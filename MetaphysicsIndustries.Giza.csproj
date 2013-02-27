@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MetaphysicsIndustries.Giza</RootNamespace>
     <AssemblyName>MetaphysicsIndustries.Giza</AssemblyName>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileUpgradeFlags>
@@ -19,9 +19,9 @@
     <UpgradeBackupLocation />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -29,7 +29,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>True</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -72,13 +72,13 @@
     <None Include="key.snk" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MetaphysicsIndustries.Build\MetaphysicsIndustries.Build.csproj">
-      <Project>{81E21BB7-DD6A-49AC-93DD-D53F55CF7C60}</Project>
-      <Name>MetaphysicsIndustries.Build</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MetaphysicsIndustries.Collections\MetaphysicsIndustries.Collections.csproj">
       <Project>{FF2B8A90-E8D2-4CF6-81E6-4A7BCE1FF900}</Project>
       <Name>MetaphysicsIndustries.Collections</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MetaphysicsIndustries.Build\MetaphysicsIndustries.Build.csproj">
+      <Project>{81E21BB7-DD6A-49AC-93DD-D53F55CF7C60}</Project>
+      <Name>MetaphysicsIndustries.Build</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -10,15 +10,13 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>giza</RootNamespace>
     <AssemblyName>giza</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -27,7 +25,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>True</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -47,21 +45,27 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MetaphysicsIndustries.Build\MetaphysicsIndustries.Build.csproj">
-      <Project>{81E21BB7-DD6A-49AC-93DD-D53F55CF7C60}</Project>
-      <Name>MetaphysicsIndustries.Build</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MetaphysicsIndustries.Collections\MetaphysicsIndustries.Collections.csproj">
+    <ProjectReference Include="..\..\MetaphysicsIndustries.Collections\MetaphysicsIndustries.Collections.csproj">
       <Project>{FF2B8A90-E8D2-4CF6-81E6-4A7BCE1FF900}</Project>
       <Name>MetaphysicsIndustries.Collections</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MetaphysicsIndustries.Giza\MetaphysicsIndustries.Giza.csproj">
+    <ProjectReference Include="..\MetaphysicsIndustries.Giza.csproj">
       <Project>{98B42ACF-8370-4428-9D41-73FF1CEFB2E4}</Project>
       <Name>MetaphysicsIndustries.Giza</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MetaphysicsIndustries.Build\MetaphysicsIndustries.Build.csproj">
+      <Project>{81E21BB7-DD6A-49AC-93DD-D53F55CF7C60}</Project>
+      <Name>MetaphysicsIndustries.Build</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="test.giza" />
+    <None Include="invalid.json" />
+    <None Include="json.giza" />
+    <None Include="json.json" />
+    <None Include="json_example1.json" />
+    <None Include="json_example2.json" />
+    <None Include="rfc4627.txt" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="test.txt" />
