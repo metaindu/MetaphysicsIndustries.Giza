@@ -196,7 +196,7 @@ namespace giza
             //Console.WriteLine("    giza --print-super");
             //Console.WriteLine("    giza --compile [GRAMMAR FILE] [START SYMBOL] [OUTPUT EXE]");
             Console.WriteLine();
-            Console.WriteLine("Converts input into base64-encoded form.");
+            Console.WriteLine("Reads grammar files and parses input.");
             Console.WriteLine();
             Console.WriteLine("    --version, -[vV]  Print version and exit successfully.");
             Console.WriteLine("    --help,           Print this help and exit successfully.");
