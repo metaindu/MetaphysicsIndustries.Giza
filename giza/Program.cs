@@ -30,7 +30,15 @@ namespace giza
                 if (args.Length > 1)
                 {
                     SupergrammarSpanner s = new SupergrammarSpanner();
-                    string gfile = File.ReadAllText(args[1]);
+                    string gfile;
+                    if (args[1] == "-")
+                    {
+                        gfile = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
+                    }
+                    else
+                    {
+                        gfile = File.ReadAllText(args[1]);
+                    }
                     Span g = s.Getgrammar(gfile);
                     PrintSpan(g);
                 }
@@ -52,7 +60,15 @@ namespace giza
                 DefinitionBuilder db = new DefinitionBuilder();
                 SimpleDefinitionNode[] defs = db.BuildDefinitions(g);
 
-                string input = File.ReadAllText(args[2]);
+				string input;
+				if (args[2] == "-")
+				{
+					input = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
+				}
+				else
+				{
+					input = File.ReadAllText(args[2]);
+				}
 
                 GenericSpanner gs = new GenericSpanner();
                 Span s = gs.Process(defs, args[1], input);
@@ -203,6 +219,8 @@ namespace giza
             Console.WriteLine("    --super,          Process the grammar file only.");
             //Console.WriteLine("    --print-super,    Print the supergrammar and exit.");
             //Console.WriteLine("    --compile,      Print the supergrammar and exit.");
+            Console.WriteLine();
+            Console.WriteLine("If \"-\" is given for FILE, or for GRAMMAR FILE given to --super, then it is read from standard input.");
             Console.WriteLine();
         }
 
