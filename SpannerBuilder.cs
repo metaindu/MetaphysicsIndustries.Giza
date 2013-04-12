@@ -226,8 +226,6 @@ namespace MetaphysicsIndustries.Giza
                 default:
                     throw new InvalidOperationException();
             }
-
-            throw new InvalidOperationException();
         }
 
         public string GenerateNameForEnumFromDef(DefinitionNode def)

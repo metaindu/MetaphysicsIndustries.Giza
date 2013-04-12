@@ -11,6 +11,10 @@ namespace MetaphysicsIndustries.Giza
             : this(new char[0], false, false, false, false)
         {
         }
+        public CharClass(char ch)
+            : this(new char[1]{ch})
+        {
+        }
         public CharClass(char[] chars)
             : this(chars, false, false, false, false)
         {

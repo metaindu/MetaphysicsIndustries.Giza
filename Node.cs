@@ -60,12 +60,16 @@ namespace MetaphysicsIndustries.Giza
     [DebuggerDisplay("'{CharClass}', {Tag}")]
     public class CharClassNode : Node
     {
-        public CharClassNode(string text)
-            : this(CharClass.FromUndelimitedCharClassText(text), text)
-        {
-        }
-        public CharClassNode(string text, string tag)
-            : this(CharClass.FromUndelimitedCharClassText(text), tag)
+//        public CharClassNode(string text)
+//            : this(CharClass.FromUndelimitedCharClassText(text), text)
+//        {
+//        }
+//        public CharClassNode(string text, string tag)
+//            : this(CharClass.FromUndelimitedCharClassText(text), tag)
+//        {
+//        }
+        public CharClassNode(char ch)
+            : this(new CharClass(ch))
         {
         }
         public CharClassNode(CharClass cc)
@@ -225,7 +229,11 @@ namespace MetaphysicsIndustries.Giza
             {
                 case NodeType.start: return new StartNode(unconNode.Text);
                 case NodeType.end: return new EndNode();
-                case NodeType.charclass: return new CharClassNode(unconNode.Text, unconNode.Tag);
+                case NodeType.charclass: 
+                    return new CharClassNode(
+                        CharClass.FromUndelimitedCharClassText(unconNode.Text), 
+                        unconNode.Tag);
+
                 case NodeType.literal:
                     if (unconNode.Text.Length > 1)
                     {
