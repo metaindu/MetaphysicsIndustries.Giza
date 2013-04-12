@@ -42,22 +42,6 @@ namespace MetaphysicsIndustries.Giza
 
         public Set<SimpleNode> NextNodes = new Set<SimpleNode>();
 
-        public static SimpleNode Literal(string unescapedText)
-        {
-            return Literal(unescapedText,unescapedText);
-        }
-        public static SimpleNode Literal(string unescapedText, string tag)
-        {
-            return new SimpleNode(unescapedText, NodeType.literal, tag);
-        }
-        public static SimpleNode CharClass(string undelimitedText)
-        {
-            return CharClass(undelimitedText, undelimitedText);
-        }
-        public static SimpleNode CharClass(string undelimitedText, string tag)
-        {
-            return new SimpleNode(undelimitedText, NodeType.charclass, tag);
-        }
         public static SimpleNode Start(string defname)
         {
             return new SimpleNode(defname, NodeType.start);
@@ -65,14 +49,6 @@ namespace MetaphysicsIndustries.Giza
         public static SimpleNode End()
         {
             return new SimpleNode("end", NodeType.end);
-        }
-        public static SimpleNode DefRef(string defname)
-        {
-            return DefRef(defname, defname);
-        }
-        public static SimpleNode DefRef(string defname, string tag)
-        {
-            return new SimpleNode(defname, NodeType.defref, tag);
         }
     }
 }
