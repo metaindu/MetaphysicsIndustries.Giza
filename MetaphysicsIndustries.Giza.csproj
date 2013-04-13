@@ -46,7 +46,6 @@
     <Compile Include="CharClass.cs" />
     <Compile Include="GenericSpanner.cs" />
     <Compile Include="Span.cs" />
-    <Compile Include="SpannerServices.cs" />
     <Compile Include="SupergrammarRenderer.cs" />
     <Compile Include="SimpleNode.cs" />
     <Compile Include="SupergrammarSpanner.cs" />
