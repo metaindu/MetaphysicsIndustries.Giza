@@ -7,11 +7,6 @@ namespace MetaphysicsIndustries.Giza
 {
     public class GenericSpanner
     {
-        public Span Process(SimpleDefinition[] defs, string startName, string input)
-        {
-            Definition[] defs2 = SpannerServices.PrepareDefinitions(defs);
-            return Process(defs2, startName, input);
-        }
         public Span Process(Definition[] defs2, string startName, string input)
         {
             Definition start = null;

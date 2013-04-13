@@ -7,7 +7,7 @@ namespace MetaphysicsIndustries.Giza
 {
     public class DefinitionBuilder
     {
-        public SimpleDefinition[] BuildDefinitions(Span span)
+        public Definition[] BuildDefinitions2(Span span)
         {
             if (span.Tag != "grammar") { throw new ArgumentException("span"); }
 
@@ -19,14 +19,8 @@ namespace MetaphysicsIndustries.Giza
                 SimpleDefinition def = BuildSingleDefinition(subspan);
                 defs.Add(def);
             }
-            return defs.ToArray();
-        }
 
-        public Definition[] BuildDefinitions2(Span span)
-        {
-            SimpleDefinition[] defs = BuildDefinitions(span);
-
-            Definition[] defs2 = SpannerServices.PrepareDefinitions(defs);
+            Definition[] defs2 = SpannerServices.PrepareDefinitions(defs.ToArray());
 
             return defs2;
         }
