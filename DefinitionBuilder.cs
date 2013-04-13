@@ -22,6 +22,15 @@ namespace MetaphysicsIndustries.Giza
             return defs.ToArray();
         }
 
+        public Definition[] BuildDefinitions2(Span span)
+        {
+            SimpleDefinition[] defs = BuildDefinitions(span);
+
+            Definition[] defs2 = SpannerServices.PrepareDefinitions(defs);
+
+            return defs2;
+        }
+
         SimpleDefinition BuildSingleDefinition(Span span)
         {
             if (span.Tag != "definition") { throw new ArgumentException("span"); }
