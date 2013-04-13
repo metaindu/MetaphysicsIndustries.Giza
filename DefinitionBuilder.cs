@@ -7,7 +7,7 @@ namespace MetaphysicsIndustries.Giza
 {
     public class DefinitionBuilder
     {
-        public Definition[] BuildDefinitions2(Span span)
+        public Definition[] BuildDefinitions(Span span)
         {
             if (span.Tag != "grammar") { throw new ArgumentException("span"); }
 

@@ -58,7 +58,7 @@ namespace giza
                 Span g = spanner.Getgrammar(grammarFile);
 
                 DefinitionBuilder db = new DefinitionBuilder();
-                Definition[] defs = db.BuildDefinitions2(g);
+                Definition[] defs = db.BuildDefinitions(g);
 
 				string input;
 				if (args[2] == "-")
