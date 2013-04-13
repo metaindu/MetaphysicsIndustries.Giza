@@ -211,11 +211,19 @@ namespace MetaphysicsIndustries.Giza
                     return new CharClass(new char[] { ((LiteralNode)node).Char });
 
                 case NodeType.defref:
-                    CharClass cc = new CharClass();
+                    CharClass cc = null;
                     foreach (Node next in ((DefRefNode)node).DefRef.start.NextNodes)
                     {
                         System.Diagnostics.Debug.Assert(next != node);
-                        cc = CharClass.Union(cc, BuildCharClassFromNode(next));
+                        CharClass cc2 = BuildCharClassFromNode(next);
+                        if (cc == null)
+                        {
+                            cc = cc2;
+                        }
+                        else
+                        {
+                            cc = CharClass.Union(cc, cc2);
+                        }
                     }
                     if (((DefRefNode)node).DefRef.IgnoreCase)
                     {

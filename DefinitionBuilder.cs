@@ -240,31 +240,38 @@ namespace MetaphysicsIndustries.Giza
 
             if (main == null) throw new InvalidOperationException();
 
-            SimpleNode node = new SimpleNode();
-            string value = main.Value;
+            string text;
+            NodeType type;
+            string tagString;
             if (main.Tag == "identifier")
             {
-                node.Type = NodeType.defref;
+                type = NodeType.defref;
+                text = main.Value;
             }
-            if (main.Tag == "literal")
+            else if (main.Tag == "literal")
             {
-                node.Type = NodeType.literal;
-                value = SpannerServices.UnescapeForLiteralNode(value);
+                type = NodeType.literal;
+                text = SpannerServices.UnescapeForLiteralNode(main.Value);
             }
-            if (main.Tag == "charclass")
+            else if (main.Tag == "charclass")
             {
-                node.Type = NodeType.charclass;
-                value = SpannerServices.UndelimitForCharClass(value);
-            }
-            node.Text = value;
-            if (tag == null)
-            {
-                node.Tag = value;
+                type = NodeType.charclass;
+                text = SpannerServices.UndelimitForCharClass(main.Value);
             }
             else
             {
-                node.Tag = tag.Value;
+                throw new InvalidOperationException();
+//                text = main.Value
             }
+            if (tag == null)
+            {
+                tagString = text;
+            }
+            else
+            {
+                tagString = tag.Value;
+            }
+            SimpleNode node = new SimpleNode(text, type, tagString);
 
             if (modifier != null)
             {

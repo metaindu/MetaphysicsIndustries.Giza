@@ -9,14 +9,6 @@ namespace MetaphysicsIndustries.Giza
     [DebuggerDisplay("{Type} '{Text}', '{Tag}', {NextNodes.Count} Nodes")]
     public class SimpleNode
     {
-        public SimpleNode()
-            : this(string.Empty, NodeType.charclass, string.Empty)
-        {
-        }
-        public SimpleNode(string text, NodeType type)
-            : this(text, type, text)
-        {
-        }
         public SimpleNode(string text, NodeType type, string tag)
         {
             Text = text;
@@ -44,11 +36,11 @@ namespace MetaphysicsIndustries.Giza
 
         public static SimpleNode Start(string defname)
         {
-            return new SimpleNode(defname, NodeType.start);
+            return new SimpleNode(defname, NodeType.start, defname);
         }
         public static SimpleNode End()
         {
-            return new SimpleNode("end", NodeType.end);
+            return new SimpleNode("end", NodeType.end, "end");
         }
     }
 }

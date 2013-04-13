@@ -7,10 +7,6 @@ namespace MetaphysicsIndustries.Giza
 {
     public class CharClass
     {
-        public CharClass()
-            : this(new char[0], false, false, false, false)
-        {
-        }
         public CharClass(char ch)
             : this(new char[1]{ch})
         {
