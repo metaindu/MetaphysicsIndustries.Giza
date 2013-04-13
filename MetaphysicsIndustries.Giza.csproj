@@ -45,7 +45,6 @@
     <Compile Include="BinarySpanner.cs" />
     <Compile Include="CharClass.cs" />
     <Compile Include="GenericSpanner.cs" />
-    <Compile Include="GrammarElement.cs" />
     <Compile Include="Span.cs" />
     <Compile Include="SpannerBuilder.cs" />
     <Compile Include="SpannerServices.cs" />
