@@ -10,11 +10,6 @@ namespace MetaphysicsIndustries.Giza
     {
         public static Definition[] PrepareDefinitions(SimpleDefinition[] defs)
         {
-            Definition[] unreferenced;
-            return PrepareDefinitions(defs, out unreferenced);
-        }
-        public static Definition[] PrepareDefinitions(SimpleDefinition[] defs, out Definition[] unreferenced)
-        {
             //converts SimpleNodes to Nodes and SimpleDefinitionNodes to DefinitionNodes,
             //makes connections from defref nodes to the appropriate definitions
 
@@ -33,8 +28,6 @@ namespace MetaphysicsIndustries.Giza
                 defs2.Add(def2);
             }
 
-            Set<Definition> unrefs = new Set<Definition>(defs2);
-
             //populate the new definitions with nodes
             foreach (SimpleDefinition def in defs)
             {
@@ -52,10 +45,6 @@ namespace MetaphysicsIndustries.Giza
 
                     Node node2 = Node.FromSimpleNode(node, defs2.ToArray());
                     nodeMatchup[node] = node2;
-                    if (node2.Type== NodeType.defref)
-                    {
-                        unrefs.Remove(((DefRefNode)node2).DefRef);
-                    }
 
                     def2.Nodes.AddRange(GatherNodes(node2));
 
@@ -90,7 +79,6 @@ namespace MetaphysicsIndustries.Giza
                 }
             }
 
-            unreferenced = unrefs.ToArray();
 
             return defs2.ToArray();
         }
