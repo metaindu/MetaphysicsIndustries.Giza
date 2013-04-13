@@ -5,7 +5,7 @@
  *  4 March 2010                                                             *
  *  Project: Giza                                                            *
  *  Written by: Richard Sartor                                               *
- *  Copyright © 2010 Metaphysics Industries, Inc.                            *
+ *  Copyright ï¿½ 2010 Metaphysics Industries, Inc.                            *
  *                                                                           *
  *  Generates a MI.Build class for the skeleton of a simple parser from      *
  *    a collection of state-graph nodes.                                     *
@@ -41,18 +41,18 @@ namespace MetaphysicsIndustries.Giza
 
         public Class ParserClassFromDefinitions(SimpleDefinitionNode[] defs)
         {
-            DefinitionNode[] unrefs;
-            DefinitionNode[] defs2 = SpannerServices.PrepareDefinitions(defs, out unrefs);
+            Definition[] unrefs;
+            Definition[] defs2 = SpannerServices.PrepareDefinitions(defs, out unrefs);
 
 
-            Dictionary<DefinitionNode, DefinitionData> datas = new Dictionary<DefinitionNode, DefinitionData>();
+            Dictionary<Definition, DefinitionData> datas = new Dictionary<Definition, DefinitionData>();
 
-            foreach (DefinitionNode def2 in defs2)
+            foreach (Definition def2 in defs2)
             {
                 datas[def2] = ConstructData(def2);
             }
 
-            foreach (DefinitionNode def2 in defs2)
+            foreach (Definition def2 in defs2)
             {
                 PopulateData(def2, datas);
             }
@@ -63,7 +63,7 @@ namespace MetaphysicsIndustries.Giza
             c.ParentNamespace = new Namespace();
             c.ParentNamespace.Name = "MetaphysicsIndustries.Giza";
 
-            foreach (DefinitionNode def in unrefs)
+            foreach (Definition def in unrefs)
             {
                 Method m = new Method();
                 m.Name = "Get" + datas[def].DefName;
@@ -236,7 +236,7 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        public string GenerateNameForEnumFromDef(DefinitionNode def)
+        public string GenerateNameForEnumFromDef(Definition def)
         {
             return CleanName(def) + "State";
         }
@@ -252,14 +252,14 @@ namespace MetaphysicsIndustries.Giza
         //    return "Get" + str;
         //}
 
-        public static string CleanName(DefinitionNode def)
+        public static string CleanName(Definition def)
         {
             return Regex.Replace(def.Name, @"[^\w\d\s]", string.Empty);
         }
 
 
 
-        private void PopulateData(DefinitionNode def, Dictionary<DefinitionNode, DefinitionData> datas)
+        private void PopulateData(Definition def, Dictionary<Definition, DefinitionData> datas)
         {
             DefinitionData data = datas[def];
 
@@ -283,7 +283,7 @@ namespace MetaphysicsIndustries.Giza
                         new MethodReferenceExpression(new ThisExpression(), data.SubspanMethod))));
         }
 
-        private DefinitionData ConstructData(DefinitionNode def)
+        private DefinitionData ConstructData(Definition def)
         {
             string defname = SpannerServices.CleanTag(def.Name);
             DefinitionData data = new DefinitionData();
@@ -371,7 +371,7 @@ namespace MetaphysicsIndustries.Giza
         //    return m;
         //}
 
-        private static Method ConstructNodeTagGetter(DefinitionNode def, string defname, Dictionary<Node, Field> fieldsByNode, EnumType enu)
+        private static Method ConstructNodeTagGetter(Definition def, string defname, Dictionary<Node, Field> fieldsByNode, EnumType enu)
         {
             Method m = new Method();
             m.Name = "GetStateTag_" + defname;
@@ -403,7 +403,7 @@ namespace MetaphysicsIndustries.Giza
             return m;
         }
 
-        private static Method ConstructSubSpanGetter(DefinitionNode def, Dictionary<DefinitionNode, DefinitionData> datas)
+        private static Method ConstructSubSpanGetter(Definition def, Dictionary<Definition, DefinitionData> datas)
         {
             //throw new NotImplementedException();
             Method m = new Method();
@@ -446,7 +446,7 @@ namespace MetaphysicsIndustries.Giza
             return m;
         }
 
-        private Method ConstructValidNextsMethod(DefinitionNode def, string defname, Dictionary<Node, Field> fieldsByNode, EnumType enu)
+        private Method ConstructValidNextsMethod(Definition def, string defname, Dictionary<Node, Field> fieldsByNode, EnumType enu)
         {
             Build.Type intListType = SystemType.GetSystemType(typeof(List<int>));
             Method m = new Method();

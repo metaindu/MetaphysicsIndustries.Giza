@@ -141,11 +141,11 @@ namespace MetaphysicsIndustries.Giza
     [DebuggerDisplay("DefRef {DefRef.Name}, {Tag}")]
     public class DefRefNode : Node
     {
-        public DefRefNode(DefinitionNode def)
+        public DefRefNode(Definition def)
             : this(def, def == null ? string.Empty : def.Name)
         {
         }
-        public DefRefNode(DefinitionNode def, string tag)
+        public DefRefNode(Definition def, string tag)
             : base(tag)
         {
             if (def == null) { throw new ArgumentNullException("def"); }
@@ -153,8 +153,8 @@ namespace MetaphysicsIndustries.Giza
             _defRef = def;
         }
 
-        DefinitionNode _defRef;
-        public DefinitionNode DefRef
+        Definition _defRef;
+        public Definition DefRef
         {
             get { return _defRef; }
         }
@@ -221,7 +221,7 @@ namespace MetaphysicsIndustries.Giza
             //return Text;
         }
 
-        public static Node FromSimpleNode(SimpleNode unconNode, DefinitionNode[] defs)
+        public static Node FromSimpleNode(SimpleNode unconNode, Definition[] defs)
         {
             if (unconNode.Text.Length < 1) throw new ArgumentException("unconNode");
 
@@ -245,7 +245,7 @@ namespace MetaphysicsIndustries.Giza
                     }
 
                 case NodeType.defref:
-                    foreach (DefinitionNode def in defs)
+                    foreach (Definition def in defs)
                     {
                         if (def.Name == unconNode.Text)
                         {

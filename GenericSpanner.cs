@@ -9,10 +9,10 @@ namespace MetaphysicsIndustries.Giza
     {
         public Span Process(SimpleDefinitionNode[] defs, string startName, string input)
         {
-            DefinitionNode[] defs2 = SpannerServices.PrepareDefinitions(defs);
+            Definition[] defs2 = SpannerServices.PrepareDefinitions(defs);
 
-            DefinitionNode start = null;
-            foreach (DefinitionNode d in defs2)
+            Definition start = null;
+            foreach (Definition d in defs2)
             {
                 if (d.Name == startName)
                 {
@@ -51,7 +51,7 @@ namespace MetaphysicsIndustries.Giza
         public Node ErrorContext;
         public int ErrorCharacter;
 
-        public Span GetItem(DefinitionNode def, string input, ref int i)
+        public Span GetItem(Definition def, string input, ref int i)
         {
             Node cur = def.start;
             List<Backtrack> backtracks = new List<Backtrack>();

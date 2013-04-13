@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using MetaphysicsIndustries.Collections;
@@ -8,37 +8,37 @@ namespace MetaphysicsIndustries.Giza
 {
     public static class SpannerServices
     {
-        public static DefinitionNode[] PrepareDefinitions(SimpleDefinitionNode[] defs)
+        public static Definition[] PrepareDefinitions(SimpleDefinitionNode[] defs)
         {
-            DefinitionNode[] unreferenced;
+            Definition[] unreferenced;
             return PrepareDefinitions(defs, out unreferenced);
         }
-        public static DefinitionNode[] PrepareDefinitions(SimpleDefinitionNode[] defs, out DefinitionNode[] unreferenced)
+        public static Definition[] PrepareDefinitions(SimpleDefinitionNode[] defs, out Definition[] unreferenced)
         {
             //converts SimpleNodes to Nodes and SimpleDefinitionNodes to DefinitionNodes,
             //makes connections from defref nodes to the appropriate definitions
 
             CheckDefRefs(defs);
 
-            List<DefinitionNode> defs2 = new List<DefinitionNode>();
-            Dictionary<SimpleDefinitionNode, DefinitionNode> defmatchup = new Dictionary<SimpleDefinitionNode, DefinitionNode>();
+            List<Definition> defs2 = new List<Definition>();
+            Dictionary<SimpleDefinitionNode, Definition> defmatchup = new Dictionary<SimpleDefinitionNode, Definition>();
 
             //create the empty defintion objects
             foreach (SimpleDefinitionNode def in defs)
             {
-                DefinitionNode def2 = new DefinitionNode();
+                Definition def2 = new Definition();
                 def2.Name = def.Name;
 
                 defmatchup[def]=def2;
                 defs2.Add(def2);
             }
 
-            Set<DefinitionNode> unrefs = new Set<DefinitionNode>(defs2);
+            Set<Definition> unrefs = new Set<Definition>(defs2);
 
             //populate the new definitions with nodes
             foreach (SimpleDefinitionNode def in defs)
             {
-                DefinitionNode def2 = defmatchup[def];
+                Definition def2 = defmatchup[def];
                 def2.IgnoreWhitespace = def.IgnoreWhitespace;
                 def2.IgnoreCase = def.IgnoreCase;
 
