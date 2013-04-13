@@ -75,9 +75,11 @@ namespace MetaphysicsIndustries.Giza
             if (span.Subspans[i + 2].Tag != "expr") throw new NotImplementedException();
 
             SimpleNode start = new SimpleNode(def.Name, NodeType.start, def.Name);
+            StartNode start2 = new StartNode(def.Name);
             def.start = start;
 
             SimpleNode end = new SimpleNode("end", NodeType.end, "end");
+            EndNode end2 = new EndNode();
             def.end = end;
 
             SimpleNode[] frontNodes;
@@ -243,35 +245,36 @@ namespace MetaphysicsIndustries.Giza
             string text;
             NodeType type;
             string tagString;
+            SimpleNode node;
+            Node node2;
+
             if (main.Tag == "identifier")
             {
                 type = NodeType.defref;
                 text = main.Value;
+                tagString = (tag == null ? text : tag.Value);
+                node = new SimpleNode(text, type, tagString);
+//                node2 = new DefRefNode(def, tagString);
             }
             else if (main.Tag == "literal")
             {
                 type = NodeType.literal;
                 text = SpannerServices.UnescapeForLiteralNode(main.Value);
+                tagString = (tag == null ? text : tag.Value);
+                node = new SimpleNode(text, type, tagString);
+//                node2 = new LiteralNode(
             }
             else if (main.Tag == "charclass")
             {
                 type = NodeType.charclass;
                 text = SpannerServices.UndelimitForCharClass(main.Value);
+                tagString = (tag == null ? text : tag.Value);
+                node = new SimpleNode(text, type, tagString);
             }
             else
             {
                 throw new InvalidOperationException();
-//                text = main.Value
             }
-            if (tag == null)
-            {
-                tagString = text;
-            }
-            else
-            {
-                tagString = tag.Value;
-            }
-            SimpleNode node = new SimpleNode(text, type, tagString);
 
             if (modifier != null)
             {
