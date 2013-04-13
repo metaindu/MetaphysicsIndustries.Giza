@@ -7,7 +7,7 @@ using System.Diagnostics;
 namespace MetaphysicsIndustries.Giza
 {
     [DebuggerDisplay("{Name}, {Nodes.Count} Nodes")]
-    public class SimpleDefinitionNode
+    public class SimpleDefinition
     {
         public string Name;
         public Set<SimpleNode> Nodes = new Set<SimpleNode>();

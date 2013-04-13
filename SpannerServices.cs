@@ -8,12 +8,12 @@ namespace MetaphysicsIndustries.Giza
 {
     public static class SpannerServices
     {
-        public static Definition[] PrepareDefinitions(SimpleDefinitionNode[] defs)
+        public static Definition[] PrepareDefinitions(SimpleDefinition[] defs)
         {
             Definition[] unreferenced;
             return PrepareDefinitions(defs, out unreferenced);
         }
-        public static Definition[] PrepareDefinitions(SimpleDefinitionNode[] defs, out Definition[] unreferenced)
+        public static Definition[] PrepareDefinitions(SimpleDefinition[] defs, out Definition[] unreferenced)
         {
             //converts SimpleNodes to Nodes and SimpleDefinitionNodes to DefinitionNodes,
             //makes connections from defref nodes to the appropriate definitions
@@ -21,10 +21,10 @@ namespace MetaphysicsIndustries.Giza
             CheckDefRefs(defs);
 
             List<Definition> defs2 = new List<Definition>();
-            Dictionary<SimpleDefinitionNode, Definition> defmatchup = new Dictionary<SimpleDefinitionNode, Definition>();
+            Dictionary<SimpleDefinition, Definition> defmatchup = new Dictionary<SimpleDefinition, Definition>();
 
             //create the empty defintion objects
-            foreach (SimpleDefinitionNode def in defs)
+            foreach (SimpleDefinition def in defs)
             {
                 Definition def2 = new Definition();
                 def2.Name = def.Name;
@@ -36,7 +36,7 @@ namespace MetaphysicsIndustries.Giza
             Set<Definition> unrefs = new Set<Definition>(defs2);
 
             //populate the new definitions with nodes
-            foreach (SimpleDefinitionNode def in defs)
+            foreach (SimpleDefinition def in defs)
             {
                 Definition def2 = defmatchup[def];
                 def2.IgnoreWhitespace = def.IgnoreWhitespace;
@@ -95,12 +95,12 @@ namespace MetaphysicsIndustries.Giza
             return defs2.ToArray();
         }
 
-        private static void CheckDefRefs(SimpleDefinitionNode[] defs)
+        private static void CheckDefRefs(SimpleDefinition[] defs)
         {
             Set<string> defnames = new Set<string>();
             Set<string> duplicateNames = new Set<string>();
             Set<string> defrefs = new Set<string>();
-            foreach (SimpleDefinitionNode def in defs)
+            foreach (SimpleDefinition def in defs)
             {
                 if (defnames.Contains(def.Name))
                 {

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -58,7 +58,7 @@ namespace giza
                 Span g = spanner.Getgrammar(grammarFile);
 
                 DefinitionBuilder db = new DefinitionBuilder();
-                SimpleDefinitionNode[] defs = db.BuildDefinitions(g);
+                SimpleDefinition[] defs = db.BuildDefinitions(g);
 
 				string input;
 				if (args[2] == "-")

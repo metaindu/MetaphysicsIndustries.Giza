@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using MetaphysicsIndustries.Collections;
@@ -7,26 +7,26 @@ namespace MetaphysicsIndustries.Giza
 {
     public class DefinitionBuilder
     {
-        public SimpleDefinitionNode[] BuildDefinitions(Span span)
+        public SimpleDefinition[] BuildDefinitions(Span span)
         {
             if (span.Tag != "grammar") { throw new ArgumentException("span"); }
 
-            List<SimpleDefinitionNode> defs = new List<SimpleDefinitionNode>();
+            List<SimpleDefinition> defs = new List<SimpleDefinition>();
             foreach (Span subspan in span.Subspans)
             {
                 if (subspan.Tag == "comment") continue;
 
-                SimpleDefinitionNode def = BuildSingleDefinition(subspan);
+                SimpleDefinition def = BuildSingleDefinition(subspan);
                 defs.Add(def);
             }
             return defs.ToArray();
         }
 
-        SimpleDefinitionNode BuildSingleDefinition(Span span)
+        SimpleDefinition BuildSingleDefinition(Span span)
         {
             if (span.Tag != "definition") { throw new ArgumentException("span"); }
 
-            SimpleDefinitionNode def = new SimpleDefinitionNode();
+            SimpleDefinition def = new SimpleDefinition();
             def.IgnoreWhitespace = true;
 
             int i;

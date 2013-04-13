@@ -39,7 +39,7 @@ namespace MetaphysicsIndustries.Giza
             public Dictionary<Node, Field> fieldsByNode = new Dictionary<Node, Field>();
         }
 
-        public Class ParserClassFromDefinitions(SimpleDefinitionNode[] defs)
+        public Class ParserClassFromDefinitions(SimpleDefinition[] defs)
         {
             Definition[] unrefs;
             Definition[] defs2 = SpannerServices.PrepareDefinitions(defs, out unrefs);

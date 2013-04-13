@@ -49,7 +49,6 @@
     <Compile Include="SpannerBuilder.cs" />
     <Compile Include="SpannerServices.cs" />
     <Compile Include="SupergrammarRenderer.cs" />
-    <Compile Include="SimpleDefinitionNode.cs" />
     <Compile Include="SimpleNode.cs" />
     <Compile Include="SupergrammarSpanner.cs" />
     <Content Include="BinarySpanner example grammar.txt" />
@@ -62,6 +61,7 @@
     <Compile Include="NodeType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Definition.cs" />
+    <Compile Include="SimpleDefinition.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
