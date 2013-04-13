@@ -221,6 +221,11 @@ namespace MetaphysicsIndustries.Giza
             //return Text;
         }
 
+        public bool IsAnEndOf(Definition def)
+        {
+            return NextNodes.Contains(def.end);
+        }
+
         public static Node FromSimpleNode(SimpleNode unconNode, Definition[] defs)
         {
             if (unconNode.Text.Length < 1) throw new ArgumentException("unconNode");
