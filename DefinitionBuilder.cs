@@ -21,9 +21,73 @@ namespace MetaphysicsIndustries.Giza
                 defs.Add(def);
             }
 
-            Definition[] defs2 = PrepareDefinitions(defs.ToArray());
+            CheckDefRefs(defs);
 
-            return defs2;
+            List<Definition> defs2 = new List<Definition>();
+            Dictionary<SimpleDefinition, Definition> defmatchup = new Dictionary<SimpleDefinition, Definition>();
+
+            //create the empty defintion objects
+            foreach (SimpleDefinition def in defs)
+            {
+                Definition def2 = new Definition();
+                def2.Name = def.Name;
+
+                defmatchup[def]=def2;
+                defs2.Add(def2);
+            }
+
+            //populate the new definitions with nodes
+            foreach (SimpleDefinition def in defs)
+            {
+                Definition def2 = defmatchup[def];
+                def2.IgnoreWhitespace = def.IgnoreWhitespace;
+                def2.IgnoreCase = def.IgnoreCase;
+
+                //create the new nodes
+                Dictionary<SimpleNode, Node> nodeMatchup = new Dictionary<SimpleNode, Node>();
+                foreach (SimpleNode node in def.Nodes)
+                {
+                    if (node.Text == "*")
+                    {
+                    }
+
+                    Node node2 = Node.FromSimpleNode(node, defs2.ToArray());
+                    nodeMatchup[node] = node2;
+
+                    def2.Nodes.AddRange(GatherNodes(node2));
+
+                    if (node.Type == NodeType.start)
+                    {
+                        def2.start = node2;
+                    }
+                    else if (node.Type == NodeType.end)
+                    {
+                        def2.end = node2;
+                    }
+                }
+
+                //connect nodes to each other
+                foreach (SimpleNode node in def.Nodes)
+                {
+                    Node node2 = nodeMatchup[node];
+                    if (node2.Type == NodeType.literal)
+                    {
+                        LiteralNode literalnode = (LiteralNode)node2;
+                        while (literalnode.NextNodes.Count == 1 &&
+                               literalnode.NextNodes.GetFirst().Type == NodeType.literal)
+                        {
+                            literalnode = (LiteralNode)literalnode.NextNodes.GetFirst();
+                        }
+                        node2 = literalnode;
+                    }
+                    foreach (SimpleNode next in node.NextNodes)
+                    {
+                        node2.NextNodes.Add(nodeMatchup[next]);
+                    }
+                }
+            }
+
+            return defs2.ToArray();
         }
 
         SimpleDefinition BuildSingleDefinition(Span span)
@@ -360,81 +424,7 @@ namespace MetaphysicsIndustries.Giza
             backNodes = backNodes3.ToArray();
         }
 
-        public static Definition[] PrepareDefinitions(SimpleDefinition[] defs)
-        {
-            //converts SimpleNodes to Nodes and SimpleDefinitionNodes to DefinitionNodes,
-            //makes connections from defref nodes to the appropriate definitions
-
-            CheckDefRefs(defs);
-
-            List<Definition> defs2 = new List<Definition>();
-            Dictionary<SimpleDefinition, Definition> defmatchup = new Dictionary<SimpleDefinition, Definition>();
-
-            //create the empty defintion objects
-            foreach (SimpleDefinition def in defs)
-            {
-                Definition def2 = new Definition();
-                def2.Name = def.Name;
-
-                defmatchup[def]=def2;
-                defs2.Add(def2);
-            }
-
-            //populate the new definitions with nodes
-            foreach (SimpleDefinition def in defs)
-            {
-                Definition def2 = defmatchup[def];
-                def2.IgnoreWhitespace = def.IgnoreWhitespace;
-                def2.IgnoreCase = def.IgnoreCase;
-
-                //create the new nodes
-                Dictionary<SimpleNode, Node> nodeMatchup = new Dictionary<SimpleNode, Node>();
-                foreach (SimpleNode node in def.Nodes)
-                {
-                    if (node.Text == "*")
-                    {
-                    }
-
-                    Node node2 = Node.FromSimpleNode(node, defs2.ToArray());
-                    nodeMatchup[node] = node2;
-
-                    def2.Nodes.AddRange(GatherNodes(node2));
-
-                    if (node.Type == NodeType.start)
-                    {
-                        def2.start = node2;
-                    }
-                    else if (node.Type == NodeType.end)
-                    {
-                        def2.end = node2;
-                    }
-                }
-
-                //connect nodes to each other
-                foreach (SimpleNode node in def.Nodes)
-                {
-                    Node node2 = nodeMatchup[node];
-                    if (node2.Type == NodeType.literal)
-                    {
-                        LiteralNode literalnode = (LiteralNode)node2;
-                        while (literalnode.NextNodes.Count == 1 &&
-                               literalnode.NextNodes.GetFirst().Type == NodeType.literal)
-                        {
-                            literalnode = (LiteralNode)literalnode.NextNodes.GetFirst();
-                        }
-                        node2 = literalnode;
-                    }
-                    foreach (SimpleNode next in node.NextNodes)
-                    {
-                        node2.NextNodes.Add(nodeMatchup[next]);
-                    }
-                }
-            }
-
-            return defs2.ToArray();
-        }
-
-        private static void CheckDefRefs(SimpleDefinition[] defs)
+        private static void CheckDefRefs(IEnumerable<SimpleDefinition> defs)
         {
             Set<string> defnames = new Set<string>();
             Set<string> duplicateNames = new Set<string>();
