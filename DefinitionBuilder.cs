@@ -74,10 +74,10 @@ namespace MetaphysicsIndustries.Giza
             if (span.Subspans[i + 1].Value != "=") throw new NotImplementedException();
             if (span.Subspans[i + 2].Tag != "expr") throw new NotImplementedException();
 
-            SimpleNode start = SimpleNode.Start(def.Name);
+            SimpleNode start = new SimpleNode(def.Name, NodeType.start, def.Name);
             def.start = start;
 
-            SimpleNode end = SimpleNode.End();
+            SimpleNode end = new SimpleNode("end", NodeType.end, "end");
             def.end = end;
 
             SimpleNode[] frontNodes;

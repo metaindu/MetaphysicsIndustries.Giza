@@ -33,14 +33,5 @@ namespace MetaphysicsIndustries.Giza
         public string Tag = string.Empty;
 
         public Set<SimpleNode> NextNodes = new Set<SimpleNode>();
-
-        public static SimpleNode Start(string defname)
-        {
-            return new SimpleNode(defname, NodeType.start, defname);
-        }
-        public static SimpleNode End()
-        {
-            return new SimpleNode("end", NodeType.end, "end");
-        }
     }
 }
