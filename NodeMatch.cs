@@ -38,6 +38,16 @@ namespace MetaphysicsIndustries.Giza
                 }
             }
         }
+
+        public enum TransitionType
+        {
+            StartDef,
+            EndDef,
+            Follow,
+        }
+
+        public TransitionType Transition;
+        public Node Node;
     }
 }
 

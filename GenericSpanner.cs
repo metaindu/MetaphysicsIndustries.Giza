@@ -49,6 +49,31 @@ namespace MetaphysicsIndustries.Giza
         public Node ErrorContext;
         public int ErrorCharacter;
 
+        public Span GetItem2(Definition def, string input)
+        {
+            DefRefNode implicitNode = new DefRefNode(def);
+            NodeMatch root = new NodeMatch{Node = implicitNode, Transition = NodeMatch.TransitionType.StartDef};
+
+            Queue<NodeMatch> currents = new Queue<NodeMatch>();
+            Queue<NodeMatch> failures = new Queue<NodeMatch>();
+
+            currents.Enqueue(root);
+
+            foreach (char ch in input)
+            {
+                while (currents.Count > 0)
+                {
+                    NodeMatch cur = currents.Dequeue();
+                }
+
+                while (failures.Count > 0)
+                {
+                }
+            }
+
+            throw new NotImplementedException();
+        }
+
         public Span GetItem(Definition def, string input, ref int i)
         {
             Node cur = def.start;
