@@ -58,25 +58,21 @@ namespace MetaphysicsIndustries.Giza
     }
 
     [DebuggerDisplay("'{CharClass}', {Tag}")]
-    public class CharClassNode : Node
+    public class CharNode : Node
     {
-//        public CharClassNode(string text)
-//            : this(CharClass.FromUndelimitedCharClassText(text), text)
-//        {
-//        }
-//        public CharClassNode(string text, string tag)
-//            : this(CharClass.FromUndelimitedCharClassText(text), tag)
-//        {
-//        }
-        public CharClassNode(char ch)
+        public CharNode(char ch)
             : this(new CharClass(ch))
         {
         }
-        public CharClassNode(CharClass cc)
+        public CharNode(char ch, string tag)
+            : this(new CharClass(ch), tag)
+        {
+        }
+        public CharNode(CharClass cc)
             : this(cc, cc.ToString())
         {
         }
-        public CharClassNode(CharClass cc, string tag)
+        public CharNode(CharClass cc, string tag)
             : base(tag)
         {
             if (cc == null) throw new ArgumentNullException("cc");
@@ -235,7 +231,7 @@ namespace MetaphysicsIndustries.Giza
                 case NodeType.start: return new StartNode(unconNode.Text);
                 case NodeType.end: return new EndNode();
                 case NodeType.charclass: 
-                    return new CharClassNode(
+                    return new CharNode(
                         CharClass.FromUndelimitedCharClassText(unconNode.Text), 
                         unconNode.Tag);
 
