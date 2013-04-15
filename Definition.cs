@@ -14,6 +14,31 @@ namespace MetaphysicsIndustries.Giza
         public Node start;
         public Node end;
 
+        public IEnumerable<Node> GetStartingNodes()
+        {
+            foreach (Node n in start.NextNodes)
+            {
+                if (n is EndNode) continue;
+                if (n is StartNode) continue;
+
+                yield return n;
+            }
+        }
+
+        public IEnumerable<Node> GetEndingNodes()
+        {
+            foreach (Node n in Nodes)
+            {
+                if (n is EndNode) continue;
+                if (n is StartNode) continue;
+
+                if (n.IsAnEndOf(this))
+                {
+                    yield return n;
+                }
+            }
+        }
+
         public bool IgnoreWhitespace = false;
         public bool IgnoreCase = false;
     }
