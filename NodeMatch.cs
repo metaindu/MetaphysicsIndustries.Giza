@@ -5,9 +5,14 @@ namespace MetaphysicsIndustries.Giza
 {
     public class NodeMatch
     {
-        public NodeMatch()
+        public NodeMatch(Node node, TransitionType transition)
         {
+            if (node == null) throw new ArgumentNullException("node");
+
             _nexts = new NodeMatchNodeMatchPreviousNextsCollection(this);
+
+            Node = node;
+            Transition = transition;
         }
 
         NodeMatchNodeMatchPreviousNextsCollection _nexts;
