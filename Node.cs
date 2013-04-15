@@ -6,57 +6,6 @@ using System.Diagnostics;
 
 namespace MetaphysicsIndustries.Giza
 {
-    [DebuggerDisplay("'{Char}', {Tag}")]
-    public class LiteralNode : Node
-    {
-        public LiteralNode(char ch)
-            : this(ch, string.Empty)
-        {
-        }
-        public LiteralNode(char ch, string tag)
-            : base(tag)
-        {
-            _char = ch;
-        }
-
-        public static LiteralNode[] FromString(string text)
-        {
-            return FromString(text, text);
-        }
-        public static LiteralNode[] FromString(string text, string tag)
-        {
-            List<LiteralNode> list = new List<LiteralNode>();
-
-            int i = 0;
-            foreach (char ch in text)
-            {
-                list.Add(new LiteralNode(ch, tag));// + "_" + i.ToString()));
-                i++;
-            }
-            for (i = 1; i < list.Count; i++)
-            {
-                list[i - 1].NextNodes.Add(list[i]);
-            }
-
-            return list.ToArray();
-        }
-
-        char _char;
-        public char Char
-        {
-            get { return _char; }
-        }
-
-        public override NodeType Type
-        {
-            get { return NodeType.literal; }
-        }
-        public override bool Matches(char ch)
-        {
-            return (ch == Char);
-        }
-    }
-
     [DebuggerDisplay("'{CharClass}', {Tag}")]
     public class CharNode : Node
     {
@@ -92,6 +41,28 @@ namespace MetaphysicsIndustries.Giza
         public override bool Matches(char ch)
         {
             return CharClass.Matches(ch);
+        }
+        public static CharNode[] FromString(string text)
+        {
+            return FromString(text, text);
+        }
+
+        public static CharNode[] FromString(string text, string tag)
+        {
+            List<CharNode> list = new List<CharNode>();
+
+            int i = 0;
+            foreach (char ch in text)
+            {
+                list.Add(new CharNode(ch, tag));// + "_" + i.ToString()));
+                i++;
+            }
+            for (i = 1; i < list.Count; i++)
+            {
+                list[i - 1].NextNodes.Add(list[i]);
+            }
+
+            return list.ToArray();
         }
     }
 
@@ -238,11 +209,11 @@ namespace MetaphysicsIndustries.Giza
                 case NodeType.literal:
                     if (unconNode.Text.Length > 1)
                     {
-                        return LiteralNode.FromString(unconNode.Text, unconNode.Tag)[0];
+                        return CharNode.FromString(unconNode.Text, unconNode.Tag)[0];
                     }
                     else
                     {
-                        return new LiteralNode(unconNode.Text[0], unconNode.Tag);
+                        return new CharNode(unconNode.Text[0], unconNode.Tag);
                     }
 
                 case NodeType.defref:

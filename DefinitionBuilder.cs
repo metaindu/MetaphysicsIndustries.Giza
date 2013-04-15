@@ -72,11 +72,11 @@ namespace MetaphysicsIndustries.Giza
                     Node node2 = nodeMatchup[node];
                     if (node2.Type == NodeType.literal)
                     {
-                        LiteralNode literalnode = (LiteralNode)node2;
+                        CharNode literalnode = (CharNode)node2;
                         while (literalnode.NextNodes.Count == 1 &&
                                literalnode.NextNodes.GetFirst().Type == NodeType.literal)
                         {
-                            literalnode = (LiteralNode)literalnode.NextNodes.GetFirst();
+                            literalnode = (CharNode)literalnode.NextNodes.GetFirst();
                         }
                         node2 = literalnode;
                     }
