@@ -6,14 +6,20 @@ using System.Diagnostics;
 
 namespace MetaphysicsIndustries.Giza
 {
-    [DebuggerDisplay("{Type} '{Text}', '{Tag}', {NextNodes.Count} Nodes")]
+    [DebuggerDisplay("[{_id}] {Type} '{Text}', '{Tag}', {NextNodes.Count} Nodes")]
     public class SimpleNode
     {
+        private static int __id = 0;
+        public readonly int _id;
+
         public SimpleNode(string text, NodeType type, string tag)
         {
             Text = text;
             Type = type;
             Tag = tag;
+
+            _id = __id;
+            __id++;
         }
 
         //if it's a start node, the text is the name of the definition

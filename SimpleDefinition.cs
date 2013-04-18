@@ -6,9 +6,18 @@ using System.Diagnostics;
 
 namespace MetaphysicsIndustries.Giza
 {
-    [DebuggerDisplay("{Name}, {Nodes.Count} Nodes")]
+    [DebuggerDisplay("[{_id}] {Name}, {Nodes.Count} Nodes")]
     public class SimpleDefinition
     {
+        private static int __id = 0;
+        public readonly int _id;
+
+        public SimpleDefinition()
+        {
+            _id = __id;
+            __id++;
+        }
+
         public string Name;
         public Set<SimpleNode> Nodes = new Set<SimpleNode>();
         public SimpleNode start;

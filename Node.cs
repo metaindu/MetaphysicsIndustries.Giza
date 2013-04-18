@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace MetaphysicsIndustries.Giza
 {
-    [DebuggerDisplay("'{CharClass}', {Tag}")]
+    [DebuggerDisplay("[{_id}] {CharClass}, {Tag}")]
     public class CharNode : Node
     {
         public CharNode(char ch)
@@ -66,7 +66,7 @@ namespace MetaphysicsIndustries.Giza
         }
     }
 
-    [DebuggerDisplay("start")]
+    [DebuggerDisplay("[{_id}] start")]
     public class StartNode : Node
     {
         public StartNode(string defname)
@@ -88,7 +88,7 @@ namespace MetaphysicsIndustries.Giza
         }
     }
 
-    [DebuggerDisplay("end")]
+    [DebuggerDisplay("[{_id}] end")]
     public class EndNode : Node
     {
         public override NodeType Type
@@ -105,7 +105,7 @@ namespace MetaphysicsIndustries.Giza
         }
     }
 
-    [DebuggerDisplay("DefRef {DefRef.Name}, {Tag}")]
+    [DebuggerDisplay("[{_id}] DefRef {DefRef.Name}, {Tag}")]
     public class DefRefNode : Node
     {
         public DefRefNode(Definition def)
@@ -146,6 +146,9 @@ namespace MetaphysicsIndustries.Giza
 
     public abstract class Node
     {
+        private static int __id = 0;
+        public readonly int _id;
+
         protected Node()
             : this(string.Empty)
         {
@@ -155,6 +158,9 @@ namespace MetaphysicsIndustries.Giza
             if (tag == null) tag = string.Empty;
 
             _tag = tag;
+
+            this._id = __id;
+            __id++;
         }
 
         public abstract NodeType Type
