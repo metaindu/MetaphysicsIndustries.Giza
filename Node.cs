@@ -188,12 +188,6 @@ namespace MetaphysicsIndustries.Giza
             get { return _nextNodes; }
         }
 
-        public override string ToString()
-        {
-            throw new NotImplementedException();
-            //return Text;
-        }
-
         public bool IsAnEndOf(Definition def)
         {
             return NextNodes.Contains(def.end);
