@@ -30,6 +30,29 @@ namespace MetaphysicsIndustries.Giza
             return span;
         }
 
+        public Span Process2(Definition[] defs2, string startName, string input)
+        {
+            Definition start = null;
+            foreach (Definition d in defs2)
+            {
+                if (d.Name == startName)
+                {
+                    start = d;
+                    break;
+                }
+            }
+
+            if (start == null)
+            {
+                throw new KeyNotFoundException("Could not find a definition by that name");
+            }
+
+            int i = 0;
+            Span span = GetItem2(start, input);
+            if (span != null) span.Tag = start.Name;
+            return span;
+        }
+
         class Backtrack
         {
             public Backtrack(int _i, Node _prev, Node[] _nexts, int _next)
@@ -49,29 +72,173 @@ namespace MetaphysicsIndustries.Giza
         public Node ErrorContext;
         public int ErrorCharacter;
 
+        struct NodeMatchStackPair
+        {
+            public NodeMatch NodeMatch;
+            public MatchStack MatchStack;
+        }
+
+        NodeMatchStackPair pair(NodeMatch nodeMatch, MatchStack matchStack)
+        {
+            return new NodeMatchStackPair{NodeMatch = nodeMatch, MatchStack = matchStack};
+        }
+
         public Span GetItem2(Definition def, string input)
         {
             DefRefNode implicitNode = new DefRefNode(def);
-            NodeMatch root = new NodeMatch{Node = implicitNode, Transition = NodeMatch.TransitionType.StartDef};
+            NodeMatch root = new NodeMatch(implicitNode, NodeMatch.TransitionType.StartDef);
 
-            Queue<NodeMatch> currents = new Queue<NodeMatch>();
-            Queue<NodeMatch> failures = new Queue<NodeMatch>();
+            MatchStack defStack = new MatchStack(root, null);
 
-            currents.Enqueue(root);
+            Queue<NodeMatchStackPair> starts = new Queue<NodeMatchStackPair>();
+            Queue<NodeMatchStackPair> currents = new Queue<NodeMatchStackPair>();
+            Queue<NodeMatchStackPair> accepts = new Queue<NodeMatchStackPair>();
+            Queue<NodeMatchStackPair> pass = new Queue<NodeMatchStackPair>();
+            Queue<NodeMatch> rejects = new Queue<NodeMatch>();
 
+            starts.Enqueue(pair(root, null));
+
+            int k = -1;
             foreach (char ch in input)
             {
-                while (currents.Count > 0)
+                k++;
+                bool isWhitespace = char.IsWhiteSpace(ch);
+
+                while (starts.Count > 0)
                 {
-                    NodeMatch cur = currents.Dequeue();
+                    NodeMatchStackPair p = starts.Dequeue();
+
+                    if (isWhitespace &&
+                        ((p.MatchStack == null && p.NodeMatch.Node is DefRefNode && (p.NodeMatch.Node as DefRefNode).DefRef.IgnoreWhitespace) ||
+                         (p.MatchStack != null && p.MatchStack.Definition.IgnoreWhitespace)))
+                    {
+                        pass.Enqueue(p);
+                    }
+                    else if (p.NodeMatch.Node is CharNode)
+                    {
+                        NodeMatch cur = p.NodeMatch;
+                        MatchStack stack = p.MatchStack;
+
+                        //next nodes
+                        foreach (Node n in cur.Node.NextNodes)
+                        {
+                            if (n is EndNode) continue;
+
+                            NodeMatch match2 = new NodeMatch(n,NodeMatch.TransitionType.Follow);
+                            match2.Previous = cur;
+                            currents.Enqueue(pair(match2, stack));
+                        }
+
+                        //end
+                        if (cur.Node.IsAnEndOf((stack.NodeMatch.Node as DefRefNode).DefRef))
+                        {
+                            //add def end nodematch, pop the stack
+                            NodeMatch match2 = new NodeMatch(stack.NodeMatch.Node, NodeMatch.TransitionType.EndDef);
+                            match2.Previous = cur;
+                            currents.Enqueue(pair(match2, stack.Parent));
+                        }
+                    }
+                    else // defrefnode
+                    {
+                        currents.Enqueue(p);
+                    }
                 }
 
-                while (failures.Count > 0)
+                while (currents.Count > 0)
                 {
+                    NodeMatchStackPair p = currents.Dequeue();
+
+                    if (isWhitespace &&
+                        ((p.MatchStack == null && p.NodeMatch.Node is DefRefNode && (p.NodeMatch.Node as DefRefNode).DefRef.IgnoreWhitespace) ||
+                         (p.MatchStack != null && p.MatchStack.Definition.IgnoreWhitespace)))
+                    {
+                        pass.Enqueue(p);
+                        continue;
+                    }
+
+                    NodeMatch cur = p.NodeMatch;
+                    MatchStack stack = p.MatchStack;
+
+                    if (cur.Node is CharNode)
+                    {
+                        if ((cur.Node as CharNode).Matches(ch))
+                        {
+                            accepts.Enqueue(p);
+                        }
+                        else
+                        {
+                            rejects.Enqueue(cur);
+                        }
+                    }
+                    else // cur.Node is DefRefNode
+                    {
+                        if (cur.Transition == NodeMatch.TransitionType.EndDef)
+                        {
+                            foreach (Node n in cur.Node.NextNodes)
+                            {
+                                if (n is EndNode) continue;
+
+                                NodeMatch match2 = new NodeMatch(n,NodeMatch.TransitionType.Follow);
+                                match2.Previous = cur;
+                                currents.Enqueue(pair(match2, stack));
+                            }
+                        }
+                        else
+                        {
+                            MatchStack stack2 = new MatchStack(cur, stack);
+                            foreach (Node start in (cur.Node as DefRefNode).DefRef.GetStartingNodes())
+                            {
+                                NodeMatch match2 = new NodeMatch(start, NodeMatch.TransitionType.StartDef);
+                                match2.Previous = cur;
+                                currents.Enqueue(pair(match2, stack2));
+                            }
+                        }
+
+                        if (stack == null)
+                        {
+                            //throw new NotImplementedException();
+                        }
+                        else if (cur.Node.IsAnEndOf((stack.NodeMatch.Node as DefRefNode).DefRef))
+                        {
+                            //add def end nodematch, pop the stack
+                            NodeMatch match2 = new NodeMatch(stack.NodeMatch.Node, NodeMatch.TransitionType.EndDef);
+                            match2.Previous = cur;
+                            currents.Enqueue(pair(match2, stack.Parent));
+                        }
+                    }
+                }
+
+                while (rejects.Count > 0)
+                {
+                    NodeMatch n = rejects.Dequeue();
+
+                    if (n.Nexts.Count <= 0)
+                    {
+                        NodeMatch prev = n.Previous;
+                        n.Previous = null;
+
+                        //recycle the NodeMatch object here, if desired
+
+                        if (prev != null && prev.Nexts.Count <= 0)
+                        {
+                            rejects.Enqueue(prev);
+                        }
+                    }
+                }
+
+                while (accepts.Count > 0)
+                {
+                    var p = accepts.Dequeue();
+                    starts.Enqueue(p);
+                }
+                while (pass.Count > 0)
+                {
+                    var p = pass.Dequeue();
+                    starts.Enqueue(p);
                 }
             }
 
-            throw new NotImplementedException();
+            return null;
         }
 
         public Span GetItem(Definition def, string input, ref int i)
