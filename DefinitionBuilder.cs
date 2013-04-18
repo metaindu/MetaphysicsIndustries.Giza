@@ -70,16 +70,19 @@ namespace MetaphysicsIndustries.Giza
                 foreach (SimpleNode node in def.Nodes)
                 {
                     Node node2 = nodeMatchup[node];
-                    if (node2.Type == NodeType.literal)
+
+                    //FromSimpleNode converts a multi-char literal into a list of single-char nodes
+                    //we have to go to the end of the list to tell that one where to go next
+                    if (node.Type == NodeType.literal && node.Text.Length > 1)
                     {
                         CharNode literalnode = (CharNode)node2;
-                        while (literalnode.NextNodes.Count == 1 &&
-                               literalnode.NextNodes.GetFirst().Type == NodeType.literal)
+                        while (literalnode.NextNodes.Count > 0)
                         {
                             literalnode = (CharNode)literalnode.NextNodes.GetFirst();
                         }
                         node2 = literalnode;
                     }
+
                     foreach (SimpleNode next in node.NextNodes)
                     {
                         node2.NextNodes.Add(nodeMatchup[next]);
