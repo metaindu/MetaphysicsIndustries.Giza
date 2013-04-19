@@ -1,10 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace MetaphysicsIndustries.Giza
 {
+    [DebuggerDisplay("[{_id}] {Node.Type}:{Node., {Transition}, {Nexts.Count} nexts")]
     public class NodeMatch
     {
+        private static int __id = 0;
+        public readonly int _id;
+
         public NodeMatch(Node node, TransitionType transition)
         {
             if (node == null) throw new ArgumentNullException("node");
@@ -13,6 +18,9 @@ namespace MetaphysicsIndustries.Giza
 
             Node = node;
             Transition = transition;
+
+            _id = __id;
+            __id++;
         }
 
         NodeMatchNodeMatchPreviousNextsCollection _nexts;
