@@ -6,7 +6,6 @@ using System.Diagnostics;
 
 namespace MetaphysicsIndustries.Giza
 {
-    [DebuggerDisplay("[{_id}] {CharClass}, {Tag}")]
     public class CharNode : Node
     {
         public CharNode(char ch)
@@ -64,9 +63,13 @@ namespace MetaphysicsIndustries.Giza
 
             return list.ToArray();
         }
+
+        public override string ToString()
+        {
+            return string.Format("[{0}] {1}, {2}", _id, CharClass, Tag);
+        }
     }
 
-    [DebuggerDisplay("[{_id}] start")]
     public class StartNode : Node
     {
         public StartNode(string defname)
@@ -86,9 +89,13 @@ namespace MetaphysicsIndustries.Giza
         {
             get { return "start"; }
         }
+
+        public override string ToString()
+        {
+            return string.Format("[{0}] start", _id);
+        }
     }
 
-    [DebuggerDisplay("[{_id}] end")]
     public class EndNode : Node
     {
         public override NodeType Type
@@ -103,9 +110,13 @@ namespace MetaphysicsIndustries.Giza
         {
             get { return "end"; }
         }
+
+        public override string ToString()
+        {
+            return string.Format("[{0}] end", _id);
+        }
     }
 
-    [DebuggerDisplay("[{_id}] DefRef {DefRef.Name}, {Tag}")]
     public class DefRefNode : Node
     {
         public DefRefNode(Definition def)
@@ -141,6 +152,11 @@ namespace MetaphysicsIndustries.Giza
             }
 
             return false;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("[{0}] \"[{1}] {2}\", {3}", _id, DefRef._id, DefRef.Name, Tag);
         }
     }
 

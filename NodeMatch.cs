@@ -4,7 +4,6 @@ using System.Diagnostics;
 
 namespace MetaphysicsIndustries.Giza
 {
-    [DebuggerDisplay("[{_id}] {Node.Type}:{Node., {Transition}, {Nexts.Count} nexts")]
     public class NodeMatch
     {
         private static int __id = 0;
@@ -61,6 +60,18 @@ namespace MetaphysicsIndustries.Giza
 
         public TransitionType Transition;
         public Node Node;
+
+        public override string ToString()
+        {
+            string nodestr;
+            if (Node is StartNode) nodestr = "<start>";
+            else if (Node is EndNode) nodestr = "<end>";
+            else if (Node is CharNode) nodestr = (Node as CharNode).CharClass.ToString();
+            else if (Node is DefRefNode) nodestr = (Node as DefRefNode).DefRef.Name;
+            else nodestr = "<unknown>";
+
+            return string.Format("[{0}] {1}:{2}, {3} nexts", _id, nodestr, Transition, Nexts.Count);
+        }
     }
 }
 

@@ -6,7 +6,6 @@ using System.Diagnostics;
 
 namespace MetaphysicsIndustries.Giza
 {
-    [DebuggerDisplay("[{_id}] {Type} '{Text}', '{Tag}', {NextNodes.Count} Nodes")]
     public class SimpleNode
     {
         private static int __id = 0;
@@ -39,5 +38,10 @@ namespace MetaphysicsIndustries.Giza
         public string Tag = string.Empty;
 
         public Set<SimpleNode> NextNodes = new Set<SimpleNode>();
+
+        public override string ToString()
+        {
+            return string.Format("[{0}] {1} '{2}', '{3}', {4} nodes", _id, Type, Text, Tag, NextNodes.Count);
+        }
     }
 }

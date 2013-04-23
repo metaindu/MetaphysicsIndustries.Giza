@@ -6,7 +6,6 @@ using System.Diagnostics;
 
 namespace MetaphysicsIndustries.Giza
 {
-    [DebuggerDisplay("[{_id}] {Name}, {Nodes.Count} Nodes")]
     public class Definition
     {
         private static int __id = 0;
@@ -50,5 +49,10 @@ namespace MetaphysicsIndustries.Giza
 
         public bool IgnoreWhitespace = false;
         public bool IgnoreCase = false;
+
+        public override string ToString()
+        {
+            return string.Format("[{0}] {1}, {2} nodes", _id, Name, Nodes.Count);
+        }
     }
 }
