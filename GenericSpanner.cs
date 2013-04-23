@@ -90,13 +90,12 @@ namespace MetaphysicsIndustries.Giza
 
             MatchStack defStack = new MatchStack(root, null);
 
-            Queue<NodeMatchStackPair> starts = new Queue<NodeMatchStackPair>();
             Queue<NodeMatchStackPair> currents = new Queue<NodeMatchStackPair>();
             Queue<NodeMatchStackPair> accepts = new Queue<NodeMatchStackPair>();
-            Queue<NodeMatchStackPair> pass = new Queue<NodeMatchStackPair>();
             Queue<NodeMatch> rejects = new Queue<NodeMatch>();
+            Queue<NodeMatch> ends = new Queue<NodeMatch>();
 
-            starts.Enqueue(pair(root, null));
+            currents.Enqueue(pair(root, null));
 
             int k = -1;
             foreach (char ch in input)
@@ -104,66 +103,48 @@ namespace MetaphysicsIndustries.Giza
                 k++;
                 bool isWhitespace = char.IsWhiteSpace(ch);
 
-                while (starts.Count > 0)
+                // move all ends to rejects
+                while (ends.Count > 0)
                 {
-                    NodeMatchStackPair p = starts.Dequeue();
-
-                    if (isWhitespace &&
-                        ((p.MatchStack == null && p.NodeMatch.Node is DefRefNode && (p.NodeMatch.Node as DefRefNode).DefRef.IgnoreWhitespace) ||
-                         (p.MatchStack != null && p.MatchStack.Definition.IgnoreWhitespace)))
-                    {
-                        pass.Enqueue(p);
-                    }
-                    else if (p.NodeMatch.Node is CharNode)
-                    {
-                        NodeMatch cur = p.NodeMatch;
-                        MatchStack stack = p.MatchStack;
-
-                        //next nodes
-                        foreach (Node n in cur.Node.NextNodes)
-                        {
-                            if (n is EndNode) continue;
-
-                            NodeMatch match2 = new NodeMatch(n,NodeMatch.TransitionType.Follow);
-                            match2.Previous = cur;
-                            currents.Enqueue(pair(match2, stack));
-                        }
-
-                        //end
-                        if (cur.Node.IsAnEndOf((stack.NodeMatch.Node as DefRefNode).DefRef))
-                        {
-                            //add def end nodematch, pop the stack
-                            NodeMatch match2 = new NodeMatch(stack.NodeMatch.Node, NodeMatch.TransitionType.EndDef);
-                            match2.Previous = cur;
-                            currents.Enqueue(pair(match2, stack.Parent));
-                        }
-                    }
-                    else // defrefnode
-                    {
-                        currents.Enqueue(p);
-                    }
+                    rejects.Enqueue(ends.Dequeue());
                 }
 
                 while (currents.Count > 0)
                 {
                     NodeMatchStackPair p = currents.Dequeue();
-
-                    if (isWhitespace &&
-                        ((p.MatchStack == null && p.NodeMatch.Node is DefRefNode && (p.NodeMatch.Node as DefRefNode).DefRef.IgnoreWhitespace) ||
-                         (p.MatchStack != null && p.MatchStack.Definition.IgnoreWhitespace)))
-                    {
-                        pass.Enqueue(p);
-                        continue;
-                    }
-
                     NodeMatch cur = p.NodeMatch;
                     MatchStack stack = p.MatchStack;
 
-                    if (cur.Node is CharNode)
+                    if (isWhitespace &&
+                        ((stack == null && cur.Node is DefRefNode && (cur.Node as DefRefNode).DefRef.IgnoreWhitespace) ||
+                         (stack != null && stack.Definition.IgnoreWhitespace)))
+                    {
+                        accepts.Enqueue(p);
+                    }
+                    else if (cur.Node is CharNode)
                     {
                         if ((cur.Node as CharNode).Matches(ch))
                         {
-                            accepts.Enqueue(p);
+//                            accepts.Enqueue(p);
+
+                            //next nodes
+                            foreach (Node n in cur.Node.NextNodes)
+                            {
+                                if (n is EndNode) continue;
+
+                                NodeMatch match2 = new NodeMatch(n,NodeMatch.TransitionType.Follow);
+                                match2.Previous = cur;
+                                accepts.Enqueue(pair(match2, stack));
+                            }
+
+                            //end
+                            if (cur.Node.IsAnEndOf((stack.NodeMatch.Node as DefRefNode).DefRef))
+                            {
+                                //add def end nodematch, pop the stack
+                                NodeMatch match2 = new NodeMatch(stack.NodeMatch.Node, NodeMatch.TransitionType.EndDef);
+                                match2.Previous = cur;
+                                accepts.Enqueue(pair(match2, stack.Parent));
+                            }
                         }
                         else
                         {
@@ -182,6 +163,18 @@ namespace MetaphysicsIndustries.Giza
                                 match2.Previous = cur;
                                 currents.Enqueue(pair(match2, stack));
                             }
+
+                            if (cur.Node == implicitNode)
+                            {
+                                ends.Enqueue(cur);
+                            }
+                            else if (cur.Node.IsAnEndOf((stack.NodeMatch.Node as DefRefNode).DefRef))
+                            {
+                                //add def end nodematch, pop the stack
+                                NodeMatch match2 = new NodeMatch(stack.Node, NodeMatch.TransitionType.EndDef);
+                                match2.Previous = cur;
+                                currents.Enqueue(pair(match2, stack.Parent));
+                            }
                         }
                         else
                         {
@@ -193,18 +186,6 @@ namespace MetaphysicsIndustries.Giza
                                 currents.Enqueue(pair(match2, stack2));
                             }
                         }
-
-                        if (stack == null)
-                        {
-                            //throw new NotImplementedException();
-                        }
-                        else if (cur.Node.IsAnEndOf((stack.NodeMatch.Node as DefRefNode).DefRef))
-                        {
-                            //add def end nodematch, pop the stack
-                            NodeMatch match2 = new NodeMatch(stack.NodeMatch.Node, NodeMatch.TransitionType.EndDef);
-                            match2.Previous = cur;
-                            currents.Enqueue(pair(match2, stack.Parent));
-                        }
                     }
                 }
 
@@ -212,31 +193,24 @@ namespace MetaphysicsIndustries.Giza
                 {
                     NodeMatch n = rejects.Dequeue();
 
-                    if (n.Nexts.Count <= 0)
+                    while (n.Nexts.Count < 1)
                     {
                         NodeMatch prev = n.Previous;
                         n.Previous = null;
 
                         //recycle the NodeMatch object here, if desired
 
-                        if (prev != null && prev.Nexts.Count <= 0)
-                        {
-                            rejects.Enqueue(prev);
-                        }
+                        n = prev;
                     }
                 }
 
                 while (accepts.Count > 0)
                 {
-                    var p = accepts.Dequeue();
-                    starts.Enqueue(p);
-                }
-                while (pass.Count > 0)
-                {
-                    var p = pass.Dequeue();
-                    starts.Enqueue(p);
+                    currents.Enqueue(accepts.Dequeue());
                 }
             }
+
+            //eveything in ends is a valid parse
 
             return null;
         }
