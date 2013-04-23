@@ -53,6 +53,7 @@ namespace MetaphysicsIndustries.Giza
             end,
             hyphen,
             id_case,
+            id_contiguous,
         }
         enum idwhitespaceState
         {
@@ -87,6 +88,21 @@ namespace MetaphysicsIndustries.Giza
             case_1,
             case_2,
             case_3,
+            end,
+        }
+        enum idcontiguousState
+        {
+            start,
+            contiguous_0,
+            contiguous_1,
+            contiguous_2,
+            contiguous_3,
+            contiguous_4,
+            contiguous_5,
+            contiguous_6,
+            contiguous_7,
+            contiguous_8,
+            contiguous_9,
             end,
         }
         enum exprState
@@ -467,7 +483,7 @@ namespace MetaphysicsIndustries.Giza
                     break;
 
                 case defmodState.comma:
-                    if (ch == 'w' || ch == 'W' || ch == 'i' || ch == 'I')
+                    if (ch == 'w' || ch == 'W' || ch == 'i' || ch == 'I' || ch == 'c' || ch == 'C')
                     {
                         validNextStates.Add((int)(defmodState.defmod_item_1));
                     }
@@ -561,6 +577,10 @@ namespace MetaphysicsIndustries.Giza
                     {
                         validNextStates.Add((int)(defmoditemState.id_ignore));
                     }
+                    if (ch == 'c' || ch == 'C')
+                    {
+                        validNextStates.Add((int)(defmoditemState.id_contiguous));
+                    }
                     break;
 
                 case defmoditemState.id_whitespace:
@@ -592,6 +612,10 @@ namespace MetaphysicsIndustries.Giza
                     linksToEnd = true;
                     break;
 
+                case defmoditemState.id_contiguous:
+                    linksToEnd = true;
+                    break;
+
                 default:
                     throw new System.InvalidOperationException("Invalid state");
             }
@@ -610,6 +634,9 @@ namespace MetaphysicsIndustries.Giza
 
                 case defmoditemState.id_case:
                     return Getid_case(input, ref i);
+
+                case defmoditemState.id_contiguous:
+                    return Getid_contiguous(input, ref i);
 
                 default:
                     return new MetaphysicsIndustries.Giza.Span(i, 1, input);
@@ -637,6 +664,9 @@ namespace MetaphysicsIndustries.Giza
 
                 case defmoditemState.id_case:
                     return "id-case";
+
+                case defmoditemState.id_contiguous:
+                    return "id-contiguous";
             }
             throw new System.ArgumentOutOfRangeException("state");
         }
@@ -978,6 +1008,153 @@ namespace MetaphysicsIndustries.Giza
 
                 case idcaseState.end:
                     return "end";
+            }
+            throw new System.ArgumentOutOfRangeException("state");
+        }
+
+        public MetaphysicsIndustries.Giza.Span Getid_contiguous(string input, ref int i)
+        {
+            return GetItem(input, ref i, false, "id-contiguous", (int)(idcontiguousState.start), (int)(idcontiguousState.end), this.GetValidNextStates_id_contiguous, this.GetStateTag_id_contiguous, this.GetSubSpan_id_contiguous);
+        }
+
+        public Int32[] GetValidNextStates_id_contiguous(int currentState, char ch, out bool linksToEnd)
+        {
+            System.Collections.Generic.List<int> validNextStates = new System.Collections.Generic.List<int>();
+
+            linksToEnd = false;
+            switch ((idcontiguousState)(currentState))
+            {
+            case idcontiguousState.start:
+                if (ch == 'c' || ch == 'C')
+                {
+                    validNextStates.Add((int)(idcontiguousState.contiguous_0));
+                }
+                break;
+
+            case idcontiguousState.contiguous_0:
+                if (ch == 'o' || ch == 'O')
+                {
+                    validNextStates.Add((int)(idcontiguousState.contiguous_1));
+                }
+                break;
+
+            case idcontiguousState.contiguous_1:
+                if (ch == 'n' || ch == 'N')
+                {
+                    validNextStates.Add((int)(idcontiguousState.contiguous_2));
+                }
+                break;
+
+            case idcontiguousState.contiguous_2:
+                if (ch == 't' || ch == 'T')
+                {
+                    validNextStates.Add((int)(idcontiguousState.contiguous_3));
+                }
+                break;
+
+            case idcontiguousState.contiguous_3:
+                if (ch == 'i' || ch == 'I')
+                {
+                    validNextStates.Add((int)(idcontiguousState.contiguous_4));
+                }
+                break;
+
+            case idcontiguousState.contiguous_4:
+                if (ch == 'g' || ch == 'G')
+                {
+                    validNextStates.Add((int)(idcontiguousState.contiguous_5));
+                }
+                break;
+
+            case idcontiguousState.contiguous_5:
+                if (ch == 'u' || ch == 'U')
+                {
+                    validNextStates.Add((int)(idcontiguousState.contiguous_6));
+                }
+                break;
+
+            case idcontiguousState.contiguous_6:
+                if (ch == 'o' || ch == 'O')
+                {
+                    validNextStates.Add((int)(idcontiguousState.contiguous_7));
+                }
+                break;
+
+            case idcontiguousState.contiguous_7:
+                if (ch == 'u' || ch == 'U')
+                {
+                    validNextStates.Add((int)(idcontiguousState.contiguous_8));
+                }
+                break;
+
+            case idcontiguousState.contiguous_8:
+                if (ch == 's' || ch == 'S')
+                {
+                    validNextStates.Add((int)(idcontiguousState.contiguous_9));
+                }
+                break;
+
+            case idcontiguousState.contiguous_9:
+                linksToEnd = true;
+                break;
+
+            case idcontiguousState.end:
+                break;
+
+            default:
+                throw new System.InvalidOperationException("Invalid state");
+            }
+            return validNextStates.ToArray();
+        }
+
+        public MetaphysicsIndustries.Giza.Span GetSubSpan_id_contiguous(string input, ref int i, int nextState)
+        {
+            switch ((idcontiguousState)(nextState))
+            {
+            default:
+                return new MetaphysicsIndustries.Giza.Span(i, 1, input);
+            }
+        }
+
+        public string GetStateTag_id_contiguous(int state)
+        {
+            switch ((idcontiguousState)(state))
+            {
+            case idcontiguousState.start:
+                return "start";
+
+            case idcontiguousState.contiguous_0:
+                return "contiguous";
+
+            case idcontiguousState.contiguous_1:
+                return "contiguous";
+
+            case idcontiguousState.contiguous_2:
+                return "contiguous";
+
+            case idcontiguousState.contiguous_3:
+                return "contiguous";
+
+            case idcontiguousState.contiguous_4:
+                return "contiguous";
+
+            case idcontiguousState.contiguous_5:
+                return "contiguous";
+
+            case idcontiguousState.contiguous_6:
+                return "contiguous";
+
+            case idcontiguousState.contiguous_7:
+                return "contiguous";
+
+            case idcontiguousState.contiguous_8:
+                return "contiguous";
+
+            case idcontiguousState.contiguous_9:
+                return "contiguous";
+
+            case idcontiguousState.end:
+                return "end";
             }
             throw new System.ArgumentOutOfRangeException("state");
         }
