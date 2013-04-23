@@ -13,6 +13,7 @@ namespace MetaphysicsIndustries.Giza
             if (span.Tag != "grammar") { throw new ArgumentException("span"); }
 
             List<SimpleDefinition> defs = new List<SimpleDefinition>();
+            Dictionary<Span, SimpleDefinition> matchup = new Dictionary<Span, SimpleDefinition>();
             foreach (Span subspan in span.Subspans)
             {
                 if (subspan.Tag == "comment") continue;
@@ -30,8 +31,16 @@ namespace MetaphysicsIndustries.Giza
                 }
                 if (!found) throw new InvalidOperationException("Couldn't find a name for the definition.");
 
-                BuildSingleDefinition(subspan, def);
+                matchup[subspan] = def;
+
                 defs.Add(def);
+            }
+            foreach (Span subspan in span.Subspans)
+            {
+                if (subspan.Tag == "comment") continue;
+
+                SimpleDefinition def = matchup[subspan];
+                BuildSingleDefinition(subspan, def);
             }
 
             CheckDefRefs(defs);
