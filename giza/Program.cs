@@ -71,7 +71,15 @@ namespace giza
 				}
 
                 GenericSpanner gs = new GenericSpanner();
-                Span s = gs.Process(defs, args[1], input);
+                Span s;
+                if (args.Length > 3 && args[3] == "-2")
+                {
+                    s = gs.Process2(defs, args[1], input);
+                }
+                else
+                {
+                    s = gs.Process(defs, args[1], input);
+                }
 
                 if (s != null)
                 {
