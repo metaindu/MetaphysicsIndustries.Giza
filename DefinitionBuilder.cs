@@ -319,6 +319,8 @@ namespace MetaphysicsIndustries.Giza
             SimpleNode node;
             Node node2;
 
+            List<SimpleNode> snodes = new List<SimpleNode>();
+
             if (main.Tag == "identifier")
             {
                 type = NodeType.defref;
@@ -333,6 +335,18 @@ namespace MetaphysicsIndustries.Giza
                 text = UnescapeForLiteralNode(main.Value);
                 tagString = (tag == null ? text : tag.Value);
                 node = new SimpleNode(text, type, tagString);
+                SimpleNode prev = null;
+                foreach (char ch in text)
+                {
+                    SimpleNode n = new SimpleNode(ch.ToString(), type, tagString);
+                    snodes.Add(n);
+                    if (prev != null)
+                    {
+                        prev.NextNodes.Add(n);
+                    }
+                    prev = n;
+                }
+
 //                node2 = new LiteralNode(
             }
             else if (main.Tag == "charclass")
@@ -347,16 +361,30 @@ namespace MetaphysicsIndustries.Giza
                 throw new InvalidOperationException();
             }
 
-            if (modifier != null)
+            if (main.Tag != "literal")
             {
-                if (modifier.Value == "*" ||
-                    modifier.Value == "+")
+                if (modifier != null)
                 {
-                    node.NextNodes.Add(node);
+                    if (modifier.Value == "*" ||
+                        modifier.Value == "+")
+                    {
+                        node.NextNodes.Add(node);
+                    }
+                }
+
+                frontNodes = backNodes = new SimpleNode[] { node };
+            }
+            else
+            {
+                frontNodes = new SimpleNode[]{snodes[0]};
+                backNodes = new SimpleNode[]{snodes[snodes.Count-1]};
+                if (modifier != null &&
+                    (modifier.Value == "*" ||
+                     modifier.Value == "+"))
+                {
+                    backNodes[0].NextNodes.Add(frontNodes[0]);
                 }
             }
-
-            frontNodes = backNodes = new SimpleNode[] { node };
         }
 
         private void ProcessOrExpr(Span orexpr, out SimpleNode[] frontNodes, out SimpleNode[] backNodes, out Span modifier)
