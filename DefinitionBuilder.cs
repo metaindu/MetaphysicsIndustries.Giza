@@ -17,7 +17,20 @@ namespace MetaphysicsIndustries.Giza
             {
                 if (subspan.Tag == "comment") continue;
 
-                SimpleDefinition def = BuildSingleDefinition(subspan);
+                SimpleDefinition def = new SimpleDefinition();
+                bool found = false;
+                foreach (Span sub2 in subspan.Subspans)
+                {
+                    if (sub2.Tag == "identifier")
+                    {
+                        def.Name = sub2.Value;
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) throw new InvalidOperationException("Couldn't find a name for the definition.");
+
+                BuildSingleDefinition(subspan, def);
                 defs.Add(def);
             }
 
@@ -109,11 +122,10 @@ namespace MetaphysicsIndustries.Giza
             return defs2.ToArray();
         }
 
-        SimpleDefinition BuildSingleDefinition(Span span)
+        void BuildSingleDefinition(Span span, SimpleDefinition def)
         {
             if (span.Tag != "definition") { throw new ArgumentException("span"); }
 
-            SimpleDefinition def = new SimpleDefinition();
             def.IgnoreWhitespace = true;
 
             int i;
@@ -186,8 +198,6 @@ namespace MetaphysicsIndustries.Giza
             //}
 
             def.Nodes.AddRange(GatherSimpleNodes(start));
-
-            return def;
         }
 
         private void ProcessExpr(Span expr, out SimpleNode[] frontNodes, out SimpleNode[] backNodes, out bool skipAll)
