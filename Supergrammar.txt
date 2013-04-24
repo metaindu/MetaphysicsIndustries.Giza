@@ -39,11 +39,9 @@ modifier = [*+?];
 
 <whitespace, contiguous> identifier = [\w-_] [\w-_\d]*;
 
-<whitespace> literal = '\'' litchar+ '\'';
-<whitespace> litchar = ( [^\\'] | '\\' [wldsrnt\\'] | unicodechar );
+<whitespace> literal = '\'' ( [^\\'] | '\\' [wldsrnt\\'] | unicodechar )+ '\'';
 
-<whitespace> charclass = '[' charclasschar+ ']';
-<whitespace> charclasschar = ( [^\\\[\]] | '\\' [wldsrnt\\\[\]] | unicodechar );
+<whitespace> charclass = '[' ( [^\\\[\]] | '\\' [wldsrnt\\\[\]] | unicodechar )+ ']';
 
 <whitespace, ignore case> unicodechar = '\\x' [\dabcdef][\dabcdef][\dabcdef][\dabcdef];
 
