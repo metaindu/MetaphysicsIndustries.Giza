@@ -19,7 +19,7 @@ definition = defmod* identifier '=' expr ';';
 defmod = '<' defmod-item ( ',' defmod-item )* '>';
 defmod-item = ( 
     id-whitespace | 
-    id-ignore '-'? id-case 
+    id-ignore '-'? id-case | 
     id-contiguous
 );
 <whitespace, ignore case> id-whitespace = 'whitespace';
