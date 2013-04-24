@@ -42,7 +42,7 @@ modifier = [*+?];
 <whitespace> literal = '\'' litchar+ '\'';
 <whitespace> litchar = ( [^\\'] | '\\' [wldsrnt\\'] | unicodechar );
 
-<whitespace> charclass = '[' '^'? charclasschar+ ']';
+<whitespace> charclass = '[' charclasschar+ ']';
 <whitespace> charclasschar = ( [^\\\[\]] | '\\' [wldsrnt\\\[\]] | unicodechar );
 
 <whitespace, ignore case> unicodechar = '\\x' [\dabcdef][\dabcdef][\dabcdef][\dabcdef];
