@@ -8,6 +8,7 @@ namespace MetaphysicsIndustries.Giza
     {
         private static int __id = 0;
         public readonly int _id;
+        public int _k = -1;
 
         public NodeMatch(Node node, TransitionType transition)
         {
