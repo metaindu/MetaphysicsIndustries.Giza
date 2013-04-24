@@ -83,10 +83,54 @@ namespace MetaphysicsIndustries.Giza
             return new NodeMatchStackPair{NodeMatch = nodeMatch, MatchStack = matchStack};
         }
 
+        NodeMatchStackPair CreateStartDefMatch(Node node, NodeMatch match, MatchStack stack2)
+        {
+            NodeMatch match2 = new NodeMatch(node, NodeMatch.TransitionType.StartDef);
+            match2.Previous = match;
+            return pair(match2, stack2);
+        }
+
+        NodeMatchStackPair CreateEndDefMatch(NodeMatch match, MatchStack stack)
+        {
+            NodeMatch match2 = new NodeMatch(stack.Node, NodeMatch.TransitionType.EndDef);
+            match2.Previous = match;
+            return pair(match2, stack.Parent);
+        }
+
+        NodeMatchStackPair CreateFollowMatch(Node node, NodeMatch match, MatchStack stack)
+        {
+            NodeMatch match2 = new NodeMatch(node, NodeMatch.TransitionType.Follow);
+            match2.Previous = match;
+            return pair(match2, stack);
+        }
+
+        void PurgeRejects(Queue<NodeMatch> rejects, int k, ref NodeMatch lastReject, ref int lastk)
+        {
+            while (rejects.Count > 0)
+            {
+                NodeMatch n = lastReject;
+                lastReject = rejects.Dequeue();
+                lastk = k;
+
+                if (n == null) break;
+
+                while (n.Nexts.Count < 1)
+                {
+                    NodeMatch prev = n.Previous;
+                    n.Previous = null;
+
+                    //recycle the NodeMatch object here, if desired
+
+                    n = prev;
+                }
+            }
+        }
+
         public Span GetItem2(Definition def, string input)
         {
             DefRefNode implicitNode = new DefRefNode(def);
             NodeMatch root = new NodeMatch(implicitNode, NodeMatch.TransitionType.StartDef);
+            root._k = -1;
 
             MatchStack defStack = new MatchStack(root, null);
 
@@ -95,9 +139,12 @@ namespace MetaphysicsIndustries.Giza
             Queue<NodeMatch> rejects = new Queue<NodeMatch>();
             Queue<NodeMatch> ends = new Queue<NodeMatch>();
 
+            NodeMatch lastReject = null;
+
             currents.Enqueue(pair(root, null));
 
             int k = -1;
+            int lastk = k;
             foreach (char ch in input)
             {
                 k++;
@@ -125,29 +172,38 @@ namespace MetaphysicsIndustries.Giza
                     {
                         if ((cur.Node as CharNode).Matches(ch))
                         {
-//                            accepts.Enqueue(p);
+                            cur._k = k;
 
                             //next nodes
                             foreach (Node n in cur.Node.NextNodes)
                             {
                                 if (n is EndNode) continue;
 
-                                NodeMatch match2 = new NodeMatch(n,NodeMatch.TransitionType.Follow);
-                                match2.Previous = cur;
-                                accepts.Enqueue(pair(match2, stack));
+                                accepts.Enqueue(CreateFollowMatch(n, cur, stack));
                             }
 
-                            //end
-                            if (cur.Node.IsAnEndOf((stack.NodeMatch.Node as DefRefNode).DefRef))
+                            if (!stack.Definition.Contiguous)
                             {
-                                //add def end nodematch, pop the stack
-                                NodeMatch match2 = new NodeMatch(stack.NodeMatch.Node, NodeMatch.TransitionType.EndDef);
-                                match2.Previous = cur;
-                                accepts.Enqueue(pair(match2, stack.Parent));
+                                //end
+                                if (cur.Node.IsAnEndOf((stack.NodeMatch.Node as DefRefNode).DefRef))
+                                {
+                                    accepts.Enqueue(CreateEndDefMatch(cur, stack));
+                                }
+                            }
+                            else
+                            {
+                                k = k;
                             }
                         }
                         else
                         {
+                            if (stack.Definition.Contiguous && 
+                                stack.Definition.Nodes.Contains(cur.Previous.Node) &&
+                                cur.Previous.Node.IsAnEndOf((stack.NodeMatch.Node as DefRefNode).DefRef))
+                            {
+                                currents.Enqueue(CreateEndDefMatch(cur.Previous, stack));
+                            }
+
                             rejects.Enqueue(cur);
                         }
                     }
@@ -159,9 +215,7 @@ namespace MetaphysicsIndustries.Giza
                             {
                                 if (n is EndNode) continue;
 
-                                NodeMatch match2 = new NodeMatch(n,NodeMatch.TransitionType.Follow);
-                                match2.Previous = cur;
-                                currents.Enqueue(pair(match2, stack));
+                                currents.Enqueue(CreateFollowMatch(n, cur, stack));
                             }
 
                             if (cur.Node == implicitNode)
@@ -170,10 +224,7 @@ namespace MetaphysicsIndustries.Giza
                             }
                             else if (cur.Node.IsAnEndOf((stack.NodeMatch.Node as DefRefNode).DefRef))
                             {
-                                //add def end nodematch, pop the stack
-                                NodeMatch match2 = new NodeMatch(stack.Node, NodeMatch.TransitionType.EndDef);
-                                match2.Previous = cur;
-                                currents.Enqueue(pair(match2, stack.Parent));
+                                currents.Enqueue(CreateEndDefMatch(cur, stack));
                             }
                         }
                         else
@@ -181,28 +232,13 @@ namespace MetaphysicsIndustries.Giza
                             MatchStack stack2 = new MatchStack(cur, stack);
                             foreach (Node start in (cur.Node as DefRefNode).DefRef.GetStartingNodes())
                             {
-                                NodeMatch match2 = new NodeMatch(start, NodeMatch.TransitionType.StartDef);
-                                match2.Previous = cur;
-                                currents.Enqueue(pair(match2, stack2));
+                                currents.Enqueue(CreateStartDefMatch(start, cur, stack2));
                             }
                         }
                     }
                 }
 
-                while (rejects.Count > 0)
-                {
-                    NodeMatch n = rejects.Dequeue();
-
-                    while (n.Nexts.Count < 1)
-                    {
-                        NodeMatch prev = n.Previous;
-                        n.Previous = null;
-
-                        //recycle the NodeMatch object here, if desired
-
-                        n = prev;
-                    }
-                }
+                PurgeRejects(rejects, k, ref lastReject, ref lastk);
 
                 while (accepts.Count > 0)
                 {
@@ -210,7 +246,60 @@ namespace MetaphysicsIndustries.Giza
                 }
             }
 
+            while (currents.Count > 0)
+            {
+                NodeMatchStackPair p = currents.Dequeue();
+                NodeMatch cur = p.NodeMatch;
+                MatchStack stack = p.MatchStack;
+
+                if (cur.Node is CharNode ||
+                    cur.Transition != NodeMatch.TransitionType.EndDef)
+                {
+                    rejects.Enqueue(cur);
+                }
+                else
+                {
+                    if (cur.Node == implicitNode)
+                    {
+                        ends.Enqueue(cur);
+                    }
+                    else if (cur.Node.IsAnEndOf((stack.NodeMatch.Node as DefRefNode).DefRef))
+                    {
+                        currents.Enqueue(CreateEndDefMatch(cur, stack));
+                    }
+                }
+            }
+
+            PurgeRejects(rejects, k, ref lastReject, ref lastk);
+
             //eveything in ends is a valid parse
+
+//            while (ends.Count > 0)
+//            {
+//                NodeMatch e = ends.Dequeue();
+//                List<NodeMatch> matches = new List<NodeMatch>();
+//
+//                Console.WriteLine("Parse:");
+//                Console.WriteLine();
+//                while (e != null)
+//                {
+//                    matches.Add(e);
+//                    e = e.Previous;
+//                }
+//                matches.Reverse();
+//                foreach (NodeMatch nm in matches)
+//                {
+//                    string ch;
+//
+//                    if (nm._k < 0) ch = " ";
+//                    else ch = input[nm._k].ToString();
+//                    if (ch == "\r") ch = "\\r";
+//                    else if (ch == "\n") ch = "\\n";
+//                    else if (ch == "\t") ch = "\\t";
+//
+//                    Console.WriteLine("{0}\t{1}\t{2}", ch, nm.ToString(), nm.Node.ToString());
+//                }
+//            }
 
             return null;
         }

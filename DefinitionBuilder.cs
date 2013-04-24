@@ -64,6 +64,7 @@ namespace MetaphysicsIndustries.Giza
                 Definition def2 = defmatchup[def];
                 def2.IgnoreWhitespace = def.IgnoreWhitespace;
                 def2.IgnoreCase = def.IgnoreCase;
+                def2.Contiguous = def.Contiguous;
 
                 //create the new nodes
                 Dictionary<SimpleNode, Node> nodeMatchup = new Dictionary<SimpleNode, Node>();
@@ -140,6 +141,7 @@ namespace MetaphysicsIndustries.Giza
             int i;
             bool ignoreWhitespace = true;
             bool ignoreCase = false;
+            bool contiguous = false;
             for (i = 0; i < span.Subspans.Length; i++)
             {
                 if (span.Subspans[i].Tag != "defmod") break;
@@ -169,12 +171,17 @@ namespace MetaphysicsIndustries.Giza
                         {
                             ignoreCase = true;
                         }
+                        else if (item.Value == "contiguous")
+                        {
+                            contiguous = true;
+                        }
                     }
                 }
             }
 
             def.IgnoreWhitespace = ignoreWhitespace;
             def.IgnoreCase = ignoreCase;
+            def.Contiguous = contiguous;
 
             if (span.Subspans[i].Tag != "identifier") throw new NotImplementedException();
             def.Name = span.Subspans[i].Value;
