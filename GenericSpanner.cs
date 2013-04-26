@@ -182,17 +182,11 @@ namespace MetaphysicsIndustries.Giza
                                 accepts.Enqueue(CreateFollowMatch(n, cur, stack));
                             }
 
-                            if (!stack.Definition.Contiguous)
+                            //end
+                            if (!stack.Definition.Contiguous &&
+                                cur.Node.IsAnEndOf((stack.NodeMatch.Node as DefRefNode).DefRef))
                             {
-                                //end
-                                if (cur.Node.IsAnEndOf((stack.NodeMatch.Node as DefRefNode).DefRef))
-                                {
-                                    accepts.Enqueue(CreateEndDefMatch(cur, stack));
-                                }
-                            }
-                            else
-                            {
-                                k = k;
+                                accepts.Enqueue(CreateEndDefMatch(cur, stack));
                             }
                         }
                         else
