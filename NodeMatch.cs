@@ -61,6 +61,7 @@ namespace MetaphysicsIndustries.Giza
 
         public TransitionType Transition;
         public Node Node;
+        public char MatchedChar;
 
         public override string ToString()
         {

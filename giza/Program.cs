@@ -60,21 +60,22 @@ namespace giza
                 DefinitionBuilder db = new DefinitionBuilder();
                 Definition[] defs = db.BuildDefinitions(g);
 
-				string input;
-				if (args[2] == "-")
-				{
-					input = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
-				}
-				else
-				{
-					input = File.ReadAllText(args[2]);
-				}
+                string input;
+                if (args[2] == "-")
+                {
+                    input = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
+                }
+                else
+                {
+                    input = File.ReadAllText(args[2]);
+                }
 
                 GenericSpanner gs = new GenericSpanner();
                 Span s;
                 if (args.Length > 3 && args[3] == "-2")
                 {
-                    s = gs.Process2(defs, args[1], input);
+                    /*s =*/ gs.Process2(defs, args[1], input);
+                    s = null;
                 }
                 else
                 {
