@@ -113,22 +113,6 @@ namespace MetaphysicsIndustries.Giza
                 }
             }
 
-            foreach (Definition def2 in defs2)
-            {
-                Console.WriteLine(def2.ToString());
-                foreach (Node node in def2.Nodes)
-                {
-                    Console.Write("  ");
-                    Console.WriteLine(node.ToString());
-
-                    foreach(Node next in node.NextNodes)
-                    {
-                        Console.Write("    ");
-                        Console.WriteLine(next.ToString());
-                    }
-                }
-            }
-
             return defs2.ToArray();
         }
 
