@@ -72,11 +72,6 @@ namespace MetaphysicsIndustries.Giza
 
     public class StartNode : Node
     {
-        public StartNode(string defname)
-        {
-            //throw new NotImplementedException();
-        }
-
         public override NodeType Type
         {
             get { return NodeType.start; }
@@ -215,7 +210,7 @@ namespace MetaphysicsIndustries.Giza
 
             switch (unconNode.Type)
             {
-                case NodeType.start: return new StartNode(unconNode.Text);
+                case NodeType.start: return new StartNode();
                 case NodeType.end: return new EndNode();
                 case NodeType.charclass: 
                     return new CharNode(

@@ -174,7 +174,7 @@ namespace MetaphysicsIndustries.Giza
             if (span.Subspans[i + 2].Tag != "expr") throw new NotImplementedException();
 
             SimpleNode start = new SimpleNode(def.Name, NodeType.start, def.Name);
-            StartNode start2 = new StartNode(def.Name);
+            StartNode start2 = new StartNode();
             def.start = start;
 
             SimpleNode end = new SimpleNode("end", NodeType.end, "end");
