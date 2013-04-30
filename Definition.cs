@@ -12,7 +12,13 @@ namespace MetaphysicsIndustries.Giza
         public readonly int _id;
 
         public Definition()
+            : this(string.Empty)
         {
+        }
+        public Definition(string name)
+        {
+            Name = name;
+
             _id = __id;
             __id++;
         }
