@@ -106,8 +106,12 @@ namespace MetaphysicsIndustries.Giza
 
         public override string ToString()
         {
+            return "[" + ToUndelimitedString() + "]";
+        }
+
+        public string ToUndelimitedString()
+        {
             StringBuilder sb = new StringBuilder();
-            sb.Append("[");
             if (Exclude) sb.Append("^");
             if (Letter) sb.Append("\\l");
             if (Digit) sb.Append("\\d");
@@ -124,7 +128,6 @@ namespace MetaphysicsIndustries.Giza
                 else if (ch == '\n') sb.Append("\\n");
                 else sb.Append(ch.ToString());
             }
-            sb.Append("]");
 
             return sb.ToString();
         }
