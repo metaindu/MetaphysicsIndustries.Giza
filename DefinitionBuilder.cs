@@ -140,17 +140,17 @@ namespace MetaphysicsIndustries.Giza
                             ignoreWhitespace = false;
                         }
                         else if (
-                            item.Subspans.Length > 0 && 
-                            item.Subspans[0].Value == "ignore" && 
+                            item.Subspans.Length > 0 &&
+                            item.Subspans[0].Value == "ignore" &&
                             (
-                                item.Subspans.Length ==2 && 
-                                item.Subspans[1].Value == "case" 
+                                item.Subspans.Length == 2 &&
+                                item.Subspans[1].Value == "case"
                             )
                             ||
                             (
-                                item.Subspans.Length ==3 && 
-                                item.Subspans[1].Value == "-" && 
-                                item.Subspans[2].Value == "case" 
+                                item.Subspans.Length == 3 &&
+                                item.Subspans[1].Value == "-" &&
+                                item.Subspans[2].Value == "case"
                             ))
                         {
                             ignoreCase = true;
