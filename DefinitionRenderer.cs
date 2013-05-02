@@ -7,10 +7,8 @@ namespace MetaphysicsIndustries.Giza
 {
     public class DefinitionRenderer
     {
-        public string RenderDefinitionsAsCSharpClass(string className, IEnumerable<Definition> _defs)
+        public string RenderDefinitionsAsCSharpClass(string className, IEnumerable<Definition> defs)
         {
-            List<Definition> defs = new List<Definition>(_defs);
-
             Dictionary<Definition, string> defnames = new Dictionary<Definition, string>();
 
             StringBuilder sb = new StringBuilder();
