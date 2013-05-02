@@ -47,6 +47,35 @@ namespace giza
                     ShowUsage();
                 }
             }
+            else if (args[0].ToLower() == "--render")
+            {
+                if (args.Length > 2)
+                {
+                    SupergrammarSpanner s = new SupergrammarSpanner();
+                    string gfile;
+                    if (args[1] == "-")
+                    {
+                        gfile = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
+                    }
+                    else
+                    {
+                        gfile = File.ReadAllText(args[1]);
+                    }
+                    Span g = s.Getgrammar(gfile);
+
+                    string className = args[2];
+
+                    DefinitionBuilder db = new DefinitionBuilder();
+                    Definition[] defs = db.BuildDefinitions(g);
+
+                    DefinitionRenderer dr = new DefinitionRenderer();
+                    Console.Write(dr.RenderDefinitionsAsCSharpClass(className, defs));
+                }
+                else
+                {
+                    ShowUsage();
+                }
+            }
             else if (args.Length < 3)
             {
                 ShowUsage();
@@ -220,6 +249,7 @@ namespace giza
             Console.WriteLine("    giza --super [GRAMMAR FILE]");
             //Console.WriteLine("    giza --print-super");
             //Console.WriteLine("    giza --compile [GRAMMAR FILE] [START SYMBOL] [OUTPUT EXE]");
+            Console.WriteLine("    giza --render [GRAMMAR FILE] [CLASS NAME]");
             Console.WriteLine();
             Console.WriteLine("Reads grammar files and parses input.");
             Console.WriteLine();
@@ -228,6 +258,7 @@ namespace giza
             Console.WriteLine("    --super,          Process the grammar file only.");
             //Console.WriteLine("    --print-super,    Print the supergrammar and exit.");
             //Console.WriteLine("    --compile,      Print the supergrammar and exit.");
+            Console.WriteLine("    --render,         Process the grammar file and print its definitions as a C# class.");
             Console.WriteLine();
             Console.WriteLine("If \"-\" is given for FILE, or for GRAMMAR FILE given to --super, then it is read from standard input.");
             Console.WriteLine();
