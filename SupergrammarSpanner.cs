@@ -17,13 +17,30 @@ namespace MetaphysicsIndustries.Giza
 {
     public class SupergrammarSpanner : MetaphysicsIndustries.Giza.BaseSpanner
     {
-        public Span GetGrammar(string input)
+        public Span GetGrammarSpan(string input)
         {
             Supergrammar supergrammar = new Supergrammar();
             Definition.__id = 0;
             Node.__id = 0;
             GenericSpanner spanner = new GenericSpanner();
             return spanner.Process(supergrammar.Definitions.ToArray(), "grammar", input);
+        }
+
+        public Grammar GetGrammar(string input)
+        {
+            Supergrammar supergrammar = new Supergrammar();
+            Definition.__id = 0;
+            Node.__id = 0;
+            GenericSpanner spanner = new GenericSpanner();
+            Span s = spanner.Process(supergrammar.Definitions.ToArray(), "grammar", input);
+
+            DefinitionBuilder db = new DefinitionBuilder();
+            Definition[] defs = db.BuildDefinitions(s);
+
+            Grammar grammar = new Grammar();
+            grammar.Definitions.AddRange(defs);
+
+            return grammar;
         }
     }
 }

@@ -39,7 +39,7 @@ namespace giza
                     {
                         gfile = File.ReadAllText(args[1]);
                     }
-                    Span g = s.Getgrammar(gfile);
+                    Span g = s.GetGrammarSpan(gfile);
                     PrintSpan(g);
                 }
                 else
@@ -61,15 +61,12 @@ namespace giza
                     {
                         gfile = File.ReadAllText(args[1]);
                     }
-                    Span g = s.Getgrammar(gfile);
+                    Grammar g = s.GetGrammar(gfile);
 
                     string className = args[2];
 
-                    DefinitionBuilder db = new DefinitionBuilder();
-                    Definition[] defs = db.BuildDefinitions(g);
-
                     DefinitionRenderer dr = new DefinitionRenderer();
-                    Console.Write(dr.RenderDefinitionsAsCSharpClass(className, defs));
+                    Console.Write(dr.RenderDefinitionsAsCSharpClass(className, g.Definitions));
                 }
                 else
                 {
@@ -84,10 +81,7 @@ namespace giza
             {
                 SupergrammarSpanner spanner = new SupergrammarSpanner();
                 string grammarFile = File.ReadAllText(args[0]);
-                Span g = spanner.Getgrammar(grammarFile);
-
-                DefinitionBuilder db = new DefinitionBuilder();
-                Definition[] defs = db.BuildDefinitions(g);
+                Grammar g = spanner.GetGrammar(grammarFile);
 
                 string input;
                 if (args[2] == "-")
@@ -103,12 +97,12 @@ namespace giza
                 Span s;
                 if (args.Length > 3 && args[3] == "-2")
                 {
-                    /*s =*/ gs.Process2(defs, args[1], input);
+                    /*s =*/ gs.Process2(g.Definitions.ToArray(), args[1], input);
                     s = null;
                 }
                 else
                 {
-                    s = gs.Process(defs, args[1], input);
+                    s = gs.Process(g.Definitions.ToArray(), args[1], input);
                 }
 
                 if (s != null)
