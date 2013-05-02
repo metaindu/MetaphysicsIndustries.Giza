@@ -157,7 +157,7 @@ namespace MetaphysicsIndustries.Giza
 
     public abstract class Node
     {
-        private static int __id = 0;
+        public static int __id = 0;
         public readonly int _id;
 
         protected Node()

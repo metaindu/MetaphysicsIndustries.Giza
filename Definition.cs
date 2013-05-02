@@ -8,7 +8,7 @@ namespace MetaphysicsIndustries.Giza
 {
     public class Definition
     {
-        private static int __id = 0;
+        public static int __id = 0;
         public readonly int _id;
 
         public Definition()
