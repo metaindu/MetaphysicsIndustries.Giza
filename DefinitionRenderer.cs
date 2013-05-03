@@ -27,7 +27,7 @@ namespace MetaphysicsIndustries.Giza
                 defnames[def] = name;
 
                 sb.AppendFormat(
-                    "        Definition {0} = new Definition({1});",
+                    "        public Definition {0} = new Definition({1});",
                     name,
                     RenderString(def.Name));
                 sb.AppendLine();
@@ -63,7 +63,7 @@ namespace MetaphysicsIndustries.Giza
                         type = "DefRefNode";
                     }
 
-                    sb.AppendFormat("        {0} {1};", type, name);
+                    sb.AppendFormat("        public {0} {1};", type, name);
                     sb.AppendLine();
                 }
             }
