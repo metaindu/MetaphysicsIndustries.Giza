@@ -201,6 +201,8 @@ namespace MetaphysicsIndustries.Giza
 
         public bool IsAnEndOf(Definition def)
         {
+            if (def.end == null) return false;
+
             return NextNodes.Contains(def.end);
         }
 
