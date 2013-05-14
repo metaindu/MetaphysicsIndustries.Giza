@@ -30,12 +30,15 @@ namespace MetaphysicsIndustries.Giza
 
         public IEnumerable<Node> GetStartingNodes()
         {
-            foreach (Node n in start.NextNodes)
+            if (start != null)
             {
-                if (n is EndNode) continue;
-                if (n is StartNode) continue;
+                foreach (Node n in start.NextNodes)
+                {
+                    if (n is EndNode) continue;
+                    if (n is StartNode) continue;
 
-                yield return n;
+                    yield return n;
+                }
             }
         }
 
