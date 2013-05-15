@@ -17,7 +17,7 @@ namespace MetaphysicsIndustries.Giza
         {
         }
         public CharNode(CharClass cc)
-            : this(cc, cc.ToString())
+            : this(cc, cc.ToUndelimitedString())
         {
         }
         public CharNode(CharClass cc, string tag)
