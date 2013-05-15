@@ -50,8 +50,6 @@
     <Content Include="BinarySpanner example grammar.txt" />
     <Content Include="BinarySpannerGrammar.txt" />
     <Content Include="BitmapBinaryGrammar.txt" />
-    <Content Include="CSharp2SyntacticGrammar.txt" />
-    <Compile Include="CSharpCompiler.cs" />
     <Compile Include="DefinitionBuilder.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="NodeType.cs" />
@@ -77,15 +75,9 @@
       <Project>{FF2B8A90-E8D2-4CF6-81E6-4A7BCE1FF900}</Project>
       <Name>MetaphysicsIndustries.Collections</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MetaphysicsIndustries.Build\MetaphysicsIndustries.Build.csproj">
-      <Project>{81E21BB7-DD6A-49AC-93DD-D53F55CF7C60}</Project>
-      <Name>MetaphysicsIndustries.Build</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="CppCliGrammar.txt" />
-    <Content Include="CSharp2LexicalGrammar.txt" />
-    <Content Include="CSharp3Grammar.txt" />
     <Content Include="ExeBinaryGrammar.txt" />
     <Content Include="Supergrammar.txt" />
   </ItemGroup>

@@ -33,6 +33,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="CSharpCompiler.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <None Include="CSharp2LexicalGrammar.txt" />
+    <None Include="CSharp2SyntacticGrammar.txt" />
+    <None Include="CSharp3Grammar.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MetaphysicsIndustries.Build\MetaphysicsIndustries.Build.csproj">
+      <Project>{81E21BB7-DD6A-49AC-93DD-D53F55CF7C60}</Project>
+      <Name>MetaphysicsIndustries.Build</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MetaphysicsIndustries.Giza.csproj">
+      <Project>{98B42ACF-8370-4428-9D41-73FF1CEFB2E4}</Project>
+      <Name>MetaphysicsIndustries.Giza</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
