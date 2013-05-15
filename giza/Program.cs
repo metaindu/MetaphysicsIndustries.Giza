@@ -61,8 +61,7 @@ namespace giza
                     }
                     else
                     {
-                        Span g = s.GetGrammarSpan(gfile);
-                        PrintSpan(g);
+                        throw new NotImplementedException();
                     }
                 }
                 else
@@ -117,10 +116,8 @@ namespace giza
                 }
 
                 GenericSpanner gs = new GenericSpanner();
-                Span s;
                 if (args.Length > 3 && args[3] == "-2")
                 {
-                    s = null;
                     Span2[] ss = gs.Process2(g.Definitions.ToArray(), args[1], input);
                     DefinitionBuilder db = new DefinitionBuilder();
                     foreach (Span2 span in ss)
@@ -130,14 +127,10 @@ namespace giza
                 }
                 else
                 {
-                    s = gs.Process(g.Definitions.ToArray(), args[1], input);
+                    throw new NotImplementedException();
                 }
 
-                if (s != null)
-                {
-                    PrintSpan(s);
-                }
-                else if (gs.ErrorContext != null)
+                if (gs.ErrorContext != null)
                 {
                     int errorLine = CountLines(input, gs.ErrorCharacter);
                     int errorChar = CountCharactersOnLine(input, gs.ErrorCharacter);
@@ -191,76 +184,6 @@ namespace giza
             } while (i >= 0 && input[i] != '\n');
 
             return n;
-        }
-
-        static string BuildSpanJson(Span s)
-        {
-            return BuildSpanJson(s, "  ");
-        }
-        static string BuildSpanJson(Span s, string indent)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append("{");
-            if (indent.Length > 0) sb.AppendLine();
-
-            BuildSpanJson(s, indent, sb);
-
-            if (indent.Length > 0) sb.AppendLine();
-            sb.Append("}");
-            if (indent.Length > 0) sb.AppendLine();
-
-            return sb.ToString();
-        }
-        static void BuildSpanJson(Span s, string indent, StringBuilder sb)
-        {
-            if (indent.Length > 0) sb.Append(indent);
-
-            sb.Append(EscapeString(s.Tag));
-            sb.Append(": ");
-
-            if (s.Subspans != null && s.Subspans.Length > 0)
-            {
-                if (indent.Length > 0)
-                    sb.AppendLine("{");
-                else
-                    sb.Append("{");
-
-                bool first = true;
-                foreach (Span ss in s.Subspans)
-                {
-                    if (first)
-                        first = false;
-                    else if (indent.Length > 0)
-                        sb.AppendLine(",");
-                    else
-                        sb.Append(",");
-
-                    BuildSpanJson(ss, indent + "  ", sb);
-                }
-
-                if (indent.Length > 0)
-                {
-                    sb.AppendLine();
-                    sb.Append(indent);
-                }
-
-                sb.Append("}");
-            }
-            else
-            {
-                sb.Append(EscapeString(s.Value));
-            }
-        }
-
-        private static void PrintSpan(Span s)
-        {
-            Console.Write(BuildSpanJson(s));
-        }
-
-        private static string EscapeString(string str)
-        {
-            return "\"" + str.Replace("\\", "\\\\").Replace("\n", "\\n").Replace("\r", "\\r").Replace("\"", "\\\"") + "\"";
         }
 
         static void ShowUsage()
