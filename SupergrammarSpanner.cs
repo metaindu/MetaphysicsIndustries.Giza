@@ -15,7 +15,7 @@ using MetaphysicsIndustries.Collections;
 
 namespace MetaphysicsIndustries.Giza
 {
-    public class SupergrammarSpanner : MetaphysicsIndustries.Giza.BaseSpanner
+    public class SupergrammarSpanner
     {
         public Span GetGrammarSpan(string input)
         {

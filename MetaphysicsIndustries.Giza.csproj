@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseSpanner.cs" />
     <Compile Include="BinarySpanner.cs" />
     <Compile Include="CharClass.cs" />
     <Compile Include="GenericSpanner.cs" />
