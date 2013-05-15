@@ -47,7 +47,6 @@ namespace MetaphysicsIndustries.Giza
                 throw new KeyNotFoundException("Could not find a definition by that name");
             }
 
-            int i = 0;
             Span2[] spans = GetItem2(start, input);
             return spans;
         }
@@ -130,8 +129,6 @@ namespace MetaphysicsIndustries.Giza
             DefRefNode implicitNode = new DefRefNode(def);
             NodeMatch root = new NodeMatch(implicitNode, NodeMatch.TransitionType.StartDef);
             root._k = -1;
-
-            MatchStack defStack = new MatchStack(root, null);
 
             Queue<NodeMatchStackPair> currents = new Queue<NodeMatchStackPair>();
             Queue<NodeMatchStackPair> accepts = new Queue<NodeMatchStackPair>();
