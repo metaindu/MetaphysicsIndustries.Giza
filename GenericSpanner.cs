@@ -7,7 +7,7 @@ namespace MetaphysicsIndustries.Giza
 {
     public class GenericSpanner
     {
-        public Span2[] Process2(Definition[] defs2, string startName, string input)
+        public Span[] Process2(Definition[] defs2, string startName, string input)
         {
             Definition start = null;
             foreach (Definition d in defs2)
@@ -24,7 +24,7 @@ namespace MetaphysicsIndustries.Giza
                 throw new KeyNotFoundException("Could not find a definition by that name");
             }
 
-            Span2[] spans = GetItem2(start, input);
+            Span[] spans = GetItem2(start, input);
             return spans;
         }
 
@@ -85,7 +85,7 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        public Span2[] GetItem2(Definition def, string input)
+        public Span[] GetItem2(Definition def, string input)
         {
             DefRefNode implicitNode = new DefRefNode(def);
             NodeMatch root = new NodeMatch(implicitNode, NodeMatch.TransitionType.StartDef);
@@ -270,12 +270,12 @@ namespace MetaphysicsIndustries.Giza
                 lists.Add(list);
             }
 
-            List<Span2> spans = new List<Span2>();
+            List<Span> spans = new List<Span>();
             foreach (List<NodeMatch> list in lists)
             {
-                Stack<Span2> stack = new Stack<Span2>();
+                Stack<Span> stack = new Stack<Span>();
 
-                Span2 rootSpan = null;
+                Span rootSpan = null;
 
                 foreach (NodeMatch nm in list)
                 {
@@ -285,7 +285,7 @@ namespace MetaphysicsIndustries.Giza
                     }
                     else if (nm.Node is DefRefNode)
                     {
-                        Span2 s = new Span2();
+                        Span s = new Span();
                         s.Node = nm.Node;
                         s.Definition = (nm.Node as DefRefNode).DefRef;
                         if (stack.Count > 0)
@@ -296,7 +296,7 @@ namespace MetaphysicsIndustries.Giza
                     }
                     else
                     {
-                        Span2 s = new Span2();
+                        Span s = new Span();
                         s.Node = nm.Node;
                         s.Value = nm.MatchedChar.ToString();
                         stack.Peek().Subspans.Add(s);

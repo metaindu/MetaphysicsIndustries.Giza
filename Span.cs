@@ -5,9 +5,9 @@ using System.Diagnostics;
 
 namespace MetaphysicsIndustries.Giza
 {
-    public class Span2
+    public class Span
     {
-        public List<Span2> Subspans = new List<Span2>();
+        public List<Span> Subspans = new List<Span>();
         public Definition Definition;
         public Node Node;
         public string Value;
@@ -17,7 +17,7 @@ namespace MetaphysicsIndustries.Giza
             if (Value == null)
             {
                 StringBuilder sb = new StringBuilder();
-                foreach (Span2 sub in Subspans)
+                foreach (Span sub in Subspans)
                 {
                     sb.Append(sub.CollectValue());
                 }

@@ -45,12 +45,12 @@ namespace giza
                         Definition.__id = 0;
                         Node.__id = 0;
                         GenericSpanner spanner = new GenericSpanner();
-                        Span2[] ss = spanner.Process2(supergrammar.Definitions.ToArray(), "grammar", gfile);
+                        Span[] ss = spanner.Process2(supergrammar.Definitions.ToArray(), "grammar", gfile);
                         DefinitionBuilder db = new DefinitionBuilder();
                         Node.__id = 0;
                         Definition.__id = 0;
                         DefinitionRenderer dr = new DefinitionRenderer();
-                        foreach (Span2 span in ss)
+                        foreach (Span span in ss)
                         {
                             Node.__id = 0;
                             Definition.__id = 0;
@@ -118,9 +118,9 @@ namespace giza
                 GenericSpanner gs = new GenericSpanner();
                 if (args.Length > 3 && args[3] == "-2")
                 {
-                    Span2[] ss = gs.Process2(g.Definitions.ToArray(), args[1], input);
+                    Span[] ss = gs.Process2(g.Definitions.ToArray(), args[1], input);
                     DefinitionBuilder db = new DefinitionBuilder();
-                    foreach (Span2 span in ss)
+                    foreach (Span span in ss)
                     {
 //                        Definition[] dd = db.BuildDefinitions2(g, span);
                     }

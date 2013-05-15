@@ -16,7 +16,7 @@ namespace MetaphysicsIndustries.Giza
             Contiguous,
         }
 
-        public Definition[] BuildDefinitions2(Supergrammar grammar, Span2 span)
+        public Definition[] BuildDefinitions2(Supergrammar grammar, Span span)
         {
             if (span.Definition != grammar.def_0_grammar) throw new InvalidOperationException();
 //            SpanChecker sc = new SpanChecker();
@@ -24,10 +24,10 @@ namespace MetaphysicsIndustries.Giza
 //            if (errors.Length > 0) throw new InvalidOperationException();
 
             List<Definition> defs = new List<Definition>();
-            Dictionary<Definition, Span2> matchup = new Dictionary<Definition, Span2>();
+            Dictionary<Definition, Span> matchup = new Dictionary<Definition, Span>();
             Dictionary<string, Definition> defsByName = new Dictionary<string, Definition>();
 
-            foreach (Span2 sub in span.Subspans)
+            foreach (Span sub in span.Subspans)
             {
                 if (sub.Definition == grammar.def_1_definition)
                 {
@@ -35,7 +35,7 @@ namespace MetaphysicsIndustries.Giza
                     defs.Add(def);
                     matchup[def] = sub;
 
-                    foreach (Span2 sub2 in sub.Subspans)
+                    foreach (Span sub2 in sub.Subspans)
                     {
                         if (sub2.Node == grammar.node_5_definition_identifier)
                         {
@@ -53,9 +53,9 @@ namespace MetaphysicsIndustries.Giza
 
             foreach (Definition def in defs)
             {
-                Span2 defspan = matchup[def];
+                Span defspan = matchup[def];
                 Set<DefmodItem> defmodItems = new Set<DefmodItem>();
-                foreach (Span2 sub in defspan.Subspans)
+                foreach (Span sub in defspan.Subspans)
                 {
                     if (sub.Definition == grammar.def_2_defmod)
                     {
@@ -114,9 +114,9 @@ namespace MetaphysicsIndustries.Giza
             return defs.ToArray();
         }
 
-        IEnumerable<DefmodItem> GetDefMods(Supergrammar grammar, Span2 span)
+        IEnumerable<DefmodItem> GetDefMods(Supergrammar grammar, Span span)
         {
-            foreach (Span2 sub in span.Subspans)
+            foreach (Span sub in span.Subspans)
             {
                 if (sub.Node == grammar.node_13_defmod_defmod_002D_item ||
                     sub.Node == grammar.node_16_defmod_defmod_002D_item)
@@ -126,7 +126,7 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        DefmodItem GetDefModItem(Supergrammar grammar, Span2 span)
+        DefmodItem GetDefModItem(Supergrammar grammar, Span span)
         {
             if (span.Subspans[0].Node == grammar.node_19_defmod_item_id_002D_whitespace)
             {
@@ -156,12 +156,12 @@ namespace MetaphysicsIndustries.Giza
             public bool IsSkippable = false;
         }
 
-        NodeBundle GetNodesFromExpr(Supergrammar grammar, Span2 exprSpan, Dictionary<string, Definition> defsByName)
+        NodeBundle GetNodesFromExpr(Supergrammar grammar, Span exprSpan, Dictionary<string, Definition> defsByName)
         {
             NodeBundle first = null;
             NodeBundle last = null;
             List<NodeBundle> bundles = new List<NodeBundle>();
-            foreach (Span2 sub in exprSpan.Subspans)
+            foreach (Span sub in exprSpan.Subspans)
             {
                 NodeBundle bundle = null;
                 if (sub.Definition == grammar.def_10_subexpr)
@@ -267,14 +267,14 @@ namespace MetaphysicsIndustries.Giza
                                   IsSkippable = skippable};
         }
 
-        NodeBundle GetNodesFromSubExpr(Supergrammar grammar, Span2 span, Dictionary<string, Definition> defsByName)
+        NodeBundle GetNodesFromSubExpr(Supergrammar grammar, Span span, Dictionary<string, Definition> defsByName)
         {
             bool skippable = false;
             bool loop = false;
             string tag = null;
             List<Node> nodes = null;
 
-            foreach (Span2 sub in span.Subspans)
+            foreach (Span sub in span.Subspans)
             {
                 if (sub.Node == grammar.node_77_subexpr_identifier)
                 {
@@ -340,13 +340,13 @@ namespace MetaphysicsIndustries.Giza
                     IsSkippable = skippable};
         }
 
-        Node GetNodeFromIdentifier(Supergrammar grammar, Span2 span, Dictionary<string, Definition> defsByName)
+        Node GetNodeFromIdentifier(Supergrammar grammar, Span span, Dictionary<string, Definition> defsByName)
         {
             string ident = GetIdentifier(grammar, span);
             return new DefRefNode(defsByName[ident], ident);
         }
 
-        List<Node> GetNodesFromLiteral(Supergrammar grammar, Span2 span)
+        List<Node> GetNodesFromLiteral(Supergrammar grammar, Span span)
         {
             List<Node> nodes = new List<Node>();
             List<char> tagNodes = new List<char>();
@@ -354,7 +354,7 @@ namespace MetaphysicsIndustries.Giza
             int i;
             for (i = 1; i < span.Subspans.Count - 1; i++)
             {
-                Span2 sub = span.Subspans[i];
+                Span sub = span.Subspans[i];
                 if (sub.Node == grammar.node_95_literal__0027_) continue;
                 if (sub.Node == grammar.node_99_literal__0027_) continue;
 
@@ -369,7 +369,7 @@ namespace MetaphysicsIndustries.Giza
                 }
                 else if (sub.Node == grammar.node_97_literal__005C_) // '\\'
                 {
-                    Span2 sub2 = span.Subspans[i+1];
+                    Span sub2 = span.Subspans[i+1];
 
                     if (sub2.Value == "r") ch = '\r';
                     else if (sub2.Value == "n") ch = '\n';
@@ -392,7 +392,7 @@ namespace MetaphysicsIndustries.Giza
             return nodes;
         }
 
-        char GetUnicodeChar(Supergrammar grammar, Span2 span)
+        char GetUnicodeChar(Supergrammar grammar, Span span)
         {
             string s =
                 span.Subspans[2].Value +
@@ -406,13 +406,13 @@ namespace MetaphysicsIndustries.Giza
             return (char)i;
         }
 
-        Node GetNodeFromCharClass(Supergrammar grammar, Span2 span)
+        Node GetNodeFromCharClass(Supergrammar grammar, Span span)
         {
             int i;
             List<char> items = new List<char>();
             for (i = 1; i < span.Subspans.Count - 1; i++)
             {
-                Span2 sub = span.Subspans[i];
+                Span sub = span.Subspans[i];
 
                 if (sub.Node == grammar.node_104_charclass__005E__005C__005C__005C__005B__005C__005D_) // [^\\\[\]]
                 {
@@ -437,28 +437,28 @@ namespace MetaphysicsIndustries.Giza
             return new CharNode(CharClass.FromUndelimitedCharClassText(charClassText));
         }
 
-        char GetModifier(Supergrammar grammar, Span2 span)
+        char GetModifier(Supergrammar grammar, Span span)
         {
             return span.Subspans[0].Value[0];
         }
 
-        string GetIdentifier(Supergrammar grammar, Span2 span)
+        string GetIdentifier(Supergrammar grammar, Span span)
         {
             List<char> chs = new List<char>();
-            foreach (Span2 sub in span.Subspans)
+            foreach (Span sub in span.Subspans)
             {
                 chs.Add(sub.Value[0]);
             }
             return new string(chs.ToArray());
         }
 
-        NodeBundle GetNodesFromOrExpr(Supergrammar grammar, Span2 span, Dictionary<string, Definition> defsByName)
+        NodeBundle GetNodesFromOrExpr(Supergrammar grammar, Span span, Dictionary<string, Definition> defsByName)
         {
             List<NodeBundle> bundles = new List<NodeBundle>();
             bool skippable = false;
             bool loopable = false;
 
-            foreach (Span2 sub in span.Subspans)
+            foreach (Span sub in span.Subspans)
             {
                 if (sub.Node == grammar.node_69_orexpr__0028_ || // '('
                     sub.Node == grammar.node_71_orexpr__007C_ || // '|'
