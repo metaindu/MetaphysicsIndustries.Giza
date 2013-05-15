@@ -17,15 +17,6 @@ namespace MetaphysicsIndustries.Giza
 {
     public class SupergrammarSpanner
     {
-        public Span GetGrammarSpan(string input)
-        {
-            Supergrammar supergrammar = new Supergrammar();
-            Definition.__id = 0;
-            Node.__id = 0;
-            GenericSpanner spanner = new GenericSpanner();
-            return spanner.Process(supergrammar.Definitions.ToArray(), "grammar", input);
-        }
-
         public Grammar GetGrammar(string input)
         {
             Supergrammar supergrammar = new Supergrammar();
