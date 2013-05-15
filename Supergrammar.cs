@@ -123,7 +123,7 @@ namespace MetaphysicsIndustries.Giza
         public CharNode node_97_literal__005C_;
         public DefRefNode node_98_literal_unicodechar;
         public CharNode node_99_literal__0027_;
-        public CharNode node_100_literal_wldsrnt_005C__005C__0027_;
+        public CharNode node_100_literal_rnt_005C__005C__0027_;
         public EndNode node_101_literal_end;
         public StartNode node_102_charclass_start;
         public CharNode node_103_charclass__005B_;
@@ -575,7 +575,7 @@ namespace MetaphysicsIndustries.Giza
             node_97_literal__005C_ = new CharNode(CharClass.FromUndelimitedCharClassText("\\\\"), "\\");
             node_98_literal_unicodechar = new DefRefNode(def_16_unicodechar, "unicodechar");
             node_99_literal__0027_ = new CharNode(CharClass.FromUndelimitedCharClassText("'"), "'");
-            node_100_literal_wldsrnt_005C__005C__0027_ = new CharNode(CharClass.FromUndelimitedCharClassText("wldsrnt\\\\'"), "wldsrnt\\\\'");
+            node_100_literal_rnt_005C__005C__0027_ = new CharNode(CharClass.FromUndelimitedCharClassText("rnt\\\\'"), "rnt\\\\'");
             node_101_literal_end = new EndNode();
             def_14_literal.Nodes.Add(node_94_literal_start);
             def_14_literal.Nodes.Add(node_95_literal__0027_);
@@ -583,7 +583,7 @@ namespace MetaphysicsIndustries.Giza
             def_14_literal.Nodes.Add(node_97_literal__005C_);
             def_14_literal.Nodes.Add(node_98_literal_unicodechar);
             def_14_literal.Nodes.Add(node_99_literal__0027_);
-            def_14_literal.Nodes.Add(node_100_literal_wldsrnt_005C__005C__0027_);
+            def_14_literal.Nodes.Add(node_100_literal_rnt_005C__005C__0027_);
             def_14_literal.Nodes.Add(node_101_literal_end);
             def_14_literal.start = node_94_literal_start;
             def_14_literal.end = node_101_literal_end;
@@ -595,16 +595,16 @@ namespace MetaphysicsIndustries.Giza
             node_96_literal__005E__005C__005C__0027_.NextNodes.Add(node_97_literal__005C_);
             node_96_literal__005E__005C__005C__0027_.NextNodes.Add(node_98_literal_unicodechar);
             node_96_literal__005E__005C__005C__0027_.NextNodes.Add(node_99_literal__0027_);
-            node_97_literal__005C_.NextNodes.Add(node_100_literal_wldsrnt_005C__005C__0027_);
+            node_97_literal__005C_.NextNodes.Add(node_100_literal_rnt_005C__005C__0027_);
             node_98_literal_unicodechar.NextNodes.Add(node_96_literal__005E__005C__005C__0027_);
             node_98_literal_unicodechar.NextNodes.Add(node_97_literal__005C_);
             node_98_literal_unicodechar.NextNodes.Add(node_98_literal_unicodechar);
             node_98_literal_unicodechar.NextNodes.Add(node_99_literal__0027_);
             node_99_literal__0027_.NextNodes.Add(node_101_literal_end);
-            node_100_literal_wldsrnt_005C__005C__0027_.NextNodes.Add(node_96_literal__005E__005C__005C__0027_);
-            node_100_literal_wldsrnt_005C__005C__0027_.NextNodes.Add(node_97_literal__005C_);
-            node_100_literal_wldsrnt_005C__005C__0027_.NextNodes.Add(node_98_literal_unicodechar);
-            node_100_literal_wldsrnt_005C__005C__0027_.NextNodes.Add(node_99_literal__0027_);
+            node_100_literal_rnt_005C__005C__0027_.NextNodes.Add(node_96_literal__005E__005C__005C__0027_);
+            node_100_literal_rnt_005C__005C__0027_.NextNodes.Add(node_97_literal__005C_);
+            node_100_literal_rnt_005C__005C__0027_.NextNodes.Add(node_98_literal_unicodechar);
+            node_100_literal_rnt_005C__005C__0027_.NextNodes.Add(node_99_literal__0027_);
 
             def_15_charclass.IgnoreCase = false;
             def_15_charclass.IgnoreWhitespace = false;

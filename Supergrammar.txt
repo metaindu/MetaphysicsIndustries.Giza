@@ -39,7 +39,7 @@ modifier = [*+?];
 
 <whitespace, contiguous> identifier = [\w-_] [\w-_\d]*;
 
-<whitespace> literal = '\'' ( [^\\'] | '\\' [wldsrnt\\'] | unicodechar )+ '\'';
+<whitespace> literal = '\'' ( [^\\'] | '\\' [rnt\\'] | unicodechar )+ '\'';
 
 <whitespace> charclass = '[' ( [^\\\[\]] | '\\' [wldsrnt\\\[\]] | unicodechar )+ ']';
 
