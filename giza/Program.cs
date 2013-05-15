@@ -54,7 +54,7 @@ namespace giza
                         {
                             Node.__id = 0;
                             Definition.__id = 0;
-                            Definition[] dd2 = db.BuildDefinitions2(supergrammar, span);
+                            Definition[] dd2 = db.BuildDefinitions(supergrammar, span);
                             string class2 = dr.RenderDefinitionsAsCSharpClass("FromBuildDefs2", dd2);
                             class2 = class2;
                         }

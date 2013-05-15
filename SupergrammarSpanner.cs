@@ -26,7 +26,7 @@ namespace MetaphysicsIndustries.Giza
             Span[] s2 = spanner.Process2(supergrammar.Definitions.ToArray(), "grammar", input);
 
             DefinitionBuilder db = new DefinitionBuilder();
-            Definition[] defs = db.BuildDefinitions2(supergrammar, s2[0]);
+            Definition[] defs = db.BuildDefinitions(supergrammar, s2[0]);
 
             Grammar grammar = new Grammar();
             grammar.Definitions.AddRange(defs);

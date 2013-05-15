@@ -16,7 +16,7 @@ namespace MetaphysicsIndustries.Giza
             Contiguous,
         }
 
-        public Definition[] BuildDefinitions2(Supergrammar grammar, Span span)
+        public Definition[] BuildDefinitions(Supergrammar grammar, Span span)
         {
             if (span.Definition != grammar.def_0_grammar) throw new InvalidOperationException();
 //            SpanChecker sc = new SpanChecker();
