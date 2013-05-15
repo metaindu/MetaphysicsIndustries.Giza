@@ -39,8 +39,34 @@ namespace giza
                     {
                         gfile = File.ReadAllText(args[1]);
                     }
-                    Span g = s.GetGrammarSpan(gfile);
-                    PrintSpan(g);
+                    if (args.Length > 2 && args[2] == "-2")
+                    {
+                        Supergrammar supergrammar = new Supergrammar();
+                        Definition.__id = 0;
+                        Node.__id = 0;
+                        GenericSpanner spanner = new GenericSpanner();
+                        Span2[] ss = spanner.Process2(supergrammar.Definitions.ToArray(), "grammar", gfile);
+                        DefinitionBuilder db = new DefinitionBuilder();
+                        Span ss1 = spanner.Process(supergrammar.Definitions.ToArray(), "grammar", gfile);
+                        Node.__id = 0;
+                        Definition.__id = 0;
+                        Definition[] dd1 = db.BuildDefinitions(ss1);
+                        DefinitionRenderer dr = new DefinitionRenderer();
+                        string class1 = dr.RenderDefinitionsAsCSharpClass("FromBuildDefs1", dd1);
+                        foreach (Span2 span in ss)
+                        {
+                            Node.__id = 0;
+                            Definition.__id = 0;
+                            Definition[] dd2 = db.BuildDefinitions2(supergrammar, span);
+                            string class2 = dr.RenderDefinitionsAsCSharpClass("FromBuildDefs2", dd2);
+                            class2 = class2;
+                        }
+                    }
+                    else
+                    {
+                        Span g = s.GetGrammarSpan(gfile);
+                        PrintSpan(g);
+                    }
                 }
                 else
                 {
@@ -97,8 +123,13 @@ namespace giza
                 Span s;
                 if (args.Length > 3 && args[3] == "-2")
                 {
-                    /*s =*/ gs.Process2(g.Definitions.ToArray(), args[1], input);
                     s = null;
+                    Span2[] ss = gs.Process2(g.Definitions.ToArray(), args[1], input);
+                    DefinitionBuilder db = new DefinitionBuilder();
+                    foreach (Span2 span in ss)
+                    {
+//                        Definition[] dd = db.BuildDefinitions2(g, span);
+                    }
                 }
                 else
                 {
