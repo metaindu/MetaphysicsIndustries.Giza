@@ -47,12 +47,9 @@ namespace giza
                         GenericSpanner spanner = new GenericSpanner();
                         Span2[] ss = spanner.Process2(supergrammar.Definitions.ToArray(), "grammar", gfile);
                         DefinitionBuilder db = new DefinitionBuilder();
-                        Span ss1 = spanner.Process(supergrammar.Definitions.ToArray(), "grammar", gfile);
                         Node.__id = 0;
                         Definition.__id = 0;
-                        Definition[] dd1 = db.BuildDefinitions(ss1);
                         DefinitionRenderer dr = new DefinitionRenderer();
-                        string class1 = dr.RenderDefinitionsAsCSharpClass("FromBuildDefs1", dd1);
                         foreach (Span2 span in ss)
                         {
                             Node.__id = 0;
