@@ -1,0 +1,10 @@
+in Spanner, check incoming definitions for correctness
+  DefinitionChecker that returns errors and warnings
+is DefinitionBuilder, check incoming span for correctness against the grammar
+  SpanChecker that returns list of errors
+return errors from Spanner
+Rename DefinitionRenderer to GrammarRenderer, rename methods, make it take a Grammar instead of Definition[].
+tokenized parsing
+Define a grammar for Solus. Create a SolusGrammar class.
+Create a SolusSpanner class around SolusGrammar. Put both classes into MetaphysicsIndustries.Solus.
+Convert all lists and arrays to IEnumerable<>
