@@ -37,7 +37,7 @@ namespace MetaphysicsIndustries.Giza
 
                     foreach (Span sub2 in sub.Subspans)
                     {
-                        if (sub2.Node == grammar.node_5_definition_identifier)
+                        if (sub2.Node == grammar.node_6_definition_identifier)
                         {
                             def.Name = GetIdentifier(grammar, sub2);
                             break;
@@ -119,7 +119,7 @@ namespace MetaphysicsIndustries.Giza
             foreach (Span sub in span.Subspans)
             {
                 if (sub.Node == grammar.node_13_defmod_defmod_002D_item ||
-                    sub.Node == grammar.node_16_defmod_defmod_002D_item)
+                    sub.Node == grammar.node_15_defmod_defmod_002D_item)
                 {
                     yield return GetDefModItem(grammar, sub);
                 }
@@ -134,13 +134,13 @@ namespace MetaphysicsIndustries.Giza
             }
             if (span.Subspans[0].Node == grammar.node_20_defmod_item_id_002D_ignore)
             {
-                if (span.Subspans[1].Node == grammar.node_24_defmod_item_id_002D_case ||
-                    span.Subspans[2].Node == grammar.node_24_defmod_item_id_002D_case)
+                if (span.Subspans[1].Node == grammar.node_22_defmod_item_id_002D_case ||
+                    span.Subspans[2].Node == grammar.node_22_defmod_item_id_002D_case)
                 {
                     return DefmodItem.IgnoreCase;
                 }
             }
-            if (span.Subspans[0].Node == grammar.node_21_defmod_item_id_002D_contiguous)
+            if (span.Subspans[0].Node == grammar.node_23_defmod_item_id_002D_contiguous)
             {
                 return DefmodItem.Contiguous;
             }
@@ -305,7 +305,7 @@ namespace MetaphysicsIndustries.Giza
                     //skip it
                     continue;
                 }
-                else if (sub.Node == grammar.node_83_subexpr_tag)
+                else if (sub.Node == grammar.node_82_subexpr_tag)
                 {
                     tag = GetIdentifier(grammar, sub);
                 }
@@ -356,7 +356,7 @@ namespace MetaphysicsIndustries.Giza
             {
                 Span sub = span.Subspans[i];
                 if (sub.Node == grammar.node_95_literal__0027_) continue;
-                if (sub.Node == grammar.node_99_literal__0027_) continue;
+                if (sub.Node == grammar.node_100_literal__0027_) continue;
 
                 char ch = ' ';
                 if (sub.Definition == grammar.def_16_unicodechar)
@@ -422,11 +422,11 @@ namespace MetaphysicsIndustries.Giza
                 {
                     items.Add(sub.Value[0]);
                 }
-                else if (sub.Node == grammar.node_108_charclass_wldsrnt_005C__005C__005C__005B__005C__005D_) // [wldsrnt\\\[\]]
+                else if (sub.Node == grammar.node_106_charclass_wldsrnt_005C__005C__005C__005B__005C__005D_) // [wldsrnt\\\[\]]
                 {
                     items.Add(sub.Value[0]);
                 }
-                else if (sub.Node == grammar.node_106_charclass_unicodechar)
+                else if (sub.Node == grammar.node_107_charclass_unicodechar)
                 {
                     items.Add(GetUnicodeChar(grammar, sub));
                 }
@@ -462,14 +462,14 @@ namespace MetaphysicsIndustries.Giza
             {
                 if (sub.Node == grammar.node_69_orexpr__0028_ || // '('
                     sub.Node == grammar.node_71_orexpr__007C_ || // '|'
-                    sub.Node == grammar.node_72_orexpr__0029_)   // ')'
+                    sub.Node == grammar.node_73_orexpr__0029_)   // ')'
                 {
                     // skip it
                     continue;
                 }
 
                 if (sub.Node == grammar.node_70_orexpr_expr ||
-                    sub.Node == grammar.node_73_orexpr_expr)
+                    sub.Node == grammar.node_72_orexpr_expr)
                 {
                     bundles.Add(GetNodesFromExpr(grammar, sub, defsByName));
                     continue;
