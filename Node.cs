@@ -37,7 +37,7 @@ namespace MetaphysicsIndustries.Giza
         {
             get { return NodeType.charclass; }
         }
-        public override bool Matches(char ch)
+        public bool Matches(char ch)
         {
             return CharClass.Matches(ch);
         }
@@ -76,10 +76,7 @@ namespace MetaphysicsIndustries.Giza
         {
             get { return NodeType.start; }
         }
-        public override bool Matches(char ch)
-        {
-            return false;
-        }
+
         public override string Tag
         {
             get { return "start"; }
@@ -97,10 +94,7 @@ namespace MetaphysicsIndustries.Giza
         {
             get { return NodeType.end; }
         }
-        public override bool Matches(char ch)
-        {
-            return false;
-        }
+
         public override string Tag
         {
             get { return "end"; }
@@ -135,18 +129,6 @@ namespace MetaphysicsIndustries.Giza
         public override NodeType Type
         {
             get { return NodeType.defref; }
-        }
-        public override bool Matches(char ch)
-        {
-            foreach (Node node in DefRef.start.NextNodes)
-            {
-                if (node.Matches(ch))
-                {
-                    return true;
-                }
-            }
-
-            return false;
         }
 
         public override string ToString()
@@ -204,8 +186,6 @@ namespace MetaphysicsIndustries.Giza
 
             return NextNodes.Contains(def.end);
         }
-
-        public abstract bool Matches(char ch);
 
         private Definition _parentDefinition;
         public Definition ParentDefinition
