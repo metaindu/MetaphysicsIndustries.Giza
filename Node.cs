@@ -245,5 +245,28 @@ namespace MetaphysicsIndustries.Giza
         }
 
         public abstract bool Matches(char ch);
+
+        private Definition _parentDefinition;
+        public Definition ParentDefinition
+        {
+            get { return _parentDefinition; }
+            set
+            {
+                if (value != _parentDefinition)
+                {
+                    if (_parentDefinition != null)
+                    {
+                        _parentDefinition.Nodes.Remove(this);
+                    }
+                    
+                    _parentDefinition = value;
+                    
+                    if (_parentDefinition != null)
+                    {
+                        _parentDefinition.Nodes.Add(this);
+                    }
+                }
+            }
+        }
     }
 }

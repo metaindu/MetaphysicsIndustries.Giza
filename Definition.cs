@@ -19,12 +19,14 @@ namespace MetaphysicsIndustries.Giza
         {
             Name = name;
 
+            Nodes = new DefinitionNodeOrderedParentChildrenCollection(this);
+
             _id = __id;
             __id++;
         }
 
         public string Name;
-        public Set<Node> Nodes = new Set<Node>();
+        public DefinitionNodeOrderedParentChildrenCollection Nodes;
         public Node start;
         public Node end;
 
