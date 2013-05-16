@@ -205,44 +205,6 @@ namespace MetaphysicsIndustries.Giza
             return NextNodes.Contains(def.end);
         }
 
-        public static Node FromSimpleNode(SimpleNode unconNode, Definition[] defs)
-        {
-            if (unconNode.Text.Length < 1) throw new ArgumentException("unconNode");
-
-            switch (unconNode.Type)
-            {
-                case NodeType.start: return new StartNode();
-                case NodeType.end: return new EndNode();
-                case NodeType.charclass: 
-                    return new CharNode(
-                        CharClass.FromUndelimitedCharClassText(unconNode.Text), 
-                        unconNode.Tag);
-
-                case NodeType.literal:
-                    if (unconNode.Text.Length > 1)
-                    {
-                        return CharNode.FromString(unconNode.Text, unconNode.Tag)[0];
-                    }
-                    else
-                    {
-                        return new CharNode(unconNode.Text[0], unconNode.Tag);
-                    }
-
-                case NodeType.defref:
-                    foreach (Definition def in defs)
-                    {
-                        if (def.Name == unconNode.Text)
-                        {
-                            return new DefRefNode(def, unconNode.Tag);
-                        }
-                    }
-                    throw new KeyNotFoundException();
-
-                default:
-                    throw new InvalidOperationException("Unknown node type: " + unconNode.Type.ToString());
-            }
-        }
-
         public abstract bool Matches(char ch);
 
         private Definition _parentDefinition;
