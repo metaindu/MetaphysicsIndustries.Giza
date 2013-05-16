@@ -66,7 +66,7 @@ namespace MetaphysicsIndustries.Giza
 
         public override string ToString()
         {
-            return string.Format("[{0}] {1}, {2}", _id, CharClass, Tag);
+            return string.Format("[{0}] {1}, {2}", ID, CharClass, Tag);
         }
     }
 
@@ -87,7 +87,7 @@ namespace MetaphysicsIndustries.Giza
 
         public override string ToString()
         {
-            return string.Format("[{0}] start", _id);
+            return string.Format("[{0}] start", ID);
         }
     }
 
@@ -108,7 +108,7 @@ namespace MetaphysicsIndustries.Giza
 
         public override string ToString()
         {
-            return string.Format("[{0}] end", _id);
+            return string.Format("[{0}] end", ID);
         }
     }
 
@@ -151,15 +151,12 @@ namespace MetaphysicsIndustries.Giza
 
         public override string ToString()
         {
-            return string.Format("[{0}] \"[{1}] {2}\", {3}", _id, DefRef._id, DefRef.Name, Tag);
+            return string.Format("[{0}] \"[{1}] {2}\", {3}", ID, DefRef._id, DefRef.Name, Tag);
         }
     }
 
     public abstract class Node
     {
-        public static int __id = 0;
-        public readonly int _id;
-
         protected Node()
             : this(string.Empty)
         {
@@ -169,9 +166,11 @@ namespace MetaphysicsIndustries.Giza
             if (tag == null) tag = string.Empty;
 
             _tag = tag;
+        }
 
-            this._id = __id;
-            __id++;
+        public int ID
+        {
+            get { return ParentDefinition.Nodes.IndexOf(this); }
         }
 
         public abstract NodeType Type

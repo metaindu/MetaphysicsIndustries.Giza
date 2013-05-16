@@ -42,16 +42,13 @@ namespace giza
                     {
                         Supergrammar supergrammar = new Supergrammar();
                         Definition.__id = 0;
-                        Node.__id = 0;
                         GenericSpanner spanner = new GenericSpanner();
                         Span[] ss = spanner.Process2(supergrammar.Definitions.ToArray(), "grammar", gfile);
                         DefinitionBuilder db = new DefinitionBuilder();
-                        Node.__id = 0;
                         Definition.__id = 0;
                         DefinitionRenderer dr = new DefinitionRenderer();
                         foreach (Span span in ss)
                         {
-                            Node.__id = 0;
                             Definition.__id = 0;
                             Definition[] dd2 = db.BuildDefinitions(supergrammar, span);
                             string class2 = dr.RenderDefinitionsAsCSharpClass("FromBuildDefs2", dd2);
