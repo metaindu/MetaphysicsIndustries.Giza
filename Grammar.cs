@@ -5,7 +5,16 @@ namespace MetaphysicsIndustries.Giza
 {
     public class Grammar
     {
-        public List<Definition> Definitions = new List<Definition>();
+        public Grammar()
+        {
+            _definitions = new GrammarDefinitionParentChildrenCollection(this);
+        }
+
+        private GrammarDefinitionParentChildrenCollection _definitions;
+        public GrammarDefinitionParentChildrenCollection Definitions
+        {
+            get { return _definitions; }
+        }
     }
 }
 

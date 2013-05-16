@@ -23,7 +23,7 @@ namespace MetaphysicsIndustries.Giza
             Definition.__id = 0;
             Node.__id = 0;
             GenericSpanner spanner = new GenericSpanner();
-            Span[] s2 = spanner.Process2(supergrammar.Definitions.ToArray(), "grammar", input);
+            Span[] s2 = spanner.Process2(supergrammar.Definitions, "grammar", input);
 
             DefinitionBuilder db = new DefinitionBuilder();
             Definition[] defs = db.BuildDefinitions(supergrammar, s2[0]);

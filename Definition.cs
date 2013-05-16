@@ -64,5 +64,28 @@ namespace MetaphysicsIndustries.Giza
         {
             return string.Format("[{0}] {1}, {2} nodes", _id, Name, Nodes.Count);
         }
+
+        private Grammar _parentGrammar;
+        public Grammar ParentGrammar
+        {
+            get { return _parentGrammar; }
+            set
+            {
+                if (value != _parentGrammar)
+                {
+                    if (_parentGrammar != null)
+                    {
+                        _parentGrammar.Definitions.Remove(this);
+                    }
+
+                    _parentGrammar = value;
+
+                    if (_parentGrammar != null)
+                    {
+                        _parentGrammar.Definitions.Add(this);
+                    }
+                }
+            }
+        }
     }
 }
