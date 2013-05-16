@@ -41,7 +41,12 @@ namespace MetaphysicsIndustries.Giza
             {
                 foreach (Node node in def.Nodes)
                 {
-                    string name = string.Format("node_{0}_{1}_{2}", node.ID, RenderIdentifier(def.Name), RenderNodeNameAsIdentifier(node.Tag));
+                    string name =
+                        string.Format(
+                            "node_{0}_{1}_{2}",
+                            RenderIdentifier(def.Name),
+                            node.ID,
+                            RenderNodeNameAsIdentifier(node.Tag));
 
                     nodenames[node] = name;
 
