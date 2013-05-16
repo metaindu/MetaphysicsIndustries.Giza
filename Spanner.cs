@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace MetaphysicsIndustries.Giza
 {
-    public class GenericSpanner
+    public class Spanner
     {
         public Span[] Process2(IEnumerable<Definition> defs2, string startName, string input)
         {
