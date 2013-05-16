@@ -24,11 +24,6 @@ namespace MetaphysicsIndustries.Giza
             get { return ParentDefinition.Nodes.IndexOf(this); }
         }
 
-        public abstract NodeType Type
-        {
-            get;
-        }
-
         //the tag is a string used to identify the node. typically, if it isn't
         //specified in the node source (grammar, state graph, etc.), then the
         //tag is just a copy of the text.
@@ -82,11 +77,6 @@ namespace MetaphysicsIndustries.Giza
 
     public class StartNode : Node
     {
-        public override NodeType Type
-        {
-            get { return NodeType.start; }
-        }
-
         public override string Tag
         {
             get { return "start"; }
@@ -100,11 +90,6 @@ namespace MetaphysicsIndustries.Giza
 
     public class EndNode : Node
     {
-        public override NodeType Type
-        {
-            get { return NodeType.end; }
-        }
-
         public override string Tag
         {
             get { return "end"; }

@@ -27,11 +27,6 @@ namespace MetaphysicsIndustries.Giza
             get { return _defRef; }
         }
 
-        public override NodeType Type
-        {
-            get { return NodeType.defref; }
-        }
-
         public override string ToString()
         {
             return string.Format("[{0}] \"[{1}] {2}\", {3}", ID, DefRef._id, DefRef.Name, Tag);

@@ -33,10 +33,6 @@ namespace MetaphysicsIndustries.Giza
             get { return _charClass; }
         }
 
-        public override NodeType Type
-        {
-            get { return NodeType.charclass; }
-        }
         public bool Matches(char ch)
         {
             return CharClass.Matches(ch);
