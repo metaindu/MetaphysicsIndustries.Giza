@@ -60,6 +60,7 @@
     <Compile Include="CharNode.cs" />
     <Compile Include="DefRefNode.cs" />
     <Compile Include="Spanner.cs" />
+    <Compile Include="DefinitionChecker.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
