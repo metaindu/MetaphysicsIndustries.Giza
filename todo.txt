@@ -1,6 +1,9 @@
 in Spanner, check incoming definitions for correctness
   DefinitionChecker that returns errors and warnings
-is DefinitionBuilder, check incoming span for correctness against the grammar
+get rid of start and end fields in Definition.
+  Replace with collections of StartNodes and EndNodes.
+  Fix IsEndOf
+in DefinitionBuilder, check incoming span for correctness against the grammar
   SpanChecker that returns list of errors
 return errors from Spanner
 Rename DefinitionRenderer to GrammarRenderer, rename methods, make it take a Grammar instead of Definition[].
