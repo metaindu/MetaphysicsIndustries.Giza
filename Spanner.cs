@@ -252,9 +252,6 @@ namespace MetaphysicsIndustries.Giza
             return spans.ToArray();
         }
 
-        public Node ErrorContext;
-        public int ErrorCharacter;
-
         struct NodeMatchStackPair
         {
             public NodeMatch NodeMatch;

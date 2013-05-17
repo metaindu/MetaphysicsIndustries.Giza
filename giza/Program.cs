@@ -125,37 +125,6 @@ namespace giza
                 {
                     throw new NotImplementedException();
                 }
-
-                if (gs.ErrorContext != null)
-                {
-                    int errorLine = CountLines(input, gs.ErrorCharacter);
-                    int errorChar = CountCharactersOnLine(input, gs.ErrorCharacter);
-                    Console.Write("{0}({1},{2}): Expected ", args[2], errorLine, errorChar);
-                    if (gs.ErrorContext.NextNodes.Count > 1)
-                    {
-                        Console.Write("one of ('");
-
-                        bool first = true;
-                        foreach (Node next in gs.ErrorContext.NextNodes)
-                        {
-                            Console.Write(next.Tag);
-                            if (first) first = false;
-                            else Console.Write("', '");
-                        }
-
-                        Console.WriteLine("')");
-                    }
-                    else
-                    {
-                        Console.Write("'");
-                        Console.Write(gs.ErrorContext.NextNodes.GetFirst().Tag);
-                        Console.Write("'");
-                        Console.WriteLine();
-                    }
-                }
-                else 
-                {
-                }
             }
         }
 
