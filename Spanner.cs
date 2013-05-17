@@ -7,7 +7,7 @@ namespace MetaphysicsIndustries.Giza
 {
     public class Spanner
     {
-        public Span[] Process2(IEnumerable<Definition> defs2, string startName, string input)
+        public Span[] Process(IEnumerable<Definition> defs2, string startName, string input)
         {
             Definition start = null;
             foreach (Definition d in defs2)
@@ -24,68 +24,11 @@ namespace MetaphysicsIndustries.Giza
                 throw new KeyNotFoundException("Could not find a definition by that name");
             }
 
-            Span[] spans = GetItem2(start, input);
+            Span[] spans = Process(start, input);
             return spans;
         }
 
-        public Node ErrorContext;
-        public int ErrorCharacter;
-
-        struct NodeMatchStackPair
-        {
-            public NodeMatch NodeMatch;
-            public MatchStack MatchStack;
-        }
-
-        NodeMatchStackPair pair(NodeMatch nodeMatch, MatchStack matchStack)
-        {
-            return new NodeMatchStackPair{NodeMatch = nodeMatch, MatchStack = matchStack};
-        }
-
-        NodeMatchStackPair CreateStartDefMatch(Node node, NodeMatch match, MatchStack stack2)
-        {
-            NodeMatch match2 = new NodeMatch(node, NodeMatch.TransitionType.StartDef);
-            match2.Previous = match;
-            return pair(match2, stack2);
-        }
-
-        NodeMatchStackPair CreateEndDefMatch(NodeMatch match, MatchStack stack)
-        {
-            NodeMatch match2 = new NodeMatch(stack.Node, NodeMatch.TransitionType.EndDef);
-            match2.Previous = match;
-            return pair(match2, stack.Parent);
-        }
-
-        NodeMatchStackPair CreateFollowMatch(Node node, NodeMatch match, MatchStack stack)
-        {
-            NodeMatch match2 = new NodeMatch(node, NodeMatch.TransitionType.Follow);
-            match2.Previous = match;
-            return pair(match2, stack);
-        }
-
-        void PurgeRejects(Queue<NodeMatch> rejects, int k, ref NodeMatch lastReject, ref int lastk)
-        {
-            while (rejects.Count > 0)
-            {
-                NodeMatch n = lastReject;
-                lastReject = rejects.Dequeue();
-                lastk = k;
-
-                if (n == null) break;
-
-                while (n.Nexts.Count < 1)
-                {
-                    NodeMatch prev = n.Previous;
-                    n.Previous = null;
-
-                    //recycle the NodeMatch object here, if desired
-
-                    n = prev;
-                }
-            }
-        }
-
-        public Span[] GetItem2(Definition def, string input)
+        public Span[] Process(Definition def, string input)
         {
             DefRefNode implicitNode = new DefRefNode(def);
             NodeMatch root = new NodeMatch(implicitNode, NodeMatch.TransitionType.StartDef);
@@ -149,7 +92,7 @@ namespace MetaphysicsIndustries.Giza
                         }
                         else
                         {
-                            if (stack.Definition.Contiguous && 
+                            if (stack.Definition.Contiguous &&
                                 stack.Definition.Nodes.Contains(cur.Previous.Node) &&
                                 cur.Previous.Node.IsAnEndOf((stack.NodeMatch.Node as DefRefNode).DefRef))
                             {
@@ -307,6 +250,63 @@ namespace MetaphysicsIndustries.Giza
             }
 
             return spans.ToArray();
+        }
+
+        public Node ErrorContext;
+        public int ErrorCharacter;
+
+        struct NodeMatchStackPair
+        {
+            public NodeMatch NodeMatch;
+            public MatchStack MatchStack;
+        }
+
+        NodeMatchStackPair pair(NodeMatch nodeMatch, MatchStack matchStack)
+        {
+            return new NodeMatchStackPair{NodeMatch = nodeMatch, MatchStack = matchStack};
+        }
+
+        NodeMatchStackPair CreateStartDefMatch(Node node, NodeMatch match, MatchStack stack2)
+        {
+            NodeMatch match2 = new NodeMatch(node, NodeMatch.TransitionType.StartDef);
+            match2.Previous = match;
+            return pair(match2, stack2);
+        }
+
+        NodeMatchStackPair CreateEndDefMatch(NodeMatch match, MatchStack stack)
+        {
+            NodeMatch match2 = new NodeMatch(stack.Node, NodeMatch.TransitionType.EndDef);
+            match2.Previous = match;
+            return pair(match2, stack.Parent);
+        }
+
+        NodeMatchStackPair CreateFollowMatch(Node node, NodeMatch match, MatchStack stack)
+        {
+            NodeMatch match2 = new NodeMatch(node, NodeMatch.TransitionType.Follow);
+            match2.Previous = match;
+            return pair(match2, stack);
+        }
+
+        void PurgeRejects(Queue<NodeMatch> rejects, int k, ref NodeMatch lastReject, ref int lastk)
+        {
+            while (rejects.Count > 0)
+            {
+                NodeMatch n = lastReject;
+                lastReject = rejects.Dequeue();
+                lastk = k;
+
+                if (n == null) break;
+
+                while (n.Nexts.Count < 1)
+                {
+                    NodeMatch prev = n.Previous;
+                    n.Previous = null;
+
+                    //recycle the NodeMatch object here, if desired
+
+                    n = prev;
+                }
+            }
         }
     }
 }

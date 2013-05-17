@@ -1,4 +1,4 @@
-﻿
+
 /*****************************************************************************
  *                                                                           *
  *  SupergrammarSpanner.cs                                                   *
@@ -22,7 +22,7 @@ namespace MetaphysicsIndustries.Giza
             Supergrammar supergrammar = new Supergrammar();
             Definition.__id = 0;
             Spanner spanner = new Spanner();
-            Span[] s2 = spanner.Process2(supergrammar.Definitions, "grammar", input);
+            Span[] s2 = spanner.Process(supergrammar.Definitions, "grammar", input);
 
             DefinitionBuilder db = new DefinitionBuilder();
             Definition[] defs = db.BuildDefinitions(supergrammar, s2[0]);

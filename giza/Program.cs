@@ -43,7 +43,7 @@ namespace giza
                         Supergrammar supergrammar = new Supergrammar();
                         Definition.__id = 0;
                         Spanner spanner = new Spanner();
-                        Span[] ss = spanner.Process2(supergrammar.Definitions.ToArray(), "grammar", gfile);
+                        Span[] ss = spanner.Process(supergrammar.Definitions.ToArray(), "grammar", gfile);
                         DefinitionBuilder db = new DefinitionBuilder();
                         Definition.__id = 0;
                         DefinitionRenderer dr = new DefinitionRenderer();
@@ -114,7 +114,7 @@ namespace giza
                 Spanner gs = new Spanner();
                 if (args.Length > 3 && args[3] == "-2")
                 {
-                    Span[] ss = gs.Process2(g.Definitions.ToArray(), args[1], input);
+                    Span[] ss = gs.Process(g.Definitions.ToArray(), args[1], input);
                     DefinitionBuilder db = new DefinitionBuilder();
                     foreach (Span span in ss)
                     {
