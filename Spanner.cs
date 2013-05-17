@@ -154,16 +154,17 @@ namespace MetaphysicsIndustries.Giza
                 {
                     rejects.Enqueue(cur);
                 }
+                else if (cur.Node == implicitNode)
+                {
+                    ends.Enqueue(cur);
+                }
+                else if (cur.Node.IsAnEndOf((stack.NodeMatch.Node as DefRefNode).DefRef))
+                {
+                    currents.Enqueue(CreateEndDefMatch(cur, stack));
+                }
                 else
                 {
-                    if (cur.Node == implicitNode)
-                    {
-                        ends.Enqueue(cur);
-                    }
-                    else if (cur.Node.IsAnEndOf((stack.NodeMatch.Node as DefRefNode).DefRef))
-                    {
-                        currents.Enqueue(CreateEndDefMatch(cur, stack));
-                    }
+                    rejects.Enqueue(cur);
                 }
             }
 
