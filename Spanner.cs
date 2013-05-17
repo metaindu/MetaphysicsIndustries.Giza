@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
+using MetaphysicsIndustries.Collections;
+using System.Linq;
 
 namespace MetaphysicsIndustries.Giza
 {
@@ -250,6 +252,181 @@ namespace MetaphysicsIndustries.Giza
             }
 
             return spans.ToArray();
+        }
+
+        class NodeMatch
+        {
+            private static int __id = 0;
+            public readonly int _id;
+            public int _k = -1;
+
+            public NodeMatch(Node node, TransitionType transition)
+            {
+                if (node == null) throw new ArgumentNullException("node");
+
+                _nexts = new NodeMatchNodeMatchPreviousNextsCollection(this);
+
+                Node = node;
+                Transition = transition;
+
+                _id = __id;
+                __id++;
+            }
+
+            NodeMatchNodeMatchPreviousNextsCollection _nexts;
+            public ICollection<NodeMatch> Nexts
+            {
+                get { return _nexts; }
+            }
+
+            NodeMatch _previous;
+            public NodeMatch Previous
+            {
+                get { return _previous; }
+                set
+                {
+                    if (value != _previous)
+                    {
+                        if (_previous != null)
+                        {
+                            _previous.Nexts.Remove(this);
+                        }
+
+                        _previous = value;
+
+                        if (_previous != null)
+                        {
+                            _previous.Nexts.Add(this);
+                        }
+                    }
+                }
+            }
+
+            public enum TransitionType
+            {
+                StartDef,
+                EndDef,
+                Follow,
+            }
+
+            public TransitionType Transition;
+            public Node Node;
+            public char MatchedChar;
+
+            public override string ToString()
+            {
+                string nodestr;
+                if (Node is StartNode) nodestr = "<start>";
+                else if (Node is EndNode) nodestr = "<end>";
+                else if (Node is CharNode) nodestr = (Node as CharNode).CharClass.ToString();
+                else if (Node is DefRefNode) nodestr = (Node as DefRefNode).DefRef.Name;
+                else nodestr = "<unknown>";
+
+                return string.Format("[{0}] {1}:{2}, {3} nexts", _id, nodestr, Transition, Nexts.Count);
+            }
+        }
+
+        class NodeMatchNodeMatchPreviousNextsCollection : ICollection<NodeMatch>
+        {
+            public NodeMatchNodeMatchPreviousNextsCollection(NodeMatch container)
+            {
+                if (container == null) throw new ArgumentNullException("container");
+
+                _container = container;
+            }
+
+            NodeMatch _container;
+            Set<NodeMatch> _collection = new Set<NodeMatch>();
+
+            #region ICollection implementation
+
+            public void Add(NodeMatch item)
+            {
+                if (!this.Contains(item))
+                {
+                    _collection.Add(item);
+                    item.Previous = _container;
+                }
+            }
+
+            public void Clear()
+            {
+                foreach (NodeMatch item in this.ToArray())
+                {
+                    this.Remove(item);
+                }
+            }
+
+            public bool Contains(NodeMatch item)
+            {
+                return _collection.Contains(item);
+            }
+
+            public void CopyTo(NodeMatch[] array, int arrayIndex)
+            {
+                _collection.CopyTo(array, arrayIndex);
+            }
+
+            public bool Remove(NodeMatch item)
+            {
+                if (_collection.Remove(item))
+                {
+                    item.Previous = null;
+
+                    return true;
+                }
+
+                return false;
+            }
+
+            public int Count
+            {
+                get
+                {
+                    return _collection.Count;
+                }
+            }
+
+            public bool IsReadOnly
+            {
+                get { return false; }
+            }
+
+            #endregion
+
+            #region IEnumerable implementation
+
+            public IEnumerator<NodeMatch> GetEnumerator()
+            {
+                return _collection.GetEnumerator();
+            }
+
+            #endregion
+
+            #region IEnumerable implementation
+
+            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+            {
+                return GetEnumerator();
+            }
+
+            #endregion
+        }
+
+        class MatchStack
+        {
+            public MatchStack(NodeMatch nodeMatch, MatchStack parent)
+            {
+                if (nodeMatch == null) throw new ArgumentNullException("nodeMatch");
+
+                NodeMatch = nodeMatch;
+                Parent = parent;
+            }
+
+            public NodeMatch NodeMatch { get; protected set; }
+            public MatchStack Parent { get; protected set; }
+            public DefRefNode Node { get { return (DefRefNode)NodeMatch.Node; } }
+            public Definition Definition { get { return Node.DefRef; } }
         }
 
         struct NodeMatchStackPair
