@@ -53,6 +53,9 @@ namespace giza
                             Definition[] dd2 = db.BuildDefinitions(supergrammar, span);
                             string class2 = dr.RenderDefinitionsAsCSharpClass("FromBuildDefs2", dd2);
                             class2 = class2;
+
+                            DefinitionCheckerTest dct = new DefinitionCheckerTest();
+                            dct.TestSingleDefCycle();
                         }
                     }
                     else

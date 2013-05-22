@@ -1,5 +1,4 @@
 in Spanner, check incoming definitions for correctness
-  DefinitionChecker that returns errors and warnings
 get rid of start and end fields in Definition.
   Replace with collections of StartNodes and EndNodes.
   Fix IsEndOf
