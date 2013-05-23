@@ -240,7 +240,7 @@ namespace MetaphysicsIndustries.Giza
                         }
                         stack.Push(s);
                     }
-                    else
+                    else // nm.Node is CharNode
                     {
                         Span s = new Span();
                         s.Node = nm.Node;
