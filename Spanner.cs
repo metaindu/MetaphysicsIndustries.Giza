@@ -9,10 +9,10 @@ namespace MetaphysicsIndustries.Giza
 {
     public class Spanner
     {
-        public Span[] Process(IEnumerable<Definition> defs2, string startName, string input)
+        public Span[] Process(IEnumerable<Definition> defs, string startName, string input)
         {
             Definition start = null;
-            foreach (Definition d in defs2)
+            foreach (Definition d in defs)
             {
                 if (d.Name == startName)
                 {
@@ -32,6 +32,13 @@ namespace MetaphysicsIndustries.Giza
 
         public Span[] Process(Definition def, string input)
         {
+            // check incoming definitions
+            DefinitionChecker dc = new DefinitionChecker();
+            List<DefinitionChecker.ErrorInfo> errors = 
+                new List<DefinitionChecker.ErrorInfo>(
+                    dc.CheckDefinitions(def.ParentGrammar.Definitions));
+            if (errors.Count > 0) throw new InvalidOperationException("Definitions contain errors.");
+
             DefRefNode implicitNode = new DefRefNode(def);
             NodeMatch root = new NodeMatch(implicitNode, NodeMatch.TransitionType.StartDef);
             root._k = -1;
