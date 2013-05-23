@@ -21,7 +21,17 @@ namespace MetaphysicsIndustries.Giza
 
         public int ID
         {
-            get { return ParentDefinition.Nodes.IndexOf(this); }
+            get
+            {
+                if (ParentDefinition == null)
+                {
+                    return -1;
+                }
+                else
+                {
+                    return ParentDefinition.Nodes.IndexOf(this); 
+                }
+            }
         }
 
         //the tag is a string used to identify the node. typically, if it isn't
