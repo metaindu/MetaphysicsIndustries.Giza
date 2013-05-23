@@ -37,6 +37,7 @@ namespace MetaphysicsIndustries.Giza
 
          List<Error> CheckSpan(Span span, Grammar grammar, Set<Span> visited, SpanStack stack)
         {
+            Definition spandef = (span.Node as DefRefNode).DefRef;
             List<Error> errors = new List<Error>();
 
             SpanStack stack2 = stack;
@@ -59,7 +60,8 @@ namespace MetaphysicsIndustries.Giza
             Span first = span.Subspans.FirstOrDefault();
             if (first != null)
             {
-                if (!span.Node.ParentDefinition.GetStartingNodes().Contains(first.Node))
+                if (spandef != null &&
+                    !spandef.GetStartingNodes().Contains(first.Node))
                 {
                     errors.Add(new Error{
                         ErrorType=ErrorType.BadStartingNode,
@@ -94,7 +96,7 @@ namespace MetaphysicsIndustries.Giza
                     }
                     visited.Add(next);
 
-                    if (next.Node.ParentDefinition != span.Node.ParentDefinition)
+                    if (next.Node.ParentDefinition != spandef)
                     {
                         errors.Add(new Error{
                             ErrorType=ErrorType.NodeInWrongDefinition,
@@ -108,7 +110,8 @@ namespace MetaphysicsIndustries.Giza
                     }
                 }
 
-                if (!span.Node.ParentDefinition.GetEndingNodes().Contains(span.Subspans.Last().Node))
+                if (spandef != null &&
+                    !spandef.GetEndingNodes().Contains(span.Subspans.Last().Node))
                 {
                     errors.Add(new Error{
                         ErrorType=ErrorType.BadEndingNode,
