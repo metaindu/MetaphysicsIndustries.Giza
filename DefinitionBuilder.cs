@@ -19,9 +19,9 @@ namespace MetaphysicsIndustries.Giza
         public Definition[] BuildDefinitions(Supergrammar grammar, Span span)
         {
             if (span.Definition != grammar.def_0_grammar) throw new InvalidOperationException();
-//            SpanChecker sc = new SpanChecker();
-//            SpanChecker.Error[] errors = sc.CheckSpan(span, grammar);
-//            if (errors.Length > 0) throw new InvalidOperationException();
+            SpanChecker sc = new SpanChecker();
+            List<SpanChecker.Error> errors = sc.CheckSpan(span, grammar);
+            if (errors.Count > 0) throw new InvalidOperationException();
 
             List<Definition> defs = new List<Definition>();
             Dictionary<Definition, Span> matchup = new Dictionary<Definition, Span>();
