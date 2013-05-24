@@ -134,8 +134,8 @@ namespace MetaphysicsIndustries.Giza
                 foreach (Node node in def.Nodes)
                 {
                     sb.Append(indent);
-                        sb.AppendFormat("{0}.Nodes.Add({1});", defnames[def], nodenames[node]);
-                        sb.AppendLine();
+                    sb.AppendFormat("{0}.Nodes.Add({1});", defnames[def], nodenames[node]);
+                    sb.AppendLine();
                 }
 
                 sb.Append(indent);
@@ -163,11 +163,13 @@ namespace MetaphysicsIndustries.Giza
                 sb.AppendLine(";");
                 foreach (Node node in def.StartingNodes)
                 {
+                    sb.Append(indent);
                     sb.AppendFormat("{0}.StartingNodes.Add({1});", defnames[def], nodenames[node]);
                     sb.AppendLine();
                 }
                 foreach (Node node in def.EndingNodes)
                 {
+                    sb.Append(indent);
                     sb.AppendFormat("{0}.EndingNodes.Add({1});", defnames[def], nodenames[node]);
                     sb.AppendLine();
                 }

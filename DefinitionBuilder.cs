@@ -79,6 +79,7 @@ namespace MetaphysicsIndustries.Giza
 
                         def.start = new StartNode();
                         def.start.NextNodes.AddRange(bundle.StartNodes);
+                        def.StartingNodes.AddRange(bundle.StartNodes);
                         def.Nodes.Add(def.start);
 
                         def.Nodes.AddRange(bundle.Nodes);
@@ -88,6 +89,7 @@ namespace MetaphysicsIndustries.Giza
                         {
                             node.NextNodes.Add(def.end);
                         }
+                        def.EndingNodes.AddRange(bundle.EndNodes);
                         def.Nodes.Add(def.end);
                     }
                     else if (sub.Definition == null && sub.Node == grammar.node_definition_5__003B_) // ';'
