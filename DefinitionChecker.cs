@@ -128,12 +128,32 @@ namespace MetaphysicsIndustries.Giza
                     Node=def.start,
                 };
             }
+            foreach (Node node in def.StartingNodes)
+            {
+                if (node.ParentDefinition != def)
+                {
+                    yield return new ErrorInfo {
+                        Error=Error.StartNodeHasWrongParentDefinition,
+                        Node=node,
+                    };
+                }
+            }
             if (def.start.ParentDefinition != def)
             {
                 yield return new ErrorInfo {
                     Error=Error.EndNodeHasWrongParentDefinition,
                     Node=def.end,
                 };
+            }
+            foreach (Node node in def.EndingNodes)
+            {
+                if (node.ParentDefinition != def)
+                {
+                    yield return new ErrorInfo {
+                        Error=Error.EndNodeHasWrongParentDefinition,
+                        Node=node,
+                    };
+                }
             }
         }
     }

@@ -29,9 +29,13 @@ namespace MetaphysicsIndustries.Giza
         public DefinitionNodeOrderedParentChildrenCollection Nodes;
         public Node start;
         public Node end;
+        public Set<Node> StartingNodes = new Set<Node>();
+        public Set<Node> EndingNodes = new Set<Node>();
 
         public IEnumerable<Node> GetStartingNodes()
         {
+            Set<Node> startNodes = new Set<Node>();
+
             if (start != null)
             {
                 foreach (Node n in start.NextNodes)
@@ -39,23 +43,33 @@ namespace MetaphysicsIndustries.Giza
                     if (n is EndNode) continue;
                     if (n is StartNode) continue;
 
-                    yield return n;
+                    startNodes.Add(n);
                 }
             }
+
+            startNodes.AddRange(StartingNodes);
+
+            return startNodes;
         }
 
         public IEnumerable<Node> GetEndingNodes()
         {
+            Set<Node> endNodes = new Set<Node>();
+
             foreach (Node n in Nodes)
             {
                 if (n is EndNode) continue;
                 if (n is StartNode) continue;
 
-                if (n.IsAnEndOf(this))
+                if (n.NextNodes.Contains(this.end))
                 {
-                    yield return n;
+                    endNodes.Add(n);
                 }
             }
+
+            endNodes.AddRange(EndingNodes);
+
+            return endNodes;
         }
 
         public bool IgnoreWhitespace = false;
