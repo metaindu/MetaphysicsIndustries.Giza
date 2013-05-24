@@ -1,0 +1,2 @@
+--super ~/other-projects/MetaphysicsIndustries.Giza/Supergrammar.txt -2
+--render ~/other-projects/MetaphysicsIndustries.Giza/Supergrammar.txt Supergrammar
