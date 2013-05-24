@@ -147,8 +147,6 @@ namespace MetaphysicsIndustries.Giza
             node_grammar_1_comment = new DefRefNode(def_17_comment, "comment");
             def_0_grammar.Nodes.Add(node_grammar_0_definition);
             def_0_grammar.Nodes.Add(node_grammar_1_comment);
-            def_0_grammar.start = null;
-            def_0_grammar.end = null;
             def_0_grammar.StartingNodes.Add(node_grammar_0_definition);
             def_0_grammar.StartingNodes.Add(node_grammar_1_comment);
             def_0_grammar.EndingNodes.Add(node_grammar_0_definition);
@@ -171,8 +169,6 @@ namespace MetaphysicsIndustries.Giza
             def_1_definition.Nodes.Add(node_definition_2__003D_);
             def_1_definition.Nodes.Add(node_definition_3_expr);
             def_1_definition.Nodes.Add(node_definition_4__003B_);
-            def_1_definition.start = null;
-            def_1_definition.end = null;
             def_1_definition.StartingNodes.Add(node_definition_0_defmod);
             def_1_definition.StartingNodes.Add(node_definition_1_identifier);
             def_1_definition.EndingNodes.Add(node_definition_4__003B_);
@@ -195,8 +191,6 @@ namespace MetaphysicsIndustries.Giza
             def_2_defmod.Nodes.Add(node_defmod_2__002C_);
             def_2_defmod.Nodes.Add(node_defmod_3_defmod_002D_item);
             def_2_defmod.Nodes.Add(node_defmod_4__003E_);
-            def_2_defmod.start = null;
-            def_2_defmod.end = null;
             def_2_defmod.StartingNodes.Add(node_defmod_0__003C_);
             def_2_defmod.EndingNodes.Add(node_defmod_4__003E_);
             node_defmod_0__003C_.NextNodes.Add(node_defmod_1_defmod_002D_item);
@@ -219,8 +213,6 @@ namespace MetaphysicsIndustries.Giza
             def_3_defmod_item.Nodes.Add(node_defmod_item_2__002D_);
             def_3_defmod_item.Nodes.Add(node_defmod_item_3_id_002D_case);
             def_3_defmod_item.Nodes.Add(node_defmod_item_4_id_002D_contiguous);
-            def_3_defmod_item.start = null;
-            def_3_defmod_item.end = null;
             def_3_defmod_item.StartingNodes.Add(node_defmod_item_0_id_002D_whitespace);
             def_3_defmod_item.StartingNodes.Add(node_defmod_item_1_id_002D_ignore);
             def_3_defmod_item.StartingNodes.Add(node_defmod_item_4_id_002D_contiguous);
@@ -254,8 +246,6 @@ namespace MetaphysicsIndustries.Giza
             def_4_id_whitespace.Nodes.Add(node_id_whitespace_7_whitespace);
             def_4_id_whitespace.Nodes.Add(node_id_whitespace_8_whitespace);
             def_4_id_whitespace.Nodes.Add(node_id_whitespace_9_whitespace);
-            def_4_id_whitespace.start = null;
-            def_4_id_whitespace.end = null;
             def_4_id_whitespace.StartingNodes.Add(node_id_whitespace_0_whitespace);
             def_4_id_whitespace.EndingNodes.Add(node_id_whitespace_9_whitespace);
             node_id_whitespace_0_whitespace.NextNodes.Add(node_id_whitespace_1_whitespace);
@@ -283,8 +273,6 @@ namespace MetaphysicsIndustries.Giza
             def_5_id_ignore.Nodes.Add(node_id_ignore_3_ignore);
             def_5_id_ignore.Nodes.Add(node_id_ignore_4_ignore);
             def_5_id_ignore.Nodes.Add(node_id_ignore_5_ignore);
-            def_5_id_ignore.start = null;
-            def_5_id_ignore.end = null;
             def_5_id_ignore.StartingNodes.Add(node_id_ignore_0_ignore);
             def_5_id_ignore.EndingNodes.Add(node_id_ignore_5_ignore);
             node_id_ignore_0_ignore.NextNodes.Add(node_id_ignore_1_ignore);
@@ -304,8 +292,6 @@ namespace MetaphysicsIndustries.Giza
             def_6_id_case.Nodes.Add(node_id_case_1_case);
             def_6_id_case.Nodes.Add(node_id_case_2_case);
             def_6_id_case.Nodes.Add(node_id_case_3_case);
-            def_6_id_case.start = null;
-            def_6_id_case.end = null;
             def_6_id_case.StartingNodes.Add(node_id_case_0_case);
             def_6_id_case.EndingNodes.Add(node_id_case_3_case);
             node_id_case_0_case.NextNodes.Add(node_id_case_1_case);
@@ -335,8 +321,6 @@ namespace MetaphysicsIndustries.Giza
             def_7_id_contiguous.Nodes.Add(node_id_contiguous_7_contiguous);
             def_7_id_contiguous.Nodes.Add(node_id_contiguous_8_contiguous);
             def_7_id_contiguous.Nodes.Add(node_id_contiguous_9_contiguous);
-            def_7_id_contiguous.start = null;
-            def_7_id_contiguous.end = null;
             def_7_id_contiguous.StartingNodes.Add(node_id_contiguous_0_contiguous);
             def_7_id_contiguous.EndingNodes.Add(node_id_contiguous_9_contiguous);
             node_id_contiguous_0_contiguous.NextNodes.Add(node_id_contiguous_1_contiguous);
@@ -358,8 +342,6 @@ namespace MetaphysicsIndustries.Giza
             def_8_expr.Nodes.Add(node_expr_0_subexpr);
             def_8_expr.Nodes.Add(node_expr_1_orexpr);
             def_8_expr.Nodes.Add(node_expr_2_comment);
-            def_8_expr.start = null;
-            def_8_expr.end = null;
             def_8_expr.StartingNodes.Add(node_expr_0_subexpr);
             def_8_expr.StartingNodes.Add(node_expr_1_orexpr);
             def_8_expr.StartingNodes.Add(node_expr_2_comment);
@@ -391,8 +373,6 @@ namespace MetaphysicsIndustries.Giza
             def_9_orexpr.Nodes.Add(node_orexpr_3_expr);
             def_9_orexpr.Nodes.Add(node_orexpr_4__0029_);
             def_9_orexpr.Nodes.Add(node_orexpr_5_modifier);
-            def_9_orexpr.start = null;
-            def_9_orexpr.end = null;
             def_9_orexpr.StartingNodes.Add(node_orexpr_0__0028_);
             def_9_orexpr.EndingNodes.Add(node_orexpr_5_modifier);
             def_9_orexpr.EndingNodes.Add(node_orexpr_4__0029_);
@@ -419,8 +399,6 @@ namespace MetaphysicsIndustries.Giza
             def_10_subexpr.Nodes.Add(node_subexpr_3_modifier);
             def_10_subexpr.Nodes.Add(node_subexpr_4__003A_);
             def_10_subexpr.Nodes.Add(node_subexpr_5_tag);
-            def_10_subexpr.start = null;
-            def_10_subexpr.end = null;
             def_10_subexpr.StartingNodes.Add(node_subexpr_0_identifier);
             def_10_subexpr.StartingNodes.Add(node_subexpr_1_literal);
             def_10_subexpr.StartingNodes.Add(node_subexpr_2_charclass);
@@ -443,8 +421,6 @@ namespace MetaphysicsIndustries.Giza
             def_11_modifier.Contiguous = false;
             node_modifier_0__002A__002B__003F_ = new CharNode(CharClass.FromUndelimitedCharClassText("*+?"), "*+?");
             def_11_modifier.Nodes.Add(node_modifier_0__002A__002B__003F_);
-            def_11_modifier.start = null;
-            def_11_modifier.end = null;
             def_11_modifier.StartingNodes.Add(node_modifier_0__002A__002B__003F_);
             def_11_modifier.EndingNodes.Add(node_modifier_0__002A__002B__003F_);
 
@@ -453,8 +429,6 @@ namespace MetaphysicsIndustries.Giza
             def_12_number.Contiguous = true;
             node_number_0__005C_d = new CharNode(CharClass.FromUndelimitedCharClassText("\\d"), "\\d");
             def_12_number.Nodes.Add(node_number_0__005C_d);
-            def_12_number.start = null;
-            def_12_number.end = null;
             def_12_number.StartingNodes.Add(node_number_0__005C_d);
             def_12_number.EndingNodes.Add(node_number_0__005C_d);
             node_number_0__005C_d.NextNodes.Add(node_number_0__005C_d);
@@ -466,8 +440,6 @@ namespace MetaphysicsIndustries.Giza
             node_identifier_1__005C_l_005C_d_002D__ = new CharNode(CharClass.FromUndelimitedCharClassText("\\l\\d-_"), "\\l\\d-_");
             def_13_identifier.Nodes.Add(node_identifier_0__005C_l_002D__);
             def_13_identifier.Nodes.Add(node_identifier_1__005C_l_005C_d_002D__);
-            def_13_identifier.start = null;
-            def_13_identifier.end = null;
             def_13_identifier.StartingNodes.Add(node_identifier_0__005C_l_002D__);
             def_13_identifier.EndingNodes.Add(node_identifier_1__005C_l_005C_d_002D__);
             def_13_identifier.EndingNodes.Add(node_identifier_0__005C_l_002D__);
@@ -489,8 +461,6 @@ namespace MetaphysicsIndustries.Giza
             def_14_literal.Nodes.Add(node_literal_3_rnt_005C__005C__0027_);
             def_14_literal.Nodes.Add(node_literal_4_unicodechar);
             def_14_literal.Nodes.Add(node_literal_5__0027_);
-            def_14_literal.start = null;
-            def_14_literal.end = null;
             def_14_literal.StartingNodes.Add(node_literal_0__0027_);
             def_14_literal.EndingNodes.Add(node_literal_5__0027_);
             node_literal_0__0027_.NextNodes.Add(node_literal_1__005E__005C__005C__0027_);
@@ -525,8 +495,6 @@ namespace MetaphysicsIndustries.Giza
             def_15_charclass.Nodes.Add(node_charclass_3_wldsrnt_005C__005C__005C__005B__005C__005D_);
             def_15_charclass.Nodes.Add(node_charclass_4_unicodechar);
             def_15_charclass.Nodes.Add(node_charclass_5__005D_);
-            def_15_charclass.start = null;
-            def_15_charclass.end = null;
             def_15_charclass.StartingNodes.Add(node_charclass_0__005B_);
             def_15_charclass.EndingNodes.Add(node_charclass_5__005D_);
             node_charclass_0__005B_.NextNodes.Add(node_charclass_1__005E__005C__005C__005C__005B__005C__005D_);
@@ -561,8 +529,6 @@ namespace MetaphysicsIndustries.Giza
             def_16_unicodechar.Nodes.Add(node_unicodechar_3__005C_dabcdef);
             def_16_unicodechar.Nodes.Add(node_unicodechar_4__005C_dabcdef);
             def_16_unicodechar.Nodes.Add(node_unicodechar_5__005C_dabcdef);
-            def_16_unicodechar.start = null;
-            def_16_unicodechar.end = null;
             def_16_unicodechar.StartingNodes.Add(node_unicodechar_0__005C_x);
             def_16_unicodechar.EndingNodes.Add(node_unicodechar_5__005C_dabcdef);
             node_unicodechar_0__005C_x.NextNodes.Add(node_unicodechar_1__005C_x);
@@ -596,8 +562,6 @@ namespace MetaphysicsIndustries.Giza
             def_17_comment.Nodes.Add(node_comment_8__002F__002F_);
             def_17_comment.Nodes.Add(node_comment_9__005E__005C_r_005C_n);
             def_17_comment.Nodes.Add(node_comment_10__005C_r_005C_n);
-            def_17_comment.start = null;
-            def_17_comment.end = null;
             def_17_comment.StartingNodes.Add(node_comment_0__002F__002A_);
             def_17_comment.StartingNodes.Add(node_comment_7__002F__002F_);
             def_17_comment.EndingNodes.Add(node_comment_6__002F_);

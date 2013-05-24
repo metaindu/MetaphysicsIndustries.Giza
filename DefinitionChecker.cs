@@ -121,14 +121,6 @@ namespace MetaphysicsIndustries.Giza
             }
 
             //check start and end
-            if (def.start != null &&
-                def.start.ParentDefinition != def)
-            {
-                yield return new ErrorInfo {
-                    Error=Error.StartNodeHasWrongParentDefinition,
-                    Node=def.start,
-                };
-            }
             foreach (Node node in def.StartingNodes)
             {
                 if (node.ParentDefinition != def)
@@ -138,14 +130,6 @@ namespace MetaphysicsIndustries.Giza
                         Node=node,
                     };
                 }
-            }
-            if (def.start != null &&
-                def.start.ParentDefinition != def)
-            {
-                yield return new ErrorInfo {
-                    Error=Error.EndNodeHasWrongParentDefinition,
-                    Node=def.end,
-                };
             }
             foreach (Node node in def.EndingNodes)
             {

@@ -38,14 +38,10 @@ namespace MetaphysicsIndustries.Giza
         {
             Definition a = new Definition {
                 Name="a",
-                start=new StartNode(),
-                end=new EndNode(),
             };
-            a.Nodes.Add(a.start);
             a.Nodes.Add(new DefRefNode(a));
-            a.Nodes.Add(a.end);
-            a.Nodes[0].NextNodes.Add(a.Nodes[1]);
-            a.Nodes[1].NextNodes.Add(a.Nodes[2]);
+            a.StartingNodes.Add(a.Nodes[0]);
+            a.EndingNodes.Add(a.Nodes[0]);
 
             List<Definition> defs = new List<Definition> { a };
 
@@ -70,43 +66,31 @@ namespace MetaphysicsIndustries.Giza
         {
             Definition a = new Definition {
                 Name="a",
-                start=new StartNode(),
-                end=new EndNode(),
             };
             Definition b = new Definition {
                 Name="b",
-                start=new StartNode(),
-                end=new EndNode(),
             };
             Definition c = new Definition {
                 Name="c",
-                start=new StartNode(),
-                end=new EndNode(),
             };
 
-            a.Nodes.Add(a.start);
             a.Nodes.Add(new DefRefNode(b));
             a.Nodes.Add(new CharNode('a'));
-            a.Nodes.Add(a.end);
+            a.StartingNodes.Add(a.Nodes[0]);
+            a.EndingNodes.Add(a.Nodes[1]);
             a.Nodes[0].NextNodes.Add(a.Nodes[1]);
-            a.Nodes[1].NextNodes.Add(a.Nodes[2]);
-            a.Nodes[2].NextNodes.Add(a.Nodes[3]);
 
-            b.Nodes.Add(b.start);
             b.Nodes.Add(new DefRefNode(c));
             b.Nodes.Add(new CharNode('b'));
-            b.Nodes.Add(b.end);
+            b.StartingNodes.Add(b.Nodes[0]);
+            b.EndingNodes.Add(b.Nodes[1]);
             b.Nodes[0].NextNodes.Add(b.Nodes[1]);
-            b.Nodes[1].NextNodes.Add(b.Nodes[2]);
-            b.Nodes[2].NextNodes.Add(b.Nodes[3]);
 
-            c.Nodes.Add(c.start);
             c.Nodes.Add(new DefRefNode(a));
             c.Nodes.Add(new CharNode('c'));
-            c.Nodes.Add(c.end);
+            c.StartingNodes.Add(c.Nodes[0]);
+            c.EndingNodes.Add(c.Nodes[1]);
             c.Nodes[0].NextNodes.Add(c.Nodes[1]);
-            c.Nodes[1].NextNodes.Add(c.Nodes[2]);
-            c.Nodes[2].NextNodes.Add(c.Nodes[3]);
 
             List<Definition> defs = new List<Definition> { a, b, c };
 

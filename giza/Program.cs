@@ -47,6 +47,10 @@ namespace giza
                         DefinitionBuilder db = new DefinitionBuilder();
                         Definition.__id = 0;
                         DefinitionRenderer dr = new DefinitionRenderer();
+                        if (ss.Length != 1)
+                        {
+                            throw new InvalidOperationException();
+                        }
                         foreach (Span span in ss)
                         {
                             Definition.__id = 0;

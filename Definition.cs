@@ -27,25 +27,12 @@ namespace MetaphysicsIndustries.Giza
 
         public string Name;
         public DefinitionNodeOrderedParentChildrenCollection Nodes;
-        public Node start;
-        public Node end;
         public Set<Node> StartingNodes = new Set<Node>();
         public Set<Node> EndingNodes = new Set<Node>();
 
         public IEnumerable<Node> GetStartingNodes()
         {
             Set<Node> startNodes = new Set<Node>();
-
-            if (start != null)
-            {
-                foreach (Node n in start.NextNodes)
-                {
-                    if (n is EndNode) continue;
-                    if (n is StartNode) continue;
-
-                    startNodes.Add(n);
-                }
-            }
 
             startNodes.AddRange(StartingNodes);
 
@@ -55,20 +42,6 @@ namespace MetaphysicsIndustries.Giza
         public IEnumerable<Node> GetEndingNodes()
         {
             Set<Node> endNodes = new Set<Node>();
-
-            if (this.end != null)
-            {
-                foreach (Node n in Nodes)
-                {
-                    if (n is EndNode) continue;
-                    if (n is StartNode) continue;
-
-                    if (n.NextNodes.Contains(this.end))
-                    {
-                        endNodes.Add(n);
-                    }
-                }
-            }
 
             endNodes.AddRange(EndingNodes);
 

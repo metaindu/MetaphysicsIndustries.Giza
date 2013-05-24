@@ -58,7 +58,6 @@ namespace MetaphysicsIndustries.Giza
         public bool IsAnEndOf(Definition def)
         {
             return
-                (def.end != null && NextNodes.Contains(def.end)) ||
                 def.GetEndingNodes().Contains(this);
         }
 

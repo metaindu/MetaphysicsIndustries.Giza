@@ -138,29 +138,6 @@ namespace MetaphysicsIndustries.Giza
                     sb.AppendLine();
                 }
 
-                sb.Append(indent);
-                sb.AppendFormat("{0}.start = ", defnames[def]);
-                if (def.start == null)
-                {
-                    sb.Append("null");
-                }
-                else
-                {
-                    sb.Append(nodenames[def.start]);
-                }
-                sb.AppendLine(";");
-
-                sb.Append(indent);
-                sb.AppendFormat("{0}.end = ", defnames[def]);
-                if (def.end == null)
-                {
-                    sb.Append("null");
-                }
-                else
-                {
-                    sb.Append(nodenames[def.end]);
-                }
-                sb.AppendLine(";");
                 foreach (Node node in def.StartingNodes)
                 {
                     sb.Append(indent);
