@@ -61,7 +61,7 @@ namespace MetaphysicsIndustries.Giza
             if (first != null)
             {
                 if (spandef != null &&
-                    !spandef.GetStartingNodes().Contains(first.Node))
+                    !spandef.StartNodes.Contains(first.Node))
                 {
                     errors.Add(new Error{
                         ErrorType=ErrorType.BadStartingNode,
@@ -111,7 +111,7 @@ namespace MetaphysicsIndustries.Giza
                 }
 
                 if (spandef != null &&
-                    !spandef.GetEndingNodes().Contains(span.Subspans.Last().Node))
+                    !spandef.EndNodes.Contains(span.Subspans.Last().Node))
                 {
                     errors.Add(new Error{
                         ErrorType=ErrorType.BadEndingNode,

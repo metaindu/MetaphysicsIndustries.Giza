@@ -94,7 +94,7 @@ namespace MetaphysicsIndustries.Giza
 
                             //end
                             if (!stack.Definition.Contiguous &&
-                                cur.Node.IsAnEndOf((stack.NodeMatch.Node as DefRefNode).DefRef))
+                                cur.Node.IsEndNode)
                             {
                                 accepts.Enqueue(CreateEndDefMatch(cur, stack));
                             }
@@ -103,7 +103,7 @@ namespace MetaphysicsIndustries.Giza
                         {
                             if (stack.Definition.Contiguous &&
                                 stack.Definition.Nodes.Contains(cur.Previous.Node) &&
-                                cur.Previous.Node.IsAnEndOf((stack.NodeMatch.Node as DefRefNode).DefRef))
+                                cur.Previous.Node.IsEndNode)
                             {
                                 currents.Enqueue(CreateEndDefMatch(cur.Previous, stack));
                             }
@@ -126,7 +126,7 @@ namespace MetaphysicsIndustries.Giza
                             {
                                 ends.Enqueue(cur);
                             }
-                            else if (cur.Node.IsAnEndOf((stack.NodeMatch.Node as DefRefNode).DefRef))
+                            else if (cur.Node.IsEndNode)
                             {
                                 currents.Enqueue(CreateEndDefMatch(cur, stack));
                             }
@@ -134,7 +134,7 @@ namespace MetaphysicsIndustries.Giza
                         else
                         {
                             MatchStack stack2 = new MatchStack(cur, stack);
-                            foreach (Node start in (cur.Node as DefRefNode).DefRef.GetStartingNodes())
+                            foreach (Node start in (cur.Node as DefRefNode).DefRef.StartNodes)
                             {
                                 currents.Enqueue(CreateStartDefMatch(start, cur, stack2));
                             }
@@ -165,7 +165,7 @@ namespace MetaphysicsIndustries.Giza
                 {
                     ends.Enqueue(cur);
                 }
-                else if (cur.Node.IsAnEndOf((stack.NodeMatch.Node as DefRefNode).DefRef))
+                else if (cur.Node.IsEndNode)
                 {
                     currents.Enqueue(CreateEndDefMatch(cur, stack));
                 }

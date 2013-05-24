@@ -77,11 +77,11 @@ namespace MetaphysicsIndustries.Giza
 
                         if (bundle.IsSkippable) throw new InvalidOperationException();
 
-                        def.StartingNodes.AddRange(bundle.StartNodes);
+                        def.StartNodes.AddRange(bundle.StartNodes);
 
                         def.Nodes.AddRange(bundle.Nodes);
 
-                        def.EndingNodes.AddRange(bundle.EndNodes);
+                        def.EndNodes.AddRange(bundle.EndNodes);
                     }
                     else if (sub.Definition == null && sub.Node == grammar.node_definition_4__003B_) // ';'
                     {

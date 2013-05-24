@@ -49,7 +49,7 @@ namespace MetaphysicsIndustries.Giza
                 Set<Definition> s = new Set<Definition>();
                 leaders[def] = s;
 
-                foreach (Node start in def.GetStartingNodes())
+                foreach (Node start in def.StartNodes)
                 {
                     if (start is DefRefNode)
                     {
@@ -121,7 +121,7 @@ namespace MetaphysicsIndustries.Giza
             }
 
             //check start and end
-            foreach (Node node in def.StartingNodes)
+            foreach (Node node in def.StartNodes)
             {
                 if (node.ParentDefinition != def)
                 {
@@ -131,7 +131,7 @@ namespace MetaphysicsIndustries.Giza
                     };
                 }
             }
-            foreach (Node node in def.EndingNodes)
+            foreach (Node node in def.EndNodes)
             {
                 if (node.ParentDefinition != def)
                 {

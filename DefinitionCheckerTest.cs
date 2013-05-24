@@ -40,8 +40,8 @@ namespace MetaphysicsIndustries.Giza
                 Name="a",
             };
             a.Nodes.Add(new DefRefNode(a));
-            a.StartingNodes.Add(a.Nodes[0]);
-            a.EndingNodes.Add(a.Nodes[0]);
+            a.StartNodes.Add(a.Nodes[0]);
+            a.EndNodes.Add(a.Nodes[0]);
 
             List<Definition> defs = new List<Definition> { a };
 
@@ -76,20 +76,20 @@ namespace MetaphysicsIndustries.Giza
 
             a.Nodes.Add(new DefRefNode(b));
             a.Nodes.Add(new CharNode('a'));
-            a.StartingNodes.Add(a.Nodes[0]);
-            a.EndingNodes.Add(a.Nodes[1]);
+            a.StartNodes.Add(a.Nodes[0]);
+            a.EndNodes.Add(a.Nodes[1]);
             a.Nodes[0].NextNodes.Add(a.Nodes[1]);
 
             b.Nodes.Add(new DefRefNode(c));
             b.Nodes.Add(new CharNode('b'));
-            b.StartingNodes.Add(b.Nodes[0]);
-            b.EndingNodes.Add(b.Nodes[1]);
+            b.StartNodes.Add(b.Nodes[0]);
+            b.EndNodes.Add(b.Nodes[1]);
             b.Nodes[0].NextNodes.Add(b.Nodes[1]);
 
             c.Nodes.Add(new DefRefNode(a));
             c.Nodes.Add(new CharNode('c'));
-            c.StartingNodes.Add(c.Nodes[0]);
-            c.EndingNodes.Add(c.Nodes[1]);
+            c.StartNodes.Add(c.Nodes[0]);
+            c.EndNodes.Add(c.Nodes[1]);
             c.Nodes[0].NextNodes.Add(c.Nodes[1]);
 
             List<Definition> defs = new List<Definition> { a, b, c };

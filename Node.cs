@@ -55,10 +55,9 @@ namespace MetaphysicsIndustries.Giza
             get { return _nextNodes; }
         }
 
-        public bool IsAnEndOf(Definition def)
+        public bool IsEndNode
         {
-            return
-                def.GetEndingNodes().Contains(this);
+            get { return ParentDefinition.EndNodes.Contains(this); }
         }
 
         private Definition _parentDefinition;

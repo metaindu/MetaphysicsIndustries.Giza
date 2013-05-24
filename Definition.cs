@@ -27,26 +27,8 @@ namespace MetaphysicsIndustries.Giza
 
         public string Name;
         public DefinitionNodeOrderedParentChildrenCollection Nodes;
-        public Set<Node> StartingNodes = new Set<Node>();
-        public Set<Node> EndingNodes = new Set<Node>();
-
-        public IEnumerable<Node> GetStartingNodes()
-        {
-            Set<Node> startNodes = new Set<Node>();
-
-            startNodes.AddRange(StartingNodes);
-
-            return startNodes;
-        }
-
-        public IEnumerable<Node> GetEndingNodes()
-        {
-            Set<Node> endNodes = new Set<Node>();
-
-            endNodes.AddRange(EndingNodes);
-
-            return endNodes;
-        }
+        public Set<Node> StartNodes = new Set<Node>();
+        public Set<Node> EndNodes = new Set<Node>();
 
         public bool IgnoreWhitespace = false;
         public bool IgnoreCase = false;

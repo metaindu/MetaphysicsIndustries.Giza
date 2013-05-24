@@ -1,15 +1,13 @@
-get rid of start and end fields in Definition.
-  Replace with collections of StartNodes and EndNodes.
-  Fix IsEndOf
-return errors from Spanner
+return errors from Spanner ?
 Rename DefinitionRenderer to GrammarRenderer, rename methods, make it take a Grammar instead of Definition[].
 tokenized parsing
 Define a grammar for Solus. Create a SolusGrammar class.
 Create a SolusSpanner class around SolusGrammar. Put both classes into MetaphysicsIndustries.Solus.
 Convert all lists and arrays to IEnumerable<> ?
-DefinitionChecker -
-  rename to GrammarChecker?
+DefinitionChecker
+  rename to GrammarChecker ?
   check that all defrefs point to defs in the same grammar
+  check for duplicate names
   more thorough analysis
 SpanChecker
   more thorough analysis
