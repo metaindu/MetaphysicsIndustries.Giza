@@ -56,14 +56,17 @@ namespace MetaphysicsIndustries.Giza
         {
             Set<Node> endNodes = new Set<Node>();
 
-            foreach (Node n in Nodes)
+            if (this.end != null)
             {
-                if (n is EndNode) continue;
-                if (n is StartNode) continue;
-
-                if (n.NextNodes.Contains(this.end))
+                foreach (Node n in Nodes)
                 {
-                    endNodes.Add(n);
+                    if (n is EndNode) continue;
+                    if (n is StartNode) continue;
+
+                    if (n.NextNodes.Contains(this.end))
+                    {
+                        endNodes.Add(n);
+                    }
                 }
             }
 

@@ -37,7 +37,7 @@ namespace MetaphysicsIndustries.Giza
 
                     foreach (Span sub2 in sub.Subspans)
                     {
-                        if (sub2.Node == grammar.node_definition_2_identifier)
+                        if (sub2.Node == grammar.node_definition_1_identifier)
                         {
                             def.Name = GetIdentifier(grammar, sub2);
                             break;
@@ -66,7 +66,7 @@ namespace MetaphysicsIndustries.Giza
                         // we've already set the name above. skip this node
                         continue;
                     }
-                    else if (sub.Definition == null && sub.Node == grammar.node_definition_3__003D_) // '='
+                    else if (sub.Definition == null && sub.Node == grammar.node_definition_2__003D_) // '='
                     {
                         // skip it
                         continue;
@@ -77,22 +77,13 @@ namespace MetaphysicsIndustries.Giza
 
                         if (bundle.IsSkippable) throw new InvalidOperationException();
 
-                        def.start = new StartNode();
-                        def.start.NextNodes.AddRange(bundle.StartNodes);
                         def.StartingNodes.AddRange(bundle.StartNodes);
-                        def.Nodes.Add(def.start);
 
                         def.Nodes.AddRange(bundle.Nodes);
 
-                        def.end = new EndNode();
-                        foreach (Node node in bundle.EndNodes)
-                        {
-                            node.NextNodes.Add(def.end);
-                        }
                         def.EndingNodes.AddRange(bundle.EndNodes);
-                        def.Nodes.Add(def.end);
                     }
-                    else if (sub.Definition == null && sub.Node == grammar.node_definition_5__003B_) // ';'
+                    else if (sub.Definition == null && sub.Node == grammar.node_definition_4__003B_) // ';'
                     {
                         // skip it
                         continue;
@@ -120,8 +111,8 @@ namespace MetaphysicsIndustries.Giza
         {
             foreach (Span sub in span.Subspans)
             {
-                if (sub.Node == grammar.node_defmod_2_defmod_002D_item ||
-                    sub.Node == grammar.node_defmod_4_defmod_002D_item)
+                if (sub.Node == grammar.node_defmod_1_defmod_002D_item ||
+                    sub.Node == grammar.node_defmod_3_defmod_002D_item)
                 {
                     yield return GetDefModItem(grammar, sub);
                 }
@@ -130,19 +121,19 @@ namespace MetaphysicsIndustries.Giza
 
         DefmodItem GetDefModItem(Supergrammar grammar, Span span)
         {
-            if (span.Subspans[0].Node == grammar.node_defmod_item_1_id_002D_whitespace)
+            if (span.Subspans[0].Node == grammar.node_defmod_item_0_id_002D_whitespace)
             {
                 return DefmodItem.MindWhitespace;
             }
-            if (span.Subspans[0].Node == grammar.node_defmod_item_2_id_002D_ignore)
+            if (span.Subspans[0].Node == grammar.node_defmod_item_1_id_002D_ignore)
             {
-                if (span.Subspans[1].Node == grammar.node_defmod_item_4_id_002D_case ||
-                    span.Subspans[2].Node == grammar.node_defmod_item_4_id_002D_case)
+                if (span.Subspans[1].Node == grammar.node_defmod_item_3_id_002D_case ||
+                    span.Subspans[2].Node == grammar.node_defmod_item_3_id_002D_case)
                 {
                     return DefmodItem.IgnoreCase;
                 }
             }
-            if (span.Subspans[0].Node == grammar.node_defmod_item_5_id_002D_contiguous)
+            if (span.Subspans[0].Node == grammar.node_defmod_item_4_id_002D_contiguous)
             {
                 return DefmodItem.Contiguous;
             }
@@ -278,7 +269,7 @@ namespace MetaphysicsIndustries.Giza
 
             foreach (Span sub in span.Subspans)
             {
-                if (sub.Node == grammar.node_subexpr_1_identifier)
+                if (sub.Node == grammar.node_subexpr_0_identifier)
                 {
                     Node node = GetNodeFromIdentifier(grammar, sub, defsByName);
                     nodes = new List<Node>{node};
@@ -302,12 +293,12 @@ namespace MetaphysicsIndustries.Giza
                     case '*': skippable = true; loop = true; break;
                     }
                 }
-                else if (sub.Node == grammar.node_subexpr_5__003A_) // ':'
+                else if (sub.Node == grammar.node_subexpr_4__003A_) // ':'
                 {
                     //skip it
                     continue;
                 }
-                else if (sub.Node == grammar.node_subexpr_6_tag)
+                else if (sub.Node == grammar.node_subexpr_5_tag)
                 {
                     tag = GetIdentifier(grammar, sub);
                 }
@@ -357,19 +348,19 @@ namespace MetaphysicsIndustries.Giza
             for (i = 1; i < span.Subspans.Count - 1; i++)
             {
                 Span sub = span.Subspans[i];
-                if (sub.Node == grammar.node_literal_1__0027_) continue;
-                if (sub.Node == grammar.node_literal_6__0027_) continue;
+                if (sub.Node == grammar.node_literal_0__0027_) continue;
+                if (sub.Node == grammar.node_literal_5__0027_) continue;
 
                 char ch = ' ';
                 if (sub.Definition == grammar.def_16_unicodechar)
                 {
                     ch = GetUnicodeChar(grammar, sub);
                 }
-                else if (sub.Node == grammar.node_literal_2__005E__005C__005C__0027_) // [^\\']
+                else if (sub.Node == grammar.node_literal_1__005E__005C__005C__0027_) // [^\\']
                 {
                     ch = sub.Value[0];
                 }
-                else if (sub.Node == grammar.node_literal_3__005C_) // '\\'
+                else if (sub.Node == grammar.node_literal_2__005C_) // '\\'
                 {
                     Span sub2 = span.Subspans[i+1];
 
@@ -416,19 +407,19 @@ namespace MetaphysicsIndustries.Giza
             {
                 Span sub = span.Subspans[i];
 
-                if (sub.Node == grammar.node_charclass_2__005E__005C__005C__005C__005B__005C__005D_) // [^\\\[\]]
+                if (sub.Node == grammar.node_charclass_1__005E__005C__005C__005C__005B__005C__005D_) // [^\\\[\]]
                 {
                     items.Add(sub.Value[0]);
                 }
-                else if (sub.Node == grammar.node_charclass_3__005C_) // '\\'
+                else if (sub.Node == grammar.node_charclass_2__005C_) // '\\'
                 {
                     items.Add(sub.Value[0]);
                 }
-                else if (sub.Node == grammar.node_charclass_4_wldsrnt_005C__005C__005C__005B__005C__005D_) // [wldsrnt\\\[\]]
+                else if (sub.Node == grammar.node_charclass_3_wldsrnt_005C__005C__005C__005B__005C__005D_) // [wldsrnt\\\[\]]
                 {
                     items.Add(sub.Value[0]);
                 }
-                else if (sub.Node == grammar.node_charclass_5_unicodechar)
+                else if (sub.Node == grammar.node_charclass_4_unicodechar)
                 {
                     items.Add(GetUnicodeChar(grammar, sub));
                 }
@@ -462,12 +453,12 @@ namespace MetaphysicsIndustries.Giza
 
             foreach (Span sub in span.Subspans)
             {
-                if (sub.Node == grammar.node_orexpr_2_expr ||
-                    sub.Node == grammar.node_orexpr_4_expr)
+                if (sub.Node == grammar.node_orexpr_1_expr ||
+                    sub.Node == grammar.node_orexpr_3_expr)
                 {
                     bundles.Add(GetNodesFromExpr(grammar, sub, defsByName));
                 }
-                else if (sub.Node == grammar.node_orexpr_6_modifier)
+                else if (sub.Node == grammar.node_orexpr_5_modifier)
                 {
                     switch (GetModifier(grammar, sub))
                     {

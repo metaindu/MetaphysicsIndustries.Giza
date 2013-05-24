@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using MetaphysicsIndustries.Collections;
 using System.Diagnostics;
+using System.Linq;
 
 namespace MetaphysicsIndustries.Giza
 {
@@ -56,9 +57,9 @@ namespace MetaphysicsIndustries.Giza
 
         public bool IsAnEndOf(Definition def)
         {
-            if (def.end == null) return false;
-
-            return NextNodes.Contains(def.end);
+            return
+                (def.end != null && NextNodes.Contains(def.end)) ||
+                def.GetEndingNodes().Contains(this);
         }
 
         private Definition _parentDefinition;

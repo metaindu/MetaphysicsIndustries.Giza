@@ -121,7 +121,8 @@ namespace MetaphysicsIndustries.Giza
             }
 
             //check start and end
-            if (def.start.ParentDefinition != def)
+            if (def.start != null &&
+                def.start.ParentDefinition != def)
             {
                 yield return new ErrorInfo {
                     Error=Error.StartNodeHasWrongParentDefinition,
@@ -138,7 +139,8 @@ namespace MetaphysicsIndustries.Giza
                     };
                 }
             }
-            if (def.start.ParentDefinition != def)
+            if (def.start != null &&
+                def.start.ParentDefinition != def)
             {
                 yield return new ErrorInfo {
                     Error=Error.EndNodeHasWrongParentDefinition,
