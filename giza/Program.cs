@@ -50,9 +50,22 @@ namespace giza
                         foreach (Span span in ss)
                         {
                             Definition.__id = 0;
+
+                            SpanChecker sc = new SpanChecker();
+                            if (sc.CheckSpan(span, supergrammar).Count > 0)
+                            {
+                                throw new InvalidOperationException();
+                            }
+
                             Definition[] dd2 = db.BuildDefinitions(supergrammar, span);
                             string class2 = dr.RenderDefinitionsAsCSharpClass("FromBuildDefs2", dd2);
                             class2 = class2;
+
+                            DefinitionChecker dc = new DefinitionChecker();
+                            if (dc.CheckDefinitions(dd2).Count() > 0)
+                            {
+                                throw new InvalidOperationException();
+                            }
 
                             DefinitionCheckerTest dct = new DefinitionCheckerTest();
                             dct.TestSingleDefCycle();
