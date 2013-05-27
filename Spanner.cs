@@ -240,7 +240,6 @@ namespace MetaphysicsIndustries.Giza
                     {
                         Span s = new Span();
                         s.Node = nm.Node;
-                        s.Definition = (nm.Node as DefRefNode).DefRef;
                         if (stack.Count > 0)
                         {
                             stack.Peek().Subspans.Add(s);

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
@@ -8,7 +8,6 @@ namespace MetaphysicsIndustries.Giza
     public class Span
     {
         public List<Span> Subspans = new List<Span>();
-        public Definition Definition;
         public Node Node;
         public string Value;
 
@@ -30,9 +29,9 @@ namespace MetaphysicsIndustries.Giza
 
         public override string ToString()
         {
-            return string.Format("Def{{{0}}}, Node{{{1}}}, \"{2}\", {3} subspans", Definition, Node, Value, Subspans.Count);
+            return string.Format("Node{{{0}}}, \"{1}\", {2} subspans", Node, Value, Subspans.Count);
         }
-    }
+     }
 
 
 }

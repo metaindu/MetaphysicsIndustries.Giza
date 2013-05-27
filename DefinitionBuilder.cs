@@ -18,7 +18,12 @@ namespace MetaphysicsIndustries.Giza
 
         public Definition[] BuildDefinitions(Supergrammar grammar, Span span)
         {
-            if (span.Definition != grammar.def_0_grammar) throw new InvalidOperationException();
+            if (!(span.Node is DefRefNode) ||
+                (span.Node as DefRefNode).DefRef != grammar.def_0_grammar) 
+            {
+                throw new InvalidOperationException();
+            }
+
             SpanChecker sc = new SpanChecker();
             List<SpanChecker.Error> errors = sc.CheckSpan(span, grammar);
             if (errors.Count > 0) throw new InvalidOperationException();
@@ -29,7 +34,7 @@ namespace MetaphysicsIndustries.Giza
 
             foreach (Span sub in span.Subspans)
             {
-                if (sub.Definition == grammar.def_1_definition)
+                if (sub.Node == grammar.node_grammar_0_definition)
                 {
                     Definition def = new Definition();
                     defs.Add(def);
@@ -45,10 +50,6 @@ namespace MetaphysicsIndustries.Giza
                     }
                     defsByName[def.Name] = def;
                 }
-                else if (sub.Definition == grammar.def_17_comment)
-                {
-                    //skip it
-                }
             }
 
             foreach (Definition def in defs)
@@ -57,21 +58,11 @@ namespace MetaphysicsIndustries.Giza
                 Set<DefmodItem> defmodItems = new Set<DefmodItem>();
                 foreach (Span sub in defspan.Subspans)
                 {
-                    if (sub.Definition == grammar.def_2_defmod)
+                    if (sub.Node == grammar.node_definition_0_defmod)
                     {
                         defmodItems.AddRange(GetDefMods(grammar, sub));
                     }
-                    else if (sub.Definition == grammar.def_13_identifier)
-                    {
-                        // we've already set the name above. skip this node
-                        continue;
-                    }
-                    else if (sub.Definition == null && sub.Node == grammar.node_definition_2__003D_) // '='
-                    {
-                        // skip it
-                        continue;
-                    }
-                    else if (sub.Definition == grammar.def_8_expr)
+                    else if (sub.Node == grammar.node_definition_3_expr)
                     {
                         NodeBundle bundle = GetNodesFromExpr(grammar, sub, defsByName);
 
@@ -82,11 +73,6 @@ namespace MetaphysicsIndustries.Giza
                         def.Nodes.AddRange(bundle.Nodes);
 
                         def.EndNodes.AddRange(bundle.EndNodes);
-                    }
-                    else if (sub.Definition == null && sub.Node == grammar.node_definition_4__003B_) // ';'
-                    {
-                        // skip it
-                        continue;
                     }
                 }
 
@@ -157,29 +143,26 @@ namespace MetaphysicsIndustries.Giza
             foreach (Span sub in exprSpan.Subspans)
             {
                 NodeBundle bundle = null;
-                if (sub.Definition == grammar.def_10_subexpr)
+                if (sub.Node == grammar.node_expr_0_subexpr)
                 {
                     bundle = GetNodesFromSubExpr(grammar, sub, defsByName);
                 }
-                else if (sub.Definition == grammar.def_9_orexpr)
+                else if (sub.Node == grammar.node_expr_1_orexpr)
                 {
                     bundle = GetNodesFromOrExpr(grammar, sub, defsByName);
                 }
-                else if (sub.Definition == grammar.def_17_comment)
+
+                if (bundle != null)
                 {
-                    //skip it
-                    continue;
+                    if (first == null)
+                    {
+                        first = bundle;
+                    }
+
+                    last = bundle;
+
+                    bundles.Add(bundle);
                 }
-
-                if (first == null)
-                {
-                    first = bundle;
-                }
-
-                last = bundle;
-
-                bundles.Add(bundle);
-//                nodes.Add(
             }
 
             Set<Node> starts = new Set<Node>();
@@ -274,16 +257,16 @@ namespace MetaphysicsIndustries.Giza
                     Node node = GetNodeFromIdentifier(grammar, sub, defsByName);
                     nodes = new List<Node>{node};
                 }
-                else if (sub.Definition == grammar.def_14_literal)
+                else if (sub.Node == grammar.node_subexpr_1_literal)
                 {
                     nodes = GetNodesFromLiteral(grammar, sub);
                 }
-                else if (sub.Definition == grammar.def_15_charclass)
+                else if (sub.Node == grammar.node_subexpr_2_charclass)
                 {
                     Node node = GetNodeFromCharClass(grammar, sub);
                     nodes = new List<Node>{node};
                 }
-                else if (sub.Definition == grammar.def_11_modifier)
+                else if (sub.Node == grammar.node_subexpr_3_modifier)
                 {
                     char mod = GetModifier(grammar, sub);
                     switch (mod)
@@ -352,7 +335,7 @@ namespace MetaphysicsIndustries.Giza
                 if (sub.Node == grammar.node_literal_5__0027_) continue;
 
                 char ch = ' ';
-                if (sub.Definition == grammar.def_16_unicodechar)
+                if (sub.Node == grammar.node_literal_4_unicodechar)
                 {
                     ch = GetUnicodeChar(grammar, sub);
                 }
