@@ -32,7 +32,7 @@ namespace MetaphysicsIndustries.Giza
 
         public bool IgnoreWhitespace = false;
         public bool IgnoreCase = false;
-        public bool Contiguous = false;
+        public bool Atomic = false;
 
         public override string ToString()
         {

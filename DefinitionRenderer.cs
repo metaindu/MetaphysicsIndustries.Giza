@@ -97,7 +97,7 @@ namespace MetaphysicsIndustries.Giza
                 sb.AppendFormat("{0}.IgnoreWhitespace = {1};", defnames[def], (def.IgnoreWhitespace ? "true" : "false"));
                 sb.AppendLine();
                 sb.Append(indent);
-                sb.AppendFormat("{0}.Contiguous = {1};", defnames[def], (def.Contiguous ? "true" : "false"));
+                sb.AppendFormat("{0}.Atomic = {1};", defnames[def], (def.Atomic ? "true" : "false"));
                 sb.AppendLine();
 
                 foreach (Node node in def.Nodes)

@@ -13,7 +13,7 @@ namespace MetaphysicsIndustries.Giza
         {
             MindWhitespace,
             IgnoreCase,
-            Contiguous,
+            Atomic,
         }
 
         public Definition[] BuildDefinitions(Supergrammar grammar, Span span)
@@ -78,14 +78,14 @@ namespace MetaphysicsIndustries.Giza
 
                 def.IgnoreWhitespace = true;
                 def.IgnoreCase = false;
-                def.Contiguous = false;
+                def.Atomic = false;
                 foreach (DefmodItem item in defmodItems)
                 {
                     switch (item)
                     {
                     case DefmodItem.MindWhitespace: def.IgnoreWhitespace = false; break;
                     case DefmodItem.IgnoreCase: def.IgnoreCase = true; break;
-                    case DefmodItem.Contiguous: def.Contiguous = true; break;
+                    case DefmodItem.Atomic: def.Atomic = true; break;
                     }
                 }
             }
@@ -119,9 +119,9 @@ namespace MetaphysicsIndustries.Giza
                     return DefmodItem.IgnoreCase;
                 }
             }
-            if (span.Subspans[0].Node == grammar.node_defmod_item_4_id_002D_contiguous)
+            if (span.Subspans[0].Node == grammar.node_defmod_item_4_id_002D_atomic)
             {
-                return DefmodItem.Contiguous;
+                return DefmodItem.Atomic;
             }
 
             throw new InvalidOperationException();

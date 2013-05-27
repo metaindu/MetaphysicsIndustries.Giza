@@ -93,7 +93,7 @@ namespace MetaphysicsIndustries.Giza
                             }
 
                             //end
-                            if (!stack.Definition.Contiguous &&
+                            if (!stack.Definition.Atomic &&
                                 cur.Node.IsEndNode)
                             {
                                 accepts.Enqueue(CreateEndDefMatch(cur, stack));
@@ -101,7 +101,7 @@ namespace MetaphysicsIndustries.Giza
                         }
                         else
                         {
-                            if (stack.Definition.Contiguous &&
+                            if (stack.Definition.Atomic &&
                                 stack.Definition.Nodes.Contains(cur.Previous.Node) &&
                                 cur.Previous.Node.IsEndNode)
                             {
