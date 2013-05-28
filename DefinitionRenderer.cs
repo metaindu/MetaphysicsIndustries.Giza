@@ -90,15 +90,12 @@ namespace MetaphysicsIndustries.Giza
 
             foreach (Definition def in defs)
             {
-                sb.Append(indent);
-                sb.AppendFormat("{0}.IgnoreCase = {1};", defnames[def], (def.IgnoreCase ? "true" : "false"));
-                sb.AppendLine();
-                sb.Append(indent);
-                sb.AppendFormat("{0}.IgnoreWhitespace = {1};", defnames[def], (def.IgnoreWhitespace ? "true" : "false"));
-                sb.AppendLine();
-                sb.Append(indent);
-                sb.AppendFormat("{0}.Atomic = {1};", defnames[def], (def.Atomic ? "true" : "false"));
-                sb.AppendLine();
+                foreach (DefinitionDirective dd in def.Directives)
+                {
+                    sb.Append(indent);
+                    sb.AppendFormat("{0}.Directives.Add(DefinitionDirective.{1});", defnames[def], dd);
+                    sb.AppendLine();
+                }
 
                 foreach (Node node in def.Nodes)
                 {

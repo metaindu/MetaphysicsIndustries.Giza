@@ -9,13 +9,6 @@ namespace MetaphysicsIndustries.Giza
 {
     public class DefinitionBuilder
     {
-        enum DefmodItem
-        {
-            MindWhitespace,
-            IgnoreCase,
-            Atomic,
-        }
-
         public Definition[] BuildDefinitions(Supergrammar grammar, Span span)
         {
             if (!(span.Node is DefRefNode) ||
@@ -55,12 +48,12 @@ namespace MetaphysicsIndustries.Giza
             foreach (Definition def in defs)
             {
                 Span defspan = matchup[def];
-                Set<DefmodItem> defmodItems = new Set<DefmodItem>();
+                Set<DefinitionDirective> directives = new Set<DefinitionDirective>();
                 foreach (Span sub in defspan.Subspans)
                 {
-                    if (sub.Node == grammar.node_definition_0_defmod)
+                    if (sub.Node == grammar.node_definition_0_directive)
                     {
-                        defmodItems.AddRange(GetDefMods(grammar, sub));
+                        directives.AddRange(GetDirectives(grammar, sub));
                     }
                     else if (sub.Node == grammar.node_definition_3_expr)
                     {
@@ -76,52 +69,41 @@ namespace MetaphysicsIndustries.Giza
                     }
                 }
 
-                def.IgnoreWhitespace = true;
-                def.IgnoreCase = false;
-                def.Atomic = false;
-                foreach (DefmodItem item in defmodItems)
-                {
-                    switch (item)
-                    {
-                    case DefmodItem.MindWhitespace: def.IgnoreWhitespace = false; break;
-                    case DefmodItem.IgnoreCase: def.IgnoreCase = true; break;
-                    case DefmodItem.Atomic: def.Atomic = true; break;
-                    }
-                }
+                def.Directives.AddRange(directives);
             }
 
             return defs.ToArray();
         }
 
-        IEnumerable<DefmodItem> GetDefMods(Supergrammar grammar, Span span)
+        IEnumerable<DefinitionDirective> GetDirectives(Supergrammar grammar, Span span)
         {
             foreach (Span sub in span.Subspans)
             {
-                if (sub.Node == grammar.node_defmod_1_defmod_002D_item ||
-                    sub.Node == grammar.node_defmod_3_defmod_002D_item)
+                if (sub.Node == grammar.node_directive_1_directive_002D_item ||
+                    sub.Node == grammar.node_directive_3_directive_002D_item)
                 {
                     yield return GetDefModItem(grammar, sub);
                 }
             }
         }
 
-        DefmodItem GetDefModItem(Supergrammar grammar, Span span)
+        DefinitionDirective GetDefModItem(Supergrammar grammar, Span span)
         {
-            if (span.Subspans[0].Node == grammar.node_defmod_item_0_id_002D_whitespace)
+            if (span.Subspans[0].Node == grammar.node_directive_item_0_id_002D_whitespace)
             {
-                return DefmodItem.MindWhitespace;
+                return DefinitionDirective.IncludeWhitespace;
             }
-            if (span.Subspans[0].Node == grammar.node_defmod_item_1_id_002D_ignore)
+            if (span.Subspans[0].Node == grammar.node_directive_item_1_id_002D_ignore)
             {
-                if (span.Subspans[1].Node == grammar.node_defmod_item_3_id_002D_case ||
-                    span.Subspans[2].Node == grammar.node_defmod_item_3_id_002D_case)
+                if (span.Subspans[1].Node == grammar.node_directive_item_3_id_002D_case ||
+                    span.Subspans[2].Node == grammar.node_directive_item_3_id_002D_case)
                 {
-                    return DefmodItem.IgnoreCase;
+                    return DefinitionDirective.IgnoreCase;
                 }
             }
-            if (span.Subspans[0].Node == grammar.node_defmod_item_4_id_002D_atomic)
+            if (span.Subspans[0].Node == grammar.node_directive_item_4_id_002D_atomic)
             {
-                return DefmodItem.Atomic;
+                return DefinitionDirective.Atomic;
             }
 
             throw new InvalidOperationException();

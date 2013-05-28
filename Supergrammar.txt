@@ -14,10 +14,10 @@
 
 grammar = ( definition | comment )+;
 
-definition = defmod* identifier '=' expr ';';
+definition = directive* identifier '=' expr ';';
 
-defmod = '<' defmod-item ( ',' defmod-item )* '>';
-defmod-item = ( 
+directive = '<' directive-item ( ',' directive-item )* '>';
+directive-item = ( 
     id-whitespace | 
     id-ignore '-'? id-case | 
     id-atomic

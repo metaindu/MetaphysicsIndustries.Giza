@@ -30,9 +30,10 @@ namespace MetaphysicsIndustries.Giza
         public Set<Node> StartNodes = new Set<Node>();
         public Set<Node> EndNodes = new Set<Node>();
 
-        public bool IgnoreWhitespace = false;
-        public bool IgnoreCase = false;
-        public bool Atomic = false;
+        public readonly Set<DefinitionDirective> Directives = new Set<DefinitionDirective>();
+        public bool IncludeWhitespace { get { return Directives.Contains(DefinitionDirective.IncludeWhitespace); } }
+        public bool IgnoreCase { get { return Directives.Contains(DefinitionDirective.IgnoreCase); } }
+        public bool Atomic { get { return Directives.Contains(DefinitionDirective.Atomic); } }
 
         public override string ToString()
         {
