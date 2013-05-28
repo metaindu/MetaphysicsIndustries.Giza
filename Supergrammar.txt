@@ -18,14 +18,15 @@ definition = directive* identifier '=' expr ';';
 
 directive = '<' directive-item ( ',' directive-item )* '>';
 directive-item = ( 
-    id-whitespace | 
-    id-ignore '-'? id-case | 
+    id-include id-whitespace | 
+    id-ignore id-case | 
     id-atomic
 );
-<whitespace, ignore case> id-whitespace = 'whitespace';
-<whitespace, ignore case> id-ignore = 'ignore';
-<whitespace, ignore case> id-case = 'case';
-<whitespace, ignore case> id-atomic = 'atomic';
+<include whitespace, ignore case> id-include = 'include';
+<include whitespace, ignore case> id-whitespace = 'whitespace';
+<include whitespace, ignore case> id-ignore = 'ignore';
+<include whitespace, ignore case> id-case = 'case';
+<include whitespace, ignore case> id-atomic = 'atomic';
 
 expr = ( subexpr | orexpr | comment )+;
 
@@ -35,15 +36,15 @@ subexpr = ( identifier | literal | charclass ) modifier? ( ':' identifier:tag )?
 
 modifier = [*+?];
 
-<whitespace, atomic> number = [\d]+;
+<include whitespace, atomic> number = [\d]+;
 
-<whitespace, atomic> identifier = [\w-_] [\w-_\d]*;
+<include whitespace, atomic> identifier = [\w-_] [\w-_\d]*;
 
-<whitespace> literal = '\'' ( [^\\'] | '\\' [rnt\\'] | unicodechar )+ '\'';
+<include whitespace> literal = '\'' ( [^\\'] | '\\' [rnt\\'] | unicodechar )+ '\'';
 
-<whitespace> charclass = '[' ( [^\\\[\]] | '\\' [wldsrnt\\\[\]] | unicodechar )+ ']';
+<include whitespace> charclass = '[' ( [^\\\[\]] | '\\' [wldsrnt\\\[\]] | unicodechar )+ ']';
 
-<whitespace, ignore case> unicodechar = '\\x' [\dabcdef][\dabcdef][\dabcdef][\dabcdef];
+<include whitespace, ignore case> unicodechar = '\\x' [\dabcdef][\dabcdef][\dabcdef][\dabcdef];
 
-<whitespace> comment = ( '/*' ( [^*] | '*'+ [^*/] )* '*'+ '/' | '//' [^\r\n]* [\r\n]+ );
+<include whitespace> comment = ( '/*' ( [^*] | '*'+ [^*/] )* '*'+ '/' | '//' [^\r\n]* [\r\n]+ );
 

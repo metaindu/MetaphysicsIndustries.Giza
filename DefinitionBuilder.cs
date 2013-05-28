@@ -89,17 +89,15 @@ namespace MetaphysicsIndustries.Giza
 
         DefinitionDirective GetDefModItem(Supergrammar grammar, Span span)
         {
-            if (span.Subspans[0].Node == grammar.node_directive_item_0_id_002D_whitespace)
+            if (span.Subspans[0].Node == grammar.node_directive_item_0_id_002D_include &&
+                span.Subspans[1].Node == grammar.node_directive_item_1_id_002D_whitespace)
             {
                 return DefinitionDirective.IncludeWhitespace;
             }
-            if (span.Subspans[0].Node == grammar.node_directive_item_1_id_002D_ignore)
+            if (span.Subspans[0].Node == grammar.node_directive_item_2_id_002D_ignore &&
+                span.Subspans[1].Node == grammar.node_directive_item_3_id_002D_case)
             {
-                if (span.Subspans[1].Node == grammar.node_directive_item_3_id_002D_case ||
-                    span.Subspans[2].Node == grammar.node_directive_item_3_id_002D_case)
-                {
-                    return DefinitionDirective.IgnoreCase;
-                }
+                return DefinitionDirective.IgnoreCase;
             }
             if (span.Subspans[0].Node == grammar.node_directive_item_4_id_002D_atomic)
             {
