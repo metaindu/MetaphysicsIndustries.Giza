@@ -1,4 +1,4 @@
-return errors from Spanner ?
+return errors from Spanner - i.e. not from DefinitionChecker or SpanChecker; high-level stuff, like "unexpected token XXX, expected YYY or ZZZ instead"
 Rename DefinitionRenderer to GrammarRenderer, rename methods, make it take a Grammar instead of Definition[].
 tokenized parsing
 Define a grammar for Solus. Create a SolusGrammar class.
@@ -12,4 +12,4 @@ DefinitionChecker
 SpanChecker
   more thorough analysis
 re-org and add tests and docs
-
+DefinitionRenderer - render to grammar text
