@@ -160,6 +160,11 @@ namespace MetaphysicsIndustries.Giza
             return (char[])_chars.Clone();
         }
 
+        public int GetNonClassCharsCount()
+        {
+            return _chars.Length;
+        }
+
         public CharClass GetIgnoreCase()
         {
             List<char> list = new List<char>(GetAllChars());
