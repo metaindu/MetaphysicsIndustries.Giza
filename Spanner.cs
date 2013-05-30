@@ -478,15 +478,20 @@ namespace MetaphysicsIndustries.Giza
 
                 if (n == null) break;
 
-                while (n.Nexts.Count < 1)
-                {
-                    NodeMatch prev = n.Previous;
-                    n.Previous = null;
+                PurgeReject(n);
+            }
+        }
 
-                    //recycle the NodeMatch object here, if desired
+        void PurgeReject(NodeMatch reject)
+        {
+            if (reject == null) throw new ArgumentNullException("reject");
 
-                    n = prev;
-                }
+            while (reject.Nexts.Count < 1)
+            {
+                NodeMatch prev = reject.Previous;
+                reject.Previous = null;
+                //recycle the NodeMatch object here, if desired
+                reject = prev;
             }
         }
     }
