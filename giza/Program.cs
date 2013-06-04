@@ -43,36 +43,45 @@ namespace giza
                         Supergrammar supergrammar = new Supergrammar();
                         Definition.__id = 0;
                         Spanner spanner = new Spanner();
-                        Span[] ss = spanner.Process(supergrammar.Definitions.ToArray(), "grammar", gfile);
-                        DefinitionBuilder db = new DefinitionBuilder();
-                        Definition.__id = 0;
-                        DefinitionRenderer dr = new DefinitionRenderer();
-                        if (ss.Length != 1)
+                        string error;
+                        Span[] ss = spanner.Process(supergrammar.Definitions.ToArray(), "grammar", gfile, out error);
+                        if (!string.IsNullOrEmpty(error))
+                        {
+                            Console.WriteLine(error);
+                        }
+                        else if (ss.Length != 1)
                         {
                             throw new InvalidOperationException();
                         }
-                        foreach (Span span in ss)
+                        else
                         {
+                            DefinitionBuilder db = new DefinitionBuilder();
                             Definition.__id = 0;
-
-                            SpanChecker sc = new SpanChecker();
-                            if (sc.CheckSpan(span, supergrammar).Count > 0)
+                            DefinitionRenderer dr = new DefinitionRenderer();
+                            if (ss.Length != 1)
+                            foreach (Span span in ss)
                             {
-                                throw new InvalidOperationException();
+                                Definition.__id = 0;
+
+                                SpanChecker sc = new SpanChecker();
+                                if (sc.CheckSpan(span, supergrammar).Count > 0)
+                                {
+                                    throw new InvalidOperationException();
+                                }
+
+                                Definition[] dd2 = db.BuildDefinitions(supergrammar, span);
+                                string class2 = dr.RenderDefinitionsAsCSharpClass("FromBuildDefs2", dd2);
+                                class2 = class2;
+
+                                DefinitionChecker dc = new DefinitionChecker();
+                                if (dc.CheckDefinitions(dd2).Count() > 0)
+                                {
+                                    throw new InvalidOperationException();
+                                }
+
+                                DefinitionCheckerTest dct = new DefinitionCheckerTest();
+                                dct.TestSingleDefCycle();
                             }
-
-                            Definition[] dd2 = db.BuildDefinitions(supergrammar, span);
-                            string class2 = dr.RenderDefinitionsAsCSharpClass("FromBuildDefs2", dd2);
-                            class2 = class2;
-
-                            DefinitionChecker dc = new DefinitionChecker();
-                            if (dc.CheckDefinitions(dd2).Count() > 0)
-                            {
-                                throw new InvalidOperationException();
-                            }
-
-                            DefinitionCheckerTest dct = new DefinitionCheckerTest();
-                            dct.TestSingleDefCycle();
                         }
                     }
                     else
@@ -99,12 +108,20 @@ namespace giza
                     {
                         gfile = File.ReadAllText(args[1]);
                     }
-                    Grammar g = s.GetGrammar(gfile);
+                    string error;
+                    Grammar g = s.GetGrammar(gfile, out error);
 
-                    string className = args[2];
+                    if (!string.IsNullOrEmpty(error))
+                    {
+                        Console.WriteLine(error);
+                    }
+                    else
+                    {
+                        string className = args[2];
 
-                    DefinitionRenderer dr = new DefinitionRenderer();
-                    Console.Write(dr.RenderDefinitionsAsCSharpClass(className, g.Definitions));
+                        DefinitionRenderer dr = new DefinitionRenderer();
+                        Console.Write(dr.RenderDefinitionsAsCSharpClass(className, g.Definitions));
+                    }
                 }
                 else
                 {
@@ -119,31 +136,39 @@ namespace giza
             {
                 SupergrammarSpanner spanner = new SupergrammarSpanner();
                 string grammarFile = File.ReadAllText(args[0]);
-                Grammar g = spanner.GetGrammar(grammarFile);
+                string error;
+                Grammar g = spanner.GetGrammar(grammarFile, out error);
 
-                string input;
-                if (args[2] == "-")
+                if (error != null)
                 {
-                    input = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
+                    Console.WriteLine(error);
                 }
                 else
                 {
-                    input = File.ReadAllText(args[2]);
-                }
-
-                Spanner gs = new Spanner();
-                if (args.Length > 3 && args[3] == "-2")
-                {
-                    Span[] ss = gs.Process(g.Definitions.ToArray(), args[1], input);
-                    DefinitionBuilder db = new DefinitionBuilder();
-                    foreach (Span span in ss)
+                    string input;
+                    if (args[2] == "-")
                     {
-//                        Definition[] dd = db.BuildDefinitions2(g, span);
+                        input = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
                     }
-                }
-                else
-                {
-                    throw new NotImplementedException();
+                    else
+                    {
+                        input = File.ReadAllText(args[2]);
+                    }
+
+                    Spanner gs = new Spanner();
+                    Span[] ss = gs.Process(g.Definitions.ToArray(), args[1], input, out error);
+                    if (error != null)
+                    {
+                        Console.WriteLine(error);
+                    }
+                    else
+                    {
+                        DefinitionBuilder db = new DefinitionBuilder();
+                        foreach (Span span in ss)
+                        {
+        //                    Definition[] dd = db.BuildDefinitions2(g, span);
+                        }
+                    }
                 }
             }
         }

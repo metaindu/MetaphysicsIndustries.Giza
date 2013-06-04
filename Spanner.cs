@@ -9,7 +9,7 @@ namespace MetaphysicsIndustries.Giza
 {
     public class Spanner
     {
-        public Span[] Process(IEnumerable<Definition> defs, string startName, string input)
+        public Span[] Process(IEnumerable<Definition> defs, string startName, string input, out string error)
         {
             Definition start = null;
             foreach (Definition d in defs)
@@ -26,15 +26,15 @@ namespace MetaphysicsIndustries.Giza
                 throw new KeyNotFoundException("Could not find a definition by that name");
             }
 
-            Span[] spans = Process(start, input);
+            Span[] spans = Process(start, input, out error);
             return spans;
         }
 
-        public Span[] Process(Definition def, string input)
+        public Span[] Process(Definition def, string input, out string error)
         {
             // check incoming definitions
             DefinitionChecker dc = new DefinitionChecker();
-            List<DefinitionChecker.ErrorInfo> errors = 
+            List<DefinitionChecker.ErrorInfo> errors =
                 new List<DefinitionChecker.ErrorInfo>(
                     dc.CheckDefinitions(def.ParentGrammar.Definitions));
             if (errors.Count > 0) throw new InvalidOperationException("Definitions contain errors.");
@@ -56,6 +56,8 @@ namespace MetaphysicsIndustries.Giza
             int lastk = k;
             foreach (char ch in input)
             {
+                if (currents.Count < 1) break;
+
                 k++;
                 bool isWhitespace = char.IsWhiteSpace(ch);
 
@@ -177,7 +179,147 @@ namespace MetaphysicsIndustries.Giza
 
             PurgeRejects(rejects, k, ref lastReject, ref lastk);
 
-            //eveything in ends is a valid parse
+            // if nothing is in ends, then we ran aground
+            // if there's something in ends and k < length + 1, then we finished but still have input
+            // otherwise, eveything in ends is a valid parse
+
+
+            if (ends.Count < 1)
+            {
+                char errorCh = input[lastk];
+
+                IEnumerable<Node> expectedNodes;
+                Set<char> vowels = new Set<char> { 'a', 'e', 'i', 'o', 'u',
+                                                   'A', 'E', 'I', 'O', 'U',
+                };
+                StringBuilder sb = new StringBuilder();
+
+                int line;
+                int linek;
+                GetPosition(input, k, out line, out linek);
+                sb.AppendFormat("Invalid character '{0}' at ({1},{2})", errorCh, line, linek);
+
+                NodeMatch cur = null;
+                if (lastReject.Previous == null)
+                {
+                    //failed to start
+                    expectedNodes = def.StartNodes;
+
+                    string an = "a";
+                    if (vowels.Contains(def.Name[0]))
+                    {
+                        an = "an";
+                    }
+
+                    sb.AppendFormat(": {0} {1} must start with ", an, def.Name);
+                }
+                else
+                {
+                    cur = lastReject.Previous;
+                    while (cur != null &&
+                           cur.Transition == NodeMatch.TransitionType.StartDef)
+                    {
+                        cur = cur.Previous;
+                    }
+
+                    if (cur.Previous != null)
+                    {
+                        string an = "a";
+                        string after = "";
+
+                        if (cur.Previous.Node is CharNode)
+                        {
+                            after = GetDescriptionsOfCharClass((cur.Previous.Node as CharNode).CharClass)[0];
+                        }
+                        else
+                        {
+                            after = (cur.Previous.Node as DefRefNode).DefRef.Name;
+                        }
+
+                        if (vowels.Contains(after[0]))
+                        {
+                            an = "an";
+                        }
+                        sb.AppendFormat(", after {0} {1}: expected ", an, after);
+                    }
+
+                    if (cur == null)
+                    {
+                        //failed to start
+                        expectedNodes = def.StartNodes;
+
+                        string an = "a";
+                        if (vowels.Contains(def.Name[0]))
+                        {
+                            an = "an";
+                        }
+
+                        sb.AppendFormat(": {0} {1} must start with ", an, def.Name);
+
+                    }
+                    else if (cur.Node is CharNode)
+                    {
+                        expectedNodes = cur.Node.NextNodes;
+                    }
+                    else // cur.Node is DefRefNode
+                    {
+                        expectedNodes = (cur.Node as DefRefNode).DefRef.StartNodes;
+                    }
+                }
+
+                if (expectedNodes != null)
+                {
+                    CharClass expectedChars = new CharClass(new char[0]);
+                    Set<Definition> expectedDefs = new Set<Definition>();
+                    foreach (Node node in expectedNodes)
+                    {
+                        if (node is CharNode)
+                        {
+                            expectedChars =
+                                CharClass.Union(
+                                (node as CharNode).CharClass,
+                                expectedChars);
+                        }
+                        else
+                        {
+                            expectedDefs.Add((node as DefRefNode).DefRef);
+                        }
+                    }
+
+                    List<string> expects = new List<string>();
+
+                    foreach (Definition expdef in expectedDefs)
+                    {
+                        expects.Add(expdef.Name);
+                    }
+
+                    expects.AddRange(GetDescriptionsOfCharClass(expectedChars));
+
+                    int i;
+                    for (i = 2; i < expects.Count; i++)
+                    {
+                        sb.AppendFormat("{0}, ", expects[i-2]);
+                    }
+                    if (expects.Count > 1)
+                    {
+                        sb.Append(expects[expects.Count - 2]);
+                        if (expects.Count > 2)
+                        {
+                            sb.Append(",");
+                        }
+                        sb.Append(" or ");
+                    }
+                    sb.Append(expects.Last());
+                }
+
+                error = sb.ToString();
+            }
+            else
+            {
+                error = null;
+            }
+
+            PurgeReject(lastReject);
 
 //            while (ends.Count > 0)
 //            {
@@ -259,6 +401,52 @@ namespace MetaphysicsIndustries.Giza
             }
 
             return spans.ToArray();
+        }
+
+        static List<string> GetDescriptionsOfCharClass(CharClass expectedChars)
+        {
+            List<string> expects2 = new List<string>();
+            if (!expectedChars.Exclude && !expectedChars.Digit && !expectedChars.Letter && !expectedChars.Whitespace && expectedChars.GetNonClassCharsCount() > 0 && expectedChars.GetNonClassCharsCount() <= 3)
+            {
+                // only one character - treat as a literal
+                foreach (char ch in expectedChars.GetNonClassChars())
+                {
+                    expects2.Add(string.Format("'{0}'", ch.ToString()));
+                }
+            }
+            else
+                if (expectedChars.Digit || expectedChars.Letter || expectedChars.Whitespace || expectedChars.GetNonClassCharsCount() > 0)
+                {
+                    // treat as char class
+                    expects2.Add(string.Format("a character that matches {0}", expectedChars));
+                }
+                else
+                {
+                    // empty char class - don't do anything
+                }
+            return expects2;
+        }
+
+        void GetPosition(string input, int k, out int line, out int linek)
+        {
+            line = 1;
+            linek = 1;
+
+            int i;
+            for (i = 0; i < k; i++)
+            {
+                char ch = input[i];
+
+                if (ch == '\n')
+                {
+                    line++;
+                    linek = 1;
+                }
+                else
+                {
+                    linek++;
+                }
+            }
         }
 
         class NodeMatch
@@ -486,7 +674,8 @@ namespace MetaphysicsIndustries.Giza
         {
             if (reject == null) throw new ArgumentNullException("reject");
 
-            while (reject.Nexts.Count < 1)
+            while (reject != null &&
+                   reject.Nexts.Count < 1)
             {
                 NodeMatch prev = reject.Previous;
                 reject.Previous = null;

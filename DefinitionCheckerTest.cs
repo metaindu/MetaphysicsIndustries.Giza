@@ -25,7 +25,10 @@ namespace MetaphysicsIndustries.Giza
                 "var = [\\w]+; \r\n" +
                 "unop = [+-] subexpr; \r\n" +
                 "paren = '(' expr ')'; \r\n";
-            Grammar grammar = ss.GetGrammar(input);
+            string error;
+            Grammar grammar = ss.GetGrammar(input, out error);
+
+            Assert.Equals(error, null);
 
             DefinitionChecker dc = new DefinitionChecker();
             List<DefinitionChecker.ErrorInfo> errors = new List<DefinitionChecker.ErrorInfo>(dc.CheckDefinitions(grammar.Definitions));

@@ -17,12 +17,12 @@ namespace MetaphysicsIndustries.Giza
 {
     public class SupergrammarSpanner
     {
-        public Grammar GetGrammar(string input)
+        public Grammar GetGrammar(string input, out string error)
         {
             Supergrammar supergrammar = new Supergrammar();
             Definition.__id = 0;
             Spanner spanner = new Spanner();
-            Span[] s2 = spanner.Process(supergrammar.Definitions, "grammar", input);
+            Span[] s2 = spanner.Process(supergrammar.Definitions, "grammar", input, out error);
 
             DefinitionBuilder db = new DefinitionBuilder();
             Definition[] defs = db.BuildDefinitions(supergrammar, s2[0]);
