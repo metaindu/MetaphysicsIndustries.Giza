@@ -89,7 +89,7 @@ namespace MetaphysicsIndustries.Giza
 
         DefinitionDirective GetDefModItem(Supergrammar grammar, Span span)
         {
-            if (span.Subspans[0].Node == grammar.node_directive_item_0_id_002D_include &&
+            if (span.Subspans[0].Node == grammar.node_directive_item_0_id_002D_mind &&
                 span.Subspans[1].Node == grammar.node_directive_item_1_id_002D_whitespace)
             {
                 return DefinitionDirective.IncludeWhitespace;
