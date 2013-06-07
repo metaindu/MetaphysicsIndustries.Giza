@@ -24,13 +24,20 @@ namespace MetaphysicsIndustries.Giza
             Spanner spanner = new Spanner();
             Span[] s2 = spanner.Process(supergrammar.Definitions, "grammar", input, out error);
 
-            DefinitionBuilder db = new DefinitionBuilder();
-            Definition[] defs = db.BuildDefinitions(supergrammar, s2[0]);
+            if (string.IsNullOrEmpty(error))
+            {
+                DefinitionBuilder db = new DefinitionBuilder();
+                Definition[] defs = db.BuildDefinitions(supergrammar, s2[0]);
 
-            Grammar grammar = new Grammar();
-            grammar.Definitions.AddRange(defs);
+                Grammar grammar = new Grammar();
+                grammar.Definitions.AddRange(defs);
 
-            return grammar;
+                return grammar;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
