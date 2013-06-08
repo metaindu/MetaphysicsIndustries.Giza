@@ -186,133 +186,7 @@ namespace MetaphysicsIndustries.Giza
 
             if (ends.Count < 1)
             {
-                char errorCh = input[lastk];
-
-                IEnumerable<Node> expectedNodes;
-                Set<char> vowels = new Set<char> { 'a', 'e', 'i', 'o', 'u',
-                                                   'A', 'E', 'I', 'O', 'U',
-                };
-                StringBuilder sb = new StringBuilder();
-
-                int line;
-                int linek;
-                GetPosition(input, k, out line, out linek);
-                sb.AppendFormat("Invalid character '{0}' at ({1},{2})", errorCh, line, linek);
-
-                NodeMatch cur = null;
-                if (lastReject.Previous == null)
-                {
-                    //failed to start
-                    expectedNodes = def.StartNodes;
-
-                    string an = "a";
-                    if (vowels.Contains(def.Name[0]))
-                    {
-                        an = "an";
-                    }
-
-                    sb.AppendFormat(": {0} {1} must start with ", an, def.Name);
-                }
-                else
-                {
-                    cur = lastReject.Previous;
-                    while (cur != null &&
-                           cur.Transition == NodeMatch.TransitionType.StartDef)
-                    {
-                        cur = cur.Previous;
-                    }
-
-                    if (cur.Previous != null)
-                    {
-                        string an = "a";
-                        string after = "";
-
-                        if (cur.Previous.Node is CharNode)
-                        {
-                            after = GetDescriptionsOfCharClass((cur.Previous.Node as CharNode).CharClass)[0];
-                        }
-                        else
-                        {
-                            after = (cur.Previous.Node as DefRefNode).DefRef.Name;
-                        }
-
-                        if (vowels.Contains(after[0]))
-                        {
-                            an = "an";
-                        }
-                        sb.AppendFormat(", after {0} {1}: expected ", an, after);
-                    }
-
-                    if (cur == null)
-                    {
-                        //failed to start
-                        expectedNodes = def.StartNodes;
-
-                        string an = "a";
-                        if (vowels.Contains(def.Name[0]))
-                        {
-                            an = "an";
-                        }
-
-                        sb.AppendFormat(": {0} {1} must start with ", an, def.Name);
-
-                    }
-                    else if (cur.Node is CharNode)
-                    {
-                        expectedNodes = cur.Node.NextNodes;
-                    }
-                    else // cur.Node is DefRefNode
-                    {
-                        expectedNodes = (cur.Node as DefRefNode).DefRef.StartNodes;
-                    }
-                }
-
-                if (expectedNodes != null)
-                {
-                    CharClass expectedChars = new CharClass(new char[0]);
-                    Set<Definition> expectedDefs = new Set<Definition>();
-                    foreach (Node node in expectedNodes)
-                    {
-                        if (node is CharNode)
-                        {
-                            expectedChars =
-                                CharClass.Union(
-                                (node as CharNode).CharClass,
-                                expectedChars);
-                        }
-                        else
-                        {
-                            expectedDefs.Add((node as DefRefNode).DefRef);
-                        }
-                    }
-
-                    List<string> expects = new List<string>();
-
-                    foreach (Definition expdef in expectedDefs)
-                    {
-                        expects.Add(expdef.Name);
-                    }
-
-                    expects.AddRange(GetDescriptionsOfCharClass(expectedChars));
-
-                    int i;
-                    for (i = 2; i < expects.Count; i++)
-                    {
-                        sb.AppendFormat("{0}, ", expects[i-2]);
-                    }
-                    if (expects.Count > 1)
-                    {
-                        sb.Append(expects[expects.Count - 2]);
-                        if (expects.Count > 2)
-                        {
-                            sb.Append(",");
-                        }
-                        sb.Append(" or ");
-                    }
-                    sb.Append(expects.Last());
-                }
-
-                error = sb.ToString();
+                error = GenerateErrorString(lastReject, lastk, def, input);
             }
             else
             {
@@ -355,6 +229,138 @@ namespace MetaphysicsIndustries.Giza
             }
 
             return MakeSpans(matchTreeLeaves);
+        }
+
+        string GenerateErrorString(NodeMatch lastReject, int lastk, Definition def, string input)
+        {
+            char errorCh = input[lastk];
+
+            IEnumerable<Node> expectedNodes;
+            Set<char> vowels = new Set<char> {
+                'a', 'e', 'i', 'o', 'u',
+                'A', 'E', 'I', 'O', 'U',
+            };
+            StringBuilder sb = new StringBuilder();
+
+            int line;
+            int linek;
+            GetPosition(input, lastk, out line, out linek);
+            sb.AppendFormat("Invalid character '{0}' at ({1},{2})", errorCh, line, linek);
+
+            NodeMatch cur = null;
+            if (lastReject.Previous == null)
+            {
+                //failed to start
+                expectedNodes = def.StartNodes;
+
+                string an = "a";
+                if (vowels.Contains(def.Name[0]))
+                {
+                    an = "an";
+                }
+
+                sb.AppendFormat(": {0} {1} must start with ", an, def.Name);
+            }
+            else
+            {
+                cur = lastReject.Previous;
+                while (cur != null &&
+                       cur.Transition == NodeMatch.TransitionType.StartDef)
+                {
+                    cur = cur.Previous;
+                }
+
+                if (cur.Previous != null)
+                {
+                    string an = "a";
+                    string after = "";
+
+                    if (cur.Previous.Node is CharNode)
+                    {
+                        after = GetDescriptionsOfCharClass((cur.Previous.Node as CharNode).CharClass)[0];
+                    }
+                    else
+                    {
+                        after = (cur.Previous.Node as DefRefNode).DefRef.Name;
+                    }
+
+                    if (vowels.Contains(after[0]))
+                    {
+                        an = "an";
+                    }
+                    sb.AppendFormat(", after {0} {1}: expected ", an, after);
+                }
+
+                if (cur == null)
+                {
+                    //failed to start
+                    expectedNodes = def.StartNodes;
+
+                    string an = "a";
+                    if (vowels.Contains(def.Name[0]))
+                    {
+                        an = "an";
+                    }
+
+                    sb.AppendFormat(": {0} {1} must start with ", an, def.Name);
+
+                }
+                else if (cur.Node is CharNode)
+                {
+                    expectedNodes = cur.Node.NextNodes;
+                }
+                else // cur.Node is DefRefNode
+                {
+                    expectedNodes = (cur.Node as DefRefNode).DefRef.StartNodes;
+                }
+            }
+
+            if (expectedNodes != null)
+            {
+                CharClass expectedChars = new CharClass(new char[0]);
+                Set<Definition> expectedDefs = new Set<Definition>();
+                foreach (Node node in expectedNodes)
+                {
+                    if (node is CharNode)
+                    {
+                        expectedChars =
+                            CharClass.Union(
+                                (node as CharNode).CharClass,
+                                expectedChars);
+                    }
+                    else
+                    {
+                        expectedDefs.Add((node as DefRefNode).DefRef);
+                    }
+                }
+
+                List<string> expects = new List<string>();
+
+                foreach (Definition expdef in expectedDefs)
+                {
+                    expects.Add(expdef.Name);
+                }
+
+                expects.AddRange(GetDescriptionsOfCharClass(expectedChars));
+
+                int i;
+                for (i = 2; i < expects.Count; i++)
+                {
+                    sb.AppendFormat("{0}, ", expects[i-2]);
+                }
+                if (expects.Count > 1)
+                {
+                    sb.Append(expects[expects.Count - 2]);
+                    if (expects.Count > 2)
+                    {
+                        sb.Append(",");
+                    }
+                    sb.Append(" or ");
+                }
+                sb.Append(expects.Last());
+            }
+
+            return sb.ToString();
         }
 
         Span[] MakeSpans(IEnumerable<NodeMatch> matchTreeLeaves)
