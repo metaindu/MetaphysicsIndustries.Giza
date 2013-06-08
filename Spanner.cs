@@ -348,11 +348,21 @@ namespace MetaphysicsIndustries.Giza
 //                }
 //            }
 
-            List<List<NodeMatch>> lists = new List<List<NodeMatch>>();
-
+            List<NodeMatch> matchTreeLeaves = new List<NodeMatch>();
             while (ends.Count > 0)
             {
-                NodeMatch cur = ends.Dequeue();
+                matchTreeLeaves.Add(ends.Dequeue());
+            }
+
+            return MakeSpans(matchTreeLeaves);
+        }
+
+        Span[] MakeSpans(IEnumerable<NodeMatch> matchTreeLeaves)
+        {
+            List<List<NodeMatch>> lists = new List<List<NodeMatch>>();
+            foreach (NodeMatch leaf in matchTreeLeaves)
+            {
+                NodeMatch cur = leaf;
                 List<NodeMatch> list = new List<NodeMatch>();
 
                 while (cur != null)
