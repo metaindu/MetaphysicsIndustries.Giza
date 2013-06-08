@@ -32,6 +32,13 @@ namespace MetaphysicsIndustries.Giza
 
         public Span[] Process(Definition def, string input, out string error)
         {
+            NodeMatch[] matchTreeLeaves = Match(def, input, out error);
+
+            return MakeSpans(matchTreeLeaves);
+        }
+
+        NodeMatch[] Match(Definition def, string input, out string error)
+        {
             // check incoming definitions
             DefinitionChecker dc = new DefinitionChecker();
             List<DefinitionChecker.ErrorInfo> errors =
@@ -228,7 +235,7 @@ namespace MetaphysicsIndustries.Giza
                 matchTreeLeaves.Add(ends.Dequeue());
             }
 
-            return MakeSpans(matchTreeLeaves);
+            return matchTreeLeaves.ToArray();
         }
 
         string GenerateErrorString(NodeMatch lastReject, int lastk, Definition def, string input)
