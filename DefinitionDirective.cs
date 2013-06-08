@@ -12,5 +12,6 @@ namespace MetaphysicsIndustries.Giza
         IncludeWhitespace,
         IgnoreCase,
         Atomic,
+        Token,
     }
 }

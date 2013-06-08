@@ -20,13 +20,15 @@ directive = '<' directive-item ( ',' directive-item )* '>';
 directive-item = (
     id-mind id-whitespace |
     id-ignore id-case |
-    id-atomic
+    id-atomic |
+    id-token
 );
 <mind whitespace, ignore case> id-mind = 'mind';
 <mind whitespace, ignore case> id-whitespace = 'whitespace';
 <mind whitespace, ignore case> id-ignore = 'ignore';
 <mind whitespace, ignore case> id-case = 'case';
 <mind whitespace, ignore case> id-atomic = 'atomic';
+<mind whitespace, ignore case> id-token = 'token';
 
 expr = ( subexpr | orexpr | comment )+;
 

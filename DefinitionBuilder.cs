@@ -82,12 +82,12 @@ namespace MetaphysicsIndustries.Giza
                 if (sub.Node == grammar.node_directive_1_directive_002D_item ||
                     sub.Node == grammar.node_directive_3_directive_002D_item)
                 {
-                    yield return GetDefModItem(grammar, sub);
+                    yield return GetDirectiveItem(grammar, sub);
                 }
             }
         }
 
-        DefinitionDirective GetDefModItem(Supergrammar grammar, Span span)
+        DefinitionDirective GetDirectiveItem(Supergrammar grammar, Span span)
         {
             if (span.Subspans[0].Node == grammar.node_directive_item_0_id_002D_mind &&
                 span.Subspans[1].Node == grammar.node_directive_item_1_id_002D_whitespace)
@@ -102,6 +102,10 @@ namespace MetaphysicsIndustries.Giza
             if (span.Subspans[0].Node == grammar.node_directive_item_4_id_002D_atomic)
             {
                 return DefinitionDirective.Atomic;
+            }
+            if (span.Subspans[0].Node == grammar.node_directive_item_5_id_002D_token)
+            {
+                return DefinitionDirective.Token;
             }
 
             throw new InvalidOperationException();
