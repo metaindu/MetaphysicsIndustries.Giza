@@ -37,7 +37,7 @@ namespace MetaphysicsIndustries.Giza
             return MakeSpans(matchTreeLeaves);
         }
 
-        NodeMatch[] Match(Definition def, string input, out string error)
+        public NodeMatch[] Match(Definition def, string input, out string error)
         {
             // check incoming definitions
             DefinitionChecker dc = new DefinitionChecker();
@@ -472,7 +472,7 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        class NodeMatch
+        public class NodeMatch
         {
             private static int __id = 0;
             public readonly int _id;
