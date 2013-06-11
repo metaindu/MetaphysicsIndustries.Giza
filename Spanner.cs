@@ -538,6 +538,23 @@ namespace MetaphysicsIndustries.Giza
 
                 return string.Format("[{0}] {1}:{2}, {3} nexts", _id, nodestr, Transition, Nexts.Count);
             }
+
+            public static string Render(NodeMatch nm)
+            {
+                StringBuilder sb = new StringBuilder();
+                Render(nm, sb, "");
+                return sb.ToString();
+            }
+            protected static void Render(NodeMatch nm, StringBuilder sb, string indent)
+            {
+                sb.Append(indent);
+                sb.Append(nm.ToString());
+                sb.AppendLine();
+                foreach (NodeMatch next in nm.Nexts)
+                {
+                    Render(next, sb, indent + "  ");
+                }
+            }
         }
 
         class NodeMatchNodeMatchPreviousNextsCollection : ICollection<NodeMatch>
