@@ -61,7 +61,6 @@
     <Compile Include="DefRefNode.cs" />
     <Compile Include="Spanner.cs" />
     <Compile Include="DefinitionChecker.cs" />
-    <Compile Include="DefinitionCheckerTest.cs" />
     <Compile Include="SpanChecker.cs" />
     <Compile Include="DefinitionDirective.cs" />
     <Compile Include="Tokenizer.cs" />

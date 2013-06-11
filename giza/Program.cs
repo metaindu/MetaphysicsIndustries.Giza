@@ -80,8 +80,8 @@ namespace giza
                                         throw new InvalidOperationException();
                                     }
 
-                                    DefinitionCheckerTest dct = new DefinitionCheckerTest();
-                                    dct.TestSingleDefCycle();
+//                                    DefinitionCheckerTest dct = new DefinitionCheckerTest();
+//                                    dct.TestSingleDefCycle();
                                 }
                             }
                         }

@@ -1,14 +1,12 @@
 using System;
-/*/
+/**/
     using NUnit.Framework;
-/*/
-    using MetaphysicsIndustries.Giza.Test;
 /**/
 using System.Collections.Generic;
 using System.Collections;
 
 
-namespace MetaphysicsIndustries.Giza
+namespace MetaphysicsIndustries.Giza.Test
 {
     [TestFixture()]
     public class DefinitionCheckerTest
@@ -28,7 +26,7 @@ namespace MetaphysicsIndustries.Giza
             string error;
             Grammar grammar = ss.GetGrammar(input, out error);
 
-            Assert.Equals(error, null);
+            Assert.IsNull(error);
 
             DefinitionChecker dc = new DefinitionChecker();
             List<DefinitionChecker.ErrorInfo> errors = new List<DefinitionChecker.ErrorInfo>(dc.CheckDefinitions(grammar.Definitions));
@@ -111,32 +109,6 @@ namespace MetaphysicsIndustries.Giza
                 }
             }
             Assert.IsTrue(found, "No LeadingReferenceCycle error was found in the returned list.");
-        }
-    }
-}
-
-namespace MetaphysicsIndustries.Giza.Test
-{
-    public class TestFixtureAttribute : Attribute
-    {
-    }
-
-    public class TestAttribute : Attribute
-    {
-    }
-
-    public static class Assert
-    {
-        public static void IsEmpty(IEnumerable collection)
-        {
-        }
-
-        public static void IsNotEmpty(IEnumerable collection)
-        {
-        }
-
-        public static void IsTrue(bool condition, string message)
-        {
         }
     }
 }
