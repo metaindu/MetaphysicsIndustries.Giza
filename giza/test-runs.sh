@@ -1,2 +1,3 @@
 --super ~/other-projects/MetaphysicsIndustries.Giza/Supergrammar.txt -2
 --render ~/other-projects/MetaphysicsIndustries.Giza/Supergrammar.txt Supergrammar
+--tokenize ~/other-projects/MetaphysicsIndustries.Giza/SolusGrammar.txt ~/other-projects/MetaphysicsIndustries.Giza/ligra-examples.txt 0

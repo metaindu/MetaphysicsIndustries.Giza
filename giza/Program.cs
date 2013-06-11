@@ -59,28 +59,30 @@ namespace giza
                             Definition.__id = 0;
                             DefinitionRenderer dr = new DefinitionRenderer();
                             if (ss.Length != 1)
-                            foreach (Span span in ss)
                             {
-                                Definition.__id = 0;
-
-                                SpanChecker sc = new SpanChecker();
-                                if (sc.CheckSpan(span, supergrammar).Count > 0)
+                                foreach (Span span in ss)
                                 {
-                                    throw new InvalidOperationException();
+                                    Definition.__id = 0;
+
+                                    SpanChecker sc = new SpanChecker();
+                                    if (sc.CheckSpan(span, supergrammar).Count > 0)
+                                    {
+                                        throw new InvalidOperationException();
+                                    }
+
+                                    Definition[] dd2 = db.BuildDefinitions(supergrammar, span);
+                                    string class2 = dr.RenderDefinitionsAsCSharpClass("FromBuildDefs2", dd2);
+                                    class2 = class2;
+
+                                    DefinitionChecker dc = new DefinitionChecker();
+                                    if (dc.CheckDefinitions(dd2).Count() > 0)
+                                    {
+                                        throw new InvalidOperationException();
+                                    }
+
+                                    DefinitionCheckerTest dct = new DefinitionCheckerTest();
+                                    dct.TestSingleDefCycle();
                                 }
-
-                                Definition[] dd2 = db.BuildDefinitions(supergrammar, span);
-                                string class2 = dr.RenderDefinitionsAsCSharpClass("FromBuildDefs2", dd2);
-                                class2 = class2;
-
-                                DefinitionChecker dc = new DefinitionChecker();
-                                if (dc.CheckDefinitions(dd2).Count() > 0)
-                                {
-                                    throw new InvalidOperationException();
-                                }
-
-                                DefinitionCheckerTest dct = new DefinitionCheckerTest();
-                                dct.TestSingleDefCycle();
                             }
                         }
                     }
@@ -126,6 +128,52 @@ namespace giza
                 else
                 {
                     ShowUsage();
+                }
+            }
+            else if (args[0].ToLower() == "--tokenize")
+            {
+                SupergrammarSpanner s = new SupergrammarSpanner();
+                string gfile;
+                if (args[1] == "-")
+                {
+                    gfile = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
+                }
+                else
+                {
+                    gfile = File.ReadAllText(args[1]);
+                }
+                string error;
+                Grammar g = s.GetGrammar(gfile, out error);
+
+                if (!string.IsNullOrEmpty(error))
+                {
+                    Console.WriteLine(error);
+                }
+                else
+                {
+                    string infile;
+                    if (args[2] == "-")
+                    {
+                        infile = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
+                    }
+                    else
+                    {
+                        infile = File.ReadAllText(args[2]);
+                    }
+
+                    int index;
+                    if (args.Length < 4)
+                    {
+                        index = 0;
+                    }
+                    else if (!int.TryParse(args[3], out index))
+                    {
+                        Console.WriteLine("\"{0}\" is not a valid index.", args[3]);
+                        return;
+                    }
+
+                    Tokenizer t = new Tokenizer(g);
+                    t.GetTokensAtLocation(infile, index);
                 }
             }
             else if (args.Length < 3)
