@@ -6,8 +6,31 @@ namespace MetaphysicsIndustries.Giza.Test
     [TestFixture()]
     public class SpannerTest
     {
+        [Test]
+        public void TestOrExpr()
+        {
+            string testGrammarText = 
+                "def1 = ( 'qwer' | 'asdf' );";
+            string error;
+            Grammar testGrammar = (new SupergrammarSpanner()).GetGrammar(testGrammarText, out error);
+            if (!string.IsNullOrEmpty(error))
+            {
+                throw new InvalidOperationException(error);
+            }
+
+            Spanner s = new Spanner();
+
+            Span[] spans = s.Process(testGrammar, "def1", "qwer", out error);
+            Assert.AreEqual(1, spans.Length);
+            Assert.IsNull(error);
+
+            spans = s.Process(testGrammar, "def1", "asdf", out error);
+            Assert.AreEqual(1, spans.Length);
+            Assert.IsNull(error);
+        }
+
         [Test()]
-        public void TestInvalidCharacterAfterDefRef()
+        public void TestErrorInvalidCharacterAfterDefRef()
         {
             string testGrammarText = 
                 " // test grammar \r\n" +
@@ -26,7 +49,7 @@ namespace MetaphysicsIndustries.Giza.Test
         }
 
         [Test()]
-        public void TestInvalidCharacterAtStart()
+        public void TestErrorInvalidCharacterAtStart()
         {
             string testGrammarText = 
                 " // test grammar \r\n" +
