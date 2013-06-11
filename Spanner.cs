@@ -37,7 +37,7 @@ namespace MetaphysicsIndustries.Giza
             return MakeSpans(matchTreeLeaves);
         }
 
-        public NodeMatch[] Match(Definition def, string input, out string error)
+        public NodeMatch[] Match(Definition def, string input, out string error, bool mustUseAllInput=true)
         {
             // check incoming definitions
             DefinitionChecker dc = new DefinitionChecker();
@@ -68,10 +68,13 @@ namespace MetaphysicsIndustries.Giza
                 k++;
                 bool isWhitespace = char.IsWhiteSpace(ch);
 
-                // move all ends to rejects
-                while (ends.Count > 0)
+                if (mustUseAllInput)
                 {
-                    rejects.Enqueue(ends.Dequeue());
+                    // move all ends to rejects
+                    while (ends.Count > 0)
+                    {
+                        rejects.Enqueue(ends.Dequeue());
+                    }
                 }
 
                 while (currents.Count > 0)
