@@ -68,6 +68,19 @@ namespace MetaphysicsIndustries.Giza
 
             return grammar;
         }
+
+        public Definition FindDefinitionByName(string name)
+        {
+            foreach (Definition def in Definitions)
+            {
+                if (def.Name == name)
+                {
+                    return def;
+                }
+            }
+
+            return null;
+        }
     }
 }
 

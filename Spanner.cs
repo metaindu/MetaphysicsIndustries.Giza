@@ -9,17 +9,9 @@ namespace MetaphysicsIndustries.Giza
 {
     public class Spanner
     {
-        public Span[] Process(IEnumerable<Definition> defs, string startName, string input, out string error)
+        public Span[] Process(Grammar grammar, string startName, string input, out string error)
         {
-            Definition start = null;
-            foreach (Definition d in defs)
-            {
-                if (d.Name == startName)
-                {
-                    start = d;
-                    break;
-                }
-            }
+            Definition start = grammar.FindDefinitionByName(startName);
 
             if (start == null)
             {

@@ -44,7 +44,7 @@ namespace giza
                         Definition.__id = 0;
                         Spanner spanner = new Spanner();
                         string error;
-                        Span[] ss = spanner.Process(supergrammar.Definitions.ToArray(), "grammar", gfile, out error);
+                        Span[] ss = spanner.Process(supergrammar, "grammar", gfile, out error);
                         if (!string.IsNullOrEmpty(error))
                         {
                             Console.WriteLine(error);
@@ -204,7 +204,7 @@ namespace giza
                     }
 
                     Spanner gs = new Spanner();
-                    Span[] ss = gs.Process(g.Definitions.ToArray(), args[1], input, out error);
+                    Span[] ss = gs.Process(g, args[1], input, out error);
                     if (error != null)
                     {
                         Console.WriteLine(error);

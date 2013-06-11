@@ -22,7 +22,7 @@ namespace MetaphysicsIndustries.Giza
             Supergrammar supergrammar = new Supergrammar();
             Definition.__id = 0;
             Spanner spanner = new Spanner();
-            Span[] s2 = spanner.Process(supergrammar.Definitions, "grammar", input, out error);
+            Span[] s2 = spanner.Process(supergrammar, "grammar", input, out error);
 
             if (string.IsNullOrEmpty(error))
             {
