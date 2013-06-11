@@ -280,7 +280,8 @@ namespace MetaphysicsIndustries.Giza
                     cur = cur.Previous;
                 }
 
-                if (cur.Previous != null)
+                if (cur != null && 
+                    cur.Previous != null)
                 {
                     string an = "a";
                     string after = "";
