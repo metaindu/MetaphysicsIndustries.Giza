@@ -29,7 +29,7 @@ namespace MetaphysicsIndustries.Giza
             return MakeSpans(matchTreeLeaves);
         }
 
-        public NodeMatch[] Match(Definition def, string input, out string error, bool mustUseAllInput=true)
+        public NodeMatch[] Match(Definition def, string input, out string error, bool mustUseAllInput=true, int startIndex=0)
         {
             // check incoming definitions
             DefinitionChecker dc = new DefinitionChecker();
@@ -52,7 +52,7 @@ namespace MetaphysicsIndustries.Giza
             currents.Enqueue(pair(root, null));
 
             int k;
-            for (k = 0; k < input.Length; k++)
+            for (k = startIndex; k < input.Length; k++)
             {
                 char ch = input[k];
 

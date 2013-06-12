@@ -29,7 +29,7 @@ namespace MetaphysicsIndustries.Giza
 
         public Token[] GetTokensAtLocation(string input, int index, out string error)
         {
-            Spanner.NodeMatch[] matchTreeLeaves = _spanner.Match(_tokenDef, input, out error, false);
+            Spanner.NodeMatch[] matchTreeLeaves = _spanner.Match(_tokenDef, input, out error, false, index);
 
             List<Token> tokens = new List<Token>();
             foreach (Spanner.NodeMatch leaf in matchTreeLeaves)
