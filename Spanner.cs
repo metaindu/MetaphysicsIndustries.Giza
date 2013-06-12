@@ -51,13 +51,13 @@ namespace MetaphysicsIndustries.Giza
 
             currents.Enqueue(pair(root, null));
 
-            int k = -1;
-            int lastk = k;
-            foreach (char ch in input)
+            int k;
+            for (k = 0; k < input.Length; k++)
             {
+                char ch = input[k];
+
                 if (currents.Count < 1) break;
 
-                k++;
                 bool isWhitespace = char.IsWhiteSpace(ch);
 
                 if (mustUseAllInput)
@@ -98,7 +98,7 @@ namespace MetaphysicsIndustries.Giza
                             if ((!stack.Definition.Atomic || cur.Node.NextNodes.Count < 1) &&
                                 cur.Node.IsEndNode)
                             {
-                                accepts.Enqueue(CreateEndDefMatch(cur, stack, k));
+                                accepts.Enqueue(CreateEndDefMatch(cur, stack));
                             }
                         }
                         else
@@ -107,7 +107,7 @@ namespace MetaphysicsIndustries.Giza
                                 stack.Definition.Nodes.Contains(cur.Previous.Node) &&
                                 cur.Previous.Node.IsEndNode)
                             {
-                                currents.Enqueue(CreateEndDefMatch(cur.Previous, stack, k));
+                                currents.Enqueue(CreateEndDefMatch(cur.Previous, stack));
                             }
 
                             rejects.Enqueue(cur);
@@ -128,7 +128,7 @@ namespace MetaphysicsIndustries.Giza
                             }
                             else if (cur.Node.IsEndNode)
                             {
-                                currents.Enqueue(CreateEndDefMatch(cur, stack, k));
+                                currents.Enqueue(CreateEndDefMatch(cur, stack));
                             }
                         }
                         else
@@ -142,7 +142,7 @@ namespace MetaphysicsIndustries.Giza
                     }
                 }
 
-                PurgeRejects(rejects, k, ref lastReject, ref lastk);
+                PurgeRejects(rejects, ref lastReject);
 
                 while (accepts.Count > 0)
                 {
@@ -167,7 +167,7 @@ namespace MetaphysicsIndustries.Giza
                 }
                 else if (cur.Node.IsEndNode)
                 {
-                    currents.Enqueue(CreateEndDefMatch(cur, stack, k));
+                    currents.Enqueue(CreateEndDefMatch(cur, stack));
                 }
                 else
                 {
@@ -175,7 +175,7 @@ namespace MetaphysicsIndustries.Giza
                 }
             }
 
-            PurgeRejects(rejects, k, ref lastReject, ref lastk);
+            PurgeRejects(rejects, ref lastReject);
 
             // if nothing is in ends, then we ran aground
             // if there's something in ends and k < length + 1, then we finished but still have input
@@ -184,7 +184,7 @@ namespace MetaphysicsIndustries.Giza
 
             if (ends.Count < 1)
             {
-                error = GenerateErrorString(lastReject, lastk, def, input);
+                error = GenerateErrorString(lastReject, def, input);
             }
             else
             {
@@ -229,9 +229,9 @@ namespace MetaphysicsIndustries.Giza
             return matchTreeLeaves.ToArray();
         }
 
-        string GenerateErrorString(NodeMatch lastReject, int lastk, Definition def, string input)
+        string GenerateErrorString(NodeMatch lastReject, Definition def, string input)
         {
-            char errorCh = input[lastk];
+            char errorCh = input[lastReject.Index];
 
             IEnumerable<Node> expectedNodes;
             Set<char> vowels = new Set<char> {
@@ -242,7 +242,7 @@ namespace MetaphysicsIndustries.Giza
 
             int line;
             int linek;
-            GetPosition(input, lastk, out line, out linek);
+            GetPosition(input, lastReject.Index, out line, out linek);
             sb.AppendFormat("Invalid character '{0}' at ({1},{2})", errorCh, line, linek);
 
             NodeMatch cur = null;
@@ -673,7 +673,7 @@ namespace MetaphysicsIndustries.Giza
             return pair(match2, stack2);
         }
 
-        NodeMatchStackPair CreateEndDefMatch(NodeMatch match, MatchStack stack, int index)
+        NodeMatchStackPair CreateEndDefMatch(NodeMatch match, MatchStack stack)
         {
             NodeMatch match2 = new NodeMatch(stack.Node, NodeMatch.TransitionType.EndDef);
             match2.Index = match.Index;
@@ -689,13 +689,12 @@ namespace MetaphysicsIndustries.Giza
             return pair(match2, stack);
         }
 
-        void PurgeRejects(Queue<NodeMatch> rejects, int k, ref NodeMatch lastReject, ref int lastk)
+        void PurgeRejects(Queue<NodeMatch> rejects, ref NodeMatch lastReject)
         {
             while (rejects.Count > 0)
             {
                 NodeMatch n = lastReject;
                 lastReject = rejects.Dequeue();
-                lastk = k;
 
                 if (n == null) break;
 
