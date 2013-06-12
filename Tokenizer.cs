@@ -34,10 +34,13 @@ namespace MetaphysicsIndustries.Giza
             List<Token> tokens = new List<Token>();
             foreach (Spanner.NodeMatch leaf in matchTreeLeaves)
             {
+                Spanner.NodeMatch tokenEnd = leaf.Previous;
+                Spanner.NodeMatch tokenStart = leaf.Previous.StartDef;
+
                 tokens.Add(new Token{
-                    Definition = leaf.Previous.Previous.Node.ParentDefinition,
-                    StartIndex = index,
-                    Length = leaf.Index - index + 1
+                    Definition = tokenEnd.Previous.Node.ParentDefinition,
+                    StartIndex = tokenStart.Index,
+                    Length = leaf.Index - tokenStart.Index + 1
                 });
             }
 

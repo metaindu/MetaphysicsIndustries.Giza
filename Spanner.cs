@@ -469,6 +469,7 @@ namespace MetaphysicsIndustries.Giza
             private static int __id = 0;
             public readonly int _id;
             public int Index = -1;
+            public NodeMatch StartDef;
 
             public NodeMatch(Node node, TransitionType transition)
             {
@@ -678,6 +679,7 @@ namespace MetaphysicsIndustries.Giza
             NodeMatch match2 = new NodeMatch(stack.Node, NodeMatch.TransitionType.EndDef);
             match2.Index = match.Index;
             match2.Previous = match;
+            match2.StartDef = stack.NodeMatch;
             return pair(match2, stack.Parent);
         }
 
