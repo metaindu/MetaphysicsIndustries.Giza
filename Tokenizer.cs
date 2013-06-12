@@ -37,7 +37,7 @@ namespace MetaphysicsIndustries.Giza
                 tokens.Add(new Token{
                     Definition = leaf.Previous.Previous.Node.ParentDefinition,
                     StartIndex = index,
-                    Length = leaf._k - index + 1
+                    Length = leaf.Index - index + 1
                 });
             }
 
