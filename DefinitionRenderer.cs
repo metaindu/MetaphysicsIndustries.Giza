@@ -51,19 +51,11 @@ namespace MetaphysicsIndustries.Giza
                     nodenames[node] = name;
 
                     string type = "";
-                    if (node is StartNode)
-                    {
-                        type = "StartNode";
-                    }
-                    else if (node is EndNode)
-                    {
-                        type = "EndNode";
-                    }
-                    else if (node is CharNode)
+                    if (node is CharNode)
                     {
                         type = "CharNode";
                     }
-                    else if (node is DefRefNode)
+                    else // (node is DefRefNode)
                     {
                         type = "DefRefNode";
                     }
@@ -102,15 +94,7 @@ namespace MetaphysicsIndustries.Giza
                     string name = nodenames[node];
 
                     sb.Append(indent);
-                    if (node is StartNode)
-                    {
-                        sb.AppendFormat("{0} = new StartNode();", name);
-                    }
-                    else if (node is EndNode)
-                    {
-                        sb.AppendFormat("{0} = new EndNode();", name);
-                    }
-                    else if (node is CharNode)
+                    if (node is CharNode)
                     {
                         sb.AppendFormat(
                             "{0} = new CharNode(CharClass.FromUndelimitedCharClassText({1}), {2});",
@@ -118,7 +102,7 @@ namespace MetaphysicsIndustries.Giza
                             RenderString((node as CharNode).CharClass.ToUndelimitedString()),
                             RenderString(node.Tag));
                     }
-                    else if (node is DefRefNode)
+                    else // (node is DefRefNode)
                     {
                         sb.AppendFormat(
                             "{0} = new DefRefNode({1}, {2});",

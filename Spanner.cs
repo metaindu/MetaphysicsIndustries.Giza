@@ -91,8 +91,6 @@ namespace MetaphysicsIndustries.Giza
                             //next nodes
                             foreach (Node n in cur.Node.NextNodes)
                             {
-                                if (n is EndNode) continue;
-
                                 accepts.Enqueue(CreateFollowMatch(n, cur, stack, k));
                             }
 
@@ -121,8 +119,6 @@ namespace MetaphysicsIndustries.Giza
                         {
                             foreach (Node n in cur.Node.NextNodes)
                             {
-                                if (n is EndNode) continue;
-
                                 currents.Enqueue(CreateFollowMatch(n, cur, stack, k));
                             }
 
@@ -530,9 +526,7 @@ namespace MetaphysicsIndustries.Giza
             public override string ToString()
             {
                 string nodestr;
-                if (Node is StartNode) nodestr = "<start>";
-                else if (Node is EndNode) nodestr = "<end>";
-                else if (Node is CharNode) nodestr = (Node as CharNode).CharClass.ToString();
+                if (Node is CharNode) nodestr = (Node as CharNode).CharClass.ToString();
                 else if (Node is DefRefNode) nodestr = (Node as DefRefNode).DefRef.Name;
                 else nodestr = "<unknown>";
 

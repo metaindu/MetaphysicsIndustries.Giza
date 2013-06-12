@@ -83,30 +83,4 @@ namespace MetaphysicsIndustries.Giza
             }
         }
     }
-
-    public class StartNode : Node
-    {
-        public override string Tag
-        {
-            get { return "start"; }
-        }
-
-        public override string ToString()
-        {
-            return string.Format("[{0}] start", ID);
-        }
-    }
-
-    public class EndNode : Node
-    {
-        public override string Tag
-        {
-            get { return "end"; }
-        }
-
-        public override string ToString()
-        {
-            return string.Format("[{0}] end", ID);
-        }
-    }
 }
