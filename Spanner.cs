@@ -95,7 +95,7 @@ namespace MetaphysicsIndustries.Giza
                             }
 
                             //end
-                            if (!stack.Definition.Atomic &&
+                            if ((!stack.Definition.Atomic || cur.Node.NextNodes.Count < 1) &&
                                 cur.Node.IsEndNode)
                             {
                                 accepts.Enqueue(CreateEndDefMatch(cur, stack, k));
@@ -676,7 +676,7 @@ namespace MetaphysicsIndustries.Giza
         NodeMatchStackPair CreateEndDefMatch(NodeMatch match, MatchStack stack, int index)
         {
             NodeMatch match2 = new NodeMatch(stack.Node, NodeMatch.TransitionType.EndDef);
-            match2._k = index;
+            match2._k = match._k;
             match2.Previous = match;
             return pair(match2, stack.Parent);
         }
