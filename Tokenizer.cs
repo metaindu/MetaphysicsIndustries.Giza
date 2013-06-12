@@ -27,9 +27,8 @@ namespace MetaphysicsIndustries.Giza
         Spanner _spanner = new Spanner();
         Definition _tokenDef;
 
-        public Token[] GetTokensAtLocation(string input, int index)
+        public Token[] GetTokensAtLocation(string input, int index, out string error)
         {
-            string error;
             Spanner.NodeMatch[] matchTreeLeaves = _spanner.Match(_tokenDef, input, out error, false);
 
             List<Token> tokens = new List<Token>();
@@ -42,7 +41,7 @@ namespace MetaphysicsIndustries.Giza
                 });
             }
 
-            throw new NotImplementedException();
+            return tokens.ToArray();
         }
     }
 }

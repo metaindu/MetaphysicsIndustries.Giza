@@ -37,6 +37,7 @@
     <Compile Include="DefinitionCheckerTest.cs" />
     <Compile Include="Fixtures\Fixtures.cs" />
     <Compile Include="SpannerTest.cs" />
+    <Compile Include="TokenizerTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

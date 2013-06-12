@@ -173,7 +173,7 @@ namespace giza
                     }
 
                     Tokenizer t = new Tokenizer(g);
-                    t.GetTokensAtLocation(infile, index);
+                    t.GetTokensAtLocation(infile, index, out error);
                 }
             }
             else if (args.Length < 3)
