@@ -49,9 +49,8 @@ namespace MetaphysicsIndustries.Giza.Test
             }
         }
 
-
         [Test()]
-        public void TestAmbiguous()
+        public void TestAmbiguousSeparateTokens()
         {
             string testGrammarText =
                 " // test grammar \r\n" +
@@ -112,6 +111,51 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(2, plusplusToken.Length);
             Assert.AreEqual(1, operToken.StartIndex);
             Assert.AreEqual(1, operToken.Length);
+        }
+
+        [Test()]
+        public void TestAmbiguousCombinedToken()
+        {
+            string testGrammarText =
+                " // test grammar \r\n" +
+                "expr = item ( oper item )+; \r\n" +
+                "<mind whitespace, atomic, token> item = [\\l]+ ; \r\n" +
+                "<mind whitespace, token> oper = ( '<' | '<<' ); \r\n";
+
+            string testInput = "a << b";
+
+            string error;
+            Grammar testGrammar = (new SupergrammarSpanner()).GetGrammar(testGrammarText, out error);
+            if (!string.IsNullOrEmpty(error))
+            {
+                throw new InvalidOperationException(error);
+            }
+            Definition itemDef = testGrammar.FindDefinitionByName("item");
+            Definition operDef = testGrammar.FindDefinitionByName("oper");
+
+            Tokenizer t = new Tokenizer(testGrammar);
+            Token[] tokens;
+
+            tokens = t.GetTokensAtLocation(testInput, 0, out error);
+            Assert.IsNull(error);
+            Assert.AreEqual(1, tokens.Length);
+            if (tokens.Length > 0)
+            {
+                Assert.AreEqual(itemDef, tokens[0].Definition);
+                Assert.AreEqual(0, tokens[0].StartIndex);
+                Assert.AreEqual(1, tokens[0].Length);
+            }
+
+            tokens = t.GetTokensAtLocation(testInput, 1, out error);
+            Assert.IsNull(error);
+            Assert.AreEqual(2, tokens.Length);
+            Assert.AreEqual(2, tokens[0].StartIndex);
+            Assert.AreEqual(2, tokens[1].StartIndex);
+            Assert.AreEqual(operDef, tokens[0].Definition);
+            Assert.AreEqual(operDef, tokens[1].Definition);
+            Assert.IsTrue(tokens[0].Length == 1 || tokens[0].Length == 2);
+            Assert.IsTrue(tokens[1].Length == 1 || tokens[1].Length == 2);
+            Assert.IsTrue(tokens[0].Length != tokens[1].Length);
         }
     }
 }

@@ -12,5 +12,5 @@ DefinitionChecker
   more thorough analysis
 SpanChecker
   more thorough analysis
-re-org and add tests and docs
+re-org and add docs
 DefinitionRenderer - render to grammar text
