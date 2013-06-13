@@ -65,6 +65,13 @@
     <Compile Include="DefinitionDirective.cs" />
     <Compile Include="Tokenizer.cs" />
     <Compile Include="Token.cs" />
+    <Compile Include="Expression.cs" />
+    <Compile Include="SubExpression.cs" />
+    <Compile Include="OrExpression.cs" />
+    <Compile Include="DefRefSubExpression.cs" />
+    <Compile Include="LiteralSubExpression.cs" />
+    <Compile Include="CharClassSubExpression.cs" />
+    <Compile Include="ExpressionItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
