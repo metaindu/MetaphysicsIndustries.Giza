@@ -14,3 +14,4 @@ SpanChecker
   more thorough analysis
 re-org and add docs
 DefinitionRenderer - render to grammar text
+Move rendering classes to a separate 'Rendering' assembly, and/or move classes for parsing into a 'Light' assembly.
