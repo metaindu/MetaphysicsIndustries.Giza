@@ -13,7 +13,7 @@ namespace MetaphysicsIndustries.Giza
         public DefinitionInfo[] BuildExpressions(Supergrammar grammar, Span span)
         {
             if (!(span.Node is DefRefNode) ||
-                (span.Node as DefRefNode).DefRef != grammar.def_0_grammar) 
+                (span.Node as DefRefNode).DefRef != grammar.def_0_grammar)
             {
                 throw new InvalidOperationException();
             }
@@ -56,7 +56,7 @@ namespace MetaphysicsIndustries.Giza
         public Definition[] BuildDefinitions(Supergrammar grammar, Span span)
         {
             if (!(span.Node is DefRefNode) ||
-                (span.Node as DefRefNode).DefRef != grammar.def_0_grammar) 
+                (span.Node as DefRefNode).DefRef != grammar.def_0_grammar)
             {
                 throw new InvalidOperationException();
             }
@@ -480,7 +480,7 @@ namespace MetaphysicsIndustries.Giza
         }
         NodeBundle GetNodesFromSubExpr(Supergrammar grammar, Span span, Dictionary<string, Definition> defsByName)
         {
-//            return 
+//            return
 //                GetNodesFromSubExpression(
 //                    GetSubExpressionFromSpan(grammar, span),
 //                    defsByName);
@@ -572,7 +572,10 @@ namespace MetaphysicsIndustries.Giza
         DefRefSubExpression GetDefRefSubExpressionFromSpan(Supergrammar grammar, Span span)
         {
             string ident = GetIdentifier(grammar, span);
-            return new DefRefSubExpression { DefinitionName = ident };
+            return new DefRefSubExpression {
+                DefinitionName = ident,
+                Tag = ident
+            };
         }
         Node GetNodeFromIdentifier(Supergrammar grammar, Span span, Dictionary<string, Definition> defsByName)
         {
@@ -754,9 +757,11 @@ namespace MetaphysicsIndustries.Giza
             }
 
             string charClassText = new string(items.ToArray());
+            CharClass cc = CharClass.FromUndelimitedCharClassText(charClassText);
 
             return new CharClassSubExpression {
-                CharClass = CharClass.FromUndelimitedCharClassText(charClassText),
+                CharClass = cc,
+                Tag = cc.ToUndelimitedString(),
             };
         }
         Node GetNodeFromCharClass(Supergrammar grammar, Span span)
