@@ -195,8 +195,7 @@ namespace MetaphysicsIndustries.Giza
 
             foreach (char ch in literal.Value)
             {
-                CharNode node = new CharNode(ch);
-                node.SetTag(literal.Value);
+                CharNode node = new CharNode(ch, literal.Tag);
                 nodes.Add(node);
             }
 
