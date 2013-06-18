@@ -42,11 +42,10 @@ namespace MetaphysicsIndustries.Giza.Test
             StringBuilder sb = new StringBuilder();
             for (i = 0; i < defs1.Length; i++)
             {
-                bool value = gc.AreEquivalent(defs1[i], defs2[i], defmatchup);
-                sb.AppendFormat("defs {0} {1}", i, (value ? "are the same" : "differ"));
+                GrammarComparer.Discrepancy[] discrepancies = gc.AreEquivalent(defs1[i], defs2[i], defmatchup);
+                sb.AppendFormat("defs {0} have {1} discrepancies", i, discrepancies.Length);
                 sb.AppendLine();
-
-                value2 = value2 && value;
+                value2 = value2 && (discrepancies.Length == 0);
             }
             Assert.IsTrue(value2);
         }

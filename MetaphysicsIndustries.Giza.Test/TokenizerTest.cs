@@ -22,7 +22,6 @@ namespace MetaphysicsIndustries.Giza.Test
             {
                 throw new InvalidOperationException(error);
             }
-            Definition sequenceDef = testGrammar.FindDefinitionByName("sequence");
             Definition item1Def = testGrammar.FindDefinitionByName("id-item1");
             Definition item2Def = testGrammar.FindDefinitionByName("id-item2");
 

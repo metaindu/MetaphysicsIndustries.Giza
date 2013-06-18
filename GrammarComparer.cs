@@ -5,6 +5,30 @@ namespace MetaphysicsIndustries.Giza
 {
     public class GrammarComparer
     {
+        public struct Discrepancy
+        {
+            public Definition DefinitionA;
+            public Definition DefinitionB;
+            public Node NodeA;
+            public Node NodeB;
+
+            public DiscrepancyType DiscrepancyType;
+        }
+
+        public enum DiscrepancyType
+        {
+            DefinitionNamesAreDifferent,
+            DefinitionDirectivesAreDifferent,
+            DefinitionNodeCountsAreDifferent,
+            DefinitionStartNodesAreDifferent,
+            DefinitionEndNodesAreDifferent,
+            NodesHaveDifferentTypes,
+            NodeCharClassesAreDifferent,
+            NodeDefRefsAreDifferent,
+            NodeTagsAreDifferent,
+            NodeNextLinksAreDifferent,
+        }
+
 //        public bool AreEquivalent(Grammar a, Grammar b)
 //        {
 //            if (a.Definitions.Count != b.Definitions.Count) return false;
@@ -25,72 +49,193 @@ namespace MetaphysicsIndustries.Giza
 //            return true;
 //        }
 
-        public bool AreEquivalent(Definition a, Definition b, Dictionary<Definition, Definition> defmatch)
+        public Discrepancy[] AreEquivalent(Definition a, Definition b, Dictionary<Definition, Definition> defmatch)
         {
-            if (a.Name != b.Name) return false;
+            List<Discrepancy> discrepancies = new List<Discrepancy>();
 
-            if (a.Directives.Count != b.Directives.Count) return false;
-            foreach (DefinitionDirective dir in a.Directives)
+            if (a.Name != b.Name)
             {
-                if (!b.Directives.Contains(dir)) return false;
+                discrepancies.Add(new Discrepancy{
+                    DefinitionA = a,
+                    DefinitionB = b,
+                    DiscrepancyType = DiscrepancyType.DefinitionNamesAreDifferent,
+                });
             }
 
-            if (a.Nodes.Count != b.Nodes.Count) return false;
+            if (a.Directives.Count != b.Directives.Count)
+            {
+                discrepancies.Add(new Discrepancy{
+                    DefinitionA = a,
+                    DefinitionB = b,
+                    DiscrepancyType = DiscrepancyType.DefinitionDirectivesAreDifferent,
+                });
+            }
+            else
+            {
+                foreach (DefinitionDirective dir in a.Directives)
+                {
+                    if (!b.Directives.Contains(dir))
+                    {
+                        discrepancies.Add(new Discrepancy{
+                            DefinitionA = a,
+                            DefinitionB = b,
+                            DiscrepancyType = DiscrepancyType.DefinitionDirectivesAreDifferent,
+                        });
+                        break;
+                    }
+                }
+            }
+
+            if (a.Nodes.Count != b.Nodes.Count)
+            {
+                discrepancies.Add(new Discrepancy{
+                    DefinitionA = a,
+                    DefinitionB = b,
+                    DiscrepancyType = DiscrepancyType.DefinitionNodeCountsAreDifferent,
+                });
+            }
             int i;
             Dictionary<Node, Node> nodematchup = new Dictionary<Node, Node>();
-            for (i = 0; i < a.Nodes.Count; i++)
+            for (i = 0; i < Math.Min(a.Nodes.Count, b.Nodes.Count); i++)
             {
                 nodematchup[a.Nodes[i]] = b.Nodes[i];
                 nodematchup[b.Nodes[i]] = a.Nodes[i];
             }
-            for (i = 0; i < a.Nodes.Count; i++)
+            for (i = 0; i < Math.Min(a.Nodes.Count, b.Nodes.Count); i++)
             {
-                if (!AreEquivalent(a.Nodes[i], b.Nodes[i], defmatch, nodematchup)) return false;
+                discrepancies.AddRange(AreEquivalent(a.Nodes[i], b.Nodes[i], defmatch, nodematchup));
             }
 
-            if (a.StartNodes.Count != b.StartNodes.Count) return false;
-            foreach (Node n in a.StartNodes)
+            if (a.StartNodes.Count != b.StartNodes.Count)
             {
-                if (!b.StartNodes.Contains(nodematchup[n])) return false;
+                discrepancies.Add(new Discrepancy{
+                    DefinitionA = a,
+                    DefinitionB = b,
+                    DiscrepancyType = DiscrepancyType.DefinitionStartNodesAreDifferent,
+                });
+            }
+            else
+            {
+                foreach (Node n in a.StartNodes)
+                {
+                    if (!b.StartNodes.Contains(nodematchup[n]))
+                    {
+                        discrepancies.Add(new Discrepancy{
+                            DefinitionA = a,
+                            DefinitionB = b,
+                            DiscrepancyType = DiscrepancyType.DefinitionStartNodesAreDifferent,
+                        });
+                        break;
+                    }
+                }
             }
 
-            if (a.EndNodes.Count != b.EndNodes.Count) return false;
-            foreach (Node n in a.EndNodes)
+            if (a.EndNodes.Count != b.EndNodes.Count)
             {
-                if (!b.EndNodes.Contains(nodematchup[n])) return false;
+
+                discrepancies.Add(new Discrepancy{
+                    DefinitionA = a,
+                    DefinitionB = b,
+                    DiscrepancyType = DiscrepancyType.DefinitionEndNodesAreDifferent,
+                });
+            }
+            else
+            {
+                foreach (Node n in a.EndNodes)
+                {
+                    if (!b.EndNodes.Contains(nodematchup[n]))
+                    {
+                        discrepancies.Add(new Discrepancy{
+                            DefinitionA = a,
+                            DefinitionB = b,
+                            DiscrepancyType = DiscrepancyType.DefinitionEndNodesAreDifferent,
+                        });
+                        break;
+                    }
+                }
             }
 
-            return true;
+            return discrepancies.ToArray();
         }
 
-        bool AreEquivalent(Node a, Node b, Dictionary<Definition, Definition> defmatchup, Dictionary<Node, Node> nodematchup)
+        public Discrepancy[] AreEquivalent(Node a, Node b, Dictionary<Definition, Definition> defmatchup, Dictionary<Node, Node> nodematchup)
         {
-            if (a.GetType() != b.GetType()) return false;
+            List<Discrepancy> discrepancies = new List<Discrepancy>();
 
-            if (a is CharNode)
+            if (a.GetType() != b.GetType())
             {
-                CharNode aa = (CharNode)a;
-                CharNode bb = (CharNode)b;
-
-                if (aa.CharClass.ToUndelimitedString() != bb.CharClass.ToUndelimitedString()) return false;
+                discrepancies.Add(new Discrepancy{
+                    NodeA = a,
+                    NodeB = b,
+                    DiscrepancyType = DiscrepancyType.NodesHaveDifferentTypes,
+                });
             }
-            else // (a is DefRefNode)
+            else
             {
-                DefRefNode aa = (DefRefNode)a;
-                DefRefNode bb = (DefRefNode)b;
+                if (a is CharNode)
+                {
+                    CharNode aa = (CharNode)a;
+                    CharNode bb = (CharNode)b;
 
-                if (aa.DefRef != defmatchup[bb.DefRef]) return false;
+                    if (aa.CharClass.ToUndelimitedString() != bb.CharClass.ToUndelimitedString())
+                    {
+                        discrepancies.Add(new Discrepancy{
+                            NodeA = a,
+                            NodeB = b,
+                            DiscrepancyType = DiscrepancyType.NodeCharClassesAreDifferent,
+                        });
+                    }
+                }
+                else // (a is DefRefNode)
+                {
+                    DefRefNode aa = (DefRefNode)a;
+                    DefRefNode bb = (DefRefNode)b;
+
+                    if (aa.DefRef != defmatchup[bb.DefRef])
+                    {
+                        discrepancies.Add(new Discrepancy{
+                            NodeA = a,
+                            NodeB = b,
+                            DiscrepancyType = DiscrepancyType.NodeDefRefsAreDifferent,
+                        });
+                    }
+                }
             }
 
-//            if (a.Tag != b.Tag) return false;
-
-            if (a.NextNodes.Count != b.NextNodes.Count) return false;
-            foreach (Node next in a.NextNodes)
+            if (a.Tag != b.Tag)
             {
-                if (!b.NextNodes.Contains(nodematchup[next])) return false;
+                discrepancies.Add(new Discrepancy{
+                    NodeA = a,
+                    NodeB = b,
+                    DiscrepancyType = DiscrepancyType.NodeTagsAreDifferent,
+                });
             }
 
-            return true;
+            if (a.NextNodes.Count != b.NextNodes.Count)
+            {
+                discrepancies.Add(new Discrepancy{
+                    NodeA = a,
+                    NodeB = b,
+                    DiscrepancyType = DiscrepancyType.NodeNextLinksAreDifferent,
+                });
+            }
+            else
+            {
+                foreach (Node next in a.NextNodes)
+                {
+                    if (!b.NextNodes.Contains(nodematchup[next]))
+                    {
+                        discrepancies.Add(new Discrepancy{
+                            NodeA = a,
+                            NodeB = b,
+                            DiscrepancyType = DiscrepancyType.NodeNextLinksAreDifferent,
+                        });
+                        break;
+                    }
+                }
+            }
+
+            return discrepancies.ToArray();
         }
     }
 }
