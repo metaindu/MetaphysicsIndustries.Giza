@@ -26,8 +26,10 @@ namespace MetaphysicsIndustries.Giza
 
             if (string.IsNullOrEmpty(error))
             {
+                ExpressionBuilder eb = new ExpressionBuilder();
+                DefinitionInfo[] dis = eb.BuildExpressions(supergrammar, s2[0]);
                 DefinitionBuilder db = new DefinitionBuilder();
-                Definition[] defs = db.BuildDefinitions(supergrammar, s2[0]);
+                Definition[] defs = db.BuildDefinitions(dis);
 
                 Grammar grammar = new Grammar();
                 grammar.Definitions.AddRange(defs);

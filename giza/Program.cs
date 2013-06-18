@@ -70,7 +70,9 @@ namespace giza
                                         throw new InvalidOperationException();
                                     }
 
-                                    Definition[] dd2 = db.BuildDefinitions(supergrammar, span);
+                                    ExpressionBuilder eb = new ExpressionBuilder();
+                                    DefinitionInfo[] dis = eb.BuildExpressions(supergrammar, span);
+                                    Definition[] dd2 = db.BuildDefinitions(dis);
                                     string class2 = dr.RenderDefinitionsAsCSharpClass("FromBuildDefs2", dd2);
                                     class2 = class2;
 
