@@ -29,7 +29,7 @@ namespace MetaphysicsIndustries.Giza
 
         public override string ToString()
         {
-            return string.Format("[{0}] \"[{1}] {2}\", {3}", ID, DefRef._id, DefRef.Name, Tag);
+            return string.Format("[{0}] \"[{1}] {2}\", {3}", ID, DefRef.ID, DefRef.Name, Tag);
         }
     }
     

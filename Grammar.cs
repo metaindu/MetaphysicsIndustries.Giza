@@ -7,11 +7,11 @@ namespace MetaphysicsIndustries.Giza
     {
         public Grammar()
         {
-            _definitions = new GrammarDefinitionParentChildrenCollection(this);
+            _definitions = new GrammarDefinitionOrderedParentChildrenCollection(this);
         }
 
-        private GrammarDefinitionParentChildrenCollection _definitions;
-        public GrammarDefinitionParentChildrenCollection Definitions
+        private GrammarDefinitionOrderedParentChildrenCollection _definitions;
+        public GrammarDefinitionOrderedParentChildrenCollection Definitions
         {
             get { return _definitions; }
         }

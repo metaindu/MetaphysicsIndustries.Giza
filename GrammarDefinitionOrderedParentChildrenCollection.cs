@@ -1,13 +1,13 @@
 
 /*****************************************************************************
  *                                                                           *
- *  GrammarDefinitionParentChildrenCollection.cs                             *
- *  15 May 2013                                                              *
+ *  GrammarDefinitionOrderedParentChildrenCollection.cs                      *
+ *  18 June 2013                                                             *
  *  Project: MetaphysicsIndustries.Giza                                      *
  *  Written by: Richard Sartor                                               *
  *  Copyright © 2013 Metaphysics Industries, Inc.                            *
  *                                                                           *
- *  An unordered collection of Definition objects.                           *
+ *  An ordered collection of Definition objects.                             *
  *                                                                           *
  *****************************************************************************/
 
@@ -17,9 +17,9 @@ using MetaphysicsIndustries.Collections;
 
 namespace MetaphysicsIndustries.Giza
 {
-    public class GrammarDefinitionParentChildrenCollection : ICollection<Definition>, IDisposable
+    public class GrammarDefinitionOrderedParentChildrenCollection : IList<Definition>, IDisposable
     {
-        public GrammarDefinitionParentChildrenCollection(Grammar container)
+        public GrammarDefinitionOrderedParentChildrenCollection(Grammar container)
         {
             _container = container;
         }
@@ -57,21 +57,21 @@ namespace MetaphysicsIndustries.Giza
         {
             if (!Contains(item))
             {
-                _set.Add(item);
+                _list.Add(item);
                 item.ParentGrammar = _container;
             }
         }
 
         public virtual bool Contains(Definition item)
         {
-            return _set.Contains(item);
+            return _list.Contains(item);
         }
 
         public virtual bool Remove(Definition item)
         {
             if (Contains(item))
             {
-                bool ret = _set.Remove(item);
+                bool ret = _list.Remove(item);
                 item.ParentGrammar = null;
                 return ret;
             }
@@ -90,28 +90,56 @@ namespace MetaphysicsIndustries.Giza
                 Remove(item);
             }
 
-            _set.Clear();
+            _list.Clear();
         }
 
         public virtual void CopyTo(Definition[] array, int arrayIndex)
         {
-            _set.CopyTo(array, arrayIndex);
+            _list.CopyTo(array, arrayIndex);
         }
 
         public virtual IEnumerator<Definition> GetEnumerator()
         {
-            return _set.GetEnumerator();
+            return _list.GetEnumerator();
+        }
+
+        //IList<Definition>
+        public virtual int IndexOf(Definition item)
+        {
+            return _list.IndexOf(item);
+        }
+
+        public virtual void Insert(int index, Definition item)
+        {
+            if (Contains(item))
+            {
+                if (IndexOf(item) < index)
+                {
+                    index--;
+                }
+
+                Remove(item);
+            }
+
+            item.ParentGrammar = null;
+            _list.Insert(index, item);
+            item.ParentGrammar = _container;
+        }
+
+        public virtual void RemoveAt(int index)
+        {
+            Remove(this[index]);
         }
 
         //ICollection<Definition>
         public virtual int Count
         {
-            get { return _set.Count; }
+            get { return _list.Count; }
         }
 
         public virtual bool IsReadOnly
         {
-            get { return (_set as ICollection<Definition>).IsReadOnly; }
+            get { return (_list as ICollection<Definition>).IsReadOnly; }
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
@@ -119,7 +147,18 @@ namespace MetaphysicsIndustries.Giza
             return GetEnumerator();
         }
 
+        //IList<Definition>
+        public virtual Definition this [ int index ]
+        {
+            get { return _list[index]; }
+            set
+            {
+                RemoveAt(index);
+                Insert(index, value);
+            }
+        }
+
         private Grammar _container;
-        private Set<Definition> _set = new Set<Definition>();
+        private List<Definition> _list = new List<Definition>();
     }
 }

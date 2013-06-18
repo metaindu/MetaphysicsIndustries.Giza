@@ -41,7 +41,6 @@ namespace giza
                     if (args.Length > 2 && args[2] == "-2")
                     {
                         Supergrammar supergrammar = new Supergrammar();
-                        Definition.__id = 0;
                         Spanner spanner = new Spanner();
                         string error;
                         Span[] ss = spanner.Process(supergrammar, "grammar", gfile, out error);
@@ -56,14 +55,11 @@ namespace giza
                         else
                         {
                             DefinitionBuilder db = new DefinitionBuilder();
-                            Definition.__id = 0;
                             DefinitionRenderer dr = new DefinitionRenderer();
                             if (ss.Length != 1)
                             {
                                 foreach (Span span in ss)
                                 {
-                                    Definition.__id = 0;
-
                                     SpanChecker sc = new SpanChecker();
                                     if (sc.CheckSpan(span, supergrammar).Count > 0)
                                     {

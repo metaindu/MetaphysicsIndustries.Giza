@@ -20,7 +20,6 @@ namespace MetaphysicsIndustries.Giza
         public Grammar GetGrammar(string input, out string error)
         {
             Supergrammar supergrammar = new Supergrammar();
-            Definition.__id = 0;
             Spanner spanner = new Spanner();
             Span[] s2 = spanner.Process(supergrammar, "grammar", input, out error);
 

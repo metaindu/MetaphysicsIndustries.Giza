@@ -8,9 +8,6 @@ namespace MetaphysicsIndustries.Giza
 {
     public class Definition
     {
-        public static int __id = 0;
-        public readonly int _id;
-
         public Definition()
             : this(string.Empty)
         {
@@ -20,9 +17,6 @@ namespace MetaphysicsIndustries.Giza
             Name = name;
 
             Nodes = new DefinitionNodeOrderedParentChildrenCollection(this);
-
-            _id = __id;
-            __id++;
         }
 
         public string Name;
@@ -37,7 +31,7 @@ namespace MetaphysicsIndustries.Giza
 
         public override string ToString()
         {
-            return string.Format("[{0}] {1}, {2} nodes", _id, Name, Nodes.Count);
+            return string.Format("[{0}] {1}, {2} nodes", ID, Name, Nodes.Count);
         }
 
         private Grammar _parentGrammar;
@@ -59,6 +53,21 @@ namespace MetaphysicsIndustries.Giza
                     {
                         _parentGrammar.Definitions.Add(this);
                     }
+                }
+            }
+        }
+
+        public int ID
+        {
+            get
+            {
+                if (ParentGrammar == null)
+                {
+                    return -1;
+                }
+                else
+                {
+                    return ParentGrammar.Definitions.IndexOf(this); 
                 }
             }
         }
