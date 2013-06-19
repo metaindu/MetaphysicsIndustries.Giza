@@ -183,6 +183,7 @@ namespace MetaphysicsIndustries.Giza
 
             return new LiteralSubExpression {
                 Value = value,
+                Tag = value,
             };
         }
 
