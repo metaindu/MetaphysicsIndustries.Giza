@@ -45,7 +45,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Span[] spans = s.Process(sg.def_0_grammar, testGrammarText, out error);
 
             Assert.IsEmpty(spans);
-            Assert.AreEqual("Invalid character 'w' at (4,2), after a '<': expected id-mind, id-ignore, id-atomic, or id-token", error);
+            Assert.AreEqual("Invalid character 'w' at (4,2), after a '<': expected id-mind, id-ignore, id-atomic, id-token, or id-subtoken", error);
         }
 
         [Test()]

@@ -13,5 +13,6 @@ namespace MetaphysicsIndustries.Giza
         IgnoreCase,
         Atomic,
         Token,
+        Subtoken,
     }
 }

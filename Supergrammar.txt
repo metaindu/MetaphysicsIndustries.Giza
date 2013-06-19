@@ -21,7 +21,8 @@ directive-item = (
     id-mind id-whitespace |
     id-ignore id-case |
     id-atomic |
-    id-token
+    id-token |
+    id-subtoken
 );
 <mind whitespace, ignore case> id-mind = 'mind';
 <mind whitespace, ignore case> id-whitespace = 'whitespace';
@@ -29,6 +30,7 @@ directive-item = (
 <mind whitespace, ignore case> id-case = 'case';
 <mind whitespace, ignore case> id-atomic = 'atomic';
 <mind whitespace, ignore case> id-token = 'token';
+<mind whitespace, ignore case> id-subtoken = 'subtoken';
 
 expr = ( subexpr | orexpr | comment )+;
 
