@@ -39,12 +39,17 @@
     <Compile Include="SpannerTest.cs" />
     <Compile Include="TokenizerTest.cs" />
     <Compile Include="DefinitionBuilderTest.cs" />
+    <Compile Include="ExpressionCheckerTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\MetaphysicsIndustries.Giza.csproj">
       <Project>{98B42ACF-8370-4428-9D41-73FF1CEFB2E4}</Project>
       <Name>MetaphysicsIndustries.Giza</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MetaphysicsIndustries.Collections\MetaphysicsIndustries.Collections.csproj">
+      <Project>{FF2B8A90-E8D2-4CF6-81E6-4A7BCE1FF900}</Project>
+      <Name>MetaphysicsIndustries.Collections</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

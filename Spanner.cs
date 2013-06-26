@@ -421,24 +421,31 @@ namespace MetaphysicsIndustries.Giza
         static List<string> GetDescriptionsOfCharClass(CharClass expectedChars)
         {
             List<string> expects2 = new List<string>();
-            if (!expectedChars.Exclude && !expectedChars.Digit && !expectedChars.Letter && !expectedChars.Whitespace && expectedChars.GetNonClassCharsCount() > 0 && expectedChars.GetNonClassCharsCount() <= 3)
+            if (!expectedChars.Exclude && 
+                !expectedChars.Digit && 
+                !expectedChars.Letter && 
+                !expectedChars.Whitespace && 
+                expectedChars.GetNonClassCharsCount() > 0 && 
+                expectedChars.GetNonClassCharsCount() <= 3)
             {
-                // only one character - treat as a literal
+                // only a few characters - list each of them in quotes
                 foreach (char ch in expectedChars.GetNonClassChars())
                 {
                     expects2.Add(string.Format("'{0}'", ch.ToString()));
                 }
             }
+            else if (expectedChars.Digit || 
+                     expectedChars.Letter || 
+                     expectedChars.Whitespace || 
+                     expectedChars.GetNonClassCharsCount() > 0)
+            {
+                // treat as char class
+                expects2.Add(string.Format("a character that matches {0}", expectedChars));
+            }
             else
-                if (expectedChars.Digit || expectedChars.Letter || expectedChars.Whitespace || expectedChars.GetNonClassCharsCount() > 0)
-                {
-                    // treat as char class
-                    expects2.Add(string.Format("a character that matches {0}", expectedChars));
-                }
-                else
-                {
-                    // empty char class - don't do anything
-                }
+            {
+                // empty char class - don't do anything
+            }
             return expects2;
         }
 

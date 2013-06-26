@@ -4,7 +4,7 @@ namespace MetaphysicsIndustries.Giza
 {
     public abstract class SubExpression : ExpressionItem
     {
-        public string Tag;
+        public string Tag = string.Empty;
     }
 }
 

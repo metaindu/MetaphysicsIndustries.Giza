@@ -12,6 +12,13 @@ namespace MetaphysicsIndustries.Giza
     {
         public Definition[] BuildDefinitions(DefinitionInfo[] defs)
         {
+            ExpressionChecker ec = new ExpressionChecker();
+            List<ExpressionChecker.ErrorInfo> errors = ec.CheckDefinitionInfosForSpanning(defs);
+            if (errors.Count > 0)
+            {
+                throw new InvalidOperationException("Errors in expressions.");
+            }
+
             List<Definition> defs2 = new List<Definition>();
             Dictionary<string, Definition> defsByName = new Dictionary<string, Definition>();
             Dictionary<Definition, Expression> exprsByDef = new Dictionary<Definition, Expression>();

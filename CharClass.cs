@@ -155,6 +155,17 @@ namespace MetaphysicsIndustries.Giza
             return chs.ToArray();
         }
 
+        public int GetAllCharsCount()
+        {
+            int count = GetNonClassCharsCount();
+
+            if (Letter) count += LetterChars.Length;
+            if (Digit) count += DigitChars.Length;
+            if (Whitespace) count += WhitespaceChars.Length;
+
+            return count;
+        }
+
         public char[] GetNonClassChars()
         {
             return (char[])_chars.Clone();
