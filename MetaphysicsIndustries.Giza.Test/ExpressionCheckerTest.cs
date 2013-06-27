@@ -128,6 +128,34 @@ namespace MetaphysicsIndustries.Giza.Test
         }
 
         [Test()]
+        public void TestReferenceCycleItem()
+        {
+            OrExpression orexpr = new OrExpression();
+            Expression expr = new Expression();
+            Expression expr2 = new Expression();
+
+            expr.Items.Add(orexpr);
+            orexpr.Expressions.Add(expr2);
+            expr2.Items.Add(orexpr);
+
+            DefinitionInfo[] defs = {
+                new DefinitionInfo {
+                    Name = "A",
+                    Expression = expr,
+                },
+            };
+
+            ExpressionChecker ec = new ExpressionChecker();
+            List<ExpressionChecker.ErrorInfo> errors = ec.CheckDefinitionInfos(defs);
+
+            Assert.AreEqual(1, errors.Count);
+            Assert.AreEqual(ExpressionChecker.Error.ReusedExpressionOrItem, errors[0].Error);
+            Assert.AreSame(null, errors[0].Expression);
+            Assert.AreSame(orexpr, errors[0].ExpressionItem);
+            Assert.AreSame(defs[0], errors[0].DefinitionInfo);
+        }
+
+        [Test()]
         public void TestNullDefinitionName()
         {
             LiteralSubExpression literal = new LiteralSubExpression { Value = "literal" };
