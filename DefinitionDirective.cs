@@ -14,5 +14,6 @@ namespace MetaphysicsIndustries.Giza
         Atomic,
         Token,
         Subtoken,
+        Comment,
     }
 }

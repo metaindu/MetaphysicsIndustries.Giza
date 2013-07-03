@@ -9,22 +9,29 @@ namespace MetaphysicsIndustries.Giza
     {
         public enum Error
         {
-            ReusedExpressionOrItem,
-            NullOrEmptyDefinitionName,
-            NullDefinitionDirectives,
-            NullDefinitionExpression,
-            EmptyExpressionItems,
-            NullExpressionItem,
-            EmptyOrexprExpressionList,
-            NullOrexprExpression,
-            NullSubexprTag,
-            NullOrEmptyDefrefName,
-            NullOrEmptyLiteralValue,
-            NullOrEmptyCharClass,
-            DuplicateDefinitionName,
-            AllItemsSkippable,
-            SkippableOrexprExpressions,
-            DefRefNameNotFound,
+            // def col -> def -> expr -> orexpr,subexpr,defref,literal,cc
+            // pan(def col) -> pan(def col, defref) -> pan(def col, expr, expr item)
+            ReusedDefintion,   //def col, blocks def on second occurence of that def
+            NullDefinition,    //def col
+            ReusedExpressionOrItem, // pan(def col, expr, expr item)
+            NullOrEmptyDefinitionName, // def
+            NullDefinitionDirectives, // def
+            NullDefinitionExpression, // def
+            EmptyExpressionItems, // expr
+            NullExpressionItem, // expr
+            EmptyOrexprExpressionList,  // orexpr
+            NullOrexprExpression,   // orexpr
+            NullSubexprTag, // subexpr
+            NullOrEmptyDefrefName, // defref
+            NullOrEmptyLiteralValue, // literal
+            NullOrEmptyCharClass,   // cc
+            DuplicateDefinitionName,    // pan(def col)
+            AllItemsSkippable, // expr
+            SkippableOrexprExpressions, //orexpr
+            DefRefNameNotFound, // pan(defref, def col)
+
+            TokenizedDirectiveInNonTokenizedGrammar, // def
+            MixedTokenizedDirectives, // def
         }
 
         public struct ErrorInfo
@@ -64,8 +71,31 @@ namespace MetaphysicsIndustries.Giza
             Set<Expression> reusedExprs = new Set<Expression>();
             Set<ExpressionItem> reusedItems = new Set<ExpressionItem>();
 
+            Set<DefinitionInfo> visitedDefs = new Set<DefinitionInfo>();
+            int index = -1;
             foreach (DefinitionInfo def in defs)
             {
+                index++;
+                if (def == null)
+                {
+                    errors.Add(new ErrorInfo {
+                        Error = Error.NullDefinition,
+                        Index = index,
+                    });
+                    continue;
+                }
+
+                if (visitedDefs.Contains(def))
+                {
+                    errors.Add(new ErrorInfo {
+                        Error = Error.ReusedDefintion,
+                        DefinitionInfo = def,
+                        Index = index,
+                    });
+                    continue;
+                }
+                visitedDefs.Add(def);
+
                 if (string.IsNullOrEmpty(def.Name))
                 {
                     errors.Add(new ErrorInfo{

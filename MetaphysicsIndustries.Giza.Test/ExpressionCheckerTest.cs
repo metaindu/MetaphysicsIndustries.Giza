@@ -581,6 +581,57 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreSame(defref, errors[0].ExpressionItem);
             Assert.AreSame(defs[0], errors[0].DefinitionInfo);
         }
+
+        [Test()]
+        public void TestDefinitionReuse()
+        {
+            Expression expr = new Expression();
+            expr.Items.Add(new LiteralSubExpression { Value = "literal" });
+            DefinitionInfo def = new DefinitionInfo {
+                Name = "A",
+                Expression = expr,
+            };
+
+            DefinitionInfo[] defs = {
+                def,
+                def,
+            };
+
+            ExpressionChecker ec = new ExpressionChecker();
+            List<ExpressionChecker.ErrorInfo> errors = ec.CheckDefinitionInfos(defs);
+
+            Assert.AreEqual(1, errors.Count);
+            Assert.AreEqual(ExpressionChecker.Error.ReusedDefintion, errors[0].Error);
+            Assert.AreSame(null, errors[0].Expression);
+            Assert.AreSame(null, errors[0].ExpressionItem);
+            Assert.AreSame(def, errors[0].DefinitionInfo);
+            Assert.AreEqual(1, errors[0].Index);
+        }
+
+        [Test()]
+        public void TestNullDefinition()
+        {
+            Expression expr = new Expression();
+            expr.Items.Add(new LiteralSubExpression { Value = "literal" });
+
+            DefinitionInfo[] defs = {
+                new DefinitionInfo {
+                    Name = "A",
+                    Expression = expr,
+                },
+                null,
+            };
+
+            ExpressionChecker ec = new ExpressionChecker();
+            List<ExpressionChecker.ErrorInfo> errors = ec.CheckDefinitionInfos(defs);
+
+            Assert.AreEqual(1, errors.Count);
+            Assert.AreEqual(ExpressionChecker.Error.NullDefinition, errors[0].Error);
+            Assert.AreSame(null, errors[0].Expression);
+            Assert.AreSame(null, errors[0].ExpressionItem);
+            Assert.AreSame(null, errors[0].DefinitionInfo);
+            Assert.AreEqual(1, errors[0].Index);
+        }
     }
 }
 
