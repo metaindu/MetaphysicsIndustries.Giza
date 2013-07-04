@@ -9,28 +9,32 @@ namespace MetaphysicsIndustries.Giza
     {
         public enum Error
         {
-            // def col -> def -> expr -> orexpr,subexpr,defref,literal,cc
-            // pan(def col) -> pan(def col, defref) -> pan(def col, expr, expr item)
-            ReusedDefintion,   //def col, blocks def on second occurence of that def
-            NullDefinition,    //def col
-            ReusedExpressionOrItem, // pan(def col, expr, expr item)
-            NullOrEmptyDefinitionName, // def
-            NullDefinitionExpression, // def
-            EmptyExpressionItems, // expr
-            NullExpressionItem, // expr
-            EmptyOrexprExpressionList,  // orexpr
-            NullOrexprExpression,   // orexpr
-            NullSubexprTag, // subexpr
-            NullOrEmptyDefrefName, // defref
-            NullOrEmptyLiteralValue, // literal
-            NullOrEmptyCharClass,   // cc
-            DuplicateDefinitionName,    // pan(def col)
-            AllItemsSkippable, // expr
-            SkippableOrexprExpressions, //orexpr
-            DefRefNameNotFound, // pan(defref, def col)
+            ReusedDefintion,
+            NullDefinition,
+            ReusedExpressionOrItem,
+            NullOrEmptyDefinitionName,
+            NullDefinitionExpression,
+            EmptyExpressionItems,
+            NullExpressionItem,
+            EmptyOrexprExpressionList,
+            NullOrexprExpression,
+            NullSubexprTag,
+            NullOrEmptyDefrefName,
+            NullOrEmptyLiteralValue,
+            NullOrEmptyCharClass,
+            DuplicateDefinitionName,
+            AllItemsSkippable,
+            SkippableOrexprExpressions,
+            DefRefNameNotFound,
 
-            TokenizedDirectiveInNonTokenizedGrammar, // def
-            MixedTokenizedDirectives, // def
+            TokenizedDirectiveInNonTokenizedGrammar,
+
+            MixedTokenizedDirectives,
+            ReferencedComment,
+            NonTokenReferencesSubtoken,
+            SubtokenReferencesNonToken,
+            TokenReferencesNonToken,
+            SubtokenReferencesToken,
         }
 
         public class InvalidDefinitionException : Exception
@@ -61,7 +65,107 @@ namespace MetaphysicsIndustries.Giza
         public List<ErrorInfo> CheckDefinitionInfosForParsing(IEnumerable<DefinitionInfo> defs)
         {
             List<ErrorInfo> errors = CheckDefinitionInfos(defs);
+
+            Dictionary<string, DefinitionInfo> defsByName = new Dictionary<string, DefinitionInfo>();
+            foreach (var def in defs)
+            {
+                defsByName[def.Name] = def;
+            }
+            foreach (var def in defs)
+            {
+                if ((def.Directives.Contains(DefinitionDirective.Token) && 
+                    def.Directives.Contains(DefinitionDirective.Subtoken)) ||
+                    (def.Directives.Contains(DefinitionDirective.Comment) && 
+                    def.Directives.Contains(DefinitionDirective.Subtoken)))
+                {
+                    errors.Add(new ErrorInfo {
+                        Error = Error.MixedTokenizedDirectives,
+                        DefinitionInfo = def,
+                    });
+                }
+
+                foreach (DefRefSubExpression defref in EnumerateDefRefs(def.Expression))
+                {
+                    if (!defsByName.ContainsKey(defref.DefinitionName)) continue;
+
+                    DefinitionInfo target = defsByName[defref.DefinitionName];
+
+                    if (target.Directives.Contains(DefinitionDirective.Comment))
+                    {
+                        errors.Add(new ErrorInfo {
+                            Error = Error.ReferencedComment,
+                            ExpressionItem = defref,
+                            DefinitionInfo = def,
+                        });
+                    }
+                    if (!def.Directives.Contains(DefinitionDirective.Token) &&
+                        !def.Directives.Contains(DefinitionDirective.Subtoken) &&
+                        !def.Directives.Contains(DefinitionDirective.Comment) &&
+                        target.Directives.Contains(DefinitionDirective.Subtoken))
+                    {
+                        errors.Add(new ErrorInfo {
+                            Error = Error.NonTokenReferencesSubtoken,
+                            ExpressionItem = defref,
+                            DefinitionInfo = def,
+                        });
+                    }
+                    if (def.Directives.Contains(DefinitionDirective.Subtoken) &&
+                        !target.Directives.Contains(DefinitionDirective.Token) &&
+                        !target.Directives.Contains(DefinitionDirective.Subtoken) &&
+                        !target.Directives.Contains(DefinitionDirective.Comment))
+                    {
+                        errors.Add(new ErrorInfo {
+                            Error = Error.SubtokenReferencesNonToken,
+                            ExpressionItem = defref,
+                            DefinitionInfo = def,
+                        });
+                    }
+                    if (def.Directives.Contains(DefinitionDirective.Token) &&
+                        !target.Directives.Contains(DefinitionDirective.Token) &&
+                        !target.Directives.Contains(DefinitionDirective.Subtoken) &&
+                        !target.Directives.Contains(DefinitionDirective.Comment))
+                    {
+                        errors.Add(new ErrorInfo {
+                            Error = Error.TokenReferencesNonToken,
+                            ExpressionItem = defref,
+                            DefinitionInfo = def,
+                        });
+                    }
+                    if (def.Directives.Contains(DefinitionDirective.Subtoken) &&
+                        target.Directives.Contains(DefinitionDirective.Token))
+                    {
+                        errors.Add(new ErrorInfo {
+                            Error = Error.SubtokenReferencesToken,
+                            ExpressionItem = defref,
+                            DefinitionInfo = def,
+                        });
+                    }
+
+                }
+            }
+
             return errors;
+        }
+
+        IEnumerable<DefRefSubExpression> EnumerateDefRefs(Expression expr)
+        {
+            foreach (var item in expr.Items)
+            {
+                if (item is DefRefSubExpression)
+                {
+                    yield return (item as DefRefSubExpression);
+                }
+                else if (item is OrExpression)
+                {
+                    foreach (var expr2 in (item as OrExpression).Expressions)
+                    {
+                        foreach (var defref in EnumerateDefRefs(expr2))
+                        {
+                            yield return defref;
+                        }
+                    }
+                }
+            }
         }
 
         public List<ErrorInfo> CheckDefinitionInfosForSpanning(IEnumerable<DefinitionInfo> defs)

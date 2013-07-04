@@ -671,6 +671,203 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(ExpressionChecker.Error.TokenizedDirectiveInNonTokenizedGrammar, errors[0].Error);
             Assert.AreSame(defs[0], errors[0].DefinitionInfo);
         }
+
+        [Test()]
+        public void TestMixedTokenizedDirectives1()
+        {
+            DefinitionInfo[] defs = {
+                new DefinitionInfo {
+                    Name = "A",
+                    Expression = new Expression(),
+                },
+            };
+            defs[0].Directives.Add(DefinitionDirective.Token);
+            defs[0].Directives.Add(DefinitionDirective.Subtoken);
+            defs[0].Expression.Items.Add(new LiteralSubExpression { Value = "literal" });
+
+            ExpressionChecker ec = new ExpressionChecker();
+            List<ExpressionChecker.ErrorInfo> errors = ec.CheckDefinitionInfosForParsing(defs);
+
+            Assert.AreEqual(1, errors.Count);
+            Assert.AreEqual(ExpressionChecker.Error.MixedTokenizedDirectives, errors[0].Error);
+            Assert.AreSame(defs[0], errors[0].DefinitionInfo);
+        }
+
+        [Test()]
+        public void TestMixedTokenizedDirectives2()
+        {
+            DefinitionInfo[] defs = {
+                new DefinitionInfo {
+                    Name = "A",
+                    Expression = new Expression(),
+                },
+            };
+            defs[0].Directives.Add(DefinitionDirective.Comment);
+            defs[0].Directives.Add(DefinitionDirective.Subtoken);
+            defs[0].Expression.Items.Add(new LiteralSubExpression { Value = "literal" });
+
+            ExpressionChecker ec = new ExpressionChecker();
+            List<ExpressionChecker.ErrorInfo> errors = ec.CheckDefinitionInfosForParsing(defs);
+
+            Assert.AreEqual(1, errors.Count);
+            Assert.AreEqual(ExpressionChecker.Error.MixedTokenizedDirectives, errors[0].Error);
+            Assert.AreSame(defs[0], errors[0].DefinitionInfo);
+        }
+
+        [Test()]
+        public void TestMixedTokenizedDirectives3()
+        {
+            DefinitionInfo[] defs = {
+                new DefinitionInfo {
+                    Name = "A",
+                    Expression = new Expression(),
+                },
+            };
+            defs[0].Directives.Add(DefinitionDirective.Comment);
+            defs[0].Directives.Add(DefinitionDirective.Token);
+            defs[0].Expression.Items.Add(new LiteralSubExpression { Value = "literal" });
+
+            ExpressionChecker ec = new ExpressionChecker();
+            List<ExpressionChecker.ErrorInfo> errors = ec.CheckDefinitionInfosForParsing(defs);
+
+            Assert.AreEqual(0, errors.Count);
+        }
+
+        [Test()]
+        public void TestReferencedComment()
+        {
+            DefinitionInfo[] defs = {
+                new DefinitionInfo {
+                    Name = "A",
+                    Expression = new Expression(),
+                },
+                new DefinitionInfo {
+                    Name = "B",
+                    Expression = new Expression(),
+                },
+            };
+            defs[0].Directives.Add(DefinitionDirective.Comment);
+            defs[0].Expression.Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[1].Expression.Items.Add(new DefRefSubExpression { DefinitionName = "A" });
+
+            ExpressionChecker ec = new ExpressionChecker();
+            List<ExpressionChecker.ErrorInfo> errors = ec.CheckDefinitionInfosForParsing(defs);
+
+            Assert.AreEqual(1, errors.Count);
+            Assert.AreEqual(ExpressionChecker.Error.ReferencedComment, errors[0].Error);
+            Assert.AreEqual(null, errors[0].Expression);
+            Assert.AreSame(defs[1].Expression.Items[0], errors[0].ExpressionItem);
+            Assert.AreSame(defs[1], errors[0].DefinitionInfo);
+        }
+
+        [Test()]
+        public void TestNonTokenReferencesSubtoken()
+        {
+            DefinitionInfo[] defs = {
+                new DefinitionInfo {
+                    Name = "A",
+                    Expression = new Expression(),
+                },
+                new DefinitionInfo {
+                    Name = "B",
+                    Expression = new Expression(),
+                },
+            };
+            defs[0].Directives.Add(DefinitionDirective.Subtoken);
+            defs[0].Expression.Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[1].Expression.Items.Add(new DefRefSubExpression { DefinitionName = "A" });
+
+            ExpressionChecker ec = new ExpressionChecker();
+            List<ExpressionChecker.ErrorInfo> errors = ec.CheckDefinitionInfosForParsing(defs);
+
+            Assert.AreEqual(1, errors.Count);
+            Assert.AreEqual(ExpressionChecker.Error.NonTokenReferencesSubtoken, errors[0].Error);
+            Assert.AreEqual(null, errors[0].Expression);
+            Assert.AreSame(defs[1].Expression.Items[0], errors[0].ExpressionItem);
+            Assert.AreSame(defs[1], errors[0].DefinitionInfo);
+        }
+
+        [Test()]
+        public void TestSubtokenReferencesNonToken()
+        {
+            DefinitionInfo[] defs = {
+                new DefinitionInfo {
+                    Name = "A",
+                    Expression = new Expression(),
+                },
+                new DefinitionInfo {
+                    Name = "B",
+                    Expression = new Expression(),
+                },
+            };
+            defs[0].Expression.Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[1].Directives.Add(DefinitionDirective.Subtoken);
+            defs[1].Expression.Items.Add(new DefRefSubExpression { DefinitionName = "A" });
+
+            ExpressionChecker ec = new ExpressionChecker();
+            List<ExpressionChecker.ErrorInfo> errors = ec.CheckDefinitionInfosForParsing(defs);
+
+            Assert.AreEqual(1, errors.Count);
+            Assert.AreEqual(ExpressionChecker.Error.SubtokenReferencesNonToken, errors[0].Error);
+            Assert.AreEqual(null, errors[0].Expression);
+            Assert.AreSame(defs[1].Expression.Items[0], errors[0].ExpressionItem);
+            Assert.AreSame(defs[1], errors[0].DefinitionInfo);
+        }
+
+        [Test()]
+        public void TestTokenReferencesNonToken()
+        {
+            DefinitionInfo[] defs = {
+                new DefinitionInfo {
+                    Name = "A",
+                    Expression = new Expression(),
+                },
+                new DefinitionInfo {
+                    Name = "B",
+                    Expression = new Expression(),
+                },
+            };
+            defs[0].Expression.Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[1].Directives.Add(DefinitionDirective.Token);
+            defs[1].Expression.Items.Add(new DefRefSubExpression { DefinitionName = "A" });
+
+            ExpressionChecker ec = new ExpressionChecker();
+            List<ExpressionChecker.ErrorInfo> errors = ec.CheckDefinitionInfosForParsing(defs);
+
+            Assert.AreEqual(1, errors.Count);
+            Assert.AreEqual(ExpressionChecker.Error.TokenReferencesNonToken, errors[0].Error);
+            Assert.AreEqual(null, errors[0].Expression);
+            Assert.AreSame(defs[1].Expression.Items[0], errors[0].ExpressionItem);
+            Assert.AreSame(defs[1], errors[0].DefinitionInfo);
+        }
+
+        [Test()]
+        public void TestSubtokenReferencesToken()
+        {
+            DefinitionInfo[] defs = {
+                new DefinitionInfo {
+                    Name = "A",
+                    Expression = new Expression(),
+                },
+                new DefinitionInfo {
+                    Name = "B",
+                    Expression = new Expression(),
+                },
+            };
+            defs[0].Directives.Add(DefinitionDirective.Token);
+            defs[0].Expression.Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[1].Directives.Add(DefinitionDirective.Subtoken);
+            defs[1].Expression.Items.Add(new DefRefSubExpression { DefinitionName = "A" });
+
+            ExpressionChecker ec = new ExpressionChecker();
+            List<ExpressionChecker.ErrorInfo> errors = ec.CheckDefinitionInfosForParsing(defs);
+
+            Assert.AreEqual(1, errors.Count);
+            Assert.AreEqual(ExpressionChecker.Error.SubtokenReferencesToken, errors[0].Error);
+            Assert.AreEqual(null, errors[0].Expression);
+            Assert.AreSame(defs[1].Expression.Items[0], errors[0].ExpressionItem);
+            Assert.AreSame(defs[1], errors[0].DefinitionInfo);
+        }
     }
 }
 
