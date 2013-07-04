@@ -71,7 +71,7 @@ namespace MetaphysicsIndustries.Giza
             return errors;
         }
 
-        public List<ErrorInfo> CheckDefinitionInfos(IEnumerable<DefinitionInfo> defs)
+        public virtual List<ErrorInfo> CheckDefinitionInfos(IEnumerable<DefinitionInfo> defs)
         {
             if (defs == null) throw new ArgumentNullException("defs");
 
@@ -146,7 +146,7 @@ namespace MetaphysicsIndustries.Giza
             return errors;
         }
 
-        void CheckExpression(DefinitionInfo def,
+        protected virtual void CheckExpression(DefinitionInfo def,
                              Expression expr,
                              List<string> defNames,
                              Set<Expression> visitedExprs,
@@ -207,7 +207,7 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        void CheckExpressionItem(DefinitionInfo def,
+        protected virtual void CheckExpressionItem(DefinitionInfo def,
                                  ExpressionItem item,
                                  List<string> defNames,
                                  Set<Expression> visitedExprs,
@@ -331,7 +331,7 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        void CheckForDuplicateNames(IEnumerable<DefinitionInfo> defs, List<ErrorInfo> errors)
+        protected virtual void CheckForDuplicateNames(IEnumerable<DefinitionInfo> defs, List<ErrorInfo> errors)
         {
             DefinitionInfo[] defs2 = defs.ToArray();
             Dictionary<string, Set<int>> indexesByName = new Dictionary<string, Set<int>>();
