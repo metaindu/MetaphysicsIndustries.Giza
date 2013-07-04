@@ -46,7 +46,7 @@ namespace MetaphysicsIndustries.Giza
                     }
                 }
 
-                def.Directives = directives.ToArray();
+                def.Directives.AddRange(directives);
             }
 
             return defs.ToArray();

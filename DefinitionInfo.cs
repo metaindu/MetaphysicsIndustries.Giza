@@ -1,11 +1,12 @@
 using System;
+using MetaphysicsIndustries.Collections;
 
 namespace MetaphysicsIndustries.Giza
 {
     public class DefinitionInfo
     {
         public string Name = string.Empty;
-        public DefinitionDirective[] Directives = new DefinitionDirective[0];
+        public readonly Set<DefinitionDirective> Directives = new Set<DefinitionDirective>();
         public Expression Expression;
     }
 }

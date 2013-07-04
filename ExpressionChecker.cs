@@ -15,7 +15,6 @@ namespace MetaphysicsIndustries.Giza
             NullDefinition,    //def col
             ReusedExpressionOrItem, // pan(def col, expr, expr item)
             NullOrEmptyDefinitionName, // def
-            NullDefinitionDirectives, // def
             NullDefinitionExpression, // def
             EmptyExpressionItems, // expr
             NullExpressionItem, // expr
@@ -120,14 +119,6 @@ namespace MetaphysicsIndustries.Giza
 
             foreach (DefinitionInfo def in defs)
             {
-                if (def.Directives == null)
-                {
-                    throw new InvalidDefinitionException {
-                        Error = Error.NullDefinitionDirectives,
-                        DefinitionInfo = def,
-                    };
-                }
-
                 if (def.Expression == null)
                 {
                     throw new InvalidExpressionException {

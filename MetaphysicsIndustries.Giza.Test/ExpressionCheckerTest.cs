@@ -206,31 +206,6 @@ namespace MetaphysicsIndustries.Giza.Test
         }
 
         [Test()]
-        public void TestNullDefinitionDirectives()
-        {
-            LiteralSubExpression literal = new LiteralSubExpression { Value = "literal" };
-            Expression expr = new Expression();
-            expr.Items.Add(literal);
-
-            DefinitionInfo[] defs = {
-                new DefinitionInfo {
-                    Name = "A",
-                    Expression = expr,
-                    Directives = null
-                },
-            };
-
-            ExpressionChecker ec = new ExpressionChecker();
-            ExpressionChecker.InvalidDefinitionException e = 
-                Assert.Throws<ExpressionChecker.InvalidDefinitionException>(
-                    () => ec.CheckDefinitionInfos(defs)
-                );
-
-            Assert.AreEqual(ExpressionChecker.Error.NullDefinitionDirectives, e.Error);
-            Assert.AreSame(defs[0], e.DefinitionInfo);
-        }
-
-        [Test()]
         public void TestNullDefinitionExpression()
         {
             DefinitionInfo[] defs = {
