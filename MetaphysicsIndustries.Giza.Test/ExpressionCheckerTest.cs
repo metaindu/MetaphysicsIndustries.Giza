@@ -12,15 +12,7 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             ExpressionChecker ec = new ExpressionChecker();
 
-            try
-            {
-                ec.CheckDefinitionInfos(null);
-                Assert.Fail("CheckDefinitionInfos failed to throw an ArgumentNullException.");
-            }
-            catch (ArgumentNullException e)
-            {
-                Assert.IsTrue(true);
-            }
+            Assert.Throws<ArgumentNullException>(() => ec.CheckDefinitionInfos(null));
         }
 
         [Test()]
