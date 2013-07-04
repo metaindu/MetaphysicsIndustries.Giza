@@ -611,6 +611,66 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreSame(null, e.DefinitionInfo);
             Assert.AreEqual(1, e.Index);
         }
+
+        [Test()]
+        public void TestTokenInNonTokenized1()
+        {
+            DefinitionInfo[] defs = {
+                new DefinitionInfo {
+                    Name = "A",
+                    Expression = new Expression(),
+                },
+            };
+            defs[0].Directives.Add(DefinitionDirective.Token);
+            defs[0].Expression.Items.Add(new LiteralSubExpression { Value = "literal" });
+
+            ExpressionChecker ec = new ExpressionChecker();
+            List<ExpressionChecker.ErrorInfo> errors = ec.CheckDefinitionInfosForSpanning(defs);
+
+            Assert.AreEqual(1, errors.Count);
+            Assert.AreEqual(ExpressionChecker.Error.TokenizedDirectiveInNonTokenizedGrammar, errors[0].Error);
+            Assert.AreSame(defs[0], errors[0].DefinitionInfo);
+        }
+
+        [Test()]
+        public void TestTokenInNonTokenized2()
+        {
+            DefinitionInfo[] defs = {
+                new DefinitionInfo {
+                    Name = "A",
+                    Expression = new Expression(),
+                },
+            };
+            defs[0].Directives.Add(DefinitionDirective.Subtoken);
+            defs[0].Expression.Items.Add(new LiteralSubExpression { Value = "literal" });
+
+            ExpressionChecker ec = new ExpressionChecker();
+            List<ExpressionChecker.ErrorInfo> errors = ec.CheckDefinitionInfosForSpanning(defs);
+
+            Assert.AreEqual(1, errors.Count);
+            Assert.AreEqual(ExpressionChecker.Error.TokenizedDirectiveInNonTokenizedGrammar, errors[0].Error);
+            Assert.AreSame(defs[0], errors[0].DefinitionInfo);
+        }
+
+        [Test()]
+        public void TestTokenInNonTokenized3()
+        {
+            DefinitionInfo[] defs = {
+                new DefinitionInfo {
+                    Name = "A",
+                    Expression = new Expression(),
+                },
+            };
+            defs[0].Directives.Add(DefinitionDirective.Comment);
+            defs[0].Expression.Items.Add(new LiteralSubExpression { Value = "literal" });
+
+            ExpressionChecker ec = new ExpressionChecker();
+            List<ExpressionChecker.ErrorInfo> errors = ec.CheckDefinitionInfosForSpanning(defs);
+
+            Assert.AreEqual(1, errors.Count);
+            Assert.AreEqual(ExpressionChecker.Error.TokenizedDirectiveInNonTokenizedGrammar, errors[0].Error);
+            Assert.AreSame(defs[0], errors[0].DefinitionInfo);
+        }
     }
 }
 
