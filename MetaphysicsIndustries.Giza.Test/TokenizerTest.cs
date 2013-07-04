@@ -6,7 +6,7 @@ namespace MetaphysicsIndustries.Giza.Test
     [TestFixture()]
     public class TokenizerTest
     {
-        [Test()]
+//        [Test()]
         public void TestNormal()
         {
             string testGrammarText =
@@ -48,7 +48,7 @@ namespace MetaphysicsIndustries.Giza.Test
             }
         }
 
-        [Test()]
+//        [Test()]
         public void TestAmbiguousSeparateTokens()
         {
             string testGrammarText =
@@ -112,7 +112,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(1, operToken.Length);
         }
 
-        [Test()]
+//        [Test()]
         public void TestAmbiguousCombinedToken()
         {
             string testGrammarText =
@@ -124,7 +124,11 @@ namespace MetaphysicsIndustries.Giza.Test
             string testInput = "a << b";
 
             string error;
-            Grammar testGrammar = (new SupergrammarSpanner()).GetGrammar(testGrammarText, out error);
+            DefinitionInfo[] dis = (new SupergrammarSpanner()).GetExpressions(testGrammarText, out error); 
+            TokenizedGrammarBuilder tgb = new TokenizedGrammarBuilder();
+            Grammar testGrammar = tgb.BuildTokenizedGrammar(dis);
+
+
             if (!string.IsNullOrEmpty(error))
             {
                 throw new InvalidOperationException(error);
