@@ -34,6 +34,22 @@ namespace MetaphysicsIndustries.Giza
             MixedTokenizedDirectives, // def
         }
 
+        public class InvalidDefinitionException : Exception
+        {
+            public Error Error;
+            public DefinitionInfo DefinitionInfo;
+            public int Index;
+        }
+
+        public class InvalidExpressionException : Exception
+        {
+            public Error Error;
+            public Expression Expression;
+            public ExpressionItem ExpressionItem;
+            public DefinitionInfo DefinitionInfo;
+            public int Index;
+        }
+
         public struct ErrorInfo
         {
             public Error Error;
@@ -68,98 +84,61 @@ namespace MetaphysicsIndustries.Giza
             // weren't expecting it.
             Set<Expression> visitedExprs = new Set<Expression>();
             Set<ExpressionItem> visitedItems = new Set<ExpressionItem>();
-            Set<Expression> reusedExprs = new Set<Expression>();
-            Set<ExpressionItem> reusedItems = new Set<ExpressionItem>();
-
             Set<DefinitionInfo> visitedDefs = new Set<DefinitionInfo>();
             int index = -1;
+            List<string> defNames = new List<string>();
             foreach (DefinitionInfo def in defs)
             {
                 index++;
                 if (def == null)
                 {
-                    errors.Add(new ErrorInfo {
+                    throw new InvalidDefinitionException {
                         Error = Error.NullDefinition,
                         Index = index,
-                    });
-                    continue;
+                    };
                 }
 
                 if (visitedDefs.Contains(def))
                 {
-                    errors.Add(new ErrorInfo {
+                    throw new InvalidDefinitionException {
                         Error = Error.ReusedDefintion,
                         DefinitionInfo = def,
                         Index = index,
-                    });
-                    continue;
+                    };
                 }
                 visitedDefs.Add(def);
 
                 if (string.IsNullOrEmpty(def.Name))
                 {
-                    errors.Add(new ErrorInfo{
+                    throw new InvalidDefinitionException {
                         Error = Error.NullOrEmptyDefinitionName,
                         DefinitionInfo = def,
-                    });
+                    };
                 }
+                defNames.Add(def.Name);
+            }
 
+            foreach (DefinitionInfo def in defs)
+            {
                 if (def.Directives == null)
                 {
-                    errors.Add(new ErrorInfo {
+                    throw new InvalidDefinitionException {
                         Error = Error.NullDefinitionDirectives,
                         DefinitionInfo = def,
-                    });
+                    };
                 }
 
                 if (def.Expression == null)
                 {
-                    errors.Add(new ErrorInfo {
+                    throw new InvalidExpressionException {
                         Error = Error.NullDefinitionExpression,
                         DefinitionInfo = def,
-                    });
+                    };
                 }
                 else
                 {
-                    reusedExprs.Clear();
-                    reusedItems.Clear();
-                    CheckForReuse(def.Expression, visitedExprs, visitedItems, reusedExprs, reusedItems);
-
-                    foreach (Expression expr in reusedExprs)
-                    {
-                        errors.Add(new ErrorInfo {
-                            Error = Error.ReusedExpressionOrItem,
-                            Expression = expr,
-                            DefinitionInfo = def,
-                        });
-                    }
-                    foreach (ExpressionItem item in reusedItems)
-                    {
-                        errors.Add(new ErrorInfo {
-                            Error = Error.ReusedExpressionOrItem,
-                            ExpressionItem = item,
-                            DefinitionInfo = def,
-                        });
-                    }
+                    CheckExpression(def, def.Expression, defNames, visitedExprs, visitedItems, errors);
                 }
-            }
-
-            if (errors.Count > 0)
-            {
-                // if there is object re-use, then there might be reference
-                // cycles. Therefor, to be safe, we will not continue 
-                // further.
-                return errors;
-            }
-
-            List<string> defNames = new List<string>();
-            foreach (DefinitionInfo def in defs)
-            {
-                defNames.Add(def.Name);
-            }
-            foreach (DefinitionInfo def in defs)
-            {
-                CheckExpression(def, def.Expression, defNames, errors);
             }
 
             CheckForDuplicateNames(defs, errors);
@@ -167,8 +146,23 @@ namespace MetaphysicsIndustries.Giza
             return errors;
         }
 
-        void CheckExpression(DefinitionInfo def, Expression expr, List<string> defNames, List<ErrorInfo> errors)
+        void CheckExpression(DefinitionInfo def,
+                             Expression expr,
+                             List<string> defNames,
+                             Set<Expression> visitedExprs,
+                             Set<ExpressionItem> visitedItems,
+                             List<ErrorInfo> errors)
         {
+            if (visitedExprs.Contains(expr))
+            {
+                throw new InvalidExpressionException {
+                    Error = Error.ReusedExpressionOrItem,
+                    Expression = expr,
+                    DefinitionInfo = def,
+                };
+            }
+            visitedExprs.Add(expr);
+
             if (expr.Items == null || expr.Items.Count < 1)
             {
                 errors.Add(new ErrorInfo {
@@ -195,7 +189,7 @@ namespace MetaphysicsIndustries.Giza
                     }
                     else
                     {
-                        CheckExpressionItem(def, item, defNames, errors);
+                        CheckExpressionItem(def, item, defNames, visitedExprs, visitedItems, errors);
                         skippable = skippable && item.IsSkippable;
                     }
 
@@ -213,9 +207,24 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        void CheckExpressionItem(DefinitionInfo def, ExpressionItem item, List<string> defNames, List<ErrorInfo> errors)
+        void CheckExpressionItem(DefinitionInfo def,
+                                 ExpressionItem item,
+                                 List<string> defNames,
+                                 Set<Expression> visitedExprs,
+                                 Set<ExpressionItem> visitedItems,
+                                 List<ErrorInfo> errors)
         {
             if (item == null) throw new ArgumentNullException("item");
+
+            if (visitedItems.Contains(item))
+            {
+                throw new InvalidExpressionException {
+                    Error = Error.ReusedExpressionOrItem,
+                    ExpressionItem = item,
+                    DefinitionInfo = def,
+                };
+            }
+            visitedItems.Add(item);
 
             if (item is OrExpression)
             {
@@ -244,7 +253,7 @@ namespace MetaphysicsIndustries.Giza
                         }
                         else
                         {
-                            CheckExpression(def, expr, defNames, errors);
+                            CheckExpression(def, expr, defNames, visitedExprs, visitedItems, errors);
                         }
                         index++;
                     }
@@ -263,7 +272,6 @@ namespace MetaphysicsIndustries.Giza
 
                 if (item is LiteralSubExpression)
                 {
-                    LiteralSubExpression literal = (LiteralSubExpression)item;
                     if (string.IsNullOrEmpty((item as LiteralSubExpression).Value))
                     {
                         errors.Add(new ErrorInfo {
@@ -347,52 +355,6 @@ namespace MetaphysicsIndustries.Giza
                 }
             }
         }
-
-        void CheckForReuse(Expression expr, 
-                           Set<Expression> visitedExprs,
-                           Set<ExpressionItem> visitedItems,
-                           Set<Expression> reusedExprs,
-                           Set<ExpressionItem> reusedItems)
-        {
-            if (visitedExprs.Contains(expr))
-            {
-                reusedExprs.Add(expr);
-            }
-            else
-            {
-                visitedExprs.Add(expr);
-                foreach (ExpressionItem item in expr.Items)
-                {
-                    CheckForReuse(item, visitedExprs, visitedItems, reusedExprs, reusedItems);
-                }
-            }
-        }
-
-        void CheckForReuse(ExpressionItem item, 
-                           Set<Expression> visitedExprs,
-                           Set<ExpressionItem> visitedItems,
-                           Set<Expression> reusedExprs,
-                           Set<ExpressionItem> reusedItems)
-        {
-            if (visitedItems.Contains(item))
-            {
-                reusedItems.Add(item);
-            }
-            else
-            {
-                visitedItems.Add(item);
-
-                if (item is OrExpression)
-                {
-                    foreach (Expression expr in (item as OrExpression).Expressions)
-                    {
-                        CheckForReuse(expr, visitedExprs, visitedItems, reusedExprs, reusedItems);
-                    }
-                }
-            }
-
-        }
-
 
         //Errors for both tokenized and non-tokenize grammars
         //
