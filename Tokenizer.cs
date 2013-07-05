@@ -13,7 +13,7 @@ namespace MetaphysicsIndustries.Giza
 
             foreach (Definition def in grammar.Definitions)
             {
-                if (def.Directives.Contains(DefinitionDirective.Token))
+                if (def.IsTokenized)
                 {
                     DefRefNode node = new DefRefNode(def);
                     _tokenDef.Nodes.Add(node);

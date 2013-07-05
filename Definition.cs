@@ -28,6 +28,17 @@ namespace MetaphysicsIndustries.Giza
         public bool IncludeWhitespace { get { return Directives.Contains(DefinitionDirective.IncludeWhitespace); } }
         public bool IgnoreCase { get { return Directives.Contains(DefinitionDirective.IgnoreCase); } }
         public bool Atomic { get { return Directives.Contains(DefinitionDirective.Atomic); } }
+        public bool IsTokenized
+        {
+            get
+            {
+                return
+                    Directives.Contains(DefinitionDirective.Token) ||
+                    Directives.Contains(DefinitionDirective.Subtoken) ||
+                    Directives.Contains(DefinitionDirective.Comment);
+            }
+        }
+        public bool IsComment { get { return Directives.Contains(DefinitionDirective.Atomic); } }
 
         public override string ToString()
         {
