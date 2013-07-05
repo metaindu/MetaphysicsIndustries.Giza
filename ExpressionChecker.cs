@@ -84,7 +84,7 @@ namespace MetaphysicsIndustries.Giza
                     });
                 }
 
-                foreach (DefRefSubExpression defref in EnumerateDefRefs(def.Expression))
+                foreach (DefRefSubExpression defref in def.Expression.EnumerateDefRefs())
                 {
                     if (!defsByName.ContainsKey(defref.DefinitionName)) continue;
 
@@ -145,27 +145,6 @@ namespace MetaphysicsIndustries.Giza
             }
 
             return errors;
-        }
-
-        IEnumerable<DefRefSubExpression> EnumerateDefRefs(Expression expr)
-        {
-            foreach (var item in expr.Items)
-            {
-                if (item is DefRefSubExpression)
-                {
-                    yield return (item as DefRefSubExpression);
-                }
-                else if (item is OrExpression)
-                {
-                    foreach (var expr2 in (item as OrExpression).Expressions)
-                    {
-                        foreach (var defref in EnumerateDefRefs(expr2))
-                        {
-                            yield return defref;
-                        }
-                    }
-                }
-            }
         }
 
         public List<ErrorInfo> CheckDefinitionInfosForSpanning(IEnumerable<DefinitionInfo> defs)
