@@ -27,8 +27,6 @@ namespace MetaphysicsIndustries.Giza
             SkippableOrexprExpressions,
             DefRefNameNotFound,
 
-            TokenizedDirectiveInNonTokenizedGrammar,
-
             MixedTokenizedDirectives,
             ReferencedComment,
             NonTokenReferencesSubtoken,
@@ -141,26 +139,6 @@ namespace MetaphysicsIndustries.Giza
                         });
                     }
 
-                }
-            }
-
-            return errors;
-        }
-
-        public List<ErrorInfo> CheckDefinitionInfosForSpanning(IEnumerable<DefinitionInfo> defs)
-        {
-            List<ErrorInfo> errors = CheckDefinitionInfos(defs);
-
-            foreach (DefinitionInfo def in defs)
-            {
-                if (def.Directives.Contains(DefinitionDirective.Token) ||
-                    def.Directives.Contains(DefinitionDirective.Subtoken) ||
-                    def.Directives.Contains(DefinitionDirective.Comment))
-                {
-                    errors.Add(new ErrorInfo {
-                        Error = Error.TokenizedDirectiveInNonTokenizedGrammar,
-                        DefinitionInfo = def,
-                    });
                 }
             }
 
