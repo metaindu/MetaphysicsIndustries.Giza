@@ -47,14 +47,6 @@ namespace MetaphysicsIndustries.Giza
             return defs2.ToArray();
         }
 
-        class NodeBundle
-        {
-            public Set<Node> StartNodes;
-            public Set<Node> EndNodes;
-            public List<Node> Nodes;
-            public bool IsSkippable = false;
-        }
-
         NodeBundle GetNodesFromExpression(Expression expr, Dictionary<string, Definition> defsByName)
         {
             NodeBundle first = null;
@@ -278,4 +270,13 @@ namespace MetaphysicsIndustries.Giza
             };
         }
     }
+
+    public class NodeBundle
+    {
+        public Set<Node> StartNodes;
+        public Set<Node> EndNodes;
+        public List<Node> Nodes;
+        public bool IsSkippable = false;
+    }
+
 }

@@ -713,8 +713,6 @@ namespace MetaphysicsIndustries.Giza
 
         void PurgeReject(NodeMatch reject)
         {
-            if (reject == null) throw new ArgumentNullException("reject");
-
             while (reject != null &&
                    reject.Nexts.Count < 1)
             {
