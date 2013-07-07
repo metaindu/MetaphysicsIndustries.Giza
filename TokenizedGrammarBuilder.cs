@@ -138,7 +138,6 @@ namespace MetaphysicsIndustries.Giza
             return "$implicit char class " + cc.CharClass.ToUndelimitedString();
         }
 
-        
         NodeBundle GetNodesFromExpression(Expression expr, Dictionary<string, Definition> defsByName)
         {
             NodeBundle first = null;
