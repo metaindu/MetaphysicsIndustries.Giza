@@ -442,10 +442,6 @@ namespace MetaphysicsIndustries.Giza
         // S5  A defref's DefinitionName is not found in the containing DefinitionInfo[] array
         // S?  Leading reference cycle?
 
-        //Errors for non-tokenized grammars
-        //
-        // S6  Any DefinitionInfo.Directives includes Token, Subtoken, or Comment
-
         //Errors for tokenized grammars
         //
         // S7  A non-token def references a subtoken def

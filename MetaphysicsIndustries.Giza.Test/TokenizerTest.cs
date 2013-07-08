@@ -17,11 +17,12 @@ namespace MetaphysicsIndustries.Giza.Test
                 "<mind whitespace, atomic, token> id-item2 = 'item2'; \r\n";
 
             string error;
-            Grammar testGrammar = (new SupergrammarSpanner()).GetGrammar(testGrammarText, out error);
+            DefinitionInfo[] dis = (new SupergrammarSpanner()).GetExpressions(testGrammarText, out error);
             if (!string.IsNullOrEmpty(error))
             {
                 throw new InvalidOperationException(error);
             }
+            Grammar testGrammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
             Definition item1Def = testGrammar.FindDefinitionByName("id-item1");
             Definition item2Def = testGrammar.FindDefinitionByName("id-item2");
 
@@ -64,11 +65,12 @@ namespace MetaphysicsIndustries.Giza.Test
             string testInput = "a+++b";
 
             string error;
-            Grammar testGrammar = (new SupergrammarSpanner()).GetGrammar(testGrammarText, out error);
+            DefinitionInfo[] dis = (new SupergrammarSpanner()).GetExpressions(testGrammarText, out error);
             if (!string.IsNullOrEmpty(error))
             {
                 throw new InvalidOperationException(error);
             }
+            Grammar testGrammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
             Definition varrefDef = testGrammar.FindDefinitionByName("varref");
             Definition plusplusDef = testGrammar.FindDefinitionByName("plusplus");
             Definition operDef = testGrammar.FindDefinitionByName("oper");
