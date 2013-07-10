@@ -477,6 +477,7 @@ namespace MetaphysicsIndustries.Giza
             public readonly int _id;
             public int Index = -1;
             public NodeMatch StartDef;
+            public Token Token;
 
             public NodeMatch(Node node, TransitionType transition)
             {
@@ -556,6 +557,17 @@ namespace MetaphysicsIndustries.Giza
                 {
                     Render(next, sb, indent + "  ");
                 }
+            }
+
+            public NodeMatch CloneWithNewToken(Token token)
+            {
+                NodeMatch nm = new NodeMatch(this.Node, this.Transition);
+                nm.Index = this.Index;
+                nm.StartDef = this.StartDef;
+                nm.Token = token;
+                nm.Previous = this.Previous;
+
+                return nm;
             }
         }
 
