@@ -75,7 +75,7 @@ namespace MetaphysicsIndustries.Giza.Test
         public void TestNodeMatchClone()
         {
             Node node = new CharNode('c', "asdf");
-            Spanner.NodeMatch nm = new Spanner.NodeMatch(node, Spanner.NodeMatch.TransitionType.Follow);
+            Spanner.NodeMatch nm = new Spanner.NodeMatch(node, Spanner.NodeMatch.TransitionType.Follow, null);
             nm.Index = 123;
             nm.Token = new Token { StartIndex = 3, Length = 3 };
 
