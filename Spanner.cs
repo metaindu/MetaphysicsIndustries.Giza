@@ -362,7 +362,7 @@ namespace MetaphysicsIndustries.Giza
             return sb.ToString();
         }
 
-        Span[] MakeSpans(IEnumerable<NodeMatch> matchTreeLeaves)
+        public static Span[] MakeSpans(IEnumerable<NodeMatch> matchTreeLeaves)
         {
             List<List<NodeMatch>> lists = new List<List<NodeMatch>>();
             foreach (NodeMatch leaf in matchTreeLeaves)
@@ -670,7 +670,7 @@ namespace MetaphysicsIndustries.Giza
             #endregion
         }
 
-        class MatchStack
+        public class MatchStack
         {
             public MatchStack(NodeMatch nodeMatch, MatchStack parent)
             {
@@ -686,13 +686,13 @@ namespace MetaphysicsIndustries.Giza
             public Definition Definition { get { return Node.DefRef; } }
         }
 
-        struct NodeMatchStackPair
+        public struct NodeMatchStackPair
         {
             public NodeMatch NodeMatch;
             public MatchStack MatchStack;
         }
 
-        NodeMatchStackPair pair(NodeMatch nodeMatch, MatchStack matchStack)
+        public static NodeMatchStackPair pair(NodeMatch nodeMatch, MatchStack matchStack)
         {
             return new NodeMatchStackPair{NodeMatch = nodeMatch, MatchStack = matchStack};
         }
