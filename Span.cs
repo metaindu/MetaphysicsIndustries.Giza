@@ -42,6 +42,18 @@ namespace MetaphysicsIndustries.Giza
         }
 
         public Node Node;
+        public Definition DefRef
+        {
+            get
+            {
+                if (Node is DefRefNode)
+                {
+                    return (Node as DefRefNode).DefRef;
+                }
+
+                return null;
+            }
+        }
         public string Value;
 
         public string CollectValue()
