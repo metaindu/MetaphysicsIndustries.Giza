@@ -526,6 +526,7 @@ namespace MetaphysicsIndustries.Giza
                 StartDef,
                 EndDef,
                 Follow,
+                Root,
             }
 
             public TransitionType Transition;
