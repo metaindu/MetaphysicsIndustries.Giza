@@ -530,6 +530,18 @@ namespace MetaphysicsIndustries.Giza
 
             public TransitionType Transition;
             public Node Node;
+            public Definition DefRef
+            {
+                get
+                {
+                    if (Node is DefRefNode)
+                    {
+                        return (Node as DefRefNode).DefRef;
+                    }
+
+                    return null;
+                }
+            }
             public char MatchedChar;
 
             public override string ToString()
