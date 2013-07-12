@@ -165,6 +165,16 @@ namespace MetaphysicsIndustries.Giza
                 if (cur.Node is CharNode ||
                     cur.Transition != NodeMatch.TransitionType.EndDef)
                 {
+                    if (stack != null &&
+                        stack.Definition != null &&
+                        stack.Definition.Atomic &&
+                        stack.Definition.Nodes.Contains(cur.Previous.Node) &&
+                        cur.Previous != null &&
+                        cur.Previous.Node.IsEndNode)
+                    {
+                        currents.Enqueue(CreateEndDefMatch(cur.Previous, stack));
+                    }
+
                     rejects.Enqueue(cur);
                 }
                 else if (cur.Node == implicitNode)
