@@ -162,6 +162,82 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsTrue(tokens[1].Length == 1 || tokens[1].Length == 2);
             Assert.IsTrue(tokens[0].Length != tokens[1].Length);
         }
+
+        [Test]
+        public void TestTokensAtIndex()
+        {
+            string grammarText =
+                "expr = operand '+' operand;\n" +
+                "<token> operand = [\\l_] [\\l\\d_]*;";
+
+            string error;
+            DefinitionInfo[] dis = (new SupergrammarSpanner()).GetExpressions(grammarText, out error);
+            if (!string.IsNullOrEmpty(error)) throw new InvalidOperationException();
+
+            Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
+
+            Definition exprDef = grammar.FindDefinitionByName("expr");
+            Definition operandDef = grammar.FindDefinitionByName("operand");
+            Definition operatorDef = grammar.FindDefinitionByName("$implicit literal +");
+
+            Tokenizer tokenizer = new Tokenizer(grammar);
+            string input = "a + b";
+
+
+
+            var tokens = tokenizer.GetTokensAtLocation(input, 0, out error);
+
+            Assert.IsNullOrEmpty(error);
+            Assert.IsNotNull(tokens);
+            Assert.AreEqual(1, tokens.Length);
+            Assert.AreSame(operandDef, tokens[0].Definition);
+            Assert.AreEqual(0, tokens[0].StartIndex);
+            Assert.AreEqual(1, tokens[0].Length);
+
+
+
+            tokens = tokenizer.GetTokensAtLocation(input, 1, out error);
+
+            Assert.IsNullOrEmpty(error);
+            Assert.IsNotNull(tokens);
+            Assert.AreEqual(1, tokens.Length);
+            Assert.AreSame(operatorDef, tokens[0].Definition);
+            Assert.AreEqual(2, tokens[0].StartIndex);
+            Assert.AreEqual(1, tokens[0].Length);
+
+
+
+            tokens = tokenizer.GetTokensAtLocation(input, 2, out error);
+
+            Assert.IsNullOrEmpty(error);
+            Assert.IsNotNull(tokens);
+            Assert.AreEqual(1, tokens.Length);
+            Assert.AreSame(operatorDef, tokens[0].Definition);
+            Assert.AreEqual(2, tokens[0].StartIndex);
+            Assert.AreEqual(1, tokens[0].Length);
+
+
+
+            tokens = tokenizer.GetTokensAtLocation(input, 3, out error);
+
+            Assert.IsNullOrEmpty(error);
+            Assert.IsNotNull(tokens);
+            Assert.AreEqual(1, tokens.Length);
+            Assert.AreSame(operandDef, tokens[0].Definition);
+            Assert.AreEqual(4, tokens[0].StartIndex);
+            Assert.AreEqual(1, tokens[0].Length);
+
+
+
+            tokens = tokenizer.GetTokensAtLocation(input, 4, out error);
+
+            Assert.IsNullOrEmpty(error);
+            Assert.IsNotNull(tokens);
+            Assert.AreEqual(1, tokens.Length);
+            Assert.AreSame(operandDef, tokens[0].Definition);
+            Assert.AreEqual(4, tokens[0].StartIndex);
+            Assert.AreEqual(1, tokens[0].Length);
+        }
     }
 }
 
