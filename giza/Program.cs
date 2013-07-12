@@ -26,153 +26,15 @@ namespace giza
             }
             else if (args[0].ToLower() == "--super")
             {
-                if (args.Length > 1)
-                {
-                    SupergrammarSpanner s = new SupergrammarSpanner();
-                    string gfile;
-                    if (args[1] == "-")
-                    {
-                        gfile = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
-                    }
-                    else
-                    {
-                        gfile = File.ReadAllText(args[1]);
-                    }
-                    if (args.Length > 2 && args[2] == "-2")
-                    {
-                        Supergrammar supergrammar = new Supergrammar();
-                        Spanner spanner = new Spanner();
-                        string error;
-                        Span[] ss = spanner.Process(supergrammar, "grammar", gfile, out error);
-                        if (!string.IsNullOrEmpty(error))
-                        {
-                            Console.WriteLine(error);
-                        }
-                        else if (ss.Length != 1)
-                        {
-                            throw new InvalidOperationException();
-                        }
-                        else
-                        {
-                            DefinitionBuilder db = new DefinitionBuilder();
-                            DefinitionRenderer dr = new DefinitionRenderer();
-                            if (ss.Length != 1)
-                            {
-                                foreach (Span span in ss)
-                                {
-                                    SpanChecker sc = new SpanChecker();
-                                    if (sc.CheckSpan(span, supergrammar).Count > 0)
-                                    {
-                                        throw new InvalidOperationException();
-                                    }
-
-                                    ExpressionBuilder eb = new ExpressionBuilder();
-                                    DefinitionInfo[] dis = eb.BuildExpressions(supergrammar, span);
-                                    Definition[] dd2 = db.BuildDefinitions(dis);
-                                    string class2 = dr.RenderDefinitionsAsCSharpClass("FromBuildDefs2", dd2);
-                                    class2 = class2;
-
-                                    DefinitionChecker dc = new DefinitionChecker();
-                                    if (dc.CheckDefinitions(dd2).Count() > 0)
-                                    {
-                                        throw new InvalidOperationException();
-                                    }
-
-//                                    DefinitionCheckerTest dct = new DefinitionCheckerTest();
-//                                    dct.TestSingleDefCycle();
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        throw new NotImplementedException();
-                    }
-                }
-                else
-                {
-                    ShowUsage();
-                }
+                Super(args);
             }
             else if (args[0].ToLower() == "--render")
             {
-                if (args.Length > 2)
-                {
-                    SupergrammarSpanner s = new SupergrammarSpanner();
-                    string gfile;
-                    if (args[1] == "-")
-                    {
-                        gfile = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
-                    }
-                    else
-                    {
-                        gfile = File.ReadAllText(args[1]);
-                    }
-                    string error;
-                    Grammar g = s.GetGrammar(gfile, out error);
-
-                    if (!string.IsNullOrEmpty(error))
-                    {
-                        Console.WriteLine(error);
-                    }
-                    else
-                    {
-                        string className = args[2];
-
-                        DefinitionRenderer dr = new DefinitionRenderer();
-                        Console.Write(dr.RenderDefinitionsAsCSharpClass(className, g.Definitions));
-                    }
-                }
-                else
-                {
-                    ShowUsage();
-                }
+                Render(args);
             }
             else if (args[0].ToLower() == "--tokenize")
             {
-                SupergrammarSpanner s = new SupergrammarSpanner();
-                string gfile;
-                if (args[1] == "-")
-                {
-                    gfile = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
-                }
-                else
-                {
-                    gfile = File.ReadAllText(args[1]);
-                }
-                string error;
-                Grammar g = s.GetGrammar(gfile, out error);
-
-                if (!string.IsNullOrEmpty(error))
-                {
-                    Console.WriteLine(error);
-                }
-                else
-                {
-                    string infile;
-                    if (args[2] == "-")
-                    {
-                        infile = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
-                    }
-                    else
-                    {
-                        infile = File.ReadAllText(args[2]);
-                    }
-
-                    int index;
-                    if (args.Length < 4)
-                    {
-                        index = 0;
-                    }
-                    else if (!int.TryParse(args[3], out index))
-                    {
-                        Console.WriteLine("\"{0}\" is not a valid index.", args[3]);
-                        return;
-                    }
-
-                    Tokenizer t = new Tokenizer(g);
-                    t.GetTokensAtLocation(infile, index, out error);
-                }
+                Tokenize(args);
             }
             else if (args.Length < 3)
             {
@@ -180,42 +42,7 @@ namespace giza
             }
             else
             {
-                SupergrammarSpanner spanner = new SupergrammarSpanner();
-                string grammarFile = File.ReadAllText(args[0]);
-                string error;
-                Grammar g = spanner.GetGrammar(grammarFile, out error);
-
-                if (error != null)
-                {
-                    Console.WriteLine(error);
-                }
-                else
-                {
-                    string input;
-                    if (args[2] == "-")
-                    {
-                        input = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
-                    }
-                    else
-                    {
-                        input = File.ReadAllText(args[2]);
-                    }
-
-                    Spanner gs = new Spanner();
-                    Span[] ss = gs.Process(g, args[1], input, out error);
-                    if (error != null)
-                    {
-                        Console.WriteLine(error);
-                    }
-                    else
-                    {
-                        DefinitionBuilder db = new DefinitionBuilder();
-                        foreach (Span span in ss)
-                        {
-        //                    Definition[] dd = db.BuildDefinitions2(g, span);
-                        }
-                    }
-                }
+                Span(args);
             }
         }
 
@@ -265,5 +92,197 @@ namespace giza
             Console.WriteLine();
         }
 
+        static void Super(string[] args)
+        {
+            if (args.Length > 1)
+            {
+                SupergrammarSpanner s = new SupergrammarSpanner();
+                string gfile;
+                if (args[1] == "-")
+                {
+                    gfile = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
+                }
+                else
+                {
+                    gfile = File.ReadAllText(args[1]);
+                }
+                if (args.Length > 2 && args[2] == "-2")
+                {
+                    Supergrammar supergrammar = new Supergrammar();
+                    Spanner spanner = new Spanner();
+                    string error;
+                    Span[] ss = spanner.Process(supergrammar, "grammar", gfile, out error);
+                    if (!string.IsNullOrEmpty(error))
+                    {
+                        Console.WriteLine(error);
+                    }
+                    else if (ss.Length != 1)
+                    {
+                        throw new InvalidOperationException();
+                    }
+                    else
+                    {
+                        DefinitionBuilder db = new DefinitionBuilder();
+                        DefinitionRenderer dr = new DefinitionRenderer();
+                        if (ss.Length != 1)
+                        {
+                            foreach (Span span in ss)
+                            {
+                                SpanChecker sc = new SpanChecker();
+                                if (sc.CheckSpan(span, supergrammar).Count > 0)
+                                {
+                                    throw new InvalidOperationException();
+                                }
+
+                                ExpressionBuilder eb = new ExpressionBuilder();
+                                DefinitionInfo[] dis = eb.BuildExpressions(supergrammar, span);
+                                Definition[] dd2 = db.BuildDefinitions(dis);
+                                string class2 = dr.RenderDefinitionsAsCSharpClass("FromBuildDefs2", dd2);
+                                class2 = class2;
+
+                                DefinitionChecker dc = new DefinitionChecker();
+                                if (dc.CheckDefinitions(dd2).Count() > 0)
+                                {
+                                    throw new InvalidOperationException();
+                                }
+
+                                //                                    DefinitionCheckerTest dct = new DefinitionCheckerTest();
+                                //                                    dct.TestSingleDefCycle();
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                }
+            }
+            else
+            {
+                ShowUsage();
+            }
+        }
+
+        static void Render(string[] args)
+        {
+            if (args.Length > 2)
+            {
+                SupergrammarSpanner s = new SupergrammarSpanner();
+                string gfile;
+                if (args[1] == "-")
+                {
+                    gfile = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
+                }
+                else
+                {
+                    gfile = File.ReadAllText(args[1]);
+                }
+                string error;
+                Grammar g = s.GetGrammar(gfile, out error);
+
+                if (!string.IsNullOrEmpty(error))
+                {
+                    Console.WriteLine(error);
+                }
+                else
+                {
+                    string className = args[2];
+
+                    DefinitionRenderer dr = new DefinitionRenderer();
+                    Console.Write(dr.RenderDefinitionsAsCSharpClass(className, g.Definitions));
+                }
+            }
+            else
+            {
+                ShowUsage();
+            }
+        }
+
+        static void Tokenize(string[] args)
+        {
+            SupergrammarSpanner s = new SupergrammarSpanner();
+            string gfile;
+            if (args[1] == "-")
+            {
+                gfile = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
+            }
+            else
+            {
+                gfile = File.ReadAllText(args[1]);
+            }
+            string error;
+            Grammar g = s.GetGrammar(gfile, out error);
+
+            if (!string.IsNullOrEmpty(error))
+            {
+                Console.WriteLine(error);
+            }
+            else
+            {
+                string infile;
+                if (args[2] == "-")
+                {
+                    infile = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
+                }
+                else
+                {
+                    infile = File.ReadAllText(args[2]);
+                }
+
+                int index;
+                if (args.Length < 4)
+                {
+                    index = 0;
+                }
+                else if (!int.TryParse(args[3], out index))
+                {
+                    Console.WriteLine("\"{0}\" is not a valid index.", args[3]);
+                    return;
+                }
+
+                Tokenizer t = new Tokenizer(g);
+                t.GetTokensAtLocation(infile, index, out error);
+            }
+        }
+
+        static void Span(string[] args)
+        {
+            SupergrammarSpanner spanner = new SupergrammarSpanner();
+            string grammarFile = File.ReadAllText(args[0]);
+            string error;
+            Grammar g = spanner.GetGrammar(grammarFile, out error);
+
+            if (error != null)
+            {
+                Console.WriteLine(error);
+            }
+            else
+            {
+                string input;
+                if (args[2] == "-")
+                {
+                    input = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
+                }
+                else
+                {
+                    input = File.ReadAllText(args[2]);
+                }
+
+                Spanner gs = new Spanner();
+                Span[] ss = gs.Process(g, args[1], input, out error);
+                if (error != null)
+                {
+                    Console.WriteLine(error);
+                }
+                else
+                {
+                    DefinitionBuilder db = new DefinitionBuilder();
+                    foreach (Span span in ss)
+                    {
+                        //                    Definition[] dd = db.BuildDefinitions2(g, span);
+                    }
+                }
+            }
+        }
     }
 }
