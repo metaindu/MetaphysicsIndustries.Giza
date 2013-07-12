@@ -40,6 +40,7 @@
     <Compile Include="TokenizerTest.cs" />
     <Compile Include="DefinitionBuilderTest.cs" />
     <Compile Include="ExpressionCheckerTest.cs" />
+    <Compile Include="ParserTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
