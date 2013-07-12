@@ -38,6 +38,12 @@ namespace MetaphysicsIndustries.Giza
                     dc.CheckDefinitions(def.ParentGrammar.Definitions));
             if (errors.Count > 0) throw new InvalidOperationException("Definitions contain errors.");
 
+            if (startIndex >= input.Length)
+            {
+                error = null;
+                return new NodeMatch[0];
+            }
+
             DefRefNode implicitNode = new DefRefNode(def);
             NodeMatch root = new NodeMatch(implicitNode, NodeMatch.TransitionType.StartDef, null);
             root.Index = -1;
