@@ -121,15 +121,17 @@ namespace giza
                 return;
             }
 
+            var grammarFilename = args[0];
+
             SupergrammarSpanner sgs = new SupergrammarSpanner();
             string gfile;
-            if (args[0] == "-")
+            if (grammarFilename == "-")
             {
                 gfile = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
             }
             else
             {
-                gfile = File.ReadAllText(args[0]);
+                gfile = File.ReadAllText(grammarFilename);
             }
             string error;
             var dis = sgs.GetExpressions(gfile, out error);
@@ -171,18 +173,46 @@ namespace giza
                 return;
             }
 
-            SupergrammarSpanner s = new SupergrammarSpanner();
+            var grammarFilename = args[0];
+            string className = args[1];
+
+            var sgs = new SupergrammarSpanner();
             string gfile;
-            if (args[0] == "-")
+            if (grammarFilename == "-")
             {
                 gfile = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
             }
             else
             {
-                gfile = File.ReadAllText(args[0]);
+                gfile = File.ReadAllText(grammarFilename);
             }
             string error;
-            Grammar g = s.GetGrammar(gfile, out error);
+            var dis = sgs.GetExpressions(gfile, out error);
+
+            if (!string.IsNullOrEmpty(error))
+            {
+                Console.WriteLine("There was an error in the grammar: {0}", error);
+                return;
+            }
+
+            var ec = new ExpressionChecker();
+            var errors = ec.CheckDefinitionInfos(dis);
+
+            if (error != null && errors.Count > 0)
+            {
+                Console.WriteLine("There are errors in the grammar:");
+                foreach (var err in errors)
+                {
+                    Console.Write("  ");
+                    Console.WriteLine(err.GetDescription());
+                }
+            }
+
+            var db = new DefinitionBuilder();
+            var defs = db.BuildDefinitions(dis);
+
+            var g = new Grammar();
+            g.Definitions.AddRange(defs);
 
             if (!string.IsNullOrEmpty(error))
             {
@@ -190,9 +220,7 @@ namespace giza
             }
             else
             {
-                string className = args[1];
-
-                DefinitionRenderer dr = new DefinitionRenderer();
+                var dr = new DefinitionRenderer();
                 Console.Write(dr.RenderDefinitionsAsCSharpClass(className, g.Definitions));
             }
         }
@@ -259,8 +287,12 @@ namespace giza
                 return;
             }
 
+            var grammarFilename = args[0];
+            var startSymbol = args[1];
+            var inputFilename = args[2];
+
             SupergrammarSpanner spanner = new SupergrammarSpanner();
-            string grammarFile = File.ReadAllText(args[0]);
+            string grammarFile = File.ReadAllText(grammarFilename);
             string error;
             var dis = spanner.GetExpressions(grammarFile, out error);
 
@@ -287,20 +319,20 @@ namespace giza
             var defs = db.BuildDefinitions(dis);
 
             string input;
-            if (args[2] == "-")
+            if (inputFilename == "-")
             {
                 input = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
             }
             else
             {
-                input = File.ReadAllText(args[2]);
+                input = File.ReadAllText(inputFilename);
             }
 
             Grammar g = new Grammar();
             g.Definitions.AddRange(defs);
 
             Spanner gs = new Spanner();
-            Span[] ss = gs.Process(g, args[1], input, out error);
+            Span[] ss = gs.Process(g, startSymbol, input, out error);
             if (error != null)
             {
                 Console.WriteLine("There was an error in the input: {0}", error);
