@@ -121,7 +121,7 @@ namespace giza
                 return;
             }
 
-            SupergrammarSpanner s = new SupergrammarSpanner();
+            SupergrammarSpanner sgs = new SupergrammarSpanner();
             string gfile;
             if (args[0] == "-")
             {
@@ -131,48 +131,35 @@ namespace giza
             {
                 gfile = File.ReadAllText(args[0]);
             }
-            Supergrammar supergrammar = new Supergrammar();
-            Spanner spanner = new Spanner();
             string error;
-            Span[] ss = spanner.Process(supergrammar, "grammar", gfile, out error);
+            var dis = sgs.GetExpressions(gfile, out error);
+
             if (!string.IsNullOrEmpty(error))
             {
-                Console.WriteLine(error);
+                Console.WriteLine("There was an error in the grammar: {0}", error);
+                return;
             }
-            else if (ss.Length != 1)
+
+            var ec = new ExpressionChecker();
+            var errors = ec.CheckDefinitionInfos(dis);
+
+            if (error != null && errors.Count > 0)
             {
-                throw new InvalidOperationException();
-            }
-            else
-            {
-                DefinitionBuilder db = new DefinitionBuilder();
-                DefinitionRenderer dr = new DefinitionRenderer();
-                if (ss.Length != 1)
+                Console.WriteLine("There are errors in the grammar:");
+                foreach (var err in errors)
                 {
-                    foreach (Span span in ss)
-                    {
-                        SpanChecker sc = new SpanChecker();
-                        if (sc.CheckSpan(span, supergrammar).Count > 0)
-                        {
-                            throw new InvalidOperationException();
-                        }
-
-                        ExpressionBuilder eb = new ExpressionBuilder();
-                        DefinitionInfo[] dis = eb.BuildExpressions(supergrammar, span);
-                        Definition[] dd2 = db.BuildDefinitions(dis);
-                        string class2 = dr.RenderDefinitionsAsCSharpClass("FromBuildDefs2", dd2);
-                        class2 = class2;
-
-                        DefinitionChecker dc = new DefinitionChecker();
-                        if (dc.CheckDefinitions(dd2).Count() > 0)
-                        {
-                            throw new InvalidOperationException();
-                        }
-
-                        //DefinitionCheckerTest dct = new DefinitionCheckerTest();
-                        //dct.TestSingleDefCycle();
-                    }
+                    Console.Write("  ");
+                    Console.WriteLine(err.GetDescription());
                 }
+            }
+
+            DefinitionBuilder db = new DefinitionBuilder();
+            var defs = db.BuildDefinitions(dis);
+
+            Console.WriteLine("There are {0} definitions in the grammar:", defs.Length);
+            foreach (var def in defs)
+            {
+                Console.WriteLine("  {0}", def.Name);
             }
         }
 
