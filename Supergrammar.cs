@@ -134,8 +134,8 @@ namespace MetaphysicsIndustries.Giza
         public CharNode node_comment_6__002F_;
         public CharNode node_comment_7__002F__002F_;
         public CharNode node_comment_8__002F__002F_;
-        public CharNode node_comment_9__005E__005C_r_005C_n;
-        public CharNode node_comment_10__005C_r_005C_n;
+        public CharNode node_comment_9__005E__005C_n;
+        public CharNode node_comment_10__000A_;
 
         public Supergrammar()
         {
@@ -591,8 +591,8 @@ namespace MetaphysicsIndustries.Giza
             node_comment_6__002F_ = new CharNode(CharClass.FromUndelimitedCharClassText("/"), "/");
             node_comment_7__002F__002F_ = new CharNode(CharClass.FromUndelimitedCharClassText("/"), "//");
             node_comment_8__002F__002F_ = new CharNode(CharClass.FromUndelimitedCharClassText("/"), "//");
-            node_comment_9__005E__005C_r_005C_n = new CharNode(CharClass.FromUndelimitedCharClassText("^\\r\\n"), "^\\r\\n");
-            node_comment_10__005C_r_005C_n = new CharNode(CharClass.FromUndelimitedCharClassText("\\r\\n"), "\\r\\n");
+            node_comment_9__005E__005C_n = new CharNode(CharClass.FromUndelimitedCharClassText("^\\n"), "^\\n");
+            node_comment_10__000A_ = new CharNode(CharClass.FromUndelimitedCharClassText("\\n"), "\n");
             def_20_comment.Nodes.Add(node_comment_0__002F__002A_);
             def_20_comment.Nodes.Add(node_comment_1__002F__002A_);
             def_20_comment.Nodes.Add(node_comment_2__005E__002A_);
@@ -602,12 +602,12 @@ namespace MetaphysicsIndustries.Giza
             def_20_comment.Nodes.Add(node_comment_6__002F_);
             def_20_comment.Nodes.Add(node_comment_7__002F__002F_);
             def_20_comment.Nodes.Add(node_comment_8__002F__002F_);
-            def_20_comment.Nodes.Add(node_comment_9__005E__005C_r_005C_n);
-            def_20_comment.Nodes.Add(node_comment_10__005C_r_005C_n);
+            def_20_comment.Nodes.Add(node_comment_9__005E__005C_n);
+            def_20_comment.Nodes.Add(node_comment_10__000A_);
             def_20_comment.StartNodes.Add(node_comment_0__002F__002A_);
             def_20_comment.StartNodes.Add(node_comment_7__002F__002F_);
             def_20_comment.EndNodes.Add(node_comment_6__002F_);
-            def_20_comment.EndNodes.Add(node_comment_10__005C_r_005C_n);
+            def_20_comment.EndNodes.Add(node_comment_10__000A_);
             node_comment_0__002F__002A_.NextNodes.Add(node_comment_1__002F__002A_);
             node_comment_1__002F__002A_.NextNodes.Add(node_comment_2__005E__002A_);
             node_comment_1__002F__002A_.NextNodes.Add(node_comment_3__002A_);
@@ -623,11 +623,10 @@ namespace MetaphysicsIndustries.Giza
             node_comment_5__002A_.NextNodes.Add(node_comment_5__002A_);
             node_comment_5__002A_.NextNodes.Add(node_comment_6__002F_);
             node_comment_7__002F__002F_.NextNodes.Add(node_comment_8__002F__002F_);
-            node_comment_8__002F__002F_.NextNodes.Add(node_comment_9__005E__005C_r_005C_n);
-            node_comment_8__002F__002F_.NextNodes.Add(node_comment_10__005C_r_005C_n);
-            node_comment_9__005E__005C_r_005C_n.NextNodes.Add(node_comment_9__005E__005C_r_005C_n);
-            node_comment_9__005E__005C_r_005C_n.NextNodes.Add(node_comment_10__005C_r_005C_n);
-            node_comment_10__005C_r_005C_n.NextNodes.Add(node_comment_10__005C_r_005C_n);
+            node_comment_8__002F__002F_.NextNodes.Add(node_comment_9__005E__005C_n);
+            node_comment_8__002F__002F_.NextNodes.Add(node_comment_10__000A_);
+            node_comment_9__005E__005C_n.NextNodes.Add(node_comment_9__005E__005C_n);
+            node_comment_9__005E__005C_n.NextNodes.Add(node_comment_10__000A_);
 
         }
     }

@@ -50,5 +50,5 @@ modifier = [*+?];
 
 <mind whitespace, ignore case> unicodechar = '\\x' [\dabcdef][\dabcdef][\dabcdef][\dabcdef];
 
-<mind whitespace> comment = ( '/*' ( [^*] | '*'+ [^*/] )* '*'+ '/' | '//' [^\r\n]* [\r\n]+ );
+<mind whitespace> comment = ( '/*' ( [^*] | '*'+ [^*/] )* '*'+ '/' | '//' [^\n]* '\n' );
 
