@@ -56,9 +56,9 @@ namespace giza
                 {
                     Render(args2);
                 }
-                else if (command == "tokenize")
+                else if (command == "parse")
                 {
-                    Tokenize(args2);
+                    Parse(args2);
                 }
                 else if (command == "span")
                 {
@@ -270,57 +270,78 @@ namespace giza
             }
         }
 
-        static void Tokenize(List<string> args)
+        static void Parse(List<string> args)
         {
-            if (args.Count < 2)
+            if (args.Count < 3)
             {
                 ShowUsage();
                 return;
             }
 
-            SupergrammarSpanner s = new SupergrammarSpanner();
-            string gfile;
-            if (args[0] == "-")
-            {
-                gfile = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
-            }
-            else
-            {
-                gfile = File.ReadAllText(args[0]);
-            }
+            var grammarFilename = args[0];
+            var startSymbol = args[1];
+            var inputFilename = args[2];
+
+            SupergrammarSpanner spanner = new SupergrammarSpanner();
+            string grammarFile = File.ReadAllText(grammarFilename);
             string error;
-            Grammar g = s.GetGrammar(gfile, out error);
+            var dis = spanner.GetExpressions(grammarFile, out error);
 
             if (!string.IsNullOrEmpty(error))
             {
-                Console.WriteLine(error);
+                Console.WriteLine("There was an error in the grammar: {0}", error);
+                return;
+            }
+
+            var ec = new ExpressionChecker();
+            var errors = ec.CheckDefinitionInfosForParsing(dis);
+
+            if (errors != null && errors.Count > 0)
+            {
+                Console.WriteLine("There are errors in the grammar:");
+                foreach (var err in errors)
+                {
+                    Console.Write("  ");
+                    Console.WriteLine(err.GetDescription());
+                }
+                return;
+            }
+
+            var tgb = new TokenizedGrammarBuilder();
+            var g = tgb.BuildTokenizedGrammar(dis);
+
+            string input;
+            if (inputFilename == "-")
+            {
+                input = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
             }
             else
             {
-                string infile;
-                if (args[1] == "-")
-                {
-                    infile = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
-                }
-                else
-                {
-                    infile = File.ReadAllText(args[1]);
-                }
+                input = File.ReadAllText(inputFilename);
+            }
 
-                int index;
-                if (args.Count < 3)
-                {
-                    index = 0;
-                }
-                else if (!int.TryParse(args[2], out index))
-                {
-                    Console.WriteLine("Error: \"{0}\" is not a valid index.", args[2]);
-                    ShowUsage();
-                    return;
-                }
-
-                Tokenizer t = new Tokenizer(g);
-                t.GetTokensAtLocation(infile, index, out error);
+            var parser = new Parser(g.FindDefinitionByName(startSymbol));
+            Span[] ss = parser.Parse(input); // out error
+            //if (error != null)
+            //{
+            //    Console.WriteLine("There was an error in the input: {0}", error);
+            //}
+            //else 
+            if (ss.Length < 1)
+            {
+                Console.WriteLine("No valid parses.");
+            }
+            else if (ss.Length > 1)
+            {
+                Console.WriteLine("{0} valid parses.", ss.Length);
+                //foreach (Span s in ss)
+                //{
+                //    Console.WriteLine(s.RenderSpanHierarchy());
+                //}
+            }
+            else
+            {
+                Console.WriteLine("1 valid parse.");
             }
         }
 
