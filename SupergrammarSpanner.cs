@@ -23,16 +23,26 @@ namespace MetaphysicsIndustries.Giza
             Spanner spanner = new Spanner();
             Span[] s2 = spanner.Process(supergrammar, "grammar", input, out error);
 
-            if (string.IsNullOrEmpty(error))
-            {
-                ExpressionBuilder eb = new ExpressionBuilder();
-                DefinitionInfo[] dis = eb.BuildExpressions(supergrammar, s2[0]);
-                return dis;
-            }
-            else
+            if (!string.IsNullOrEmpty(error))
             {
                 return null;
             }
+
+            if (s2.Length < 1)
+            {
+                error = "There are no valid spans of the grammar.";
+                return null;
+            }
+
+            if (s2.Length > 1)
+            {
+                error = string.Format("There are more than one valid span of the grammar ({0}).", s2.Length);
+                return null;
+            }
+
+            ExpressionBuilder eb = new ExpressionBuilder();
+            DefinitionInfo[] dis = eb.BuildExpressions(supergrammar, s2[0]);
+            return dis;
         }
 
         public Grammar GetGrammar(string input, out string error)
