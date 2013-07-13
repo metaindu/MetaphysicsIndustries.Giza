@@ -58,6 +58,11 @@ namespace MetaphysicsIndustries.Giza
             public ExpressionItem ExpressionItem;
             public DefinitionInfo DefinitionInfo;
             public int Index;
+
+            public string GetDescription()
+            {
+                return Error.ToString();
+            }
         }
 
         public List<ErrorInfo> CheckDefinitionInfosForParsing(IEnumerable<DefinitionInfo> defs)
