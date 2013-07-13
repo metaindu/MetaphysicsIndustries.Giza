@@ -11,10 +11,12 @@ namespace giza
     class Program
     {
         static OptionSet _options;
+        static OptionSet _options2;
 
         static bool showHelp = false;
         static bool showVersion = false;
         static bool verbose = false;
+        static bool tokenized = false;
 
         static void Main(string[] args)
         {
@@ -22,6 +24,9 @@ namespace giza
                 { "h|?|help", x => showHelp = true },
                 { "v|version", x => showVersion = true },
                 { "verbose", x => verbose = true },
+            };
+            _options2 = new OptionSet() {
+                { "tokenized", x => tokenized = true },
             };
 
             var args2 = _options.Parse(args);
@@ -186,6 +191,8 @@ namespace giza
 
         static void Render(List<string> args)
         {
+            args = _options2.Parse(args);
+
             if (args.Count < 2)
             {
                 ShowUsage();
@@ -215,7 +222,15 @@ namespace giza
             }
 
             var ec = new ExpressionChecker();
-            var errors = ec.CheckDefinitionInfos(dis);
+            List<ExpressionChecker.ErrorInfo> errors;
+            if (tokenized)
+            {
+                errors = ec.CheckDefinitionInfosForParsing(dis);
+            }
+            else
+            {
+                errors = ec.CheckDefinitionInfos(dis);
+            }
 
             if (errors != null && errors.Count > 0)
             {
@@ -228,11 +243,21 @@ namespace giza
                 return;
             }
 
-            var db = new DefinitionBuilder();
-            var defs = db.BuildDefinitions(dis);
+            Grammar g;
 
-            var g = new Grammar();
-            g.Definitions.AddRange(defs);
+            if (tokenized)
+            {
+                var tgb = new TokenizedGrammarBuilder();
+                g = tgb.BuildTokenizedGrammar(dis);
+            }
+            else
+            {
+                var db = new DefinitionBuilder();
+                var defs = db.BuildDefinitions(dis);
+
+                g = new Grammar();
+                g.Definitions.AddRange(defs);
+            }
 
             if (!string.IsNullOrEmpty(error))
             {
