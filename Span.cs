@@ -76,6 +76,25 @@ namespace MetaphysicsIndustries.Giza
         {
             return string.Format("Node{{{0}}}, \"{1}\", {2} subspans", Node, Value, Subspans.Count);
         }
+
+        public string RenderSpanHierarchy()
+        {
+            StringBuilder sb = new StringBuilder();
+            this.RenderSpanHierarchy(sb);
+            return sb.ToString();
+        }
+        void RenderSpanHierarchy(StringBuilder sb, string indent="")
+        {
+            sb.Append(indent);
+            sb.Append(this.ToString());
+            sb.AppendLine();
+
+            string indent2 = indent + "  ";
+            foreach (var sub in this.Subspans)
+            {
+                sub.RenderSpanHierarchy(sb, indent2);
+            }
+        }
      }
 
     public class SpanSpanOrderedParentChildrenCollection : IList<Span>, IDisposable
