@@ -10,46 +10,55 @@ namespace giza
 {
     class Program
     {
+        static OptionSet _options;
+
         static void Main(string[] args)
         {
             bool showHelp = false;
             bool showVersion = false;
 
-            OptionSet options = new OptionSet() {
+            _options = new OptionSet() {
                 { "h|?|help", x => showHelp = true },
                 { "v|version", x => showVersion = true },
             };
 
-            var args2 = options.Parse(args);
+            var args2 = _options.Parse(args);
 
             if (showHelp || args.Length < 1)
             {
-                ShowUsage(options);
+                ShowUsage();
+                return;
             }
-            else if (showVersion)
+
+            if (showVersion)
             {
                 ShowVersion();
+                return;
             }
-            else if (args2[0].ToLower() == "super")
+
+            var command = args2[0].ToLower();
+            args2.RemoveAt(0);
+
+            if (command == "super")
             {
-                Super(args);
+                Super(args2);
             }
-            else if (args2[0].ToLower() == "render")
+            else if (command == "render")
             {
-                Render(args);
+                Render(args2);
             }
-            else if (args2[0].ToLower() == "tokenize")
+            else if (command == "tokenize")
             {
-                Tokenize(args);
+                Tokenize(args2);
             }
-            else if (args2[0] == "span")
+            else if (command == "span")
             {
-                Span(args);
+                Span(args2);
             }
             else
             {
-                Console.WriteLine(string.Format("Unknown command: \"{0}\"", args2[0]));
-                ShowUsage(options);
+                Console.WriteLine(string.Format("Unknown command: \"{0}\"", command));
+                ShowUsage();
             }
         }
 
@@ -81,7 +90,7 @@ namespace giza
             Console.WriteLine("giza.exe version x.y.z");
         }
 
-        static void ShowUsage(OptionSet options)
+        static void ShowUsage()
         {
             Console.WriteLine("Usage:");
             Console.WriteLine("    giza [options]");
@@ -101,126 +110,123 @@ namespace giza
             Console.WriteLine("If \"-\" is given for FILE, or for GRAMMAR FILE given to --super, then it is read from standard input.");
             Console.WriteLine();
 
-            options.WriteOptionDescriptions(Console.Out);
+            _options.WriteOptionDescriptions(Console.Out);
         }
 
-        static void Super(string[] args)
+        static void Super(List<string> args)
         {
-            if (args.Length > 1)
+            if (args.Count < 1)
             {
-                SupergrammarSpanner s = new SupergrammarSpanner();
-                string gfile;
-                if (args[1] == "-")
-                {
-                    gfile = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
-                }
-                else
-                {
-                    gfile = File.ReadAllText(args[1]);
-                }
-                if (args.Length > 2 && args[2] == "-2")
-                {
-                    Supergrammar supergrammar = new Supergrammar();
-                    Spanner spanner = new Spanner();
-                    string error;
-                    Span[] ss = spanner.Process(supergrammar, "grammar", gfile, out error);
-                    if (!string.IsNullOrEmpty(error))
-                    {
-                        Console.WriteLine(error);
-                    }
-                    else if (ss.Length != 1)
-                    {
-                        throw new InvalidOperationException();
-                    }
-                    else
-                    {
-                        DefinitionBuilder db = new DefinitionBuilder();
-                        DefinitionRenderer dr = new DefinitionRenderer();
-                        if (ss.Length != 1)
-                        {
-                            foreach (Span span in ss)
-                            {
-                                SpanChecker sc = new SpanChecker();
-                                if (sc.CheckSpan(span, supergrammar).Count > 0)
-                                {
-                                    throw new InvalidOperationException();
-                                }
-
-                                ExpressionBuilder eb = new ExpressionBuilder();
-                                DefinitionInfo[] dis = eb.BuildExpressions(supergrammar, span);
-                                Definition[] dd2 = db.BuildDefinitions(dis);
-                                string class2 = dr.RenderDefinitionsAsCSharpClass("FromBuildDefs2", dd2);
-                                class2 = class2;
-
-                                DefinitionChecker dc = new DefinitionChecker();
-                                if (dc.CheckDefinitions(dd2).Count() > 0)
-                                {
-                                    throw new InvalidOperationException();
-                                }
-
-                                //                                    DefinitionCheckerTest dct = new DefinitionCheckerTest();
-                                //                                    dct.TestSingleDefCycle();
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    throw new NotImplementedException();
-                }
+                ShowUsage();
+                return;
             }
-            else
-            {
-//                ShowUsage();
-            }
-        }
 
-        static void Render(string[] args)
-        {
-            if (args.Length > 2)
-            {
-                SupergrammarSpanner s = new SupergrammarSpanner();
-                string gfile;
-                if (args[1] == "-")
-                {
-                    gfile = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
-                }
-                else
-                {
-                    gfile = File.ReadAllText(args[1]);
-                }
-                string error;
-                Grammar g = s.GetGrammar(gfile, out error);
-
-                if (!string.IsNullOrEmpty(error))
-                {
-                    Console.WriteLine(error);
-                }
-                else
-                {
-                    string className = args[2];
-
-                    DefinitionRenderer dr = new DefinitionRenderer();
-                    Console.Write(dr.RenderDefinitionsAsCSharpClass(className, g.Definitions));
-                }
-            }
-            else
-            {
-//                ShowUsage();
-            }
-        }
-
-        static void Tokenize(string[] args)
-        {
             SupergrammarSpanner s = new SupergrammarSpanner();
             string gfile;
-            if (args[1] == "-")
+            if (args[0] == "-")
             {
                 gfile = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
             }
             else
             {
-                gfile = File.ReadAllText(args[1]);
+                gfile = File.ReadAllText(args[0]);
+            }
+            Supergrammar supergrammar = new Supergrammar();
+            Spanner spanner = new Spanner();
+            string error;
+            Span[] ss = spanner.Process(supergrammar, "grammar", gfile, out error);
+            if (!string.IsNullOrEmpty(error))
+            {
+                Console.WriteLine(error);
+            }
+            else if (ss.Length != 1)
+            {
+                throw new InvalidOperationException();
+            }
+            else
+            {
+                DefinitionBuilder db = new DefinitionBuilder();
+                DefinitionRenderer dr = new DefinitionRenderer();
+                if (ss.Length != 1)
+                {
+                    foreach (Span span in ss)
+                    {
+                        SpanChecker sc = new SpanChecker();
+                        if (sc.CheckSpan(span, supergrammar).Count > 0)
+                        {
+                            throw new InvalidOperationException();
+                        }
+
+                        ExpressionBuilder eb = new ExpressionBuilder();
+                        DefinitionInfo[] dis = eb.BuildExpressions(supergrammar, span);
+                        Definition[] dd2 = db.BuildDefinitions(dis);
+                        string class2 = dr.RenderDefinitionsAsCSharpClass("FromBuildDefs2", dd2);
+                        class2 = class2;
+
+                        DefinitionChecker dc = new DefinitionChecker();
+                        if (dc.CheckDefinitions(dd2).Count() > 0)
+                        {
+                            throw new InvalidOperationException();
+                        }
+
+                        //DefinitionCheckerTest dct = new DefinitionCheckerTest();
+                        //dct.TestSingleDefCycle();
+                    }
+                }
+            }
+        }
+
+        static void Render(List<string> args)
+        {
+            if (args.Count < 2)
+            {
+                ShowUsage();
+                return;
+            }
+
+            SupergrammarSpanner s = new SupergrammarSpanner();
+            string gfile;
+            if (args[0] == "-")
+            {
+                gfile = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
+            }
+            else
+            {
+                gfile = File.ReadAllText(args[0]);
+            }
+            string error;
+            Grammar g = s.GetGrammar(gfile, out error);
+
+            if (!string.IsNullOrEmpty(error))
+            {
+                Console.WriteLine(error);
+            }
+            else
+            {
+                string className = args[1];
+
+                DefinitionRenderer dr = new DefinitionRenderer();
+                Console.Write(dr.RenderDefinitionsAsCSharpClass(className, g.Definitions));
+            }
+        }
+
+        static void Tokenize(List<string> args)
+        {
+            if (args.Count < 2)
+            {
+                ShowUsage();
+                return;
+            }
+
+            SupergrammarSpanner s = new SupergrammarSpanner();
+            string gfile;
+            if (args[0] == "-")
+            {
+                gfile = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
+            }
+            else
+            {
+                gfile = File.ReadAllText(args[0]);
             }
             string error;
             Grammar g = s.GetGrammar(gfile, out error);
@@ -232,23 +238,24 @@ namespace giza
             else
             {
                 string infile;
-                if (args[2] == "-")
+                if (args[1] == "-")
                 {
                     infile = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
                 }
                 else
                 {
-                    infile = File.ReadAllText(args[2]);
+                    infile = File.ReadAllText(args[1]);
                 }
 
                 int index;
-                if (args.Length < 4)
+                if (args.Count < 3)
                 {
                     index = 0;
                 }
-                else if (!int.TryParse(args[3], out index))
+                else if (!int.TryParse(args[2], out index))
                 {
-                    Console.WriteLine("\"{0}\" is not a valid index.", args[3]);
+                    Console.WriteLine("Error: \"{0}\" is not a valid index.", args[2]);
+                    ShowUsage();
                     return;
                 }
 
@@ -257,8 +264,14 @@ namespace giza
             }
         }
 
-        static void Span(string[] args)
+        static void Span(List<string> args)
         {
+            if (args.Count < 3)
+            {
+                ShowUsage();
+                return;
+            }
+
             SupergrammarSpanner spanner = new SupergrammarSpanner();
             string grammarFile = File.ReadAllText(args[0]);
             string error;
