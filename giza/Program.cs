@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MetaphysicsIndustries.Giza;
 using System.IO;
+using NDesk.Options;
 
 namespace giza
 {
@@ -11,38 +12,44 @@ namespace giza
     {
         static void Main(string[] args)
         {
-            if (args.Length < 1)
-            {
-                ShowUsage();
-            }
-            else if (args[0].ToLower() == "--version" ||
-                     args[0].ToLower() == "-v")
-            {
+            bool showHelp = false;
+            bool showVersion = false;
 
-            }
-            else if (args[0].ToLower() == "--help")
+            OptionSet options = new OptionSet() {
+                { "h|?|help", x => showHelp = true },
+                { "v|version", x => showVersion = true },
+            };
+
+            var args2 = options.Parse(args);
+
+            if (showHelp || args.Length < 1)
             {
-                ShowUsage();
+                ShowUsage(options);
             }
-            else if (args[0].ToLower() == "--super")
+            else if (showVersion)
+            {
+                ShowVersion();
+            }
+            else if (args2[0].ToLower() == "super")
             {
                 Super(args);
             }
-            else if (args[0].ToLower() == "--render")
+            else if (args2[0].ToLower() == "render")
             {
                 Render(args);
             }
-            else if (args[0].ToLower() == "--tokenize")
+            else if (args2[0].ToLower() == "tokenize")
             {
                 Tokenize(args);
             }
-            else if (args.Length < 3)
+            else if (args2[0] == "span")
             {
-                ShowUsage();
+                Span(args);
             }
             else
             {
-                Span(args);
+                Console.WriteLine(string.Format("Unknown command: \"{0}\"", args2[0]));
+                ShowUsage(options);
             }
         }
 
@@ -69,7 +76,12 @@ namespace giza
             return n;
         }
 
-        static void ShowUsage()
+        static void ShowVersion()
+        {
+            Console.WriteLine("giza.exe version x.y.z");
+        }
+
+        static void ShowUsage(OptionSet options)
         {
             Console.WriteLine("Usage:");
             Console.WriteLine("    giza [options]");
@@ -90,6 +102,8 @@ namespace giza
             Console.WriteLine();
             Console.WriteLine("If \"-\" is given for FILE, or for GRAMMAR FILE given to --super, then it is read from standard input.");
             Console.WriteLine();
+
+            options.WriteOptionDescriptions(Console.Out);
         }
 
         static void Super(string[] args)
@@ -159,7 +173,7 @@ namespace giza
             }
             else
             {
-                ShowUsage();
+//                ShowUsage();
             }
         }
 
@@ -194,7 +208,7 @@ namespace giza
             }
             else
             {
-                ShowUsage();
+//                ShowUsage();
             }
         }
 
