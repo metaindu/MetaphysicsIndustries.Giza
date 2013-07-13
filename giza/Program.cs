@@ -12,53 +12,71 @@ namespace giza
     {
         static OptionSet _options;
 
+        static bool showHelp = false;
+        static bool showVersion = false;
+        static bool verbose = false;
+
         static void Main(string[] args)
         {
-            bool showHelp = false;
-            bool showVersion = false;
-
             _options = new OptionSet() {
                 { "h|?|help", x => showHelp = true },
                 { "v|version", x => showVersion = true },
+                { "verbose", x => verbose = true },
             };
 
             var args2 = _options.Parse(args);
 
-            if (showHelp || args.Length < 1)
+            try
             {
-                ShowUsage();
-                return;
-            }
+                if (showHelp || args.Length < 1)
+                {
+                    ShowUsage();
+                    return;
+                }
 
-            if (showVersion)
-            {
-                ShowVersion();
-                return;
-            }
+                if (showVersion)
+                {
+                    ShowVersion();
+                    return;
+                }
 
-            var command = args2[0].ToLower();
-            args2.RemoveAt(0);
+                var command = args2[0].ToLower();
+                args2.RemoveAt(0);
 
-            if (command == "super")
-            {
-                Super(args2);
+                if (command == "super")
+                {
+                    Super(args2);
+                }
+                else if (command == "render")
+                {
+                    Render(args2);
+                }
+                else if (command == "tokenize")
+                {
+                    Tokenize(args2);
+                }
+                else if (command == "span")
+                {
+                    Span(args2);
+                }
+                else
+                {
+                    Console.WriteLine(string.Format("Unknown command: \"{0}\"", command));
+                    ShowUsage();
+                }
             }
-            else if (command == "render")
+            catch (Exception ex)
             {
-                Render(args2);
-            }
-            else if (command == "tokenize")
-            {
-                Tokenize(args2);
-            }
-            else if (command == "span")
-            {
-                Span(args2);
-            }
-            else
-            {
-                Console.WriteLine(string.Format("Unknown command: \"{0}\"", command));
-                ShowUsage();
+                Console.Write("There was an internal error");
+                if (verbose)
+                {
+                    Console.WriteLine(":");
+                    Console.WriteLine(ex.ToString());
+                }
+                else
+                {
+                    Console.WriteLine();
+                }
             }
         }
 
@@ -145,7 +163,7 @@ namespace giza
             var ec = new ExpressionChecker();
             var errors = ec.CheckDefinitionInfos(dis);
 
-            if (error != null && errors.Count > 0)
+            if (errors != null && errors.Count > 0)
             {
                 Console.WriteLine("There are errors in the grammar:");
                 foreach (var err in errors)
@@ -153,6 +171,7 @@ namespace giza
                     Console.Write("  ");
                     Console.WriteLine(err.GetDescription());
                 }
+                return;
             }
 
             DefinitionBuilder db = new DefinitionBuilder();
@@ -198,7 +217,7 @@ namespace giza
             var ec = new ExpressionChecker();
             var errors = ec.CheckDefinitionInfos(dis);
 
-            if (error != null && errors.Count > 0)
+            if (errors != null && errors.Count > 0)
             {
                 Console.WriteLine("There are errors in the grammar:");
                 foreach (var err in errors)
@@ -206,6 +225,7 @@ namespace giza
                     Console.Write("  ");
                     Console.WriteLine(err.GetDescription());
                 }
+                return;
             }
 
             var db = new DefinitionBuilder();
@@ -305,7 +325,7 @@ namespace giza
             var ec = new ExpressionChecker();
             var errors = ec.CheckDefinitionInfos(dis);
 
-            if (error != null && errors.Count > 0)
+            if (errors != null && errors.Count > 0)
             {
                 Console.WriteLine("There are errors in the grammar:");
                 foreach (var err in errors)
@@ -313,6 +333,7 @@ namespace giza
                     Console.Write("  ");
                     Console.WriteLine(err.GetDescription());
                 }
+                return;
             }
 
             DefinitionBuilder db = new DefinitionBuilder();
