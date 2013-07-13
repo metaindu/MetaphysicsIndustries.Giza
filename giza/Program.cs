@@ -275,38 +275,64 @@ namespace giza
             SupergrammarSpanner spanner = new SupergrammarSpanner();
             string grammarFile = File.ReadAllText(args[0]);
             string error;
-            Grammar g = spanner.GetGrammar(grammarFile, out error);
+            var dis = spanner.GetExpressions(grammarFile, out error);
 
-            if (error != null)
+            if (!string.IsNullOrEmpty(error))
             {
-                Console.WriteLine(error);
+                Console.WriteLine("There was an error in the grammar: {0}", error);
+                return;
+            }
+
+            var ec = new ExpressionChecker();
+            var errors = ec.CheckDefinitionInfos(dis);
+
+            if (error != null && errors.Count > 0)
+            {
+                Console.WriteLine("There are errors in the grammar:");
+                foreach (var err in errors)
+                {
+                    Console.Write("  ");
+                    Console.WriteLine(err.GetDescription());
+                }
+            }
+
+            DefinitionBuilder db = new DefinitionBuilder();
+            var defs = db.BuildDefinitions(dis);
+
+            string input;
+            if (args[2] == "-")
+            {
+                input = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
             }
             else
             {
-                string input;
-                if (args[2] == "-")
-                {
-                    input = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
-                }
-                else
-                {
-                    input = File.ReadAllText(args[2]);
-                }
+                input = File.ReadAllText(args[2]);
+            }
 
-                Spanner gs = new Spanner();
-                Span[] ss = gs.Process(g, args[1], input, out error);
-                if (error != null)
-                {
-                    Console.WriteLine(error);
-                }
-                else
-                {
-                    DefinitionBuilder db = new DefinitionBuilder();
-                    foreach (Span span in ss)
-                    {
-                        //                    Definition[] dd = db.BuildDefinitions2(g, span);
-                    }
-                }
+            Grammar g = new Grammar();
+            g.Definitions.AddRange(defs);
+
+            Spanner gs = new Spanner();
+            Span[] ss = gs.Process(g, args[1], input, out error);
+            if (error != null)
+            {
+                Console.WriteLine("There was an error in the input: {0}", error);
+            }
+            else if (ss.Length < 1)
+            {
+                Console.WriteLine("No valid spans.");
+            }
+            else if (ss.Length > 1)
+            {
+                Console.WriteLine("{0} valid spans.", ss.Length);
+//                foreach (Span s in ss)
+//                {
+//                    Console.WriteLine(s.RenderSpanHierarchy());
+//                }
+            }
+            else
+            {
+                Console.WriteLine("1 valid span.");
             }
         }
     }
