@@ -362,6 +362,10 @@ namespace giza
             else
             {
                 Console.WriteLine("1 valid parse.");
+                if (verbose)
+                {
+                    Console.WriteLine(ss[0].RenderSpanHierarchy());
+                }
             }
         }
 
@@ -439,6 +443,10 @@ namespace giza
             else
             {
                 Console.WriteLine("1 valid span.");
+                if (verbose)
+                {
+                    Console.WriteLine(ss[0].RenderSpanHierarchy());
+                }
             }
         }
     }
