@@ -9,7 +9,7 @@ namespace MetaphysicsIndustries.Giza
 {
     public enum DefinitionDirective
     {
-        IncludeWhitespace,
+        MindWhitespace,
         IgnoreCase,
         Atomic,
         Token,

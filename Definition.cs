@@ -25,7 +25,7 @@ namespace MetaphysicsIndustries.Giza
         public Set<Node> EndNodes = new Set<Node>();
 
         public readonly Set<DefinitionDirective> Directives = new Set<DefinitionDirective>();
-        public bool IncludeWhitespace { get { return Directives.Contains(DefinitionDirective.IncludeWhitespace); } }
+        public bool MindWhitespace { get { return Directives.Contains(DefinitionDirective.MindWhitespace); } }
         public bool IgnoreCase { get { return Directives.Contains(DefinitionDirective.IgnoreCase); } }
         public bool Atomic { get { return Directives.Contains(DefinitionDirective.Atomic); } }
         public bool IsTokenized

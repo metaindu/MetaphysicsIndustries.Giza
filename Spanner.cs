@@ -87,8 +87,8 @@ namespace MetaphysicsIndustries.Giza
                     MatchStack stack = p.MatchStack;
 
                     if (isWhitespace &&
-                        ((stack == null && cur.Node is DefRefNode && !(cur.Node as DefRefNode).DefRef.IncludeWhitespace) ||
-                         (stack != null && !stack.Definition.IncludeWhitespace)))
+                        ((stack == null && cur.Node is DefRefNode && !(cur.Node as DefRefNode).DefRef.MindWhitespace) ||
+                         (stack != null && !stack.Definition.MindWhitespace)))
                     {
                         accepts.Enqueue(p);
                     }

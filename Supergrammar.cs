@@ -239,7 +239,7 @@ namespace MetaphysicsIndustries.Giza
             node_directive_item_0_id_002D_mind.NextNodes.Add(node_directive_item_1_id_002D_whitespace);
             node_directive_item_2_id_002D_ignore.NextNodes.Add(node_directive_item_3_id_002D_case);
 
-            def_4_id_mind.Directives.Add(DefinitionDirective.IncludeWhitespace);
+            def_4_id_mind.Directives.Add(DefinitionDirective.MindWhitespace);
             def_4_id_mind.Directives.Add(DefinitionDirective.IgnoreCase);
             node_id_mind_0_mind = new CharNode(CharClass.FromUndelimitedCharClassText("m"), "mind");
             node_id_mind_1_mind = new CharNode(CharClass.FromUndelimitedCharClassText("i"), "mind");
@@ -255,7 +255,7 @@ namespace MetaphysicsIndustries.Giza
             node_id_mind_1_mind.NextNodes.Add(node_id_mind_2_mind);
             node_id_mind_2_mind.NextNodes.Add(node_id_mind_3_mind);
 
-            def_5_id_whitespace.Directives.Add(DefinitionDirective.IncludeWhitespace);
+            def_5_id_whitespace.Directives.Add(DefinitionDirective.MindWhitespace);
             def_5_id_whitespace.Directives.Add(DefinitionDirective.IgnoreCase);
             node_id_whitespace_0_whitespace = new CharNode(CharClass.FromUndelimitedCharClassText("w"), "whitespace");
             node_id_whitespace_1_whitespace = new CharNode(CharClass.FromUndelimitedCharClassText("h"), "whitespace");
@@ -289,7 +289,7 @@ namespace MetaphysicsIndustries.Giza
             node_id_whitespace_7_whitespace.NextNodes.Add(node_id_whitespace_8_whitespace);
             node_id_whitespace_8_whitespace.NextNodes.Add(node_id_whitespace_9_whitespace);
 
-            def_6_id_ignore.Directives.Add(DefinitionDirective.IncludeWhitespace);
+            def_6_id_ignore.Directives.Add(DefinitionDirective.MindWhitespace);
             def_6_id_ignore.Directives.Add(DefinitionDirective.IgnoreCase);
             node_id_ignore_0_ignore = new CharNode(CharClass.FromUndelimitedCharClassText("i"), "ignore");
             node_id_ignore_1_ignore = new CharNode(CharClass.FromUndelimitedCharClassText("g"), "ignore");
@@ -311,7 +311,7 @@ namespace MetaphysicsIndustries.Giza
             node_id_ignore_3_ignore.NextNodes.Add(node_id_ignore_4_ignore);
             node_id_ignore_4_ignore.NextNodes.Add(node_id_ignore_5_ignore);
 
-            def_7_id_case.Directives.Add(DefinitionDirective.IncludeWhitespace);
+            def_7_id_case.Directives.Add(DefinitionDirective.MindWhitespace);
             def_7_id_case.Directives.Add(DefinitionDirective.IgnoreCase);
             node_id_case_0_case = new CharNode(CharClass.FromUndelimitedCharClassText("c"), "case");
             node_id_case_1_case = new CharNode(CharClass.FromUndelimitedCharClassText("a"), "case");
@@ -327,7 +327,7 @@ namespace MetaphysicsIndustries.Giza
             node_id_case_1_case.NextNodes.Add(node_id_case_2_case);
             node_id_case_2_case.NextNodes.Add(node_id_case_3_case);
 
-            def_8_id_atomic.Directives.Add(DefinitionDirective.IncludeWhitespace);
+            def_8_id_atomic.Directives.Add(DefinitionDirective.MindWhitespace);
             def_8_id_atomic.Directives.Add(DefinitionDirective.IgnoreCase);
             node_id_atomic_0_atomic = new CharNode(CharClass.FromUndelimitedCharClassText("a"), "atomic");
             node_id_atomic_1_atomic = new CharNode(CharClass.FromUndelimitedCharClassText("t"), "atomic");
@@ -349,7 +349,7 @@ namespace MetaphysicsIndustries.Giza
             node_id_atomic_3_atomic.NextNodes.Add(node_id_atomic_4_atomic);
             node_id_atomic_4_atomic.NextNodes.Add(node_id_atomic_5_atomic);
 
-            def_9_id_token.Directives.Add(DefinitionDirective.IncludeWhitespace);
+            def_9_id_token.Directives.Add(DefinitionDirective.MindWhitespace);
             def_9_id_token.Directives.Add(DefinitionDirective.IgnoreCase);
             node_id_token_0_token = new CharNode(CharClass.FromUndelimitedCharClassText("t"), "token");
             node_id_token_1_token = new CharNode(CharClass.FromUndelimitedCharClassText("o"), "token");
@@ -368,7 +368,7 @@ namespace MetaphysicsIndustries.Giza
             node_id_token_2_token.NextNodes.Add(node_id_token_3_token);
             node_id_token_3_token.NextNodes.Add(node_id_token_4_token);
 
-            def_10_id_subtoken.Directives.Add(DefinitionDirective.IncludeWhitespace);
+            def_10_id_subtoken.Directives.Add(DefinitionDirective.MindWhitespace);
             def_10_id_subtoken.Directives.Add(DefinitionDirective.IgnoreCase);
             node_id_subtoken_0_subtoken = new CharNode(CharClass.FromUndelimitedCharClassText("s"), "subtoken");
             node_id_subtoken_1_subtoken = new CharNode(CharClass.FromUndelimitedCharClassText("u"), "subtoken");
@@ -475,7 +475,7 @@ namespace MetaphysicsIndustries.Giza
             def_14_modifier.StartNodes.Add(node_modifier_0__002A__002B__003F_);
             def_14_modifier.EndNodes.Add(node_modifier_0__002A__002B__003F_);
 
-            def_15_number.Directives.Add(DefinitionDirective.IncludeWhitespace);
+            def_15_number.Directives.Add(DefinitionDirective.MindWhitespace);
             def_15_number.Directives.Add(DefinitionDirective.Atomic);
             node_number_0__005C_d = new CharNode(CharClass.FromUndelimitedCharClassText("\\d"), "\\d");
             def_15_number.Nodes.Add(node_number_0__005C_d);
@@ -483,7 +483,7 @@ namespace MetaphysicsIndustries.Giza
             def_15_number.EndNodes.Add(node_number_0__005C_d);
             node_number_0__005C_d.NextNodes.Add(node_number_0__005C_d);
 
-            def_16_identifier.Directives.Add(DefinitionDirective.IncludeWhitespace);
+            def_16_identifier.Directives.Add(DefinitionDirective.MindWhitespace);
             def_16_identifier.Directives.Add(DefinitionDirective.Atomic);
             node_identifier_0__005C_l_002D__ = new CharNode(CharClass.FromUndelimitedCharClassText("\\l-_"), "\\l-_");
             node_identifier_1__005C_l_005C_d_002D__ = new CharNode(CharClass.FromUndelimitedCharClassText("\\l\\d-_"), "\\l\\d-_");
@@ -495,7 +495,7 @@ namespace MetaphysicsIndustries.Giza
             node_identifier_0__005C_l_002D__.NextNodes.Add(node_identifier_1__005C_l_005C_d_002D__);
             node_identifier_1__005C_l_005C_d_002D__.NextNodes.Add(node_identifier_1__005C_l_005C_d_002D__);
 
-            def_17_literal.Directives.Add(DefinitionDirective.IncludeWhitespace);
+            def_17_literal.Directives.Add(DefinitionDirective.MindWhitespace);
             node_literal_0__0027_ = new CharNode(CharClass.FromUndelimitedCharClassText("'"), "'");
             node_literal_1__005E__005C__005C__0027_ = new CharNode(CharClass.FromUndelimitedCharClassText("^\\\\'"), "^\\\\'");
             node_literal_2__005C_ = new CharNode(CharClass.FromUndelimitedCharClassText("\\\\"), "\\");
@@ -527,7 +527,7 @@ namespace MetaphysicsIndustries.Giza
             node_literal_4_unicodechar.NextNodes.Add(node_literal_4_unicodechar);
             node_literal_4_unicodechar.NextNodes.Add(node_literal_5__0027_);
 
-            def_18_charclass.Directives.Add(DefinitionDirective.IncludeWhitespace);
+            def_18_charclass.Directives.Add(DefinitionDirective.MindWhitespace);
             node_charclass_0__005B_ = new CharNode(CharClass.FromUndelimitedCharClassText("\\["), "[");
             node_charclass_1__005E__005C__005C__005C__005B__005C__005D_ = new CharNode(CharClass.FromUndelimitedCharClassText("^\\\\\\[\\]"), "^\\\\\\[\\]");
             node_charclass_2__005C_ = new CharNode(CharClass.FromUndelimitedCharClassText("\\\\"), "\\");
@@ -559,7 +559,7 @@ namespace MetaphysicsIndustries.Giza
             node_charclass_4_unicodechar.NextNodes.Add(node_charclass_4_unicodechar);
             node_charclass_4_unicodechar.NextNodes.Add(node_charclass_5__005D_);
 
-            def_19_unicodechar.Directives.Add(DefinitionDirective.IncludeWhitespace);
+            def_19_unicodechar.Directives.Add(DefinitionDirective.MindWhitespace);
             def_19_unicodechar.Directives.Add(DefinitionDirective.IgnoreCase);
             node_unicodechar_0__005C_x = new CharNode(CharClass.FromUndelimitedCharClassText("\\\\"), "\\x");
             node_unicodechar_1__005C_x = new CharNode(CharClass.FromUndelimitedCharClassText("x"), "\\x");
@@ -581,7 +581,7 @@ namespace MetaphysicsIndustries.Giza
             node_unicodechar_3__005C_dabcdef.NextNodes.Add(node_unicodechar_4__005C_dabcdef);
             node_unicodechar_4__005C_dabcdef.NextNodes.Add(node_unicodechar_5__005C_dabcdef);
 
-            def_20_comment.Directives.Add(DefinitionDirective.IncludeWhitespace);
+            def_20_comment.Directives.Add(DefinitionDirective.MindWhitespace);
             node_comment_0__002F__002A_ = new CharNode(CharClass.FromUndelimitedCharClassText("/"), "/*");
             node_comment_1__002F__002A_ = new CharNode(CharClass.FromUndelimitedCharClassText("*"), "/*");
             node_comment_2__005E__002A_ = new CharNode(CharClass.FromUndelimitedCharClassText("^*"), "^*");

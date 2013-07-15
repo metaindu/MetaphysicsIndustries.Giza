@@ -306,7 +306,7 @@ namespace MetaphysicsIndustries.Giza
             if (span.Subspans[0].Node == grammar.node_directive_item_0_id_002D_mind &&
                 span.Subspans[1].Node == grammar.node_directive_item_1_id_002D_whitespace)
             {
-                return DefinitionDirective.IncludeWhitespace;
+                return DefinitionDirective.MindWhitespace;
             }
             if (span.Subspans[0].Node == grammar.node_directive_item_2_id_002D_ignore &&
                 span.Subspans[1].Node == grammar.node_directive_item_3_id_002D_case)
