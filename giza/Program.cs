@@ -138,6 +138,8 @@ namespace giza
 
         static void Super(List<string> args)
         {
+            args = _options2.Parse(args);
+
             if (args.Count < 1)
             {
                 ShowUsage();
@@ -166,7 +168,15 @@ namespace giza
             }
 
             var ec = new ExpressionChecker();
-            var errors = ec.CheckDefinitionInfos(dis);
+            List<ExpressionChecker.ErrorInfo> errors;
+            if (tokenized)
+            {
+                errors = ec.CheckDefinitionInfosForParsing(dis);
+            }
+            else
+            {
+                errors = ec.CheckDefinitionInfos(dis);
+            }
 
             if (errors != null && errors.Count > 0)
             {
@@ -179,10 +189,20 @@ namespace giza
                 return;
             }
 
-            DefinitionBuilder db = new DefinitionBuilder();
-            var defs = db.BuildDefinitions(dis);
+            IEnumerable<Definition> defs;
+            if (tokenized)
+            {
+                TokenizedGrammarBuilder tgb = new TokenizedGrammarBuilder();
+                var g = tgb.BuildTokenizedGrammar(dis);
+                defs = g.Definitions;
+            }
+            else
+            {
+                DefinitionBuilder db = new DefinitionBuilder();
+                defs = db.BuildDefinitions(dis);
+            }
 
-            Console.WriteLine("There are {0} definitions in the grammar:", defs.Length);
+            Console.WriteLine("There are {0} definitions in the grammar:", defs.Count());
             foreach (var def in defs)
             {
                 Console.WriteLine("  {0}", def.Name);
