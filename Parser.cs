@@ -75,8 +75,15 @@ namespace MetaphysicsIndustries.Giza
                         {
                             if (curstack == null)
                             {
-                                ends.Add(cur);
-                                shouldRejectSource = false;
+                                if (intokens != null && intokens.Length > 0)
+                                {
+//                                    Reject(cur);
+                                }
+                                else
+                                {
+                                    ends.Add(cur);
+                                    shouldRejectSource = false;
+                                }
                             }
                             else
                             {
