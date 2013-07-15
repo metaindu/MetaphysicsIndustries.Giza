@@ -38,15 +38,19 @@ namespace MetaphysicsIndustries.Giza
                     dc.CheckDefinitions(def.ParentGrammar.Definitions));
             if (errors.Count > 0) throw new InvalidOperationException("Definitions contain errors.");
 
+            bool endOfInput = false;
+
             if (startIndex >= input.Length)
             {
+                endOfInput = true;
                 error = null;
                 return new NodeMatch[0];
             }
 
             DefRefNode implicitNode = new DefRefNode(def);
-            NodeMatch root = new NodeMatch(implicitNode, NodeMatch.TransitionType.StartDef, null);
+            NodeMatch root = new NodeMatch(implicitNode, NodeMatch.TransitionType.Root, null);
             root.Index = -1;
+
 
             Queue<NodeMatchStackPair> currents = new Queue<NodeMatchStackPair>();
             Queue<NodeMatchStackPair> accepts = new Queue<NodeMatchStackPair>();
@@ -75,6 +79,7 @@ namespace MetaphysicsIndustries.Giza
                     }
                 }
 
+                var enddefs = new Set<NodeMatch>();
                 while (currents.Count > 0)
                 {
                     NodeMatchStackPair p = currents.Dequeue();
@@ -111,9 +116,11 @@ namespace MetaphysicsIndustries.Giza
                         {
                             if (stack.Definition.Atomic &&
                                 stack.Definition.Nodes.Contains(cur.Previous.Node) &&
-                                cur.Previous.Node.IsEndNode)
+                                cur.Previous.Node.IsEndNode &&
+                                !enddefs.Contains(cur.Previous))
                             {
                                 currents.Enqueue(CreateEndDefMatch(cur.Previous, stack));
+                                enddefs.Add(cur.Previous);
                             }
 
                             rejects.Enqueue(cur);
@@ -154,6 +161,11 @@ namespace MetaphysicsIndustries.Giza
                 {
                     currents.Enqueue(accepts.Dequeue());
                 }
+            }
+
+            if (k >= input.Length)
+            {
+                endOfInput = true;
             }
 
             while (currents.Count > 0)
@@ -247,6 +259,8 @@ namespace MetaphysicsIndustries.Giza
 
         string GenerateErrorString(NodeMatch lastReject, Definition def, string input)
         {
+            if (lastReject.Transition == NodeMatch.TransitionType.Root) return null;
+
             char errorCh = input[lastReject.Index];
 
             IEnumerable<Node> expectedNodes;
