@@ -325,6 +325,10 @@ namespace MetaphysicsIndustries.Giza
             {
                 return DefinitionDirective.Subtoken;
             }
+            if (span.Subspans[0].Node == grammar.node_directive_item_7_id_002D_comment)
+            {
+                return DefinitionDirective.Comment;
+            }
 
             throw new InvalidOperationException();
         }
