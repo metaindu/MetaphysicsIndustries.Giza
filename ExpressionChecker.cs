@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Collections;
 using System.Linq;
+using System.Text;
 
 namespace MetaphysicsIndustries.Giza
 {
@@ -61,7 +62,20 @@ namespace MetaphysicsIndustries.Giza
 
             public string GetDescription()
             {
-                return Error.ToString();
+                StringBuilder sb = new StringBuilder();
+                sb.Append(Error.ToString());
+
+                if (Expression != null) sb.AppendFormat(", {0}", Expression.ToString());
+                if (ExpressionItem != null) sb.AppendFormat(", {0}", ExpressionItem.ToString());
+                if (DefinitionInfo != null) sb.AppendFormat(", {0} \"{1}\"", DefinitionInfo.ToString(), DefinitionInfo.Name);
+                if (Index > 0) sb.AppendFormat(", index {0}", Index);
+
+                if (ExpressionItem is DefRefSubExpression)
+                {
+                    sb.AppendFormat(", defref \"{0}\"", (ExpressionItem as DefRefSubExpression).DefinitionName);
+                }
+
+                return sb.ToString();
             }
         }
 
