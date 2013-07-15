@@ -15,3 +15,11 @@ SpanChecker
 re-org and add docs
 DefinitionRenderer - render to grammar text
 Move rendering classes to a separate 'Rendering' assembly, and/or move classes for parsing into a 'Light' assembly.
+user-defined reductions
+operate on streams
+
+clarify what 'mind whitespace' and 'atomic' do on tokens, subtokens, and comments, if anything
+    what are the defaults?
+clarify what 'mind whitespace', 'ignore case' and 'atomic' directives do on non-tokenized defs
+    should affect only implicits
+more tests for above
