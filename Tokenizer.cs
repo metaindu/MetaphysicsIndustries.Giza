@@ -31,7 +31,7 @@ namespace MetaphysicsIndustries.Giza
 
         public Token[] GetTokensAtLocation(string input, int index, out string error)
         {
-            Set<Spanner.NodeMatch> matchTreeLeaves = new Set<Spanner.NodeMatch>();
+            Set<NodeMatch> matchTreeLeaves = new Set<NodeMatch>();
 
             error = null;
 
@@ -66,10 +66,10 @@ namespace MetaphysicsIndustries.Giza
             }
 
             List<Token> tokens = new List<Token>();
-            foreach (Spanner.NodeMatch leaf in matchTreeLeaves)
+            foreach (NodeMatch leaf in matchTreeLeaves)
             {
-                Spanner.NodeMatch tokenEnd = leaf.Previous;
-                Spanner.NodeMatch tokenStart = tokenEnd.StartDef;
+                NodeMatch tokenEnd = leaf.Previous;
+                NodeMatch tokenStart = tokenEnd.StartDef;
 
                 tokens.Add(new Token{
                     Definition = tokenEnd.Previous.Node.ParentDefinition,

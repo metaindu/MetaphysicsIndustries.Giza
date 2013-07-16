@@ -1,8 +1,5 @@
 using System;
 using System.Collections.Generic;
-using NodeMatch = MetaphysicsIndustries.Giza.Spanner.NodeMatch;
-using NodeMatchStackPair = MetaphysicsIndustries.Giza.Spanner.NodeMatchStackPair;
-using MatchStack = MetaphysicsIndustries.Giza.Spanner.MatchStack;
 
 namespace MetaphysicsIndustries.Giza
 {

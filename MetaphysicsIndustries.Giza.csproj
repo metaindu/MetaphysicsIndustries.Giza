@@ -39,6 +39,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BinarySpanner.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="TokenizedGrammarBuilder.cs" />
     <Compile Include="ExpressionChecker.cs" />
     <Compile Include="Parser.cs" />
+    <Compile Include="NodeMatch.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
