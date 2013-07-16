@@ -8,7 +8,7 @@ using NDesk.Options;
 
 namespace giza
 {
-    class Program
+    public class Program
     {
         static OptionSet _options;
         static OptionSet _options2;
@@ -18,7 +18,7 @@ namespace giza
         static bool verbose = false;
         static bool tokenized = false;
 
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             _options = new OptionSet() {
                 { "h|?|help", x => showHelp = true },

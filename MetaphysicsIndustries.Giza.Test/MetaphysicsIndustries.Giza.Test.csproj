@@ -40,6 +40,7 @@
     <Compile Include="DefinitionBuilderTest.cs" />
     <Compile Include="ExpressionCheckerTest.cs" />
     <Compile Include="ParserTest.cs" />
+    <Compile Include="CommandLineTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -50,6 +51,10 @@
     <ProjectReference Include="..\..\MetaphysicsIndustries.Collections\MetaphysicsIndustries.Collections.csproj">
       <Project>{FF2B8A90-E8D2-4CF6-81E6-4A7BCE1FF900}</Project>
       <Name>MetaphysicsIndustries.Collections</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\giza\giza.csproj">
+      <Project>{3CB3C1B6-0838-4E0A-94BA-254B974D8D6E}</Project>
+      <Name>giza</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
