@@ -23,3 +23,4 @@ clarify what 'mind whitespace' and 'atomic' do on tokens, subtokens, and comment
 clarify what 'mind whitespace', 'ignore case' and 'atomic' directives do on non-tokenized defs
     should affect only implicits
 more tests for above
+repl
