@@ -41,33 +41,29 @@ namespace MetaphysicsIndustries.Giza
                 {
                     nonTokenizedDefs.Add(def);
 
-                    foreach (var literal in def.Expression.EnumerateLiterals())
+                    foreach (var literal in def.EnumerateLiterals())
                     {
                         string defname = GetImplicitDefinitionName(literal);
                         if (!implicitsByLiteralValue.ContainsKey(defname))
                         {
-                            Expression expr = new Expression();
-                            expr.Items.Add(new LiteralSubExpression{Value=literal.Value});
                             DefinitionInfo di = new DefinitionInfo {
                                 Name = defname,
-                                Expression = expr,
                             };
+                            di.Items.Add(new LiteralSubExpression{Value=literal.Value});
                             di.Directives.Add(DefinitionDirective.Token);
                             implicitsByLiteralValue[defname] = di;
                         }
                     }
 
-                    foreach (var cc in def.Expression.EnumerateCharClasses())
+                    foreach (var cc in def.EnumerateCharClasses())
                     {
                         string defname = GetImplicitDefinitionName(cc);
                         if (!implicitsByCharClassUndelimited.ContainsKey(defname))
                         {
-                            Expression expr = new Expression();
-                            expr.Items.Add(new CharClassSubExpression() { CharClass = cc.CharClass });
                             DefinitionInfo di = new DefinitionInfo {
                                 Name = defname,
-                                Expression = expr,
                             };
+                            di.Items.Add(new CharClassSubExpression() { CharClass = cc.CharClass });
                             di.Directives.Add(DefinitionDirective.Token);
                             implicitsByCharClassUndelimited[defname] = di;
                         }
@@ -83,9 +79,9 @@ namespace MetaphysicsIndustries.Giza
             foreach (var def in tokenizedDefs)
             {
                 var def2 = new DefinitionInfo {
-                    Expression = def.Expression,
                     Name = def.Name,
                 };
+                def2.Items.AddRange(def.Items);
                 def2.Directives.AddRange(def.Directives);
                 def2.Directives.Add(DefinitionDirective.Atomic);
                 tokenizedDefsDetokenized.Add(def2);
@@ -101,7 +97,7 @@ namespace MetaphysicsIndustries.Giza
                 defs2.Add(def);
                 defsByName[di.Name] = def;
                 def.Directives.AddRange(di.Directives);
-                exprsByDef[def] = di.Expression;
+                exprsByDef[def] = di;
             }
             foreach (Definition def in tokenizedDefs2)
             {

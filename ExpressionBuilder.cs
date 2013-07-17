@@ -42,7 +42,9 @@ namespace MetaphysicsIndustries.Giza
                     }
                     else if (sub.Node == grammar.node_definition_3_expr)
                     {
-                        def.Expression = GetExpressionFromSpan(grammar, sub);
+                        var expr = GetExpressionFromSpan(grammar, sub);
+                        def.Items.AddRange(expr.Items);
+                        expr.Items.Clear();
                     }
                 }
 

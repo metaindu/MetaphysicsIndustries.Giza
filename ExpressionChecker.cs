@@ -14,7 +14,6 @@ namespace MetaphysicsIndustries.Giza
             NullDefinition,
             ReusedExpressionOrItem,
             NullOrEmptyDefinitionName,
-            NullDefinitionExpression,
             EmptyExpressionItems,
             NullExpressionItem,
             EmptyOrexprExpressionList,
@@ -101,7 +100,7 @@ namespace MetaphysicsIndustries.Giza
                     });
                 }
 
-                foreach (DefRefSubExpression defref in def.Expression.EnumerateDefRefs())
+                foreach (DefRefSubExpression defref in def.EnumerateDefRefs())
                 {
                     if (!defsByName.ContainsKey(defref.DefinitionName)) continue;
 
@@ -213,17 +212,7 @@ namespace MetaphysicsIndustries.Giza
 
             foreach (DefinitionInfo def in defs)
             {
-                if (def.Expression == null)
-                {
-                    throw new InvalidExpressionException {
-                        Error = Error.NullDefinitionExpression,
-                        DefinitionInfo = def,
-                    };
-                }
-                else
-                {
-                    CheckExpression(def, def.Expression, defNames, visitedExprs, visitedItems, errors);
-                }
+                CheckExpression(def, def, defNames, visitedExprs, visitedItems, errors);
             }
 
             CheckForDuplicateNames(defs, errors);

@@ -28,7 +28,7 @@ namespace MetaphysicsIndustries.Giza
                 defs2.Add(def);
                 defsByName[di.Name] = def;
                 def.Directives.AddRange(di.Directives);
-                exprsByDef[def] = di.Expression;
+                exprsByDef[def] = di;
             }
 
             foreach (Definition def in defs2)
