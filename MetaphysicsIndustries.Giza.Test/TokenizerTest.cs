@@ -17,7 +17,7 @@ namespace MetaphysicsIndustries.Giza.Test
                 "<mind whitespace, atomic, token> id-item2 = 'item2'; \r\n";
 
             string error;
-            DefinitionInfo[] dis = (new SupergrammarSpanner()).GetExpressions(testGrammarText, out error);
+            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(testGrammarText, out error);
             if (!string.IsNullOrEmpty(error))
             {
                 throw new InvalidOperationException(error);
@@ -65,7 +65,7 @@ namespace MetaphysicsIndustries.Giza.Test
             string testInput = "a+++b";
 
             string error;
-            DefinitionInfo[] dis = (new SupergrammarSpanner()).GetExpressions(testGrammarText, out error);
+            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(testGrammarText, out error);
             if (!string.IsNullOrEmpty(error))
             {
                 throw new InvalidOperationException(error);
@@ -126,7 +126,7 @@ namespace MetaphysicsIndustries.Giza.Test
             string testInput = "a << b";
 
             string error;
-            DefinitionInfo[] dis = (new SupergrammarSpanner()).GetExpressions(testGrammarText, out error); 
+            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(testGrammarText, out error); 
             TokenizedGrammarBuilder tgb = new TokenizedGrammarBuilder();
             Grammar testGrammar = tgb.BuildTokenizedGrammar(dis);
 
@@ -171,7 +171,7 @@ namespace MetaphysicsIndustries.Giza.Test
                 "<token> operand = [\\l_] [\\l\\d_]*;";
 
             string error;
-            DefinitionInfo[] dis = (new SupergrammarSpanner()).GetExpressions(grammarText, out error);
+            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(grammarText, out error);
             if (!string.IsNullOrEmpty(error)) throw new InvalidOperationException();
 
             Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);

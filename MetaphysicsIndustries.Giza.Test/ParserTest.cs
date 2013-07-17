@@ -14,7 +14,7 @@ namespace MetaphysicsIndustries.Giza.Test
                 "<token> operand = [\\l_] [\\l\\d_]*;";
 
             string error;
-            DefinitionInfo[] dis = (new SupergrammarSpanner()).GetExpressions(grammarText, out error);
+            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(grammarText, out error);
             if (!string.IsNullOrEmpty(error)) throw new InvalidOperationException();
 
             Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
@@ -57,7 +57,7 @@ namespace MetaphysicsIndustries.Giza.Test
                 "<token> operand = [\\l_] [\\l\\d_]*;";
 
             string error;
-            DefinitionInfo[] dis = (new SupergrammarSpanner()).GetExpressions(grammarText, out error);
+            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(grammarText, out error);
             if (!string.IsNullOrEmpty(error)) throw new InvalidOperationException();
 
             Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);

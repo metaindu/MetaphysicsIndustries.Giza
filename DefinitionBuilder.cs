@@ -10,7 +10,7 @@ namespace MetaphysicsIndustries.Giza
 {
     public class DefinitionBuilder
     {
-        public Definition[] BuildDefinitions(DefinitionInfo[] defs)
+        public Definition[] BuildDefinitions(DefinitionExpression[] defs)
         {
             ExpressionChecker ec = new ExpressionChecker();
             List<ExpressionChecker.ErrorInfo> errors = ec.CheckDefinitionInfos(defs);
@@ -22,7 +22,7 @@ namespace MetaphysicsIndustries.Giza
             List<Definition> defs2 = new List<Definition>();
             Dictionary<string, Definition> defsByName = new Dictionary<string, Definition>();
             Dictionary<Definition, Expression> exprsByDef = new Dictionary<Definition, Expression>();
-            foreach (DefinitionInfo di in defs)
+            foreach (DefinitionExpression di in defs)
             {
                 Definition def = new Definition(di.Name);
                 defs2.Add(def);

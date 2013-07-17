@@ -14,7 +14,7 @@ namespace MetaphysicsIndustries.Giza
         // place of that subexpr. In this way, non-tokenized definitions
         // are composed entirely of defrefs.
 
-        public Grammar BuildTokenizedGrammar(DefinitionInfo[] defs)
+        public Grammar BuildTokenizedGrammar(DefinitionExpression[] defs)
         {
             ExpressionChecker ec = new ExpressionChecker();
             List<ExpressionChecker.ErrorInfo> errors = ec.CheckDefinitionInfosForParsing(defs);
@@ -24,12 +24,12 @@ namespace MetaphysicsIndustries.Giza
             }
 
             // get the implicit tokens
-            Dictionary<string, DefinitionInfo> implicitsByLiteralValue = new Dictionary<string, DefinitionInfo>();
-            Dictionary<string, DefinitionInfo> implicitsByCharClassUndelimited = new Dictionary<string, DefinitionInfo>();
-            List<DefinitionInfo> tokenizedDefs = new List<DefinitionInfo>();
-            List<DefinitionInfo> nonTokenizedDefs = new List<DefinitionInfo>();
+            Dictionary<string, DefinitionExpression> implicitsByLiteralValue = new Dictionary<string, DefinitionExpression>();
+            Dictionary<string, DefinitionExpression> implicitsByCharClassUndelimited = new Dictionary<string, DefinitionExpression>();
+            List<DefinitionExpression> tokenizedDefs = new List<DefinitionExpression>();
+            List<DefinitionExpression> nonTokenizedDefs = new List<DefinitionExpression>();
 
-            foreach (DefinitionInfo def in defs)
+            foreach (DefinitionExpression def in defs)
             {
                 if (def.Directives.Contains(DefinitionDirective.Token) ||
                     def.Directives.Contains(DefinitionDirective.Subtoken) ||
@@ -46,7 +46,7 @@ namespace MetaphysicsIndustries.Giza
                         string defname = GetImplicitDefinitionName(literal);
                         if (!implicitsByLiteralValue.ContainsKey(defname))
                         {
-                            DefinitionInfo di = new DefinitionInfo {
+                            DefinitionExpression di = new DefinitionExpression {
                                 Name = defname,
                             };
                             di.Items.Add(new LiteralSubExpression{Value=literal.Value});
@@ -60,7 +60,7 @@ namespace MetaphysicsIndustries.Giza
                         string defname = GetImplicitDefinitionName(cc);
                         if (!implicitsByCharClassUndelimited.ContainsKey(defname))
                         {
-                            DefinitionInfo di = new DefinitionInfo {
+                            DefinitionExpression di = new DefinitionExpression {
                                 Name = defname,
                             };
                             di.Items.Add(new CharClassSubExpression() { CharClass = cc.CharClass });
@@ -75,10 +75,10 @@ namespace MetaphysicsIndustries.Giza
             tokenizedDefs.AddRange(implicitsByCharClassUndelimited.Values);
 
             DefinitionBuilder db = new DefinitionBuilder();
-            List<DefinitionInfo> tokenizedDefsDetokenized = new List<DefinitionInfo>();
+            List<DefinitionExpression> tokenizedDefsDetokenized = new List<DefinitionExpression>();
             foreach (var def in tokenizedDefs)
             {
-                var def2 = new DefinitionInfo {
+                var def2 = new DefinitionExpression {
                     Name = def.Name,
                 };
                 def2.Items.AddRange(def.Items);
@@ -91,7 +91,7 @@ namespace MetaphysicsIndustries.Giza
             List<Definition> defs2 = new List<Definition>();
             Dictionary<string, Definition> defsByName = new Dictionary<string, Definition>();
             Dictionary<Definition, Expression> exprsByDef = new Dictionary<Definition, Expression>();
-            foreach (DefinitionInfo di in nonTokenizedDefs)
+            foreach (DefinitionExpression di in nonTokenizedDefs)
             {
                 Definition def = new Definition(di.Name);
                 defs2.Add(def);

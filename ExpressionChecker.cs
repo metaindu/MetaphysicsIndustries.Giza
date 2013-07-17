@@ -38,7 +38,7 @@ namespace MetaphysicsIndustries.Giza
         public class InvalidDefinitionException : Exception
         {
             public Error Error;
-            public DefinitionInfo DefinitionInfo;
+            public DefinitionExpression DefinitionInfo;
             public int Index;
         }
 
@@ -47,7 +47,7 @@ namespace MetaphysicsIndustries.Giza
             public Error Error;
             public Expression Expression;
             public ExpressionItem ExpressionItem;
-            public DefinitionInfo DefinitionInfo;
+            public DefinitionExpression DefinitionInfo;
             public int Index;
         }
 
@@ -56,7 +56,7 @@ namespace MetaphysicsIndustries.Giza
             public Error Error;
             public Expression Expression;
             public ExpressionItem ExpressionItem;
-            public DefinitionInfo DefinitionInfo;
+            public DefinitionExpression DefinitionInfo;
             public int Index;
 
             public string GetDescription()
@@ -78,11 +78,11 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        public List<ErrorInfo> CheckDefinitionInfosForParsing(IEnumerable<DefinitionInfo> defs)
+        public List<ErrorInfo> CheckDefinitionInfosForParsing(IEnumerable<DefinitionExpression> defs)
         {
             List<ErrorInfo> errors = CheckDefinitionInfos(defs);
 
-            Dictionary<string, DefinitionInfo> defsByName = new Dictionary<string, DefinitionInfo>();
+            Dictionary<string, DefinitionExpression> defsByName = new Dictionary<string, DefinitionExpression>();
             foreach (var def in defs)
             {
                 defsByName[def.Name] = def;
@@ -104,7 +104,7 @@ namespace MetaphysicsIndustries.Giza
                 {
                     if (!defsByName.ContainsKey(defref.DefinitionName)) continue;
 
-                    DefinitionInfo target = defsByName[defref.DefinitionName];
+                    DefinitionExpression target = defsByName[defref.DefinitionName];
 
                     if (target.Directives.Contains(DefinitionDirective.Comment))
                     {
@@ -163,7 +163,7 @@ namespace MetaphysicsIndustries.Giza
             return errors;
         }
 
-        public virtual List<ErrorInfo> CheckDefinitionInfos(IEnumerable<DefinitionInfo> defs)
+        public virtual List<ErrorInfo> CheckDefinitionInfos(IEnumerable<DefinitionExpression> defs)
         {
             if (defs == null) throw new ArgumentNullException("defs");
 
@@ -176,10 +176,10 @@ namespace MetaphysicsIndustries.Giza
             // weren't expecting it.
             Set<Expression> visitedExprs = new Set<Expression>();
             Set<ExpressionItem> visitedItems = new Set<ExpressionItem>();
-            Set<DefinitionInfo> visitedDefs = new Set<DefinitionInfo>();
+            Set<DefinitionExpression> visitedDefs = new Set<DefinitionExpression>();
             int index = -1;
             List<string> defNames = new List<string>();
-            foreach (DefinitionInfo def in defs)
+            foreach (DefinitionExpression def in defs)
             {
                 index++;
                 if (def == null)
@@ -210,7 +210,7 @@ namespace MetaphysicsIndustries.Giza
                 defNames.Add(def.Name);
             }
 
-            foreach (DefinitionInfo def in defs)
+            foreach (DefinitionExpression def in defs)
             {
                 CheckExpression(def, def, defNames, visitedExprs, visitedItems, errors);
             }
@@ -220,7 +220,7 @@ namespace MetaphysicsIndustries.Giza
             return errors;
         }
 
-        protected virtual void CheckExpression(DefinitionInfo def,
+        protected virtual void CheckExpression(DefinitionExpression def,
                              Expression expr,
                              List<string> defNames,
                              Set<Expression> visitedExprs,
@@ -281,7 +281,7 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        protected virtual void CheckExpressionItem(DefinitionInfo def,
+        protected virtual void CheckExpressionItem(DefinitionExpression def,
                                  ExpressionItem item,
                                  List<string> defNames,
                                  Set<Expression> visitedExprs,
@@ -405,9 +405,9 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        protected virtual void CheckForDuplicateNames(IEnumerable<DefinitionInfo> defs, List<ErrorInfo> errors)
+        protected virtual void CheckForDuplicateNames(IEnumerable<DefinitionExpression> defs, List<ErrorInfo> errors)
         {
-            DefinitionInfo[] defs2 = defs.ToArray();
+            DefinitionExpression[] defs2 = defs.ToArray();
             Dictionary<string, Set<int>> indexesByName = new Dictionary<string, Set<int>>();
             int i;
             for (i = 0; i < defs2.Length; i++)

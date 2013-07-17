@@ -6,7 +6,7 @@ namespace MetaphysicsIndustries.Giza
 {
     public class ExpressionBuilder
     {
-        public DefinitionInfo[] BuildExpressions(Supergrammar grammar, Span span)
+        public DefinitionExpression[] BuildExpressions(Supergrammar grammar, Span span)
         {
             if (!(span.Node is DefRefNode) ||
                 (span.Node as DefRefNode).DefRef != grammar.def_0_grammar)
@@ -19,14 +19,14 @@ namespace MetaphysicsIndustries.Giza
             if (errors.Count > 0)
                 throw new InvalidOperationException();
 
-            List<DefinitionInfo> defs = new List<DefinitionInfo>();
+            List<DefinitionExpression> defs = new List<DefinitionExpression>();
 
             foreach (Span defspan in span.Subspans)
             {
                 if (defspan.Node != grammar.node_grammar_0_definition)
                     continue;
 
-                DefinitionInfo def = new DefinitionInfo();
+                DefinitionExpression def = new DefinitionExpression();
                 defs.Add(def);
 
                 List<DefinitionDirective> directives = new List<DefinitionDirective>();

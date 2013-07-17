@@ -17,7 +17,7 @@ namespace MetaphysicsIndustries.Giza
 {
     public class SupergrammarSpanner
     {
-        public DefinitionInfo[] GetExpressions(string input, out string error)
+        public DefinitionExpression[] GetExpressions(string input, out string error)
         {
             Supergrammar supergrammar = new Supergrammar();
             Spanner spanner = new Spanner();
@@ -41,13 +41,13 @@ namespace MetaphysicsIndustries.Giza
             }
 
             ExpressionBuilder eb = new ExpressionBuilder();
-            DefinitionInfo[] dis = eb.BuildExpressions(supergrammar, s2[0]);
+            DefinitionExpression[] dis = eb.BuildExpressions(supergrammar, s2[0]);
             return dis;
         }
 
         public Grammar GetGrammar(string input, out string error)
         {
-            DefinitionInfo[] dis = GetExpressions(input, out error);
+            DefinitionExpression[] dis = GetExpressions(input, out error);
 
             if (string.IsNullOrEmpty(error) && dis != null)
             {

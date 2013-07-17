@@ -25,11 +25,11 @@ namespace MetaphysicsIndustries.Giza.Test
             OrExpression orexprB = new OrExpression();
             orexprB.Expressions.Add(expr);
 
-            DefinitionInfo[] defs = {
-                new DefinitionInfo {
+            DefinitionExpression[] defs = {
+                new DefinitionExpression {
                     Name = "A",
                 },
-                new DefinitionInfo {
+                new DefinitionExpression {
                     Name = "B",
                 },
             };
@@ -52,11 +52,11 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             LiteralSubExpression literal = new LiteralSubExpression { Value = "literal" };
 
-            DefinitionInfo[] defs = {
-                new DefinitionInfo {
+            DefinitionExpression[] defs = {
+                new DefinitionExpression {
                     Name = "A",
                 },
-                new DefinitionInfo {
+                new DefinitionExpression {
                     Name = "B",
                 },
             };
@@ -79,8 +79,8 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             LiteralSubExpression literal = new LiteralSubExpression { Value = "literal" };
 
-            DefinitionInfo[] defs = {
-                new DefinitionInfo {
+            DefinitionExpression[] defs = {
+                new DefinitionExpression {
                     Name = "A",
                 },
             };
@@ -109,8 +109,8 @@ namespace MetaphysicsIndustries.Giza.Test
             expr.Items.Add(orexpr);
             orexpr2.Expressions.Add(expr);
 
-            DefinitionInfo[] defs = {
-                new DefinitionInfo {
+            DefinitionExpression[] defs = {
+                new DefinitionExpression {
                     Name = "A",
                 },
             };
@@ -136,8 +136,8 @@ namespace MetaphysicsIndustries.Giza.Test
             orexpr.Expressions.Add(expr2);
             expr2.Items.Add(orexpr);
 
-            DefinitionInfo[] defs = {
-                new DefinitionInfo {
+            DefinitionExpression[] defs = {
+                new DefinitionExpression {
                     Name = "A",
                 },
             };
@@ -160,8 +160,8 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             LiteralSubExpression literal = new LiteralSubExpression { Value = "literal" };
 
-            DefinitionInfo[] defs = {
-                new DefinitionInfo {
+            DefinitionExpression[] defs = {
+                new DefinitionExpression {
                     Name = null,
                 },
             };
@@ -182,8 +182,8 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             LiteralSubExpression literal = new LiteralSubExpression { Value = "literal" };
 
-            DefinitionInfo[] defs = {
-                new DefinitionInfo {
+            DefinitionExpression[] defs = {
+                new DefinitionExpression {
                     Name = "",
                 },
             };
@@ -202,8 +202,8 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test()]
         public void TestEmptyDefinitionItems()
         {
-            DefinitionInfo[] defs = {
-                new DefinitionInfo {
+            DefinitionExpression[] defs = {
+                new DefinitionExpression {
                     Name = "A",
                 },
             };
@@ -225,8 +225,8 @@ namespace MetaphysicsIndustries.Giza.Test
             var expr = new Expression();
 
 
-            DefinitionInfo[] defs = {
-                new DefinitionInfo {
+            DefinitionExpression[] defs = {
+                new DefinitionExpression {
                     Name = "A",
                 },
             };
@@ -248,8 +248,8 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             OrExpression orexpr = new OrExpression();
 
-            DefinitionInfo[] defs = {
-                new DefinitionInfo {
+            DefinitionExpression[] defs = {
+                new DefinitionExpression {
                     Name = "A",
                 },
             };
@@ -272,8 +272,8 @@ namespace MetaphysicsIndustries.Giza.Test
                 Tag = null,
             };
 
-            DefinitionInfo[] defs = {
-                new DefinitionInfo {
+            DefinitionExpression[] defs = {
+                new DefinitionExpression {
                     Name = "A",
                 },
             };
@@ -294,8 +294,8 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             DefRefSubExpression defref = new DefRefSubExpression { DefinitionName = null };
 
-            DefinitionInfo[] defs = {
-                new DefinitionInfo {
+            DefinitionExpression[] defs = {
+                new DefinitionExpression {
                     Name = "A",
                 },
             };
@@ -316,8 +316,8 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             DefRefSubExpression defref = new DefRefSubExpression { DefinitionName = "" };
 
-            DefinitionInfo[] defs = {
-                new DefinitionInfo {
+            DefinitionExpression[] defs = {
+                new DefinitionExpression {
                     Name = "A",
                 },
             };
@@ -338,8 +338,8 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             LiteralSubExpression literal = new LiteralSubExpression { Value = null };
 
-            DefinitionInfo[] defs = {
-                new DefinitionInfo {
+            DefinitionExpression[] defs = {
+                new DefinitionExpression {
                     Name = "A",
                 },
             };
@@ -360,8 +360,8 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             LiteralSubExpression literal = new LiteralSubExpression { Value = "" };
 
-            DefinitionInfo[] defs = {
-                new DefinitionInfo {
+            DefinitionExpression[] defs = {
+                new DefinitionExpression {
                     Name = "A",
                 },
             };
@@ -382,8 +382,8 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             CharClassSubExpression cc = new CharClassSubExpression { CharClass = null };
 
-            DefinitionInfo[] defs = {
-                new DefinitionInfo {
+            DefinitionExpression[] defs = {
+                new DefinitionExpression {
                     Name = "A",
                 },
             };
@@ -404,8 +404,8 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             CharClassSubExpression cc = new CharClassSubExpression { CharClass = new CharClass(new char[0]) };
 
-            DefinitionInfo[] defs = {
-                new DefinitionInfo {
+            DefinitionExpression[] defs = {
+                new DefinitionExpression {
                     Name = "A",
                 },
             };
@@ -424,11 +424,11 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test()]
         public void TestDuplicateNames()
         {
-            DefinitionInfo[] defs = {
-                new DefinitionInfo {
+            DefinitionExpression[] defs = {
+                new DefinitionExpression {
                     Name = "A",
                 },
-                new DefinitionInfo {
+                new DefinitionExpression {
                     Name = "A",
                 }
             };
@@ -461,8 +461,8 @@ namespace MetaphysicsIndustries.Giza.Test
             var orexpr = new OrExpression();
             orexpr.Expressions.Add(expr);
 
-            DefinitionInfo[] defs = {
-                new DefinitionInfo {
+            DefinitionExpression[] defs = {
+                new DefinitionExpression {
                     Name = "A",
                 },
             };
@@ -515,8 +515,8 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             DefRefSubExpression defref = new DefRefSubExpression { DefinitionName = "qwerty" };
 
-            DefinitionInfo[] defs = {
-                new DefinitionInfo {
+            DefinitionExpression[] defs = {
+                new DefinitionExpression {
                     Name = "A",
                 },
             };
@@ -535,12 +535,12 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test()]
         public void TestDefinitionReuse()
         {
-            DefinitionInfo def = new DefinitionInfo {
+            DefinitionExpression def = new DefinitionExpression {
                 Name = "A",
             };
             def.Items.Add(new LiteralSubExpression { Value = "literal" });
 
-            DefinitionInfo[] defs = {
+            DefinitionExpression[] defs = {
                 def,
                 def,
             };
@@ -559,8 +559,8 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test()]
         public void TestNullDefinition()
         {
-            DefinitionInfo[] defs = {
-                new DefinitionInfo {
+            DefinitionExpression[] defs = {
+                new DefinitionExpression {
                     Name = "A",
                 },
                 null,
@@ -581,8 +581,8 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test()]
         public void TestMixedTokenizedDirectives1()
         {
-            DefinitionInfo[] defs = {
-                new DefinitionInfo {
+            DefinitionExpression[] defs = {
+                new DefinitionExpression {
                     Name = "A",
                 },
             };
@@ -601,8 +601,8 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test()]
         public void TestMixedTokenizedDirectives2()
         {
-            DefinitionInfo[] defs = {
-                new DefinitionInfo {
+            DefinitionExpression[] defs = {
+                new DefinitionExpression {
                     Name = "A",
                 },
             };
@@ -621,8 +621,8 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test()]
         public void TestMixedTokenizedDirectives3()
         {
-            DefinitionInfo[] defs = {
-                new DefinitionInfo {
+            DefinitionExpression[] defs = {
+                new DefinitionExpression {
                     Name = "A",
                 },
             };
@@ -639,11 +639,11 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test()]
         public void TestReferencedComment()
         {
-            DefinitionInfo[] defs = {
-                new DefinitionInfo {
+            DefinitionExpression[] defs = {
+                new DefinitionExpression {
                     Name = "A",
                 },
-                new DefinitionInfo {
+                new DefinitionExpression {
                     Name = "B",
                 },
             };
@@ -664,11 +664,11 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test()]
         public void TestNonTokenReferencesSubtoken()
         {
-            DefinitionInfo[] defs = {
-                new DefinitionInfo {
+            DefinitionExpression[] defs = {
+                new DefinitionExpression {
                     Name = "A",
                 },
-                new DefinitionInfo {
+                new DefinitionExpression {
                     Name = "B",
                 },
             };
@@ -689,11 +689,11 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test()]
         public void TestSubtokenReferencesNonToken()
         {
-            DefinitionInfo[] defs = {
-                new DefinitionInfo {
+            DefinitionExpression[] defs = {
+                new DefinitionExpression {
                     Name = "A",
                 },
-                new DefinitionInfo {
+                new DefinitionExpression {
                     Name = "B",
                 },
             };
@@ -714,11 +714,11 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test()]
         public void TestTokenReferencesNonToken()
         {
-            DefinitionInfo[] defs = {
-                new DefinitionInfo {
+            DefinitionExpression[] defs = {
+                new DefinitionExpression {
                     Name = "A",
                 },
-                new DefinitionInfo {
+                new DefinitionExpression {
                     Name = "B",
                 },
             };
@@ -739,11 +739,11 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test()]
         public void TestSubtokenReferencesToken()
         {
-            DefinitionInfo[] defs = {
-                new DefinitionInfo {
+            DefinitionExpression[] defs = {
+                new DefinitionExpression {
                     Name = "A",
                 },
-                new DefinitionInfo {
+                new DefinitionExpression {
                     Name = "B",
                 },
             };

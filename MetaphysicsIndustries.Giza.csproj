@@ -72,7 +72,6 @@
     <Compile Include="LiteralSubExpression.cs" />
     <Compile Include="CharClassSubExpression.cs" />
     <Compile Include="ExpressionItem.cs" />
-    <Compile Include="DefinitionInfo.cs" />
     <Compile Include="GrammarComparer.cs" />
     <Compile Include="ExpressionBuilder.cs" />
     <Compile Include="GrammarDefinitionOrderedParentChildrenCollection.cs" />
@@ -80,6 +79,7 @@
     <Compile Include="ExpressionChecker.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="NodeMatch.cs" />
+    <Compile Include="DefinitionExpression.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
