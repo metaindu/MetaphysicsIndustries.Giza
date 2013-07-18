@@ -8,8 +8,47 @@ namespace MetaphysicsIndustries.Giza
 {
     public class ExpressionChecker
     {
-        public static class Error
+        public class InvalidDefinitionException : Exception
         {
+            public ErrorType Error;
+            public DefinitionExpression DefinitionInfo;
+            public int Index;
+        }
+
+        public class InvalidExpressionException : Exception
+        {
+            public ErrorType Error;
+            public Expression Expression;
+            public ExpressionItem ExpressionItem;
+            public DefinitionExpression DefinitionInfo;
+            public int Index;
+        }
+
+        public class EcError : Error
+        {
+            public Expression Expression;
+            public ExpressionItem ExpressionItem;
+            public DefinitionExpression DefinitionInfo;
+            public int Index;
+
+            public string GetDescription()
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append(ErrorType.ToString());
+
+                if (Expression != null) sb.AppendFormat(", {0}", Expression.ToString());
+                if (ExpressionItem != null) sb.AppendFormat(", {0}", ExpressionItem.ToString());
+                if (DefinitionInfo != null) sb.AppendFormat(", {0} \"{1}\"", DefinitionInfo.ToString(), DefinitionInfo.Name);
+                if (Index > 0) sb.AppendFormat(", index {0}", Index);
+
+                if (ExpressionItem is DefRefSubExpression)
+                {
+                    sb.AppendFormat(", defref \"{0}\"", (ExpressionItem as DefRefSubExpression).DefinitionName);
+                }
+
+                return sb.ToString();
+            }
+
             public static readonly ErrorType ReusedDefintion =              new ErrorType() { Name = "ReusedDefintion",                 Description = "Description" };
             public static readonly ErrorType NullDefinition =               new ErrorType() { Name = "NullDefinition",                  Description = "Description" };
             public static readonly ErrorType ReusedExpressionOrItem =       new ErrorType() { Name = "ReusedExpressionOrItem",          Description = "Description" };
@@ -36,52 +75,9 @@ namespace MetaphysicsIndustries.Giza
 
         }
 
-        public class InvalidDefinitionException : Exception
+        public List<Error> CheckDefinitionInfosForParsing(IEnumerable<DefinitionExpression> defs)
         {
-            public ErrorType Error;
-            public DefinitionExpression DefinitionInfo;
-            public int Index;
-        }
-
-        public class InvalidExpressionException : Exception
-        {
-            public ErrorType Error;
-            public Expression Expression;
-            public ExpressionItem ExpressionItem;
-            public DefinitionExpression DefinitionInfo;
-            public int Index;
-        }
-
-        public struct ErrorInfo
-        {
-            public ErrorType Error;
-            public Expression Expression;
-            public ExpressionItem ExpressionItem;
-            public DefinitionExpression DefinitionInfo;
-            public int Index;
-
-            public string GetDescription()
-            {
-                StringBuilder sb = new StringBuilder();
-                sb.Append(Error.ToString());
-
-                if (Expression != null) sb.AppendFormat(", {0}", Expression.ToString());
-                if (ExpressionItem != null) sb.AppendFormat(", {0}", ExpressionItem.ToString());
-                if (DefinitionInfo != null) sb.AppendFormat(", {0} \"{1}\"", DefinitionInfo.ToString(), DefinitionInfo.Name);
-                if (Index > 0) sb.AppendFormat(", index {0}", Index);
-
-                if (ExpressionItem is DefRefSubExpression)
-                {
-                    sb.AppendFormat(", defref \"{0}\"", (ExpressionItem as DefRefSubExpression).DefinitionName);
-                }
-
-                return sb.ToString();
-            }
-        }
-
-        public List<ErrorInfo> CheckDefinitionInfosForParsing(IEnumerable<DefinitionExpression> defs)
-        {
-            List<ErrorInfo> errors = CheckDefinitionInfos(defs);
+            List<Error> errors = CheckDefinitionInfos(defs);
 
             Dictionary<string, DefinitionExpression> defsByName = new Dictionary<string, DefinitionExpression>();
             foreach (var def in defs)
@@ -95,8 +91,8 @@ namespace MetaphysicsIndustries.Giza
                     (def.Directives.Contains(DefinitionDirective.Comment) && 
                     def.Directives.Contains(DefinitionDirective.Subtoken)))
                 {
-                    errors.Add(new ErrorInfo {
-                        Error = Error.MixedTokenizedDirectives,
+                    errors.Add(new EcError {
+                        ErrorType = EcError.MixedTokenizedDirectives,
                         DefinitionInfo = def,
                     });
                 }
@@ -109,8 +105,8 @@ namespace MetaphysicsIndustries.Giza
 
                     if (target.Directives.Contains(DefinitionDirective.Comment))
                     {
-                        errors.Add(new ErrorInfo {
-                            Error = Error.ReferencedComment,
+                        errors.Add(new EcError {
+                            ErrorType = EcError.ReferencedComment,
                             ExpressionItem = defref,
                             DefinitionInfo = def,
                         });
@@ -120,8 +116,8 @@ namespace MetaphysicsIndustries.Giza
                         !def.Directives.Contains(DefinitionDirective.Comment) &&
                         target.Directives.Contains(DefinitionDirective.Subtoken))
                     {
-                        errors.Add(new ErrorInfo {
-                            Error = Error.NonTokenReferencesSubtoken,
+                        errors.Add(new EcError {
+                            ErrorType = EcError.NonTokenReferencesSubtoken,
                             ExpressionItem = defref,
                             DefinitionInfo = def,
                         });
@@ -131,8 +127,8 @@ namespace MetaphysicsIndustries.Giza
                         !target.Directives.Contains(DefinitionDirective.Subtoken) &&
                         !target.Directives.Contains(DefinitionDirective.Comment))
                     {
-                        errors.Add(new ErrorInfo {
-                            Error = Error.SubtokenReferencesNonToken,
+                        errors.Add(new EcError {
+                            ErrorType = EcError.SubtokenReferencesNonToken,
                             ExpressionItem = defref,
                             DefinitionInfo = def,
                         });
@@ -142,8 +138,8 @@ namespace MetaphysicsIndustries.Giza
                         !target.Directives.Contains(DefinitionDirective.Subtoken) &&
                         !target.Directives.Contains(DefinitionDirective.Comment))
                     {
-                        errors.Add(new ErrorInfo {
-                            Error = Error.TokenReferencesNonToken,
+                        errors.Add(new EcError {
+                            ErrorType = EcError.TokenReferencesNonToken,
                             ExpressionItem = defref,
                             DefinitionInfo = def,
                         });
@@ -151,8 +147,8 @@ namespace MetaphysicsIndustries.Giza
                     if (def.Directives.Contains(DefinitionDirective.Subtoken) &&
                         target.Directives.Contains(DefinitionDirective.Token))
                     {
-                        errors.Add(new ErrorInfo {
-                            Error = Error.SubtokenReferencesToken,
+                        errors.Add(new EcError {
+                            ErrorType = EcError.SubtokenReferencesToken,
                             ExpressionItem = defref,
                             DefinitionInfo = def,
                         });
@@ -164,11 +160,11 @@ namespace MetaphysicsIndustries.Giza
             return errors;
         }
 
-        public virtual List<ErrorInfo> CheckDefinitionInfos(IEnumerable<DefinitionExpression> defs)
+        public virtual List<Error> CheckDefinitionInfos(IEnumerable<DefinitionExpression> defs)
         {
             if (defs == null) throw new ArgumentNullException("defs");
 
-            List<ErrorInfo> errors = new List<ErrorInfo>();
+            List<Error> errors = new List<Error>();
 
             // Any Expression or ExpressionItem object can be used in the 
             // trees only once. This precludes reference cycles as well as 
@@ -186,7 +182,7 @@ namespace MetaphysicsIndustries.Giza
                 if (def == null)
                 {
                     throw new InvalidDefinitionException {
-                        Error = Error.NullDefinition,
+                        Error = EcError.NullDefinition,
                         Index = index,
                     };
                 }
@@ -194,7 +190,7 @@ namespace MetaphysicsIndustries.Giza
                 if (visitedDefs.Contains(def))
                 {
                     throw new InvalidDefinitionException {
-                        Error = Error.ReusedDefintion,
+                        Error = EcError.ReusedDefintion,
                         DefinitionInfo = def,
                         Index = index,
                     };
@@ -204,7 +200,7 @@ namespace MetaphysicsIndustries.Giza
                 if (string.IsNullOrEmpty(def.Name))
                 {
                     throw new InvalidDefinitionException {
-                        Error = Error.NullOrEmptyDefinitionName,
+                        Error = EcError.NullOrEmptyDefinitionName,
                         DefinitionInfo = def,
                     };
                 }
@@ -226,12 +222,12 @@ namespace MetaphysicsIndustries.Giza
                              List<string> defNames,
                              Set<Expression> visitedExprs,
                              Set<ExpressionItem> visitedItems,
-                             List<ErrorInfo> errors)
+                             List<Error> errors)
         {
             if (visitedExprs.Contains(expr))
             {
                 throw new InvalidExpressionException {
-                    Error = Error.ReusedExpressionOrItem,
+                    Error = EcError.ReusedExpressionOrItem,
                     Expression = expr,
                     DefinitionInfo = def,
                 };
@@ -240,8 +236,8 @@ namespace MetaphysicsIndustries.Giza
 
             if (expr.Items == null || expr.Items.Count < 1)
             {
-                errors.Add(new ErrorInfo {
-                    Error = Error.EmptyExpressionItems,
+                errors.Add(new EcError {
+                    ErrorType = EcError.EmptyExpressionItems,
                     Expression = expr,
                     DefinitionInfo = def,
                 });
@@ -255,8 +251,8 @@ namespace MetaphysicsIndustries.Giza
                 {
                     if (item == null)
                     {
-                        errors.Add(new ErrorInfo {
-                            Error = Error.NullExpressionItem,
+                        errors.Add(new EcError {
+                            ErrorType = EcError.NullExpressionItem,
                             Expression = expr,
                             Index = index,
                             DefinitionInfo = def
@@ -273,8 +269,8 @@ namespace MetaphysicsIndustries.Giza
 
                 if (skippable && expr.Items.Count > 0)
                 {
-                    errors.Add(new ErrorInfo {
-                        Error = Error.AllItemsSkippable,
+                    errors.Add(new EcError {
+                        ErrorType = EcError.AllItemsSkippable,
                         Expression = expr,
                         DefinitionInfo = def,
                     });
@@ -287,14 +283,14 @@ namespace MetaphysicsIndustries.Giza
                                  List<string> defNames,
                                  Set<Expression> visitedExprs,
                                  Set<ExpressionItem> visitedItems,
-                                 List<ErrorInfo> errors)
+                                 List<Error> errors)
         {
             if (item == null) throw new ArgumentNullException("item");
 
             if (visitedItems.Contains(item))
             {
                 throw new InvalidExpressionException {
-                    Error = Error.ReusedExpressionOrItem,
+                    Error = EcError.ReusedExpressionOrItem,
                     ExpressionItem = item,
                     DefinitionInfo = def,
                 };
@@ -306,8 +302,8 @@ namespace MetaphysicsIndustries.Giza
                 OrExpression orexor = (OrExpression)item;
                 if (orexor.Expressions.Count < 1)
                 {
-                    errors.Add(new ErrorInfo {
-                        Error = Error.EmptyOrexprExpressionList,
+                    errors.Add(new EcError {
+                        ErrorType = EcError.EmptyOrexprExpressionList,
                         DefinitionInfo = def,
                         ExpressionItem = item
                     });
@@ -319,8 +315,8 @@ namespace MetaphysicsIndustries.Giza
                     {
                         if (expr == null)
                         {
-                            errors.Add(new ErrorInfo {
-                                Error = Error.NullOrexprExpression,
+                            errors.Add(new EcError {
+                                ErrorType = EcError.NullOrexprExpression,
                                 ExpressionItem = item,
                                 Index = index,
                                 DefinitionInfo = def,
@@ -338,8 +334,8 @@ namespace MetaphysicsIndustries.Giza
             {
                 if ((item as SubExpression).Tag == null)
                 {
-                    errors.Add(new ErrorInfo {
-                        Error = Error.NullSubexprTag,
+                    errors.Add(new EcError {
+                        ErrorType = EcError.NullSubexprTag,
                         ExpressionItem = item,
                         DefinitionInfo = def,
                     });
@@ -349,8 +345,8 @@ namespace MetaphysicsIndustries.Giza
                 {
                     if (string.IsNullOrEmpty((item as LiteralSubExpression).Value))
                     {
-                        errors.Add(new ErrorInfo {
-                            Error = Error.NullOrEmptyLiteralValue,
+                        errors.Add(new EcError {
+                            ErrorType = EcError.NullOrEmptyLiteralValue,
                             ExpressionItem = item,
                             DefinitionInfo = def,
                         });
@@ -362,8 +358,8 @@ namespace MetaphysicsIndustries.Giza
 
                     if (cc == null || cc.GetAllCharsCount() < 1)
                     {
-                        errors.Add(new ErrorInfo {
-                            Error = Error.NullOrEmptyCharClass,
+                        errors.Add(new EcError {
+                            ErrorType = EcError.NullOrEmptyCharClass,
                             ExpressionItem = item,
                             DefinitionInfo = def
                         });
@@ -374,16 +370,16 @@ namespace MetaphysicsIndustries.Giza
                     string name = (item as DefRefSubExpression).DefinitionName;
                     if (string.IsNullOrEmpty(name))
                     {
-                        errors.Add(new ErrorInfo {
-                            Error = Error.NullOrEmptyDefrefName,
+                        errors.Add(new EcError {
+                            ErrorType = EcError.NullOrEmptyDefrefName,
                             ExpressionItem = item,
                             DefinitionInfo = def,
                         });
                     }
                     else if (!defNames.Contains(name))
                     {
-                        errors.Add(new ErrorInfo {
-                            Error = Error.DefRefNameNotFound,
+                        errors.Add(new EcError {
+                            ErrorType = EcError.DefRefNameNotFound,
                             ExpressionItem = item,
                             DefinitionInfo = def,
                         });
@@ -406,7 +402,7 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        protected virtual void CheckForDuplicateNames(IEnumerable<DefinitionExpression> defs, List<ErrorInfo> errors)
+        protected virtual void CheckForDuplicateNames(IEnumerable<DefinitionExpression> defs, List<Error> errors)
         {
             DefinitionExpression[] defs2 = defs.ToArray();
             Dictionary<string, Set<int>> indexesByName = new Dictionary<string, Set<int>>();
@@ -422,8 +418,8 @@ namespace MetaphysicsIndustries.Giza
                 indexesByName[name].Add(i);
                 if (indexesByName[name].Count > 1)
                 {
-                    errors.Add(new ErrorInfo {
-                        Error = Error.DuplicateDefinitionName,
+                    errors.Add(new EcError {
+                        ErrorType = EcError.DuplicateDefinitionName,
                         Index = i,
                         DefinitionInfo = defs2[i],
                     });

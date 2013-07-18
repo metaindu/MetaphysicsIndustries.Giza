@@ -168,7 +168,7 @@ namespace giza
             }
 
             var ec = new ExpressionChecker();
-            List<ExpressionChecker.ErrorInfo> errors;
+            List<Error> errors;
             if (tokenized)
             {
                 errors = ec.CheckDefinitionInfosForParsing(dis);
@@ -184,7 +184,7 @@ namespace giza
                 foreach (var err in errors)
                 {
                     Console.Write("  ");
-                    Console.WriteLine(err.GetDescription());
+                    Console.WriteLine(err.Description);
                 }
                 return;
             }
@@ -242,7 +242,7 @@ namespace giza
             }
 
             var ec = new ExpressionChecker();
-            List<ExpressionChecker.ErrorInfo> errors;
+            List<Error> errors;
             if (tokenized)
             {
                 errors = ec.CheckDefinitionInfosForParsing(dis);
@@ -258,7 +258,7 @@ namespace giza
                 foreach (var err in errors)
                 {
                     Console.Write("  ");
-                    Console.WriteLine(err.GetDescription());
+                    Console.WriteLine(err.Description);
                 }
                 return;
             }
@@ -322,7 +322,7 @@ namespace giza
                 foreach (var err in errors)
                 {
                     Console.Write("  ");
-                    Console.WriteLine(err.GetDescription());
+                    Console.WriteLine(err.Description);
                 }
                 return;
             }
@@ -401,7 +401,7 @@ namespace giza
                 foreach (var err in errors)
                 {
                     Console.Write("  ");
-                    Console.WriteLine(err.GetDescription());
+                    Console.WriteLine(err.Description);
                 }
                 return;
             }

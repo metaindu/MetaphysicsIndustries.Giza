@@ -17,7 +17,7 @@ namespace MetaphysicsIndustries.Giza
         public Grammar BuildTokenizedGrammar(DefinitionExpression[] defs)
         {
             ExpressionChecker ec = new ExpressionChecker();
-            List<ExpressionChecker.ErrorInfo> errors = ec.CheckDefinitionInfosForParsing(defs);
+            List<Error> errors = ec.CheckDefinitionInfosForParsing(defs);
             if (errors.Count > 0)
             {
                 throw new InvalidOperationException("Errors in expressions.");
