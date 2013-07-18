@@ -81,6 +81,7 @@
     <Compile Include="NodeMatch.cs" />
     <Compile Include="DefinitionExpression.cs" />
     <Compile Include="ErrorType.cs" />
+    <Compile Include="Error.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
