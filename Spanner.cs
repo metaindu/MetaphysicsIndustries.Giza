@@ -9,6 +9,18 @@ namespace MetaphysicsIndustries.Giza
 {
     public class Spanner
     {
+        public class SpannerError : Error
+        {
+            public static readonly ErrorType InvalidCharacter = new ErrorType() { Name="InvalidCharacter", Description="InvalidCharacter" };
+
+            public string DescriptionString = string.Empty;
+
+            public override string Description
+            {
+                get { return DescriptionString; }
+            }
+        }
+
         public Span[] Process(Grammar grammar, string startName, string input, out string error)
         {
             Definition start = grammar.FindDefinitionByName(startName);
@@ -213,6 +225,7 @@ namespace MetaphysicsIndustries.Giza
             if (ends.Count < 1)
             {
                 error = GenerateErrorString(lastReject, def, input);
+                var error2 = new SpannerError() { ErrorType=SpannerError.InvalidCharacter, DescriptionString=error };
             }
             else
             {
