@@ -1,5 +1,6 @@
 using System;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Giza.Test
 {
@@ -13,9 +14,9 @@ namespace MetaphysicsIndustries.Giza.Test
                 "expr = operand '+' operand;\n" +
                 "<token> operand = [\\l_] [\\l\\d_]*;";
 
-            string error;
-            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(grammarText, out error);
-            if (!string.IsNullOrEmpty(error)) throw new InvalidOperationException();
+            var errors = new List<Error>();
+            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(grammarText, errors);
+            Assert.IsEmpty(errors);
 
             Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
 
@@ -56,9 +57,9 @@ namespace MetaphysicsIndustries.Giza.Test
                 "subexpr = ( operand | operand '++' | '++' operand ); \n" +
                 "<token> operand = [\\l_] [\\l\\d_]*;";
 
-            string error;
-            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(grammarText, out error);
-            if (!string.IsNullOrEmpty(error)) throw new InvalidOperationException();
+            var errors = new List<Error>();
+            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(grammarText, errors);
+            Assert.IsEmpty(errors);
 
             Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
 

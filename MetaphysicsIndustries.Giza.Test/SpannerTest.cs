@@ -1,5 +1,6 @@
 using System;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Giza.Test
 {
@@ -11,22 +12,19 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             string testGrammarText = 
                 "def1 = ( 'qwer' | 'asdf' );";
-            string error;
-            Grammar testGrammar = (new SupergrammarSpanner()).GetGrammar(testGrammarText, out error);
-            if (!string.IsNullOrEmpty(error))
-            {
-                throw new InvalidOperationException(error);
-            }
+            var errors = new List<Error>();
+            Grammar testGrammar = (new SupergrammarSpanner()).GetGrammar(testGrammarText, errors);
+            Assert.IsEmpty(errors);
 
             Spanner s = new Spanner();
 
-            Span[] spans = s.Process(testGrammar, "def1", "qwer", out error);
+            Span[] spans = s.Process(testGrammar, "def1", "qwer", errors);
             Assert.AreEqual(1, spans.Length);
-            Assert.IsNull(error);
+            Assert.IsEmpty(errors);
 
-            spans = s.Process(testGrammar, "def1", "asdf", out error);
+            spans = s.Process(testGrammar, "def1", "asdf", errors);
             Assert.AreEqual(1, spans.Length);
-            Assert.IsNull(error);
+            Assert.IsEmpty(errors);
         }
 
         [Test()]
@@ -41,11 +39,12 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Spanner s = new Spanner();
             Supergrammar sg = new Supergrammar();
-            string error;
-            Span[] spans = s.Process(sg.def_0_grammar, testGrammarText, out error);
+            var errors = new List<Error>();
+            Span[] spans = s.Process(sg.def_0_grammar, testGrammarText, errors);
 
             Assert.IsEmpty(spans);
-            Assert.AreEqual("Invalid character 'w' at (4,2), after a '<': expected id-mind, id-ignore, id-atomic, id-token, or id-subtoken", error);
+            throw new NotImplementedException();
+//            Assert.AreEqual("Invalid character 'w' at (4,2), after a '<': expected id-mind, id-ignore, id-atomic, id-token, or id-subtoken", error);
         }
 
         [Test()]
@@ -61,14 +60,16 @@ namespace MetaphysicsIndustries.Giza.Test
             string testInput = "$ item1 item2 ";
 
             SupergrammarSpanner sgs = new SupergrammarSpanner();
-            string error1;
-            Grammar testGrammar = sgs.GetGrammar(testGrammarText, out error1);
+            var errors = new List<Error>();
+            Grammar testGrammar = sgs.GetGrammar(testGrammarText, errors);
+            Assert.IsEmpty(errors);
+
             Spanner s = new Spanner();
-            string error;
-            Span[] spans = s.Process(testGrammar, "sequence", testInput, out error);
+            Span[] spans = s.Process(testGrammar, "sequence", testInput, errors);
 
             Assert.IsEmpty(spans);
-            Assert.AreEqual("Invalid character '$' at (1,1): a sequence must start with item", error);
+            throw new NotImplementedException();
+//            Assert.AreEqual("Invalid character '$' at (1,1): a sequence must start with item", error);
         }
 
         [Test]

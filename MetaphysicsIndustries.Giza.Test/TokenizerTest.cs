@@ -1,5 +1,6 @@
 using System;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Giza.Test
 {
@@ -16,20 +17,18 @@ namespace MetaphysicsIndustries.Giza.Test
                 "<mind whitespace, atomic, token> id-item1 = 'item1'; \r\n" +
                 "<mind whitespace, atomic, token> id-item2 = 'item2'; \r\n";
 
-            string error;
-            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(testGrammarText, out error);
-            if (!string.IsNullOrEmpty(error))
-            {
-                throw new InvalidOperationException(error);
-            }
+            var errors = new List<Error>();
+            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(testGrammarText, errors);
+            Assert.IsEmpty(errors);
+
             Grammar testGrammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
             Definition item1Def = testGrammar.FindDefinitionByName("id-item1");
             Definition item2Def = testGrammar.FindDefinitionByName("id-item2");
 
             Tokenizer t = new Tokenizer(testGrammar);
             Token[] tokens;
-            tokens = t.GetTokensAtLocation("item1 item2", 0, out error);
-            Assert.IsNull(error);
+            tokens = t.GetTokensAtLocation("item1 item2", 0, errors);
+            Assert.IsEmpty(errors);
             Assert.AreEqual(1, tokens.Length);
             if (tokens.Length > 0)
             {
@@ -38,8 +37,8 @@ namespace MetaphysicsIndustries.Giza.Test
                 Assert.AreEqual(5, tokens[0].Length);
             }
 
-            tokens = t.GetTokensAtLocation("item1 item2", 5, out error);
-            Assert.IsNull(error);
+            tokens = t.GetTokensAtLocation("item1 item2", 5, errors);
+            Assert.IsEmpty(errors);
             Assert.AreEqual(1, tokens.Length);
             if (tokens.Length > 0)
             {
@@ -64,12 +63,10 @@ namespace MetaphysicsIndustries.Giza.Test
 
             string testInput = "a+++b";
 
-            string error;
-            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(testGrammarText, out error);
-            if (!string.IsNullOrEmpty(error))
-            {
-                throw new InvalidOperationException(error);
-            }
+            var errors = new List<Error>();
+            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(testGrammarText, errors);
+            Assert.IsEmpty(errors);
+
             Grammar testGrammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
             Definition varrefDef = testGrammar.FindDefinitionByName("varref");
             Definition plusplusDef = testGrammar.FindDefinitionByName("plusplus");
@@ -78,8 +75,8 @@ namespace MetaphysicsIndustries.Giza.Test
             Tokenizer t = new Tokenizer(testGrammar);
             Token[] tokens;
 
-            tokens = t.GetTokensAtLocation(testInput, 0, out error);
-            Assert.IsNull(error);
+            tokens = t.GetTokensAtLocation(testInput, 0, errors);
+            Assert.IsEmpty(errors);
             Assert.AreEqual(1, tokens.Length);
             if (tokens.Length > 0)
             {
@@ -88,8 +85,8 @@ namespace MetaphysicsIndustries.Giza.Test
                 Assert.AreEqual(1, tokens[0].Length);
             }
 
-            tokens = t.GetTokensAtLocation(testInput, 1, out error);
-            Assert.IsNull(error);
+            tokens = t.GetTokensAtLocation(testInput, 1, errors);
+            Assert.IsEmpty(errors);
             Assert.AreEqual(2, tokens.Length);
             Assert.IsTrue(tokens[0].Definition == plusplusDef || tokens[0].Definition == operDef);
             Assert.IsTrue(tokens[1].Definition == plusplusDef || tokens[1].Definition == operDef);
@@ -125,24 +122,21 @@ namespace MetaphysicsIndustries.Giza.Test
 
             string testInput = "a << b";
 
-            string error;
-            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(testGrammarText, out error); 
+            var errors = new List<Error>();
+            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(testGrammarText, errors); 
+            Assert.IsEmpty(errors);
             TokenizedGrammarBuilder tgb = new TokenizedGrammarBuilder();
             Grammar testGrammar = tgb.BuildTokenizedGrammar(dis);
 
 
-            if (!string.IsNullOrEmpty(error))
-            {
-                throw new InvalidOperationException(error);
-            }
             Definition itemDef = testGrammar.FindDefinitionByName("item");
             Definition operDef = testGrammar.FindDefinitionByName("oper");
 
             Tokenizer t = new Tokenizer(testGrammar);
             Token[] tokens;
 
-            tokens = t.GetTokensAtLocation(testInput, 0, out error);
-            Assert.IsNull(error);
+            tokens = t.GetTokensAtLocation(testInput, 0, errors);
+            Assert.IsEmpty(errors);
             Assert.AreEqual(1, tokens.Length);
             if (tokens.Length > 0)
             {
@@ -151,8 +145,8 @@ namespace MetaphysicsIndustries.Giza.Test
                 Assert.AreEqual(1, tokens[0].Length);
             }
 
-            tokens = t.GetTokensAtLocation(testInput, 1, out error);
-            Assert.IsNull(error);
+            tokens = t.GetTokensAtLocation(testInput, 1, errors);
+            Assert.IsEmpty(errors);
             Assert.AreEqual(2, tokens.Length);
             Assert.AreEqual(2, tokens[0].StartIndex);
             Assert.AreEqual(2, tokens[1].StartIndex);
@@ -170,9 +164,9 @@ namespace MetaphysicsIndustries.Giza.Test
                 "expr = operand '+' operand;\n" +
                 "<token> operand = [\\l_] [\\l\\d_]*;";
 
-            string error;
-            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(grammarText, out error);
-            if (!string.IsNullOrEmpty(error)) throw new InvalidOperationException();
+            var errors = new List<Error>();
+            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(grammarText, errors);
+            Assert.IsEmpty(errors);
 
             Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
 
@@ -185,9 +179,9 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
 
-            var tokens = tokenizer.GetTokensAtLocation(input, 0, out error);
+            var tokens = tokenizer.GetTokensAtLocation(input, 0, errors);
 
-            Assert.IsNullOrEmpty(error);
+            Assert.IsEmpty(errors);
             Assert.IsNotNull(tokens);
             Assert.AreEqual(1, tokens.Length);
             Assert.AreSame(operandDef, tokens[0].Definition);
@@ -196,9 +190,9 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
 
-            tokens = tokenizer.GetTokensAtLocation(input, 1, out error);
+            tokens = tokenizer.GetTokensAtLocation(input, 1, errors);
 
-            Assert.IsNullOrEmpty(error);
+            Assert.IsEmpty(errors);
             Assert.IsNotNull(tokens);
             Assert.AreEqual(1, tokens.Length);
             Assert.AreSame(operatorDef, tokens[0].Definition);
@@ -207,9 +201,9 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
 
-            tokens = tokenizer.GetTokensAtLocation(input, 2, out error);
+            tokens = tokenizer.GetTokensAtLocation(input, 2, errors);
 
-            Assert.IsNullOrEmpty(error);
+            Assert.IsEmpty(errors);
             Assert.IsNotNull(tokens);
             Assert.AreEqual(1, tokens.Length);
             Assert.AreSame(operatorDef, tokens[0].Definition);
@@ -218,9 +212,9 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
 
-            tokens = tokenizer.GetTokensAtLocation(input, 3, out error);
+            tokens = tokenizer.GetTokensAtLocation(input, 3, errors);
 
-            Assert.IsNullOrEmpty(error);
+            Assert.IsEmpty(errors);
             Assert.IsNotNull(tokens);
             Assert.AreEqual(1, tokens.Length);
             Assert.AreSame(operandDef, tokens[0].Definition);
@@ -229,9 +223,9 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
 
-            tokens = tokenizer.GetTokensAtLocation(input, 4, out error);
+            tokens = tokenizer.GetTokensAtLocation(input, 4, errors);
 
-            Assert.IsNullOrEmpty(error);
+            Assert.IsEmpty(errors);
             Assert.IsNotNull(tokens);
             Assert.AreEqual(1, tokens.Length);
             Assert.AreSame(operandDef, tokens[0].Definition);

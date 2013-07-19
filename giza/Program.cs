@@ -158,17 +158,20 @@ namespace giza
             {
                 gfile = File.ReadAllText(grammarFilename);
             }
-            string error;
-            var dis = sgs.GetExpressions(gfile, out error);
+            var errors = new List<Error>();
+            var dis = sgs.GetExpressions(gfile, errors);
 
-            if (!string.IsNullOrEmpty(error))
+            if (errors.Count > 0)
             {
-                Console.WriteLine("There was an error in the grammar: {0}", error);
+                Console.WriteLine("There were errors in the grammar:");
+                foreach (var error in errors)
+                {
+                    Console.WriteLine(error.Description);
+                }
                 return;
             }
 
             var ec = new ExpressionChecker();
-            List<Error> errors;
             if (tokenized)
             {
                 errors = ec.CheckDefinitionInfosForParsing(dis);
@@ -232,17 +235,21 @@ namespace giza
             {
                 gfile = File.ReadAllText(grammarFilename);
             }
-            string error;
-            var dis = sgs.GetExpressions(gfile, out error);
 
-            if (!string.IsNullOrEmpty(error))
+            List<Error> errors = new List<Error>();
+            var dis = sgs.GetExpressions(gfile, errors);
+
+            if (errors.Count > 0)
             {
-                Console.WriteLine("There was an error in the grammar: {0}", error);
+                Console.WriteLine("There were errors in the grammar:");
+                foreach (var error in errors)
+                {
+                    Console.WriteLine(error.Description);
+                }
                 return;
             }
 
             var ec = new ExpressionChecker();
-            List<Error> errors;
             if (tokenized)
             {
                 errors = ec.CheckDefinitionInfosForParsing(dis);
@@ -279,9 +286,15 @@ namespace giza
                 g.Definitions.AddRange(defs);
             }
 
-            if (!string.IsNullOrEmpty(error))
+            if (errors != null && errors.Count > 0)
             {
-                Console.WriteLine(error);
+                Console.WriteLine("There are errors in the grammar:");
+                foreach (var err in errors)
+                {
+                    Console.Write("  ");
+                    Console.WriteLine(err.Description);
+                }
+                return;
             }
             else
             {
@@ -304,17 +317,22 @@ namespace giza
 
             SupergrammarSpanner spanner = new SupergrammarSpanner();
             string grammarFile = File.ReadAllText(grammarFilename);
-            string error;
-            var dis = spanner.GetExpressions(grammarFile, out error);
+            var errors = new List<Error>();
+            var dis = spanner.GetExpressions(grammarFile, errors);
 
-            if (!string.IsNullOrEmpty(error))
+            if (errors != null && errors.Count > 0)
             {
-                Console.WriteLine("There was an error in the grammar: {0}", error);
+                Console.WriteLine("There are errors in the grammar:");
+                foreach (var err in errors)
+                {
+                    Console.Write("  ");
+                    Console.WriteLine(err.Description);
+                }
                 return;
             }
 
             var ec = new ExpressionChecker();
-            var errors = ec.CheckDefinitionInfosForParsing(dis);
+            errors = ec.CheckDefinitionInfosForParsing(dis);
 
             if (errors != null && errors.Count > 0)
             {
@@ -383,17 +401,22 @@ namespace giza
 
             SupergrammarSpanner spanner = new SupergrammarSpanner();
             string grammarFile = File.ReadAllText(grammarFilename);
-            string error;
-            var dis = spanner.GetExpressions(grammarFile, out error);
+            var errors = new List<Error>();
+            var dis = spanner.GetExpressions(grammarFile, errors);
 
-            if (!string.IsNullOrEmpty(error))
+            if (errors != null && errors.Count > 0)
             {
-                Console.WriteLine("There was an error in the grammar: {0}", error);
+                Console.WriteLine("There are errors in the grammar:");
+                foreach (var err in errors)
+                {
+                    Console.Write("  ");
+                    Console.WriteLine(err.Description);
+                }
                 return;
             }
 
             var ec = new ExpressionChecker();
-            var errors = ec.CheckDefinitionInfos(dis);
+            errors = ec.CheckDefinitionInfos(dis);
 
             if (errors != null && errors.Count > 0)
             {
@@ -423,10 +446,16 @@ namespace giza
             g.Definitions.AddRange(defs);
 
             Spanner gs = new Spanner();
-            Span[] ss = gs.Process(g, startSymbol, input, out error);
-            if (error != null)
+            Span[] ss = gs.Process(g, startSymbol, input, errors);
+            if (errors != null && errors.Count > 0)
             {
-                Console.WriteLine("There was an error in the input: {0}", error);
+                Console.WriteLine("There are errors in the input:");
+                foreach (var err in errors)
+                {
+                    Console.Write("  ");
+                    Console.WriteLine(err.Description);
+                }
+                return;
             }
             else if (ss.Length < 1)
             {

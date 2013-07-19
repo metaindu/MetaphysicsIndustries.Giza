@@ -41,11 +41,11 @@ namespace MetaphysicsIndustries.Giza
                     bool shouldRejectSource = true;
 
                     //get all tokens, starting at end of source's token
-                    string error;
+                    var errors = new List<Error>();
                     var intokens = _tokenizer.GetTokensAtLocation(
                                         input, 
                                         source.Token.StartIndex + source.Token.Length, 
-                                        out error);
+                                        errors);
                     //if we get a token, set shouldRejectSource to false
                     if (intokens != null && 
                         intokens.Length > 0)

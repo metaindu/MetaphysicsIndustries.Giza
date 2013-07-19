@@ -23,13 +23,13 @@ namespace MetaphysicsIndustries.Giza.Test
                 "var = [\\w]+; \r\n" +
                 "unop = [+-] subexpr; \r\n" +
                 "paren = '(' expr ')'; \r\n";
-            string error;
-            Grammar grammar = ss.GetGrammar(input, out error);
+            var errors = new List<Error>();
+            Grammar grammar = ss.GetGrammar(input, errors);
 
-            Assert.IsNull(error);
+            Assert.IsEmpty(errors);
 
             DefinitionChecker dc = new DefinitionChecker();
-            var errors = dc.CheckDefinitions(grammar.Definitions);
+            errors = new List<Error>(dc.CheckDefinitions(grammar.Definitions));
 
             Assert.IsEmpty(errors);
         }

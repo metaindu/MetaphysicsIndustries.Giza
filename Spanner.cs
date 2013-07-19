@@ -21,7 +21,7 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        public Span[] Process(Grammar grammar, string startName, string input, out string error)
+        public Span[] Process(Grammar grammar, string startName, string input, List<Error> errors)
         {
             Definition start = grammar.FindDefinitionByName(startName);
 
@@ -30,30 +30,33 @@ namespace MetaphysicsIndustries.Giza
                 throw new KeyNotFoundException("Could not find a definition by that name");
             }
 
-            Span[] spans = Process(start, input, out error);
+            Span[] spans = Process(start, input, errors);
             return spans;
         }
 
-        public Span[] Process(Definition def, string input, out string error)
+        public Span[] Process(Definition def, string input, List<Error> errors)
         {
-            NodeMatch[] matchTreeLeaves = Match(def, input, out error);
+            NodeMatch[] matchTreeLeaves = Match(def, input, errors);
 
             return MakeSpans(matchTreeLeaves);
         }
 
-        public NodeMatch[] Match(Definition def, string input, out string error, bool mustUseAllInput=true, int startIndex=0)
+        public NodeMatch[] Match(Definition def, string input, List<Error> errors, bool mustUseAllInput=true, int startIndex=0)
         {
             // check incoming definitions
             DefinitionChecker dc = new DefinitionChecker();
-            var errors = new List<Error>(dc.CheckDefinitions(def.ParentGrammar.Definitions));
-            if (errors.Count > 0) throw new InvalidOperationException("Definitions contain errors.");
+            var errors2 = new List<Error>(dc.CheckDefinitions(def.ParentGrammar.Definitions));
+            if (errors2.Count > 0)
+            {
+                errors.AddRange(errors2);
+                return null;
+            }
 
             bool endOfInput = false;
 
             if (startIndex >= input.Length)
             {
                 endOfInput = true;
-                error = null;
                 return new NodeMatch[0];
             }
 
@@ -222,12 +225,8 @@ namespace MetaphysicsIndustries.Giza
 
             if (ends.Count < 1)
             {
-                error = GenerateErrorString(lastReject, def, input);
+                string error = GenerateErrorString(lastReject, def, input);
                 var error2 = new SpannerError() { ErrorType=SpannerError.InvalidCharacter, DescriptionString=error };
-            }
-            else
-            {
-                error = null;
             }
 
             PurgeReject(lastReject);
