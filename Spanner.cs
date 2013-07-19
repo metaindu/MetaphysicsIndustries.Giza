@@ -45,9 +45,7 @@ namespace MetaphysicsIndustries.Giza
         {
             // check incoming definitions
             DefinitionChecker dc = new DefinitionChecker();
-            List<DefinitionChecker.ErrorInfo> errors =
-                new List<DefinitionChecker.ErrorInfo>(
-                    dc.CheckDefinitions(def.ParentGrammar.Definitions));
+            var errors = new List<Error>(dc.CheckDefinitions(def.ParentGrammar.Definitions));
             if (errors.Count > 0) throw new InvalidOperationException("Definitions contain errors.");
 
             bool endOfInput = false;

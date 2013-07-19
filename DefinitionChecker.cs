@@ -17,26 +17,22 @@ namespace MetaphysicsIndustries.Giza
            Definition conforms to what the supergrammar can output (a narrower
            requirement). */
 
-        public enum Error
+        public class DcError : Error
         {
-            NextNodeLinksOutsideOfDefinition,
-            StartNodeHasWrongParentDefinition,
-            EndNodeHasWrongParentDefinition,
-            LeadingReferenceCycle,
-        }
+            public static readonly ErrorType NextNodeLinksOutsideOfDefinition =     new ErrorType() { Name="NextNodeLinksOutsideOfDefinition",  Description="NextNodeLinksOutsideOfDefinition"  };
+            public static readonly ErrorType StartNodeHasWrongParentDefinition =    new ErrorType() { Name="StartNodeHasWrongParentDefinition", Description="StartNodeHasWrongParentDefinition" };
+            public static readonly ErrorType EndNodeHasWrongParentDefinition =      new ErrorType() { Name="EndNodeHasWrongParentDefinition",   Description="EndNodeHasWrongParentDefinition"   };
+            public static readonly ErrorType LeadingReferenceCycle =                new ErrorType() { Name="LeadingReferenceCycle",             Description="LeadingReferenceCycle"             };
 
-        public struct ErrorInfo
-        {
-            public Error Error;
             public Node Node;
             public List<Definition> Cycle;
         }
 
-        public IEnumerable<ErrorInfo> CheckDefinitions(IEnumerable<Definition> defs)
+        public IEnumerable<Error> CheckDefinitions(IEnumerable<Definition> defs)
         {
             foreach (Definition def in defs)
             {
-                foreach (ErrorInfo ei in CheckDefinition(def))
+                foreach (DcError ei in CheckDefinition(def))
                 {
                     yield return ei;
                 }
@@ -96,14 +92,14 @@ namespace MetaphysicsIndustries.Giza
                     leadingCycle.Add(current);
                 }
 
-                yield return new ErrorInfo {
-                    Error=Error.LeadingReferenceCycle,
+                yield return new DcError {
+                    ErrorType=DcError.LeadingReferenceCycle,
                     Cycle=leadingCycle,
                 };
             }
         }
 
-        public IEnumerable<ErrorInfo> CheckDefinition(Definition def)
+        public IEnumerable<Error> CheckDefinition(Definition def)
         {
             // check that all NextNodes are in the same definition
             foreach (Node node in def.Nodes)
@@ -112,8 +108,8 @@ namespace MetaphysicsIndustries.Giza
                 {
                     if (next.ParentDefinition != def)
                     {
-                        yield return new ErrorInfo{
-                            Error=Error.NextNodeLinksOutsideOfDefinition,
+                        yield return new DcError {
+                            ErrorType=DcError.NextNodeLinksOutsideOfDefinition,
                             Node = next,
                         };
                     }
@@ -125,8 +121,8 @@ namespace MetaphysicsIndustries.Giza
             {
                 if (node.ParentDefinition != def)
                 {
-                    yield return new ErrorInfo {
-                        Error=Error.StartNodeHasWrongParentDefinition,
+                    yield return new DcError {
+                        ErrorType=DcError.StartNodeHasWrongParentDefinition,
                         Node=node,
                     };
                 }
@@ -135,8 +131,8 @@ namespace MetaphysicsIndustries.Giza
             {
                 if (node.ParentDefinition != def)
                 {
-                    yield return new ErrorInfo {
-                        Error=Error.EndNodeHasWrongParentDefinition,
+                    yield return new DcError {
+                        ErrorType=DcError.EndNodeHasWrongParentDefinition,
                         Node=node,
                     };
                 }

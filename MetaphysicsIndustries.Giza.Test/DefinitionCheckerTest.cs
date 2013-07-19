@@ -29,7 +29,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsNull(error);
 
             DefinitionChecker dc = new DefinitionChecker();
-            List<DefinitionChecker.ErrorInfo> errors = new List<DefinitionChecker.ErrorInfo>(dc.CheckDefinitions(grammar.Definitions));
+            var errors = dc.CheckDefinitions(grammar.Definitions);
 
             Assert.IsEmpty(errors);
         }
@@ -47,14 +47,14 @@ namespace MetaphysicsIndustries.Giza.Test
             List<Definition> defs = new List<Definition> { a };
 
             DefinitionChecker dc = new DefinitionChecker();
-            List<DefinitionChecker.ErrorInfo> errors = new List<DefinitionChecker.ErrorInfo>(dc.CheckDefinitions(defs));
+            var errors = dc.CheckDefinitions(defs);
 
             Assert.IsNotEmpty(errors);
 
             bool found = false;
-            foreach (DefinitionChecker.ErrorInfo ei in errors)
+            foreach (var ei in errors)
             {
-                if (ei.Error == DefinitionChecker.Error.LeadingReferenceCycle)
+                if (ei.ErrorType == DefinitionChecker.DcError.LeadingReferenceCycle)
                 {
                     found = true;
                 }
@@ -96,14 +96,14 @@ namespace MetaphysicsIndustries.Giza.Test
             List<Definition> defs = new List<Definition> { a, b, c };
 
             DefinitionChecker dc = new DefinitionChecker();
-            List<DefinitionChecker.ErrorInfo> errors = new List<DefinitionChecker.ErrorInfo>(dc.CheckDefinitions(defs));
+            var errors = dc.CheckDefinitions(defs);
 
             Assert.IsNotEmpty(errors);
 
             bool found = false;
-            foreach (DefinitionChecker.ErrorInfo ei in errors)
+            foreach (Error ei in errors)
             {
-                if (ei.Error == DefinitionChecker.Error.LeadingReferenceCycle)
+                if (ei.ErrorType == DefinitionChecker.DcError.LeadingReferenceCycle)
                 {
                     found = true;
                 }
