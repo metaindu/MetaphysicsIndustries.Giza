@@ -162,6 +162,26 @@ namespace MetaphysicsIndustries.Giza
             return errors;
         }
 
+        public List<Error> CheckDefinitionInfosForSpanning(IEnumerable<DefinitionExpression> defs)
+        {
+            List<Error> errors = CheckDefinitionInfos(defs);
+
+            foreach (var def in defs)
+            {
+                if (def.Directives.Contains(DefinitionDirective.Token) ||
+                    def.Directives.Contains(DefinitionDirective.Subtoken) ||
+                    def.Directives.Contains(DefinitionDirective.Comment))
+                {
+                    errors.Add(new EcError {
+                        ErrorType = EcError.TokenizedDirectiveInNonTokenizedGrammar,
+                        DefinitionInfo = def,
+                    });
+                }
+            }
+
+            return errors;
+        }
+
         public virtual List<Error> CheckDefinitionInfos(IEnumerable<DefinitionExpression> defs)
         {
             if (defs == null) throw new ArgumentNullException("defs");
