@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Giza
 {
@@ -14,6 +15,51 @@ namespace MetaphysicsIndustries.Giza
         public virtual string Description
         {
             get { return ErrorType.Description; }
+        }
+    }
+
+    public static class ErrorHelpers
+    {
+        public static bool ContainsWarnings(this IEnumerable<Error> errors)
+        {
+            foreach (var err in errors)
+            {
+                if (err.IsWarning) return true;
+            }
+
+            return false;
+        }
+
+        public static bool ContainsNonWarnings(this IEnumerable<Error> errors)
+        {
+            foreach (var err in errors)
+            {
+                if (!err.IsWarning) return true;
+            }
+
+            return false;
+        }
+
+        public static int GetWarningsCount(this IEnumerable<Error> errors)
+        {
+            int n = 0;
+            foreach (var err in errors)
+            {
+                if (err.IsWarning) n++;
+            }
+
+            return n;
+        }
+
+        public static int GetNonWarningsCount(this IEnumerable<Error> errors)
+        {
+            int n = 0;
+            foreach (var err in errors)
+            {
+                if (!err.IsWarning) n++;
+            }
+
+            return n;
         }
     }
 }

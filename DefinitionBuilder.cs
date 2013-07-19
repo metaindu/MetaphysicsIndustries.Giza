@@ -13,8 +13,8 @@ namespace MetaphysicsIndustries.Giza
         public Definition[] BuildDefinitions(DefinitionExpression[] defs)
         {
             ExpressionChecker ec = new ExpressionChecker();
-            List<Error> errors = ec.CheckDefinitionInfos(defs);
-            if (errors.Count > 0)
+            List<Error> errors = ec.CheckDefinitionInfosForSpanning(defs);
+            if (errors.ContainsNonWarnings())
             {
                 throw new InvalidOperationException("Errors in expressions.");
             }
