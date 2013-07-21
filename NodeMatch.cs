@@ -228,5 +228,11 @@ namespace MetaphysicsIndustries.Giza
         public NodeMatch NodeMatch;
         public MatchStack MatchStack;
     }
+
+    public struct NodeMatchErrorTypePair
+    {
+        public NodeMatch NodeMatch;
+        public ErrorType ErrorType;
+    }
 }
 
