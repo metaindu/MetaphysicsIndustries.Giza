@@ -1,6 +1,7 @@
 using System;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MetaphysicsIndustries.Giza.Test
 {
@@ -44,8 +45,17 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Assert.IsEmpty(spans);
             Assert.AreEqual(1, errors.Count);
-            throw new NotImplementedException();
-//            Assert.AreEqual("Invalid character 'w' at (4,2), after a '<': expected id-mind, id-ignore, id-atomic, id-token, or id-subtoken", error);
+            Assert.IsInstanceOf<Spanner.SpannerError>(errors[0]);
+            var err = ((Spanner.SpannerError)errors[0]);
+            Assert.AreEqual(Spanner.SpannerError.InvalidCharacter, err.ErrorType);
+            Assert.AreEqual('w', err.OffendingCharacter);
+            Assert.AreEqual(4, err.Line);
+            Assert.AreEqual(2, err.Column);
+            Assert.IsInstanceOf<CharNode>(err.PreviousNode);
+            var charnode = (err.PreviousNode as CharNode);
+            Assert.AreEqual("<", charnode.CharClass.ToUndelimitedString());
+            Assert.AreEqual(1, err.ExpectedNodes.Count());
+            Assert.AreEqual("directive-item", (err.ExpectedNodes.First() as DefRefNode).DefRef.Name);
         }
 
         [Test()]
@@ -69,8 +79,16 @@ namespace MetaphysicsIndustries.Giza.Test
             Span[] spans = s.Process(testGrammar, "sequence", testInput, errors);
 
             Assert.IsEmpty(spans);
-            throw new NotImplementedException();
-//            Assert.AreEqual("Invalid character '$' at (1,1): a sequence must start with item", error);
+            Assert.AreEqual(1, errors.Count);
+            Assert.IsInstanceOf<Spanner.SpannerError>(errors[0]);
+            var err = ((Spanner.SpannerError)errors[0]);
+            Assert.AreEqual(Spanner.SpannerError.InvalidCharacter, err.ErrorType);
+            Assert.AreEqual('$', err.OffendingCharacter);
+            Assert.AreEqual(1, err.Line);
+            Assert.AreEqual(1, err.Column);
+            Assert.IsNull(err.PreviousNode);
+            Assert.AreEqual(1, err.ExpectedNodes.Count());
+            Assert.AreEqual("item", (err.ExpectedNodes.First() as DefRefNode).DefRef.Name);
         }
 
         [Test]

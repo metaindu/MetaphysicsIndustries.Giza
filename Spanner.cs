@@ -19,6 +19,9 @@ namespace MetaphysicsIndustries.Giza
             public char OffendingCharacter;
             public int Line;
             public int Column;
+            public Node PreviousNode;
+            public Definition ExpectedDefinition;
+            public IEnumerable<Node> ExpectedNodes;
 
             public override string Description
             {
@@ -230,9 +233,8 @@ namespace MetaphysicsIndustries.Giza
 
             if (ends.Count < 1)
             {
-                string error = GenerateErrorString(lastReject, def, input);
-                var error2 = new SpannerError() { ErrorType=SpannerError.InvalidCharacter, DescriptionString=error };
-                errors.Add(error2);
+                var error = GenerateError(lastReject, def, input);
+                errors.Add(error);
             }
 
             PurgeReject(lastReject.NodeMatch);
@@ -273,7 +275,7 @@ namespace MetaphysicsIndustries.Giza
             return matchTreeLeaves.ToArray();
         }
 
-        string GenerateErrorString(NodeMatchErrorTypePair lastReject, Definition def, string input)
+        Error GenerateError(NodeMatchErrorTypePair lastReject, Definition def, string input)
         {
             NodeMatch lastRejectnm = lastReject.NodeMatch;
             SpannerError se = new SpannerError() { ErrorType=SpannerError.InvalidCharacter };
@@ -298,10 +300,47 @@ namespace MetaphysicsIndustries.Giza
             sb.AppendFormat("Invalid character '{0}' at ({1},{2})", errorCh, line, linek);
 
             NodeMatch cur = null;
-            if (lastRejectnm.Previous == null)
+
+            cur = lastRejectnm.Previous;
+            while (cur != null &&
+                   cur.Transition == NodeMatch.TransitionType.StartDef)
+            {
+                cur = cur.Previous;
+            }
+
+            if (cur != null)
+            {
+                cur = cur.Previous;
+            }
+
+            if (cur != null &&
+                cur.Previous != null)
+            {
+                string an = "a";
+                string after = "";
+
+                if (cur.Previous.Node is CharNode)
+                {
+                    after = GetDescriptionsOfCharClass((cur.Previous.Node as CharNode).CharClass)[0];
+                }
+                else
+                {
+                    after = (cur.Previous.Node as DefRefNode).DefRef.Name;
+                }
+
+                if (vowels.Contains(after[0]))
+                {
+                    an = "an";
+                }
+                sb.AppendFormat(", after {0} {1}: expected ", an, after);
+            }
+
+            if (cur == null)
             {
                 //failed to start
                 expectedNodes = def.StartNodes;
+                se.ExpectedDefinition = def;
+                se.ExpectedNodes = def.StartNodes;
 
                 string an = "a";
                 if (vowels.Contains(def.Name[0]))
@@ -310,60 +349,19 @@ namespace MetaphysicsIndustries.Giza
                 }
 
                 sb.AppendFormat(": {0} {1} must start with ", an, def.Name);
+
             }
-            else
+            else if (cur.Node is CharNode)
             {
-                cur = lastRejectnm.Previous;
-                while (cur != null &&
-                       cur.Transition == NodeMatch.TransitionType.StartDef)
-                {
-                    cur = cur.Previous;
-                }
-
-                if (cur != null &&
-                    cur.Previous != null)
-                {
-                    string an = "a";
-                    string after = "";
-
-                    if (cur.Previous.Node is CharNode)
-                    {
-                        after = GetDescriptionsOfCharClass((cur.Previous.Node as CharNode).CharClass)[0];
-                    }
-                    else
-                    {
-                        after = (cur.Previous.Node as DefRefNode).DefRef.Name;
-                    }
-
-                    if (vowels.Contains(after[0]))
-                    {
-                        an = "an";
-                    }
-                    sb.AppendFormat(", after {0} {1}: expected ", an, after);
-                }
-
-                if (cur == null)
-                {
-                    //failed to start
-                    expectedNodes = def.StartNodes;
-
-                    string an = "a";
-                    if (vowels.Contains(def.Name[0]))
-                    {
-                        an = "an";
-                    }
-
-                    sb.AppendFormat(": {0} {1} must start with ", an, def.Name);
-
-                }
-                else if (cur.Node is CharNode)
-                {
-                    expectedNodes = cur.Node.NextNodes;
-                }
-                else // cur.Node is DefRefNode
-                {
-                    expectedNodes = (cur.Node as DefRefNode).DefRef.StartNodes;
-                }
+                expectedNodes = cur.Node.NextNodes;
+                se.PreviousNode = cur.Node;
+                se.ExpectedNodes = se.PreviousNode.NextNodes;
+            }
+            else // cur.Node is DefRefNode
+            {
+                expectedNodes = (cur.Node as DefRefNode).DefRef.StartNodes;
+                se.PreviousNode = cur.Node;
+                se.ExpectedNodes = se.PreviousNode.NextNodes;
             }
 
             if (expectedNodes != null)
@@ -411,7 +409,9 @@ namespace MetaphysicsIndustries.Giza
                 sb.Append(expects.Last());
             }
 
-            return sb.ToString();
+            se.DescriptionString = sb.ToString();
+
+            return se;
         }
 
         public static Span[] MakeSpans(IEnumerable<NodeMatch> matchTreeLeaves)
