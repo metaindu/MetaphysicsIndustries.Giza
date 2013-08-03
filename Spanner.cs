@@ -87,18 +87,30 @@ namespace MetaphysicsIndustries.Giza
             {
                 char ch = input[k];
 
-                if (currents.Count < 1) break;
-
                 bool isWhitespace = char.IsWhiteSpace(ch);
 
-                if (mustUseAllInput)
+                if (mustUseAllInput && ends.Count > 0)
                 {
+                    int line;
+                    int column;
+                    GetPosition(input, k-1, out line, out column);
+
                     // move all ends to rejects
                     while (ends.Count > 0)
                     {
-                        rejects.Enqueue(pair2(ends.Dequeue(), SpannerError.ExcessRemainingInput));
+                        var end = ends.Dequeue();
+                        rejects.Enqueue(pair2(end, 
+                            new SpannerError {
+                                ErrorType=SpannerError.ExcessRemainingInput,
+                                Line=line,
+                                Column=column,
+                                PreviousNode=end.Node,
+                                OffendingCharacter=input[k-1],
+                            }));
                     }
                 }
+
+                if (currents.Count < 1) break;
 
                 var enddefs = new Set<NodeMatch>();
                 while (currents.Count > 0)
@@ -453,7 +465,7 @@ namespace MetaphysicsIndustries.Giza
             }
             else // (se.ErrorType == SpannerError.ExcessRemainingInput)
             {
-                throw new NotImplementedException();
+                return se;
             }
         }
 

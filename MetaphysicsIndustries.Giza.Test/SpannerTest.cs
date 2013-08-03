@@ -207,6 +207,40 @@ namespace MetaphysicsIndustries.Giza.Test
         }
 
         [Test]
+        public void TestExcessRemainingInput()
+        {
+            string testGrammarText =
+                " // test grammar \r\n" +
+                "sequence = id-one id-two id-three; \r\n" +
+                "<mind whitespace, atomic> id-one = 'one'; \r\n" +
+                "<mind whitespace, atomic> id-two = 'two'; \r\n" +
+                "<mind whitespace, atomic> id-three = 'three'; \r\n";
+
+            string testInput = "one two three four";
+                              //123456789012345678
+            SupergrammarSpanner sgs = new SupergrammarSpanner();
+            var errors = new List<Error>();
+            Grammar testGrammar = sgs.GetGrammar(testGrammarText, errors);
+            Assert.IsEmpty(errors);
+
+            Spanner s = new Spanner();
+            Span[] spans = s.Process(testGrammar, "sequence", testInput, errors);
+
+            Assert.IsNotNull(spans);
+            Assert.AreEqual(0, spans.Length);
+            Assert.IsNotNull(errors);
+            Assert.AreEqual(1, errors.Count);
+            Assert.IsInstanceOf<Spanner.SpannerError>(errors[0]);
+            var err = ((Spanner.SpannerError)errors[0]);
+            Assert.AreEqual(Spanner.SpannerError.ExcessRemainingInput, err.ErrorType);
+            Assert.AreEqual(1, err.Line);
+            Assert.AreEqual(15, err.Column);
+            Assert.IsInstanceOf<DefRefNode>(err.PreviousNode);
+            Assert.AreEqual("sequence", (err.PreviousNode as DefRefNode).DefRef.Name);
+            Assert.IsNull(err.ExpectedNodes);
+        }
+
+        [Test]
         public void TestNodeMatchClone()
         {
             Node node = new CharNode('c', "asdf");
