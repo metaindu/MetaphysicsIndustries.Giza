@@ -16,6 +16,11 @@ namespace MetaphysicsIndustries.Giza
         {
             get { return ErrorType.Description; }
         }
+
+        public override string ToString()
+        {
+            return ErrorType.Name + (IsWarning ? " (warning)" : "");
+        }
     }
 
     public static class ErrorHelpers

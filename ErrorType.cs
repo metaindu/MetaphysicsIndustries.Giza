@@ -34,6 +34,10 @@ namespace MetaphysicsIndustries.Giza
         {
             return Name.GetHashCode() ^ IsWarning.GetHashCode() ^ Description.GetHashCode();
         }
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 
     public static class ErrorTypeHelpers
