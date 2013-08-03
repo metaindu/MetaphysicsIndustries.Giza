@@ -92,6 +92,121 @@ namespace MetaphysicsIndustries.Giza.Test
         }
 
         [Test]
+        public void TestUnexpectedEndOfInput1()
+        {
+            string testGrammarText =
+                " // test grammar \r\n" +
+                "sequence = item+; \r\n" +
+                "item = ( id-item1 | id-item2 | paren ); \r\n" +
+                "<mind whitespace, atomic> id-item1 = 'item1'; \r\n" +
+                "<mind whitespace, atomic> id-item2 = 'item2'; \r\n" +
+                "paren = '(' sequence ')'; \r\n";
+
+            string testInput = "item1 ( item2 ";
+
+            SupergrammarSpanner sgs = new SupergrammarSpanner();
+            var errors = new List<Error>();
+            Grammar testGrammar = sgs.GetGrammar(testGrammarText, errors);
+            Assert.IsEmpty(errors);
+
+            Spanner s = new Spanner();
+            Span[] spans = s.Process(testGrammar, "sequence", testInput, errors);
+
+            Assert.IsNotNull(spans);
+            Assert.AreEqual(0, spans.Length);
+            Assert.IsNotNull(errors);
+            Assert.AreEqual(1, errors.Count);
+            Assert.IsInstanceOf<Spanner.SpannerError>(errors[0]);
+            var err = ((Spanner.SpannerError)errors[0]);
+            Assert.AreEqual(Spanner.SpannerError.UnexpectedEndOfInput, err.ErrorType);
+            Assert.AreEqual(1, err.Line);
+            Assert.AreEqual(15, err.Column);
+            Assert.IsInstanceOf<DefRefNode>(err.PreviousNode);
+            Assert.AreEqual("sequence", (err.PreviousNode as DefRefNode).DefRef.Name);
+            Assert.IsNotNull(err.ExpectedNodes);
+            Assert.AreEqual(1, err.ExpectedNodes.Count());
+            Assert.IsInstanceOf<CharNode>(err.ExpectedNodes.First());
+            Assert.AreEqual(")", (err.ExpectedNodes.First() as CharNode).CharClass.ToUndelimitedString());
+        }
+
+        [Test]
+        public void TestUnexpectedEndOfInput2()
+        {
+            string testGrammarText =
+                " // test grammar \r\n" +
+                    "sequence = item+; \r\n" +
+                    "item = ( id-item1 | id-item2 | paren ); \r\n" +
+                    "<mind whitespace, atomic> id-item1 = 'item1'; \r\n" +
+                    "<mind whitespace, atomic> id-item2 = 'item2'; \r\n" +
+                    "paren = '(' sequence ')'; \r\n";
+
+            string testInput = "item1 ( item2";
+
+            SupergrammarSpanner sgs = new SupergrammarSpanner();
+            var errors = new List<Error>();
+            Grammar testGrammar = sgs.GetGrammar(testGrammarText, errors);
+            Assert.IsEmpty(errors);
+
+            Spanner s = new Spanner();
+            Span[] spans = s.Process(testGrammar, "sequence", testInput, errors);
+
+            Assert.IsNotNull(spans);
+            Assert.AreEqual(0, spans.Length);
+            Assert.IsNotNull(errors);
+            Assert.AreEqual(1, errors.Count);
+            Assert.IsInstanceOf<Spanner.SpannerError>(errors[0]);
+            var err = ((Spanner.SpannerError)errors[0]);
+            Assert.AreEqual(Spanner.SpannerError.UnexpectedEndOfInput, err.ErrorType);
+            Assert.AreEqual(1, err.Line);
+            Assert.AreEqual(14, err.Column);
+            Assert.IsInstanceOf<DefRefNode>(err.PreviousNode);
+            Assert.AreEqual("sequence", (err.PreviousNode as DefRefNode).DefRef.Name);
+            Assert.IsNotNull(err.ExpectedNodes);
+            Assert.AreEqual(1, err.ExpectedNodes.Count());
+            Assert.IsInstanceOf<CharNode>(err.ExpectedNodes.First());
+            Assert.AreEqual(")", (err.ExpectedNodes.First() as CharNode).CharClass.ToUndelimitedString());
+        }
+
+        [Test]
+        public void TestUnexpectedEndOfInput3()
+        {
+            string testGrammarText =
+                " // test grammar \r\n" +
+                    "sequence = item+; \r\n" +
+                    "item = ( id-item1 | id-item2 | paren ); \r\n" +
+                    "<mind whitespace, atomic> id-item1 = 'item1'; \r\n" +
+                    "<mind whitespace, atomic> id-item2 = 'item2'; \r\n" +
+                    "paren = '(' sequence ')'; \r\n";
+
+            string testInput = "item1 ( item";
+
+            SupergrammarSpanner sgs = new SupergrammarSpanner();
+            var errors = new List<Error>();
+            Grammar testGrammar = sgs.GetGrammar(testGrammarText, errors);
+            Assert.IsEmpty(errors);
+
+            Spanner s = new Spanner();
+            Span[] spans = s.Process(testGrammar, "sequence", testInput, errors);
+
+            Assert.IsNotNull(spans);
+            Assert.AreEqual(0, spans.Length);
+            Assert.IsNotNull(errors);
+            Assert.AreEqual(1, errors.Count);
+            Assert.IsInstanceOf<Spanner.SpannerError>(errors[0]);
+            var err = ((Spanner.SpannerError)errors[0]);
+            Assert.AreEqual(Spanner.SpannerError.UnexpectedEndOfInput, err.ErrorType);
+            Assert.AreEqual(1, err.Line);
+            Assert.AreEqual(13, err.Column);
+            Assert.IsInstanceOf<CharNode>(err.PreviousNode);
+            Assert.AreEqual("m", (err.PreviousNode as CharNode).CharClass.ToUndelimitedString());
+            Assert.IsNotNull(err.ExpectedNodes);
+            Assert.AreEqual(1, err.ExpectedNodes.Count());
+            Assert.IsInstanceOf<CharNode>(err.ExpectedNodes.First());
+            var expectedChar = (err.ExpectedNodes.First() as CharNode).CharClass.ToUndelimitedString();
+            Assert.True(expectedChar == "1" || expectedChar == "2");
+        }
+
+        [Test]
         public void TestNodeMatchClone()
         {
             Node node = new CharNode('c', "asdf");
