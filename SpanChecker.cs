@@ -7,21 +7,18 @@ namespace MetaphysicsIndustries.Giza
 {
     public class SpanChecker
     {
-        public enum ErrorType
-        {
-            BadStartingNode,
-            BadEndingNode,
-            BadFollow,
-            NodeInWrongDefinition,
-            SpanHasNoSubspans,
-            CycleInSubspans,
-            SpanReused,
-        }
-
         public struct ScError
         {
             public ErrorType ErrorType;
             public Span Span;
+
+            public static readonly ErrorType BadStartingNode =          new ErrorType() { Name="BadStartingNode",       Description="BadStartingNode"       };
+            public static readonly ErrorType BadEndingNode =            new ErrorType() { Name="BadEndingNode",         Description="BadEndingNode"         };
+            public static readonly ErrorType BadFollow =                new ErrorType() { Name="BadFollow",             Description="BadFollow"             };
+            public static readonly ErrorType NodeInWrongDefinition =    new ErrorType() { Name="NodeInWrongDefinition", Description="NodeInWrongDefinition" };
+            public static readonly ErrorType SpanHasNoSubspans =        new ErrorType() { Name="SpanHasNoSubspans",     Description="SpanHasNoSubspans"     };
+            public static readonly ErrorType CycleInSubspans =          new ErrorType() { Name="CycleInSubspans",       Description="CycleInSubspans"       };
+            public static readonly ErrorType SpanReused =               new ErrorType() { Name="SpanReused",            Description="SpanReused"            };
         }
 
         public List<ScError> CheckSpan(Span span, Grammar grammar)
@@ -46,7 +43,7 @@ namespace MetaphysicsIndustries.Giza
                 if (span == stack2.Span)
                 {
                     errors.Add(new ScError{
-                        ErrorType=ErrorType.CycleInSubspans,
+                        ErrorType=ScError.CycleInSubspans,
                         Span=span,
                     });
                     break;
@@ -64,7 +61,7 @@ namespace MetaphysicsIndustries.Giza
                     !spandef.StartNodes.Contains(first.Node))
                 {
                     errors.Add(new ScError{
-                        ErrorType=ErrorType.BadStartingNode,
+                        ErrorType=ScError.BadStartingNode,
                         Span=first,
                     });
                 }
@@ -81,7 +78,7 @@ namespace MetaphysicsIndustries.Giza
                         if (!prev.Node.NextNodes.Contains(next.Node))
                         {
                             errors.Add(new ScError{
-                                ErrorType=ErrorType.BadFollow,
+                                ErrorType=ScError.BadFollow,
                                 Span=next,
                             });
                         }
@@ -90,7 +87,7 @@ namespace MetaphysicsIndustries.Giza
                     if (visited.Contains(next))
                     {
                         errors.Add(new ScError{
-                            ErrorType=ErrorType.SpanReused,
+                            ErrorType=ScError.SpanReused,
                             Span=next,
                         });
                     }
@@ -99,7 +96,7 @@ namespace MetaphysicsIndustries.Giza
                     if (next.Node.ParentDefinition != spandef)
                     {
                         errors.Add(new ScError{
-                            ErrorType=ErrorType.NodeInWrongDefinition,
+                            ErrorType=ScError.NodeInWrongDefinition,
                             Span=next,
                         });
                     }
@@ -114,7 +111,7 @@ namespace MetaphysicsIndustries.Giza
                     !spandef.EndNodes.Contains(span.Subspans.Last().Node))
                 {
                     errors.Add(new ScError{
-                        ErrorType=ErrorType.BadEndingNode,
+                        ErrorType=ScError.BadEndingNode,
                         Span=span.Subspans.Last(),
                     });
                 }
@@ -124,7 +121,7 @@ namespace MetaphysicsIndustries.Giza
                 if (span.Node is DefRefNode)
                 {
                     errors.Add(new ScError{
-                        ErrorType=ErrorType.SpanHasNoSubspans,
+                        ErrorType=ScError.SpanHasNoSubspans,
                         Span=span,
                     });
                 }
