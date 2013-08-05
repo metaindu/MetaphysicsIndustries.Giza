@@ -15,7 +15,7 @@ namespace MetaphysicsIndustries.Giza
             }
 
             SpanChecker sc = new SpanChecker();
-            List<SpanChecker.Error> errors = sc.CheckSpan(span, grammar);
+            List<SpanChecker.ScError> errors = sc.CheckSpan(span, grammar);
             if (errors.Count > 0)
                 throw new InvalidOperationException();
 
