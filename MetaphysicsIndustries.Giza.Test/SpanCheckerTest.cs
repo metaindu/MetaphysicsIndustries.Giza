@@ -20,7 +20,7 @@ namespace MetaphysicsIndustries.Giza.Test
             });
             span.Subspans.Add(new Span {
                 Node=sg.node_literal_1__005E__005C__005C__0027_,
-                Value="a"
+                Value="b"
             });
             span.Subspans.Add(new Span {
                 Node=sg.node_literal_1__005E__005C__005C__0027_,
@@ -44,7 +44,43 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreSame(span.Subspans[0], e.Span);
         }
 
-//        public void TestBadEndingNode
+        [Test]
+        public void TestBadEndingNode()
+        {
+            Supergrammar sg = new Supergrammar();
+            Span span = new Span() {
+                Node=sg.node_subexpr_1_literal,
+            };
+            span.Subspans.Add(new Span {
+                Node=sg.node_literal_0__0027_,
+                Value="'"
+            });
+            span.Subspans.Add(new Span {
+                Node=sg.node_literal_1__005E__005C__005C__0027_,
+                Value="a"
+            });
+            span.Subspans.Add(new Span {
+                Node=sg.node_literal_1__005E__005C__005C__0027_,
+                Value="b"
+            });
+            span.Subspans.Add(new Span {
+                Node=sg.node_literal_1__005E__005C__005C__0027_,
+                Value="c"
+            });
+            SpanChecker sc = new SpanChecker();
+
+
+            var errors = sc.CheckSpan(span, sg);
+
+
+            Assert.IsNotNull(errors);
+            Assert.AreEqual(1, errors.Count);
+            Assert.IsInstanceOf<ScError>(errors[0]);
+            var e = (ScError)errors[0];
+            Assert.AreEqual(ScError.BadEndingNode, e.ErrorType);
+            Assert.AreSame(span.Subspans[3], e.Span);
+        }
+
 //        public void TestBadFollow
 //        public void TestNodeInWrongDefinition
 //        public void TestSpanHasNoSubspans
