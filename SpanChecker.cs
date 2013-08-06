@@ -7,9 +7,8 @@ namespace MetaphysicsIndustries.Giza
 {
     public class SpanChecker
     {
-        public struct ScError
+        public class ScError : Error
         {
-            public ErrorType ErrorType;
             public Span Span;
 
             public static readonly ErrorType BadStartingNode =          new ErrorType() { Name="BadStartingNode",       Description="BadStartingNode"       };
