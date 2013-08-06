@@ -81,7 +81,35 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreSame(span.Subspans[3], e.Span);
         }
 
-//        public void TestBadFollow
+        [Test]
+        public void TestBadFollow()
+        {
+            Supergrammar sg = new Supergrammar();
+            Span span = new Span() {
+                Node=sg.node_subexpr_1_literal,
+            };
+            span.Subspans.Add(new Span {
+                Node=sg.node_literal_0__0027_,
+                Value="'"
+            });
+            span.Subspans.Add(new Span {
+                Node=sg.node_literal_5__0027_,
+                Value="'"
+            });
+            SpanChecker sc = new SpanChecker();
+
+
+            var errors = sc.CheckSpan(span, sg);
+
+
+            Assert.IsNotNull(errors);
+            Assert.AreEqual(1, errors.Count);
+            Assert.IsInstanceOf<ScError>(errors[0]);
+            var e = (ScError)errors[0];
+            Assert.AreEqual(ScError.BadFollow, e.ErrorType);
+            Assert.AreSame(span.Subspans[1], e.Span);
+        }
+
 //        public void TestNodeInWrongDefinition
 //        public void TestSpanHasNoSubspans
 //        public void TestCycleInSubspans
