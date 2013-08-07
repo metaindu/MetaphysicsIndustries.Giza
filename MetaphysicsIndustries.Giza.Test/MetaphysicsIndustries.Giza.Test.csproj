@@ -43,6 +43,7 @@
     <Compile Include="ParserTest.cs" />
     <Compile Include="CommandLineTest.cs" />
     <Compile Include="SpanCheckerTest.cs" />
+    <Compile Include="NodeMatchTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
