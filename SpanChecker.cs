@@ -19,15 +19,18 @@ namespace MetaphysicsIndustries.Giza
             public static readonly ErrorType CycleInSubspans =          new ErrorType() { Name="CycleInSubspans",       Description="CycleInSubspans"       };
         }
 
-        public List<ScError> CheckSpan(Span span, Grammar grammar)
+        public List<Error> CheckSpan(Span span, Grammar grammar)
         {
-            return CheckSpan(span, grammar, new Set<Span>(), new Set<Span>());
+            List<Error> errors = new List<Error>();
+
+            CheckSpan(span, grammar, new Set<Span>(), new Set<Span>(), errors);
+
+            return errors;
         }
 
-        List<ScError> CheckSpan(Span span, Grammar grammar, Set<Span> visited, Set<Span> ancestorSpans)
+        void CheckSpan(Span span, Grammar grammar, Set<Span> visited, Set<Span> ancestorSpans, List<Error> errors)
         {
             Definition spandef = (span.Node as DefRefNode).DefRef;
-            List<ScError> errors = new List<ScError>();
 
             if (ancestorSpans.Contains(span))
             {
@@ -35,7 +38,7 @@ namespace MetaphysicsIndustries.Giza
                     ErrorType=ScError.CycleInSubspans,
                     Span=span,
                 });
-                return errors;
+                return;
             }
 
             Span first = span.Subspans.FirstOrDefault();
@@ -78,7 +81,7 @@ namespace MetaphysicsIndustries.Giza
 
                     if (next.Subspans.Count > 0)
                     {
-                        errors.AddRange(CheckSpan(next, grammar, visited, ancestorSpans));
+                        CheckSpan(next, grammar, visited, ancestorSpans, errors);
                     }
                 }
                 ancestorSpans.Remove(span);
@@ -102,8 +105,6 @@ namespace MetaphysicsIndustries.Giza
                     });
                 }
             }
-
-            return errors;
         }
     }
 }
