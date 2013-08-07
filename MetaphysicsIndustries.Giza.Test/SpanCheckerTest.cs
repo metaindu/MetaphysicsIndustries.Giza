@@ -373,12 +373,6 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreSame(span, e.Span);
             Assert.AreSame(span.Subspans[1], e.Span);
         }
-
-//        public void TestSpanReused
-
     }
-
-
-
 }
 

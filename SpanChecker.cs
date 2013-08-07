@@ -17,7 +17,6 @@ namespace MetaphysicsIndustries.Giza
             public static readonly ErrorType NodeInWrongDefinition =    new ErrorType() { Name="NodeInWrongDefinition", Description="NodeInWrongDefinition" };
             public static readonly ErrorType SpanHasNoSubspans =        new ErrorType() { Name="SpanHasNoSubspans",     Description="SpanHasNoSubspans"     };
             public static readonly ErrorType CycleInSubspans =          new ErrorType() { Name="CycleInSubspans",       Description="CycleInSubspans"       };
-            public static readonly ErrorType SpanReused =               new ErrorType() { Name="SpanReused",            Description="SpanReused"            };
         }
 
         public List<ScError> CheckSpan(Span span, Grammar grammar)
@@ -38,16 +37,6 @@ namespace MetaphysicsIndustries.Giza
                 });
                 return errors;
             }
-
-            if (visited.Contains(span))
-            {
-                errors.Add(new ScError{
-                    ErrorType=ScError.SpanReused,
-                    Span=span,
-                });
-                return errors;
-            }
-            visited.Add(span);
 
             Span first = span.Subspans.FirstOrDefault();
             if (first != null)
