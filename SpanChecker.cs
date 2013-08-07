@@ -22,36 +22,32 @@ namespace MetaphysicsIndustries.Giza
 
         public List<ScError> CheckSpan(Span span, Grammar grammar)
         {
-            return CheckSpan(span, grammar, new Set<Span>{span}, null);
+            return CheckSpan(span, grammar, new Set<Span>(), new Set<Span>());
         }
 
-        class SpanStack
-        {
-            public Span Span;
-            public SpanStack Parent;
-        }
-
-         List<ScError> CheckSpan(Span span, Grammar grammar, Set<Span> visited, SpanStack stack)
+        List<ScError> CheckSpan(Span span, Grammar grammar, Set<Span> visited, Set<Span> ancestorSpans)
         {
             Definition spandef = (span.Node as DefRefNode).DefRef;
             List<ScError> errors = new List<ScError>();
 
-            SpanStack stack2 = stack;
-            while (stack2 != null)
+            if (ancestorSpans.Contains(span))
             {
-                if (span == stack2.Span)
-                {
-                    errors.Add(new ScError{
-                        ErrorType=ScError.CycleInSubspans,
-                        Span=span,
-                    });
-                    break;
-                }
-                else
-                {
-                    stack2 = stack2.Parent;
-                }
+                errors.Add(new ScError{
+                    ErrorType=ScError.CycleInSubspans,
+                    Span=span,
+                });
+                return errors;
             }
+
+            if (visited.Contains(span))
+            {
+                errors.Add(new ScError{
+                    ErrorType=ScError.SpanReused,
+                    Span=span,
+                });
+                return errors;
+            }
+            visited.Add(span);
 
             Span first = span.Subspans.FirstOrDefault();
             if (first != null)
@@ -65,7 +61,7 @@ namespace MetaphysicsIndustries.Giza
                     });
                 }
 
-                stack2 = new SpanStack { Span=span, Parent=stack };
+                ancestorSpans.Add(span);
                 int i;
                 for (i = 0; i < span.Subspans.Count; i++)
                 {
@@ -83,15 +79,6 @@ namespace MetaphysicsIndustries.Giza
                         }
                     }
 
-                    if (visited.Contains(next))
-                    {
-                        errors.Add(new ScError{
-                            ErrorType=ScError.SpanReused,
-                            Span=next,
-                        });
-                    }
-                    visited.Add(next);
-
                     if (next.Node.ParentDefinition != spandef)
                     {
                         errors.Add(new ScError{
@@ -102,9 +89,10 @@ namespace MetaphysicsIndustries.Giza
 
                     if (next.Subspans.Count > 0)
                     {
-                        errors.AddRange(CheckSpan(next, grammar, visited, stack2));
+                        errors.AddRange(CheckSpan(next, grammar, visited, ancestorSpans));
                     }
                 }
+                ancestorSpans.Remove(span);
 
                 if (spandef != null &&
                     !spandef.EndNodes.Contains(span.Subspans.Last().Node))
