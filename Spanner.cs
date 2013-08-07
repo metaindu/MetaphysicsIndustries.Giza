@@ -469,7 +469,7 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        public static Span[] MakeSpans(IEnumerable<NodeMatch> matchTreeLeaves)
+        static Span[] MakeSpans(IEnumerable<NodeMatch> matchTreeLeaves)
         {
             List<List<NodeMatch>> lists = new List<List<NodeMatch>>();
             foreach (NodeMatch leaf in matchTreeLeaves)
