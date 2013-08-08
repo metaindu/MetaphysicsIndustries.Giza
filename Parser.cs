@@ -16,7 +16,8 @@ namespace MetaphysicsIndustries.Giza
         Definition _definition;
         Tokenizer _tokenizer;
 
-        public Span[] Parse(string input)
+
+        public Span[] Parse(string input, List<Error> errors)
         {
             var sources = new Queue<NodeMatchStackPair>();
             var ends = new List<NodeMatch>();
@@ -41,7 +42,6 @@ namespace MetaphysicsIndustries.Giza
                     bool shouldRejectSource = true;
 
                     //get all tokens, starting at end of source's token
-                    var errors = new List<Error>();
                     var intokens = _tokenizer.GetTokensAtLocation(
                                         input, 
                                         source.Token.StartIndex + source.Token.Length, 

@@ -25,10 +25,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Definition operatorDef = grammar.FindDefinitionByName("$implicit literal +");
 
             Parser parser = new Parser(exprDef);
+            errors = new List<Error>();
 
 
 
-            Span[] s = parser.Parse("a + b");
+            Span[] s = parser.Parse("a + b", errors);
 
 
 
@@ -70,10 +71,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Definition plusPlusDef = grammar.FindDefinitionByName("$implicit literal ++");
 
             Parser parser = new Parser(exprDef);
+            errors = new List<Error>();
 
 
 
-            Span[] s = parser.Parse("a+++b");
+            Span[] s = parser.Parse("a+++b", errors);
 
 
 

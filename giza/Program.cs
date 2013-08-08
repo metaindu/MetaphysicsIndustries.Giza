@@ -359,7 +359,8 @@ namespace giza
             }
 
             var parser = new Parser(g.FindDefinitionByName(startSymbol));
-            Span[] ss = parser.Parse(input); // out error
+            errors = new List<Error>();
+            Span[] ss = parser.Parse(input, errors);
             //if (error != null)
             //{
             //    Console.WriteLine("There was an error in the input: {0}", error);
