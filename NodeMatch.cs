@@ -229,10 +229,10 @@ namespace MetaphysicsIndustries.Giza
         public MatchStack MatchStack;
     }
 
-    public struct NodeMatchSpannerErrorPair
+    public struct NodeMatchErrorPair
     {
         public NodeMatch NodeMatch;
-        public Spanner.SpannerError Error;
+        public Error Error;
     }
 }
 

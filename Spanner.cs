@@ -75,10 +75,10 @@ namespace MetaphysicsIndustries.Giza
 
             Queue<NodeMatchStackPair> currents = new Queue<NodeMatchStackPair>();
             Queue<NodeMatchStackPair> accepts = new Queue<NodeMatchStackPair>();
-            Queue<NodeMatchSpannerErrorPair> rejects = new Queue<NodeMatchSpannerErrorPair>();
+            Queue<NodeMatchErrorPair> rejects = new Queue<NodeMatchErrorPair>();
             Queue<NodeMatch> ends = new Queue<NodeMatch>();
 
-            NodeMatchSpannerErrorPair lastReject = pair2(null, new SpannerError{ ErrorType=SpannerError.ExcessRemainingInput });
+            NodeMatchErrorPair lastReject = pair2(null, new SpannerError{ ErrorType=SpannerError.ExcessRemainingInput });
 
             currents.Enqueue(pair(root, null));
 
@@ -309,10 +309,10 @@ namespace MetaphysicsIndustries.Giza
             return matchTreeLeaves.ToArray();
         }
 
-        Error GenerateError(NodeMatchSpannerErrorPair lastReject, Definition def, string input)
+        Error GenerateError(NodeMatchErrorPair lastReject, Definition def, string input)
         {
             NodeMatch lastRejectnm = lastReject.NodeMatch;
-            SpannerError se = lastReject.Error;
+            SpannerError se = (SpannerError)lastReject.Error;
 
             if (se.ErrorType == SpannerError.InvalidCharacter)
             {
@@ -583,14 +583,14 @@ namespace MetaphysicsIndustries.Giza
             return new NodeMatchStackPair{NodeMatch = nodeMatch, MatchStack = matchStack};
         }
 
-        public static NodeMatchSpannerErrorPair pair2(NodeMatch nodeMatch, SpannerError err)
+        public static NodeMatchErrorPair pair2(NodeMatch nodeMatch, SpannerError err)
         {
-            return new NodeMatchSpannerErrorPair{NodeMatch=nodeMatch, Error=err};
+            return new NodeMatchErrorPair{NodeMatch=nodeMatch, Error=err};
         }
 
-        public static NodeMatchSpannerErrorPair pair2(NodeMatch nodeMatch, ErrorType et)
+        public static NodeMatchErrorPair pair2(NodeMatch nodeMatch, ErrorType et)
         {
-            return new NodeMatchSpannerErrorPair{NodeMatch=nodeMatch, Error=new SpannerError{ErrorType=et}};
+            return new NodeMatchErrorPair{NodeMatch=nodeMatch, Error=new SpannerError{ErrorType=et}};
         }
 
         NodeMatchStackPair CreateStartDefMatch(Node node, NodeMatch match, MatchStack stack2, int index)
@@ -615,7 +615,7 @@ namespace MetaphysicsIndustries.Giza
             return pair(match2, stack);
         }
 
-        void PurgeRejects(Queue<NodeMatchSpannerErrorPair> rejects, ref NodeMatchSpannerErrorPair lastReject)
+        void PurgeRejects(Queue<NodeMatchErrorPair> rejects, ref NodeMatchErrorPair lastReject)
         {
             while (rejects.Count > 0)
             {
