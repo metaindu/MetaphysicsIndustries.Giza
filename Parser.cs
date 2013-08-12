@@ -53,42 +53,43 @@ namespace MetaphysicsIndustries.Giza
                         shouldRejectSource = false;
                     }
 
-                    //find all branches
-                    var branches = new List<NodeMatchStackPair>();
                     var currents = new Queue<NodeMatchStackPair>();
 
                     currents.Enqueue(sourcepair);
 
+                    //find all ends
+                    var ender = sourcepair;
+                    while (true)
+                    {
+                        var nm = ender.NodeMatch;
+
+                        if (nm == null) break;
+                        if (nm.Transition == NodeMatch.TransitionType.Root) break;
+
+                        if (ender.MatchStack == null)
+                        {
+                            ends.Add(ender.NodeMatch);
+                            shouldRejectSource = false;
+                            break;
+                        }
+                        else if (nm.Node.IsEndNode)
+                        {
+                            ender = ender.CreateEndDefMatch();
+                            currents.Enqueue(ender);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+
+                    //find all branches
+                    var branches = new List<NodeMatchStackPair>();
                     while (currents.Count > 0)
                     {
                         NodeMatchStackPair current = currents.Dequeue();
                         NodeMatch cur = current.NodeMatch;
                         MatchStack curstack = current.MatchStack;
-
-                        if (cur.Node.IsEndNode &&
-                            cur.Transition != NodeMatch.TransitionType.Root &&
-                            (cur == source ||
-                             cur.Transition == NodeMatch.TransitionType.EndDef))
-                        {
-                            if (curstack == null)
-                            {
-                                if (intokens != null && intokens.Length > 0)
-                                {
-//                                    Reject(cur);
-                                }
-                                else
-                                {
-                                    ends.Add(cur);
-                                    shouldRejectSource = false;
-                                }
-                            }
-                            else
-                            {
-                                NodeMatch nm = new NodeMatch(curstack.Node, NodeMatch.TransitionType.EndDef, cur);
-                                nm.StartDef = curstack.NodeMatch;
-                                currents.Enqueue(pair(nm, curstack.Parent));
-                            }
-                        }
 
                         if (cur.DefRef.IsTokenized && 
                             cur != source)
