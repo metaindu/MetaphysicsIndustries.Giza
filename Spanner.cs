@@ -135,14 +135,14 @@ namespace MetaphysicsIndustries.Giza
                             //next nodes
                             foreach (Node n in cur.Node.NextNodes)
                             {
-                                accepts.Enqueue(CreateFollowMatch(n, cur, stack, k));
+                                accepts.Enqueue(NodeMatchStackPair.CreateFollowMatch(n, cur, stack, k));
                             }
 
                             //end
                             if ((!stack.Definition.Atomic || cur.Node.NextNodes.Count < 1) &&
                                 cur.Node.IsEndNode)
                             {
-                                accepts.Enqueue(CreateEndDefMatch(cur, stack));
+                                accepts.Enqueue(p.CreateEndDefMatch());
                             }
                         }
                         else
@@ -152,7 +152,7 @@ namespace MetaphysicsIndustries.Giza
                                 cur.Previous.Node.IsEndNode &&
                                 !enddefs.Contains(cur.Previous))
                             {
-                                currents.Enqueue(CreateEndDefMatch(cur.Previous, stack));
+                                currents.Enqueue(NodeMatchStackPair.CreateEndDefMatch(cur.Previous, stack));
                                 enddefs.Add(cur.Previous);
                             }
 
@@ -165,7 +165,7 @@ namespace MetaphysicsIndustries.Giza
                         {
                             foreach (Node n in cur.Node.NextNodes)
                             {
-                                currents.Enqueue(CreateFollowMatch(n, cur, stack, k));
+                                currents.Enqueue(NodeMatchStackPair.CreateFollowMatch(n, cur, stack, k));
                             }
 
                             if (cur.Node == implicitNode)
@@ -174,7 +174,7 @@ namespace MetaphysicsIndustries.Giza
                             }
                             else if (cur.Node.IsEndNode)
                             {
-                                currents.Enqueue(CreateEndDefMatch(cur, stack));
+                                currents.Enqueue(p.CreateEndDefMatch());
                             }
                         }
                         else
@@ -182,7 +182,7 @@ namespace MetaphysicsIndustries.Giza
                             MatchStack stack2 = new MatchStack(cur, stack);
                             foreach (Node start in (cur.Node as DefRefNode).DefRef.StartNodes)
                             {
-                                currents.Enqueue(CreateStartDefMatch(start, cur, stack2, k));
+                                currents.Enqueue(NodeMatchStackPair.CreateStartDefMatch(start, cur, stack2, k));
                             }
                         }
                     }
@@ -220,7 +220,7 @@ namespace MetaphysicsIndustries.Giza
                         cur.Previous != null &&
                         cur.Previous.Node.IsEndNode)
                     {
-                        currents.Enqueue(CreateEndDefMatch(cur.Previous, stack));
+                        currents.Enqueue(NodeMatchStackPair.CreateEndDefMatch(cur.Previous, stack));
                     }
 
                     int line;
@@ -240,7 +240,7 @@ namespace MetaphysicsIndustries.Giza
                 }
                 else if (cur.Node.IsEndNode)
                 {
-                    currents.Enqueue(CreateEndDefMatch(cur, stack));
+                    currents.Enqueue(NodeMatchStackPair.CreateEndDefMatch(cur, stack));
                 }
                 else
                 {
@@ -593,27 +593,6 @@ namespace MetaphysicsIndustries.Giza
             return new NodeMatchErrorPair{NodeMatch=nodeMatch, Error=new SpannerError{ErrorType=et}};
         }
 
-        NodeMatchStackPair CreateStartDefMatch(Node node, NodeMatch match, MatchStack stack2, int index)
-        {
-            NodeMatch match2 = new NodeMatch(node, NodeMatch.TransitionType.StartDef, match);
-            match2.Index = index;
-            return pair(match2, stack2);
-        }
-
-        NodeMatchStackPair CreateEndDefMatch(NodeMatch match, MatchStack stack)
-        {
-            NodeMatch match2 = new NodeMatch(stack.Node, NodeMatch.TransitionType.EndDef, match);
-            match2.Index = match.Index;
-            match2.StartDef = stack.NodeMatch;
-            return pair(match2, stack.Parent);
-        }
-
-        NodeMatchStackPair CreateFollowMatch(Node node, NodeMatch match, MatchStack stack, int index)
-        {
-            NodeMatch match2 = new NodeMatch(node, NodeMatch.TransitionType.Follow, match);
-            match2.Index = index;
-            return pair(match2, stack);
-        }
 
         void PurgeRejects(Queue<NodeMatchErrorPair> rejects, ref NodeMatchErrorPair lastReject)
         {

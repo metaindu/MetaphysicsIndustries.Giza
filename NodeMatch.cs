@@ -225,8 +225,42 @@ namespace MetaphysicsIndustries.Giza
 
     public struct NodeMatchStackPair
     {
+        public NodeMatchStackPair(NodeMatch nm, MatchStack stack)
+        {
+            NodeMatch = nm;
+            MatchStack = stack;
+        }
+
         public NodeMatch NodeMatch;
         public MatchStack MatchStack;
+
+        public static NodeMatchStackPair CreateStartDefMatch(Node node, NodeMatch match, MatchStack stack2, int index)
+        {
+            NodeMatch match2 = new NodeMatch(node, NodeMatch.TransitionType.StartDef, match);
+            match2.Index = index;
+            return new NodeMatchStackPair(match2, stack2);
+        }
+
+        public NodeMatchStackPair CreateEndDefMatch()
+        {
+            return CreateEndDefMatch(this.NodeMatch, this.MatchStack);
+        }
+
+        public static NodeMatchStackPair CreateEndDefMatch(NodeMatch match, MatchStack stack)
+        {
+            NodeMatch match2 = new NodeMatch(stack.Node, NodeMatch.TransitionType.EndDef, match);
+            match2.Index = match.Index;
+            match2.StartDef = stack.NodeMatch;
+            return new NodeMatchStackPair(match2, stack.Parent);
+        }
+
+        public static NodeMatchStackPair CreateFollowMatch(Node node, NodeMatch match, MatchStack stack, int index)
+        {
+            NodeMatch match2 = new NodeMatch(node, NodeMatch.TransitionType.Follow, match);
+            match2.Index = index;
+            return new NodeMatchStackPair(match2, stack);
+        }
+
     }
 
     public struct NodeMatchErrorPair
