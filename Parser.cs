@@ -41,18 +41,6 @@ namespace MetaphysicsIndustries.Giza
 
                     bool shouldRejectSource = true;
 
-                    //get all tokens, starting at end of source's token
-                    var intokens = _tokenizer.GetTokensAtLocation(
-                                        input, 
-                                        source.Token.StartIndex + source.Token.Length, 
-                                        errors);
-                    //if we get a token, set shouldRejectSource to false
-                    if (intokens != null && 
-                        intokens.Length > 0)
-                    {
-                        shouldRejectSource = false;
-                    }
-
                     var currents = new Queue<NodeMatchStackPair>();
 
                     currents.Enqueue(sourcepair);
@@ -81,6 +69,18 @@ namespace MetaphysicsIndustries.Giza
                         {
                             break;
                         }
+                    }
+
+                    //get all tokens, starting at end of source's token
+                    var intokens = _tokenizer.GetTokensAtLocation(
+                        input,
+                        source.Token.StartIndex + source.Token.Length,
+                        errors);
+                    //if we get a token, set shouldRejectSource to false
+                    if (intokens != null &&
+                        intokens.Length > 0)
+                    {
+                        shouldRejectSource = false;
                     }
 
                     //find all branches
