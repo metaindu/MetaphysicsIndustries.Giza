@@ -5,6 +5,19 @@ namespace MetaphysicsIndustries.Giza
 {
     public class Parser
     {
+        public class ParserError : Error
+        {
+            public static readonly ErrorType InvalidToken =         new ErrorType() { Name="InvalidToken",          Description="InvalidToken"          };
+            public static readonly ErrorType UnexpectedEndOfInput = new ErrorType() { Name="UnexpectedEndOfInput",  Description="UnexpectedEndOfInput"  };
+            public static readonly ErrorType ExcessRemainingInput = new ErrorType() { Name="ExcessRemainingInput",  Description="ExcessRemainingInput"  };
+
+            public Token OffendingToken;
+            public int Line;
+            public int Column;
+            public Node LastValidMatchingNode;
+            public IEnumerable<Node> ExpectedNodes;
+        }
+
         public Parser(Definition definition)
         {
             if (definition == null) throw new ArgumentNullException("definition");
