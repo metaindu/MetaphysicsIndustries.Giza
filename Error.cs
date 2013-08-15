@@ -68,6 +68,26 @@ namespace MetaphysicsIndustries.Giza
 
             return n;
         }
+
+        public static Error GetFirstWarning(this IEnumerable<Error> errors)
+        {
+            foreach (var err in errors)
+            {
+                if (err.IsWarning) return err;
+            }
+
+            return null;
+        }
+
+        public static Error GetFirstNonWarning(this IEnumerable<Error> errors)
+        {
+            foreach (var err in errors)
+            {
+                if (!err.IsWarning) return err;
+            }
+
+            return null;
+        }
     }
 }
 
