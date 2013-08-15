@@ -21,6 +21,8 @@ namespace MetaphysicsIndustries.Giza
         {
             return ErrorType.Name + (IsWarning ? " (warning)" : "");
         }
+
+        public static readonly ErrorType Unknown = new ErrorType() { Name="Unknown", Description="Unknown" };
     }
 
     public static class ErrorHelpers
