@@ -140,10 +140,10 @@ namespace MetaphysicsIndustries.Giza
                     {
                         foreach (var branch in branches)
                         {
-                            Reject(branch.NodeMatch);
+                            Reject(branch.NodeMatch, null);
                         }
 
-                        Reject(source);
+                        Reject(source, null);
                         continue;
                     }
 
@@ -162,7 +162,7 @@ namespace MetaphysicsIndustries.Giza
                             }
                         }
 
-                        Reject(branch.NodeMatch);
+                        Reject(branch.NodeMatch, null);
                     }
                 }
 
@@ -236,12 +236,13 @@ namespace MetaphysicsIndustries.Giza
             return new NodeMatchStackPair{NodeMatch = nodeMatch, MatchStack = matchStack};
         }
 
-        List<NodeMatch> _rejects = new List<NodeMatch>();
-        public void Reject(NodeMatch reject)
+        List<NodeMatchErrorPair> _rejects = new List<NodeMatchErrorPair>();
+        public void Reject(NodeMatch reject, Error error)
         {
-            _rejects.Add(reject);
-            NodeMatch next = reject;
+            _rejects.Add(new NodeMatchErrorPair(reject, error));
+
             NodeMatch cur = reject;
+            NodeMatch next = cur;
             while (cur != null &&
                     cur.Nexts.Count < 2)
             {
@@ -252,14 +253,6 @@ namespace MetaphysicsIndustries.Giza
             {
                 next.Previous = null;
             }
-
-//            while (reject != null &&
-//                    reject.Nexts.Count < 1)
-//            {
-//                var temp = reject;
-//                reject = reject.Previous;
-//                temp.Previous = null;
-//            }
         }
     }
 }
