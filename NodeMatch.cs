@@ -265,6 +265,12 @@ namespace MetaphysicsIndustries.Giza
 
     public struct NodeMatchErrorPair
     {
+        public NodeMatchErrorPair(NodeMatch nm, Error error)
+        {
+            NodeMatch = nm;
+            Error = error;
+        }
+
         public NodeMatch NodeMatch;
         public Error Error;
     }
