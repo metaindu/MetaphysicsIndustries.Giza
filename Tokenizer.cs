@@ -38,7 +38,9 @@ namespace MetaphysicsIndustries.Giza
             while (startIndexes.Count > 0)
             {
                 int startIndex = startIndexes.Dequeue();
-                var leaves = _spanner.Match(_tokenDef, input, errors, false, startIndex);
+                var leaves = _spanner.Match(_tokenDef, input, errors,
+                                            mustUseAllInput:false,
+                                            startIndex:startIndex);
                 if (errors.Count > 0)
                 {
                     return null;
