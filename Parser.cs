@@ -85,15 +85,70 @@ namespace MetaphysicsIndustries.Giza
                     }
 
                     //get all tokens, starting at end of source's token
+                    var errors2 = new List<Error>();
                     var intokens = _tokenizer.GetTokensAtLocation(
                         input,
                         source.Token.StartIndex + source.Token.Length,
-                        errors);
+                        errors2);
                     //if we get a token, set shouldRejectSource to false
                     if (intokens != null &&
                         intokens.Length > 0)
                     {
                         shouldRejectSource = false;
+                    }
+                    else
+                    {
+                        Error err;
+                        if (errors2.ContainsNonWarnings())
+                        {
+                            //reject source with error
+                            Spanner.SpannerError se = (errors2.GetFirstNonWarning() as Spanner.SpannerError);
+                            ParserError pe = new ParserError();
+                            err = pe;
+                            pe.LastValidMatchingNode = source.Node;
+                            pe.ExpectedNodes = pe.LastValidMatchingNode.NextNodes;
+                            if (se.ErrorType == Spanner.SpannerError.UnexpectedEndOfInput)
+                            {
+                                pe.ErrorType = ParserError.UnexpectedEndOfInput;
+                                pe.Column = se.Column;
+                                pe.Line = se.Line;
+                            }
+                            else if (se.ErrorType == Spanner.SpannerError.ExcessRemainingInput)
+                            {
+                                // this shouldn't happen. when we read tokens,
+                                // we set mustUseAllInput to false
+                                throw new InvalidOperationException("Excess remaining input when reading tokens");
+                            }
+                            else if (se.ErrorType == Spanner.SpannerError.InvalidCharacter)
+                            {
+                                pe.ErrorType = Spanner.SpannerError.InvalidCharacter;
+                                pe.Column = se.Column;
+                                pe.Line = se.Line;
+                            }
+                            else
+                            {
+                                // in the future, this shouldn't happen. The
+                                // only thing that would cause an error that's
+                                // not a SpannerError would be something that
+                                // DefinitionChecker found. And
+                                // DefinitionChecker in Spanner.Match shouldn't
+                                // find any problems in the definitions after
+                                // we've already checked them in Parser.Parse
+                                // or Tokenizer (which we don't do yet).
+                                throw new InvalidOperationException("Errors in definitions");
+                            }
+
+                            errors.Add(err);
+                            Reject(source, err);
+                            continue;
+                        }
+                        else
+                        {
+                            err = new Error() {
+                                ErrorType=Error.Unknown,
+                            };
+                            errors.Add(err);
+                        }
                     }
 
                     //find all branches
