@@ -51,21 +51,29 @@ namespace MetaphysicsIndustries.Giza
 
         public NodeMatch[] Match(Definition def, string input, List<Error> errors, bool mustUseAllInput=true, int startIndex=0)
         {
+            bool endOfInput;
+            return Match(def, input, errors, out endOfInput, mustUseAllInput, startIndex);
+        }
+        public NodeMatch[] Match(Definition def, string input, List<Error> errors, out bool endOfInput, bool mustUseAllInput=true, int startIndex=0)
+        {
             // check incoming definitions
             DefinitionChecker dc = new DefinitionChecker();
             var errors2 = new List<Error>(dc.CheckDefinitions(def.ParentGrammar.Definitions));
             if (errors2.Count > 0)
             {
                 errors.AddRange(errors2);
+                endOfInput = false;
                 return null;
             }
-
-            bool endOfInput = false;
 
             if (startIndex >= input.Length)
             {
                 endOfInput = true;
                 return new NodeMatch[0];
+            }
+            else
+            {
+                endOfInput = false;
             }
 
             DefRefNode implicitNode = new DefRefNode(def);
@@ -194,11 +202,6 @@ namespace MetaphysicsIndustries.Giza
                 {
                     currents.Enqueue(accepts.Dequeue());
                 }
-            }
-
-            if (k >= input.Length)
-            {
-                endOfInput = true;
             }
 
             // at this point, the only things in `currents` would be the 

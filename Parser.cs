@@ -86,10 +86,12 @@ namespace MetaphysicsIndustries.Giza
 
                     //get all tokens, starting at end of source's token
                     var errors2 = new List<Error>();
+                    bool endOfInput;
                     var intokens = _tokenizer.GetTokensAtLocation(
                         input,
                         source.Token.StartIndex + source.Token.Length,
-                        errors2);
+                        errors2,
+                        out endOfInput);
                     //if we get a token, set shouldRejectSource to false
                     if (intokens != null &&
                         intokens.Length > 0)
@@ -217,6 +219,8 @@ namespace MetaphysicsIndustries.Giza
                             }
                         }
 
+                        // if we didn't add any intokens, then this should be 
+                        // an invalid token error instead of null
                         Reject(branch.NodeMatch, null);
                     }
                 }

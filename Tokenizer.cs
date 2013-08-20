@@ -29,16 +29,18 @@ namespace MetaphysicsIndustries.Giza
         Spanner _spanner = new Spanner();
         Definition _tokenDef;
 
-        public Token[] GetTokensAtLocation(string input, int index, List<Error> errors)
+        public Token[] GetTokensAtLocation(string input, int index, List<Error> errors, out bool endOfInput)
         {
             Set<NodeMatch> matchTreeLeaves = new Set<NodeMatch>();
 
             Queue<int> startIndexes = new Queue<int>();
             startIndexes.Enqueue(index);
+            endOfInput = false;
             while (startIndexes.Count > 0)
             {
                 int startIndex = startIndexes.Dequeue();
                 var leaves = _spanner.Match(_tokenDef, input, errors,
+                                            out endOfInput,
                                             mustUseAllInput:false,
                                             startIndex:startIndex);
                 if (errors.Count > 0)

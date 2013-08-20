@@ -27,8 +27,10 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Tokenizer t = new Tokenizer(testGrammar);
             Token[] tokens;
-            tokens = t.GetTokensAtLocation("item1 item2", 0, errors);
+            bool endOfInput;
+            tokens = t.GetTokensAtLocation("item1 item2", 0, errors, out endOfInput);
             Assert.IsEmpty(errors);
+            Assert.IsFalse(endOfInput);
             Assert.AreEqual(1, tokens.Length);
             if (tokens.Length > 0)
             {
@@ -37,8 +39,9 @@ namespace MetaphysicsIndustries.Giza.Test
                 Assert.AreEqual(5, tokens[0].Length);
             }
 
-            tokens = t.GetTokensAtLocation("item1 item2", 5, errors);
+            tokens = t.GetTokensAtLocation("item1 item2", 5, errors, out endOfInput);
             Assert.IsEmpty(errors);
+            Assert.IsFalse(endOfInput);
             Assert.AreEqual(1, tokens.Length);
             if (tokens.Length > 0)
             {
@@ -74,9 +77,11 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Tokenizer t = new Tokenizer(testGrammar);
             Token[] tokens;
+            bool endOfInput;
 
-            tokens = t.GetTokensAtLocation(testInput, 0, errors);
+            tokens = t.GetTokensAtLocation(testInput, 0, errors, out endOfInput);
             Assert.IsEmpty(errors);
+            Assert.IsFalse(endOfInput);
             Assert.AreEqual(1, tokens.Length);
             if (tokens.Length > 0)
             {
@@ -85,8 +90,9 @@ namespace MetaphysicsIndustries.Giza.Test
                 Assert.AreEqual(1, tokens[0].Length);
             }
 
-            tokens = t.GetTokensAtLocation(testInput, 1, errors);
+            tokens = t.GetTokensAtLocation(testInput, 1, errors, out endOfInput);
             Assert.IsEmpty(errors);
+            Assert.IsFalse(endOfInput);
             Assert.AreEqual(2, tokens.Length);
             Assert.IsTrue(tokens[0].Definition == plusplusDef || tokens[0].Definition == operDef);
             Assert.IsTrue(tokens[1].Definition == plusplusDef || tokens[1].Definition == operDef);
@@ -134,9 +140,11 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Tokenizer t = new Tokenizer(testGrammar);
             Token[] tokens;
+            bool endOfInput;
 
-            tokens = t.GetTokensAtLocation(testInput, 0, errors);
+            tokens = t.GetTokensAtLocation(testInput, 0, errors, out endOfInput);
             Assert.IsEmpty(errors);
+            Assert.IsFalse(endOfInput);
             Assert.AreEqual(1, tokens.Length);
             if (tokens.Length > 0)
             {
@@ -145,8 +153,9 @@ namespace MetaphysicsIndustries.Giza.Test
                 Assert.AreEqual(1, tokens[0].Length);
             }
 
-            tokens = t.GetTokensAtLocation(testInput, 1, errors);
+            tokens = t.GetTokensAtLocation(testInput, 1, errors, out endOfInput);
             Assert.IsEmpty(errors);
+            Assert.IsFalse(endOfInput);
             Assert.AreEqual(2, tokens.Length);
             Assert.AreEqual(2, tokens[0].StartIndex);
             Assert.AreEqual(2, tokens[1].StartIndex);
@@ -176,12 +185,13 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Tokenizer tokenizer = new Tokenizer(grammar);
             string input = "a + b";
+            bool endOfInput;
 
 
-
-            var tokens = tokenizer.GetTokensAtLocation(input, 0, errors);
+            var tokens = tokenizer.GetTokensAtLocation(input, 0, errors, out endOfInput);
 
             Assert.IsEmpty(errors);
+            Assert.IsFalse(endOfInput);
             Assert.IsNotNull(tokens);
             Assert.AreEqual(1, tokens.Length);
             Assert.AreSame(operandDef, tokens[0].Definition);
@@ -190,9 +200,10 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
 
-            tokens = tokenizer.GetTokensAtLocation(input, 1, errors);
+            tokens = tokenizer.GetTokensAtLocation(input, 1, errors, out endOfInput);
 
             Assert.IsEmpty(errors);
+            Assert.IsFalse(endOfInput);
             Assert.IsNotNull(tokens);
             Assert.AreEqual(1, tokens.Length);
             Assert.AreSame(operatorDef, tokens[0].Definition);
@@ -201,9 +212,10 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
 
-            tokens = tokenizer.GetTokensAtLocation(input, 2, errors);
+            tokens = tokenizer.GetTokensAtLocation(input, 2, errors, out endOfInput);
 
             Assert.IsEmpty(errors);
+            Assert.IsFalse(endOfInput);
             Assert.IsNotNull(tokens);
             Assert.AreEqual(1, tokens.Length);
             Assert.AreSame(operatorDef, tokens[0].Definition);
@@ -212,9 +224,10 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
 
-            tokens = tokenizer.GetTokensAtLocation(input, 3, errors);
+            tokens = tokenizer.GetTokensAtLocation(input, 3, errors, out endOfInput);
 
             Assert.IsEmpty(errors);
+            Assert.IsFalse(endOfInput);
             Assert.IsNotNull(tokens);
             Assert.AreEqual(1, tokens.Length);
             Assert.AreSame(operandDef, tokens[0].Definition);
@@ -223,9 +236,10 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
 
-            tokens = tokenizer.GetTokensAtLocation(input, 4, errors);
+            tokens = tokenizer.GetTokensAtLocation(input, 4, errors, out endOfInput);
 
             Assert.IsEmpty(errors);
+            Assert.IsFalse(endOfInput);
             Assert.IsNotNull(tokens);
             Assert.AreEqual(1, tokens.Length);
             Assert.AreSame(operandDef, tokens[0].Definition);
