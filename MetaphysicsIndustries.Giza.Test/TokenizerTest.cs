@@ -327,6 +327,123 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsNotNull(errors);
             Assert.IsEmpty(errors);
         }
+
+        [Test]
+        public void TestEndOfInputParameterWithComment1()
+        {
+            string grammarText =
+                "expr = operand '+' operand;\n" +
+                "<token> operand = [\\l_] [\\l\\d_]*;\n" +
+                "<comment> comment = '/*' [^*]* '*/';";
+
+            var errors = new List<Error>();
+            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(grammarText, errors);
+            Assert.IsEmpty(errors);
+
+            Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
+            Tokenizer tokenizer = new Tokenizer(grammar);
+            string input = "a + b/*comment*/";
+            bool endOfInput;
+
+
+            var tokens = tokenizer.GetTokensAtLocation(input, 5, errors, out endOfInput);
+
+
+            Assert.IsTrue(endOfInput);
+            Assert.IsNotNull(tokens);
+            Assert.IsEmpty(tokens);
+            Assert.IsNotNull(errors);
+            Assert.IsEmpty(errors);
+        }
+
+        [Test]
+        public void TestEndOfInputParameterWithComment2()
+        {
+            string grammarText =
+                "expr = operand '+' operand;\n" +
+                    "<token> operand = [\\l_] [\\l\\d_]*;\n" +
+                    "<comment> comment = '/*' [^*]* '*/';";
+
+            var errors = new List<Error>();
+            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(grammarText, errors);
+            Assert.IsEmpty(errors);
+
+            Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
+            Tokenizer tokenizer = new Tokenizer(grammar);
+            string input = "a + b /*comment*/";
+            bool endOfInput;
+
+
+            var tokens = tokenizer.GetTokensAtLocation(input, 5, errors, out endOfInput);
+
+
+            Assert.IsTrue(endOfInput);
+            Assert.IsNotNull(tokens);
+            Assert.IsEmpty(tokens);
+            Assert.IsNotNull(errors);
+            Assert.IsEmpty(errors);
+        }
+
+        [Test]
+        public void TestEndOfInputParameterWithComment3()
+        {
+            string grammarText =
+                "expr = operand '+' operand;\n" +
+                    "<token> operand = [\\l_] [\\l\\d_]*;\n" +
+                    "<comment> comment = '/*' [^*]* '*/';";
+
+            var errors = new List<Error>();
+            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(grammarText, errors);
+            Assert.IsEmpty(errors);
+
+            Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
+            Tokenizer tokenizer = new Tokenizer(grammar);
+            string input = "a + b/*comment*/ ";
+            bool endOfInput;
+
+
+            var tokens = tokenizer.GetTokensAtLocation(input, 5, errors, out endOfInput);
+
+
+            Assert.IsTrue(endOfInput);
+            Assert.IsNotNull(tokens);
+            Assert.IsEmpty(tokens);
+            Assert.IsNotNull(errors);
+            Assert.IsEmpty(errors);
+        }
+
+        [Test]
+        public void TestEndOfInputParameterWithAmbiguousComment()
+        {
+            string grammarText =
+                "expr = operand '+' operand;\n" +
+                    "<token> operand = [\\l_] [\\l\\d_]*;\n" +
+                    "<comment> comment = '/*' [^*]* '*/';\n" +
+                    "<token> strange = '/*' [\\l]+;\n";
+
+            var errors = new List<Error>();
+            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(grammarText, errors);
+            Assert.IsEmpty(errors);
+
+            Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
+            Definition strangeDef = grammar.FindDefinitionByName("strange");
+            Tokenizer tokenizer = new Tokenizer(grammar);
+            string input = "a + b/*comment*/";
+            bool endOfInput;
+
+
+            var tokens = tokenizer.GetTokensAtLocation(input, 5, errors, out endOfInput);
+
+
+            Assert.IsFalse(endOfInput);
+            Assert.IsNotNull(errors);
+            Assert.IsEmpty(errors);
+            Assert.IsNotNull(tokens);
+            Assert.AreEqual(1, tokens.Length);
+            Assert.AreSame(strangeDef, tokens[0].Definition);
+            Assert.AreEqual(5, tokens[0].StartIndex);
+            Assert.AreEqual(9, tokens[0].Length);
+        }
     }
 }
 
