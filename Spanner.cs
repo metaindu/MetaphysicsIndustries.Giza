@@ -71,10 +71,6 @@ namespace MetaphysicsIndustries.Giza
                 endOfInput = true;
                 return new NodeMatch[0];
             }
-            else
-            {
-                endOfInput = false;
-            }
 
             DefRefNode implicitNode = new DefRefNode(def);
             NodeMatch root = new NodeMatch(implicitNode, NodeMatch.TransitionType.Root, null);
@@ -202,6 +198,19 @@ namespace MetaphysicsIndustries.Giza
                 {
                     currents.Enqueue(accepts.Dequeue());
                 }
+            }
+
+            if (k >= input.Length &&
+                currents.Count == 1 &&
+                currents.Peek().NodeMatch.Transition == NodeMatch.TransitionType.Root)
+            {
+                //end of input on the root node
+                endOfInput = true;
+                return new NodeMatch[0];
+            }
+            else
+            {
+                endOfInput = false;
             }
 
             // at this point, the only things in `currents` would be the 
