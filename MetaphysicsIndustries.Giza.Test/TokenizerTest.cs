@@ -246,6 +246,87 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(4, tokens[0].StartIndex);
             Assert.AreEqual(1, tokens[0].Length);
         }
+
+        [Test]
+        public void TestEndOfInputParameter1()
+        {
+            string grammarText =
+                "expr = operand '+' operand;\n" +
+                "<token> operand = [\\l_] [\\l\\d_]*;";
+
+            var errors = new List<Error>();
+            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(grammarText, errors);
+            Assert.IsEmpty(errors);
+
+            Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
+            Tokenizer tokenizer = new Tokenizer(grammar);
+            string input = "a + b";
+            bool endOfInput;
+
+
+            var tokens = tokenizer.GetTokensAtLocation(input, 5, errors, out endOfInput);
+
+
+            Assert.IsTrue(endOfInput);
+            Assert.IsNotNull(tokens);
+            Assert.IsEmpty(tokens);
+            Assert.IsNotNull(errors);
+            Assert.IsEmpty(errors);
+        }
+
+        [Test]
+        public void TestEndOfInputParameter2()
+        {
+            string grammarText =
+                "expr = operand '+' operand;\n" +
+                    "<token> operand = [\\l_] [\\l\\d_]*;";
+
+            var errors = new List<Error>();
+            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(grammarText, errors);
+            Assert.IsEmpty(errors);
+
+            Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
+            Tokenizer tokenizer = new Tokenizer(grammar);
+            string input = "a + b ";
+            bool endOfInput;
+
+
+            var tokens = tokenizer.GetTokensAtLocation(input, 5, errors, out endOfInput);
+
+
+            Assert.IsTrue(endOfInput);
+            Assert.IsNotNull(tokens);
+            Assert.IsEmpty(tokens);
+            Assert.IsNotNull(errors);
+            Assert.IsEmpty(errors);
+        }
+
+        [Test]
+        public void TestEndOfInputParameter3()
+        {
+            string grammarText =
+                "expr = operand '+' operand;\n" +
+                    "<token> operand = [\\l_] [\\l\\d_]*;";
+
+            var errors = new List<Error>();
+            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(grammarText, errors);
+            Assert.IsEmpty(errors);
+
+            Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
+            Tokenizer tokenizer = new Tokenizer(grammar);
+            string input = "a + b ";
+            bool endOfInput;
+
+
+            var tokens = tokenizer.GetTokensAtLocation(input, 6, errors, out endOfInput);
+
+
+            Assert.IsTrue(endOfInput);
+            Assert.IsNotNull(tokens);
+            Assert.IsEmpty(tokens);
+            Assert.IsNotNull(errors);
+            Assert.IsEmpty(errors);
+        }
     }
 }
 
