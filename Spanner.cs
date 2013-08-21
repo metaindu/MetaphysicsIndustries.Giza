@@ -276,33 +276,6 @@ namespace MetaphysicsIndustries.Giza
 
             PurgeReject(lastReject.NodeMatch);
 
-//            while (ends.Count > 0)
-//            {
-//                NodeMatch e = ends.Dequeue();
-//                List<NodeMatch> matches = new List<NodeMatch>();
-//
-//                Console.WriteLine("Parse:");
-//                Console.WriteLine();
-//                while (e != null)
-//                {
-//                    matches.Add(e);
-//                    e = e.Previous;
-//                }
-//                matches.Reverse();
-//                foreach (NodeMatch nm in matches)
-//                {
-//                    string ch;
-//
-//                    if (nm._k < 0) ch = " ";
-//                    else ch = input[nm._k].ToString();
-//                    if (ch == "\r") ch = "\\r";
-//                    else if (ch == "\n") ch = "\\n";
-//                    else if (ch == "\t") ch = "\\t";
-//
-//                    Console.WriteLine("{0}\t{1}\t{2}", ch, nm.ToString(), nm.Node.ToString());
-//                }
-//            }
-
             List<NodeMatch> matchTreeLeaves = new List<NodeMatch>();
             while (ends.Count > 0)
             {

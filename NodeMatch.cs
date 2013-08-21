@@ -118,6 +118,27 @@ namespace MetaphysicsIndustries.Giza
 
             return nm;
         }
+
+        public string TreeToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            this.WriteTreeTo(sb);
+            return sb.ToString();
+        }
+        public void WriteTreeTo(StringBuilder sb)
+        {
+            WriteTreeTo(sb, string.Empty);
+        }
+        public void WriteTreeTo(StringBuilder sb, string indent)
+        {
+            sb.Append(indent);
+            sb.AppendLine(this.ToString());
+            string indent2 = indent + "  ";
+            foreach (NodeMatch next in this.Nexts)
+            {
+                next.WriteTreeTo(sb, indent2);
+            }
+        }
     }
 
     class NodeMatchNodeMatchPreviousNextsCollection : ICollection<NodeMatch>
