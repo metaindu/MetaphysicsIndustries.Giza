@@ -239,6 +239,90 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual("sequence", (err.PreviousNode as DefRefNode).DefRef.Name);
             Assert.IsNull(err.ExpectedNodes);
         }
+
+        [Test]
+        public void TestEndOfInputParameter1()
+        {
+            string grammarText =
+                "expr = operand '+' operand;\n" +
+                "<atomic> operand = [\\l_] [\\l\\d_]*;";
+
+            var errors = new List<Error>();
+            Grammar grammar = (new SupergrammarSpanner()).GetGrammar(grammarText, errors);
+            Assert.IsEmpty(errors);
+
+            Spanner spanner = new Spanner();
+            var exprDef = grammar.FindDefinitionByName("expr");
+            string input = "a + b";
+            bool endOfInput;
+
+
+            var tokens = spanner.Match(exprDef, input, errors, out endOfInput,
+                                       mustUseAllInput: false, startIndex: 5);
+
+
+            Assert.IsTrue(endOfInput);
+            Assert.IsNotNull(tokens);
+            Assert.IsEmpty(tokens);
+            Assert.IsNotNull(errors);
+            Assert.IsEmpty(errors);
+        }
+
+        [Test]
+        public void TestEndOfInputParameter2()
+        {
+            string grammarText =
+                "expr = operand '+' operand;\n" +
+                "<atomic> operand = [\\l_] [\\l\\d_]*;";
+
+            var errors = new List<Error>();
+            Grammar grammar = (new SupergrammarSpanner()).GetGrammar(grammarText, errors);
+            Assert.IsEmpty(errors);
+
+            Spanner spanner = new Spanner();
+            var exprDef = grammar.FindDefinitionByName("expr");
+            string input = "a + b ";
+            bool endOfInput;
+
+
+            var tokens = spanner.Match(exprDef, input, errors, out endOfInput,
+                                       mustUseAllInput: false, startIndex: 5);
+
+
+            Assert.IsTrue(endOfInput);
+            Assert.IsNotNull(tokens);
+            Assert.IsEmpty(tokens);
+            Assert.IsNotNull(errors);
+            Assert.IsEmpty(errors);
+        }
+
+        [Test]
+        public void TestEndOfInputParameter3()
+        {
+            string grammarText =
+                "expr = operand '+' operand;\n" +
+                "<atomic> operand = [\\l_] [\\l\\d_]*;";
+
+            var errors = new List<Error>();
+            Grammar grammar = (new SupergrammarSpanner()).GetGrammar(grammarText, errors);
+            Assert.IsEmpty(errors);
+
+            Spanner spanner = new Spanner();
+            var exprDef = grammar.FindDefinitionByName("expr");
+            string input = "a + b ";
+            bool endOfInput;
+
+
+            var tokens = spanner.Match(exprDef, input, errors, out endOfInput,
+                                       mustUseAllInput: false, startIndex: 5);
+
+
+            Assert.IsTrue(endOfInput);
+            Assert.IsNotNull(tokens);
+            Assert.IsEmpty(tokens);
+            Assert.IsNotNull(errors);
+            Assert.IsEmpty(errors);
+        }
     }
 }
 
