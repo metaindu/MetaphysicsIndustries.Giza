@@ -446,7 +446,7 @@ namespace giza
             Grammar g = new Grammar();
             g.Definitions.AddRange(defs);
 
-            Spanner gs = new Spanner();
+            Spanner gs = new Spanner(g.FindDefinitionByName(startSymbol));
             Span[] ss = gs.Process(g, startSymbol, input, errors);
             if (errors != null && errors.Count > 0)
             {

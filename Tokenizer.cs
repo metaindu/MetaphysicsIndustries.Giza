@@ -23,10 +23,12 @@ namespace MetaphysicsIndustries.Giza
                     _tokenDef.EndNodes.Add(node);
                 }
             }
+
+            _spanner = new Spanner(_tokenDef);
         }
 
         Grammar _grammar;
-        Spanner _spanner = new Spanner();
+        Spanner _spanner;
         Definition _tokenDef;
 
         struct TokenizationByIndex

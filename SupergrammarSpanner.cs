@@ -43,7 +43,7 @@ namespace MetaphysicsIndustries.Giza
         public DefinitionExpression[] GetExpressions(string input, List<Error> errors)
         {
             Supergrammar supergrammar = new Supergrammar();
-            Spanner spanner = new Spanner();
+            Spanner spanner = new Spanner(supergrammar.def_0_grammar);
             Span[] s2 = spanner.Process(supergrammar, "grammar", input, errors);
 
             if (errors.Count > 0)

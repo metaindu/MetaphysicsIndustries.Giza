@@ -17,7 +17,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Grammar testGrammar = (new SupergrammarSpanner()).GetGrammar(testGrammarText, errors);
             Assert.IsEmpty(errors);
 
-            Spanner s = new Spanner();
+            Spanner s = new Spanner(testGrammar.FindDefinitionByName("def1"));
 
             Span[] spans = s.Process(testGrammar, "def1", "qwer", errors);
             Assert.AreEqual(1, spans.Length);
@@ -38,8 +38,8 @@ namespace MetaphysicsIndustries.Giza.Test
                 "<whitespace, atomic> id-item1 = 'item1'; \r\n" +
                 "<whitespace, atomic> id-item2 = 'item2'; \r\n";
 
-            Spanner s = new Spanner();
             Supergrammar sg = new Supergrammar();
+            Spanner s = new Spanner(sg.def_0_grammar);
             var errors = new List<Error>();
             Span[] spans = s.Process(sg.def_0_grammar, testGrammarText, errors);
 
@@ -75,7 +75,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Grammar testGrammar = sgs.GetGrammar(testGrammarText, errors);
             Assert.IsEmpty(errors);
 
-            Spanner s = new Spanner();
+            Spanner s = new Spanner(testGrammar.FindDefinitionByName("sequence"));
             Span[] spans = s.Process(testGrammar, "sequence", testInput, errors);
 
             Assert.IsEmpty(spans);
@@ -109,7 +109,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Grammar testGrammar = sgs.GetGrammar(testGrammarText, errors);
             Assert.IsEmpty(errors);
 
-            Spanner s = new Spanner();
+            Spanner s = new Spanner(testGrammar.FindDefinitionByName("sequence"));
             Span[] spans = s.Process(testGrammar, "sequence", testInput, errors);
 
             Assert.IsNotNull(spans);
@@ -147,7 +147,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Grammar testGrammar = sgs.GetGrammar(testGrammarText, errors);
             Assert.IsEmpty(errors);
 
-            Spanner s = new Spanner();
+            Spanner s = new Spanner(testGrammar.FindDefinitionByName("sequence"));
             Span[] spans = s.Process(testGrammar, "sequence", testInput, errors);
 
             Assert.IsNotNull(spans);
@@ -185,7 +185,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Grammar testGrammar = sgs.GetGrammar(testGrammarText, errors);
             Assert.IsEmpty(errors);
 
-            Spanner s = new Spanner();
+            Spanner s = new Spanner(testGrammar.FindDefinitionByName("sequence"));
             Span[] spans = s.Process(testGrammar, "sequence", testInput, errors);
 
             Assert.IsNotNull(spans);
@@ -223,7 +223,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Grammar testGrammar = sgs.GetGrammar(testGrammarText, errors);
             Assert.IsEmpty(errors);
 
-            Spanner s = new Spanner();
+            Spanner s = new Spanner(testGrammar.FindDefinitionByName("sequence"));
             Span[] spans = s.Process(testGrammar, "sequence", testInput, errors);
 
             Assert.IsNotNull(spans);
@@ -251,8 +251,8 @@ namespace MetaphysicsIndustries.Giza.Test
             Grammar grammar = (new SupergrammarSpanner()).GetGrammar(grammarText, errors);
             Assert.IsEmpty(errors);
 
-            Spanner spanner = new Spanner();
             var exprDef = grammar.FindDefinitionByName("expr");
+            Spanner spanner = new Spanner(exprDef);
             string input = "a + b";
             bool endOfInput;
 
@@ -279,8 +279,8 @@ namespace MetaphysicsIndustries.Giza.Test
             Grammar grammar = (new SupergrammarSpanner()).GetGrammar(grammarText, errors);
             Assert.IsEmpty(errors);
 
-            Spanner spanner = new Spanner();
             var exprDef = grammar.FindDefinitionByName("expr");
+            Spanner spanner = new Spanner(exprDef);
             string input = "a + b ";
             bool endOfInput;
 
@@ -307,8 +307,8 @@ namespace MetaphysicsIndustries.Giza.Test
             Grammar grammar = (new SupergrammarSpanner()).GetGrammar(grammarText, errors);
             Assert.IsEmpty(errors);
 
-            Spanner spanner = new Spanner();
             var exprDef = grammar.FindDefinitionByName("expr");
+            Spanner spanner = new Spanner(exprDef);
             string input = "a + b ";
             bool endOfInput;
 

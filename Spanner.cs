@@ -9,6 +9,15 @@ namespace MetaphysicsIndustries.Giza
 {
     public class Spanner
     {
+        public Spanner(Definition definition)
+        {
+            if (definition == null) throw new ArgumentNullException("definition");
+
+            _definition = definition;
+        }
+
+        Definition _definition;
+
         public class SpannerError : Error
         {
             public static readonly ErrorType InvalidCharacter =     new ErrorType() { Name="InvalidCharacter",      Description="InvalidCharacter"      };
