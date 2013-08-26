@@ -447,7 +447,7 @@ namespace giza
             g.Definitions.AddRange(defs);
 
             Spanner gs = new Spanner(g.FindDefinitionByName(startSymbol));
-            Span[] ss = gs.Process(g, startSymbol, input, errors);
+            Span[] ss = gs.Process(input, errors);
             if (errors != null && errors.Count > 0)
             {
                 Console.WriteLine("There are errors in the input:");

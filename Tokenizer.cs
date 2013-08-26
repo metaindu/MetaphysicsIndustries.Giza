@@ -64,7 +64,7 @@ namespace MetaphysicsIndustries.Giza
                 var errors2 = new List<Error>();
                 var tokenLeaves = new Set<NodeMatch>();
 
-                var leaves = _spanner.Match(_tokenDef, input, errors2,
+                var leaves = _spanner.Match(input, errors2,
                                             out endOfInput2,
                                             mustUseAllInput:false,
                                             startIndex:startIndex);

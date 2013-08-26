@@ -38,36 +38,23 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        public Span[] Process(Grammar grammar, string startName, string input, List<Error> errors)
+        public Span[] Process(string input, List<Error> errors)
         {
-            Definition start = grammar.FindDefinitionByName(startName);
-
-            if (start == null)
-            {
-                throw new KeyNotFoundException("Could not find a definition by that name");
-            }
-
-            Span[] spans = Process(start, input, errors);
-            return spans;
-        }
-
-        public Span[] Process(Definition def, string input, List<Error> errors)
-        {
-            NodeMatch[] matchTreeLeaves = Match(def, input, errors);
+            NodeMatch[] matchTreeLeaves = Match(input, errors);
 
             return MakeSpans(matchTreeLeaves);
         }
 
-        public NodeMatch[] Match(Definition def, string input, List<Error> errors, bool mustUseAllInput=true, int startIndex=0)
+        public NodeMatch[] Match(string input, List<Error> errors, bool mustUseAllInput=true, int startIndex=0)
         {
             bool endOfInput;
-            return Match(def, input, errors, out endOfInput, mustUseAllInput, startIndex);
+            return Match(input, errors, out endOfInput, mustUseAllInput, startIndex);
         }
-        public NodeMatch[] Match(Definition def, string input, List<Error> errors, out bool endOfInput, bool mustUseAllInput=true, int startIndex=0)
+        public NodeMatch[] Match(string input, List<Error> errors, out bool endOfInput, bool mustUseAllInput=true, int startIndex=0)
         {
             // check incoming definitions
             DefinitionChecker dc = new DefinitionChecker();
-            var errors2 = new List<Error>(dc.CheckDefinitions(def.ParentGrammar.Definitions));
+            var errors2 = new List<Error>(dc.CheckDefinitions(_definition.ParentGrammar.Definitions));
             if (errors2.Count > 0)
             {
                 errors.AddRange(errors2);
@@ -81,7 +68,7 @@ namespace MetaphysicsIndustries.Giza
                 return new NodeMatch[0];
             }
 
-            DefRefNode implicitNode = new DefRefNode(def);
+            DefRefNode implicitNode = new DefRefNode(_definition);
             NodeMatch root = new NodeMatch(implicitNode, NodeMatch.TransitionType.Root, null);
             root.Index = -1;
 
@@ -288,7 +275,7 @@ namespace MetaphysicsIndustries.Giza
 
             if (ends.Count < 1)
             {
-                var error = GenerateError(lastReject, def, input);
+                var error = GenerateError(lastReject, _definition, input);
                 errors.Add(error);
             }
 

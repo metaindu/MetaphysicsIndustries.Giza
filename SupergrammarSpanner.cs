@@ -44,7 +44,7 @@ namespace MetaphysicsIndustries.Giza
         {
             Supergrammar supergrammar = new Supergrammar();
             Spanner spanner = new Spanner(supergrammar.def_0_grammar);
-            Span[] s2 = spanner.Process(supergrammar, "grammar", input, errors);
+            Span[] s2 = spanner.Process(input, errors);
 
             if (errors.Count > 0)
             {

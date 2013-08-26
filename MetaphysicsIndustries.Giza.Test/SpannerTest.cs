@@ -19,11 +19,11 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Spanner s = new Spanner(testGrammar.FindDefinitionByName("def1"));
 
-            Span[] spans = s.Process(testGrammar, "def1", "qwer", errors);
+            Span[] spans = s.Process("qwer", errors);
             Assert.AreEqual(1, spans.Length);
             Assert.IsEmpty(errors);
 
-            spans = s.Process(testGrammar, "def1", "asdf", errors);
+            spans = s.Process("asdf", errors);
             Assert.AreEqual(1, spans.Length);
             Assert.IsEmpty(errors);
         }
@@ -41,7 +41,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Supergrammar sg = new Supergrammar();
             Spanner s = new Spanner(sg.def_0_grammar);
             var errors = new List<Error>();
-            Span[] spans = s.Process(sg.def_0_grammar, testGrammarText, errors);
+            Span[] spans = s.Process(testGrammarText, errors);
 
             Assert.IsEmpty(spans);
             Assert.AreEqual(1, errors.Count);
@@ -76,7 +76,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
 
             Spanner s = new Spanner(testGrammar.FindDefinitionByName("sequence"));
-            Span[] spans = s.Process(testGrammar, "sequence", testInput, errors);
+            Span[] spans = s.Process(testInput, errors);
 
             Assert.IsEmpty(spans);
             Assert.AreEqual(1, errors.Count);
@@ -110,7 +110,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
 
             Spanner s = new Spanner(testGrammar.FindDefinitionByName("sequence"));
-            Span[] spans = s.Process(testGrammar, "sequence", testInput, errors);
+            Span[] spans = s.Process(testInput, errors);
 
             Assert.IsNotNull(spans);
             Assert.AreEqual(0, spans.Length);
@@ -148,7 +148,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
 
             Spanner s = new Spanner(testGrammar.FindDefinitionByName("sequence"));
-            Span[] spans = s.Process(testGrammar, "sequence", testInput, errors);
+            Span[] spans = s.Process(testInput, errors);
 
             Assert.IsNotNull(spans);
             Assert.AreEqual(0, spans.Length);
@@ -186,7 +186,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
 
             Spanner s = new Spanner(testGrammar.FindDefinitionByName("sequence"));
-            Span[] spans = s.Process(testGrammar, "sequence", testInput, errors);
+            Span[] spans = s.Process(testInput, errors);
 
             Assert.IsNotNull(spans);
             Assert.AreEqual(0, spans.Length);
@@ -224,7 +224,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
 
             Spanner s = new Spanner(testGrammar.FindDefinitionByName("sequence"));
-            Span[] spans = s.Process(testGrammar, "sequence", testInput, errors);
+            Span[] spans = s.Process(testInput, errors);
 
             Assert.IsNotNull(spans);
             Assert.AreEqual(0, spans.Length);
@@ -257,7 +257,7 @@ namespace MetaphysicsIndustries.Giza.Test
             bool endOfInput;
 
 
-            var tokens = spanner.Match(exprDef, input, errors, out endOfInput,
+            var tokens = spanner.Match(input, errors, out endOfInput,
                                        mustUseAllInput: false, startIndex: 5);
 
 
@@ -285,7 +285,7 @@ namespace MetaphysicsIndustries.Giza.Test
             bool endOfInput;
 
 
-            var tokens = spanner.Match(exprDef, input, errors, out endOfInput,
+            var tokens = spanner.Match(input, errors, out endOfInput,
                                        mustUseAllInput: false, startIndex: 5);
 
 
@@ -313,7 +313,7 @@ namespace MetaphysicsIndustries.Giza.Test
             bool endOfInput;
 
 
-            var tokens = spanner.Match(exprDef, input, errors, out endOfInput,
+            var tokens = spanner.Match(input, errors, out endOfInput,
                                        mustUseAllInput: false, startIndex: 5);
 
 
