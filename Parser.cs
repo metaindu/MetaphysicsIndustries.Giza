@@ -181,7 +181,7 @@ namespace MetaphysicsIndustries.Giza
                         NodeMatch cur = current.NodeMatch;
                         MatchStack curstack = current.MatchStack;
 
-                        if (cur.DefRef.IsTokenized && 
+                        if (cur.DefRef.IsTokenized &&
                             cur != info.Source)
                         {
                             branches.Add(current);
@@ -229,19 +229,35 @@ namespace MetaphysicsIndustries.Giza
                         var branchnm = branch.NodeMatch;
                         var branchstack = branch.MatchStack;
 
+                        bool matched = false;
                         foreach (var intoken in info.Tokens)
                         {
-                            if ((branchnm.Node is DefRefNode) && 
+                            if ((branchnm.Node is DefRefNode) &&
                                 (branchnm.Node as DefRefNode).DefRef == intoken.Definition)
                             {
                                 var newNext = branchnm.CloneWithNewToken(intoken);
                                 nextSources.Add(pair(newNext, branchstack));
+                                matched = true;
                             }
                         }
 
-                        // if we didn't add any intokens, then this should be 
-                        // an invalid token error instead of null
-                        Reject(branch.NodeMatch, null);
+                        ParserError err = null;
+
+                        if (!matched &&
+                            info.Tokens != null &&
+                            info.Tokens.Length > 0)
+                        {
+                            err = new ParserError {
+                                ErrorType = ParserError.InvalidToken,
+                                LastValidMatchingNode = info.Source.Node,
+                                OffendingToken = info.Tokens[0],
+                                ExpectedNodes = info.Source.Node.NextNodes,
+//                                Line =
+//                                Column =
+                            };
+                        }
+
+                        Reject(branch.NodeMatch, err);
                     }
                 }
 
