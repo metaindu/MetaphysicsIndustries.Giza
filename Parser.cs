@@ -86,7 +86,6 @@ namespace MetaphysicsIndustries.Giza
 
                         if (info.Ender.MatchStack == null)
                         {
-                            ends.Add(info.Ender.NodeMatch);
                             shouldRejectSource = false;
                             info.EnderIsEndCandidate = true;
                             break;
@@ -222,6 +221,24 @@ namespace MetaphysicsIndustries.Giza
 
                         Reject(info.Source, null);
                         continue;
+                    }
+
+                    if (info.EnderIsEndCandidate)
+                    {
+                        if (info.EndOfInput)
+                        {
+                            ends.Add(info.Ender.NodeMatch);
+                        }
+                        else
+                        {
+                            var err = new ParserError {
+                                ErrorType = ParserError.ExcessRemainingInput,
+                                LastValidMatchingNode = info.Source.Node,
+//                                Line =
+//                                Column =
+                            };
+                            Reject(info.Ender.NodeMatch, err);
+                        }
                     }
 
                     foreach (var branch in branches)
