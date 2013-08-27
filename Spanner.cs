@@ -13,6 +13,14 @@ namespace MetaphysicsIndustries.Giza
         {
             if (definition == null) throw new ArgumentNullException("definition");
 
+            // check incoming definitions
+            DefinitionChecker dc = new DefinitionChecker();
+            var errors2 = new List<Error>(dc.CheckDefinitions(definition.ParentGrammar.Definitions));
+            if (errors2.Count > 0)
+            {
+                //errors.AddRange(errors2);
+            }
+
             _definition = definition;
         }
 
@@ -52,16 +60,6 @@ namespace MetaphysicsIndustries.Giza
         }
         public NodeMatch[] Match(string input, List<Error> errors, out bool endOfInput, bool mustUseAllInput=true, int startIndex=0)
         {
-            // check incoming definitions
-            DefinitionChecker dc = new DefinitionChecker();
-            var errors2 = new List<Error>(dc.CheckDefinitions(_definition.ParentGrammar.Definitions));
-            if (errors2.Count > 0)
-            {
-                errors.AddRange(errors2);
-                endOfInput = false;
-                return null;
-            }
-
             if (startIndex >= input.Length)
             {
                 endOfInput = true;
