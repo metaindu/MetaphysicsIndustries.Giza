@@ -295,5 +295,13 @@ namespace MetaphysicsIndustries.Giza
         public NodeMatch NodeMatch;
         public Error Error;
     }
+
+    public static class NodeMatchErrorPairHelper
+    {
+        public static void Add(this ICollection<NodeMatchErrorPair> collection, NodeMatch nm, Error err)
+        {
+            collection.Add(new NodeMatchErrorPair(nm, err));
+        }
+    }
 }
 
