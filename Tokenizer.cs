@@ -101,7 +101,7 @@ namespace MetaphysicsIndustries.Giza
 
                 if (tokenLeaves.Count > 0 ||
                     endOfInput2 ||
-                    errors.Count > 0)
+                    errors2.Count > 0)
                 {
                     var tokenization = new TokenizationByIndex(
                         startIndex, errors2, endOfInput2, tokenLeaves,
