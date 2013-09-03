@@ -9,9 +9,9 @@ namespace MetaphysicsIndustries.Giza
     {
         public class ParserError : Error
         {
-            public static readonly ErrorType InvalidToken =         new ErrorType() { Name="InvalidToken",          Description="InvalidToken"          };
-            public static readonly ErrorType UnexpectedEndOfInput = new ErrorType() { Name="UnexpectedEndOfInput",  Description="UnexpectedEndOfInput"  };
-            public static readonly ErrorType ExcessRemainingInput = new ErrorType() { Name="ExcessRemainingInput",  Description="ExcessRemainingInput"  };
+            public static readonly ErrorType InvalidToken =         new ErrorType { Name="InvalidToken",          Description="InvalidToken"          };
+            public static readonly ErrorType UnexpectedEndOfInput = new ErrorType { Name="UnexpectedEndOfInput",  Description="UnexpectedEndOfInput"  };
+            public static readonly ErrorType ExcessRemainingInput = new ErrorType { Name="ExcessRemainingInput",  Description="ExcessRemainingInput"  };
 
             public Token OffendingToken;
             public int Line;
@@ -48,8 +48,11 @@ namespace MetaphysicsIndustries.Giza
             public List<NodeMatchStackPair> Branches;
         }
 
-        public Span[] Parse(string input, List<Error> errors)
+        public Span[] Parse(string input, ICollection<Error> errors)
         {
+            if (input == null) throw new ArgumentNullException("input");
+            if (errors == null) throw new ArgumentNullException("errors");
+
             var sources = new Queue<NodeMatchStackPair>();
             var ends = new List<NodeMatch>();
             var rootDef = new Definition("$rootDef");
@@ -82,15 +85,18 @@ namespace MetaphysicsIndustries.Giza
                     {
                         var nm = ender.NodeMatch;
 
-                        if (nm == null) break;
-                        if (nm.Transition == NodeMatch.TransitionType.Root) break;
+                        if (nm == null)
+                            break;
+                        if (nm.Transition == NodeMatch.TransitionType.Root)
+                            break;
 
                         if (ender.MatchStack == null)
                         {
                             info.LastEnderIsEndCandidate = true;
                             break;
                         }
-                        else if (nm.Node.IsEndNode)
+
+                        if (nm.Node.IsEndNode)
                         {
                             ender = ender.CreateEndDefMatch();
                             currents.Enqueue(ender);
@@ -122,7 +128,7 @@ namespace MetaphysicsIndustries.Giza
                         {
                             foreach (var next in cur.Node.NextNodes)
                             {
-                                NodeMatch nm = new NodeMatch(next, NodeMatch.TransitionType.Follow, cur);
+                                var nm = new NodeMatch(next, NodeMatch.TransitionType.Follow, cur);
                                 currents.Enqueue(pair(nm, curstack));
                             }
                         }
@@ -131,7 +137,7 @@ namespace MetaphysicsIndustries.Giza
                             var nextStack = new MatchStack(cur, curstack);
                             foreach (var start in (cur.Node as DefRefNode).DefRef.StartNodes)
                             {
-                                NodeMatch nm = new NodeMatch(start, NodeMatch.TransitionType.StartDef, cur);
+                                var nm = new NodeMatch(start, NodeMatch.TransitionType.StartDef, cur);
                                 currents.Enqueue(pair(nm, nextStack));
                             }
                         }
@@ -152,7 +158,7 @@ namespace MetaphysicsIndustries.Giza
                     {
                         //reject branches with error
                         Spanner.SpannerError se = (info.TokenizationErrors.GetFirstNonWarning() as Spanner.SpannerError);
-                        ParserError err = new ParserError();
+                        var err = new ParserError();
                         err.LastValidMatchingNode = info.Source.Node;
 
                         err.ExpectedNodes = GetExpectedNodes(info);
@@ -183,8 +189,6 @@ namespace MetaphysicsIndustries.Giza
                             throw new InvalidOperationException("Errors in definitions");
                         }
 
-//                        errors.Add(err);
-//                        rejects.Add(info.Source, err);
                         foreach (var branch in info.Branches)
                         {
                             rejects.Add(branch.NodeMatch, err);
@@ -305,36 +309,35 @@ namespace MetaphysicsIndustries.Giza
 
                 return MakeSpans(ends, input);
             }
-            else
-            {
-                if (rejects.Count > 0)
-                {
-                    Error errorToUse = null;
-                    foreach (var reject in (rejects as IEnumerable<NodeMatchErrorPair>).Reverse())
-                    {
-                        if (reject.Error != null)
-                        {
-                            errorToUse = reject.Error;
-                            break;
-                        }
-                    }
 
-                    if (errorToUse != null)
+            if (rejects.Count > 0)
+            {
+                Error errorToUse = null;
+                foreach (var reject in (rejects as IEnumerable<NodeMatchErrorPair>).Reverse())
+                {
+                    if (reject.Error != null)
                     {
-                        errors.Add(errorToUse);
+                        errorToUse = reject.Error;
+                        break;
                     }
-                    else
-                    {
-                        throw new InvalidOperationException("No errors among the rejects");
-                    }
+                }
+
+                if (errorToUse != null)
+                {
+                    errors.Add(errorToUse);
                 }
                 else
                 {
-                    // failed to start?
-                    throw new NotImplementedException();
+                    throw new InvalidOperationException("No errors among the rejects");
                 }
-                return new Span[0];
             }
+            else
+            {
+                // failed to start?
+                throw new NotImplementedException();
+            }
+
+            return new Span[0];
         }
 
         static IEnumerable<Node> GetExpectedNodes(ParseInfo info)
@@ -357,11 +360,11 @@ namespace MetaphysicsIndustries.Giza
 
         static Span[] MakeSpans(IEnumerable<NodeMatch> matchTreeLeaves, string input)
         {
-            List<List<NodeMatch>> lists = new List<List<NodeMatch>>();
+            var lists = new List<List<NodeMatch>>();
             foreach (NodeMatch leaf in matchTreeLeaves)
             {
                 NodeMatch cur = leaf;
-                List<NodeMatch> list = new List<NodeMatch>();
+                var list = new List<NodeMatch>();
 
                 while (cur != null)
                 {
@@ -373,10 +376,10 @@ namespace MetaphysicsIndustries.Giza
                 lists.Add(list);
             }
 
-            List<Span> spans = new List<Span>();
+            var spans = new List<Span>();
             foreach (List<NodeMatch> list in lists)
             {
-                Stack<Span> stack = new Stack<Span>();
+                var stack = new Stack<Span>();
 
                 Span rootSpan = null;
 
@@ -388,7 +391,7 @@ namespace MetaphysicsIndustries.Giza
                     }
                     else if (!nm.DefRef.IsTokenized)
                     {
-                        Span s = new Span();
+                        var s = new Span();
                         s.Node = nm.Node;
                         if (stack.Count > 0)
                         {
@@ -398,7 +401,7 @@ namespace MetaphysicsIndustries.Giza
                     }
                     else
                     {
-                        Span s = new Span();
+                        var s = new Span();
                         s.Node = nm.Node;
                         s.Value = input.Substring(nm.Token.StartIndex, nm.Token.Length);
                         stack.Peek().Subspans.Add(s);
