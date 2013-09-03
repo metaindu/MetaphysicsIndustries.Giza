@@ -224,7 +224,8 @@ namespace MetaphysicsIndustries.Giza
                             int line;
                             int column;
 
-                            Spanner.GetPosition(input, parseIndex, out line, out column);
+                            Spanner.GetPosition(input, info.Tokens[0].StartIndex,
+                                                out line, out column);
 
                             var err = new ParserError {
                                 ErrorType = ParserError.ExcessRemainingInput,
@@ -263,13 +264,19 @@ namespace MetaphysicsIndustries.Giza
                             // otherwise, reject it with null since it's a duplicate
                             if (!matched)
                             {
+                                int line;
+                                int column;
+
+                                Spanner.GetPosition(input, info.Tokens[0].StartIndex,
+                                                    out line, out column);
+
                                 err = new ParserError {
                                     ErrorType = ParserError.InvalidToken,
                                     LastValidMatchingNode = info.Source.Node,
                                     OffendingToken = info.Tokens[0],
                                     ExpectedNodes = info.Source.Node.NextNodes,
-                                    // Line =
-                                    // Column =
+                                    Line = line,
+                                    Column = column,
                                 };
                             }
 
