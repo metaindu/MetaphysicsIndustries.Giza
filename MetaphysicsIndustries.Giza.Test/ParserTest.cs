@@ -409,6 +409,48 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsInstanceOf<DefRefNode>(err.ExpectedNodes.First());
             Assert.AreSame(sequenceDef, (err.ExpectedNodes.First() as DefRefNode).DefRef);
         }
+
+        [Test]
+        public void TestExcessRemainingInput()
+        {
+            string testGrammarText =
+                " // test grammar \r\n" +
+                "sequence = 'one' 'two' 'three'; \r\n" +
+                "number = ( 'one' | 'two' | 'three' | 'four' ); \r\n";
+
+            string testInput = "one two three four";
+                              //123456789012345678
+            var sgs = new SupergrammarSpanner();
+            var errors = new List<Error>();
+            var dis = sgs.GetExpressions(testGrammarText, errors);
+            Assert.IsEmpty(errors);
+            var tgb = new TokenizedGrammarBuilder();
+            var testGrammar = tgb.BuildTokenizedGrammar(dis);
+            var threeDef = testGrammar.FindDefinitionByName("$implicit literal three");
+            var fourDef = testGrammar.FindDefinitionByName("$implicit literal four");
+            var sequenceDef = testGrammar.FindDefinitionByName("sequence");
+            var parser = new Parser(sequenceDef);
+
+
+            Span[] spans = parser.Parse(testInput, errors);
+
+
+            Assert.IsNotNull(spans);
+            Assert.AreEqual(0, spans.Length);
+            Assert.IsNotNull(errors);
+            Assert.AreEqual(1, errors.Count);
+            Assert.IsInstanceOf<ParserError>(errors[0]);
+            var err = ((ParserError)errors[0]);
+            Assert.AreEqual(ParserError.ExcessRemainingInput, err.ErrorType);
+            Assert.AreEqual(1, err.Line);
+            Assert.AreEqual(15, err.Column);
+            Assert.AreEqual(14, err.OffendingToken.StartIndex);
+            Assert.AreEqual(4, err.OffendingToken.Length);
+            Assert.AreSame(fourDef, err.OffendingToken.Definition);
+            Assert.IsInstanceOf<DefRefNode>(err.LastValidMatchingNode);
+            Assert.AreSame(threeDef, (err.LastValidMatchingNode as DefRefNode).DefRef);
+            Assert.IsNull(err.ExpectedNodes);
+        }
     }
 }
 
