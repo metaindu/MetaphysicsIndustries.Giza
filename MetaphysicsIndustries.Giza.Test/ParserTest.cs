@@ -17,16 +17,16 @@ namespace MetaphysicsIndustries.Giza.Test
                 "<token> operand = [\\l_] [\\l\\d_]*;";
 
             var errors = new List<Error>();
-            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(grammarText, errors);
+            var dis = (new SupergrammarSpanner()).GetExpressions(grammarText, errors);
             Assert.IsEmpty(errors);
 
-            Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
+            var grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
 
-            Definition exprDef = grammar.FindDefinitionByName("expr");
-            Definition operandDef = grammar.FindDefinitionByName("operand");
-            Definition operatorDef = grammar.FindDefinitionByName("$implicit literal +");
+            var exprDef = grammar.FindDefinitionByName("expr");
+            var operandDef = grammar.FindDefinitionByName("operand");
+            var operatorDef = grammar.FindDefinitionByName("$implicit literal +");
 
-            Parser parser = new Parser(exprDef);
+            var parser = new Parser(exprDef);
             errors = new List<Error>();
 
 
@@ -61,18 +61,18 @@ namespace MetaphysicsIndustries.Giza.Test
                 "<token> operand = [\\l_] [\\l\\d_]*;";
 
             var errors = new List<Error>();
-            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(grammarText, errors);
+            var dis = (new SupergrammarSpanner()).GetExpressions(grammarText, errors);
             Assert.IsEmpty(errors);
 
-            Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
+            var grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
 
-            Definition exprDef = grammar.FindDefinitionByName("expr");
-            Definition subexprDef = grammar.FindDefinitionByName("subexpr");
-            Definition operandDef = grammar.FindDefinitionByName("operand");
-            Definition plusDef = grammar.FindDefinitionByName("$implicit literal +");
-            Definition plusPlusDef = grammar.FindDefinitionByName("$implicit literal ++");
+            var exprDef = grammar.FindDefinitionByName("expr");
+            var subexprDef = grammar.FindDefinitionByName("subexpr");
+            var operandDef = grammar.FindDefinitionByName("operand");
+            var plusDef = grammar.FindDefinitionByName("$implicit literal +");
+            var plusPlusDef = grammar.FindDefinitionByName("$implicit literal ++");
 
-            Parser parser = new Parser(exprDef);
+            var parser = new Parser(exprDef);
             errors = new List<Error>();
 
 
@@ -161,14 +161,14 @@ namespace MetaphysicsIndustries.Giza.Test
 
             string testInput = "item1 ( item2 ";
 
-            SupergrammarSpanner sgs = new SupergrammarSpanner();
+            var sgs = new SupergrammarSpanner();
             var errors = new List<Error>();
             var dis = sgs.GetExpressions(testGrammarText, errors);
             Assert.IsEmpty(errors);
             var tgb = new TokenizedGrammarBuilder();
             Grammar testGrammar = tgb.BuildTokenizedGrammar(dis);
             var itemDef = testGrammar.FindDefinitionByName("item");
-            Parser parser = new Parser(testGrammar.FindDefinitionByName("sequence"));
+            var parser = new Parser(testGrammar.FindDefinitionByName("sequence"));
 
             Span[] spans = parser.Parse(testInput, errors);
 
@@ -202,14 +202,14 @@ namespace MetaphysicsIndustries.Giza.Test
 
             string testInput = "item1 ( item2";
 
-            SupergrammarSpanner sgs = new SupergrammarSpanner();
+            var sgs = new SupergrammarSpanner();
             var errors = new List<Error>();
             var dis = sgs.GetExpressions(testGrammarText, errors);
             Assert.IsEmpty(errors);
             var tgb = new TokenizedGrammarBuilder();
-            Grammar testGrammar = tgb.BuildTokenizedGrammar(dis);
+            var testGrammar = tgb.BuildTokenizedGrammar(dis);
             var itemDef = testGrammar.FindDefinitionByName("item");
-            Parser parser = new Parser(testGrammar.FindDefinitionByName("sequence"));
+            var parser = new Parser(testGrammar.FindDefinitionByName("sequence"));
 
             Span[] spans = parser.Parse(testInput, errors);
 
@@ -243,7 +243,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
             string testInput = "item1 ( item";
 
-            SupergrammarSpanner sgs = new SupergrammarSpanner();
+            var sgs = new SupergrammarSpanner();
             var errors = new List<Error>();
             var dis = sgs.GetExpressions(testGrammarText, errors);
             Assert.IsEmpty(errors);
