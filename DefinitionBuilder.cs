@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using MetaphysicsIndustries.Collections;
-using System.Text.RegularExpressions;
-using System.Globalization;
 using System.Linq;
 
 namespace MetaphysicsIndustries.Giza
@@ -12,19 +9,19 @@ namespace MetaphysicsIndustries.Giza
     {
         public Definition[] BuildDefinitions(DefinitionExpression[] defs)
         {
-            ExpressionChecker ec = new ExpressionChecker();
+            var ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionInfosForSpanning(defs);
             if (errors.ContainsNonWarnings())
             {
                 throw new InvalidOperationException("Errors in expressions.");
             }
 
-            List<Definition> defs2 = new List<Definition>();
-            Dictionary<string, Definition> defsByName = new Dictionary<string, Definition>();
-            Dictionary<Definition, Expression> exprsByDef = new Dictionary<Definition, Expression>();
+            var defs2 = new List<Definition>();
+            var defsByName = new Dictionary<string, Definition>();
+            var exprsByDef = new Dictionary<Definition, Expression>();
             foreach (DefinitionExpression di in defs)
             {
-                Definition def = new Definition(di.Name);
+                var def = new Definition(di.Name);
                 defs2.Add(def);
                 defsByName[di.Name] = def;
                 def.Directives.AddRange(di.Directives);
@@ -51,7 +48,7 @@ namespace MetaphysicsIndustries.Giza
         {
             NodeBundle first = null;
             NodeBundle last = null;
-            List<NodeBundle> bundles = new List<NodeBundle>();
+            var bundles = new List<NodeBundle>();
             foreach (ExpressionItem item in expr.Items)
             {
                 NodeBundle bundle = null;
@@ -77,9 +74,9 @@ namespace MetaphysicsIndustries.Giza
                 }
             }
 
-            Set<Node> starts = new Set<Node>();
-            Set<Node> ends = new Set<Node>();
-            List<Node> nodes = new List<Node>();
+            var starts = new Set<Node>();
+            var ends = new Set<Node>();
+            var nodes = new List<Node>();
 
             foreach (NodeBundle bundle in bundles)
             {
@@ -155,7 +152,7 @@ namespace MetaphysicsIndustries.Giza
                 IsSkippable = skippable};
         }
 
-        NodeBundle GetNodesFromSubExpression(SubExpression subexpr, Dictionary<string, Definition> defsByName)
+        static NodeBundle GetNodesFromSubExpression(SubExpression subexpr, Dictionary<string, Definition> defsByName)
         {
             if (subexpr is DefRefSubExpression)
             {
@@ -171,15 +168,15 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        NodeBundle GetNodesFromDefRefSubExpression(DefRefSubExpression defref, Dictionary<string, Definition> defsByName)
+        static NodeBundle GetNodesFromDefRefSubExpression(DefRefSubExpression defref, IDictionary<string, Definition> defsByName)
         {
-            DefRefNode node = new DefRefNode(defsByName[defref.DefinitionName], defref.Tag);
+            var node = new DefRefNode(defsByName[defref.DefinitionName], defref.Tag);
             if (defref.IsRepeatable)
             {
                 node.NextNodes.Add(node);
             }
 
-            NodeBundle bundle = new NodeBundle();
+            var bundle = new NodeBundle();
             bundle.Nodes = new List<Node> { node };
             bundle.StartNodes = new Set<Node> { node };
             bundle.EndNodes = new Set<Node> { node };
@@ -188,13 +185,13 @@ namespace MetaphysicsIndustries.Giza
             return bundle;
         }
 
-        NodeBundle GetNodesFromLiteralSubExpression(LiteralSubExpression literal)
+        static NodeBundle GetNodesFromLiteralSubExpression(LiteralSubExpression literal)
         {
-            List<Node> nodes = new List<Node>();
+            var nodes = new List<Node>();
 
             foreach (char ch in literal.Value)
             {
-                CharNode node = new CharNode(ch, literal.Tag);
+                var node = new CharNode(ch, literal.Tag);
                 nodes.Add(node);
             }
 
@@ -209,7 +206,7 @@ namespace MetaphysicsIndustries.Giza
                 nodes.Last().NextNodes.Add(nodes[0]);
             }
 
-            NodeBundle bundle = new NodeBundle();
+            var bundle = new NodeBundle();
             bundle.Nodes = nodes;
             bundle.StartNodes = new Set<Node> { nodes[0] };
             bundle.EndNodes = new Set<Node> { nodes.Last() };
@@ -218,9 +215,9 @@ namespace MetaphysicsIndustries.Giza
             return bundle;
         }
 
-        NodeBundle GetNodesFromCharClassSubExpression(CharClassSubExpression cc)
+        static NodeBundle GetNodesFromCharClassSubExpression(CharClassSubExpression cc)
         {
-            CharNode node = new CharNode(cc.CharClass, cc.Tag);
+            var node = new CharNode(cc.CharClass, cc.Tag);
 
             if (cc.IsRepeatable)
             {
@@ -237,16 +234,16 @@ namespace MetaphysicsIndustries.Giza
 
         NodeBundle GetNodesFromOrExpression(OrExpression orexpr, Dictionary<string, Definition> defsByName)
         {
-            List<NodeBundle> bundles = new List<NodeBundle>();
+            var bundles = new List<NodeBundle>();
 
             foreach (Expression expr in orexpr.Expressions)
             {
                 bundles.Add(GetNodesFromExpression(expr, defsByName));
             }
 
-            Set<Node> starts = new Set<Node>();
-            Set<Node> ends = new Set<Node>();
-            List<Node> nodes = new List<Node>();
+            var starts = new Set<Node>();
+            var ends = new Set<Node>();
+            var nodes = new List<Node>();
             foreach (NodeBundle bundle in bundles)
             {
                 nodes.AddRange(bundle.Nodes);
@@ -276,7 +273,7 @@ namespace MetaphysicsIndustries.Giza
         public Set<Node> StartNodes;
         public Set<Node> EndNodes;
         public List<Node> Nodes;
-        public bool IsSkippable = false;
+        public bool IsSkippable;
     }
 
 }
