@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using MetaphysicsIndustries.Collections;
+using System.Linq;
 
 namespace MetaphysicsIndustries.Giza
 {
@@ -35,11 +37,11 @@ namespace MetaphysicsIndustries.Giza
             public NodeMatch Source { get { return SourcePair.NodeMatch; } }
             public MatchStack SourceStack { get { return SourcePair.MatchStack; } }
 
-            public NodeMatchStackPair Ender;
-            public bool EnderIsEndCandidate;
-            public bool EnderIsSource;
+            public List<NodeMatchStackPair> Enders;
+            public bool LastEnderIsEndCandidate;
 
             public bool EndOfInput;
+            public int EndOfInputIndex;
             public Token[] Tokens;
             public List<Error> TokenizationErrors;
 
@@ -56,6 +58,7 @@ namespace MetaphysicsIndustries.Giza
             rootDef.StartNodes.Add(rootNode);
             rootDef.EndNodes.Add(rootNode);
             var root = new NodeMatch(rootNode, NodeMatch.TransitionType.Root, null);
+            var rejects = new List<NodeMatchErrorPair>();
 
             sources.Enqueue(pair(root, null));
 
@@ -68,33 +71,30 @@ namespace MetaphysicsIndustries.Giza
                     var info = new ParseInfo();
                     info.SourcePair = sources.Dequeue();
 
-                    bool shouldRejectSource = true;
-
                     var currents = new Queue<NodeMatchStackPair>();
 
                     currents.Enqueue(info.SourcePair);
 
-                    //find all ends
-                    info.Ender = info.SourcePair;
-                    info.EnderIsSource = true;
+                    // find all ends
+                    var ender = info.SourcePair;
+                    info.Enders = new List<NodeMatchStackPair>();
                     while (true)
                     {
-                        var nm = info.Ender.NodeMatch;
+                        var nm = ender.NodeMatch;
 
                         if (nm == null) break;
                         if (nm.Transition == NodeMatch.TransitionType.Root) break;
 
-                        if (info.Ender.MatchStack == null)
+                        if (ender.MatchStack == null)
                         {
-                            shouldRejectSource = false;
-                            info.EnderIsEndCandidate = true;
+                            info.LastEnderIsEndCandidate = true;
                             break;
                         }
                         else if (nm.Node.IsEndNode)
                         {
-                            info.Ender = info.Ender.CreateEndDefMatch();
-                            currents.Enqueue(info.Ender);
-                            info.EnderIsSource = false;
+                            ender = ender.CreateEndDefMatch();
+                            currents.Enqueue(ender);
+                            info.Enders.Add(ender);
                         }
                         else
                         {
@@ -102,80 +102,8 @@ namespace MetaphysicsIndustries.Giza
                         }
                     }
 
-                    //get all tokens, starting at end of source's token
-                    int endOfInputIndex;
-                    info.TokenizationErrors = new List<Error>();
-                    info.Tokens = _tokenizer.GetTokensAtLocation(
-                        input,
-                        info.Source.Token.StartIndex + info.Source.Token.Length,
-                        info.TokenizationErrors,
-                        out info.EndOfInput,
-                        out endOfInputIndex);
-
-                    //if we get a token, set shouldRejectSource to false
-                    if (info.Tokens != null &&
-                        info.Tokens.Length > 0)
-                    {
-                        shouldRejectSource = false;
-                    }
-                    else
-                    {
-                        Error err;
-                        if (info.TokenizationErrors.ContainsNonWarnings())
-                        {
-                            //reject source with error
-                            Spanner.SpannerError se = (info.TokenizationErrors.GetFirstNonWarning() as Spanner.SpannerError);
-                            ParserError pe = new ParserError();
-                            err = pe;
-                            pe.LastValidMatchingNode = info.Source.Node;
-                            pe.ExpectedNodes = pe.LastValidMatchingNode.NextNodes;
-                            if (se.ErrorType == Spanner.SpannerError.UnexpectedEndOfInput)
-                            {
-                                pe.ErrorType = ParserError.UnexpectedEndOfInput;
-                                pe.Column = se.Column;
-                                pe.Line = se.Line;
-                            }
-                            else if (se.ErrorType == Spanner.SpannerError.ExcessRemainingInput)
-                            {
-                                // this shouldn't happen. when we read tokens,
-                                // we set mustUseAllInput to false
-                                throw new InvalidOperationException("Excess remaining input when reading tokens");
-                            }
-                            else if (se.ErrorType == Spanner.SpannerError.InvalidCharacter)
-                            {
-                                pe.ErrorType = Spanner.SpannerError.InvalidCharacter;
-                                pe.Column = se.Column;
-                                pe.Line = se.Line;
-                            }
-                            else
-                            {
-                                // in the future, this shouldn't happen. The
-                                // only thing that would cause an error that's
-                                // not a SpannerError would be something that
-                                // DefinitionChecker found. And
-                                // DefinitionChecker in Spanner.Match shouldn't
-                                // find any problems in the definitions after
-                                // we've already checked them in Parser.Parse
-                                // or Tokenizer (which we don't do yet).
-                                throw new InvalidOperationException("Errors in definitions");
-                            }
-
-                            errors.Add(err);
-                            Reject(info.Source, err);
-                            // reject ender?
-                            continue;
-                        }
-                        else
-                        {
-                            err = new Error() {
-                                ErrorType=Error.Unknown,
-                            };
-                            errors.Add(err);
-                        }
-                    }
-
                     //find all branches
-                    var branches = new List<NodeMatchStackPair>();
+                    info.Branches = new List<NodeMatchStackPair>();
                     while (currents.Count > 0)
                     {
                         NodeMatchStackPair current = currents.Dequeue();
@@ -185,11 +113,9 @@ namespace MetaphysicsIndustries.Giza
                         if (cur.DefRef.IsTokenized &&
                             cur != info.Source)
                         {
-                            branches.Add(current);
-                            shouldRejectSource = false;
+                            info.Branches.Add(current);
                             continue;
                         }
-
 
                         if (cur.DefRef.IsTokenized ||
                             cur.Transition == NodeMatch.TransitionType.EndDef)
@@ -211,72 +137,144 @@ namespace MetaphysicsIndustries.Giza
                         }
                     }
 
-                    //if no tokens, reject source and continue
-                    //if no branches, reject source and continue
-                    //however, if ends, then dont reject source
-                    if (shouldRejectSource)
+                    //get all tokens, starting at end of source's token
+                    var parseIndex = info.Source.Token.StartIndex + info.Source.Token.Length;
+                    info.TokenizationErrors = new List<Error>();
+                    info.Tokens = _tokenizer.GetTokensAtLocation(
+                        input,
+                        parseIndex,
+                        info.TokenizationErrors,
+                        out info.EndOfInput,
+                        out info.EndOfInputIndex);
+
+                    //if we get any tokenization errors, process them and reject
+                    if (info.TokenizationErrors.ContainsNonWarnings())
                     {
-                        foreach (var branch in branches)
+                        //reject branches with error
+                        Spanner.SpannerError se = (info.TokenizationErrors.GetFirstNonWarning() as Spanner.SpannerError);
+                        ParserError pe = new ParserError();
+                        var err = pe;
+                        pe.LastValidMatchingNode = info.Source.Node;
+
+                        pe.ExpectedNodes = GetExpectedNodes(info);
+
+                        if (se.ErrorType == Spanner.SpannerError.UnexpectedEndOfInput)
                         {
-                            Reject(branch.NodeMatch, null);
+                            pe.ErrorType = ParserError.UnexpectedEndOfInput;
+                            pe.Column = se.Column;
+                            pe.Line = se.Line;
                         }
-
-                        Reject(info.Source, null);
-                        continue;
-                    }
-
-                    if (info.EnderIsEndCandidate)
-                    {
-                        if (info.EndOfInput)
+                        else if (se.ErrorType == Spanner.SpannerError.ExcessRemainingInput)
                         {
-                            ends.Add(info.Ender.NodeMatch);
+                            // this shouldn't happen. when we read tokens,
+                            // we set mustUseAllInput to false
+                            throw new InvalidOperationException("Excess remaining input when reading tokens");
+                        }
+                        else if (se.ErrorType == Spanner.SpannerError.InvalidCharacter)
+                        {
+                            pe.ErrorType = Spanner.SpannerError.InvalidCharacter;
+                            pe.Column = se.Column;
+                            pe.Line = se.Line;
                         }
                         else
                         {
+                            throw new InvalidOperationException("Errors in definitions");
+                        }
+
+                        errors.Add(err);
+//                        rejects.Add(info.Source, err);
+                        foreach (var branch in info.Branches)
+                        {
+                            rejects.Add(branch.NodeMatch, err);
+                        }
+
+                        if (info.LastEnderIsEndCandidate)
+                        {
+                            rejects.Add(info.Enders.Last().NodeMatch, err);
+                        }
+                    }
+                    else if (info.EndOfInput)
+                    {
+                        int line;
+                        int column;
+
+                        Spanner.GetPosition(input, info.EndOfInputIndex, out line, out column);
+
+                        var err = new ParserError {
+                            ErrorType = ParserError.UnexpectedEndOfInput,
+                            LastValidMatchingNode = info.Source.Node,
+                            ExpectedNodes = GetExpectedNodes(info),
+                            Line = line,
+                            Column = column,
+                        };
+                        foreach (var branch in info.Branches)
+                        {
+                            rejects.Add(branch.NodeMatch, err);
+                        }
+
+                        if (info.LastEnderIsEndCandidate)
+                        {
+                            ends.Add(info.Enders.Last().NodeMatch);
+                        }
+                    }
+                    else // we get valid tokens
+                    {
+                        if (info.LastEnderIsEndCandidate)
+                        {
+                            int line;
+                            int column;
+
+                            Spanner.GetPosition(input, parseIndex, out line, out column);
+
                             var err = new ParserError {
                                 ErrorType = ParserError.ExcessRemainingInput,
                                 LastValidMatchingNode = info.Source.Node,
-//                                Line =
-//                                Column =
+                                Line = line,
+                                Column = column,
                             };
-                            Reject(info.Ender.NodeMatch, err);
+                            rejects.Add(info.Enders.Last().NodeMatch, err);
                         }
-                    }
 
-                    foreach (var branch in branches)
-                    {
-                        var branchnm = branch.NodeMatch;
-                        var branchstack = branch.MatchStack;
-
-                        bool matched = false;
-                        foreach (var intoken in info.Tokens)
+                        // try to match branches to tokens
+                        var matchedBranches = new Set<NodeMatchStackPair>();
+                        var unmatchedBranches = new Set<NodeMatchStackPair>();
+                        unmatchedBranches.AddRange(info.Branches);
+                        foreach (var branch in info.Branches)
                         {
-                            if ((branchnm.Node is DefRefNode) &&
-                                (branchnm.Node as DefRefNode).DefRef == intoken.Definition)
+                            var branchnm = branch.NodeMatch;
+                            var branchstack = branch.MatchStack;
+
+                            bool matched = false;
+                            foreach (var intoken in info.Tokens)
                             {
-                                var newNext = branchnm.CloneWithNewToken(intoken);
-                                nextSources.Add(pair(newNext, branchstack));
-                                matched = true;
+                                if ((branchnm.Node is DefRefNode) &&
+                                    (branchnm.Node as DefRefNode).DefRef == intoken.Definition)
+                                {
+                                    var newNext = branchnm.CloneWithNewToken(intoken);
+                                    nextSources.Add(pair(newNext, branchstack));
+                                    matched = true;
+                                    matchedBranches.Add(branch);
+                                    unmatchedBranches.Remove(branch);
+                                }
                             }
+
+                            ParserError err = null;
+                            // if the branch didn't match, reject it with InvalidToken
+                            // otherwise, reject it with null since it's a duplicate
+                            if (!matched)
+                            {
+                                err = new ParserError {
+                                    ErrorType = ParserError.InvalidToken,
+                                    LastValidMatchingNode = info.Source.Node,
+                                    OffendingToken = info.Tokens[0],
+                                    ExpectedNodes = info.Source.Node.NextNodes,
+                                    // Line =
+                                    // Column =
+                                };
+                            }
+
+                            rejects.Add(branch.NodeMatch, err);
                         }
-
-                        ParserError err = null;
-
-                        if (!matched &&
-                            info.Tokens != null &&
-                            info.Tokens.Length > 0)
-                        {
-                            err = new ParserError {
-                                ErrorType = ParserError.InvalidToken,
-                                LastValidMatchingNode = info.Source.Node,
-                                OffendingToken = info.Tokens[0],
-                                ExpectedNodes = info.Source.Node.NextNodes,
-//                                Line =
-//                                Column =
-                            };
-                        }
-
-                        Reject(branch.NodeMatch, err);
                     }
                 }
 
@@ -286,7 +284,46 @@ namespace MetaphysicsIndustries.Giza
                 }
             }
 
-            return MakeSpans(ends, input);
+            if (ends.Count > 0)
+            {
+                foreach (var reject in rejects)
+                {
+                    StripReject(reject.NodeMatch);
+                }
+
+                return MakeSpans(ends, input);
+            }
+            else
+            {
+                if (rejects.Count > 0)
+                {
+                    errors.Add(rejects[rejects.Count - 1].Error);
+                }
+                else
+                {
+                    // failed to start?
+                    throw new NotImplementedException();
+                }
+                return new Span[0];
+            }
+        }
+
+        static IEnumerable<Node> GetExpectedNodes(ParseInfo info)
+        {
+            if (info.Source.Node.NextNodes.Count > 0)
+            {
+                return info.Source.Node.NextNodes;
+            }
+
+            foreach (var ender in info.Enders)
+            {
+                if (ender.NodeMatch.Node.NextNodes.Count > 0)
+                {
+                    return ender.NodeMatch.Node.NextNodes;
+                }
+            }
+
+            return new Node[0];
         }
 
         static Span[] MakeSpans(IEnumerable<NodeMatch> matchTreeLeaves, string input)
@@ -350,15 +387,13 @@ namespace MetaphysicsIndustries.Giza
             return new NodeMatchStackPair{NodeMatch = nodeMatch, MatchStack = matchStack};
         }
 
-        List<NodeMatchErrorPair> _rejects = new List<NodeMatchErrorPair>();
-        public void Reject(NodeMatch reject, Error error)
-        {
-            _rejects.Add(new NodeMatchErrorPair(reject, error));
 
+        public static void StripReject(NodeMatch reject)
+        {
             NodeMatch cur = reject;
             NodeMatch next = cur;
             while (cur != null &&
-                    cur.Nexts.Count < 2)
+                   cur.Nexts.Count < 2)
             {
                 next = cur;
                 cur = cur.Previous;

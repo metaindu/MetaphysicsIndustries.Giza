@@ -167,7 +167,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
             var tgb = new TokenizedGrammarBuilder();
             Grammar testGrammar = tgb.BuildTokenizedGrammar(dis);
-            var cparenDef = testGrammar.FindDefinitionByName("$implicit literal )");
+            var itemDef = testGrammar.FindDefinitionByName("item");
             Parser parser = new Parser(testGrammar.FindDefinitionByName("sequence"));
 
             Span[] spans = parser.Parse(testInput, errors);
@@ -182,11 +182,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(1, err.Line);
             Assert.AreEqual(15, err.Column);
             Assert.IsInstanceOf<DefRefNode>(err.LastValidMatchingNode);
-            Assert.AreEqual("sequence", (err.LastValidMatchingNode as DefRefNode).DefRef.Name);
+            Assert.AreEqual("id-item2", (err.LastValidMatchingNode as DefRefNode).DefRef.Name);
             Assert.IsNotNull(err.ExpectedNodes);
             Assert.AreEqual(1, err.ExpectedNodes.Count());
             Assert.IsInstanceOf<DefRefNode>(err.ExpectedNodes.First());
-            Assert.AreSame(cparenDef, (err.ExpectedNodes.First() as DefRefNode).DefRef);
+            Assert.AreSame(itemDef, (err.ExpectedNodes.First() as DefRefNode).DefRef);
         }
 
         [Test]
@@ -196,8 +196,8 @@ namespace MetaphysicsIndustries.Giza.Test
                 " // test grammar \r\n" +
                     "sequence = item+; \r\n" +
                     "item = ( id-item1 | id-item2 | paren ); \r\n" +
-                    "<mind whitespace, atomic> id-item1 = 'item1'; \r\n" +
-                    "<mind whitespace, atomic> id-item2 = 'item2'; \r\n" +
+                    "<token> id-item1 = 'item1'; \r\n" +
+                    "<token> id-item2 = 'item2'; \r\n" +
                     "paren = '(' sequence ')'; \r\n";
 
             string testInput = "item1 ( item2";
@@ -208,7 +208,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
             var tgb = new TokenizedGrammarBuilder();
             Grammar testGrammar = tgb.BuildTokenizedGrammar(dis);
-            var cparenDef = testGrammar.FindDefinitionByName("$implicit literal )");
+            var itemDef = testGrammar.FindDefinitionByName("item");
             Parser parser = new Parser(testGrammar.FindDefinitionByName("sequence"));
 
             Span[] spans = parser.Parse(testInput, errors);
@@ -223,11 +223,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(1, err.Line);
             Assert.AreEqual(14, err.Column);
             Assert.IsInstanceOf<DefRefNode>(err.LastValidMatchingNode);
-            Assert.AreEqual("sequence", (err.LastValidMatchingNode as DefRefNode).DefRef.Name);
+            Assert.AreEqual("id-item2", (err.LastValidMatchingNode as DefRefNode).DefRef.Name);
             Assert.IsNotNull(err.ExpectedNodes);
             Assert.AreEqual(1, err.ExpectedNodes.Count());
             Assert.IsInstanceOf<DefRefNode>(err.ExpectedNodes.First());
-            Assert.AreSame(cparenDef, (err.ExpectedNodes.First() as DefRefNode).DefRef);
+            Assert.AreSame(itemDef, (err.ExpectedNodes.First() as DefRefNode).DefRef);
         }
 
         [Test]
