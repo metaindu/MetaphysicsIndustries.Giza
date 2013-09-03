@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Text;
 using MetaphysicsIndustries.Collections;
 using System.Linq;
+using System.IO;
 
 namespace MetaphysicsIndustries.Giza
 {
@@ -92,20 +93,23 @@ namespace MetaphysicsIndustries.Giza
             return string.Format("[{0}] {1}:{2}, {3} nexts", _id, nodestr, Transition, Nexts.Count);
         }
 
-        public static string Render(NodeMatch nm)
+        public string Render()
         {
             StringBuilder sb = new StringBuilder();
-            Render(nm, sb, "");
+            StringWriter sw = new StringWriter(sb);
+
+            Render(sw, string.Empty);
+
             return sb.ToString();
         }
-        protected static void Render(NodeMatch nm, StringBuilder sb, string indent)
+        public void Render(TextWriter writer, string indent)
         {
-            sb.Append(indent);
-            sb.Append(nm.ToString());
-            sb.AppendLine();
-            foreach (NodeMatch next in nm.Nexts)
+            writer.Write(indent);
+            writer.Write(this.ToString());
+            writer.WriteLine();
+            foreach (NodeMatch next in this.Nexts)
             {
-                Render(next, sb, indent + "  ");
+                next.Render(writer, indent + "  ");
             }
         }
 
@@ -117,27 +121,6 @@ namespace MetaphysicsIndustries.Giza
             nm.Token = token;
 
             return nm;
-        }
-
-        public string TreeToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            this.WriteTreeTo(sb);
-            return sb.ToString();
-        }
-        public void WriteTreeTo(StringBuilder sb)
-        {
-            WriteTreeTo(sb, string.Empty);
-        }
-        public void WriteTreeTo(StringBuilder sb, string indent)
-        {
-            sb.Append(indent);
-            sb.AppendLine(this.ToString());
-            string indent2 = indent + "  ";
-            foreach (NodeMatch next in this.Nexts)
-            {
-                next.WriteTreeTo(sb, indent2);
-            }
         }
     }
 
