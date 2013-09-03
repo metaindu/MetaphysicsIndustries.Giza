@@ -181,7 +181,7 @@ namespace MetaphysicsIndustries.Giza
                             throw new InvalidOperationException("Errors in definitions");
                         }
 
-                        errors.Add(err);
+//                        errors.Add(err);
 //                        rejects.Add(info.Source, err);
                         foreach (var branch in info.Branches)
                         {
