@@ -223,10 +223,12 @@ namespace MetaphysicsIndustries.Giza
                     {
                         if (info.LastEnderIsEndCandidate)
                         {
+                            var offendingToken = info.Tokens.First();
+
                             int line;
                             int column;
 
-                            Spanner.GetPosition(input, info.Tokens[0].StartIndex,
+                            Spanner.GetPosition(input, offendingToken.StartIndex,
                                                 out line, out column);
 
                             var err = new ParserError {
@@ -234,6 +236,7 @@ namespace MetaphysicsIndustries.Giza
                                 LastValidMatchingNode = info.Source.Node,
                                 Line = line,
                                 Column = column,
+                                OffendingToken=offendingToken,
                             };
                             rejects.Add(info.Enders.Last().NodeMatch, err);
                         }
