@@ -11,7 +11,7 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestOrExpr()
         {
-            string testGrammarText = 
+            string testGrammarText =
                 "def1 = ( 'qwer' | 'asdf' );";
             var errors = new List<Error>();
             Grammar testGrammar = (new SupergrammarSpanner()).GetGrammar(testGrammarText, errors);
@@ -31,7 +31,7 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test()]
         public void TestErrorInvalidCharacterAfterDefRef()
         {
-            string testGrammarText = 
+            string testGrammarText =
                 " // test grammar \r\n" +
                 "sequence = item+; \r\n" +
                 "item = ( id-item1 | id-item2 ); \r\n" +
@@ -61,7 +61,7 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test()]
         public void TestErrorInvalidCharacterAtStart()
         {
-            string testGrammarText = 
+            string testGrammarText =
                 " // test grammar \r\n" +
                 "sequence = item+; \r\n" +
                 "item = ( id-item1 | id-item2 ); \r\n" +
@@ -255,9 +255,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Spanner spanner = new Spanner(exprDef);
             string input = "a + b";
             bool endOfInput;
+            int lastIndex;
 
 
-            var tokens = spanner.Match(input, errors, out endOfInput,
+            var tokens = spanner.Match(input, errors,
+                                       out endOfInput, out lastIndex,
                                        mustUseAllInput: false, startIndex: 5);
 
 
@@ -266,6 +268,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(tokens);
             Assert.IsNotNull(errors);
             Assert.IsEmpty(errors);
+            Assert.AreEqual(5, lastIndex);
         }
 
         [Test]
@@ -283,9 +286,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Spanner spanner = new Spanner(exprDef);
             string input = "a + b ";
             bool endOfInput;
+            int lastIndex;
 
 
-            var tokens = spanner.Match(input, errors, out endOfInput,
+            var tokens = spanner.Match(input, errors,
+                                       out endOfInput, out lastIndex,
                                        mustUseAllInput: false, startIndex: 5);
 
 
@@ -294,6 +299,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(tokens);
             Assert.IsNotNull(errors);
             Assert.IsEmpty(errors);
+            Assert.AreEqual(6, lastIndex);
         }
 
         [Test]
@@ -311,9 +317,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Spanner spanner = new Spanner(exprDef);
             string input = "a + b ";
             bool endOfInput;
+            int lastIndex;
 
 
-            var tokens = spanner.Match(input, errors, out endOfInput,
+            var tokens = spanner.Match(input, errors,
+                                       out endOfInput, out lastIndex,
                                        mustUseAllInput: false, startIndex: 5);
 
 
@@ -322,6 +330,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(tokens);
             Assert.IsNotNull(errors);
             Assert.IsEmpty(errors);
+            Assert.AreEqual(6, lastIndex);
         }
     }
 }

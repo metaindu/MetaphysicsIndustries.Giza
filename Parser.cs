@@ -103,12 +103,14 @@ namespace MetaphysicsIndustries.Giza
                     }
 
                     //get all tokens, starting at end of source's token
+                    int endOfInputIndex;
                     info.TokenizationErrors = new List<Error>();
                     info.Tokens = _tokenizer.GetTokensAtLocation(
                         input,
                         info.Source.Token.StartIndex + info.Source.Token.Length,
                         info.TokenizationErrors,
-                        out info.EndOfInput);
+                        out info.EndOfInput,
+                        out endOfInputIndex);
 
                     //if we get a token, set shouldRejectSource to false
                     if (info.Tokens != null &&

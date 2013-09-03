@@ -56,13 +56,15 @@ namespace MetaphysicsIndustries.Giza
         public NodeMatch[] Match(string input, List<Error> errors, bool mustUseAllInput=true, int startIndex=0)
         {
             bool endOfInput;
-            return Match(input, errors, out endOfInput, mustUseAllInput, startIndex);
+            int endOfInputIndex;
+            return Match(input, errors, out endOfInput, out endOfInputIndex, mustUseAllInput, startIndex);
         }
-        public NodeMatch[] Match(string input, List<Error> errors, out bool endOfInput, bool mustUseAllInput=true, int startIndex=0)
+        public NodeMatch[] Match(string input, List<Error> errors, out bool endOfInput, out int endOfInputIndex, bool mustUseAllInput=true, int startIndex=0)
         {
             if (startIndex >= input.Length)
             {
                 endOfInput = true;
+                endOfInputIndex = input.Length;
                 return new NodeMatch[0];
             }
 
@@ -97,7 +99,7 @@ namespace MetaphysicsIndustries.Giza
                     while (ends.Count > 0)
                     {
                         var end = ends.Dequeue();
-                        rejects.Enqueue(pair2(end, 
+                        rejects.Enqueue(pair2(end,
                             new SpannerError {
                                 ErrorType=SpannerError.ExcessRemainingInput,
                                 Line=line,
@@ -200,14 +202,16 @@ namespace MetaphysicsIndustries.Giza
             {
                 //end of input on the root node
                 endOfInput = true;
+                endOfInputIndex = input.Length;
                 return new NodeMatch[0];
             }
             else
             {
                 endOfInput = false;
+                endOfInputIndex = -1;
             }
 
-            // at this point, the only things in `currents` would be the 
+            // at this point, the only things in `currents` would be the
             // previous contents of `accepts`, which are all the nodes
             // immediately after the CharNodes that matched a char.
             while (currents.Count > 0)
@@ -267,7 +271,7 @@ namespace MetaphysicsIndustries.Giza
 
             // if nothing is in ends, then we ran aground, either on an invalid
             //  char or end-of-input
-            // if there's something in ends and k < length + 1, then we 
+            // if there's something in ends and k < length + 1, then we
             //  finished but still have input
             // otherwise, eveything in ends is a valid parse
 
@@ -535,7 +539,7 @@ namespace MetaphysicsIndustries.Giza
             return expects2;
         }
 
-        void GetPosition(string input, int k, out int line, out int linek)
+        public static void GetPosition(string input, int k, out int line, out int linek)
         {
             line = 1;
             linek = 1;
