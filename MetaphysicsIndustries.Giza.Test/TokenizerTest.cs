@@ -176,7 +176,7 @@ namespace MetaphysicsIndustries.Giza.Test
         }
 
         [Test]
-        public void TestTokensAtIndex()
+        public void TestTokensAtIndex0()
         {
             string grammarText =
                 "expr = operand '+' operand;\n" +
@@ -188,9 +188,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
 
-            Definition exprDef = grammar.FindDefinitionByName("expr");
             Definition operandDef = grammar.FindDefinitionByName("operand");
-            Definition operatorDef = grammar.FindDefinitionByName("$implicit literal +");
 
             Tokenizer tokenizer = new Tokenizer(grammar);
             string input = "a + b";
@@ -210,12 +208,32 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(0, tokens[0].StartIndex);
             Assert.AreEqual(1, tokens[0].Length);
             Assert.AreEqual(-1, endOfInputIndex);
+        }
+
+        [Test]
+        public void TestTokensAtIndex1()
+        {
+            string grammarText =
+                "expr = operand '+' operand;\n" +
+                "<token> operand = [\\l_] [\\l\\d_]*;";
+
+            var errors = new List<Error>();
+            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(grammarText, errors);
+            Assert.IsEmpty(errors);
+
+            Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
+
+            Definition operatorDef = grammar.FindDefinitionByName("$implicit literal +");
+
+            Tokenizer tokenizer = new Tokenizer(grammar);
+            string input = "a + b";
+            bool endOfInput;
+            int endOfInputIndex;
 
 
-
-            tokens = tokenizer.GetTokensAtLocation(input, 1, errors,
-                                                   out endOfInput,
-                                                   out endOfInputIndex);
+            var tokens = tokenizer.GetTokensAtLocation(input, 1, errors,
+                                                       out endOfInput,
+                                                       out endOfInputIndex);
 
             Assert.IsEmpty(errors);
             Assert.IsFalse(endOfInput);
@@ -225,12 +243,32 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(2, tokens[0].StartIndex);
             Assert.AreEqual(1, tokens[0].Length);
             Assert.AreEqual(-1, endOfInputIndex);
+        }
+
+        [Test]
+        public void TestTokensAtIndex2()
+        {
+            string grammarText =
+                "expr = operand '+' operand;\n" +
+                "<token> operand = [\\l_] [\\l\\d_]*;";
+
+            var errors = new List<Error>();
+            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(grammarText, errors);
+            Assert.IsEmpty(errors);
+
+            Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
+
+            Definition operatorDef = grammar.FindDefinitionByName("$implicit literal +");
+
+            Tokenizer tokenizer = new Tokenizer(grammar);
+            string input = "a + b";
+            bool endOfInput;
+            int endOfInputIndex;
 
 
-
-            tokens = tokenizer.GetTokensAtLocation(input, 2, errors,
-                                                   out endOfInput,
-                                                   out endOfInputIndex);
+            var tokens = tokenizer.GetTokensAtLocation(input, 2, errors,
+                                                       out endOfInput,
+                                                       out endOfInputIndex);
 
             Assert.IsEmpty(errors);
             Assert.IsFalse(endOfInput);
@@ -240,10 +278,30 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(2, tokens[0].StartIndex);
             Assert.AreEqual(1, tokens[0].Length);
             Assert.AreEqual(-1, endOfInputIndex);
+        }
+
+        [Test]
+        public void TestTokensAtIndex3()
+        {
+            string grammarText =
+                "expr = operand '+' operand;\n" +
+                "<token> operand = [\\l_] [\\l\\d_]*;";
+
+            var errors = new List<Error>();
+            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(grammarText, errors);
+            Assert.IsEmpty(errors);
+
+            Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
+
+            Definition operandDef = grammar.FindDefinitionByName("operand");
+
+            Tokenizer tokenizer = new Tokenizer(grammar);
+            string input = "a + b";
+            bool endOfInput;
+            int endOfInputIndex;
 
 
-
-            tokens = tokenizer.GetTokensAtLocation(input, 3, errors,
+            var tokens = tokenizer.GetTokensAtLocation(input, 3, errors,
                                                    out endOfInput,
                                                    out endOfInputIndex);
 
@@ -255,10 +313,30 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(4, tokens[0].StartIndex);
             Assert.AreEqual(1, tokens[0].Length);
             Assert.AreEqual(-1, endOfInputIndex);
+        }
+
+        [Test]
+        public void TestTokensAtIndex4()
+        {
+            string grammarText =
+                "expr = operand '+' operand;\n" +
+                    "<token> operand = [\\l_] [\\l\\d_]*;";
+
+            var errors = new List<Error>();
+            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(grammarText, errors);
+            Assert.IsEmpty(errors);
+
+            Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
+
+            Definition operandDef = grammar.FindDefinitionByName("operand");
+
+            Tokenizer tokenizer = new Tokenizer(grammar);
+            string input = "a + b";
+            bool endOfInput;
+            int endOfInputIndex;
 
 
-
-            tokens = tokenizer.GetTokensAtLocation(input, 4, errors,
+            var tokens = tokenizer.GetTokensAtLocation(input, 4, errors,
                                                    out endOfInput,
                                                    out endOfInputIndex);
 
@@ -270,6 +348,36 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(4, tokens[0].StartIndex);
             Assert.AreEqual(1, tokens[0].Length);
             Assert.AreEqual(-1, endOfInputIndex);
+        }
+
+        [Test]
+        public void TestTokensAtIndex5()
+        {
+            string grammarText =
+                "expr = operand '+' operand;\n" +
+                    "<token> operand = [\\l_] [\\l\\d_]*;";
+
+            var errors = new List<Error>();
+            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(grammarText, errors);
+            Assert.IsEmpty(errors);
+
+            Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
+
+            Tokenizer tokenizer = new Tokenizer(grammar);
+            string input = "a + b";
+            bool endOfInput;
+            int endOfInputIndex;
+
+
+            var tokens = tokenizer.GetTokensAtLocation(input, 5, errors,
+                                                   out endOfInput,
+                                                   out endOfInputIndex);
+
+            Assert.IsEmpty(errors);
+            Assert.IsTrue(endOfInput);
+            Assert.IsNotNull(tokens);
+            Assert.AreEqual(0, tokens.Length);
+            Assert.AreEqual(5, endOfInputIndex);
         }
 
         [Test]
