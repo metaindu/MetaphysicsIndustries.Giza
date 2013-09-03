@@ -304,7 +304,24 @@ namespace MetaphysicsIndustries.Giza
             {
                 if (rejects.Count > 0)
                 {
-                    errors.Add(rejects[rejects.Count - 1].Error);
+                    Error errorToUse = null;
+                    foreach (var reject in (rejects as IEnumerable<NodeMatchErrorPair>).Reverse())
+                    {
+                        if (reject.Error != null)
+                        {
+                            errorToUse = reject.Error;
+                            break;
+                        }
+                    }
+
+                    if (errorToUse != null)
+                    {
+                        errors.Add(errorToUse);
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("No errors among the rejects");
+                    }
                 }
                 else
                 {
