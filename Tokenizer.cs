@@ -17,7 +17,7 @@ namespace MetaphysicsIndustries.Giza
                 if (def.Directives.Contains(DefinitionDirective.Token) ||
                     def.Directives.Contains(DefinitionDirective.Comment))
                 {
-                    DefRefNode node = new DefRefNode(def);
+                    var node = new DefRefNode(def);
                     _tokenDef.Nodes.Add(node);
                     _tokenDef.StartNodes.Add(node);
                     _tokenDef.EndNodes.Add(node);
@@ -159,7 +159,7 @@ namespace MetaphysicsIndustries.Giza
                     matchTreeLeaves.AddRange(tok.MatchTreeLeaves);
                 }
 
-                List<Token> tokens = new List<Token>();
+                var tokens = new List<Token>();
                 foreach (NodeMatch leaf in matchTreeLeaves)
                 {
                     NodeMatch tokenEnd = leaf.Previous;
