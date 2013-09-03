@@ -34,6 +34,7 @@ namespace MetaphysicsIndustries.Giza
 
             public string DescriptionString = string.Empty;
             public char OffendingCharacter;
+            public int Index;
             public int Line;
             public int Column;
             public Node PreviousNode;
@@ -104,6 +105,7 @@ namespace MetaphysicsIndustries.Giza
                                 ErrorType=SpannerError.ExcessRemainingInput,
                                 Line=line,
                                 Column=column,
+                                Index=k-1,
                                 PreviousNode=end.Node,
                                 OffendingCharacter=input[k-1],
                             }));
@@ -241,6 +243,7 @@ namespace MetaphysicsIndustries.Giza
                         ErrorType=SpannerError.UnexpectedEndOfInput,
                         Line=line,
                         Column=column,
+                        Index = k,
                     };
                     rejects.Enqueue(pair2(cur, se));
                 }
@@ -262,6 +265,7 @@ namespace MetaphysicsIndustries.Giza
                         ErrorType=SpannerError.UnexpectedEndOfInput,
                         Line=line,
                         Column=column,
+                        Index = k,
                     };
                     rejects.Enqueue(pair2(cur, se));
                 }
@@ -316,6 +320,7 @@ namespace MetaphysicsIndustries.Giza
                 se.OffendingCharacter = errorCh;
                 se.Line = line;
                 se.Column = linek;
+                se.Index = lastRejectnm.Index;
                 sb.AppendFormat("Invalid character '{0}' at ({1},{2})", errorCh, line, linek);
 
                 NodeMatch cur = null;
