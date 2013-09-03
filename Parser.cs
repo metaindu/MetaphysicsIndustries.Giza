@@ -152,17 +152,16 @@ namespace MetaphysicsIndustries.Giza
                     {
                         //reject branches with error
                         Spanner.SpannerError se = (info.TokenizationErrors.GetFirstNonWarning() as Spanner.SpannerError);
-                        ParserError pe = new ParserError();
-                        var err = pe;
-                        pe.LastValidMatchingNode = info.Source.Node;
+                        ParserError err = new ParserError();
+                        err.LastValidMatchingNode = info.Source.Node;
 
-                        pe.ExpectedNodes = GetExpectedNodes(info);
+                        err.ExpectedNodes = GetExpectedNodes(info);
 
                         if (se.ErrorType == Spanner.SpannerError.UnexpectedEndOfInput)
                         {
-                            pe.ErrorType = ParserError.UnexpectedEndOfInput;
-                            pe.Column = se.Column;
-                            pe.Line = se.Line;
+                            err.ErrorType = ParserError.UnexpectedEndOfInput;
+                            err.Column = se.Column;
+                            err.Line = se.Line;
                         }
                         else if (se.ErrorType == Spanner.SpannerError.ExcessRemainingInput)
                         {
@@ -172,9 +171,12 @@ namespace MetaphysicsIndustries.Giza
                         }
                         else if (se.ErrorType == Spanner.SpannerError.InvalidCharacter)
                         {
-                            pe.ErrorType = Spanner.SpannerError.InvalidCharacter;
-                            pe.Column = se.Column;
-                            pe.Line = se.Line;
+                            err.ErrorType = ParserError.InvalidToken;
+                            err.Column = se.Column;
+                            err.Line = se.Line;
+                            err.OffendingToken.StartIndex = se.Index;
+                            err.OffendingToken.Length = 1;
+                            err.OffendingToken.Definition = null;
                         }
                         else
                         {
