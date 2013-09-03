@@ -364,6 +364,51 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsInstanceOf<DefRefNode>(err.ExpectedNodes.First());
             Assert.AreSame(sequenceDef, (err.ExpectedNodes.First() as DefRefNode).DefRef);
         }
+
+        [Test]
+        public void TestInvalidCharacter()
+        {
+            string testGrammarText =
+                " // test grammar \r\n" +
+                    "sequence = item+; \r\n" +
+                    "item = ( id-item1 | id-item2 | paren ); \r\n" +
+                    "<token> id-item1 = 'item1'; \r\n" +
+                    "<token> id-item2 = 'item2'; \r\n" +
+                    "paren = '(' sequence ')'; \r\n";
+
+            string testInput = "item1 ( $";
+
+            var sgs = new SupergrammarSpanner();
+            var errors = new List<Error>();
+            var dis = sgs.GetExpressions(testGrammarText, errors);
+            Assert.IsEmpty(errors);
+            var tgb = new TokenizedGrammarBuilder();
+            var testGrammar = tgb.BuildTokenizedGrammar(dis);
+            var oparenDef = testGrammar.FindDefinitionByName("$implicit literal (");
+            var sequenceDef = testGrammar.FindDefinitionByName("sequence");
+            var parser = new Parser(testGrammar.FindDefinitionByName("sequence"));
+
+            Span[] spans = parser.Parse(testInput, errors);
+
+            Assert.IsNotNull(spans);
+            Assert.AreEqual(0, spans.Length);
+            Assert.IsNotNull(errors);
+            Assert.AreEqual(1, errors.Count);
+            Assert.IsInstanceOf<ParserError>(errors[0]);
+            var err = ((ParserError)errors[0]);
+            Assert.AreEqual(ParserError.InvalidToken, err.ErrorType);
+            Assert.AreEqual(1, err.Line);
+            Assert.AreEqual(9, err.Column);
+            Assert.AreEqual(8, err.OffendingToken.StartIndex);
+            Assert.AreEqual(1, err.OffendingToken.Length);
+            Assert.IsNull(err.OffendingToken.Definition);
+            Assert.IsInstanceOf<DefRefNode>(err.LastValidMatchingNode);
+            Assert.AreSame(oparenDef, (err.LastValidMatchingNode as DefRefNode).DefRef);
+            Assert.IsNotNull(err.ExpectedNodes);
+            Assert.AreEqual(1, err.ExpectedNodes.Count());
+            Assert.IsInstanceOf<DefRefNode>(err.ExpectedNodes.First());
+            Assert.AreSame(sequenceDef, (err.ExpectedNodes.First() as DefRefNode).DefRef);
+        }
     }
 }
 
