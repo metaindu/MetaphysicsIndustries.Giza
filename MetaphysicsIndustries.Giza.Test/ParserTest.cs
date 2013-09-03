@@ -237,8 +237,8 @@ namespace MetaphysicsIndustries.Giza.Test
                 " // test grammar \r\n" +
                     "sequence = item+; \r\n" +
                     "item = ( id-item1 | id-item2 | paren ); \r\n" +
-                    "<mind whitespace, atomic> id-item1 = 'item1'; \r\n" +
-                    "<mind whitespace, atomic> id-item2 = 'item2'; \r\n" +
+                    "<token> id-item1 = 'item1'; \r\n" +
+                    "<token> id-item2 = 'item2'; \r\n" +
                     "paren = '(' sequence ')'; \r\n";
 
             string testInput = "item1 ( item";
@@ -261,12 +261,9 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(1, errors.Count);
             Assert.IsInstanceOf<ParserError>(errors[0]);
             var err = ((ParserError)errors[0]);
-            Assert.AreEqual(ParserError.InvalidToken, err.ErrorType);
+            Assert.AreEqual(ParserError.UnexpectedEndOfInput, err.ErrorType);
             Assert.AreEqual(1, err.Line);
-            Assert.AreEqual(9, err.Column);
-            Assert.AreEqual(9, err.OffendingToken.StartIndex);
-            Assert.AreEqual(4, err.OffendingToken.Length);
-            Assert.IsNull(err.OffendingToken.Definition);
+            Assert.AreEqual(13, err.Column);
             Assert.IsInstanceOf<DefRefNode>(err.LastValidMatchingNode);
             Assert.AreSame(oparenDef, (err.LastValidMatchingNode as DefRefNode).DefRef);
             Assert.IsNotNull(err.ExpectedNodes);
