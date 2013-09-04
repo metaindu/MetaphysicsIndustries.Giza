@@ -1,5 +1,5 @@
-return errors from Spanner - i.e. not from DefinitionChecker or SpanChecker; high-level stuff, like "unexpected token XXX, expected YYY or ZZZ instead"
-    needs more analysis and tests
+full analysis and tests for Spanner, Tokenizer, Parser
+full analysis and tests for other classes
 Rename DefinitionRenderer to GrammarRenderer, rename methods, make it take a Grammar instead of Definition[].
 tokenized parsing
 Define a grammar for Solus. Create a SolusGrammar class.
