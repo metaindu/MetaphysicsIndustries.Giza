@@ -5,9 +5,19 @@ namespace MetaphysicsIndustries.Giza
 {
     public struct ErrorType : IEquatable<ErrorType>
     {
+        public ErrorType(string name, string descriptionFormat="{0}", bool isWarning=false)
+        {
+            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException("name");
+            if (descriptionFormat == null) throw new ArgumentNullException("descriptionFormat");
+
+            Name = name;
+            DescriptionFormat = descriptionFormat;
+            IsWarning = isWarning;
+        }
+
         public string Name;
-        public bool IsWarning;
         public string DescriptionFormat;
+        public bool IsWarning;
 
         public static bool operator==(ErrorType a, ErrorType b)
         {
