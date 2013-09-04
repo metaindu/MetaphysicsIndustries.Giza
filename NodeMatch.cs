@@ -92,7 +92,7 @@ namespace MetaphysicsIndustries.Giza
 
             if (Token.Length > 0)
             {
-                return string.Format("[{0}] {1}:{2}, {3} nexts, token '{4}' as {5}",
+                return string.Format("[{0}] {1}:{2}, {3} nm nexts, token '{4}' as {5}",
                                      _id,
                                      nodestr,
                                      Transition,
@@ -100,9 +100,18 @@ namespace MetaphysicsIndustries.Giza
                                      Token.Value,
                                      Token.Definition.Name);
             }
+            else if (MatchedChar != '\0')
+            {
+                return string.Format("[{0}] {1}:{2}, {3} nm nexts, match char '{4}'",
+                                     _id,
+                                     nodestr,
+                                     Transition,
+                                     Nexts.Count,
+                                     MatchedChar.ToString());
+            }
             else
             {
-                return string.Format("[{0}] {1}:{2}, {3} nexts", _id, nodestr, Transition, Nexts.Count);
+                return string.Format("[{0}] {1}:{2}, {3} nm nexts", _id, nodestr, Transition, Nexts.Count);
             }
         }
 
