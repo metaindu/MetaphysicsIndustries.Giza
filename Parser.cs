@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Collections;
 using System.Linq;
+using System.Text;
 
 namespace MetaphysicsIndustries.Giza
 {
@@ -18,6 +19,49 @@ namespace MetaphysicsIndustries.Giza
             public int Column;
             public Node LastValidMatchingNode;
             public IEnumerable<Node> ExpectedNodes;
+
+            public override string Description
+            {
+                get
+                {
+                    if (ErrorType == InvalidToken)
+                    {
+                        string expect = "";
+                        if (ExpectedNodes.Count() > 1)
+                        {
+                            var expects = new List<string>();
+                            foreach (var enode in ExpectedNodes)
+                            {
+                                expects.Add(((DefRefNode)ExpectedNodes.First()).DefRef.Name);
+                            }
+
+                            StringBuilder sb = new StringBuilder();
+                            sb.Append("Expected ");
+                            int i;
+                            for (i = 1; i < expects.Count; i++)
+                            {
+                                sb.Append(expects[i - 1]);
+                                sb.Append(", ");
+                            }
+                            sb.Append("or ");
+                            sb.Append(expects.Last());
+                            expect = sb.ToString();
+                        }
+                        else if (ExpectedNodes.Count() > 0)
+                        {
+                            expect = string.Format("Expected {0}.", ((DefRefNode)ExpectedNodes.First()).DefRef.Name);
+                        }
+
+                        return string.Format("Invalid token '{0}' at position {1},{2}.",
+                                             OffendingToken.Value,
+                                             Line,
+                                             Column,
+                                             expect);
+                    }
+
+                    return base.Description;
+                }
+            }
         }
 
         public Parser(Definition definition)

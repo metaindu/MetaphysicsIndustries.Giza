@@ -513,7 +513,7 @@ namespace MetaphysicsIndustries.Giza
             return spans.ToArray();
         }
 
-        static List<string> GetDescriptionsOfCharClass(CharClass expectedChars)
+        public static List<string> GetDescriptionsOfCharClass(CharClass expectedChars)
         {
             List<string> expects2 = new List<string>();
             if (!expectedChars.Exclude &&
