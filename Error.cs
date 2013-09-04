@@ -14,7 +14,7 @@ namespace MetaphysicsIndustries.Giza
 
         public virtual string Description
         {
-            get { return ErrorType.DescriptionFormat; }
+            get { return string.Format(ErrorType.DescriptionFormat, ErrorType.Name); }
         }
 
         public override string ToString()
