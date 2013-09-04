@@ -595,7 +595,7 @@ namespace MetaphysicsIndustries.Giza.Test
                                                        out lastIndex);
 
 
-            Assert.IsFalse(endOfInput);
+            Assert.IsTrue(endOfInput);
             Assert.IsNotNull(errors);
             Assert.IsEmpty(errors);
             Assert.IsNotNull(tokens);
@@ -603,7 +603,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreSame(strangeDef, tokens[0].Definition);
             Assert.AreEqual(5, tokens[0].StartIndex);
             Assert.AreEqual(9, tokens[0].Length);
-            Assert.AreEqual(-1, lastIndex);
+            Assert.AreEqual(16, lastIndex);
         }
     }
 }
