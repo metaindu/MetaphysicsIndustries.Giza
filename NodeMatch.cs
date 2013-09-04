@@ -135,6 +135,47 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
+        public static string RenderPathToLeaf(NodeMatch leaf)
+        {
+            StringBuilder sb = new StringBuilder();
+            StringWriter sw = new StringWriter(sb);
+
+            RenderPathToLeaf(leaf, sw);
+
+            return sb.ToString();
+        }
+        public static void RenderPathToLeaf(NodeMatch leaf, TextWriter writer)
+        {
+            var nodeMatches = new List<NodeMatch>();
+            var cur = leaf;
+            while (cur != null)
+            {
+                nodeMatches.Add(cur);
+                cur = cur.Previous;
+            }
+            nodeMatches.Reverse();
+
+            int depth = 0;
+            string indent = "";
+            foreach (var nm in nodeMatches)
+            {
+                if (nm.Transition == TransitionType.StartDef)
+                {
+                    depth++;
+                    indent = new string(' ', depth);
+                }
+                else if (nm.Transition == TransitionType.EndDef)
+                {
+                    depth--;
+                    indent = new string(' ', depth);
+                }
+
+                writer.Write(indent);
+                writer.Write(nm.ToString());
+                writer.WriteLine();
+            }
+        }
+
         public NodeMatch CloneWithNewToken(Token token)
         {
             NodeMatch nm = new NodeMatch(this.Node, this.Transition, this.Previous);
