@@ -15,6 +15,7 @@ namespace MetaphysicsIndustries.Giza
             public static readonly ErrorType ExcessRemainingInput = new ErrorType(name:"ExcessRemainingInput",  descriptionFormat:"ExcessRemainingInput"  );
 
             public Token OffendingToken;
+            public int Index;
             public int Line;
             public int Column;
             public Node LastValidMatchingNode;
@@ -212,6 +213,7 @@ namespace MetaphysicsIndustries.Giza
                             err.ErrorType = ParserError.UnexpectedEndOfInput;
                             err.Column = se.Column;
                             err.Line = se.Line;
+                            err.Index = se.Index;
                         }
                         else if (se.ErrorType == Spanner.SpannerError.ExcessRemainingInput)
                         {
@@ -224,6 +226,7 @@ namespace MetaphysicsIndustries.Giza
                             err.ErrorType = ParserError.InvalidToken;
                             err.Column = se.Column;
                             err.Line = se.Line;
+                            err.Index = se.Index;
                             err.OffendingToken.StartIndex = se.Index;
                             err.OffendingToken.Length = 1;
                             err.OffendingToken.Definition = null;
@@ -256,6 +259,7 @@ namespace MetaphysicsIndustries.Giza
                             ExpectedNodes = GetExpectedNodes(info),
                             Line = line,
                             Column = column,
+                            Index = info.EndOfInputIndex,
                         };
                         foreach (var branch in info.Branches)
                         {
@@ -284,6 +288,7 @@ namespace MetaphysicsIndustries.Giza
                                 LastValidMatchingNode = info.Source.Node,
                                 Line = line,
                                 Column = column,
+                                Index = offendingToken.StartIndex,
                                 OffendingToken=offendingToken,
                             };
                             rejects.Add(info.Enders.Last().NodeMatch, err);
@@ -330,6 +335,7 @@ namespace MetaphysicsIndustries.Giza
                                     ExpectedNodes = info.Source.Node.NextNodes,
                                     Line = line,
                                     Column = column,
+                                    Index = info.Tokens[0].StartIndex,
                                 };
                             }
 
