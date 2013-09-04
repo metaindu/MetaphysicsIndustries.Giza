@@ -94,7 +94,7 @@ namespace MetaphysicsIndustries.Giza
                         else
                         {
                             tokenLeaves.Add(leaf);
-                            endOfInput = false;
+                            endOfInput2 = false;
                         }
                     }
                 }
@@ -150,6 +150,10 @@ namespace MetaphysicsIndustries.Giza
                 }
             }
 
+            var tokens = new List<Token>();
+            endOfInput = false;
+            endOfInputIndex = -1;
+
             if (hasLeaves.Count > 0)
             {
                 var matchTreeLeaves = new Set<NodeMatch>();
@@ -159,7 +163,6 @@ namespace MetaphysicsIndustries.Giza
                     matchTreeLeaves.AddRange(tok.MatchTreeLeaves);
                 }
 
-                var tokens = new List<Token>();
                 foreach (NodeMatch leaf in matchTreeLeaves)
                 {
                     NodeMatch tokenEnd = leaf.Previous;
@@ -173,12 +176,9 @@ namespace MetaphysicsIndustries.Giza
                         Value = input.Substring(tokenStart.Index, length),
                     });
                 }
-
-                endOfInput = false;
-                endOfInputIndex = -1;
-                return tokens.ToArray();
             }
-            else if (hasEnd.Count > 0)
+
+            if (hasEnd.Count > 0)
             {
                 endOfInput = true;
                 endOfInputIndex = index;
@@ -186,7 +186,11 @@ namespace MetaphysicsIndustries.Giza
                 {
                     endOfInputIndex = Math.Max(endOfInputIndex, tok.LastIndex);
                 }
-                return new Token[0];
+            }
+
+            if (hasLeaves.Count > 0 || hasEnd.Count > 0)
+            {
+                return tokens.ToArray();
             }
             else
             {
@@ -204,13 +208,8 @@ namespace MetaphysicsIndustries.Giza
 
                 errors.AddRange(mintok.Errors);
 
-                endOfInput = false;
-                endOfInputIndex = -1;
                 return new Token[0];
             }
-
-
-
         }
     }
 }
