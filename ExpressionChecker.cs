@@ -33,31 +33,31 @@ namespace MetaphysicsIndustries.Giza
                 return sb.ToString();
             }
 
-            public static readonly ErrorType ReusedDefintion =                          new ErrorType() { Name="ReusedDefintion",                           DescriptionFormat="Description" };
-            public static readonly ErrorType NullDefinition =                           new ErrorType() { Name="NullDefinition",                            DescriptionFormat="Description" };
-            public static readonly ErrorType ReusedExpressionOrItem =                   new ErrorType() { Name="ReusedExpressionOrItem",                    DescriptionFormat="Description" };
-            public static readonly ErrorType NullOrEmptyDefinitionName =                new ErrorType() { Name="NullOrEmptyDefinitionName=",                DescriptionFormat="Description" };
-            public static readonly ErrorType EmptyExpressionItems =                     new ErrorType() { Name="EmptyExpressionItems",                      DescriptionFormat="Description" };
-            public static readonly ErrorType NullExpressionItem =                       new ErrorType() { Name="NullExpressionItem",                        DescriptionFormat="Description" };
-            public static readonly ErrorType EmptyOrexprExpressionList =                new ErrorType() { Name="EmptyOrexprExpressionList",                 DescriptionFormat="Description" };
-            public static readonly ErrorType NullOrexprExpression =                     new ErrorType() { Name="NullOrexprExpression",                      DescriptionFormat="Description" };
-            public static readonly ErrorType NullSubexprTag =                           new ErrorType() { Name="NullSubexprTag",                            DescriptionFormat="Description" };
-            public static readonly ErrorType NullOrEmptyDefrefName =                    new ErrorType() { Name="NullOrEmptyDefrefName",                     DescriptionFormat="Description" };
-            public static readonly ErrorType NullOrEmptyLiteralValue =                  new ErrorType() { Name="NullOrEmptyLiteralValue",                   DescriptionFormat="Description" };
-            public static readonly ErrorType NullOrEmptyCharClass =                     new ErrorType() { Name="NullOrEmptyCharClass",                      DescriptionFormat="Description" };
-            public static readonly ErrorType DuplicateDefinitionName =                  new ErrorType() { Name="DuplicateDefinitionName=",                  DescriptionFormat="Description" };
-            public static readonly ErrorType AllItemsSkippable =                        new ErrorType() { Name="AllItemsSkippable=",                        DescriptionFormat="Description" };
-            public static readonly ErrorType SkippableOrexprExpressions =               new ErrorType() { Name="SkippableOrexprExpressions ",               DescriptionFormat="Description" };
-            public static readonly ErrorType DefRefNameNotFound =                       new ErrorType() { Name="DefRefNameNotFound ",                       DescriptionFormat="Description" };
+            public static readonly ErrorType ReusedDefintion =                          new ErrorType(name:"ReusedDefintion",                           descriptionFormat:"{0}" );
+            public static readonly ErrorType NullDefinition =                           new ErrorType(name:"NullDefinition",                            descriptionFormat:"{0}" );
+            public static readonly ErrorType ReusedExpressionOrItem =                   new ErrorType(name:"ReusedExpressionOrItem",                    descriptionFormat:"{0}" );
+            public static readonly ErrorType NullOrEmptyDefinitionName =                new ErrorType(name:"NullOrEmptyDefinitionName=",                descriptionFormat:"{0}" );
+            public static readonly ErrorType EmptyExpressionItems =                     new ErrorType(name:"EmptyExpressionItems",                      descriptionFormat:"{0}" );
+            public static readonly ErrorType NullExpressionItem =                       new ErrorType(name:"NullExpressionItem",                        descriptionFormat:"{0}" );
+            public static readonly ErrorType EmptyOrexprExpressionList =                new ErrorType(name:"EmptyOrexprExpressionList",                 descriptionFormat:"{0}" );
+            public static readonly ErrorType NullOrexprExpression =                     new ErrorType(name:"NullOrexprExpression",                      descriptionFormat:"{0}" );
+            public static readonly ErrorType NullSubexprTag =                           new ErrorType(name:"NullSubexprTag",                            descriptionFormat:"{0}" );
+            public static readonly ErrorType NullOrEmptyDefrefName =                    new ErrorType(name:"NullOrEmptyDefrefName",                     descriptionFormat:"{0}" );
+            public static readonly ErrorType NullOrEmptyLiteralValue =                  new ErrorType(name:"NullOrEmptyLiteralValue",                   descriptionFormat:"{0}" );
+            public static readonly ErrorType NullOrEmptyCharClass =                     new ErrorType(name:"NullOrEmptyCharClass",                      descriptionFormat:"{0}" );
+            public static readonly ErrorType DuplicateDefinitionName =                  new ErrorType(name:"DuplicateDefinitionName=",                  descriptionFormat:"{0}" );
+            public static readonly ErrorType AllItemsSkippable =                        new ErrorType(name:"AllItemsSkippable=",                        descriptionFormat:"{0}" );
+            public static readonly ErrorType SkippableOrexprExpressions =               new ErrorType(name:"SkippableOrexprExpressions ",               descriptionFormat:"{0}" );
+            public static readonly ErrorType DefRefNameNotFound =                       new ErrorType(name:"DefRefNameNotFound ",                       descriptionFormat:"{0}" );
 
-            public static readonly ErrorType TokenizedDirectiveInNonTokenizedGrammar =  new ErrorType() { Name="TokenizedDirectiveInNonTokenizedGrammar",   DescriptionFormat="TokenizedDirectiveInNonTokenizedGrammar",  IsWarning=true };
+            public static readonly ErrorType TokenizedDirectiveInNonTokenizedGrammar =  new ErrorType(name:"TokenizedDirectiveInNonTokenizedGrammar",   descriptionFormat:"{0}",  isWarning:true );
 
-            public static readonly ErrorType MixedTokenizedDirectives =                 new ErrorType() { Name="MixedTokenizedDirectives",                  DescriptionFormat="Description" };
-            public static readonly ErrorType ReferencedComment =                        new ErrorType() { Name="ReferencedComment",                         DescriptionFormat="Description" };
-            public static readonly ErrorType NonTokenReferencesSubtoken =               new ErrorType() { Name="NonTokenReferencesSubtoken",                DescriptionFormat="Description" };
-            public static readonly ErrorType SubtokenReferencesNonToken =               new ErrorType() { Name="SubtokenReferencesNonToken",                DescriptionFormat="Description" };
-            public static readonly ErrorType TokenReferencesNonToken =                  new ErrorType() { Name="TokenReferencesNonToken",                   DescriptionFormat="Description" };
-            public static readonly ErrorType SubtokenReferencesToken =                  new ErrorType() { Name="SubtokenReferencesToken",                   DescriptionFormat="Description" };
+            public static readonly ErrorType MixedTokenizedDirectives =                 new ErrorType(name:"MixedTokenizedDirectives",                  descriptionFormat:"{0}" );
+            public static readonly ErrorType ReferencedComment =                        new ErrorType(name:"ReferencedComment",                         descriptionFormat:"{0}" );
+            public static readonly ErrorType NonTokenReferencesSubtoken =               new ErrorType(name:"NonTokenReferencesSubtoken",                descriptionFormat:"{0}" );
+            public static readonly ErrorType SubtokenReferencesNonToken =               new ErrorType(name:"SubtokenReferencesNonToken",                descriptionFormat:"{0}" );
+            public static readonly ErrorType TokenReferencesNonToken =                  new ErrorType(name:"TokenReferencesNonToken",                   descriptionFormat:"{0}" );
+            public static readonly ErrorType SubtokenReferencesToken =                  new ErrorType(name:"SubtokenReferencesToken",                   descriptionFormat:"{0}" );
 
         }
 

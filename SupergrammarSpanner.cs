@@ -19,8 +19,8 @@ namespace MetaphysicsIndustries.Giza
     {
         public class SupergrammarSpannerError : Error
         {
-            public static readonly ErrorType NoValidSpans = new ErrorType() { Name="NoValidSpans", DescriptionFormat="There are no valid spans of the grammar." };
-            public static readonly ErrorType MultipleValidSpans = new ErrorType() { Name="MultipleValidSpans", DescriptionFormat="There are more than one valid span of the grammar ({0})." };
+            public static readonly ErrorType NoValidSpans =         new ErrorType(name:"NoValidSpans",          descriptionFormat:"There are no valid spans of the grammar.");
+            public static readonly ErrorType MultipleValidSpans =   new ErrorType(name:"MultipleValidSpans",    descriptionFormat:"There are more than one valid span of the grammar ({0}).");
 
             public override string Description
             {

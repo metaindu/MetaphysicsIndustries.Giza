@@ -11,12 +11,12 @@ namespace MetaphysicsIndustries.Giza
         {
             public Span Span;
 
-            public static readonly ErrorType BadStartingNode =          new ErrorType() { Name="BadStartingNode",       DescriptionFormat="BadStartingNode"       };
-            public static readonly ErrorType BadEndingNode =            new ErrorType() { Name="BadEndingNode",         DescriptionFormat="BadEndingNode"         };
-            public static readonly ErrorType BadFollow =                new ErrorType() { Name="BadFollow",             DescriptionFormat="BadFollow"             };
-            public static readonly ErrorType NodeInWrongDefinition =    new ErrorType() { Name="NodeInWrongDefinition", DescriptionFormat="NodeInWrongDefinition" };
-            public static readonly ErrorType SpanHasNoSubspans =        new ErrorType() { Name="SpanHasNoSubspans",     DescriptionFormat="SpanHasNoSubspans"     };
-            public static readonly ErrorType CycleInSubspans =          new ErrorType() { Name="CycleInSubspans",       DescriptionFormat="CycleInSubspans"       };
+            public static readonly ErrorType BadStartingNode =          new ErrorType(name:"BadStartingNode",       descriptionFormat:"BadStartingNode"       );
+            public static readonly ErrorType BadEndingNode =            new ErrorType(name:"BadEndingNode",         descriptionFormat:"BadEndingNode"         );
+            public static readonly ErrorType BadFollow =                new ErrorType(name:"BadFollow",             descriptionFormat:"BadFollow"             );
+            public static readonly ErrorType NodeInWrongDefinition =    new ErrorType(name:"NodeInWrongDefinition", descriptionFormat:"NodeInWrongDefinition" );
+            public static readonly ErrorType SpanHasNoSubspans =        new ErrorType(name:"SpanHasNoSubspans",     descriptionFormat:"SpanHasNoSubspans"     );
+            public static readonly ErrorType CycleInSubspans =          new ErrorType(name:"CycleInSubspans",       descriptionFormat:"CycleInSubspans"       );
         }
 
         public List<Error> CheckSpan(Span span, Grammar grammar)
