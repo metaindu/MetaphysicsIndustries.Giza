@@ -27,41 +27,60 @@ namespace MetaphysicsIndustries.Giza
                 {
                     if (ErrorType == InvalidToken)
                     {
-                        string expect = "";
-                        if (ExpectedNodes.Count() > 1)
-                        {
-                            var expects = new List<string>();
-                            foreach (var enode in ExpectedNodes)
-                            {
-                                expects.Add(((DefRefNode)ExpectedNodes.First()).DefRef.Name);
-                            }
-
-                            StringBuilder sb = new StringBuilder();
-                            sb.Append("Expected ");
-                            int i;
-                            for (i = 1; i < expects.Count; i++)
-                            {
-                                sb.Append(expects[i - 1]);
-                                sb.Append(", ");
-                            }
-                            sb.Append("or ");
-                            sb.Append(expects.Last());
-                            expect = sb.ToString();
-                        }
-                        else if (ExpectedNodes.Count() > 0)
-                        {
-                            expect = string.Format("Expected {0}.", ((DefRefNode)ExpectedNodes.First()).DefRef.Name);
-                        }
-
-                        return string.Format("Invalid token '{0}' at position {1},{2}.",
-                                             OffendingToken.Value,
-                                             Line,
-                                             Column,
-                                             expect);
+                        return string.Format(
+                            "Invalid token '{0}' at position {1},{2} (index {4}). {3}",
+                            OffendingToken.Value,
+                            Line,
+                            Column,
+                            GetExpectedNodesString(),
+                            Index);
+                    }
+                    else if (ErrorType == ExcessRemainingInput)
+                    {
+                        return string.Format(
+                            "Excess remaining input after parsing had completed. " +
+                                "Got token '{0}' at position {1},{2} (index {4}). {3}",
+                            OffendingToken.Value,
+                            Line,
+                            Column,
+                            GetExpectedNodesString(),
+                            Index);
                     }
 
                     return base.Description;
                 }
+            }
+
+            string GetExpectedNodesString()
+            {
+                if (ExpectedNodes == null) return "";
+
+                string expect = "";
+                if (ExpectedNodes.Count() > 1)
+                {
+                    var expects = new List<string>();
+                    foreach (var enode in ExpectedNodes)
+                    {
+                        expects.Add(((DefRefNode)ExpectedNodes.First()).DefRef.Name);
+                    }
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("Expected ");
+                    int i;
+                    for (i = 1; i < expects.Count; i++)
+                    {
+                        sb.Append(expects[i - 1]);
+                        sb.Append(", ");
+                    }
+                    sb.Append("or ");
+                    sb.Append(expects.Last());
+                    expect = sb.ToString();
+                }
+                else if (ExpectedNodes.Count() > 0)
+                {
+                    expect = string.Format("Expected {0}.", ((DefRefNode)ExpectedNodes.First()).DefRef.Name);
+                }
+
+                return expect;
             }
         }
 
