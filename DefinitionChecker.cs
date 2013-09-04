@@ -23,6 +23,8 @@ namespace MetaphysicsIndustries.Giza
             public static readonly ErrorType StartNodeHasWrongParentDefinition =    new ErrorType(name:"StartNodeHasWrongParentDefinition", descriptionFormat:"StartNodeHasWrongParentDefinition" );
             public static readonly ErrorType EndNodeHasWrongParentDefinition =      new ErrorType(name:"EndNodeHasWrongParentDefinition",   descriptionFormat:"EndNodeHasWrongParentDefinition"   );
             public static readonly ErrorType LeadingReferenceCycle =                new ErrorType(name:"LeadingReferenceCycle",             descriptionFormat:"LeadingReferenceCycle"             );
+            public static readonly ErrorType NodehasNoPathFromStart =               new ErrorType(name:"NodehasNoPathFromStart");
+            public static readonly ErrorType NodehasNoPathToEnd =                   new ErrorType(name:"NodehasNoPathToEnd");
 
             public Node Node;
             public List<Definition> Cycle;
