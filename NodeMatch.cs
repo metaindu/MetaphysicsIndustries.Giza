@@ -90,7 +90,20 @@ namespace MetaphysicsIndustries.Giza
             else if (Node is DefRefNode) nodestr = (Node as DefRefNode).DefRef.Name;
             else nodestr = "<unknown>";
 
-            return string.Format("[{0}] {1}:{2}, {3} nexts", _id, nodestr, Transition, Nexts.Count);
+            if (Token.Length > 0)
+            {
+                return string.Format("[{0}] {1}:{2}, {3} nexts, token '{4}' as {5}",
+                                     _id,
+                                     nodestr,
+                                     Transition,
+                                     Nexts.Count,
+                                     Token.Value,
+                                     Token.Definition.Name);
+            }
+            else
+            {
+                return string.Format("[{0}] {1}:{2}, {3} nexts", _id, nodestr, Transition, Nexts.Count);
+            }
         }
 
         public string Render()
