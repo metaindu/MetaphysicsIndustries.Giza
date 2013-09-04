@@ -366,7 +366,15 @@ namespace giza
             //    Console.WriteLine("There was an error in the input: {0}", error);
             //}
             //else 
-            if (ss.Length < 1)
+            if (errors.ContainsNonWarnings())
+            {
+                Console.WriteLine("There are errors in the input:");
+                foreach (var err in errors)
+                {
+                    Console.WriteLine("  {0}", err.Description);
+                }
+            }
+            else if (ss.Length < 1)
             {
                 Console.WriteLine("No valid parses.");
             }
