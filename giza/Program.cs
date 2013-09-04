@@ -21,9 +21,15 @@ namespace giza
         public static void Main(string[] args)
         {
             _options = new OptionSet() {
-                { "h|?|help", x => showHelp = true },
-                { "v|version", x => showVersion = true },
-                { "verbose", x => verbose = true },
+                {   "h|?|help",
+                    "Print this help text and exit",
+                    x => showHelp = true },
+                {   "v|version",
+                    "Print version and exit",
+                    x => showVersion = true },
+                {   "verbose",
+                    "Print extra information with some subcommands",
+                    x => verbose = true },
             };
             _options2 = new OptionSet() {
                 { "tokenized", x => tokenized = true },
@@ -118,19 +124,18 @@ namespace giza
             Console.WriteLine("Usage:");
             Console.WriteLine("    giza [options]");
             Console.WriteLine("    giza span [options] [GRAMMAR FILE] [START SYMBOL] [FILE]");
+            Console.WriteLine("    giza parse [options] [GRAMMAR FILE] [START SYMBOL] [FILE]");
             Console.WriteLine("    giza super [GRAMMAR FILE]");
-            //Console.WriteLine("    giza print-super");
             Console.WriteLine("    giza render [GRAMMAR FILE] [CLASS NAME]");
             Console.WriteLine();
-            Console.WriteLine("Reads grammar files and parses input.");
+            Console.WriteLine("Subcommands:");
             Console.WriteLine();
-            Console.WriteLine("    version, -v     Print version and exit successfully.");
-            Console.WriteLine("    --help, -h, -?  Print this help and exit successfully.");
+            Console.WriteLine("    span,           Process the input file with a non-tokenized grammar, starting with a given symbol.");
+            Console.WriteLine("    parse,          Parse the input file with a tokenized grammar, starting with a given symbol.");
             Console.WriteLine("    super,          Process the grammar file only.");
-            //Console.WriteLine("    print-super,    Print the supergrammar and exit.");
             Console.WriteLine("    render,         Process the grammar file and print its definitions as a C# class.");
             Console.WriteLine();
-            Console.WriteLine("If \"-\" is given for FILE, or for GRAMMAR FILE given to --super, then it is read from standard input.");
+            Console.WriteLine("If \"-\" is given for FILE, or for GRAMMAR FILE given to super, then it is read from standard input.");
             Console.WriteLine();
 
             _options.WriteOptionDescriptions(Console.Out);
