@@ -19,10 +19,10 @@ namespace MetaphysicsIndustries.Giza
 
         public class DcError : Error
         {
-            public static readonly ErrorType NextNodeLinksOutsideOfDefinition =     new ErrorType() { Name="NextNodeLinksOutsideOfDefinition",  Description="NextNodeLinksOutsideOfDefinition"  };
-            public static readonly ErrorType StartNodeHasWrongParentDefinition =    new ErrorType() { Name="StartNodeHasWrongParentDefinition", Description="StartNodeHasWrongParentDefinition" };
-            public static readonly ErrorType EndNodeHasWrongParentDefinition =      new ErrorType() { Name="EndNodeHasWrongParentDefinition",   Description="EndNodeHasWrongParentDefinition"   };
-            public static readonly ErrorType LeadingReferenceCycle =                new ErrorType() { Name="LeadingReferenceCycle",             Description="LeadingReferenceCycle"             };
+            public static readonly ErrorType NextNodeLinksOutsideOfDefinition =     new ErrorType() { Name="NextNodeLinksOutsideOfDefinition",  DescriptionFormat="NextNodeLinksOutsideOfDefinition"  };
+            public static readonly ErrorType StartNodeHasWrongParentDefinition =    new ErrorType() { Name="StartNodeHasWrongParentDefinition", DescriptionFormat="StartNodeHasWrongParentDefinition" };
+            public static readonly ErrorType EndNodeHasWrongParentDefinition =      new ErrorType() { Name="EndNodeHasWrongParentDefinition",   DescriptionFormat="EndNodeHasWrongParentDefinition"   };
+            public static readonly ErrorType LeadingReferenceCycle =                new ErrorType() { Name="LeadingReferenceCycle",             DescriptionFormat="LeadingReferenceCycle"             };
 
             public Node Node;
             public List<Definition> Cycle;

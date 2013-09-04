@@ -7,7 +7,7 @@ namespace MetaphysicsIndustries.Giza
     {
         public string Name;
         public bool IsWarning;
-        public string Description;
+        public string DescriptionFormat;
 
         public static bool operator==(ErrorType a, ErrorType b)
         {
@@ -28,11 +28,11 @@ namespace MetaphysicsIndustries.Giza
             return
                 Name.Equals(other.Name) &&
                 IsWarning.Equals(other.IsWarning) &&
-                Description.Equals(other.Description);
+                DescriptionFormat.Equals(other.DescriptionFormat);
         }
         public override int GetHashCode()
         {
-            return Name.GetHashCode() ^ IsWarning.GetHashCode() ^ Description.GetHashCode();
+            return Name.GetHashCode() ^ IsWarning.GetHashCode() ^ DescriptionFormat.GetHashCode();
         }
         public override string ToString()
         {

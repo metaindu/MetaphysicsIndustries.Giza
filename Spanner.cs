@@ -28,9 +28,9 @@ namespace MetaphysicsIndustries.Giza
 
         public class SpannerError : Error
         {
-            public static readonly ErrorType InvalidCharacter =     new ErrorType() { Name="InvalidCharacter",      Description="InvalidCharacter"      };
-            public static readonly ErrorType UnexpectedEndOfInput = new ErrorType() { Name="UnexpectedEndOfInput",  Description="UnexpectedEndOfInput"  };
-            public static readonly ErrorType ExcessRemainingInput = new ErrorType() { Name="ExcessRemainingInput",  Description="ExcessRemainingInput"  };
+            public static readonly ErrorType InvalidCharacter =     new ErrorType() { Name="InvalidCharacter",      DescriptionFormat="InvalidCharacter"      };
+            public static readonly ErrorType UnexpectedEndOfInput = new ErrorType() { Name="UnexpectedEndOfInput",  DescriptionFormat="UnexpectedEndOfInput"  };
+            public static readonly ErrorType ExcessRemainingInput = new ErrorType() { Name="ExcessRemainingInput",  DescriptionFormat="ExcessRemainingInput"  };
 
             public string DescriptionString = string.Empty;
             public char OffendingCharacter;

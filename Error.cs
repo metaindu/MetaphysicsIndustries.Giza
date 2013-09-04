@@ -14,7 +14,7 @@ namespace MetaphysicsIndustries.Giza
 
         public virtual string Description
         {
-            get { return ErrorType.Description; }
+            get { return ErrorType.DescriptionFormat; }
         }
 
         public override string ToString()
@@ -22,7 +22,7 @@ namespace MetaphysicsIndustries.Giza
             return ErrorType.Name + (IsWarning ? " (warning)" : "");
         }
 
-        public static readonly ErrorType Unknown = new ErrorType() { Name="Unknown", Description="Unknown" };
+        public static readonly ErrorType Unknown = new ErrorType() { Name="Unknown", DescriptionFormat="Unknown" };
     }
 
     public static class ErrorHelpers

@@ -9,9 +9,9 @@ namespace MetaphysicsIndustries.Giza
     {
         public class ParserError : Error
         {
-            public static readonly ErrorType InvalidToken =         new ErrorType { Name="InvalidToken",          Description="InvalidToken"          };
-            public static readonly ErrorType UnexpectedEndOfInput = new ErrorType { Name="UnexpectedEndOfInput",  Description="UnexpectedEndOfInput"  };
-            public static readonly ErrorType ExcessRemainingInput = new ErrorType { Name="ExcessRemainingInput",  Description="ExcessRemainingInput"  };
+            public static readonly ErrorType InvalidToken =         new ErrorType { Name="InvalidToken",          DescriptionFormat="InvalidToken"          };
+            public static readonly ErrorType UnexpectedEndOfInput = new ErrorType { Name="UnexpectedEndOfInput",  DescriptionFormat="UnexpectedEndOfInput"  };
+            public static readonly ErrorType ExcessRemainingInput = new ErrorType { Name="ExcessRemainingInput",  DescriptionFormat="ExcessRemainingInput"  };
 
             public Token OffendingToken;
             public int Line;
