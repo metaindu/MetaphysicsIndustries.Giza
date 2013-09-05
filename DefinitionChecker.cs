@@ -139,6 +139,88 @@ namespace MetaphysicsIndustries.Giza
                     };
                 }
             }
+
+            // check path-from-start
+            if (true)
+            {
+                var knownPathFromStart = new Set<Node>();
+                var remaining = new Set<Node>();
+                var nexts = new Set<Node>();
+                remaining.AddRange(def.Nodes);
+                knownPathFromStart.AddRange(def.StartNodes);
+                remaining.RemoveRange(knownPathFromStart);
+
+                while (remaining.Count > 0)
+                {
+                    nexts.Clear();
+                    foreach (var node in knownPathFromStart)
+                    {
+                        nexts.AddRange(node.NextNodes);
+                    }
+                    nexts.RemoveRange(knownPathFromStart);
+
+                    if (nexts.Count < 1) break;
+
+                    knownPathFromStart.AddRange(nexts);
+                    remaining.RemoveRange(nexts);
+                }
+
+                foreach (var node in remaining)
+                {
+                    yield return new DcError {
+                        ErrorType = DcError.NodeHasNoPathFromStart,
+                        Node = node,
+                    };
+                }
+            }
+
+            // check path-to-end
+            if (true)
+            {
+                var previousNodes = new Dictionary<Node, Set<Node>>();
+                foreach (var node in def.Nodes)
+                {
+                    previousNodes[node] = new Set<Node>();
+                }
+                foreach (var node in def.Nodes)
+                {
+                    foreach (var next in node.NextNodes)
+                    {
+                        previousNodes[next].Add(node);
+                    }
+                }
+
+                var knownPathToEnd = new Set<Node>();
+                var remaining = new Set<Node>(def.Nodes);
+                var prevs = new Set<Node>();
+
+                knownPathToEnd.AddRange(def.EndNodes);
+                remaining.RemoveRange(knownPathToEnd);
+
+                while (remaining.Count > 0)
+                {
+                    prevs.Clear();
+                    foreach (var node in knownPathToEnd)
+                    {
+                        prevs.AddRange(previousNodes[node]);
+                    }
+
+                    prevs.RemoveRange(knownPathToEnd);
+
+                    if (prevs.Count < 1) break;
+
+                    knownPathToEnd.AddRange(prevs);
+                    remaining.RemoveRange(prevs);
+                }
+
+                foreach (var node in remaining)
+                {
+                    yield return new DcError {
+                        ErrorType = DcError.NodeHasNoPathToEnd,
+                        Node = node,
+                    };
+                }
+            }
         }
     }
 }
