@@ -24,3 +24,8 @@ clarify what 'mind whitespace', 'ignore case' and 'atomic' directives do on non-
     should affect only implicits
 more tests for above
 repl
+
+whitspace as tokenized def
+    remove 'mind whitespace'
+implement a spanner with a parser acting on single-char tokens
+
