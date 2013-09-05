@@ -4,6 +4,7 @@ using System;
 /**/
 using System.Collections.Generic;
 using System.Collections;
+using DcError = MetaphysicsIndustries.Giza.DefinitionChecker.DcError;
 
 
 namespace MetaphysicsIndustries.Giza.Test
@@ -109,6 +110,78 @@ namespace MetaphysicsIndustries.Giza.Test
                 }
             }
             Assert.IsTrue(found, "No LeadingReferenceCycle error was found in the returned list.");
+        }
+
+        [Test]
+        public void TestNoPathFromStart()
+        {
+            // setup
+            var a = new Definition {
+                Name="a"
+            };
+
+            var n1 = new CharNode('1');
+            var n2 = new CharNode('2');
+            var n3 = new CharNode('3');
+
+            a.Nodes.Add(n1);
+            a.Nodes.Add(n2);
+            a.Nodes.Add(n3);
+
+            a.StartNodes.Add(n1);
+            a.EndNodes.Add(n3);
+            n1.NextNodes.Add(n3);
+            n2.NextNodes.Add(n3);
+
+            var dc = new DefinitionChecker();
+
+            // action
+            var errorEnu = dc.CheckDefinition(a);
+            var errors = new List<Error>(errorEnu);
+
+            // assertions
+            Assert.IsNotNull(errorEnu);
+            Assert.AreEqual(1, errors.Count);
+            Assert.IsInstanceOf<DcError>(errors[0]);
+            var err = (DcError)errors[0];
+            Assert.AreEqual(DcError.NodeHasNoPathFromStart, err.ErrorType);
+            Assert.AreSame(n2, err.Node);
+        }
+
+        [Test]
+        public void TestNoPathToEnd()
+        {
+            // setup
+            var a = new Definition {
+                Name="a"
+            };
+
+            var n1 = new CharNode('1');
+            var n2 = new CharNode('2');
+            var n3 = new CharNode('3');
+
+            a.Nodes.Add(n1);
+            a.Nodes.Add(n2);
+            a.Nodes.Add(n3);
+
+            a.StartNodes.Add(n1);
+            a.EndNodes.Add(n3);
+            n1.NextNodes.Add(n3);
+            n1.NextNodes.Add(n2);
+
+            var dc = new DefinitionChecker();
+
+            // action
+            var errorEnu = dc.CheckDefinition(a);
+            var errors = new List<Error>(errorEnu);
+
+            // assertions
+            Assert.IsNotNull(errorEnu);
+            Assert.AreEqual(1, errors.Count);
+            Assert.IsInstanceOf<DcError>(errors[0]);
+            var err = (DcError)errors[0];
+            Assert.AreEqual(DcError.NodeHasNoPathToEnd, err.ErrorType);
+            Assert.AreSame(n2, err.Node);
         }
     }
 }
