@@ -32,12 +32,17 @@ namespace MetaphysicsIndustries.Giza
 
         public IEnumerable<Error> CheckDefinitions(IEnumerable<Definition> defs)
         {
+            if (defs == null) throw new ArgumentNullException("defs");
+
             var errors = new List<Error>();
             CheckDefinitions(defs, errors);
             return errors;
         }
         public void CheckDefinitions(IEnumerable<Definition> defs, ICollection<Error> errors)
         {
+            if (defs == null) throw new ArgumentNullException("defs");
+            if (errors == null) throw new ArgumentNullException("errors");
+
             bool foundErrors = false;
             foreach (Definition def in defs)
             {
@@ -115,12 +120,17 @@ namespace MetaphysicsIndustries.Giza
 
         public IEnumerable<Error> CheckDefinition(Definition def)
         {
+            if (def == null) throw new ArgumentNullException("def");
+
             var errors = new List<Error>();
             CheckDefinition(def, errors);
             return errors;
         }
         public void CheckDefinition(Definition def, ICollection<Error> errors)
         {
+            if (def == null) throw new ArgumentNullException("def");
+            if (errors == null) throw new ArgumentNullException("errors");
+
             bool checkPaths = true;
 
             // check that all NextNodes are in the same definition
