@@ -32,76 +32,94 @@ namespace MetaphysicsIndustries.Giza
 
         public IEnumerable<Error> CheckDefinitions(IEnumerable<Definition> defs)
         {
+            var errors = new List<Error>();
+            CheckDefinitions(defs, errors);
+            return errors;
+        }
+        public void CheckDefinitions(IEnumerable<Definition> defs, ICollection<Error> errors)
+        {
+            bool foundErrors = false;
             foreach (Definition def in defs)
             {
-                foreach (DcError ei in CheckDefinition(def))
+                var defErrors = CheckDefinition(def);
+                if (defErrors.Count() > 0)
                 {
-                    yield return ei;
+                    Collection.AddRange(errors, defErrors);
+                    foundErrors = true;
                 }
             }
 
-            // check for leading cycles
-            Dictionary<Definition, Set<Definition>> leaders = new Dictionary<Definition, Set<Definition>>();
-            foreach (Definition def in defs)
+            if (!foundErrors)
             {
-                Set<Definition> s = new Set<Definition>();
-                leaders[def] = s;
-
-                foreach (Node start in def.StartNodes)
+                // check for leading cycles
+                var leaders = new Dictionary<Definition, Set<Definition>>();
+                foreach (Definition def in defs)
                 {
-                    if (start is DefRefNode)
-                    {
-                        s.Add((start as DefRefNode).DefRef);
-                    }
-                }
-            }
+                    Set<Definition> s = new Set<Definition>();
+                    leaders[def] = s;
 
-            bool c = true;
-            while (c)
-            {
-                c = false;
-                foreach (Definition def in leaders.Keys.ToArray())
-                {
-                    if (leaders[def].Count < 1)
+                    foreach (Node start in def.StartNodes)
                     {
-                        leaders.Remove(def);
-                        c = true;
-                    }
-                    else
-                    {
-                        foreach (Definition leader in leaders[def].ToArray())
+                        if (start is DefRefNode)
                         {
-                            if (!leaders.ContainsKey(leader))
+                            s.Add((start as DefRefNode).DefRef);
+                        }
+                    }
+                }
+
+                bool c = true;
+                while (c)
+                {
+                    c = false;
+                    foreach (Definition def in leaders.Keys.ToArray())
+                    {
+                        if (leaders[def].Count < 1)
+                        {
+                            leaders.Remove(def);
+                            c = true;
+                        }
+                        else
+                        {
+                            foreach (Definition leader in leaders[def].ToArray())
                             {
-                                leaders[def].Remove(leader);
-                                c = true;
+                                if (!leaders.ContainsKey(leader))
+                                {
+                                    leaders[def].Remove(leader);
+                                    c = true;
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            if (leaders.Count > 0)
-            {
-                Definition start = leaders.Keys.First();
-                List<Definition> leadingCycle = new List<Definition>();
-                Definition current = leaders[start].First();
-                leadingCycle.Add(start);
-                leadingCycle.Add(current);
-                while (current != start)
+                if (leaders.Count > 0)
                 {
-                    current = leaders[current].First();
+                    Definition start = leaders.Keys.First();
+                    var leadingCycle = new List<Definition>();
+                    Definition current = leaders[start].First();
+                    leadingCycle.Add(start);
                     leadingCycle.Add(current);
-                }
+                    while (current != start)
+                    {
+                        current = leaders[current].First();
+                        leadingCycle.Add(current);
+                    }
 
-                yield return new DcError {
-                    ErrorType=DcError.LeadingReferenceCycle,
-                    Cycle=leadingCycle,
-                };
+                    errors.Add(new DcError {
+                        ErrorType=DcError.LeadingReferenceCycle,
+                        Cycle=leadingCycle,
+                    });
+                }
             }
         }
 
         public IEnumerable<Error> CheckDefinition(Definition def)
+        {
+            var errors = new List<Error>();
+            CheckDefinition(def, errors);
+            return errors;
+        }
+        public void CheckDefinition(Definition def, ICollection<Error> errors)
         {
             bool checkPaths = true;
 
@@ -112,10 +130,10 @@ namespace MetaphysicsIndustries.Giza
                 {
                     if (next.ParentDefinition != def)
                     {
-                        yield return new DcError {
+                        errors.Add(new DcError {
                             ErrorType=DcError.NextNodeLinksOutsideOfDefinition,
                             Node = node,
-                        };
+                        });
                         checkPaths = false;
                     }
                 }
@@ -126,10 +144,10 @@ namespace MetaphysicsIndustries.Giza
             {
                 if (node.ParentDefinition != def)
                 {
-                    yield return new DcError {
+                    errors.Add(new DcError {
                         ErrorType=DcError.StartNodeHasWrongParentDefinition,
                         Node=node,
-                    };
+                    });
                     checkPaths = false;
                 }
             }
@@ -137,10 +155,10 @@ namespace MetaphysicsIndustries.Giza
             {
                 if (node.ParentDefinition != def)
                 {
-                    yield return new DcError {
+                    errors.Add(new DcError {
                         ErrorType=DcError.EndNodeHasWrongParentDefinition,
                         Node=node,
-                    };
+                    });
                     checkPaths = false;
                 }
             }
@@ -174,10 +192,10 @@ namespace MetaphysicsIndustries.Giza
 
                     foreach (var node in remaining)
                     {
-                        yield return new DcError {
+                        errors.Add(new DcError {
                             ErrorType = DcError.NodeHasNoPathFromStart,
                             Node = node,
-                        };
+                        });
                     }
                 }
 
@@ -222,10 +240,10 @@ namespace MetaphysicsIndustries.Giza
 
                     foreach (var node in remaining)
                     {
-                        yield return new DcError {
+                        errors.Add(new DcError {
                             ErrorType = DcError.NodeHasNoPathToEnd,
                             Node = node,
-                        };
+                        });
                     }
                 }
             }
