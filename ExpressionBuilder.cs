@@ -307,29 +307,29 @@ namespace MetaphysicsIndustries.Giza
 
         DefinitionDirective GetDirectiveItem(Supergrammar grammar, Span span)
         {
-            if (span.Subspans[0].Node == grammar.node_directive_item_0_id_002D_mind &&
-                span.Subspans[1].Node == grammar.node_directive_item_1_id_002D_whitespace)
+            if (span.Subspans[0].Node == grammar.node_directive_002D_item_0_id_002D_mind &&
+                span.Subspans[1].Node == grammar.node_directive_002D_item_1_id_002D_whitespace)
             {
                 return DefinitionDirective.MindWhitespace;
             }
-            if (span.Subspans[0].Node == grammar.node_directive_item_2_id_002D_ignore &&
-                span.Subspans[1].Node == grammar.node_directive_item_3_id_002D_case)
+            if (span.Subspans[0].Node == grammar.node_directive_002D_item_2_id_002D_ignore &&
+                span.Subspans[1].Node == grammar.node_directive_002D_item_3_id_002D_case)
             {
                 return DefinitionDirective.IgnoreCase;
             }
-            if (span.Subspans[0].Node == grammar.node_directive_item_4_id_002D_atomic)
+            if (span.Subspans[0].Node == grammar.node_directive_002D_item_4_id_002D_atomic)
             {
                 return DefinitionDirective.Atomic;
             }
-            if (span.Subspans[0].Node == grammar.node_directive_item_5_id_002D_token)
+            if (span.Subspans[0].Node == grammar.node_directive_002D_item_5_id_002D_token)
             {
                 return DefinitionDirective.Token;
             }
-            if (span.Subspans[0].Node == grammar.node_directive_item_6_id_002D_subtoken)
+            if (span.Subspans[0].Node == grammar.node_directive_002D_item_6_id_002D_subtoken)
             {
                 return DefinitionDirective.Subtoken;
             }
-            if (span.Subspans[0].Node == grammar.node_directive_item_7_id_002D_comment)
+            if (span.Subspans[0].Node == grammar.node_directive_002D_item_7_id_002D_comment)
             {
                 return DefinitionDirective.Comment;
             }
