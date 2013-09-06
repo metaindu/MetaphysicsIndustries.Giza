@@ -183,6 +183,38 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(DcError.NodeHasNoPathToEnd, err.ErrorType);
             Assert.AreSame(n2, err.Node);
         }
+
+        [Test]
+        public void TestNextNodeOutsideDefinition()
+        {
+            // setup
+            var a = new Definition() { Name="a" };
+            var b = new Definition() { Name="b" };
+            var n1 = new CharNode('1');
+            var n2 = new CharNode('2');
+
+            a.Nodes.Add(n1);
+            a.StartNodes.Add(n1);
+            a.EndNodes.Add(n1);
+            b.Nodes.Add(n2);
+            b.StartNodes.Add(n2);
+            b.EndNodes.Add(n2);
+
+            n1.NextNodes.Add(n2);
+            var dc = new DefinitionChecker();
+
+            // action
+            var errorEnu = dc.CheckDefinition(a);
+            var errors = new List<Error>(errorEnu);
+
+            // assertions
+            Assert.IsNotNull(errorEnu);
+            Assert.AreEqual(1, errors.Count);
+            Assert.IsInstanceOf<DcError>(errors[0]);
+            var err = (DcError)errors[0];
+            Assert.AreEqual(DcError.NextNodeLinksOutsideOfDefinition, err.ErrorType);
+            Assert.AreSame(n1, err.Node);
+        }
     }
 }
 
