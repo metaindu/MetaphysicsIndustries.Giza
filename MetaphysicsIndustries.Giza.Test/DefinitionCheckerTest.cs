@@ -367,6 +367,26 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(DcError.EndNodeHasWrongParentDefinition, err.ErrorType);
             Assert.AreSame(n2, err.Node);
         }
+
+        [Test]
+        public void TestCheckDefinitionsNullArgument()
+        {
+            // setup
+            var dc = new DefinitionChecker();
+
+            // action/assertions
+            Assert.Throws<ArgumentNullException>(() => dc.CheckDefinitions(null));
+        }
+
+        [Test]
+        public void TestCheckDefinitionNullArgument()
+        {
+            // setup
+            var dc = new DefinitionChecker();
+
+            // action/assertions
+            Assert.Throws<ArgumentNullException>(() => dc.CheckDefinition(null));
+        }
     }
 }
 
