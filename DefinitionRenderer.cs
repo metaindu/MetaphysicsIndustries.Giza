@@ -46,7 +46,7 @@ namespace MetaphysicsIndustries.Giza
                             "node_{0}_{1}_{2}",
                             RenderIdentifier(def.Name),
                             node.ID,
-                            RenderNodeNameAsIdentifier(node.Tag));
+                            RenderIdentifier(node.Tag));
 
                     nodenames[node] = name;
 
@@ -152,9 +152,25 @@ namespace MetaphysicsIndustries.Giza
             return sb.ToString();
         }
 
-        static string RenderIdentifier(string s)
+        static string RenderIdentifier(string name)
         {
-            return Regex.Replace(s, @"[^\w\d_]", "_");
+            StringBuilder sb = new StringBuilder();
+
+            foreach (char ch in name)
+            {
+                if (char.IsLetterOrDigit(ch))
+                {
+                    sb.Append(ch.ToString());
+                }
+                else
+                {
+                    sb.Append("_");
+                    sb.Append(Convert.ToInt32(ch).ToString("X4"));
+                    sb.Append("_");
+                }
+            }
+
+            return sb.ToString();
         }
 
         static string RenderString(string s)
@@ -168,27 +184,6 @@ namespace MetaphysicsIndustries.Giza
             s2 = s2.Replace("\t", "\\t");
 
             return "\"" + s2 + "\"";
-        }
-
-        static string RenderNodeNameAsIdentifier(string name)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            foreach (char ch in name)
-            {
-                if (char.IsLetterOrDigit(ch) || ch == '_')
-                {
-                    sb.Append(ch.ToString());
-                }
-                else
-                {
-                    sb.Append("_");
-                    sb.Append(Convert.ToInt32(ch).ToString("X4"));
-                    sb.Append("_");
-                }
-            }
-
-            return sb.ToString();
         }
     }
 }
