@@ -103,6 +103,8 @@ namespace MetaphysicsIndustries.Giza
 
         public IEnumerable<Error> CheckDefinition(Definition def)
         {
+            bool checkPaths = true;
+
             // check that all NextNodes are in the same definition
             foreach (Node node in def.Nodes)
             {
@@ -112,8 +114,9 @@ namespace MetaphysicsIndustries.Giza
                     {
                         yield return new DcError {
                             ErrorType=DcError.NextNodeLinksOutsideOfDefinition,
-                            Node = next,
+                            Node = node,
                         };
+                        checkPaths = false;
                     }
                 }
             }
@@ -127,6 +130,7 @@ namespace MetaphysicsIndustries.Giza
                         ErrorType=DcError.StartNodeHasWrongParentDefinition,
                         Node=node,
                     };
+                    checkPaths = false;
                 }
             }
             foreach (Node node in def.EndNodes)
@@ -137,88 +141,92 @@ namespace MetaphysicsIndustries.Giza
                         ErrorType=DcError.EndNodeHasWrongParentDefinition,
                         Node=node,
                     };
+                    checkPaths = false;
                 }
             }
 
-            // check path-from-start
-            if (true)
+            if (checkPaths)
             {
-                var knownPathFromStart = new Set<Node>();
-                var remaining = new Set<Node>();
-                var nexts = new Set<Node>();
-                remaining.AddRange(def.Nodes);
-                knownPathFromStart.AddRange(def.StartNodes);
-                remaining.RemoveRange(knownPathFromStart);
-
-                while (remaining.Count > 0)
+                // check path-from-start
+                if (true)
                 {
-                    nexts.Clear();
-                    foreach (var node in knownPathFromStart)
+                    var knownPathFromStart = new Set<Node>();
+                    var remaining = new Set<Node>();
+                    var nexts = new Set<Node>();
+                    remaining.AddRange(def.Nodes);
+                    knownPathFromStart.AddRange(def.StartNodes);
+                    remaining.RemoveRange(knownPathFromStart);
+
+                    while (remaining.Count > 0)
                     {
-                        nexts.AddRange(node.NextNodes);
+                        nexts.Clear();
+                        foreach (var node in knownPathFromStart)
+                        {
+                            nexts.AddRange(node.NextNodes);
+                        }
+                        nexts.RemoveRange(knownPathFromStart);
+
+                        if (nexts.Count < 1) break;
+
+                        knownPathFromStart.AddRange(nexts);
+                        remaining.RemoveRange(nexts);
                     }
-                    nexts.RemoveRange(knownPathFromStart);
 
-                    if (nexts.Count < 1) break;
-
-                    knownPathFromStart.AddRange(nexts);
-                    remaining.RemoveRange(nexts);
-                }
-
-                foreach (var node in remaining)
-                {
-                    yield return new DcError {
-                        ErrorType = DcError.NodeHasNoPathFromStart,
-                        Node = node,
-                    };
-                }
-            }
-
-            // check path-to-end
-            if (true)
-            {
-                var previousNodes = new Dictionary<Node, Set<Node>>();
-                foreach (var node in def.Nodes)
-                {
-                    previousNodes[node] = new Set<Node>();
-                }
-                foreach (var node in def.Nodes)
-                {
-                    foreach (var next in node.NextNodes)
+                    foreach (var node in remaining)
                     {
-                        previousNodes[next].Add(node);
+                        yield return new DcError {
+                            ErrorType = DcError.NodeHasNoPathFromStart,
+                            Node = node,
+                        };
                     }
                 }
 
-                var knownPathToEnd = new Set<Node>();
-                var remaining = new Set<Node>(def.Nodes);
-                var prevs = new Set<Node>();
-
-                knownPathToEnd.AddRange(def.EndNodes);
-                remaining.RemoveRange(knownPathToEnd);
-
-                while (remaining.Count > 0)
+                // check path-to-end
+                if (true)
                 {
-                    prevs.Clear();
-                    foreach (var node in knownPathToEnd)
+                    var previousNodes = new Dictionary<Node, Set<Node>>();
+                    foreach (var node in def.Nodes)
                     {
-                        prevs.AddRange(previousNodes[node]);
+                        previousNodes[node] = new Set<Node>();
+                    }
+                    foreach (var node in def.Nodes)
+                    {
+                        foreach (var next in node.NextNodes)
+                        {
+                            previousNodes[next].Add(node);
+                        }
                     }
 
-                    prevs.RemoveRange(knownPathToEnd);
+                    var knownPathToEnd = new Set<Node>();
+                    var remaining = new Set<Node>(def.Nodes);
+                    var prevs = new Set<Node>();
 
-                    if (prevs.Count < 1) break;
+                    knownPathToEnd.AddRange(def.EndNodes);
+                    remaining.RemoveRange(knownPathToEnd);
 
-                    knownPathToEnd.AddRange(prevs);
-                    remaining.RemoveRange(prevs);
-                }
+                    while (remaining.Count > 0)
+                    {
+                        prevs.Clear();
+                        foreach (var node in knownPathToEnd)
+                        {
+                            prevs.AddRange(previousNodes[node]);
+                        }
 
-                foreach (var node in remaining)
-                {
-                    yield return new DcError {
-                        ErrorType = DcError.NodeHasNoPathToEnd,
-                        Node = node,
-                    };
+                        prevs.RemoveRange(knownPathToEnd);
+
+                        if (prevs.Count < 1) break;
+
+                        knownPathToEnd.AddRange(prevs);
+                        remaining.RemoveRange(prevs);
+                    }
+
+                    foreach (var node in remaining)
+                    {
+                        yield return new DcError {
+                            ErrorType = DcError.NodeHasNoPathToEnd,
+                            Node = node,
+                        };
+                    }
                 }
             }
         }
