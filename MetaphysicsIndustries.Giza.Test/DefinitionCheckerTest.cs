@@ -305,6 +305,68 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(DcError.StartNodeHasWrongParentDefinition, err.ErrorType);
             Assert.AreSame(n2, err.Node);
         }
+
+        [Test]
+        public void TestEndNodeHasWrongParentDefinition1()
+        {
+            // setup
+            var a = new Definition() { Name="a" };
+            var b = new Definition() { Name="b" };
+            var n1 = new CharNode('1');
+            var n2 = new CharNode('2');
+
+            a.Nodes.Add(n1);
+            a.StartNodes.Add(n1);
+            a.EndNodes.Add(n1);
+            b.Nodes.Add(n2);
+            b.StartNodes.Add(n2);
+            b.EndNodes.Add(n2);
+
+            a.EndNodes.Add(n2);
+
+            var dc = new DefinitionChecker();
+
+            // action
+            var errorEnu = dc.CheckDefinition(a);
+            var errors = new List<Error>(errorEnu);
+
+            // assertions
+            Assert.IsNotNull(errorEnu);
+            Assert.AreEqual(1, errors.Count);
+            Assert.IsInstanceOf<DcError>(errors[0]);
+            var err = (DcError)errors[0];
+            Assert.AreEqual(DcError.EndNodeHasWrongParentDefinition, err.ErrorType);
+            Assert.AreSame(n2, err.Node);
+        }
+
+        [Test]
+        public void TestEndNodeHasWrongParentDefinition2()
+        {
+            // setup
+            var a = new Definition() { Name="a" };
+            var n1 = new CharNode('1');
+            var n2 = new CharNode('2');
+
+            a.Nodes.Add(n1);
+            a.StartNodes.Add(n1);
+            a.EndNodes.Add(n1);
+
+            a.EndNodes.Add(n2);
+
+            var dc = new DefinitionChecker();
+
+            // action
+            var errorEnu = dc.CheckDefinition(a);
+            var errors = new List<Error>(errorEnu);
+
+            // assertions
+            Assert.IsNotNull(errorEnu);
+            Assert.AreEqual(1, errors.Count);
+            Assert.IsInstanceOf<DcError>(errors[0]);
+            var err = (DcError)errors[0];
+            Assert.AreEqual(DcError.EndNodeHasWrongParentDefinition, err.ErrorType);
+            Assert.AreSame(n2, err.Node);
+        }
     }
 }
 
