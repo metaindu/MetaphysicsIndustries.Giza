@@ -379,6 +379,26 @@ namespace MetaphysicsIndustries.Giza.Test
         }
 
         [Test]
+        public void TestCheckDefinitionsNullArgument2()
+        {
+            // setup
+            var dc = new DefinitionChecker();
+
+            // action/assertions
+            Assert.Throws<ArgumentNullException>(() => dc.CheckDefinitions(null, new List<Error>()));
+        }
+
+        [Test]
+        public void TestCheckDefinitionsNullArgument3()
+        {
+            // setup
+            var dc = new DefinitionChecker();
+
+            // action/assertions
+            Assert.Throws<ArgumentNullException>(() => dc.CheckDefinitions(new Definition[0], null));
+        }
+
+        [Test]
         public void TestCheckDefinitionNullArgument()
         {
             // setup
@@ -386,6 +406,26 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // action/assertions
             Assert.Throws<ArgumentNullException>(() => dc.CheckDefinition(null));
+        }
+
+        [Test]
+        public void TestCheckDefinitionNullArgument2()
+        {
+            // setup
+            var dc = new DefinitionChecker();
+
+            // action/assertions
+            Assert.Throws<ArgumentNullException>(() => dc.CheckDefinition(new Definition("a"), null));
+        }
+
+        [Test]
+        public void TestCheckDefinitionNullArgument3()
+        {
+            // setup
+            var dc = new DefinitionChecker();
+
+            // action/assertions
+            Assert.Throws<ArgumentNullException>(() => dc.CheckDefinition(null, new List<Error>()));
         }
     }
 }
