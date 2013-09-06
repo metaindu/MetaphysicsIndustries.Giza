@@ -91,6 +91,7 @@
     <None Include="Giza.cd" />
     <None Include="key.snk" />
     <None Include="todo.txt" />
+    <None Include="docs\Directives.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MetaphysicsIndustries.Collections\MetaphysicsIndustries.Collections.csproj">
@@ -115,4 +116,7 @@
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="docs\" />
+  </ItemGroup>
 </Project>

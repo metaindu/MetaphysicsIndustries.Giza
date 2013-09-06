@@ -1,0 +1,52 @@
+
+spanned
+    ic  mw  a   t   st  c
+d   ic  mw  a   warnwarnwarn
+
+parsed
+    ic  mw  a
+t   ic  autoauto
+nt  imp warnwarn
+
+in a non-tokenized (spanned) grammar
+    definitions, by default have no directives, which means that they ignore whitespace, mind case, and aren't atomic.
+    ignore case, mind whitespace, and atomic perform as advertized
+    token, subtoken, and comment produce warnings but are otherwise ignored by Spanner
+in a tokenized (parsed) grammar
+    definitions, by default have no directives, which means that they ignore whitespace, mind case, and aren't atomic.
+    implicit tokens have the token directive applied
+    tokens, subtokens, comments, and implicit tokens have mind whitespace and atomic by default. these can't be turned off
+    tokens, subtokens, and comments with ignore case will ignore case
+    ignore case, on a non-tokenized definition, normally has no effect.
+        however, if the non-tokenized definition has any implicit tokens, then those implicit tokens get ignore case.
+        this will lead to possibly duplicate implicit token definitions
+        the following should give rise to two different "$implicit literal implicit" tokens:
+            definition1 = something 'implicit' something;
+            <ignore case>
+            definition2 = words+ ( 'implicit' words )*;
+        these duplicates have different names
+            "$implicit literal value" vs "$implicit ignore case literal value" 
+            "$implicit charclass \dabcdef" vs "$implicit ignore case charclass \dabcdef"
+    atomic, on a non-tokenized definition, produces a warning and is ignored
+    mind whitespace, on a non-tokenized definition, produces a warning and is ignored
+    a non-tokenized definition cannot refer to a subtoken definition
+    a/b --> a can reference b
+    token/token         ?
+    token/subtoken      y
+    token/comment       ?
+    token/nontoken      ?
+    subtoken/token      ?
+    subtoken/subtoken   ?
+    subtoken/comment    ?
+    subtoken/nontoken   ?
+    comment/token       ?
+    comment/subtoken    ?
+    comment/comment     ?
+    comment/nontoken    ?
+    nontoken/token      y
+    nontoken/subtoken   n
+    nontoken/comment    n
+    nontoken/nontoken   y
+    a definition may not have more than one of token, subtoken, or comment
+in both tokenized and non-tokenized grammars
+

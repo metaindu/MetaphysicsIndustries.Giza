@@ -19,7 +19,7 @@ user-defined reductions
 operate on streams
 
 clarify what 'mind whitespace' and 'atomic' do on tokens, subtokens, and comments, if anything
-    what are the defaults?
+
 clarify what 'mind whitespace', 'ignore case' and 'atomic' directives do on non-tokenized defs
     should affect only implicits
 more tests for above
