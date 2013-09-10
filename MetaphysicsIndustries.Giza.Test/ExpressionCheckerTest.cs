@@ -783,7 +783,11 @@ namespace MetaphysicsIndustries.Giza.Test
             List<Error> errors = ec.CheckDefinitionInfosForParsing(defs);
 
             Assert.IsNotNull(errors);
-            Assert.AreEqual(0, errors.Count);
+            Assert.AreEqual(1, errors.Count);
+            Assert.AreEqual(EcError.MixedTokenizedDirectives, errors[0].ErrorType);
+            Assert.IsInstanceOf<EcError>(errors[0]);
+            var err = (errors[0] as EcError);
+            Assert.AreSame(defs[0], err.DefinitionInfo);
         }
     }
 }
