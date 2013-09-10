@@ -54,7 +54,6 @@ namespace MetaphysicsIndustries.Giza
 
             public static readonly ErrorType MixedTokenizedDirectives =                 new ErrorType(name:"MixedTokenizedDirectives",                  descriptionFormat:"{0}" );
             public static readonly ErrorType ReferencedComment =                        new ErrorType(name:"ReferencedComment",                         descriptionFormat:"{0}" );
-            public static readonly ErrorType NonTokenReferencesSubtoken =               new ErrorType(name:"NonTokenReferencesSubtoken",                descriptionFormat:"{0}" );
             public static readonly ErrorType SubtokenReferencesNonToken =               new ErrorType(name:"SubtokenReferencesNonToken",                descriptionFormat:"{0}" );
             public static readonly ErrorType TokenReferencesNonToken =                  new ErrorType(name:"TokenReferencesNonToken",                   descriptionFormat:"{0}" );
             public static readonly ErrorType SubtokenReferencesToken =                  new ErrorType(name:"SubtokenReferencesToken",                   descriptionFormat:"{0}" );
@@ -62,11 +61,20 @@ namespace MetaphysicsIndustries.Giza
             public static readonly ErrorType CommentReferencesNonToken =                new ErrorType(name:"CommentReferencesNonToken");
             public static readonly ErrorType CommentReferencesToken =                   new ErrorType(name:"CommentReferencesToken");
 
+            public static readonly ErrorType NonTokenReferencesSubtoken =               new ErrorType(name:"NonTokenReferencesSubtoken",                descriptionFormat:"{0}" );
             public static readonly ErrorType NonTokenReferencesComment =                new ErrorType(name:"NonTokenReferencesComment");
             public static readonly ErrorType TokenizedReferencesNonToken =              new ErrorType(name:"SubtokenReferencesNonToken");
             public static readonly ErrorType TokenizedReferencesToken =                 new ErrorType(name:"TokenReferencesNonToken");
             public static readonly ErrorType TokenizedReferencesComment =               new ErrorType(name:"SubtokenReferencesToken");
 
+        }
+
+        bool IsTokenized(DefinitionExpression def)
+        {
+            return
+                def.Directives.Contains(DefinitionDirective.Token) ||
+                def.Directives.Contains(DefinitionDirective.Subtoken) ||
+                def.Directives.Contains(DefinitionDirective.Comment);
         }
 
         public List<Error> CheckDefinitionInfosForParsing(IEnumerable<DefinitionExpression> defs)
@@ -97,17 +105,7 @@ namespace MetaphysicsIndustries.Giza
 
                     DefinitionExpression target = defsByName[defref.DefinitionName];
 
-                    if (target.Directives.Contains(DefinitionDirective.Comment))
-                    {
-                        errors.Add(new EcError {
-                            ErrorType = EcError.ReferencedComment,
-                            ExpressionItem = defref,
-                            DefinitionInfo = def,
-                        });
-                    }
-                    if (!def.Directives.Contains(DefinitionDirective.Token) &&
-                        !def.Directives.Contains(DefinitionDirective.Subtoken) &&
-                        !def.Directives.Contains(DefinitionDirective.Comment) &&
+                    if (!IsTokenized(def) &&
                         target.Directives.Contains(DefinitionDirective.Subtoken))
                     {
                         errors.Add(new EcError {
@@ -116,38 +114,46 @@ namespace MetaphysicsIndustries.Giza
                             DefinitionInfo = def,
                         });
                     }
-                    if (def.Directives.Contains(DefinitionDirective.Subtoken) &&
-                        !target.Directives.Contains(DefinitionDirective.Token) &&
-                        !target.Directives.Contains(DefinitionDirective.Subtoken) &&
-                        !target.Directives.Contains(DefinitionDirective.Comment))
+
+                    if (!IsTokenized(def) &&
+                        target.Directives.Contains(DefinitionDirective.Comment))
                     {
                         errors.Add(new EcError {
-                            ErrorType = EcError.SubtokenReferencesNonToken,
-                            ExpressionItem = defref,
-                            DefinitionInfo = def,
-                        });
-                    }
-                    if (def.Directives.Contains(DefinitionDirective.Token) &&
-                        !target.Directives.Contains(DefinitionDirective.Token) &&
-                        !target.Directives.Contains(DefinitionDirective.Subtoken) &&
-                        !target.Directives.Contains(DefinitionDirective.Comment))
-                    {
-                        errors.Add(new EcError {
-                            ErrorType = EcError.TokenReferencesNonToken,
-                            ExpressionItem = defref,
-                            DefinitionInfo = def,
-                        });
-                    }
-                    if (def.Directives.Contains(DefinitionDirective.Subtoken) &&
-                        target.Directives.Contains(DefinitionDirective.Token))
-                    {
-                        errors.Add(new EcError {
-                            ErrorType = EcError.SubtokenReferencesToken,
+                            ErrorType = EcError.NonTokenReferencesComment,
                             ExpressionItem = defref,
                             DefinitionInfo = def,
                         });
                     }
 
+                    if (IsTokenized(def) &&
+                        target.Directives.Contains(DefinitionDirective.Token))
+                    {
+                        errors.Add(new EcError {
+                            ErrorType = EcError.TokenizedReferencesToken,
+                            ExpressionItem = defref,
+                            DefinitionInfo = def,
+                        });
+                    }
+
+                    if (IsTokenized(def) &&
+                        target.Directives.Contains(DefinitionDirective.Comment))
+                    {
+                        errors.Add(new EcError {
+                            ErrorType = EcError.TokenizedReferencesComment,
+                            ExpressionItem = defref,
+                            DefinitionInfo = def,
+                        });
+                    }
+
+                    if (IsTokenized(def) &&
+                        !IsTokenized(target))
+                    {
+                        errors.Add(new EcError {
+                            ErrorType = EcError.TokenizedReferencesNonToken,
+                            ExpressionItem = defref,
+                            DefinitionInfo = def,
+                        });
+                    }
                 }
             }
 
