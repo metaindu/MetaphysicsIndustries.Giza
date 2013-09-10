@@ -61,6 +61,12 @@ namespace MetaphysicsIndustries.Giza
             public static readonly ErrorType TokenReferencesToken =                     new ErrorType(name:"TokenReferencesToken");
             public static readonly ErrorType CommentReferencesNonToken =                new ErrorType(name:"CommentReferencesNonToken");
             public static readonly ErrorType CommentReferencesToken =                   new ErrorType(name:"CommentReferencesToken");
+
+            public static readonly ErrorType NonTokenReferencesComment =                new ErrorType(name:"NonTokenReferencesComment");
+            public static readonly ErrorType TokenizedReferencesNonToken =              new ErrorType(name:"SubtokenReferencesNonToken");
+            public static readonly ErrorType TokenizedReferencesToken =                 new ErrorType(name:"TokenReferencesNonToken");
+            public static readonly ErrorType TokenizedReferencesComment =               new ErrorType(name:"SubtokenReferencesToken");
+
         }
 
         public List<Error> CheckDefinitionInfosForParsing(IEnumerable<DefinitionExpression> defs)
