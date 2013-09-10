@@ -1,52 +1,77 @@
 
-spanned
-    ic  mw  a   t   st  c
-d   ic  mw  a   warnwarnwarn
+definitions and directives
+all of this is checked by ExpressionChecker
+some of it is checked by DefinitionChecker
 
-parsed
-    ic  mw  a
-t   ic  autoauto
-nt  imp warnwarn
 
-in a non-tokenized (spanned) grammar
+
+in all grammars, combinations of token, subtoken, and comment yield an error
+in a spanned grammar
     definitions, by default have no directives, which means that they ignore whitespace, mind case, and aren't atomic.
     ignore case, mind whitespace, and atomic perform as advertized
     token, subtoken, and comment produce warnings but are otherwise ignored by Spanner
-in a tokenized (parsed) grammar
+    references between definitions work normally, no matter what tokenizing directives are applied to either def
+    directives have no effect on inter-definition references, as token, subtoken, and comment are ignored
+in a parsed grammar
     definitions, by default have no directives, which means that they ignore whitespace, mind case, and aren't atomic.
-    implicit tokens have the token directive applied
-    tokens, subtokens, comments, and implicit tokens have mind whitespace and atomic by default. these can't be turned off
-    tokens, subtokens, and comments with ignore case will ignore case
-    ignore case, on a non-tokenized definition, normally has no effect.
-        however, if the non-tokenized definition has any implicit tokens, then those implicit tokens get ignore case.
-        this will lead to possibly duplicate implicit token definitions
-        the following should give rise to two different "$implicit literal implicit" tokens:
-            definition1 = something 'implicit' something;
-            <ignore case>
-            definition2 = words+ ( 'implicit' words )*;
-        these duplicates have different names
-            "$implicit literal value" vs "$implicit ignore case literal value" 
-            "$implicit charclass \dabcdef" vs "$implicit ignore case charclass \dabcdef"
-    atomic, on a non-tokenized definition, produces a warning and is ignored
-    mind whitespace, on a non-tokenized definition, produces a warning and is ignored
-    a non-tokenized definition cannot refer to a subtoken definition
-    a/b --> a can reference b
-    token/token         ?
-    token/subtoken      y
-    token/comment       ?
-    token/nontoken      ?
-    subtoken/token      ?
-    subtoken/subtoken   ?
-    subtoken/comment    ?
-    subtoken/nontoken   ?
-    comment/token       ?
-    comment/subtoken    ?
-    comment/comment     ?
-    comment/nontoken    ?
-    nontoken/token      y
-    nontoken/subtoken   n
-    nontoken/comment    n
-    nontoken/nontoken   y
-    a definition may not have more than one of token, subtoken, or comment
-in both tokenized and non-tokenized grammars
+    in a nontoken definition
+        atomic produces a warning and is ignored
+        mind whitespace produces a warning and is ignored
+        ignore case applies to implicit tokens only (see below)
+    in a token, subtoken, or comment definition
+        atomic is automatic. adding it produces a warning
+        mind whitespace is automatic. adding it produces a warning
+        ignore case ignores case
+    in an implicit token definition
+        token is automatic
+        atomic is automatic
+        mind whitespace is automatic
+        it is impossible to add directives
+        ignore case is specified on the containing non-token def (see above)
+            changes names from "$implicit literal value" to "$implicit ignore case literal value"
+            changes names from "$implicit charclass \dabcdef" to "$implicit ignore case charclass \dabcdef"
+    inter-definition references
+        token/subtoken/comment defs and nontoken defs operatre on different input streams
+            therefore, it wouldn't work to have nontoken reference subtoken or comment defs
+            nor would it work to have t/st/c reference nt
+            nontoken defs references token defs is the whole point of the dichotomy, and is perfectly acceptable
+        comments are removed from the token stream. 
+            therefore, nontokens will never be able to successfully reference them. it is disallowed
+        subtokens are never made a part of the token stream
+            therefore, nontokens will never be able to successfully reference them. it is disallowed
+        in principal, there are no real reason why token, subtoken, and comment can't reference each other or themselves
+            they operate on the same input stream, and are treated identically be the Spanner
+            t/st and c/st is the whole point of st
+            st/st make perfect sense
+            t/t, t/c, st/t, st/c, c/t, c/c make things confusing, which is a reason to frown upon the practice, but doesn't seem to warrant forbidding it entirely
+            a possible argument is that limiting the references to the first three would make things a bit simpler, eliminate confusion, and give example of the best way to do things
+            maybe make them warnings?
+            the only use i can think of for the six confusing links is re-use, but there are better ways of doing re-use that maintain the token/comment separation more clearly
+                "<token> dotted-name = [\w]+ ( '.' dotted-name )? ;"
+                vs.
+                "<token> dotted-name = dotted-name-parts; <subtoken> dotted-name-parts = [\w]+ ( '.' dotted-name-parts )? ;"
+                vs.
+                "<token> dotted-name = name ( '.' name )* ; <subtoken> name = [\w_] [\w\d_]* ;"
+            if they're trying to re-use something, then it should probably be a subtoken. if they need to use a subtoken in the token stream, then a single-node token def on top of it should suffice.
+            it breaks down to the following two questions:
+                can token defs be referenced by other t/st/c defs?
+                can comments be referenced by other t/st/c defs?
+            for now, i vote no.
+        a/b --> a can reference b
+        token/token         n*
+        token/subtoken      y
+        token/comment       n*
+        token/nontoken      n
+        subtoken/token      n*
+        subtoken/subtoken   y
+        subtoken/comment    n*
+        subtoken/nontoken   n
+        comment/token       n*
+        comment/subtoken    y
+        comment/comment     n*
+        comment/nontoken    n
+        nontoken/token      y
+        nontoken/subtoken   n
+        nontoken/comment    n
+        nontoken/nontoken   y
 
