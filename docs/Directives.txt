@@ -34,12 +34,12 @@ in a parsed grammar
         token/subtoken/comment defs and nontoken defs operatre on different input streams
             therefore, it wouldn't work to have nontoken reference subtoken or comment defs
             nor would it work to have t/st/c reference nt
-            nontoken defs references token defs is the whole point of the dichotomy, and is perfectly acceptable
+            nontoken defs referencing token defs is the whole point of the dichotomy, and is perfectly acceptable
         comments are removed from the token stream. 
             therefore, nontokens will never be able to successfully reference them. it is disallowed
         subtokens are never made a part of the token stream
             therefore, nontokens will never be able to successfully reference them. it is disallowed
-        in principal, there are no real reason why token, subtoken, and comment can't reference each other or themselves
+        in principal, there are no technical reason why token, subtoken, and comment can't reference each other or themselves
             they operate on the same input stream, and are treated identically be the Spanner
             t/st and c/st is the whole point of st
             st/st make perfect sense
@@ -56,7 +56,7 @@ in a parsed grammar
             it breaks down to the following two questions:
                 can token defs be referenced by other t/st/c defs?
                 can comments be referenced by other t/st/c defs?
-            for now, i vote no.
+            for now, we'll say no
         a/b --> a can reference b
         token/token         n*
         token/subtoken      y
