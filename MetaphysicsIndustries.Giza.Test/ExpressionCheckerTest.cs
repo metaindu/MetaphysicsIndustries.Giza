@@ -766,7 +766,7 @@ namespace MetaphysicsIndustries.Giza.Test
         }
 
         [Test()]
-        public void TestReferencedComment()
+        public void TestNonTokenReferencesComment()
         {
             DefinitionExpression[] defs = {
                 new DefinitionExpression {
