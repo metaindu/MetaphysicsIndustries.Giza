@@ -240,6 +240,7 @@ namespace MetaphysicsIndustries.Giza.Test
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionInfos(defs);
 
+            Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
             Assert.AreEqual(EcError.EmptyExpressionItems, errors[0].ErrorType);
             Assert.IsInstanceOf<EcError>(errors[0]);
@@ -267,6 +268,7 @@ namespace MetaphysicsIndustries.Giza.Test
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionInfos(defs);
 
+            Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
             Assert.AreEqual(EcError.EmptyExpressionItems, errors[0].ErrorType);
             Assert.IsInstanceOf<EcError>(errors[0]);
@@ -291,6 +293,7 @@ namespace MetaphysicsIndustries.Giza.Test
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionInfos(defs);
 
+            Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
             Assert.AreEqual(EcError.EmptyOrexprExpressionList, errors[0].ErrorType);
             Assert.IsInstanceOf<EcError>(errors[0]);
@@ -317,6 +320,7 @@ namespace MetaphysicsIndustries.Giza.Test
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionInfos(defs);
 
+            Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
             Assert.AreEqual(EcError.NullSubexprTag, errors[0].ErrorType);
             Assert.IsInstanceOf<EcError>(errors[0]);
@@ -341,6 +345,7 @@ namespace MetaphysicsIndustries.Giza.Test
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionInfos(defs);
 
+            Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
             Assert.AreEqual(EcError.NullOrEmptyDefrefName, errors[0].ErrorType);
             Assert.IsInstanceOf<EcError>(errors[0]);
@@ -365,6 +370,7 @@ namespace MetaphysicsIndustries.Giza.Test
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionInfos(defs);
 
+            Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
             Assert.AreEqual(EcError.NullOrEmptyDefrefName, errors[0].ErrorType);
             Assert.IsInstanceOf<EcError>(errors[0]);
@@ -389,6 +395,7 @@ namespace MetaphysicsIndustries.Giza.Test
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionInfos(defs);
 
+            Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
             Assert.AreEqual(EcError.NullOrEmptyLiteralValue, errors[0].ErrorType);
             Assert.IsInstanceOf<EcError>(errors[0]);
@@ -413,6 +420,7 @@ namespace MetaphysicsIndustries.Giza.Test
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionInfos(defs);
 
+            Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
             Assert.AreEqual(EcError.NullOrEmptyLiteralValue, errors[0].ErrorType);
             Assert.IsInstanceOf<EcError>(errors[0]);
@@ -437,6 +445,7 @@ namespace MetaphysicsIndustries.Giza.Test
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionInfos(defs);
 
+            Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
             Assert.AreEqual(EcError.NullOrEmptyCharClass, errors[0].ErrorType);
             Assert.IsInstanceOf<EcError>(errors[0]);
@@ -461,6 +470,7 @@ namespace MetaphysicsIndustries.Giza.Test
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionInfos(defs);
 
+            Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
             Assert.AreEqual(EcError.NullOrEmptyCharClass, errors[0].ErrorType);
             Assert.IsInstanceOf<EcError>(errors[0]);
@@ -487,6 +497,7 @@ namespace MetaphysicsIndustries.Giza.Test
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionInfos(defs);
 
+            Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
             Assert.AreEqual(EcError.DuplicateDefinitionName, errors[0].ErrorType);
             Assert.IsInstanceOf<EcError>(errors[0]);
@@ -522,6 +533,7 @@ namespace MetaphysicsIndustries.Giza.Test
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionInfos(defs);
 
+            Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
             Assert.AreEqual(EcError.AllItemsSkippable, errors[0].ErrorType);
             Assert.IsInstanceOf<EcError>(errors[0]);
@@ -556,6 +568,7 @@ namespace MetaphysicsIndustries.Giza.Test
 //            ExpressionChecker ec = new ExpressionChecker();
 //            List<Error> errors = ec.CheckDefinitionInfos(defs);
 //
+//            Assert.IsNotNull(errors);
 //            Assert.AreEqual(1, errors.Count);
 //            Assert.AreEqual(ExpressionChecker.Error.AllItemsSkippable, errors[0].ErrorType);
 //        Assert.IsInstanceOf<EcError>(errors[0]);
@@ -580,6 +593,7 @@ namespace MetaphysicsIndustries.Giza.Test
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionInfos(defs);
 
+            Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
             Assert.AreEqual(EcError.DefRefNameNotFound, errors[0].ErrorType);
             Assert.IsInstanceOf<EcError>(errors[0]);
@@ -608,6 +622,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var errors = ec.CheckDefinitionInfos(defs);
 
 
+            Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
             Assert.IsInstanceOf<ExpressionChecker.EcError>(errors[0]);
             EcError e = (ExpressionChecker.EcError)errors[0];
@@ -656,6 +671,7 @@ namespace MetaphysicsIndustries.Giza.Test
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionInfosForSpanning(defs);
 
+            Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
             Assert.AreEqual(EcError.TokenizedDirectiveInNonTokenizedGrammar, errors[0].ErrorType);
             Assert.IsInstanceOf<EcError>(errors[0]);
@@ -676,6 +692,7 @@ namespace MetaphysicsIndustries.Giza.Test
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionInfosForSpanning(defs);
 
+            Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
             Assert.AreEqual(EcError.TokenizedDirectiveInNonTokenizedGrammar, errors[0].ErrorType);
             Assert.IsInstanceOf<EcError>(errors[0]);
@@ -696,6 +713,7 @@ namespace MetaphysicsIndustries.Giza.Test
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionInfosForSpanning(defs);
 
+            Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
             Assert.AreEqual(EcError.TokenizedDirectiveInNonTokenizedGrammar, errors[0].ErrorType);
             Assert.IsInstanceOf<EcError>(errors[0]);
@@ -718,6 +736,7 @@ namespace MetaphysicsIndustries.Giza.Test
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionInfosForParsing(defs);
 
+            Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
             Assert.AreEqual(EcError.MixedTokenizedDirectives, errors[0].ErrorType);
             Assert.IsInstanceOf<EcError>(errors[0]);
@@ -740,6 +759,7 @@ namespace MetaphysicsIndustries.Giza.Test
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionInfosForParsing(defs);
 
+            Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
             Assert.AreEqual(EcError.MixedTokenizedDirectives, errors[0].ErrorType);
             Assert.IsInstanceOf<EcError>(errors[0]);
@@ -762,6 +782,7 @@ namespace MetaphysicsIndustries.Giza.Test
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionInfosForParsing(defs);
 
+            Assert.IsNotNull(errors);
             Assert.AreEqual(0, errors.Count);
         }
     }
