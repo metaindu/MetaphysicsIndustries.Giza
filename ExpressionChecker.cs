@@ -80,10 +80,13 @@ namespace MetaphysicsIndustries.Giza
             }
             foreach (var def in defs)
             {
-                if ((def.Directives.Contains(DefinitionDirective.Token) && 
-                    def.Directives.Contains(DefinitionDirective.Subtoken)) ||
-                    (def.Directives.Contains(DefinitionDirective.Comment) && 
-                    def.Directives.Contains(DefinitionDirective.Subtoken)))
+                int numTokenizedDirectives = 0;
+
+                if (def.Directives.Contains(DefinitionDirective.Token)) numTokenizedDirectives++;
+                if (def.Directives.Contains(DefinitionDirective.Subtoken)) numTokenizedDirectives++;
+                if (def.Directives.Contains(DefinitionDirective.Comment)) numTokenizedDirectives++;
+
+                if (numTokenizedDirectives > 1)
                 {
                     errors.Add(new EcError {
                         ErrorType = EcError.MixedTokenizedDirectives,
