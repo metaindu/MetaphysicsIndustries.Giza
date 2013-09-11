@@ -33,6 +33,7 @@ namespace MetaphysicsIndustries.Giza
                 return sb.ToString();
             }
 
+            // all grammars
             public static readonly ErrorType ReusedDefintion =                          new ErrorType(name:"ReusedDefintion");
             public static readonly ErrorType NullDefinition =                           new ErrorType(name:"NullDefinition");
             public static readonly ErrorType ReusedExpressionOrItem =                   new ErrorType(name:"ReusedExpressionOrItem");
@@ -50,15 +51,20 @@ namespace MetaphysicsIndustries.Giza
             public static readonly ErrorType SkippableOrexprExpressions =               new ErrorType(name:"SkippableOrexprExpressions ");
             public static readonly ErrorType DefRefNameNotFound =                       new ErrorType(name:"DefRefNameNotFound ");
 
+            // spanned grammars
             public static readonly ErrorType TokenizedDirectiveInNonTokenizedGrammar =  new ErrorType(name:"TokenizedDirectiveInNonTokenizedGrammar",   isWarning:true );
 
+            // parsed grammars
             public static readonly ErrorType MixedTokenizedDirectives =                 new ErrorType(name:"MixedTokenizedDirectives");
             public static readonly ErrorType NonTokenReferencesSubtoken =               new ErrorType(name:"NonTokenReferencesSubtoken");
             public static readonly ErrorType NonTokenReferencesComment =                new ErrorType(name:"NonTokenReferencesComment");
             public static readonly ErrorType TokenizedReferencesNonToken =              new ErrorType(name:"SubtokenReferencesNonToken");
             public static readonly ErrorType TokenizedReferencesToken =                 new ErrorType(name:"TokenReferencesNonToken");
             public static readonly ErrorType TokenizedReferencesComment =               new ErrorType(name:"SubtokenReferencesToken");
-
+            public static readonly ErrorType AtomicInNonTokenDefinition =               new ErrorType(name:"AtomicInNonTokenDefinition",                isWarning:true);
+            public static readonly ErrorType MindWhitespaceInNonTokenDefinition =       new ErrorType(name:"MindWhitespaceInNonTokenDefinition",        isWarning:true);
+            public static readonly ErrorType AtomicInTokenizedDefinition =              new ErrorType(name:"AtomicInTokenizedDefinition",               isWarning:true);
+            public static readonly ErrorType MindWhitespaceInTokenizedDefinition =      new ErrorType(name:"MindWhitespaceInTokenizedDefinition",       isWarning:true);
         }
 
         bool IsTokenized(DefinitionExpression def)
