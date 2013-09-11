@@ -249,6 +249,7 @@ namespace MetaphysicsIndustries.Giza
                             err.OffendingToken.StartIndex = se.Index;
                             err.OffendingToken.Length = 1;
                             err.OffendingToken.Definition = null;
+                            err.OffendingToken.Value = input[se.Index].ToString();
                         }
                         else
                         {
