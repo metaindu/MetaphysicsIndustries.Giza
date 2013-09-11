@@ -278,27 +278,160 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsNotNull(def.EndNodes);
             Assert.AreEqual(1, def.EndNodes.Count);
         }
-//
-//        [Test]
-//        public void TestAtomicDirectiveInNonToken()
-//        {
-//        }
-//
-//        [Test]
-//        public void TestAtomicDirectiveInToken()
-//        {
-//        }
-//
-//        [Test]
-//        public void TestAtomicDirectiveInSubtoken()
-//        {
-//        }
-//
-//        [Test]
-//        public void TestAtomicDirectiveInComment()
-//        {
-//        }
 
+        [Test]
+        public void TestAtomicDirectiveInNonToken()
+        {
+            // setup
+            string testGrammarText = "<atomic> def = token; <token> token = 'token'; ";
+            var sgs = new SupergrammarSpanner();
+            var errors = new List<Error>();
+            var dis = sgs.GetExpressions(testGrammarText, errors);
+            Assert.IsNotNull(errors);
+            Assert.IsEmpty(errors);
+            var tgb = new TokenizedGrammarBuilder();
+
+
+            // action
+            var grammar = tgb.BuildTokenizedGrammar(dis);
+            var def = grammar.FindDefinitionByName("def");
+
+
+            // assertions
+            Assert.IsNotNull(grammar);
+            Assert.AreEqual(2, grammar.Definitions.Count);
+
+            Assert.IsNotNull(def);
+            Assert.AreEqual(0, def.Directives.Count);
+            Assert.IsFalse(def.Atomic);
+            Assert.IsFalse(def.IgnoreCase);
+            Assert.IsFalse(def.IsComment);
+            Assert.IsFalse(def.IsTokenized);
+            Assert.IsFalse(def.MindWhitespace);
+            Assert.IsNotNull(def.Nodes);
+            Assert.AreEqual(1, def.Nodes.Count);
+            Assert.IsNotNull(def.StartNodes);
+            Assert.AreEqual(1, def.StartNodes.Count);
+            Assert.IsNotNull(def.EndNodes);
+            Assert.AreEqual(1, def.EndNodes.Count);
+        }
+
+        [Test]
+        public void TestAtomicDirectiveInToken()
+        {
+            // setup
+            string testGrammarText = "<token, atomic> something = 'value'; ";
+            var sgs = new SupergrammarSpanner();
+            var errors = new List<Error>();
+            var dis = sgs.GetExpressions(testGrammarText, errors);
+            Assert.IsNotNull(errors);
+            Assert.IsEmpty(errors);
+            var tgb = new TokenizedGrammarBuilder();
+
+
+            // action
+            var grammar = tgb.BuildTokenizedGrammar(dis);
+            var def = grammar.FindDefinitionByName("something");
+
+
+            // assertions
+            Assert.IsNotNull(grammar);
+            Assert.AreEqual(1, grammar.Definitions.Count);
+
+            Assert.IsNotNull(def);
+            Assert.AreEqual(2, def.Directives.Count);
+            Assert.Contains(DefinitionDirective.Token, def.Directives.ToArray());
+            Assert.Contains(DefinitionDirective.Atomic, def.Directives.ToArray());
+            Assert.IsTrue(def.Atomic);
+            Assert.IsFalse(def.IgnoreCase);
+            Assert.IsFalse(def.IsComment);
+            Assert.IsTrue(def.IsTokenized);
+            //            Assert.IsTrue(def.MindWhitespace);
+            Assert.IsNotNull(def.Nodes);
+            Assert.AreEqual(5, def.Nodes.Count);
+            Assert.IsNotNull(def.StartNodes);
+            Assert.AreEqual(1, def.StartNodes.Count);
+            Assert.IsNotNull(def.EndNodes);
+            Assert.AreEqual(1, def.EndNodes.Count);
+        }
+
+        [Test]
+        public void TestAtomicDirectiveInSubtoken()
+        {
+            // setup
+            string testGrammarText = "<subtoken, atomic> something = 'value'; ";
+            var sgs = new SupergrammarSpanner();
+            var errors = new List<Error>();
+            var dis = sgs.GetExpressions(testGrammarText, errors);
+            Assert.IsNotNull(errors);
+            Assert.IsEmpty(errors);
+            var tgb = new TokenizedGrammarBuilder();
+
+
+            // action
+            var grammar = tgb.BuildTokenizedGrammar(dis);
+            var def = grammar.FindDefinitionByName("something");
+
+
+            // assertions
+            Assert.IsNotNull(grammar);
+            Assert.AreEqual(1, grammar.Definitions.Count);
+
+            Assert.IsNotNull(def);
+            Assert.AreEqual(2, def.Directives.Count);
+            Assert.Contains(DefinitionDirective.Subtoken, def.Directives.ToArray());
+            Assert.Contains(DefinitionDirective.Atomic, def.Directives.ToArray());
+            Assert.IsTrue(def.Atomic);
+            Assert.IsFalse(def.IgnoreCase);
+            Assert.IsFalse(def.IsComment);
+            Assert.IsTrue(def.IsTokenized);
+            //            Assert.IsTrue(def.MindWhitespace);
+            Assert.IsNotNull(def.Nodes);
+            Assert.AreEqual(5, def.Nodes.Count);
+            Assert.IsNotNull(def.StartNodes);
+            Assert.AreEqual(1, def.StartNodes.Count);
+            Assert.IsNotNull(def.EndNodes);
+            Assert.AreEqual(1, def.EndNodes.Count);
+        }
+
+        [Test]
+        public void TestAtomicDirectiveInComment()
+        {
+            // setup
+            string testGrammarText = "<comment, atomic> something = 'value'; ";
+            var sgs = new SupergrammarSpanner();
+            var errors = new List<Error>();
+            var dis = sgs.GetExpressions(testGrammarText, errors);
+            Assert.IsNotNull(errors);
+            Assert.IsEmpty(errors);
+            var tgb = new TokenizedGrammarBuilder();
+
+
+            // action
+            var grammar = tgb.BuildTokenizedGrammar(dis);
+            var def = grammar.FindDefinitionByName("something");
+
+
+            // assertions
+            Assert.IsNotNull(grammar);
+            Assert.AreEqual(1, grammar.Definitions.Count);
+
+            Assert.IsNotNull(def);
+            Assert.AreEqual(2, def.Directives.Count);
+            Assert.Contains(DefinitionDirective.Comment, def.Directives.ToArray());
+            Assert.Contains(DefinitionDirective.Atomic, def.Directives.ToArray());
+            Assert.IsTrue(def.Atomic);
+            Assert.IsFalse(def.IgnoreCase);
+            Assert.IsTrue(def.IsComment);
+            Assert.IsTrue(def.IsTokenized);
+            //            Assert.IsTrue(def.MindWhitespace);
+            Assert.IsNotNull(def.Nodes);
+            Assert.AreEqual(5, def.Nodes.Count);
+            Assert.IsNotNull(def.StartNodes);
+            Assert.AreEqual(1, def.StartNodes.Count);
+            Assert.IsNotNull(def.EndNodes);
+            Assert.AreEqual(1, def.EndNodes.Count);
+        }
     }
 }
 
