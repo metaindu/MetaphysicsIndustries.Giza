@@ -18,7 +18,7 @@ namespace MetaphysicsIndustries.Giza
         {
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionInfosForParsing(defs);
-            if (errors.Count > 0)
+            if (errors.GetNonWarningsCount() > 0)
             {
                 throw new InvalidOperationException("Errors in expressions.");
             }
