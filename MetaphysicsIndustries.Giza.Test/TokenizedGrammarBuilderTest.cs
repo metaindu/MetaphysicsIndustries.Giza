@@ -114,16 +114,116 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsNotNull(implicitDef.EndNodes);
             Assert.AreEqual(1, implicitDef.EndNodes.Count);
         }
-//
-//        [Test]
-//        public void TestImplicitIgnoreCaseLiteral()
-//        {
-//        }
-//
-//        [Test]
-//        public void TestImplicitIgnoreCaseCharClass()
-//        {
-//        }
+
+        [Test]
+        public void TestImplicitIgnoreCaseLiteral()
+        {
+            // setup
+            string testGrammarText = "<ignore case> def = 'value';";
+            var sgs = new SupergrammarSpanner();
+            var errors = new List<Error>();
+            var dis = sgs.GetExpressions(testGrammarText, errors);
+            Assert.IsNotNull(errors);
+            Assert.IsEmpty(errors);
+            var tgb = new TokenizedGrammarBuilder();
+
+
+            // action
+            var grammar = tgb.BuildTokenizedGrammar(dis);
+            var explicitDef = grammar.FindDefinitionByName("def");
+            var implicitDef = grammar.FindDefinitionByName("$implicit ignore case literal value");
+
+
+            // assertions
+            Assert.IsNotNull(grammar);
+            Assert.AreEqual(2, grammar.Definitions.Count);
+
+            Assert.IsNotNull(explicitDef);
+            Assert.AreEqual(0, explicitDef.Directives.Count);
+            Assert.IsFalse(explicitDef.Atomic);
+            Assert.IsFalse(explicitDef.IgnoreCase);
+            Assert.IsFalse(explicitDef.IsComment);
+            Assert.IsFalse(explicitDef.IsTokenized);
+            Assert.IsFalse(explicitDef.MindWhitespace);
+            Assert.IsNotNull(explicitDef.Nodes);
+            Assert.AreEqual(1, explicitDef.Nodes.Count);
+            Assert.IsNotNull(explicitDef.StartNodes);
+            Assert.AreEqual(1, explicitDef.StartNodes.Count);
+            Assert.IsNotNull(explicitDef.EndNodes);
+            Assert.AreEqual(1, explicitDef.EndNodes.Count);
+
+            Assert.IsNotNull(implicitDef);
+            Assert.AreEqual(3, implicitDef.Directives.Count);
+            Assert.Contains(DefinitionDirective.Token, implicitDef.Directives.ToArray());
+            Assert.Contains(DefinitionDirective.Atomic, implicitDef.Directives.ToArray());
+            Assert.Contains(DefinitionDirective.IgnoreCase, implicitDef.Directives.ToArray());
+            Assert.IsTrue(implicitDef.Atomic);
+            Assert.IsTrue(implicitDef.IgnoreCase);
+            Assert.IsFalse(implicitDef.IsComment);
+            Assert.IsTrue(implicitDef.IsTokenized);
+//            Assert.IsTrue(implicitDef.MindWhitespace);
+            Assert.IsNotNull(implicitDef.Nodes);
+            Assert.AreEqual(5, implicitDef.Nodes.Count);
+            Assert.IsNotNull(implicitDef.StartNodes);
+            Assert.AreEqual(1, implicitDef.StartNodes.Count);
+            Assert.IsNotNull(implicitDef.EndNodes);
+            Assert.AreEqual(1, implicitDef.EndNodes.Count);
+        }
+
+        [Test]
+        public void TestImplicitIgnoreCaseCharClass()
+        {
+            // setup
+            string testGrammarText = "<ignore case> def = [\\d];";
+            var sgs = new SupergrammarSpanner();
+            var errors = new List<Error>();
+            var dis = sgs.GetExpressions(testGrammarText, errors);
+            Assert.IsNotNull(errors);
+            Assert.IsEmpty(errors);
+            var tgb = new TokenizedGrammarBuilder();
+
+
+            // action
+            var grammar = tgb.BuildTokenizedGrammar(dis);
+            var explicitDef = grammar.FindDefinitionByName("def");
+            var implicitDef = grammar.FindDefinitionByName("$implicit ignore case char class \\d");
+
+
+            // assertions
+            Assert.IsNotNull(grammar);
+            Assert.AreEqual(2, grammar.Definitions.Count);
+
+            Assert.IsNotNull(explicitDef);
+            Assert.AreEqual(0, explicitDef.Directives.Count);
+            Assert.IsFalse(explicitDef.Atomic);
+            Assert.IsFalse(explicitDef.IgnoreCase);
+            Assert.IsFalse(explicitDef.IsComment);
+            Assert.IsFalse(explicitDef.IsTokenized);
+            Assert.IsFalse(explicitDef.MindWhitespace);
+            Assert.IsNotNull(explicitDef.Nodes);
+            Assert.AreEqual(1, explicitDef.Nodes.Count);
+            Assert.IsNotNull(explicitDef.StartNodes);
+            Assert.AreEqual(1, explicitDef.StartNodes.Count);
+            Assert.IsNotNull(explicitDef.EndNodes);
+            Assert.AreEqual(1, explicitDef.EndNodes.Count);
+
+            Assert.IsNotNull(implicitDef);
+            Assert.AreEqual(3, implicitDef.Directives.Count);
+            Assert.Contains(DefinitionDirective.Token, implicitDef.Directives.ToArray());
+            Assert.Contains(DefinitionDirective.Atomic, implicitDef.Directives.ToArray());
+            Assert.Contains(DefinitionDirective.IgnoreCase, implicitDef.Directives.ToArray());
+            Assert.IsTrue(implicitDef.Atomic);
+            Assert.IsTrue(implicitDef.IgnoreCase);
+            Assert.IsFalse(implicitDef.IsComment);
+            Assert.IsTrue(implicitDef.IsTokenized);
+//            Assert.IsTrue(implicitDef.MindWhitespace);
+            Assert.IsNotNull(implicitDef.Nodes);
+            Assert.AreEqual(1, implicitDef.Nodes.Count);
+            Assert.IsNotNull(implicitDef.StartNodes);
+            Assert.AreEqual(1, implicitDef.StartNodes.Count);
+            Assert.IsNotNull(implicitDef.EndNodes);
+            Assert.AreEqual(1, implicitDef.EndNodes.Count);
+        }
 
         [Test]
         public void TestNonTokenWithoutDirectives()
