@@ -45,6 +45,7 @@
     <Compile Include="SpanCheckerTest.cs" />
     <Compile Include="NodeMatchTest.cs" />
     <Compile Include="ExpressionCheckerTest.DirectivesAndDefRefs.cs" />
+    <Compile Include="ExpressionCheckerTest.Directives.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
