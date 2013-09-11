@@ -100,6 +100,42 @@ namespace MetaphysicsIndustries.Giza
                     });
                 }
 
+                if (!IsTokenized(def) &&
+                    def.Directives.Contains(DefinitionDirective.Atomic))
+                {
+                    errors.Add(new EcError {
+                        ErrorType = EcError.AtomicInNonTokenDefinition,
+                        DefinitionInfo = def,
+                    });
+                }
+
+                if (IsTokenized(def) &&
+                    def.Directives.Contains(DefinitionDirective.Atomic))
+                {
+                    errors.Add(new EcError {
+                        ErrorType = EcError.AtomicInTokenizedDefinition,
+                        DefinitionInfo = def,
+                    });
+                }
+
+                if (!IsTokenized(def) &&
+                    def.Directives.Contains(DefinitionDirective.MindWhitespace))
+                {
+                    errors.Add(new EcError {
+                        ErrorType = EcError.MindWhitespaceInNonTokenDefinition,
+                        DefinitionInfo = def,
+                    });
+                }
+
+                if (IsTokenized(def) &&
+                    def.Directives.Contains(DefinitionDirective.MindWhitespace))
+                {
+                    errors.Add(new EcError {
+                        ErrorType = EcError.MindWhitespaceInTokenizedDefinition,
+                        DefinitionInfo = def,
+                    });
+                }
+
                 foreach (DefRefSubExpression defref in def.EnumerateDefRefs())
                 {
                     if (!defsByName.ContainsKey(defref.DefinitionName)) continue;
