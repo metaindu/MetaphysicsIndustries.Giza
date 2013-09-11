@@ -38,7 +38,7 @@ namespace MetaphysicsIndustries.Giza
                     Directives.Contains(DefinitionDirective.Comment);
             }
         }
-        public bool IsComment { get { return Directives.Contains(DefinitionDirective.Atomic); } }
+        public bool IsComment { get { return Directives.Contains(DefinitionDirective.Comment); } }
 
         public override string ToString()
         {
