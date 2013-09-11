@@ -50,7 +50,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.Contains(DefinitionDirective.Atomic, implicitDef.Directives.ToArray());
             Assert.IsTrue(implicitDef.Atomic);
             Assert.IsFalse(implicitDef.IgnoreCase);
-//            Assert.IsFalse(implicitDef.IsComment);
+            Assert.IsFalse(implicitDef.IsComment);
             Assert.IsTrue(implicitDef.IsTokenized);
 //            Assert.IsTrue(implicitDef.MindWhitespace);
             Assert.IsNotNull(implicitDef.Nodes);
@@ -104,7 +104,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.Contains(DefinitionDirective.Atomic, implicitDef.Directives.ToArray());
             Assert.IsTrue(implicitDef.Atomic);
             Assert.IsFalse(implicitDef.IgnoreCase);
-//            Assert.IsFalse(implicitDef.IsComment);
+            Assert.IsFalse(implicitDef.IsComment);
             Assert.IsTrue(implicitDef.IsTokenized);
 //            Assert.IsTrue(implicitDef.MindWhitespace);
             Assert.IsNotNull(implicitDef.Nodes);
@@ -190,7 +190,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.Contains(DefinitionDirective.Atomic, def.Directives.ToArray());
             Assert.IsTrue(def.Atomic);
             Assert.IsFalse(def.IgnoreCase);
-//            Assert.IsFalse(def.IsComment);
+            Assert.IsFalse(def.IsComment);
             Assert.IsTrue(def.IsTokenized);
 //            Assert.IsTrue(def.MindWhitespace);
             Assert.IsNotNull(def.Nodes);
@@ -229,7 +229,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.Contains(DefinitionDirective.Atomic, def.Directives.ToArray());
             Assert.IsTrue(def.Atomic);
             Assert.IsFalse(def.IgnoreCase);
-//            Assert.IsFalse(def.IsComment);
+            Assert.IsFalse(def.IsComment);
             Assert.IsTrue(def.IsTokenized);
 //            Assert.IsTrue(def.MindWhitespace);
             Assert.IsNotNull(def.Nodes);
