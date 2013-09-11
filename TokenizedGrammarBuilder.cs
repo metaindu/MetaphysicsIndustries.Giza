@@ -24,8 +24,7 @@ namespace MetaphysicsIndustries.Giza
             }
 
             // get the implicit tokens
-            Dictionary<string, DefinitionExpression> implicitsByLiteralValue = new Dictionary<string, DefinitionExpression>();
-            Dictionary<string, DefinitionExpression> implicitsByCharClassUndelimited = new Dictionary<string, DefinitionExpression>();
+            Dictionary<string, DefinitionExpression> implicitTokenDefs = new Dictionary<string, DefinitionExpression>();
             List<DefinitionExpression> tokenizedDefs = new List<DefinitionExpression>();
             List<DefinitionExpression> nonTokenizedDefs = new List<DefinitionExpression>();
 
@@ -41,38 +40,47 @@ namespace MetaphysicsIndustries.Giza
                 {
                     nonTokenizedDefs.Add(def);
 
+                    bool ignoreCase = def.Directives.Contains(DefinitionDirective.IgnoreCase);
+
                     foreach (var literal in def.EnumerateLiterals())
                     {
-                        string defname = GetImplicitDefinitionName(literal);
-                        if (!implicitsByLiteralValue.ContainsKey(defname))
+                        string defname = GetImplicitDefinitionName(literal, ignoreCase);
+                        if (!implicitTokenDefs.ContainsKey(defname))
                         {
                             DefinitionExpression di = new DefinitionExpression {
                                 Name = defname,
                             };
                             di.Items.Add(new LiteralSubExpression{Value=literal.Value});
                             di.Directives.Add(DefinitionDirective.Token);
-                            implicitsByLiteralValue[defname] = di;
+                            if (ignoreCase)
+                            {
+                                di.Directives.Add(DefinitionDirective.IgnoreCase);
+                            }
+                            implicitTokenDefs[defname] = di;
                         }
                     }
 
                     foreach (var cc in def.EnumerateCharClasses())
                     {
-                        string defname = GetImplicitDefinitionName(cc);
-                        if (!implicitsByCharClassUndelimited.ContainsKey(defname))
+                        string defname = GetImplicitDefinitionName(cc, ignoreCase);
+                        if (!implicitTokenDefs.ContainsKey(defname))
                         {
                             DefinitionExpression di = new DefinitionExpression {
                                 Name = defname,
                             };
                             di.Items.Add(new CharClassSubExpression() { CharClass = cc.CharClass });
                             di.Directives.Add(DefinitionDirective.Token);
-                            implicitsByCharClassUndelimited[defname] = di;
+                            if (ignoreCase)
+                            {
+                                di.Directives.Add(DefinitionDirective.IgnoreCase);
+                            }
+                            implicitTokenDefs[defname] = di;
                         }
                     }
                 }
             }
 
-            tokenizedDefs.AddRange(implicitsByLiteralValue.Values);
-            tokenizedDefs.AddRange(implicitsByCharClassUndelimited.Values);
+            tokenizedDefs.AddRange(implicitTokenDefs.Values);
 
             DefinitionBuilder db = new DefinitionBuilder();
             List<DefinitionExpression> tokenizedDefsDetokenized = new List<DefinitionExpression>();
@@ -90,7 +98,7 @@ namespace MetaphysicsIndustries.Giza
 
             List<Definition> defs2 = new List<Definition>();
             Dictionary<string, Definition> defsByName = new Dictionary<string, Definition>();
-            Dictionary<Definition, Expression> exprsByDef = new Dictionary<Definition, Expression>();
+            Dictionary<Definition, DefinitionExpression> exprsByDef = new Dictionary<Definition, DefinitionExpression>();
             foreach (DefinitionExpression di in nonTokenizedDefs)
             {
                 Definition def = new Definition(di.Name);
@@ -98,6 +106,7 @@ namespace MetaphysicsIndustries.Giza
                 defsByName[di.Name] = def;
                 def.Directives.AddRange(di.Directives);
                 def.Directives.Remove(DefinitionDirective.Atomic);
+                def.Directives.Remove(DefinitionDirective.IgnoreCase);
                 exprsByDef[def] = di;
             }
             foreach (Definition def in tokenizedDefs2)
@@ -107,7 +116,7 @@ namespace MetaphysicsIndustries.Giza
 
             foreach (Definition def in defs2)
             {
-                NodeBundle bundle = GetNodesFromExpression(exprsByDef[def], defsByName);
+                NodeBundle bundle = GetNodesFromExpression(exprsByDef[def], defsByName, exprsByDef[def]);
 
                 if (bundle.IsSkippable) throw new InvalidOperationException();
 
@@ -126,16 +135,24 @@ namespace MetaphysicsIndustries.Giza
             return grammar;
         }
 
-        string GetImplicitDefinitionName(LiteralSubExpression literal)
+        string GetImplicitDefinitionName(LiteralSubExpression literal, bool ignoreCase)
         {
-            return "$implicit literal " + literal.Value;
+            return
+                string.Format(
+                    "$implicit {0}literal {1}",
+                    ignoreCase ? "ignore case " : "",
+                    literal.Value);
         }
-        string GetImplicitDefinitionName(CharClassSubExpression cc)
+        string GetImplicitDefinitionName(CharClassSubExpression cc, bool ignoreCase)
         {
-            return "$implicit char class " + cc.CharClass.ToUndelimitedString();
+            return
+                string.Format(
+                    "$implicit {0}char class {1}",
+                    ignoreCase ? "ignore case " : "",
+                    cc.CharClass.ToUndelimitedString());
         }
 
-        NodeBundle GetNodesFromExpression(Expression expr, Dictionary<string, Definition> defsByName)
+        NodeBundle GetNodesFromExpression(Expression expr, Dictionary<string, Definition> defsByName, DefinitionExpression parentDefinition)
         {
             NodeBundle first = null;
             NodeBundle last = null;
@@ -145,11 +162,11 @@ namespace MetaphysicsIndustries.Giza
                 NodeBundle bundle = null;
                 if (item is SubExpression)
                 {
-                    bundle = GetNodesFromSubExpression((SubExpression)item, defsByName);
+                    bundle = GetNodesFromSubExpression((SubExpression)item, defsByName, parentDefinition);
                 }
                 else // (item is OrExpression)
                 {
-                    bundle = GetNodesFromOrExpression((OrExpression)item, defsByName);
+                    bundle = GetNodesFromOrExpression((OrExpression)item, defsByName, parentDefinition);
                 }
 
                 if (bundle != null)
@@ -243,7 +260,7 @@ namespace MetaphysicsIndustries.Giza
                 IsSkippable = skippable};
         }
 
-        NodeBundle GetNodesFromSubExpression(SubExpression subexpr, Dictionary<string, Definition> defsByName)
+        NodeBundle GetNodesFromSubExpression(SubExpression subexpr, Dictionary<string, Definition> defsByName, DefinitionExpression parentDefinition)
         {
             if (subexpr is DefRefSubExpression)
             {
@@ -251,11 +268,11 @@ namespace MetaphysicsIndustries.Giza
             }
             else if (subexpr is LiteralSubExpression)
             {
-                return GetNodesFromLiteralSubExpression((LiteralSubExpression)subexpr, defsByName);
+                return GetNodesFromLiteralSubExpression((LiteralSubExpression)subexpr, defsByName, parentDefinition);
             }
             else // (subexpr is CharClassSubExpression)
             {
-                return GetNodesFromCharClassSubExpression((CharClassSubExpression)subexpr, defsByName);
+                return GetNodesFromCharClassSubExpression((CharClassSubExpression)subexpr, defsByName, parentDefinition);
             }
         }
 
@@ -276,9 +293,10 @@ namespace MetaphysicsIndustries.Giza
             return bundle;
         }
 
-        NodeBundle GetNodesFromLiteralSubExpression(LiteralSubExpression literal, Dictionary<string, Definition> defsByName)
+        NodeBundle GetNodesFromLiteralSubExpression(LiteralSubExpression literal, Dictionary<string, Definition> defsByName, DefinitionExpression parentDefinition)
         {
-            DefRefNode node = new DefRefNode(defsByName[GetImplicitDefinitionName(literal)], literal.Tag);
+            var defname = GetImplicitDefinitionName(literal, parentDefinition.Directives.Contains(DefinitionDirective.IgnoreCase));
+            DefRefNode node = new DefRefNode(defsByName[defname], literal.Tag);
             if (literal.IsRepeatable)
             {
                 node.NextNodes.Add(node);
@@ -293,9 +311,10 @@ namespace MetaphysicsIndustries.Giza
             return bundle;
         }
 
-        NodeBundle GetNodesFromCharClassSubExpression(CharClassSubExpression cc, Dictionary<string, Definition> defsByName)
+        NodeBundle GetNodesFromCharClassSubExpression(CharClassSubExpression cc, Dictionary<string, Definition> defsByName, DefinitionExpression parentDefinition)
         {
-            DefRefNode node = new DefRefNode(defsByName[GetImplicitDefinitionName(cc)], cc.Tag);
+            var defname = GetImplicitDefinitionName(cc, parentDefinition.Directives.Contains(DefinitionDirective.IgnoreCase));
+            DefRefNode node = new DefRefNode(defsByName[defname], cc.Tag);
             if (cc.IsRepeatable)
             {
                 node.NextNodes.Add(node);
@@ -310,13 +329,13 @@ namespace MetaphysicsIndustries.Giza
             return bundle;
         }
 
-        NodeBundle GetNodesFromOrExpression(OrExpression orexpr, Dictionary<string, Definition> defsByName)
+        NodeBundle GetNodesFromOrExpression(OrExpression orexpr, Dictionary<string, Definition> defsByName, DefinitionExpression parentDefinition)
         {
             List<NodeBundle> bundles = new List<NodeBundle>();
 
             foreach (Expression expr in orexpr.Expressions)
             {
-                bundles.Add(GetNodesFromExpression(expr, defsByName));
+                bundles.Add(GetNodesFromExpression(expr, defsByName, parentDefinition));
             }
 
             Set<Node> starts = new Set<Node>();
