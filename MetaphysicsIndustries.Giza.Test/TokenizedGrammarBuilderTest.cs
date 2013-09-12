@@ -45,14 +45,15 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(1, explicitDef.EndNodes.Count);
 
             Assert.IsNotNull(implicitDef);
-            Assert.AreEqual(2, implicitDef.Directives.Count);
+            Assert.AreEqual(3, implicitDef.Directives.Count);
             Assert.Contains(DefinitionDirective.Token, implicitDef.Directives.ToArray());
             Assert.Contains(DefinitionDirective.Atomic, implicitDef.Directives.ToArray());
+            Assert.Contains(DefinitionDirective.MindWhitespace, implicitDef.Directives.ToArray());
             Assert.IsTrue(implicitDef.Atomic);
             Assert.IsFalse(implicitDef.IgnoreCase);
             Assert.IsFalse(implicitDef.IsComment);
             Assert.IsTrue(implicitDef.IsTokenized);
-//            Assert.IsTrue(implicitDef.MindWhitespace);
+            Assert.IsTrue(implicitDef.MindWhitespace);
             Assert.IsNotNull(implicitDef.Nodes);
             Assert.AreEqual(5, implicitDef.Nodes.Count);
             Assert.IsNotNull(implicitDef.StartNodes);
@@ -99,14 +100,15 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(1, explicitDef.EndNodes.Count);
 
             Assert.IsNotNull(implicitDef);
-            Assert.AreEqual(2, implicitDef.Directives.Count);
+            Assert.AreEqual(3, implicitDef.Directives.Count);
             Assert.Contains(DefinitionDirective.Token, implicitDef.Directives.ToArray());
             Assert.Contains(DefinitionDirective.Atomic, implicitDef.Directives.ToArray());
+            Assert.Contains(DefinitionDirective.MindWhitespace, implicitDef.Directives.ToArray());
             Assert.IsTrue(implicitDef.Atomic);
             Assert.IsFalse(implicitDef.IgnoreCase);
             Assert.IsFalse(implicitDef.IsComment);
             Assert.IsTrue(implicitDef.IsTokenized);
-//            Assert.IsTrue(implicitDef.MindWhitespace);
+            Assert.IsTrue(implicitDef.MindWhitespace);
             Assert.IsNotNull(implicitDef.Nodes);
             Assert.AreEqual(1, implicitDef.Nodes.Count);
             Assert.IsNotNull(implicitDef.StartNodes);
@@ -153,15 +155,16 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(1, explicitDef.EndNodes.Count);
 
             Assert.IsNotNull(implicitDef);
-            Assert.AreEqual(3, implicitDef.Directives.Count);
+            Assert.AreEqual(4, implicitDef.Directives.Count);
             Assert.Contains(DefinitionDirective.Token, implicitDef.Directives.ToArray());
             Assert.Contains(DefinitionDirective.Atomic, implicitDef.Directives.ToArray());
             Assert.Contains(DefinitionDirective.IgnoreCase, implicitDef.Directives.ToArray());
+            Assert.Contains(DefinitionDirective.MindWhitespace, implicitDef.Directives.ToArray());
             Assert.IsTrue(implicitDef.Atomic);
             Assert.IsTrue(implicitDef.IgnoreCase);
             Assert.IsFalse(implicitDef.IsComment);
             Assert.IsTrue(implicitDef.IsTokenized);
-//            Assert.IsTrue(implicitDef.MindWhitespace);
+            Assert.IsTrue(implicitDef.MindWhitespace);
             Assert.IsNotNull(implicitDef.Nodes);
             Assert.AreEqual(5, implicitDef.Nodes.Count);
             Assert.IsNotNull(implicitDef.StartNodes);
@@ -208,15 +211,16 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(1, explicitDef.EndNodes.Count);
 
             Assert.IsNotNull(implicitDef);
-            Assert.AreEqual(3, implicitDef.Directives.Count);
+            Assert.AreEqual(4, implicitDef.Directives.Count);
             Assert.Contains(DefinitionDirective.Token, implicitDef.Directives.ToArray());
             Assert.Contains(DefinitionDirective.Atomic, implicitDef.Directives.ToArray());
             Assert.Contains(DefinitionDirective.IgnoreCase, implicitDef.Directives.ToArray());
+            Assert.Contains(DefinitionDirective.MindWhitespace, implicitDef.Directives.ToArray());
             Assert.IsTrue(implicitDef.Atomic);
             Assert.IsTrue(implicitDef.IgnoreCase);
             Assert.IsFalse(implicitDef.IsComment);
             Assert.IsTrue(implicitDef.IsTokenized);
-//            Assert.IsTrue(implicitDef.MindWhitespace);
+            Assert.IsTrue(implicitDef.MindWhitespace);
             Assert.IsNotNull(implicitDef.Nodes);
             Assert.AreEqual(1, implicitDef.Nodes.Count);
             Assert.IsNotNull(implicitDef.StartNodes);
@@ -285,14 +289,15 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(1, grammar.Definitions.Count);
 
             Assert.IsNotNull(def);
-            Assert.AreEqual(2, def.Directives.Count);
+            Assert.AreEqual(3, def.Directives.Count);
             Assert.Contains(DefinitionDirective.Token, def.Directives.ToArray());
             Assert.Contains(DefinitionDirective.Atomic, def.Directives.ToArray());
+            Assert.Contains(DefinitionDirective.MindWhitespace, def.Directives.ToArray());
             Assert.IsTrue(def.Atomic);
             Assert.IsFalse(def.IgnoreCase);
             Assert.IsFalse(def.IsComment);
             Assert.IsTrue(def.IsTokenized);
-//            Assert.IsTrue(def.MindWhitespace);
+            Assert.IsTrue(def.MindWhitespace);
             Assert.IsNotNull(def.Nodes);
             Assert.AreEqual(5, def.Nodes.Count);
             Assert.IsNotNull(def.StartNodes);
@@ -324,14 +329,15 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(1, grammar.Definitions.Count);
 
             Assert.IsNotNull(def);
-            Assert.AreEqual(2, def.Directives.Count);
+            Assert.AreEqual(3, def.Directives.Count);
             Assert.Contains(DefinitionDirective.Subtoken, def.Directives.ToArray());
             Assert.Contains(DefinitionDirective.Atomic, def.Directives.ToArray());
+            Assert.Contains(DefinitionDirective.MindWhitespace, def.Directives.ToArray());
             Assert.IsTrue(def.Atomic);
             Assert.IsFalse(def.IgnoreCase);
             Assert.IsFalse(def.IsComment);
             Assert.IsTrue(def.IsTokenized);
-//            Assert.IsTrue(def.MindWhitespace);
+            Assert.IsTrue(def.MindWhitespace);
             Assert.IsNotNull(def.Nodes);
             Assert.AreEqual(5, def.Nodes.Count);
             Assert.IsNotNull(def.StartNodes);
@@ -363,14 +369,15 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(1, grammar.Definitions.Count);
 
             Assert.IsNotNull(def);
-            Assert.AreEqual(2, def.Directives.Count);
+            Assert.AreEqual(3, def.Directives.Count);
             Assert.Contains(DefinitionDirective.Comment, def.Directives.ToArray());
             Assert.Contains(DefinitionDirective.Atomic, def.Directives.ToArray());
+            Assert.Contains(DefinitionDirective.MindWhitespace, def.Directives.ToArray());
             Assert.IsTrue(def.Atomic);
             Assert.IsFalse(def.IgnoreCase);
             Assert.IsTrue(def.IsComment);
             Assert.IsTrue(def.IsTokenized);
-//            Assert.IsTrue(def.MindWhitespace);
+            Assert.IsTrue(def.MindWhitespace);
             Assert.IsNotNull(def.Nodes);
             Assert.AreEqual(5, def.Nodes.Count);
             Assert.IsNotNull(def.StartNodes);
@@ -439,14 +446,15 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(1, grammar.Definitions.Count);
 
             Assert.IsNotNull(def);
-            Assert.AreEqual(2, def.Directives.Count);
+            Assert.AreEqual(3, def.Directives.Count);
             Assert.Contains(DefinitionDirective.Token, def.Directives.ToArray());
             Assert.Contains(DefinitionDirective.Atomic, def.Directives.ToArray());
+            Assert.Contains(DefinitionDirective.MindWhitespace, def.Directives.ToArray());
             Assert.IsTrue(def.Atomic);
             Assert.IsFalse(def.IgnoreCase);
             Assert.IsFalse(def.IsComment);
             Assert.IsTrue(def.IsTokenized);
-            //            Assert.IsTrue(def.MindWhitespace);
+            Assert.IsTrue(def.MindWhitespace);
             Assert.IsNotNull(def.Nodes);
             Assert.AreEqual(5, def.Nodes.Count);
             Assert.IsNotNull(def.StartNodes);
@@ -478,14 +486,15 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(1, grammar.Definitions.Count);
 
             Assert.IsNotNull(def);
-            Assert.AreEqual(2, def.Directives.Count);
+            Assert.AreEqual(3, def.Directives.Count);
             Assert.Contains(DefinitionDirective.Subtoken, def.Directives.ToArray());
             Assert.Contains(DefinitionDirective.Atomic, def.Directives.ToArray());
+            Assert.Contains(DefinitionDirective.MindWhitespace, def.Directives.ToArray());
             Assert.IsTrue(def.Atomic);
             Assert.IsFalse(def.IgnoreCase);
             Assert.IsFalse(def.IsComment);
             Assert.IsTrue(def.IsTokenized);
-            //            Assert.IsTrue(def.MindWhitespace);
+            Assert.IsTrue(def.MindWhitespace);
             Assert.IsNotNull(def.Nodes);
             Assert.AreEqual(5, def.Nodes.Count);
             Assert.IsNotNull(def.StartNodes);
@@ -517,14 +526,15 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(1, grammar.Definitions.Count);
 
             Assert.IsNotNull(def);
-            Assert.AreEqual(2, def.Directives.Count);
+            Assert.AreEqual(3, def.Directives.Count);
             Assert.Contains(DefinitionDirective.Comment, def.Directives.ToArray());
             Assert.Contains(DefinitionDirective.Atomic, def.Directives.ToArray());
+            Assert.Contains(DefinitionDirective.MindWhitespace, def.Directives.ToArray());
             Assert.IsTrue(def.Atomic);
             Assert.IsFalse(def.IgnoreCase);
             Assert.IsTrue(def.IsComment);
             Assert.IsTrue(def.IsTokenized);
-            //            Assert.IsTrue(def.MindWhitespace);
+            Assert.IsTrue(def.MindWhitespace);
             Assert.IsNotNull(def.Nodes);
             Assert.AreEqual(5, def.Nodes.Count);
             Assert.IsNotNull(def.StartNodes);
