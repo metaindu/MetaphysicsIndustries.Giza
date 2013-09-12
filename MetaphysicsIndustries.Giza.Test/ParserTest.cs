@@ -138,35 +138,297 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual("b", twoOne.Subspans[2].Subspans[0].Value);
         }
 
-//        [Test]
-//        public void TestCaseInsensitiveToken1()
-//        {
-//        }
-//
-//        [Test]
-//        public void TestCaseInsensitiveToken2()
-//        {
-//        }
-//
-//        [Test]
-//        public void TestCaseInsensitiveSubtoken1()
-//        {
-//        }
-//
-//        [Test]
-//        public void TestCaseInsensitiveSubtoken2()
-//        {
-//        }
-//
-//        [Test]
-//        public void TestCaseInsensitiveComment1()
-//        {
-//        }
-//
-//        [Test]
-//        public void TestCaseInsensitiveComment2()
-//        {
-//        }
+        [Test]
+        public void TestTokenIgnoreCase1()
+        {
+            // setup
+            string testGrammarText =
+                " // test grammar \r\n" +
+                    "sequence = item+; \r\n" +
+                    "<token, ignore case> item = 'item'; \r\n";
+            string testInputText = "item ITEM iTeM";
+
+            var sgs = new SupergrammarSpanner();
+            var errors = new List<Error>();
+            var dis = sgs.GetExpressions(testGrammarText, errors);
+            Assert.IsEmpty(errors);
+            var tgb = new TokenizedGrammarBuilder();
+            Grammar testGrammar = tgb.BuildTokenizedGrammar(dis);
+            var itemDef = testGrammar.FindDefinitionByName("item");
+            var sequenceDef = testGrammar.FindDefinitionByName("sequence");
+            Assert.IsNotNull(itemDef);
+            Assert.IsNotNull(sequenceDef);
+            var parser = new Parser(sequenceDef);
+
+
+            // action
+            var spans = parser.Parse(testInputText, errors);
+
+
+            // assertions
+            Assert.IsNotNull(errors);
+            Assert.AreEqual(0, errors.Count);
+            Assert.IsNotNull(spans);
+            Assert.AreEqual(1, spans.Length);
+            Assert.AreSame(sequenceDef, spans[0].DefRef);
+            Assert.AreEqual(3, spans[0].Subspans.Count);
+
+            Assert.AreSame(itemDef, spans[0].Subspans[0].DefRef);
+            Assert.AreEqual("item", spans[0].Subspans[0].Value);
+            Assert.AreEqual(0, spans[0].Subspans[0].Subspans.Count);
+
+            Assert.AreSame(itemDef, spans[0].Subspans[1].DefRef);
+            Assert.AreEqual("ITEM", spans[0].Subspans[1].Value);
+            Assert.AreEqual(0, spans[0].Subspans[1].Subspans.Count);
+
+            Assert.AreSame(itemDef, spans[0].Subspans[2].DefRef);
+            Assert.AreEqual("iTeM", spans[0].Subspans[2].Value);
+            Assert.AreEqual(0, spans[0].Subspans[2].Subspans.Count);
+        }
+
+        [Test]
+        public void TestTokenIgnoreCase2()
+        {
+            // setup
+            string testGrammarText =
+                " // test grammar \r\n" +
+                    "sequence = item+; \r\n" +
+                    "<token, ignore case> item = [\\l]+; \r\n";
+            string testInputText = "item ITEM iTeM";
+
+            var sgs = new SupergrammarSpanner();
+            var errors = new List<Error>();
+            var dis = sgs.GetExpressions(testGrammarText, errors);
+            Assert.IsEmpty(errors);
+            var tgb = new TokenizedGrammarBuilder();
+            Grammar testGrammar = tgb.BuildTokenizedGrammar(dis);
+            var itemDef = testGrammar.FindDefinitionByName("item");
+            var sequenceDef = testGrammar.FindDefinitionByName("sequence");
+            Assert.IsNotNull(itemDef);
+            Assert.IsNotNull(sequenceDef);
+            var parser = new Parser(sequenceDef);
+
+
+            // action
+            var spans = parser.Parse(testInputText, errors);
+
+
+            // assertions
+            Assert.IsNotNull(errors);
+            Assert.AreEqual(0, errors.Count);
+            Assert.IsNotNull(spans);
+            Assert.AreEqual(1, spans.Length);
+            Assert.AreSame(sequenceDef, spans[0].DefRef);
+            Assert.AreEqual(3, spans[0].Subspans.Count);
+
+            Assert.AreSame(itemDef, spans[0].Subspans[0].DefRef);
+            Assert.AreEqual("item", spans[0].Subspans[0].Value);
+            Assert.AreEqual(0, spans[0].Subspans[0].Subspans.Count);
+
+            Assert.AreSame(itemDef, spans[0].Subspans[1].DefRef);
+            Assert.AreEqual("ITEM", spans[0].Subspans[1].Value);
+            Assert.AreEqual(0, spans[0].Subspans[1].Subspans.Count);
+
+            Assert.AreSame(itemDef, spans[0].Subspans[2].DefRef);
+            Assert.AreEqual("iTeM", spans[0].Subspans[2].Value);
+            Assert.AreEqual(0, spans[0].Subspans[2].Subspans.Count);
+        }
+
+        [Test]
+        public void TestSubtokenIgnoreCase1()
+        {
+            // setup
+            string testGrammarText =
+                " // test grammar \r\n" +
+                "sequence = item+; \r\n" +
+                "<token> item = 'abc' middle 'xyz'; \r\n" +
+                "<subtoken, ignore case> middle = 'qwer'; \r\n";
+            string testInputText = "abcqwerxyz abcQWERxyz abcQwErxyz";
+
+            var sgs = new SupergrammarSpanner();
+            var errors = new List<Error>();
+            var dis = sgs.GetExpressions(testGrammarText, errors);
+            Assert.IsEmpty(errors);
+            var tgb = new TokenizedGrammarBuilder();
+            Grammar testGrammar = tgb.BuildTokenizedGrammar(dis);
+            var itemDef = testGrammar.FindDefinitionByName("item");
+            var sequenceDef = testGrammar.FindDefinitionByName("sequence");
+            Assert.IsNotNull(itemDef);
+            Assert.IsNotNull(sequenceDef);
+            var parser = new Parser(sequenceDef);
+
+
+            // action
+            var spans = parser.Parse(testInputText, errors);
+
+
+            // assertions
+            Assert.IsNotNull(errors);
+            Assert.AreEqual(0, errors.Count);
+            Assert.IsNotNull(spans);
+            Assert.AreEqual(1, spans.Length);
+            Assert.AreSame(sequenceDef, spans[0].DefRef);
+            Assert.AreEqual(3, spans[0].Subspans.Count);
+
+            Assert.AreSame(itemDef, spans[0].Subspans[0].DefRef);
+            Assert.AreEqual("abcqwerxyz", spans[0].Subspans[0].Value);
+            Assert.AreEqual(0, spans[0].Subspans[0].Subspans.Count);
+
+            Assert.AreSame(itemDef, spans[0].Subspans[1].DefRef);
+            Assert.AreEqual("abcQWERxyz", spans[0].Subspans[1].Value);
+            Assert.AreEqual(0, spans[0].Subspans[1].Subspans.Count);
+
+            Assert.AreSame(itemDef, spans[0].Subspans[2].DefRef);
+            Assert.AreEqual("abcQwErxyz", spans[0].Subspans[2].Value);
+            Assert.AreEqual(0, spans[0].Subspans[2].Subspans.Count);
+        }
+
+        [Test]
+        public void TestSubtokenIgnoreCase2()
+        {
+            // setup
+            string testGrammarText =
+                " // test grammar \r\n" +
+                    "sequence = item+; \r\n" +
+                    "<token> item = 'abc' middle 'xyz'; \r\n" +
+                    "<subtoken, ignore case> middle = [\\l]+; \r\n";
+            string testInputText = "abcqwerxyz abcQWERxyz abcQwErxyz";
+
+            var sgs = new SupergrammarSpanner();
+            var errors = new List<Error>();
+            var dis = sgs.GetExpressions(testGrammarText, errors);
+            Assert.IsEmpty(errors);
+            var tgb = new TokenizedGrammarBuilder();
+            Grammar testGrammar = tgb.BuildTokenizedGrammar(dis);
+            var itemDef = testGrammar.FindDefinitionByName("item");
+            var sequenceDef = testGrammar.FindDefinitionByName("sequence");
+            Assert.IsNotNull(itemDef);
+            Assert.IsNotNull(sequenceDef);
+            var parser = new Parser(sequenceDef);
+
+
+            // action
+            var spans = parser.Parse(testInputText, errors);
+
+
+            // assertions
+            Assert.IsNotNull(errors);
+            Assert.AreEqual(0, errors.Count);
+            Assert.IsNotNull(spans);
+            Assert.AreEqual(1, spans.Length);
+            Assert.AreSame(sequenceDef, spans[0].DefRef);
+            Assert.AreEqual(3, spans[0].Subspans.Count);
+
+            Assert.AreSame(itemDef, spans[0].Subspans[0].DefRef);
+            Assert.AreEqual("abcqwerxyz", spans[0].Subspans[0].Value);
+            Assert.AreEqual(0, spans[0].Subspans[0].Subspans.Count);
+
+            Assert.AreSame(itemDef, spans[0].Subspans[1].DefRef);
+            Assert.AreEqual("abcQWERxyz", spans[0].Subspans[1].Value);
+            Assert.AreEqual(0, spans[0].Subspans[1].Subspans.Count);
+
+            Assert.AreSame(itemDef, spans[0].Subspans[2].DefRef);
+            Assert.AreEqual("abcQwErxyz", spans[0].Subspans[2].Value);
+            Assert.AreEqual(0, spans[0].Subspans[2].Subspans.Count);
+        }
+
+        [Test]
+        public void TestCommentIgnoreCase1()
+        {
+            // setup
+            string testGrammarText =
+                " // test grammar \r\n" +
+                "sequence = item+; \r\n" +
+                "<token> item = 'item'; \r\n" +
+                "<comment, ignore case> middle = '[comment]'; \r\n";
+            string testInputText = "item [comment] item [COMMENT] item [CoMmEnT]";
+
+            var sgs = new SupergrammarSpanner();
+            var errors = new List<Error>();
+            var dis = sgs.GetExpressions(testGrammarText, errors);
+            Assert.IsEmpty(errors);
+            var tgb = new TokenizedGrammarBuilder();
+            Grammar testGrammar = tgb.BuildTokenizedGrammar(dis);
+            var itemDef = testGrammar.FindDefinitionByName("item");
+            var sequenceDef = testGrammar.FindDefinitionByName("sequence");
+            Assert.IsNotNull(itemDef);
+            Assert.IsNotNull(sequenceDef);
+            var parser = new Parser(sequenceDef);
+
+
+            // action
+            var spans = parser.Parse(testInputText, errors);
+
+
+            // assertions
+            Assert.IsNotNull(errors);
+            Assert.AreEqual(0, errors.Count);
+            Assert.IsNotNull(spans);
+            Assert.AreEqual(1, spans.Length);
+            Assert.AreSame(sequenceDef, spans[0].DefRef);
+            Assert.AreEqual(3, spans[0].Subspans.Count);
+
+            Assert.AreSame(itemDef, spans[0].Subspans[0].DefRef);
+            Assert.AreEqual("item", spans[0].Subspans[0].Value);
+            Assert.AreEqual(0, spans[0].Subspans[0].Subspans.Count);
+
+            Assert.AreSame(itemDef, spans[0].Subspans[1].DefRef);
+            Assert.AreEqual("item", spans[0].Subspans[1].Value);
+            Assert.AreEqual(0, spans[0].Subspans[1].Subspans.Count);
+
+            Assert.AreSame(itemDef, spans[0].Subspans[2].DefRef);
+            Assert.AreEqual("item", spans[0].Subspans[2].Value);
+            Assert.AreEqual(0, spans[0].Subspans[2].Subspans.Count);
+        }
+
+        [Test]
+        public void TestCommentIgnoreCase2()
+        {
+            // setup
+            string testGrammarText =
+                " // test grammar \r\n" +
+                    "sequence = item+; \r\n" +
+                    "<token> item = 'item'; \r\n" +
+                    "<comment, ignore case> middle = '[' [\\l]+ ']'; \r\n";
+            string testInputText = "item [comment] item [COMMENT] item [CoMmEnT]";
+
+            var sgs = new SupergrammarSpanner();
+            var errors = new List<Error>();
+            var dis = sgs.GetExpressions(testGrammarText, errors);
+            Assert.IsEmpty(errors);
+            var tgb = new TokenizedGrammarBuilder();
+            Grammar testGrammar = tgb.BuildTokenizedGrammar(dis);
+            var itemDef = testGrammar.FindDefinitionByName("item");
+            var sequenceDef = testGrammar.FindDefinitionByName("sequence");
+            Assert.IsNotNull(itemDef);
+            Assert.IsNotNull(sequenceDef);
+            var parser = new Parser(sequenceDef);
+
+
+            // action
+            var spans = parser.Parse(testInputText, errors);
+
+
+            // assertions
+            Assert.IsNotNull(errors);
+            Assert.AreEqual(0, errors.Count);
+            Assert.IsNotNull(spans);
+            Assert.AreEqual(1, spans.Length);
+            Assert.AreSame(sequenceDef, spans[0].DefRef);
+            Assert.AreEqual(3, spans[0].Subspans.Count);
+
+            Assert.AreSame(itemDef, spans[0].Subspans[0].DefRef);
+            Assert.AreEqual("item", spans[0].Subspans[0].Value);
+            Assert.AreEqual(0, spans[0].Subspans[0].Subspans.Count);
+
+            Assert.AreSame(itemDef, spans[0].Subspans[1].DefRef);
+            Assert.AreEqual("item", spans[0].Subspans[1].Value);
+            Assert.AreEqual(0, spans[0].Subspans[1].Subspans.Count);
+
+            Assert.AreSame(itemDef, spans[0].Subspans[2].DefRef);
+            Assert.AreEqual("item", spans[0].Subspans[2].Value);
+            Assert.AreEqual(0, spans[0].Subspans[2].Subspans.Count);
+        }
 
         [Test]
         public void TestCaseInsensitiveImplicitTokens1()
@@ -279,11 +541,6 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual("A", spans[0].Subspans[2].Subspans[0].Value);
             Assert.AreEqual(0, spans[0].Subspans[2].Subspans[0].Subspans.Count);
         }
-
-        //[Test]
-        //public void TestMindWhitespaceTokens()
-        //{
-        //}
 
         [Test]
         public void TestUnexpectedEndOfInput1()
