@@ -63,7 +63,8 @@ namespace MetaphysicsIndustries.Giza
             public static readonly ErrorType TokenizedReferencesComment =               new ErrorType(name:"SubtokenReferencesToken");
             public static readonly ErrorType AtomicInNonTokenDefinition =               new ErrorType(name:"AtomicInNonTokenDefinition",                isWarning:true);
             public static readonly ErrorType MindWhitespaceInNonTokenDefinition =       new ErrorType(name:"MindWhitespaceInNonTokenDefinition",        isWarning:true);
-            public static readonly ErrorType AtomicInTokenizedDefinition =              new ErrorType(name:"AtomicInTokenizedDefinition",               isWarning:true);
+            public static readonly ErrorType AtomicInTokenDefinition =                  new ErrorType(name:"AtomicInTokenDefinition",                   isWarning:true);
+            public static readonly ErrorType AtomicInCommentDefinition =                new ErrorType(name:"AtomicInCommentDefinition",                 isWarning:true);
             public static readonly ErrorType MindWhitespaceInTokenizedDefinition =      new ErrorType(name:"MindWhitespaceInTokenizedDefinition",       isWarning:true);
         }
 
@@ -113,7 +114,7 @@ namespace MetaphysicsIndustries.Giza
                     def.Directives.Contains(DefinitionDirective.Atomic))
                 {
                     errors.Add(new EcError {
-                        ErrorType = EcError.AtomicInTokenizedDefinition,
+                        ErrorType = EcError.AtomicInTokenDefinition,
                         DefinitionInfo = def,
                     });
                 }

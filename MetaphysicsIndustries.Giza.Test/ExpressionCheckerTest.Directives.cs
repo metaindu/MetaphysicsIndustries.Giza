@@ -185,7 +185,7 @@ namespace MetaphysicsIndustries.Giza.Test
         }
 
         [Test]
-        public void TestAtomicInTokenizedDefinition1()
+        public void TestAtomicInTokenDefinition()
         {
             DefinitionExpression[] defs = {
                 new DefinitionExpression {
@@ -201,14 +201,14 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
-            Assert.AreEqual(EcError.AtomicInTokenizedDefinition, errors[0].ErrorType);
+            Assert.AreEqual(EcError.AtomicInTokenDefinition, errors[0].ErrorType);
             Assert.IsInstanceOf<EcError>(errors[0]);
             var err = (errors[0] as EcError);
             Assert.AreSame(defs[0], err.DefinitionInfo);
         }
 
         [Test]
-        public void TestAtomicInTokenizedDefinition2()
+        public void TestAtomicInSubtokenDefinition()
         {
             DefinitionExpression[] defs = {
                 new DefinitionExpression {
@@ -223,15 +223,11 @@ namespace MetaphysicsIndustries.Giza.Test
             List<Error> errors = ec.CheckDefinitionInfosForParsing(defs);
 
             Assert.IsNotNull(errors);
-            Assert.AreEqual(1, errors.Count);
-            Assert.AreEqual(EcError.AtomicInTokenizedDefinition, errors[0].ErrorType);
-            Assert.IsInstanceOf<EcError>(errors[0]);
-            var err = (errors[0] as EcError);
-            Assert.AreSame(defs[0], err.DefinitionInfo);
+            Assert.AreEqual(0, errors.Count);
         }
 
         [Test]
-        public void TestAtomicInTokenizedDefinition3()
+        public void TestAtomicInCommentDefinition()
         {
             DefinitionExpression[] defs = {
                 new DefinitionExpression {
@@ -247,7 +243,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
-            Assert.AreEqual(EcError.AtomicInTokenizedDefinition, errors[0].ErrorType);
+            Assert.AreEqual(EcError.AtomicInCommentDefinition, errors[0].ErrorType);
             Assert.IsInstanceOf<EcError>(errors[0]);
             var err = (errors[0] as EcError);
             Assert.AreSame(defs[0], err.DefinitionInfo);
