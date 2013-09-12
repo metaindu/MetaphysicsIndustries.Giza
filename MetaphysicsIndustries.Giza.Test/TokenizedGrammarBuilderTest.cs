@@ -329,11 +329,10 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(1, grammar.Definitions.Count);
 
             Assert.IsNotNull(def);
-            Assert.AreEqual(3, def.Directives.Count);
+            Assert.AreEqual(2, def.Directives.Count);
             Assert.Contains(DefinitionDirective.Subtoken, def.Directives.ToArray());
-            Assert.Contains(DefinitionDirective.Atomic, def.Directives.ToArray());
             Assert.Contains(DefinitionDirective.MindWhitespace, def.Directives.ToArray());
-            Assert.IsTrue(def.Atomic);
+            Assert.IsFalse(def.Atomic);
             Assert.IsFalse(def.IgnoreCase);
             Assert.IsFalse(def.IsComment);
             Assert.IsTrue(def.IsTokenized);
