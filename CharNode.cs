@@ -35,7 +35,14 @@ namespace MetaphysicsIndustries.Giza
 
         public bool Matches(char ch)
         {
-            return CharClass.Matches(ch);
+            if (ParentDefinition.IgnoreCase)
+            {
+                return CharClass.MatchesIgnoringCase(ch);
+            }
+            else
+            {
+                return CharClass.Matches(ch);
+            }
         }
         public static CharNode[] FromString(string text)
         {

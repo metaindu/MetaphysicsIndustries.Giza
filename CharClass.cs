@@ -104,6 +104,33 @@ namespace MetaphysicsIndustries.Giza
             return Exclude;
         }
 
+        public bool MatchesIgnoringCase(char ch)
+        {
+            if (Letter && char.IsLetter(ch))
+            {
+                return !Exclude;
+            }
+            if (Digit && char.IsDigit(ch))
+            {
+                return !Exclude;
+            }
+            if (Whitespace && char.IsWhiteSpace(ch))
+            {
+                return !Exclude;
+            }
+
+            char lower = char.ToLower(ch);
+            foreach (char ch2 in _chars)
+            {
+                if (lower == char.ToLower(ch2))
+                {
+                    return !Exclude;
+                }
+            }
+
+            return Exclude;
+        }
+
         public override string ToString()
         {
             return "[" + ToUndelimitedString() + "]";
