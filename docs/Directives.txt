@@ -2,6 +2,7 @@
 definitions and directives
 all of this is checked by ExpressionChecker
 some of it is checked by DefinitionChecker
+some of it also goes into DefinitionBuilder and TokenizedGrammarBuilder
 
 
 
@@ -18,8 +19,19 @@ in a parsed grammar
         atomic produces a warning and is ignored
         mind whitespace produces a warning and is ignored
         ignore case applies to implicit tokens only (see below)
-    in a token, subtoken, or comment definition
+    in a token or comment definition
         atomic is automatic. adding it produces a warning
+            non-atomic would lead to a 2^N explosion in the number of comments or tokens in ambiguous cases, such as [\d]+
+        mind whitespace is automatic. adding it produces a warning
+        ignore case ignores case
+    in a subtoken definition
+        atomic is not automatic. adding it makes the definition atomic, and produces no warnings or errors
+            this is because the subtoken is only used by the spanner, not the
+            parser. The goal behind making tokens and comments atomic was to
+            avoid the 2^N explosion in ambiguous cases. However, since
+            atomic-vs-non-atomic is an allowable concept in spanned grammars,
+            it should also be allowed in subtokens, as they are only spanned
+            and not parsed.
         mind whitespace is automatic. adding it produces a warning
         ignore case ignores case
     in an implicit token definition
