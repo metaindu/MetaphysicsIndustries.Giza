@@ -92,6 +92,7 @@ namespace MetaphysicsIndustries.Giza
                 def2.Items.AddRange(def.Items);
                 def2.Directives.AddRange(def.Directives);
                 def2.Directives.Add(DefinitionDirective.Atomic);
+                def2.Directives.Add(DefinitionDirective.MindWhitespace);
                 tokenizedDefsDetokenized.Add(def2);
             }
             Definition[] tokenizedDefs2 = db.BuildDefinitions(tokenizedDefsDetokenized.ToArray());
