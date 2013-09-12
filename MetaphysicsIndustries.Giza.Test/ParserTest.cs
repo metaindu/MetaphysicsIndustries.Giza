@@ -186,6 +186,10 @@ namespace MetaphysicsIndustries.Giza.Test
             Grammar testGrammar = tgb.BuildTokenizedGrammar(dis);
             var itemDef = testGrammar.FindDefinitionByName("item");
             var sequenceDef = testGrammar.FindDefinitionByName("sequence");
+            var implicitDef = testGrammar.FindDefinitionByName("$implicit ignore case literal item");
+            Assert.IsNotNull(itemDef);
+            Assert.IsNotNull(sequenceDef);
+            Assert.IsNotNull(implicitDef);
             var parser = new Parser(sequenceDef);
 
 
@@ -200,15 +204,24 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(1, spans.Length);
             Assert.AreSame(sequenceDef, spans[0].DefRef);
             Assert.AreEqual(3, spans[0].Subspans.Count);
+
             Assert.AreSame(itemDef, spans[0].Subspans[0].DefRef);
-            Assert.AreEqual("item", spans[0].Subspans[0].Value);
-            Assert.AreEqual(0, spans[0].Subspans[0].Subspans.Count);
+            Assert.AreEqual(1, spans[0].Subspans[0].Subspans.Count);
+            Assert.AreSame(implicitDef, spans[0].Subspans[0].Subspans[0].DefRef);
+            Assert.AreEqual("item", spans[0].Subspans[0].Subspans[0].Value);
+            Assert.AreEqual(0, spans[0].Subspans[0].Subspans[0].Subspans.Count);
+
             Assert.AreSame(itemDef, spans[0].Subspans[1].DefRef);
-            Assert.AreEqual("ITEM", spans[0].Subspans[1].Value);
-            Assert.AreEqual(0, spans[0].Subspans[1].Subspans.Count);
+            Assert.AreEqual(1, spans[0].Subspans[1].Subspans.Count);
+            Assert.AreSame(implicitDef, spans[0].Subspans[1].Subspans[0].DefRef);
+            Assert.AreEqual("ITEM", spans[0].Subspans[1].Subspans[0].Value);
+            Assert.AreEqual(0, spans[0].Subspans[1].Subspans[0].Subspans.Count);
+
             Assert.AreSame(itemDef, spans[0].Subspans[2].DefRef);
-            Assert.AreEqual("iTeM", spans[0].Subspans[2].Value);
-            Assert.AreEqual(0, spans[0].Subspans[2].Subspans.Count);
+            Assert.AreEqual(1, spans[0].Subspans[2].Subspans.Count);
+            Assert.AreSame(implicitDef, spans[0].Subspans[2].Subspans[0].DefRef);
+            Assert.AreEqual("iTeM", spans[0].Subspans[2].Subspans[0].Value);
+            Assert.AreEqual(0, spans[0].Subspans[2].Subspans[0].Subspans.Count);
         }
 
         [Test]
@@ -218,8 +231,8 @@ namespace MetaphysicsIndustries.Giza.Test
             string testGrammarText =
                 " // test grammar \r\n" +
                 "sequence = item+; \r\n" +
-                "<ignore case> item = [\\dabcdef]+; \r\n";
-            string testInputText = "0123 abcd ABCD";
+                "<ignore case, mind whitespace> item = [\\dabcdef]; \r\n";
+            string testInputText = "0 a A";
 
             var sgs = new SupergrammarSpanner();
             var errors = new List<Error>();
@@ -229,6 +242,10 @@ namespace MetaphysicsIndustries.Giza.Test
             Grammar testGrammar = tgb.BuildTokenizedGrammar(dis);
             var itemDef = testGrammar.FindDefinitionByName("item");
             var sequenceDef = testGrammar.FindDefinitionByName("sequence");
+            var implicitDef = testGrammar.FindDefinitionByName("$implicit ignore case char class \\dabcdef");
+            Assert.IsNotNull(itemDef);
+            Assert.IsNotNull(sequenceDef);
+            Assert.IsNotNull(implicitDef);
             var parser = new Parser(sequenceDef);
 
 
@@ -243,15 +260,24 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(1, spans.Length);
             Assert.AreSame(sequenceDef, spans[0].DefRef);
             Assert.AreEqual(3, spans[0].Subspans.Count);
+
             Assert.AreSame(itemDef, spans[0].Subspans[0].DefRef);
-            Assert.AreEqual("0123", spans[0].Subspans[0].Value);
-            Assert.AreEqual(0, spans[0].Subspans[0].Subspans.Count);
+            Assert.AreEqual(1, spans[0].Subspans[0].Subspans.Count);
+            Assert.AreSame(implicitDef, spans[0].Subspans[0].Subspans[0].DefRef);
+            Assert.AreEqual("0", spans[0].Subspans[0].Subspans[0].Value);
+            Assert.AreEqual(0, spans[0].Subspans[0].Subspans[0].Subspans.Count);
+
             Assert.AreSame(itemDef, spans[0].Subspans[1].DefRef);
-            Assert.AreEqual("abcd", spans[0].Subspans[1].Value);
-            Assert.AreEqual(0, spans[0].Subspans[1].Subspans.Count);
+            Assert.AreEqual(1, spans[0].Subspans[1].Subspans.Count);
+            Assert.AreSame(implicitDef, spans[0].Subspans[1].Subspans[0].DefRef);
+            Assert.AreEqual("a", spans[0].Subspans[1].Subspans[0].Value);
+            Assert.AreEqual(0, spans[0].Subspans[1].Subspans[0].Subspans.Count);
+
             Assert.AreSame(itemDef, spans[0].Subspans[2].DefRef);
-            Assert.AreEqual("ABCD", spans[0].Subspans[2].Value);
-            Assert.AreEqual(0, spans[0].Subspans[2].Subspans.Count);
+            Assert.AreEqual(1, spans[0].Subspans[2].Subspans.Count);
+            Assert.AreSame(implicitDef, spans[0].Subspans[2].Subspans[0].DefRef);
+            Assert.AreEqual("A", spans[0].Subspans[2].Subspans[0].Value);
+            Assert.AreEqual(0, spans[0].Subspans[2].Subspans[0].Subspans.Count);
         }
 
         //[Test]
