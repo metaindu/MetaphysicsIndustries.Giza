@@ -138,11 +138,12 @@ namespace MetaphysicsIndustries.Giza
 
         string GetImplicitDefinitionName(LiteralSubExpression literal, bool ignoreCase)
         {
+
             return
                 string.Format(
                     "$implicit {0}literal {1}",
                     ignoreCase ? "ignore case " : "",
-                    literal.Value);
+                    ignoreCase ? literal.Value.ToLower() : literal.Value);
         }
         string GetImplicitDefinitionName(CharClassSubExpression cc, bool ignoreCase)
         {
@@ -150,7 +151,7 @@ namespace MetaphysicsIndustries.Giza
                 string.Format(
                     "$implicit {0}char class {1}",
                     ignoreCase ? "ignore case " : "",
-                    cc.CharClass.ToUndelimitedString());
+                    ignoreCase ? cc.CharClass.ToUndelimitedString().ToLower() : cc.CharClass.ToUndelimitedString());
         }
 
         NodeBundle GetNodesFromExpression(Expression expr, Dictionary<string, Definition> defsByName, DefinitionExpression parentDefinition)

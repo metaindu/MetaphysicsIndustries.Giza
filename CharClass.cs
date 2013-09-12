@@ -143,7 +143,9 @@ namespace MetaphysicsIndustries.Giza
             if (Letter) sb.Append("\\l");
             if (Digit) sb.Append("\\d");
             if (Whitespace) sb.Append("\\s");
-            foreach (char ch in _chars)
+            var chs = new List<char>(_chars);
+            chs.Sort();
+            foreach (char ch in chs)
             {
                 if (ch == ']' || ch == '\\' || ch == '[')
                 {
