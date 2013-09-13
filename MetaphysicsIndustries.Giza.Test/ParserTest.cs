@@ -333,6 +333,88 @@ namespace MetaphysicsIndustries.Giza.Test
         }
 
         [Test]
+        public void TestSubtokenAtomic()
+        {
+            // setup
+            string testGrammarText =
+                " // test grammar \r\n" +
+                    "sequence = item+; \r\n" +
+                    "<token> item = 'abc-' sub+ '-xyz'; \r\n" +
+                    "<subtoken, atomic> sub = [\\l]+; \r\n";
+            string testInputText = "abc-qwer-xyz";
+
+            var sgs = new SupergrammarSpanner();
+            var errors = new List<Error>();
+            var dis = sgs.GetExpressions(testGrammarText, errors);
+            Assert.IsEmpty(errors);
+            var tgb = new TokenizedGrammarBuilder();
+            Grammar testGrammar = tgb.BuildTokenizedGrammar(dis);
+            var itemDef = testGrammar.FindDefinitionByName("item");
+            var sequenceDef = testGrammar.FindDefinitionByName("sequence");
+            Assert.IsNotNull(itemDef);
+            Assert.IsNotNull(sequenceDef);
+            var parser = new Parser(sequenceDef);
+
+
+            // action
+            var spans = parser.Parse(testInputText, errors);
+
+
+            // assertions
+            Assert.IsNotNull(errors);
+            Assert.AreEqual(0, errors.Count);
+            Assert.IsNotNull(spans);
+            Assert.AreEqual(1, spans.Length);
+            Assert.AreSame(sequenceDef, spans[0].DefRef);
+            Assert.AreEqual(1, spans[0].Subspans.Count);
+
+            Assert.AreSame(itemDef, spans[0].Subspans[0].DefRef);
+            Assert.AreEqual("abc-qwer-xyz", spans[0].Subspans[0].Value);
+            Assert.AreEqual(0, spans[0].Subspans[0].Subspans.Count);
+        }
+
+        [Test]
+        public void TestSubtokenNonAtomic()
+        {
+            // setup
+            string testGrammarText =
+                " // test grammar \r\n" +
+                    "sequence = item+; \r\n" +
+                    "<token> item = 'abc-' sub+ '-xyz'; \r\n" +
+                    "<subtoken> sub = [\\l]+; \r\n";
+            string testInputText = "abc-qw-xyz";
+
+            var sgs = new SupergrammarSpanner();
+            var errors = new List<Error>();
+            var dis = sgs.GetExpressions(testGrammarText, errors);
+            Assert.IsEmpty(errors);
+            var tgb = new TokenizedGrammarBuilder();
+            Grammar testGrammar = tgb.BuildTokenizedGrammar(dis);
+            var itemDef = testGrammar.FindDefinitionByName("item");
+            var sequenceDef = testGrammar.FindDefinitionByName("sequence");
+            Assert.IsNotNull(itemDef);
+            Assert.IsNotNull(sequenceDef);
+            var parser = new Parser(sequenceDef);
+
+
+            // action
+            var spans = parser.Parse(testInputText, errors);
+
+
+
+            // assertions
+            Assert.IsNotNull(errors);
+            Assert.AreEqual(0, errors.Count);
+            Assert.IsNotNull(spans);
+            Assert.AreEqual(1, spans.Length);
+            Assert.AreSame(sequenceDef, spans[0].DefRef);
+            Assert.AreEqual(1, spans[0].Subspans.Count);
+            Assert.AreSame(itemDef, spans[0].Subspans[0].DefRef);
+            Assert.AreEqual("abc-qw-xyz", spans[0].Subspans[0].Value);
+            Assert.AreEqual(0, spans[0].Subspans[0].Subspans.Count);
+        }
+
+        [Test]
         public void TestCommentIgnoreCase1()
         {
             // setup
