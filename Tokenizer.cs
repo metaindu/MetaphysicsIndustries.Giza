@@ -150,7 +150,7 @@ namespace MetaphysicsIndustries.Giza
                 }
             }
 
-            var tokens = new List<Token>();
+            var tokens = new Set<Token>();
             endOfInput = false;
             endOfInputIndex = -1;
 
