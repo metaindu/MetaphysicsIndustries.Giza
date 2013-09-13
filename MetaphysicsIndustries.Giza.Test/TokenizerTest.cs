@@ -605,6 +605,52 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(9, tokens[0].Length);
             Assert.AreEqual(16, lastIndex);
         }
+
+        [Test]
+        public void TestAmbiguousSubtokens()
+        {
+            // item is a token and middle is a subtoken. middle is not atomic,
+            // therefore it should run into the 2^N explosion and produce
+            // multiple spans. however, becase the spans all start and end at
+            // the same indexes, it should only result in one token.
+
+            // setup
+            string testGrammarText =
+                "sequence = item+;\n" +
+                "<token> item = 'start-' middle+ '-end' ;\n" +
+                "<subtoken> middle = [\\l]+ ;\n";
+            string testInputText = "start-ABCD-end";
+
+            //
+
+            var errors = new List<Error>();
+            DefinitionExpression[] dis = (new SupergrammarSpanner()).GetExpressions(testGrammarText, errors);
+            Assert.IsEmpty(errors);
+
+            Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
+            Definition sequenceDef = grammar.FindDefinitionByName("sequence");
+            Definition itemDef = grammar.FindDefinitionByName("item");
+            Tokenizer tokenizer = new Tokenizer(grammar);
+            bool endOfInput;
+            int endOfInputIndex;
+
+
+            var tokens = tokenizer.GetTokensAtLocation(testInputText, 0, errors,
+                                                       out endOfInput,
+                                                       out endOfInputIndex);
+
+
+            Assert.IsNotNull(errors);
+            Assert.IsEmpty(errors);
+            Assert.IsFalse(endOfInput);
+            Assert.AreEqual(-1, endOfInputIndex);
+            Assert.IsNotNull(tokens);
+            Assert.AreEqual(1, tokens.Length);
+            Assert.AreSame(itemDef, tokens[0].Definition);
+            Assert.AreEqual(0, tokens[0].StartIndex);
+            Assert.AreEqual(14, tokens[0].Length);
+            Assert.AreEqual("start-ABCD-end", tokens[0].Value);
+        }
     }
 }
 
