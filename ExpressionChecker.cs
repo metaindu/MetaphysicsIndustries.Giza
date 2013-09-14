@@ -15,22 +15,25 @@ namespace MetaphysicsIndustries.Giza
             public DefinitionExpression DefinitionInfo;
             public int Index;
 
-            public string GetDescription()
+            public override string Description
             {
-                StringBuilder sb = new StringBuilder();
-                sb.Append(ErrorType.ToString());
-
-                if (Expression != null) sb.AppendFormat(", {0}", Expression.ToString());
-                if (ExpressionItem != null) sb.AppendFormat(", {0}", ExpressionItem.ToString());
-                if (DefinitionInfo != null) sb.AppendFormat(", {0} \"{1}\"", DefinitionInfo.ToString(), DefinitionInfo.Name);
-                if (Index > 0) sb.AppendFormat(", index {0}", Index);
-
-                if (ExpressionItem is DefRefSubExpression)
+                get
                 {
-                    sb.AppendFormat(", defref \"{0}\"", (ExpressionItem as DefRefSubExpression).DefinitionName);
-                }
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append(ErrorType.ToString());
 
-                return sb.ToString();
+                    if (Expression != null) sb.AppendFormat(", {0}", Expression.ToString());
+                    if (ExpressionItem != null) sb.AppendFormat(", {0}", ExpressionItem.ToString());
+                    if (DefinitionInfo != null) sb.AppendFormat(", {0} \"{1}\"", DefinitionInfo.ToString(), DefinitionInfo.Name);
+                    if (Index > 0) sb.AppendFormat(", index {0}", Index);
+
+                    if (ExpressionItem is DefRefSubExpression)
+                    {
+                        sb.AppendFormat(", defref \"{0}\"", (ExpressionItem as DefRefSubExpression).DefinitionName);
+                    }
+
+                    return sb.ToString();
+                }
             }
 
             // all grammars
