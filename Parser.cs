@@ -46,6 +46,15 @@ namespace MetaphysicsIndustries.Giza
                             GetExpectedNodesString(),
                             Index);
                     }
+                    else if (ErrorType == UnexpectedEndOfInput)
+                    {
+                        return string.Format(
+                            "Unexpected end of input at position {0},{1} (index {2}). {3}",
+                            Line,
+                            Column,
+                            Index,
+                            GetExpectedNodesString());
+                    }
 
                     return base.Description;
                 }
