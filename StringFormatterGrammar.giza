@@ -1,0 +1,12 @@
+
+format = ( text | escape | param )+;
+
+<atomic, mind whitespace>
+text = [^{}]+ ;
+
+escape = ( '{{' | '}}' );
+
+param = '{' name '}' ;
+
+name = [\l_] [\l\d]* ;
+

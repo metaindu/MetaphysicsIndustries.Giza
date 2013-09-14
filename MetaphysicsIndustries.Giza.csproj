@@ -92,6 +92,7 @@
     <None Include="key.snk" />
     <None Include="todo.txt" />
     <None Include="docs\Directives.txt" />
+    <None Include="StringFormatterGrammar.giza" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MetaphysicsIndustries.Collections\MetaphysicsIndustries.Collections.csproj">
