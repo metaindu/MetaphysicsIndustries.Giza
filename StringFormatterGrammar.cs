@@ -19,8 +19,10 @@ namespace MetaphysicsIndustries.Giza
         public CharNode node_escape_2__007D__007D_;
         public CharNode node_escape_3__007D__007D_;
         public CharNode node_param_0__007B_;
-        public DefRefNode node_param_1_name;
-        public CharNode node_param_2__007D_;
+        public CharNode node_param_1__005C_s;
+        public DefRefNode node_param_2_name;
+        public CharNode node_param_3__005C_s;
+        public CharNode node_param_4__007D_;
         public CharNode node_name_0__005C_l_005F_;
         public CharNode node_name_1__005C_l_005C_d;
 
@@ -32,6 +34,7 @@ namespace MetaphysicsIndustries.Giza
             Definitions.Add(def_3_param);
             Definitions.Add(def_4_name);
 
+            def_0_format.Directives.Add(DefinitionDirective.MindWhitespace);
             node_format_0_text = new DefRefNode(def_1_text, "text");
             node_format_1_escape = new DefRefNode(def_2_escape, "escape");
             node_format_2_param = new DefRefNode(def_3_param, "param");
@@ -62,6 +65,7 @@ namespace MetaphysicsIndustries.Giza
             def_1_text.EndNodes.Add(node_text_0__005E__007B__007D_);
             node_text_0__005E__007B__007D_.NextNodes.Add(node_text_0__005E__007B__007D_);
 
+            def_2_escape.Directives.Add(DefinitionDirective.MindWhitespace);
             node_escape_0__007B__007B_ = new CharNode(CharClass.FromUndelimitedCharClassText("{"), "{{");
             node_escape_1__007B__007B_ = new CharNode(CharClass.FromUndelimitedCharClassText("{"), "{{");
             node_escape_2__007D__007D_ = new CharNode(CharClass.FromUndelimitedCharClassText("}"), "}}");
@@ -77,17 +81,29 @@ namespace MetaphysicsIndustries.Giza
             node_escape_0__007B__007B_.NextNodes.Add(node_escape_1__007B__007B_);
             node_escape_2__007D__007D_.NextNodes.Add(node_escape_3__007D__007D_);
 
+            def_3_param.Directives.Add(DefinitionDirective.MindWhitespace);
             node_param_0__007B_ = new CharNode(CharClass.FromUndelimitedCharClassText("{"), "{");
-            node_param_1_name = new DefRefNode(def_4_name, "name");
-            node_param_2__007D_ = new CharNode(CharClass.FromUndelimitedCharClassText("}"), "}");
+            node_param_1__005C_s = new CharNode(CharClass.FromUndelimitedCharClassText("\\s"), "\\s");
+            node_param_2_name = new DefRefNode(def_4_name, "name");
+            node_param_3__005C_s = new CharNode(CharClass.FromUndelimitedCharClassText("\\s"), "\\s");
+            node_param_4__007D_ = new CharNode(CharClass.FromUndelimitedCharClassText("}"), "}");
             def_3_param.Nodes.Add(node_param_0__007B_);
-            def_3_param.Nodes.Add(node_param_1_name);
-            def_3_param.Nodes.Add(node_param_2__007D_);
+            def_3_param.Nodes.Add(node_param_1__005C_s);
+            def_3_param.Nodes.Add(node_param_2_name);
+            def_3_param.Nodes.Add(node_param_3__005C_s);
+            def_3_param.Nodes.Add(node_param_4__007D_);
             def_3_param.StartNodes.Add(node_param_0__007B_);
-            def_3_param.EndNodes.Add(node_param_2__007D_);
-            node_param_0__007B_.NextNodes.Add(node_param_1_name);
-            node_param_1_name.NextNodes.Add(node_param_2__007D_);
+            def_3_param.EndNodes.Add(node_param_4__007D_);
+            node_param_0__007B_.NextNodes.Add(node_param_1__005C_s);
+            node_param_0__007B_.NextNodes.Add(node_param_2_name);
+            node_param_1__005C_s.NextNodes.Add(node_param_1__005C_s);
+            node_param_1__005C_s.NextNodes.Add(node_param_2_name);
+            node_param_2_name.NextNodes.Add(node_param_3__005C_s);
+            node_param_2_name.NextNodes.Add(node_param_4__007D_);
+            node_param_3__005C_s.NextNodes.Add(node_param_3__005C_s);
+            node_param_3__005C_s.NextNodes.Add(node_param_4__007D_);
 
+            def_4_name.Directives.Add(DefinitionDirective.MindWhitespace);
             node_name_0__005C_l_005F_ = new CharNode(CharClass.FromUndelimitedCharClassText("\\l_"), "\\l_");
             node_name_1__005C_l_005C_d = new CharNode(CharClass.FromUndelimitedCharClassText("\\l\\d"), "\\l\\d");
             def_4_name.Nodes.Add(node_name_0__005C_l_005F_);
