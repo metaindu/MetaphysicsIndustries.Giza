@@ -47,6 +47,7 @@
     <Compile Include="ExpressionCheckerTest.DirectivesAndDefRefs.cs" />
     <Compile Include="ExpressionCheckerTest.Directives.cs" />
     <Compile Include="TokenizedGrammarBuilderTest.cs" />
+    <Compile Include="StringFormatterTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
