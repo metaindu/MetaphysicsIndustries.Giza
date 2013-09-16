@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace MetaphysicsIndustries.Giza
 {
@@ -22,7 +23,77 @@ namespace MetaphysicsIndustries.Giza
             return ErrorType.Name + (IsWarning ? " (warning)" : "");
         }
 
-        public static readonly ErrorType Unknown = new ErrorType(name:"Unknown" );
+        public static readonly ErrorType Unknown = new ErrorType(name: "Unknown");
+
+        Func<string, string> _resolver;
+        public Func<string, string> Resolver
+        {
+            get
+            {
+                if (_resolver == null)
+                {
+                    _resolver = MakeResolver();
+                }
+
+                return _resolver;
+            }
+        }
+
+        Func<string, string> MakeResolver()
+        {
+            var type = this.GetType();
+            Dictionary<string, FieldInfo> gettableFields;
+            Dictionary<string, PropertyInfo> gettableProperties;
+            if (_fields.ContainsKey(type))
+            {
+                gettableFields = _fields[type];
+                gettableProperties = _properties[type];
+            }
+            else
+            {
+                var members = type.GetMembers(
+                    BindingFlags.GetField |
+                    BindingFlags.GetProperty |
+                    BindingFlags.Static |
+                    BindingFlags.Instance |
+                    BindingFlags.Public |
+                    BindingFlags.NonPublic);
+
+                gettableFields = new Dictionary<string, FieldInfo>();
+                gettableProperties = new Dictionary<string, PropertyInfo>();
+                foreach (var member in members)
+                {
+                    try
+                    {
+                        if (member is FieldInfo)
+                        {
+                            var field = (member as FieldInfo);
+                            field.GetValue(this);
+                            gettableFields.Add(field.Name, field);
+                        }
+                        else if (member is PropertyInfo)
+                        {
+                            var property = (member as PropertyInfo);
+                            property.GetValue(this, null);
+                            gettableProperties.Add(property.Name, property);
+                        }
+                    }
+                    catch
+                    {
+                        continue;
+                    }
+                }
+            }
+
+            Func<string, string> resolver =
+                (x) =>
+                    gettableFields.ContainsKey(x) ? gettableFields[x].GetValue(this).ToString() :
+                    gettableProperties.ContainsKey(x) ? gettableProperties[x].GetValue(this, null).ToString() :
+                    null;
+            return resolver;
+        }
+        static Dictionary<Type, Dictionary<string, FieldInfo>> _fields = new Dictionary<Type, Dictionary<string, FieldInfo>>();
+        static Dictionary<Type, Dictionary<string, PropertyInfo>> _properties = new Dictionary<Type, Dictionary<string, PropertyInfo>>();
     }
 
     public static class ErrorHelpers
