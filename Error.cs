@@ -26,17 +26,14 @@ namespace MetaphysicsIndustries.Giza
         public static readonly ErrorType Unknown = new ErrorType(name: "Unknown");
 
         Func<string, string> _resolver;
-        public Func<string, string> Resolver
+        public Func<string, string> GetResolver()
         {
-            get
+            if (_resolver == null)
             {
-                if (_resolver == null)
-                {
-                    _resolver = MakeResolver();
-                }
-
-                return _resolver;
+                _resolver = MakeResolver();
             }
+
+            return _resolver;
         }
 
         Func<string, string> MakeResolver()
@@ -65,6 +62,11 @@ namespace MetaphysicsIndustries.Giza
                 {
                     try
                     {
+                        if (member.Name == "Description")
+                        {
+                            continue;
+                        }
+
                         if (member is FieldInfo)
                         {
                             var field = (member as FieldInfo);
@@ -87,9 +89,27 @@ namespace MetaphysicsIndustries.Giza
 
             Func<string, string> resolver =
                 (x) =>
-                    gettableFields.ContainsKey(x) ? gettableFields[x].GetValue(this).ToString() :
-                    gettableProperties.ContainsKey(x) ? gettableProperties[x].GetValue(this, null).ToString() :
-                    null;
+                {
+                    object value;
+
+                    if (gettableFields.ContainsKey(x))
+                    {
+                        value = gettableFields[x].GetValue(this);
+                    }
+                    else if (gettableProperties.ContainsKey(x))
+                    {
+                    value = gettableProperties[x].GetValue(this, null);
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
+                    if (value != null) return value.ToString();
+
+                    return null;
+                };
+
             return resolver;
         }
         static Dictionary<Type, Dictionary<string, FieldInfo>> _fields = new Dictionary<Type, Dictionary<string, FieldInfo>>();
