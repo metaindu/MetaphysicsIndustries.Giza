@@ -338,6 +338,60 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
             Assert.AreEqual(6, lastIndex);
         }
+
+        [Test]
+        public void TestEndDefAtLastCharacter()
+        {
+            // setup
+            string testGrammarText =
+                "<mind whitespace> format = ( text | param )+; \r\n" +
+                "<atomic, mind whitespace> text = [^{}]+ ; \r\n" +
+                "<mind whitespace> param = '{' [\\s]* name [\\s]* '}' ; \r\n" +
+                "<mind whitespace> name = [\\l_] [\\l\\d]* ; \r\n";
+            string testInput = "leading {delimited}x";
+            var errors = new List<Error>();
+            var grammar = (new SupergrammarSpanner()).GetGrammar(testGrammarText, errors);
+            Assert.IsEmpty(errors);
+            var formatDef = grammar.FindDefinitionByName("format");
+            var textDef = grammar.FindDefinitionByName("text");
+            var paramDef = grammar.FindDefinitionByName("param");
+            var nameDef = grammar.FindDefinitionByName("name");
+            var spanner = new Spanner(formatDef);
+
+            var spans = spanner.Process(testInput, errors);
+
+            Assert.IsNotNull(errors);
+            Assert.AreEqual(0, errors.Count);
+            Assert.IsNotNull(spans);
+            Assert.AreEqual(1, spans.Length);
+            var span = spans[0];
+            Assert.AreSame(formatDef, span.DefRef);
+            Assert.AreEqual(3, span.Subspans.Count);
+            var s0 = span.Subspans[0];
+            var s1 = span.Subspans[1];
+            var s2 = span.Subspans[2];
+            Assert.AreSame(textDef, s0.DefRef);
+            Assert.AreEqual("leading", s0.CollectValue());
+
+            Assert.AreSame(paramDef, s1.DefRef);
+            Assert.AreEqual(3, s1.Subspans.Count);
+            var s10 = s1.Subspans[0];
+            var s11 = s1.Subspans[1];
+            var s12 = s1.Subspans[2];
+            Assert.AreSame(paramDef.Nodes[0], s10.Node);
+            Assert.IsNull(s10.DefRef);
+            Assert.AreEqual(0, s10.Subspans.Count);
+            Assert.AreEqual("{", s10.Value);
+            Assert.AreSame(nameDef, s11.DefRef);
+            Assert.AreEqual("delimited", s11.CollectValue());
+            Assert.AreSame(paramDef.Nodes[0], s12.Node);
+            Assert.IsNull(s12.DefRef);
+            Assert.AreEqual(0, s12.Subspans.Count);
+            Assert.AreEqual("}", s12.Value);
+
+            Assert.AreSame(textDef, s2.DefRef);
+            Assert.AreEqual("x", s2.CollectValue());
+        }
     }
 }
 
