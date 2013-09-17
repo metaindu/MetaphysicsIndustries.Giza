@@ -14,6 +14,20 @@ namespace MetaphysicsIndustries.Giza
             public ExpressionItem ExpressionItem;
             public DefinitionExpression DefinitionInfo;
             public string DefinitionInfoName { get { return DefinitionInfo.Name; } }
+            public string ReferencedDefinitionName
+            {
+                get
+                {
+                    if (ExpressionItem is DefRefSubExpression)
+                    {
+                        return (ExpressionItem as DefRefSubExpression).DefinitionName;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
             public int Index = -1;
 
             public override string Description
