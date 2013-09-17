@@ -73,7 +73,7 @@ namespace MetaphysicsIndustries.Giza
             public static readonly ErrorType AtomicInNonTokenDefinition =
                 new ErrorType(
                     name:"AtomicInNonTokenDefinition",
-                    descriptionFormat:"Directive 'atomic' applied to the non-token definition \"{DefinitionInfoName}\"",
+                    descriptionFormat:"Directive 'atomic' applied to the non-token definition \"{DefinitionInfoName}\" ",
                     isWarning:true);
             public static readonly ErrorType MindWhitespaceInNonTokenDefinition =       new ErrorType(name:"MindWhitespaceInNonTokenDefinition",        isWarning:true);
             public static readonly ErrorType AtomicInTokenDefinition =                  new ErrorType(name:"AtomicInTokenDefinition",                   isWarning:true);
