@@ -28,9 +28,13 @@ namespace MetaphysicsIndustries.Giza
             {
                 throw new FormatException("format is invalid");
             }
-            if (spans.Length != 1)
+            if (spans.Length < 1)
             {
                 throw new InvalidOperationException("format produced no spans");
+            }
+            if (spans.Length > 1)
+            {
+                throw new FormatException("format is ambiguous");
             }
 
             var span = spans[0];
