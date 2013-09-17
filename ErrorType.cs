@@ -5,7 +5,7 @@ namespace MetaphysicsIndustries.Giza
 {
     public struct ErrorType : IEquatable<ErrorType>
     {
-        public ErrorType(string name, string descriptionFormat="{0}", bool isWarning=false)
+        public ErrorType(string name, string descriptionFormat="{Name}", bool isWarning=false)
         {
             if (string.IsNullOrEmpty(name)) throw new ArgumentNullException("name");
             if (descriptionFormat == null) throw new ArgumentNullException("descriptionFormat");

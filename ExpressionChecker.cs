@@ -13,12 +13,18 @@ namespace MetaphysicsIndustries.Giza
             public Expression Expression;
             public ExpressionItem ExpressionItem;
             public DefinitionExpression DefinitionInfo;
-            public int Index;
+            public string DefinitionInfoName { get { return DefinitionInfo.Name; } }
+            public int Index = -1;
 
             public override string Description
             {
                 get
                 {
+                    if (ErrorType.DescriptionFormat != "{Name}")
+                    {
+                        return base.Description;
+                    }
+
                     StringBuilder sb = new StringBuilder();
                     sb.Append(ErrorType.ToString());
 
@@ -64,7 +70,11 @@ namespace MetaphysicsIndustries.Giza
             public static readonly ErrorType TokenizedReferencesNonToken =              new ErrorType(name:"SubtokenReferencesNonToken");
             public static readonly ErrorType TokenizedReferencesToken =                 new ErrorType(name:"TokenReferencesNonToken");
             public static readonly ErrorType TokenizedReferencesComment =               new ErrorType(name:"SubtokenReferencesToken");
-            public static readonly ErrorType AtomicInNonTokenDefinition =               new ErrorType(name:"AtomicInNonTokenDefinition",                isWarning:true);
+            public static readonly ErrorType AtomicInNonTokenDefinition =
+                new ErrorType(
+                    name:"AtomicInNonTokenDefinition",
+                    descriptionFormat:"Directive 'atomic' applied to the non-token definition \"{DefinitionInfoName}\"",
+                    isWarning:true);
             public static readonly ErrorType MindWhitespaceInNonTokenDefinition =       new ErrorType(name:"MindWhitespaceInNonTokenDefinition",        isWarning:true);
             public static readonly ErrorType AtomicInTokenDefinition =                  new ErrorType(name:"AtomicInTokenDefinition",                   isWarning:true);
             public static readonly ErrorType AtomicInCommentDefinition =                new ErrorType(name:"AtomicInCommentDefinition",                 isWarning:true);
