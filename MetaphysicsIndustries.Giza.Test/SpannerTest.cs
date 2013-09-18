@@ -371,7 +371,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var s1 = span.Subspans[1];
             var s2 = span.Subspans[2];
             Assert.AreSame(textDef, s0.DefRef);
-            Assert.AreEqual("leading", s0.CollectValue());
+            Assert.AreEqual("leading ", s0.CollectValue());
 
             Assert.AreSame(paramDef, s1.DefRef);
             Assert.AreEqual(3, s1.Subspans.Count);
@@ -384,7 +384,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual("{", s10.Value);
             Assert.AreSame(nameDef, s11.DefRef);
             Assert.AreEqual("delimited", s11.CollectValue());
-            Assert.AreSame(paramDef.Nodes[0], s12.Node);
+            Assert.AreSame(paramDef.Nodes[4], s12.Node);
             Assert.IsNull(s12.DefRef);
             Assert.AreEqual(0, s12.Subspans.Count);
             Assert.AreEqual("}", s12.Value);
