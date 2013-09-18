@@ -85,6 +85,7 @@
     <Compile Include="Error.cs" />
     <Compile Include="StringFormatterGrammar.cs" />
     <Compile Include="StringFormatter.cs" />
+    <Compile Include="ExpressionChecker.EcError.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
