@@ -172,7 +172,25 @@ namespace MetaphysicsIndustries.Giza
 
                             if (cur.Node == implicitNode)
                             {
-                                ends.Enqueue(cur);
+                                if (k < input.Length - 1 || !mustUseAllInput)
+                                {
+                                    ends.Enqueue(cur);
+                                }
+                                else
+                                {
+                                    int line;
+                                    int column;
+                                    GetPosition(input, k, out line, out column);
+                                    rejects.Enqueue(pair2(cur,
+                                                          new SpannerError {
+                                        ErrorType=SpannerError.ExcessRemainingInput,
+                                        Line=line,
+                                        Column=column,
+                                        Index=k,
+                                        PreviousNode=cur.Node,
+                                        OffendingCharacter=input[k],
+                                    }));
+                                }
                             }
                             else if (cur.Node.IsEndNode)
                             {
