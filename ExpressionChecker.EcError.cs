@@ -73,7 +73,7 @@ namespace MetaphysicsIndustries.Giza
             //  grammar errors - SupergrammarSpanner can emit expression trees
             //      from grammar files with these errors.
             public static readonly ErrorType DuplicateDefinitionName                    = new ErrorType(name:"DuplicateDefinitionName",                                 descriptionFormat:"The definition '{DefinitionInfoName}' has already been defined.");
-            public static readonly ErrorType AllItemsSkippable                          = new ErrorType(name:"AllItemsSkippable",                                       descriptionFormat:"{Name}");
+            public static readonly ErrorType AllItemsSkippable                          = new ErrorType(name:"AllItemsSkippable",                                       descriptionFormat:"All Items within an expression are skippable, in definition '{DefinitionInfoName}'.");
             public static readonly ErrorType SkippableOrexprExpressions                 = new ErrorType(name:"SkippableOrexprExpressions",                              descriptionFormat:"One of the expressions within an OrExpression in ");
             public static readonly ErrorType DefRefNameNotFound                         = new ErrorType(name:"DefRefNameNotFound",                                      descriptionFormat:"Definition '{DefinitionInfoName}' references a definition '{ReferencedDefinitionName}' which is not defined.");
 
