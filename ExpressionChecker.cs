@@ -253,7 +253,7 @@ namespace MetaphysicsIndustries.Giza
             if (visitedExprs.Contains(expr))
             {
                 errors.Add(new EcError {
-                    ErrorType=EcError.ReusedExpressionOrItem,
+                    ErrorType=EcError.ReusedExpression,
                     Expression=expr,
                     DefinitionInfo=def,
                 });
@@ -317,7 +317,7 @@ namespace MetaphysicsIndustries.Giza
             if (visitedItems.Contains(item))
             {
                 errors.Add(new EcError {
-                    ErrorType=EcError.ReusedExpressionOrItem,
+                    ErrorType=EcError.ReusedExpressionItem,
                     ExpressionItem=item,
                     DefinitionInfo=def,
                 });
