@@ -157,7 +157,7 @@ namespace giza
             string gfile;
             if (grammarFilename == "-")
             {
-                gfile = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
+                gfile = Console.In.ReadToEnd();
             }
             else
             {
