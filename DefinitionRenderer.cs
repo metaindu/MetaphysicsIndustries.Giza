@@ -177,8 +177,8 @@ namespace MetaphysicsIndustries.Giza
         {
             string s2 = s;
 
-            s2 = s2.Replace("\"", "\\\"");
             s2 = s2.Replace("\\", "\\\\");
+            s2 = s2.Replace("\"", "\\\"");
             s2 = s2.Replace("\r", "\\r");
             s2 = s2.Replace("\n", "\\n");
             s2 = s2.Replace("\t", "\\t");
