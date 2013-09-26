@@ -166,54 +166,58 @@ namespace giza
             var errors = new List<Error>();
             var dis = sgs.GetExpressions(gfile, errors);
 
-            if (errors.Count > 0)
+            if (!errors.ContainsNonWarnings())
+            {
+                List<Error> errors2;
+
+                var ec = new ExpressionChecker();
+                if (tokenized)
+                {
+                    errors2 = ec.CheckDefinitionInfosForParsing(dis);
+                }
+                else
+                {
+                    errors2 = ec.CheckDefinitionInfos(dis);
+                }
+
+                errors.AddRange(errors2);
+            }
+
+            if (errors.ContainsNonWarnings())
             {
                 Console.WriteLine("There were errors in the grammar:");
-                foreach (var error in errors)
+            }
+            else if (errors.ContainsWarnings())
+            {
+                Console.WriteLine("There were warnings in the grammar:");
+            }
+
+            foreach (var error in errors)
+            {
+                Console.Write("  ");
+                Console.WriteLine(error.Description);
+            }
+
+            if (!errors.ContainsNonWarnings())
+            {
+                IEnumerable<Definition> defs;
+                if (tokenized)
                 {
-                    Console.WriteLine(error.Description);
+                    TokenizedGrammarBuilder tgb = new TokenizedGrammarBuilder();
+                    var g = tgb.BuildTokenizedGrammar(dis);
+                    defs = g.Definitions;
                 }
-                return;
-            }
-
-            var ec = new ExpressionChecker();
-            if (tokenized)
-            {
-                errors = ec.CheckDefinitionInfosForParsing(dis);
-            }
-            else
-            {
-                errors = ec.CheckDefinitionInfos(dis);
-            }
-
-            if (errors != null && errors.Count > 0)
-            {
-                Console.WriteLine("There are errors in the grammar:");
-                foreach (var err in errors)
+                else
                 {
-                    Console.Write("  ");
-                    Console.WriteLine(err.Description);
+                    DefinitionBuilder db = new DefinitionBuilder();
+                    defs = db.BuildDefinitions(dis);
                 }
-                return;
-            }
 
-            IEnumerable<Definition> defs;
-            if (tokenized)
-            {
-                TokenizedGrammarBuilder tgb = new TokenizedGrammarBuilder();
-                var g = tgb.BuildTokenizedGrammar(dis);
-                defs = g.Definitions;
-            }
-            else
-            {
-                DefinitionBuilder db = new DefinitionBuilder();
-                defs = db.BuildDefinitions(dis);
-            }
-
-            Console.WriteLine("There are {0} definitions in the grammar:", defs.Count());
-            foreach (var def in defs)
-            {
-                Console.WriteLine("  {0}", def.Name);
+                Console.WriteLine("There are {0} definitions in the grammar:", defs.Count());
+                foreach (var def in defs)
+                {
+                    Console.WriteLine("  {0}", def.Name);
+                }
             }
         }
 
