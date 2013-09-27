@@ -19,15 +19,15 @@ namespace MetaphysicsIndustries.Giza.Test
                 Value="'"
             });
             span.Subspans.Add(new Span {
-                Node=sg.node_literal_1__005E__005C__005C__0027_,
+                Node=sg.node_literal_1__005E__0027__005C__005C_,
                 Value="a"
             });
             span.Subspans.Add(new Span {
-                Node=sg.node_literal_1__005E__005C__005C__0027_,
+                Node=sg.node_literal_1__005E__0027__005C__005C_,
                 Value="b"
             });
             span.Subspans.Add(new Span {
-                Node=sg.node_literal_1__005E__005C__005C__0027_,
+                Node=sg.node_literal_1__005E__0027__005C__005C_,
                 Value="c"
             });
             span.Subspans.Add(new Span {
@@ -52,15 +52,15 @@ namespace MetaphysicsIndustries.Giza.Test
                 Node=sg.node_subexpr_1_literal,
             };
             span.Subspans.Add(new Span {
-                Node=sg.node_literal_1__005E__005C__005C__0027_,
+                Node=sg.node_literal_1__005E__0027__005C__005C_,
                 Value="a"
             });
             span.Subspans.Add(new Span {
-                Node=sg.node_literal_1__005E__005C__005C__0027_,
+                Node=sg.node_literal_1__005E__0027__005C__005C_,
                 Value="b"
             });
             span.Subspans.Add(new Span {
-                Node=sg.node_literal_1__005E__005C__005C__0027_,
+                Node=sg.node_literal_1__005E__0027__005C__005C_,
                 Value="c"
             });
             span.Subspans.Add(new Span {
@@ -93,15 +93,15 @@ namespace MetaphysicsIndustries.Giza.Test
                 Value="'"
             });
             span.Subspans.Add(new Span {
-                Node=sg.node_literal_1__005E__005C__005C__0027_,
+                Node=sg.node_literal_1__005E__0027__005C__005C_,
                 Value="a"
             });
             span.Subspans.Add(new Span {
-                Node=sg.node_literal_1__005E__005C__005C__0027_,
+                Node=sg.node_literal_1__005E__0027__005C__005C_,
                 Value="b"
             });
             span.Subspans.Add(new Span {
-                Node=sg.node_literal_1__005E__005C__005C__0027_,
+                Node=sg.node_literal_1__005E__0027__005C__005C_,
                 Value="c"
             });
             SpanChecker sc = new SpanChecker();
@@ -159,15 +159,15 @@ namespace MetaphysicsIndustries.Giza.Test
                 Value="'"
             });
             span.Subspans.Add(new Span {
-                Node=sg.node_literal_1__005E__005C__005C__0027_,
+                Node=sg.node_literal_1__005E__0027__005C__005C_,
                 Value="a"
             });
             span.Subspans.Add(new Span {
-                Node=sg.node_charclass_1__005E__005C__005C__005C__005B__005C__005D_,
+                Node=sg.node_charclass_1__005E__005C__005B__005C__005C__005C__005D_,
                 Value="b"
             });
             span.Subspans.Add(new Span {
-                Node=sg.node_literal_1__005E__005C__005C__0027_,
+                Node=sg.node_literal_1__005E__0027__005C__005C_,
                 Value="c"
             });
             span.Subspans.Add(new Span {
@@ -291,15 +291,15 @@ namespace MetaphysicsIndustries.Giza.Test
                 Value="'"
             });
             span.Subspans.Add(new Span {
-                Node=sg.node_literal_1__005E__005C__005C__0027_,
+                Node=sg.node_literal_1__005E__0027__005C__005C_,
                 Value="a"
             });
             span.Subspans.Add(new Span {
-                Node=sg.node_charclass_1__005E__005C__005C__005C__005B__005C__005D_,
+                Node=sg.node_charclass_1__005E__005C__005B__005C__005C__005C__005D_,
                 Value="b"
             });
             span.Subspans.Add(new Span {
-                Node=sg.node_literal_1__005E__005C__005C__0027_,
+                Node=sg.node_literal_1__005E__0027__005C__005C_,
                 Value="c"
             });
             span.Subspans.Add(span);

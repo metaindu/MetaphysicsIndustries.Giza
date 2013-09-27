@@ -159,7 +159,7 @@ namespace MetaphysicsIndustries.Giza
                 {
                     ch = GetUnicodeChar(grammar, sub);
                 }
-                else if (sub.Node == grammar.node_literal_1__005E__005C__005C__0027_) // [^\\']
+                else if (sub.Node == grammar.node_literal_1__005E__0027__005C__005C_) // [^\\']
                 {
                     ch = sub.Value[0];
                 }
@@ -199,7 +199,7 @@ namespace MetaphysicsIndustries.Giza
             {
                 Span sub = span.Subspans[i];
 
-                if (sub.Node == grammar.node_charclass_1__005E__005C__005C__005C__005B__005C__005D_) // [^\\\[\]]
+                if (sub.Node == grammar.node_charclass_1__005E__005C__005B__005C__005C__005C__005D_) // [^\\\[\]]
                 {
                     items.Add(sub.Value[0]);
                 }
@@ -207,7 +207,7 @@ namespace MetaphysicsIndustries.Giza
                 {
                     items.Add(sub.Value[0]);
                 }
-                else if (sub.Node == grammar.node_charclass_3_wldsrnt_005C__005C__005C__005B__005C__005D_) // [wldsrnt\\\[\]]
+                else if (sub.Node == grammar.node_charclass_3__005C__005B__005C__005C__005C__005D_dlnrstw) // [wldsrnt\\\[\]]
                 {
                     items.Add(sub.Value[0]);
                 }
