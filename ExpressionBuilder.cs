@@ -9,7 +9,7 @@ namespace MetaphysicsIndustries.Giza
         public DefinitionExpression[] BuildExpressions(Supergrammar grammar, Span span)
         {
             if (!(span.Node is DefRefNode) ||
-                (span.Node as DefRefNode).DefRef != grammar.def_0_grammar)
+                (span.Node as DefRefNode).DefRef != grammar.def_grammar)
             {
                 throw new InvalidOperationException();
             }

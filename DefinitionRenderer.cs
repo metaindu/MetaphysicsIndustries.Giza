@@ -22,7 +22,7 @@ namespace MetaphysicsIndustries.Giza
 
             foreach (Definition def in defs)
             {
-                string name = string.Format("def_{0}_{1}", def.ID, RenderIdentifier(def.Name));
+                string name = string.Format("def_{0}", RenderIdentifier(def.Name));
 
                 defnames[def] = name;
 

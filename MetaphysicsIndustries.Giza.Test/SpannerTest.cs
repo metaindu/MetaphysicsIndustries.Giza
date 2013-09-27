@@ -39,7 +39,7 @@ namespace MetaphysicsIndustries.Giza.Test
                 "<whitespace, atomic> id-item2 = 'item2'; \r\n";
 
             Supergrammar sg = new Supergrammar();
-            Spanner s = new Spanner(sg.def_0_grammar);
+            Spanner s = new Spanner(sg.def_grammar);
             var errors = new List<Error>();
             Span[] spans = s.Process(testGrammarText, errors);
 
