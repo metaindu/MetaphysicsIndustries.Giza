@@ -392,6 +392,31 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreSame(textDef, s2.DefRef);
             Assert.AreEqual("x", s2.CollectValue());
         }
+
+        [Test]
+        public void TestAmbiguityAtEndOfAtomicDef()
+        {
+            // setup
+            var input =
+                "line1,fielda,fieldb\n"+
+                "line2,fielda,fieldb,fieldc\n"+
+                "line3,fielda,fieldb\n";
+            var grammar =
+                "<mind whitespace, atomic>\nfile = record (('\\r'? '\\n')+ record?)* ;\n\n" +
+                "<mind whitespace>\nrecord = field (',' field?)* ;\n\n" +
+                "<mind whitespace>\nfield = [\\d\\l]+;\n\n";
+            var errors = new List<Error>();
+            var g = (new SupergrammarSpanner()).GetGrammar(grammar, errors);
+            Assert.IsEmpty(errors);
+            var spanner = new Spanner(g.FindDefinitionByName("file"));
+
+            // action
+            var spans = spanner.Process(input, errors);
+
+            // assertions
+            Assert.IsNotNull(spans);
+            Assert.AreEqual(1, spans.Length);
+        }
     }
 }
 
