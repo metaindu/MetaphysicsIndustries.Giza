@@ -36,6 +36,8 @@ tokenized parsing
                 changes names from "$implicit literal value" to "$implicit ignore case literal value"
                 changes names from "$implicit charclass \dabcdef" to "$implicit ignore case charclass \dabcdef"
 
+key.snk !
+
 resilience
     full analysis and tests for Spanner, Tokenizer, Parser
     full analysis and tests for other classes
