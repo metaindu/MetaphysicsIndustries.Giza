@@ -185,11 +185,11 @@ namespace giza
 
             if (errors.ContainsNonWarnings())
             {
-                Console.WriteLine("There were errors in the grammar:");
+                Console.WriteLine("There are errors in the grammar:");
             }
             else if (errors.ContainsWarnings())
             {
-                Console.WriteLine("There were warnings in the grammar:");
+                Console.WriteLine("There are warnings in the grammar:");
             }
 
             foreach (var error in errors)
@@ -326,36 +326,50 @@ namespace giza
 
             SupergrammarSpanner spanner = new SupergrammarSpanner();
             string grammarFile = File.ReadAllText(grammarFilename);
-            var errors = new List<Error>();
-            var dis = spanner.GetExpressions(grammarFile, errors);
+            var grammarErrors = new List<Error>();
+            var dis = spanner.GetExpressions(grammarFile, grammarErrors);
 
-            if (errors != null && errors.Count > 0)
+            if (!grammarErrors.ContainsNonWarnings())
             {
-                Console.WriteLine("There are errors in the grammar:");
-                foreach (var err in errors)
-                {
-                    Console.Write("  ");
-                    Console.WriteLine(err.Description);
-                }
-                return;
+                var ec = new ExpressionChecker();
+                var errors2 = ec.CheckDefinitionInfosForParsing(dis);
+                grammarErrors.AddRange(errors2);
             }
 
-            var ec = new ExpressionChecker();
-            errors = ec.CheckDefinitionInfosForParsing(dis);
-
-            if (errors != null && errors.Count > 0)
+            Grammar g;
+            if (grammarErrors.ContainsNonWarnings())
             {
                 Console.WriteLine("There are errors in the grammar:");
-                foreach (var err in errors)
-                {
-                    Console.Write("  ");
-                    Console.WriteLine(err.Description);
-                }
+            }
+            else if (grammarErrors.ContainsWarnings())
+            {
+                Console.WriteLine("There are warnings in the grammar:");
+            }
+
+            foreach (var err in grammarErrors)
+            {
+                Console.WriteLine("  {0}", err.Description);
+            }
+
+            if (grammarErrors.ContainsNonWarnings())
+            {
                 return;
             }
 
             var tgb = new TokenizedGrammarBuilder();
-            var g = tgb.BuildTokenizedGrammar(dis);
+            g = tgb.BuildTokenizedGrammar(dis);
+
+            var startDefinition = g.FindDefinitionByName(startSymbol);
+            if (startDefinition == null)
+            {
+                Console.WriteLine("There is no defintion named \"{0}\".", startSymbol);
+                Console.WriteLine("There are {0} definitions in the grammar:", g.Definitions.Count());
+                foreach (var def in g.Definitions)
+                {
+                    Console.WriteLine("  {0}", def.Name);
+                }
+                return;
+            }
 
             string input;
             if (inputFilename == "-")
@@ -364,32 +378,52 @@ namespace giza
             }
             else
             {
-                input = File.ReadAllText(inputFilename);
-            }
-
-            var parser = new Parser(g.FindDefinitionByName(startSymbol));
-            errors = new List<Error>();
-            Span[] ss = parser.Parse(input, errors);
-            //if (error != null)
-            //{
-            //    Console.WriteLine("There was an error in the input: {0}", error);
-            //}
-            //else 
-            if (errors.ContainsNonWarnings())
-            {
-                Console.WriteLine("There are errors in the input:");
-                foreach (var err in errors)
+                try
                 {
-                    Console.WriteLine("  {0}", err.Description);
+                    input = File.ReadAllText(inputFilename);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("There was an error while trying to open the input file:");
+                    Console.WriteLine("  {0}", e.Message);
+                    if (verbose)
+                    {
+                        Console.WriteLine("  {0}", e.ToString());
+                    }
+                    return;
                 }
             }
-            else if (ss.Length < 1)
+
+            var parser = new Parser(startDefinition);
+            var inputErrors = new List<Error>();
+            Span[] ss = parser.Parse(input, inputErrors);
+
+            if (inputErrors.ContainsNonWarnings())
             {
-                Console.WriteLine("No valid parses.");
+                Console.WriteLine("There are errors in the input:");
+            }
+            else if (inputErrors.ContainsWarnings())
+            {
+                Console.WriteLine("There are warnings in the input:");
+            }
+
+            foreach (var err in inputErrors)
+            {
+                Console.WriteLine("  {0}", err.Description);
+            }
+
+            if (inputErrors.ContainsNonWarnings())
+            {
+                return;
+            }
+
+            if (ss.Length < 1)
+            {
+                Console.WriteLine("There are no valid parses of the input.");
             }
             else if (ss.Length > 1)
             {
-                Console.WriteLine("{0} valid parses.", ss.Length);
+                Console.WriteLine("There are {0} valid parses of the input.", ss.Length);
                 //foreach (Span s in ss)
                 //{
                 //    Console.WriteLine(s.RenderSpanHierarchy());
@@ -397,7 +431,7 @@ namespace giza
             }
             else
             {
-                Console.WriteLine("1 valid parse.");
+                Console.WriteLine("There is 1 valid parse of the input.");
                 if (verbose)
                 {
                     Console.WriteLine(ss[0].RenderSpanHierarchy());
