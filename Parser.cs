@@ -115,7 +115,7 @@ namespace MetaphysicsIndustries.Giza
 
             public bool EndOfInput;
             public int EndOfInputIndex;
-            public Token[] Tokens;
+            public IEnumerable<Token> Tokens;
             public List<Error> TokenizationErrors;
 
             public List<NodeMatchStackPair> Branches;
@@ -353,18 +353,19 @@ namespace MetaphysicsIndustries.Giza
                             {
                                 int line;
                                 int column;
+                                var offendingToken = info.Tokens.First();
 
-                                Spanner.GetPosition(input, info.Tokens[0].StartIndex,
+                                Spanner.GetPosition(input, offendingToken.StartIndex,
                                                     out line, out column);
 
                                 err = new ParserError {
                                     ErrorType = ParserError.InvalidToken,
                                     LastValidMatchingNode = info.Source.Node,
-                                    OffendingToken = info.Tokens[0],
+                                    OffendingToken = offendingToken,
                                     ExpectedNodes = info.Source.Node.NextNodes,
                                     Line = line,
                                     Column = column,
-                                    Index = info.Tokens[0].StartIndex,
+                                    Index = offendingToken.StartIndex,
                                 };
                             }
 

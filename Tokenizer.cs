@@ -53,10 +53,10 @@ namespace MetaphysicsIndustries.Giza
             public int LastIndex;
         }
 
-        public Token[] GetTokensAtLocation(string input, int index, 
-                                           List<Error> errors, 
-                                           out bool endOfInput, 
-                                           out int endOfInputIndex)
+        public IEnumerable<Token> GetTokensAtLocation(string input, int index,
+                                                       List<Error> errors,
+                                                       out bool endOfInput,
+                                                       out int endOfInputIndex)
         {
             var tokenizations = new Queue<TokenizationByIndex>();
             var startIndexes = new Queue<int>();

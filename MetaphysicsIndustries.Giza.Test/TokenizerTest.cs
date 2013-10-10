@@ -1,6 +1,7 @@
 using System;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MetaphysicsIndustries.Giza.Test
 {
@@ -26,32 +27,27 @@ namespace MetaphysicsIndustries.Giza.Test
             Definition item2Def = testGrammar.FindDefinitionByName("id-item2");
 
             Tokenizer t = new Tokenizer(testGrammar);
-            Token[] tokens;
             bool endOfInput;
             int lastIndex;
-            tokens = t.GetTokensAtLocation("item1 item2", 0, errors,
+            var tokens = t.GetTokensAtLocation("item1 item2", 0, errors,
                                            out endOfInput, out lastIndex);
             Assert.IsEmpty(errors);
             Assert.IsFalse(endOfInput);
-            Assert.AreEqual(1, tokens.Length);
-            if (tokens.Length > 0)
-            {
-                Assert.AreEqual(item1Def, tokens[0].Definition);
-                Assert.AreEqual(0, tokens[0].StartIndex);
-                Assert.AreEqual(5, tokens[0].Length);
-            }
+            Assert.AreEqual(1, tokens.Count());
+            var first = tokens.First();
+            Assert.AreEqual(item1Def, first.Definition);
+            Assert.AreEqual(0, first.StartIndex);
+            Assert.AreEqual(5, first.Length);
 
             tokens = t.GetTokensAtLocation("item1 item2", 5, errors,
                                            out endOfInput, out lastIndex);
             Assert.IsEmpty(errors);
             Assert.IsFalse(endOfInput);
-            Assert.AreEqual(1, tokens.Length);
-            if (tokens.Length > 0)
-            {
-                Assert.AreEqual(item2Def, tokens[0].Definition);
-                Assert.AreEqual(6, tokens[0].StartIndex);
-                Assert.AreEqual(5, tokens[0].Length);
-            }
+            Assert.AreEqual(1, tokens.Count());
+            first = tokens.First();
+            Assert.AreEqual(item2Def, first.Definition);
+            Assert.AreEqual(6, first.StartIndex);
+            Assert.AreEqual(5, first.Length);
         }
 
         [Test()]
@@ -79,42 +75,41 @@ namespace MetaphysicsIndustries.Giza.Test
             Definition operDef = testGrammar.FindDefinitionByName("oper");
 
             Tokenizer t = new Tokenizer(testGrammar);
-            Token[] tokens;
             bool endOfInput;
             int lastIndex;
 
-            tokens = t.GetTokensAtLocation(testInput, 0, errors,
+            var tokens = t.GetTokensAtLocation(testInput, 0, errors,
                                            out endOfInput, out lastIndex);
             Assert.IsEmpty(errors);
             Assert.IsFalse(endOfInput);
-            Assert.AreEqual(1, tokens.Length);
-            if (tokens.Length > 0)
-            {
-                Assert.AreEqual(varrefDef, tokens[0].Definition);
-                Assert.AreEqual(0, tokens[0].StartIndex);
-                Assert.AreEqual(1, tokens[0].Length);
-            }
+            Assert.AreEqual(1, tokens.Count());
+            var first = tokens.First();
+            Assert.AreEqual(varrefDef, first.Definition);
+            Assert.AreEqual(0, first.StartIndex);
+            Assert.AreEqual(1, first.Length);
 
             tokens = t.GetTokensAtLocation(testInput, 1, errors,
                                            out endOfInput, out lastIndex);
             Assert.IsEmpty(errors);
             Assert.IsFalse(endOfInput);
-            Assert.AreEqual(2, tokens.Length);
-            Assert.IsTrue(tokens[0].Definition == plusplusDef || tokens[0].Definition == operDef);
-            Assert.IsTrue(tokens[1].Definition == plusplusDef || tokens[1].Definition == operDef);
-            Assert.IsFalse(tokens[0].Definition == tokens[1].Definition);
+            Assert.AreEqual(2, tokens.Count());
+            first = tokens.First();
+            var second = tokens.ElementAt(1);
+            Assert.IsTrue(first.Definition == plusplusDef || first.Definition == operDef);
+            Assert.IsTrue(second.Definition == plusplusDef || second.Definition == operDef);
+            Assert.IsFalse(first.Definition == second.Definition);
 
             Token plusplusToken;
             Token operToken;
-            if (tokens[0].Definition == plusplusDef)
+            if (first.Definition == plusplusDef)
             {
-                plusplusToken = tokens[0];
-                operToken = tokens[1];
+                plusplusToken = first;
+                operToken = second;
             }
             else
             {
-                plusplusToken = tokens[1];
-                operToken = tokens[0];
+                plusplusToken = second;
+                operToken = first;
             }
 
             Assert.AreEqual(1, plusplusToken.StartIndex);
@@ -145,34 +140,33 @@ namespace MetaphysicsIndustries.Giza.Test
             Definition operDef = testGrammar.FindDefinitionByName("oper");
 
             Tokenizer t = new Tokenizer(testGrammar);
-            Token[] tokens;
             bool endOfInput;
             int lastIndex;
 
-            tokens = t.GetTokensAtLocation(testInput, 0, errors,
+            var tokens = t.GetTokensAtLocation(testInput, 0, errors,
                                            out endOfInput, out lastIndex);
             Assert.IsEmpty(errors);
             Assert.IsFalse(endOfInput);
-            Assert.AreEqual(1, tokens.Length);
-            if (tokens.Length > 0)
-            {
-                Assert.AreEqual(itemDef, tokens[0].Definition);
-                Assert.AreEqual(0, tokens[0].StartIndex);
-                Assert.AreEqual(1, tokens[0].Length);
-            }
+            Assert.AreEqual(1, tokens.Count());
+            var first = tokens.First();
+            Assert.AreEqual(itemDef, first.Definition);
+            Assert.AreEqual(0, first.StartIndex);
+            Assert.AreEqual(1, first.Length);
 
             tokens = t.GetTokensAtLocation(testInput, 1, errors,
                                            out endOfInput, out lastIndex);
             Assert.IsEmpty(errors);
             Assert.IsFalse(endOfInput);
-            Assert.AreEqual(2, tokens.Length);
-            Assert.AreEqual(2, tokens[0].StartIndex);
-            Assert.AreEqual(2, tokens[1].StartIndex);
-            Assert.AreEqual(operDef, tokens[0].Definition);
-            Assert.AreEqual(operDef, tokens[1].Definition);
-            Assert.IsTrue(tokens[0].Length == 1 || tokens[0].Length == 2);
-            Assert.IsTrue(tokens[1].Length == 1 || tokens[1].Length == 2);
-            Assert.IsTrue(tokens[0].Length != tokens[1].Length);
+            Assert.AreEqual(2, tokens.Count());
+            first = tokens.First();
+            var second = tokens.ElementAt(1);
+            Assert.AreEqual(2, first.StartIndex);
+            Assert.AreEqual(2, second.StartIndex);
+            Assert.AreEqual(operDef, first.Definition);
+            Assert.AreEqual(operDef, second.Definition);
+            Assert.IsTrue(first.Length == 1 || first.Length == 2);
+            Assert.IsTrue(second.Length == 1 || second.Length == 2);
+            Assert.IsTrue(first.Length != second.Length);
         }
 
         [Test]
@@ -203,10 +197,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
             Assert.IsFalse(endOfInput);
             Assert.IsNotNull(tokens);
-            Assert.AreEqual(1, tokens.Length);
-            Assert.AreSame(operandDef, tokens[0].Definition);
-            Assert.AreEqual(0, tokens[0].StartIndex);
-            Assert.AreEqual(1, tokens[0].Length);
+            Assert.AreEqual(1, tokens.Count());
+            var first = tokens.First();
+            Assert.AreSame(operandDef, first.Definition);
+            Assert.AreEqual(0, first.StartIndex);
+            Assert.AreEqual(1, first.Length);
             Assert.AreEqual(-1, endOfInputIndex);
         }
 
@@ -238,10 +233,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
             Assert.IsFalse(endOfInput);
             Assert.IsNotNull(tokens);
-            Assert.AreEqual(1, tokens.Length);
-            Assert.AreSame(operatorDef, tokens[0].Definition);
-            Assert.AreEqual(2, tokens[0].StartIndex);
-            Assert.AreEqual(1, tokens[0].Length);
+            Assert.AreEqual(1, tokens.Count());
+            var first = tokens.First();
+            Assert.AreSame(operatorDef, first.Definition);
+            Assert.AreEqual(2, first.StartIndex);
+            Assert.AreEqual(1, first.Length);
             Assert.AreEqual(-1, endOfInputIndex);
         }
 
@@ -273,10 +269,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
             Assert.IsFalse(endOfInput);
             Assert.IsNotNull(tokens);
-            Assert.AreEqual(1, tokens.Length);
-            Assert.AreSame(operatorDef, tokens[0].Definition);
-            Assert.AreEqual(2, tokens[0].StartIndex);
-            Assert.AreEqual(1, tokens[0].Length);
+            Assert.AreEqual(1, tokens.Count());
+            var first = tokens.First();
+            Assert.AreSame(operatorDef, first.Definition);
+            Assert.AreEqual(2, first.StartIndex);
+            Assert.AreEqual(1, first.Length);
             Assert.AreEqual(-1, endOfInputIndex);
         }
 
@@ -308,10 +305,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
             Assert.IsFalse(endOfInput);
             Assert.IsNotNull(tokens);
-            Assert.AreEqual(1, tokens.Length);
-            Assert.AreSame(operandDef, tokens[0].Definition);
-            Assert.AreEqual(4, tokens[0].StartIndex);
-            Assert.AreEqual(1, tokens[0].Length);
+            Assert.AreEqual(1, tokens.Count());
+            var first = tokens.First();
+            Assert.AreSame(operandDef, first.Definition);
+            Assert.AreEqual(4, first.StartIndex);
+            Assert.AreEqual(1, first.Length);
             Assert.AreEqual(-1, endOfInputIndex);
         }
 
@@ -343,10 +341,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
             Assert.IsFalse(endOfInput);
             Assert.IsNotNull(tokens);
-            Assert.AreEqual(1, tokens.Length);
-            Assert.AreSame(operandDef, tokens[0].Definition);
-            Assert.AreEqual(4, tokens[0].StartIndex);
-            Assert.AreEqual(1, tokens[0].Length);
+            Assert.AreEqual(1, tokens.Count());
+            var first = tokens.First();
+            Assert.AreSame(operandDef, first.Definition);
+            Assert.AreEqual(4, first.StartIndex);
+            Assert.AreEqual(1, first.Length);
             Assert.AreEqual(-1, endOfInputIndex);
         }
 
@@ -376,7 +375,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
             Assert.IsTrue(endOfInput);
             Assert.IsNotNull(tokens);
-            Assert.AreEqual(0, tokens.Length);
+            Assert.AreEqual(0, tokens.Count());
             Assert.AreEqual(5, endOfInputIndex);
         }
 
@@ -599,10 +598,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsNotNull(errors);
             Assert.IsEmpty(errors);
             Assert.IsNotNull(tokens);
-            Assert.AreEqual(1, tokens.Length);
-            Assert.AreSame(strangeDef, tokens[0].Definition);
-            Assert.AreEqual(5, tokens[0].StartIndex);
-            Assert.AreEqual(9, tokens[0].Length);
+            Assert.AreEqual(1, tokens.Count());
+            var first = tokens.First();
+            Assert.AreSame(strangeDef, first.Definition);
+            Assert.AreEqual(5, first.StartIndex);
+            Assert.AreEqual(9, first.Length);
             Assert.AreEqual(16, lastIndex);
         }
 
@@ -645,11 +645,12 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsFalse(endOfInput);
             Assert.AreEqual(-1, endOfInputIndex);
             Assert.IsNotNull(tokens);
-            Assert.AreEqual(1, tokens.Length);
-            Assert.AreSame(itemDef, tokens[0].Definition);
-            Assert.AreEqual(0, tokens[0].StartIndex);
-            Assert.AreEqual(14, tokens[0].Length);
-            Assert.AreEqual("start-ABCD-end", tokens[0].Value);
+            Assert.AreEqual(1, tokens.Count());
+            var first = tokens.First();
+            Assert.AreSame(itemDef, first.Definition);
+            Assert.AreEqual(0, first.StartIndex);
+            Assert.AreEqual(14, first.Length);
+            Assert.AreEqual("start-ABCD-end", first.Value);
         }
     }
 }
