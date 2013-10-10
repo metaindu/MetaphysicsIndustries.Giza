@@ -384,7 +384,7 @@ namespace MetaphysicsIndustries.Giza
                     StripReject(reject.NodeMatch);
                 }
 
-                return MakeSpans(ends, input);
+                return MakeSpans(ends);
             }
 
             if (rejects.Count > 0)
@@ -435,7 +435,7 @@ namespace MetaphysicsIndustries.Giza
             return new Node[0];
         }
 
-        static Span[] MakeSpans(IEnumerable<NodeMatch> matchTreeLeaves, string input)
+        static Span[] MakeSpans(IEnumerable<NodeMatch> matchTreeLeaves)
         {
             var lists = new List<List<NodeMatch>>();
             foreach (NodeMatch leaf in matchTreeLeaves)
@@ -480,7 +480,7 @@ namespace MetaphysicsIndustries.Giza
                     {
                         var s = new Span();
                         s.Node = nm.Node;
-                        s.Value = input.Substring(nm.Token.StartIndex, nm.Token.Value.Length);
+                        s.Value = nm.Token.Value;
                         stack.Peek().Subspans.Add(s);
                     }
                 }
