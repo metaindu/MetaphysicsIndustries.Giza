@@ -32,7 +32,7 @@ namespace MetaphysicsIndustries.Giza
 
             foreach (var intoken in intokens)
             {
-                _tokens.Add(new Token { Value = null });
+                _tokens.Add(new Token(value: null));
             }
         }
 
@@ -69,11 +69,11 @@ namespace MetaphysicsIndustries.Giza
             NodeMatch tokenStart = tokenEnd.StartDef;
 
             int length = leaf.Index - tokenStart.Index + 1;
-            var token = new Token{
-                Definition = tokenEnd.Previous.Node.ParentDefinition,
-                StartIndex = tokenStart.Index,
-                Value = _intokens[index].Substring(tokenStart.Index, length),
-            };
+            var token = new Token(
+                definition: tokenEnd.Previous.Node.ParentDefinition,
+                startIndex: tokenStart.Index,
+                value: _intokens[index].Substring(tokenStart.Index, length)
+            );
 
             _tokens[index] = token;
 

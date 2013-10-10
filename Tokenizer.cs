@@ -174,11 +174,11 @@ namespace MetaphysicsIndustries.Giza
                     NodeMatch tokenStart = tokenEnd.StartDef;
 
                     int length = leaf.Index - tokenStart.Index + 1;
-                    tokens.Add(new Token{
-                        Definition = tokenEnd.Previous.Node.ParentDefinition,
-                        StartIndex = tokenStart.Index,
-                        Value = _input.Substring(tokenStart.Index, length),
-                    });
+                    tokens.Add(new Token(
+                        definition: tokenEnd.Previous.Node.ParentDefinition,
+                        startIndex: tokenStart.Index,
+                        value: _input.Substring(tokenStart.Index, length)
+                    ));
                 }
             }
 
