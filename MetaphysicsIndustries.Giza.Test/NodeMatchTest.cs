@@ -11,15 +11,15 @@ namespace MetaphysicsIndustries.Giza.Test
             Node node = new CharNode('c', "asdf");
             NodeMatch nm = new NodeMatch(node, NodeMatch.TransitionType.Follow, null);
             nm.Index = 123;
-            nm.Token = new Token { StartIndex = 3, Length = 3 };
+            nm.Token = new Token { StartIndex = 3, Value = "qwer" };
 
-            NodeMatch clone = nm.CloneWithNewToken(new Token { StartIndex = 5, Length = 2 });
+            NodeMatch clone = nm.CloneWithNewToken(new Token { StartIndex = 5, Value = "zxcv" });
 
             Assert.AreSame(node, clone.Node);
             Assert.AreEqual(NodeMatch.TransitionType.Follow, clone.Transition);
             Assert.AreEqual(123, clone.Index);
             Assert.AreEqual(5, clone.Token.StartIndex);
-            Assert.AreEqual(2, clone.Token.Length);
+            Assert.AreEqual("zxcv", clone.Token.Value);
         }
     }
 }

@@ -72,7 +72,6 @@ namespace MetaphysicsIndustries.Giza
             var token = new Token{
                 Definition = tokenEnd.Previous.Node.ParentDefinition,
                 StartIndex = tokenStart.Index,
-                Length = length,
                 Value = _intokens[index].Substring(tokenStart.Index, length),
             };
 

@@ -177,7 +177,6 @@ namespace MetaphysicsIndustries.Giza
                     tokens.Add(new Token{
                         Definition = tokenEnd.Previous.Node.ParentDefinition,
                         StartIndex = tokenStart.Index,
-                        Length = length,
                         Value = _input.Substring(tokenStart.Index, length),
                     });
                 }

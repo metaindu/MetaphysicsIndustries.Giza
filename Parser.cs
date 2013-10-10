@@ -217,7 +217,15 @@ namespace MetaphysicsIndustries.Giza
                     }
 
                     //get all tokens, starting at end of source's token
-                    var parseIndex = info.Source.Token.StartIndex + info.Source.Token.Length;
+                    int parseIndex;
+                    if (info.Source.Token.Value != null)
+                    {
+                        parseIndex = info.Source.Token.StartIndex + info.Source.Token.Value.Length;
+                    }
+                    else
+                    {
+                        parseIndex = info.Source.Token.StartIndex;
+                    }
                     info.TokenizationErrors = new List<Error>();
                     info.Tokens = tokenSource.GetTokensAtLocation(
                         parseIndex,
@@ -255,7 +263,6 @@ namespace MetaphysicsIndustries.Giza
                             err.Line = se.Line;
                             err.Index = se.Index;
                             err.OffendingToken.StartIndex = se.Index;
-                            err.OffendingToken.Length = 1;
                             err.OffendingToken.Definition = null;
                             err.OffendingToken.Value = input[se.Index].ToString();
                         }
@@ -482,7 +489,7 @@ namespace MetaphysicsIndustries.Giza
                     {
                         var s = new Span();
                         s.Node = nm.Node;
-                        s.Value = input.Substring(nm.Token.StartIndex, nm.Token.Length);
+                        s.Value = input.Substring(nm.Token.StartIndex, nm.Token.Value.Length);
                         stack.Peek().Subspans.Add(s);
                     }
                 }

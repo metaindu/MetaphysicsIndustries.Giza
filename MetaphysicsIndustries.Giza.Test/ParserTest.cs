@@ -784,7 +784,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(1, err.Line);
             Assert.AreEqual(9, err.Column);
             Assert.AreEqual(8, err.OffendingToken.StartIndex);
-            Assert.AreEqual(1, err.OffendingToken.Length);
+            Assert.AreEqual(")", err.OffendingToken.Value);
             Assert.AreSame(cparenDef, err.OffendingToken.Definition);
             Assert.IsInstanceOf<DefRefNode>(err.LastValidMatchingNode);
             Assert.AreSame(oparenDef, (err.LastValidMatchingNode as DefRefNode).DefRef);
@@ -831,7 +831,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(1, err.Line);
             Assert.AreEqual(9, err.Column);
             Assert.AreEqual(8, err.OffendingToken.StartIndex);
-            Assert.AreEqual(3, err.OffendingToken.Length);
+            Assert.AreEqual("two", err.OffendingToken.Value);
             Assert.AreSame(twoDef, err.OffendingToken.Definition);
             Assert.IsInstanceOf<DefRefNode>(err.LastValidMatchingNode);
             Assert.AreSame(oparenDef, (err.LastValidMatchingNode as DefRefNode).DefRef);
@@ -876,7 +876,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(1, err.Line);
             Assert.AreEqual(9, err.Column);
             Assert.AreEqual(8, err.OffendingToken.StartIndex);
-            Assert.AreEqual(1, err.OffendingToken.Length);
+            Assert.AreEqual("$", err.OffendingToken.Value);
             Assert.IsNull(err.OffendingToken.Definition);
             Assert.IsInstanceOf<DefRefNode>(err.LastValidMatchingNode);
             Assert.AreSame(oparenDef, (err.LastValidMatchingNode as DefRefNode).DefRef);
@@ -921,7 +921,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(1, err.Line);
             Assert.AreEqual(15, err.Column);
             Assert.AreEqual(14, err.OffendingToken.StartIndex);
-            Assert.AreEqual(4, err.OffendingToken.Length);
+            Assert.AreEqual("four", err.OffendingToken.Value);
             Assert.AreSame(fourDef, err.OffendingToken.Definition);
             Assert.IsInstanceOf<DefRefNode>(err.LastValidMatchingNode);
             Assert.AreSame(threeDef, (err.LastValidMatchingNode as DefRefNode).DefRef);

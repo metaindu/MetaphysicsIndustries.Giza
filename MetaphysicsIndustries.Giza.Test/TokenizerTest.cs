@@ -37,7 +37,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var first = tokens.First();
             Assert.AreEqual(item1Def, first.Definition);
             Assert.AreEqual(0, first.StartIndex);
-            Assert.AreEqual(5, first.Length);
+            Assert.AreEqual("item1", first.Value);
 
             tokens = t.GetTokensAtLocation(5, errors,
                                            out endOfInput, out lastIndex);
@@ -47,7 +47,7 @@ namespace MetaphysicsIndustries.Giza.Test
             first = tokens.First();
             Assert.AreEqual(item2Def, first.Definition);
             Assert.AreEqual(6, first.StartIndex);
-            Assert.AreEqual(5, first.Length);
+            Assert.AreEqual("item2", first.Value);
         }
 
         [Test()]
@@ -86,7 +86,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var first = tokens.First();
             Assert.AreEqual(varrefDef, first.Definition);
             Assert.AreEqual(0, first.StartIndex);
-            Assert.AreEqual(1, first.Length);
+            Assert.AreEqual("a", first.Value);
 
             tokens = t.GetTokensAtLocation(1, errors,
                                            out endOfInput, out lastIndex);
@@ -113,9 +113,9 @@ namespace MetaphysicsIndustries.Giza.Test
             }
 
             Assert.AreEqual(1, plusplusToken.StartIndex);
-            Assert.AreEqual(2, plusplusToken.Length);
+            Assert.AreEqual("++", plusplusToken.Value);
             Assert.AreEqual(1, operToken.StartIndex);
-            Assert.AreEqual(1, operToken.Length);
+            Assert.AreEqual("+", operToken.Value);
         }
 
         [Test()]
@@ -151,7 +151,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var first = tokens.First();
             Assert.AreEqual(itemDef, first.Definition);
             Assert.AreEqual(0, first.StartIndex);
-            Assert.AreEqual(1, first.Length);
+            Assert.AreEqual("a", first.Value);
 
             tokens = t.GetTokensAtLocation(1, errors,
                                            out endOfInput, out lastIndex);
@@ -164,9 +164,9 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(2, second.StartIndex);
             Assert.AreEqual(operDef, first.Definition);
             Assert.AreEqual(operDef, second.Definition);
-            Assert.IsTrue(first.Length == 1 || first.Length == 2);
-            Assert.IsTrue(second.Length == 1 || second.Length == 2);
-            Assert.IsTrue(first.Length != second.Length);
+            Assert.IsTrue(first.Value == "<" || first.Value == "<<");
+            Assert.IsTrue(second.Value == "<" || second.Value == "<<");
+            Assert.IsTrue(first.Value != second.Value);
         }
 
         [Test]
@@ -201,7 +201,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var first = tokens.First();
             Assert.AreSame(operandDef, first.Definition);
             Assert.AreEqual(0, first.StartIndex);
-            Assert.AreEqual(1, first.Length);
+            Assert.AreEqual("a", first.Value);
             Assert.AreEqual(-1, endOfInputIndex);
         }
 
@@ -237,7 +237,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var first = tokens.First();
             Assert.AreSame(operatorDef, first.Definition);
             Assert.AreEqual(2, first.StartIndex);
-            Assert.AreEqual(1, first.Length);
+            Assert.AreEqual("+", first.Value);
             Assert.AreEqual(-1, endOfInputIndex);
         }
 
@@ -273,7 +273,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var first = tokens.First();
             Assert.AreSame(operatorDef, first.Definition);
             Assert.AreEqual(2, first.StartIndex);
-            Assert.AreEqual(1, first.Length);
+            Assert.AreEqual("+", first.Value);
             Assert.AreEqual(-1, endOfInputIndex);
         }
 
@@ -309,7 +309,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var first = tokens.First();
             Assert.AreSame(operandDef, first.Definition);
             Assert.AreEqual(4, first.StartIndex);
-            Assert.AreEqual(1, first.Length);
+            Assert.AreEqual("b", first.Value);
             Assert.AreEqual(-1, endOfInputIndex);
         }
 
@@ -345,7 +345,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var first = tokens.First();
             Assert.AreSame(operandDef, first.Definition);
             Assert.AreEqual(4, first.StartIndex);
-            Assert.AreEqual(1, first.Length);
+            Assert.AreEqual("b", first.Value);
             Assert.AreEqual(-1, endOfInputIndex);
         }
 
@@ -602,7 +602,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var first = tokens.First();
             Assert.AreSame(strangeDef, first.Definition);
             Assert.AreEqual(5, first.StartIndex);
-            Assert.AreEqual(9, first.Length);
+            Assert.AreEqual("/*comment", first.Value);
             Assert.AreEqual(16, lastIndex);
         }
 
@@ -648,7 +648,6 @@ namespace MetaphysicsIndustries.Giza.Test
             var first = tokens.First();
             Assert.AreSame(itemDef, first.Definition);
             Assert.AreEqual(0, first.StartIndex);
-            Assert.AreEqual(14, first.Length);
             Assert.AreEqual("start-ABCD-end", first.Value);
         }
     }
