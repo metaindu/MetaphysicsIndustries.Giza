@@ -217,18 +217,9 @@ namespace MetaphysicsIndustries.Giza
                     }
 
                     //get all tokens, starting at end of source's token
-                    int parseIndex;
-                    if (info.Source.Token.Value != null)
-                    {
-                        parseIndex = info.Source.Token.StartIndex + info.Source.Token.Value.Length;
-                    }
-                    else
-                    {
-                        parseIndex = info.Source.Token.StartIndex;
-                    }
                     info.TokenizationErrors = new List<Error>();
                     info.Tokens = tokenSource.GetTokensAtLocation(
-                        parseIndex,
+                        info.Source.Token.IndexOfNextToken,
                         info.TokenizationErrors,
                         out info.EndOfInput,
                         out info.EndOfInputIndex);
