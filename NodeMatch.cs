@@ -10,11 +10,24 @@ namespace MetaphysicsIndustries.Giza
 {
     public class NodeMatch
     {
+        public enum TransitionType
+        {
+            StartDef,
+            EndDef,
+            Follow,
+            Root,
+        }
+
         private static int __id = 0;
+
         public readonly int _id;
+
         public int Index = -1;
         public NodeMatch StartDef;
         public Token Token;
+        public char MatchedChar;
+        public TransitionType Transition;
+        public Node Node;
 
         public NodeMatch(Node node, TransitionType transition, NodeMatch previous)
         {
@@ -59,16 +72,6 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        public enum TransitionType
-        {
-            StartDef,
-            EndDef,
-            Follow,
-            Root,
-        }
-
-        public TransitionType Transition;
-        public Node Node;
         public Definition DefRef
         {
             get
@@ -81,7 +84,16 @@ namespace MetaphysicsIndustries.Giza
                 return null;
             }
         }
-        public char MatchedChar;
+
+        public NodeMatch CloneWithNewToken(Token token)
+        {
+            NodeMatch nm = new NodeMatch(this.Node, this.Transition, this.Previous);
+            nm.Index = this.Index;
+            nm.StartDef = this.StartDef;
+            nm.Token = token;
+
+            return nm;
+        }
 
         public override string ToString()
         {
@@ -174,16 +186,6 @@ namespace MetaphysicsIndustries.Giza
                 writer.Write(nm.ToString());
                 writer.WriteLine();
             }
-        }
-
-        public NodeMatch CloneWithNewToken(Token token)
-        {
-            NodeMatch nm = new NodeMatch(this.Node, this.Transition, this.Previous);
-            nm.Index = this.Index;
-            nm.StartDef = this.StartDef;
-            nm.Token = token;
-
-            return nm;
         }
     }
 
