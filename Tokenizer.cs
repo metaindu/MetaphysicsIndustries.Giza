@@ -4,7 +4,7 @@ using MetaphysicsIndustries.Collections;
 
 namespace MetaphysicsIndustries.Giza
 {
-    public class Tokenizer
+    public class Tokenizer : ITokenSource
     {
         public Tokenizer(Grammar grammar)
         {
