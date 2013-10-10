@@ -26,10 +26,10 @@ namespace MetaphysicsIndustries.Giza.Test
             Definition item1Def = testGrammar.FindDefinitionByName("id-item1");
             Definition item2Def = testGrammar.FindDefinitionByName("id-item2");
 
-            Tokenizer t = new Tokenizer(testGrammar);
+            Tokenizer t = new Tokenizer(testGrammar, "item1 item2");
             bool endOfInput;
             int lastIndex;
-            var tokens = t.GetTokensAtLocation("item1 item2", 0, errors,
+            var tokens = t.GetTokensAtLocation(0, errors,
                                            out endOfInput, out lastIndex);
             Assert.IsEmpty(errors);
             Assert.IsFalse(endOfInput);
@@ -39,7 +39,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(0, first.StartIndex);
             Assert.AreEqual(5, first.Length);
 
-            tokens = t.GetTokensAtLocation("item1 item2", 5, errors,
+            tokens = t.GetTokensAtLocation(5, errors,
                                            out endOfInput, out lastIndex);
             Assert.IsEmpty(errors);
             Assert.IsFalse(endOfInput);
@@ -74,11 +74,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Definition plusplusDef = testGrammar.FindDefinitionByName("plusplus");
             Definition operDef = testGrammar.FindDefinitionByName("oper");
 
-            Tokenizer t = new Tokenizer(testGrammar);
+            Tokenizer t = new Tokenizer(testGrammar, testInput);
             bool endOfInput;
             int lastIndex;
 
-            var tokens = t.GetTokensAtLocation(testInput, 0, errors,
+            var tokens = t.GetTokensAtLocation(0, errors,
                                            out endOfInput, out lastIndex);
             Assert.IsEmpty(errors);
             Assert.IsFalse(endOfInput);
@@ -88,7 +88,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(0, first.StartIndex);
             Assert.AreEqual(1, first.Length);
 
-            tokens = t.GetTokensAtLocation(testInput, 1, errors,
+            tokens = t.GetTokensAtLocation(1, errors,
                                            out endOfInput, out lastIndex);
             Assert.IsEmpty(errors);
             Assert.IsFalse(endOfInput);
@@ -139,11 +139,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Definition itemDef = testGrammar.FindDefinitionByName("item");
             Definition operDef = testGrammar.FindDefinitionByName("oper");
 
-            Tokenizer t = new Tokenizer(testGrammar);
+            Tokenizer t = new Tokenizer(testGrammar, testInput);
             bool endOfInput;
             int lastIndex;
 
-            var tokens = t.GetTokensAtLocation(testInput, 0, errors,
+            var tokens = t.GetTokensAtLocation(0, errors,
                                            out endOfInput, out lastIndex);
             Assert.IsEmpty(errors);
             Assert.IsFalse(endOfInput);
@@ -153,7 +153,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(0, first.StartIndex);
             Assert.AreEqual(1, first.Length);
 
-            tokens = t.GetTokensAtLocation(testInput, 1, errors,
+            tokens = t.GetTokensAtLocation(1, errors,
                                            out endOfInput, out lastIndex);
             Assert.IsEmpty(errors);
             Assert.IsFalse(endOfInput);
@@ -184,13 +184,13 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Definition operandDef = grammar.FindDefinitionByName("operand");
 
-            Tokenizer tokenizer = new Tokenizer(grammar);
             string input = "a + b";
+            Tokenizer tokenizer = new Tokenizer(grammar, input);
             bool endOfInput;
             int endOfInputIndex;
 
 
-            var tokens = tokenizer.GetTokensAtLocation(input, 0, errors,
+            var tokens = tokenizer.GetTokensAtLocation(0, errors,
                                                        out endOfInput,
                                                        out endOfInputIndex);
 
@@ -220,13 +220,13 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Definition operatorDef = grammar.FindDefinitionByName("$implicit literal +");
 
-            Tokenizer tokenizer = new Tokenizer(grammar);
             string input = "a + b";
+            Tokenizer tokenizer = new Tokenizer(grammar, input);
             bool endOfInput;
             int endOfInputIndex;
 
 
-            var tokens = tokenizer.GetTokensAtLocation(input, 1, errors,
+            var tokens = tokenizer.GetTokensAtLocation(1, errors,
                                                        out endOfInput,
                                                        out endOfInputIndex);
 
@@ -256,13 +256,13 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Definition operatorDef = grammar.FindDefinitionByName("$implicit literal +");
 
-            Tokenizer tokenizer = new Tokenizer(grammar);
             string input = "a + b";
+            Tokenizer tokenizer = new Tokenizer(grammar, input);
             bool endOfInput;
             int endOfInputIndex;
 
 
-            var tokens = tokenizer.GetTokensAtLocation(input, 2, errors,
+            var tokens = tokenizer.GetTokensAtLocation(2, errors,
                                                        out endOfInput,
                                                        out endOfInputIndex);
 
@@ -292,13 +292,13 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Definition operandDef = grammar.FindDefinitionByName("operand");
 
-            Tokenizer tokenizer = new Tokenizer(grammar);
             string input = "a + b";
+            Tokenizer tokenizer = new Tokenizer(grammar, input);
             bool endOfInput;
             int endOfInputIndex;
 
 
-            var tokens = tokenizer.GetTokensAtLocation(input, 3, errors,
+            var tokens = tokenizer.GetTokensAtLocation(3, errors,
                                                    out endOfInput,
                                                    out endOfInputIndex);
 
@@ -328,13 +328,13 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Definition operandDef = grammar.FindDefinitionByName("operand");
 
-            Tokenizer tokenizer = new Tokenizer(grammar);
             string input = "a + b";
+            Tokenizer tokenizer = new Tokenizer(grammar, input);
             bool endOfInput;
             int endOfInputIndex;
 
 
-            var tokens = tokenizer.GetTokensAtLocation(input, 4, errors,
+            var tokens = tokenizer.GetTokensAtLocation(4, errors,
                                                    out endOfInput,
                                                    out endOfInputIndex);
 
@@ -362,13 +362,13 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
 
-            Tokenizer tokenizer = new Tokenizer(grammar);
             string input = "a + b";
+            Tokenizer tokenizer = new Tokenizer(grammar, input);
             bool endOfInput;
             int endOfInputIndex;
 
 
-            var tokens = tokenizer.GetTokensAtLocation(input, 5, errors,
+            var tokens = tokenizer.GetTokensAtLocation(5, errors,
                                                    out endOfInput,
                                                    out endOfInputIndex);
 
@@ -391,13 +391,13 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
 
             Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
-            Tokenizer tokenizer = new Tokenizer(grammar);
             string input = "a + b";
+            Tokenizer tokenizer = new Tokenizer(grammar, input);
             bool endOfInput;
             int lastIndex;
 
 
-            var tokens = tokenizer.GetTokensAtLocation(input, 5, errors,
+            var tokens = tokenizer.GetTokensAtLocation(5, errors,
                                                        out endOfInput,
                                                        out lastIndex);
 
@@ -422,13 +422,13 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
 
             Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
-            Tokenizer tokenizer = new Tokenizer(grammar);
             string input = "a + b ";
+            Tokenizer tokenizer = new Tokenizer(grammar, input);
             bool endOfInput;
             int lastIndex;
 
 
-            var tokens = tokenizer.GetTokensAtLocation(input, 5, errors,
+            var tokens = tokenizer.GetTokensAtLocation(5, errors,
                                                        out endOfInput,
                                                        out lastIndex);
 
@@ -453,13 +453,13 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
 
             Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
-            Tokenizer tokenizer = new Tokenizer(grammar);
             string input = "a + b ";
+            Tokenizer tokenizer = new Tokenizer(grammar, input);
             bool endOfInput;
             int lastIndex;
 
 
-            var tokens = tokenizer.GetTokensAtLocation(input, 6, errors,
+            var tokens = tokenizer.GetTokensAtLocation(6, errors,
                                                        out endOfInput,
                                                        out lastIndex);
 
@@ -485,13 +485,13 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
 
             Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
-            Tokenizer tokenizer = new Tokenizer(grammar);
             string input = "a + b/*comment*/";
+            Tokenizer tokenizer = new Tokenizer(grammar, input);
             bool endOfInput;
             int lastIndex;
 
 
-            var tokens = tokenizer.GetTokensAtLocation(input, 5, errors,
+            var tokens = tokenizer.GetTokensAtLocation(5, errors,
                                                        out endOfInput,
                                                        out lastIndex);
 
@@ -517,13 +517,13 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
 
             Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
-            Tokenizer tokenizer = new Tokenizer(grammar);
             string input = "a + b /*comment*/";
+            Tokenizer tokenizer = new Tokenizer(grammar, input);
             bool endOfInput;
             int lastIndex;
 
 
-            var tokens = tokenizer.GetTokensAtLocation(input, 5, errors,
+            var tokens = tokenizer.GetTokensAtLocation(5, errors,
                                                        out endOfInput,
                                                        out lastIndex);
 
@@ -549,13 +549,13 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
 
             Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
-            Tokenizer tokenizer = new Tokenizer(grammar);
             string input = "a + b/*comment*/ ";
+            Tokenizer tokenizer = new Tokenizer(grammar, input);
             bool endOfInput;
             int lastIndex;
 
 
-            var tokens = tokenizer.GetTokensAtLocation(input, 5, errors,
+            var tokens = tokenizer.GetTokensAtLocation(5, errors,
                                                        out endOfInput,
                                                        out lastIndex);
 
@@ -583,13 +583,13 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
             Definition strangeDef = grammar.FindDefinitionByName("strange");
-            Tokenizer tokenizer = new Tokenizer(grammar);
             string input = "a + b/*comment*/";
+            Tokenizer tokenizer = new Tokenizer(grammar, input);
             bool endOfInput;
             int lastIndex;
 
 
-            var tokens = tokenizer.GetTokensAtLocation(input, 5, errors,
+            var tokens = tokenizer.GetTokensAtLocation(5, errors,
                                                        out endOfInput,
                                                        out lastIndex);
 
@@ -628,14 +628,13 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
 
             Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
-            Definition sequenceDef = grammar.FindDefinitionByName("sequence");
             Definition itemDef = grammar.FindDefinitionByName("item");
-            Tokenizer tokenizer = new Tokenizer(grammar);
+            Tokenizer tokenizer = new Tokenizer(grammar, testInputText);
             bool endOfInput;
             int endOfInputIndex;
 
 
-            var tokens = tokenizer.GetTokensAtLocation(testInputText, 0, errors,
+            var tokens = tokenizer.GetTokensAtLocation(0, errors,
                                                        out endOfInput,
                                                        out endOfInputIndex);
 

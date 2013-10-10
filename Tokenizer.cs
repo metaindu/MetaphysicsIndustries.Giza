@@ -6,8 +6,11 @@ namespace MetaphysicsIndustries.Giza
 {
     public class Tokenizer : ITokenSource
     {
-        public Tokenizer(Grammar grammar)
+        public Tokenizer(Grammar grammar, string input)
         {
+            if (grammar == null) throw new ArgumentNullException("grammar");
+            if (input == null) throw new ArgumentNullException("input");
+
             _grammar = grammar.Clone();
             _tokenDef = new Definition("$token");
             _grammar.Definitions.Add(_tokenDef);
@@ -25,11 +28,13 @@ namespace MetaphysicsIndustries.Giza
             }
 
             _spanner = new Spanner(_tokenDef);
+            _input = input;
         }
 
         Grammar _grammar;
         Spanner _spanner;
         Definition _tokenDef;
+        string _input;
 
         struct TokenizationByIndex
         {
@@ -53,7 +58,7 @@ namespace MetaphysicsIndustries.Giza
             public int LastIndex;
         }
 
-        public IEnumerable<Token> GetTokensAtLocation(string input, int index,
+        public IEnumerable<Token> GetTokensAtLocation(int index,
                                                        List<Error> errors,
                                                        out bool endOfInput,
                                                        out int endOfInputIndex)
@@ -71,7 +76,7 @@ namespace MetaphysicsIndustries.Giza
                 var tokenLeaves = new Set<NodeMatch>();
                 int endOfInputIndex2;
 
-                var leaves = _spanner.Match(input, errors2,
+                var leaves = _spanner.Match(_input, errors2,
                                             out endOfInput2,
                                             out endOfInputIndex2,
                                             mustUseAllInput:false,
@@ -173,7 +178,7 @@ namespace MetaphysicsIndustries.Giza
                         Definition = tokenEnd.Previous.Node.ParentDefinition,
                         StartIndex = tokenStart.Index,
                         Length = length,
-                        Value = input.Substring(tokenStart.Index, length),
+                        Value = _input.Substring(tokenStart.Index, length),
                     });
                 }
             }

@@ -124,7 +124,7 @@ namespace MetaphysicsIndustries.Giza
             if (input == null) throw new ArgumentNullException("input");
             if (errors == null) throw new ArgumentNullException("errors");
 
-            var _tokenizer = new Tokenizer(_definition.ParentGrammar);
+            ITokenSource tokenSource = new Tokenizer(_definition.ParentGrammar, input);
 
             var sources = new Queue<NodeMatchStackPair>();
             var ends = new List<NodeMatch>();
@@ -219,8 +219,7 @@ namespace MetaphysicsIndustries.Giza
                     //get all tokens, starting at end of source's token
                     var parseIndex = info.Source.Token.StartIndex + info.Source.Token.Length;
                     info.TokenizationErrors = new List<Error>();
-                    info.Tokens = _tokenizer.GetTokensAtLocation(
-                        input,
+                    info.Tokens = tokenSource.GetTokensAtLocation(
                         parseIndex,
                         info.TokenizationErrors,
                         out info.EndOfInput,
