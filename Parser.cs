@@ -98,11 +98,9 @@ namespace MetaphysicsIndustries.Giza
             if (definition == null) throw new ArgumentNullException("definition");
 
             _definition = definition;
-            _tokenizer = new Tokenizer(_definition.ParentGrammar);
         }
 
         Definition _definition;
-        Tokenizer _tokenizer;
 
         struct ParseInfo
         {
@@ -125,6 +123,8 @@ namespace MetaphysicsIndustries.Giza
         {
             if (input == null) throw new ArgumentNullException("input");
             if (errors == null) throw new ArgumentNullException("errors");
+
+            var _tokenizer = new Tokenizer(_definition.ParentGrammar);
 
             var sources = new Queue<NodeMatchStackPair>();
             var ends = new List<NodeMatch>();
