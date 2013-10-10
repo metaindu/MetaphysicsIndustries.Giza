@@ -42,26 +42,26 @@ namespace MetaphysicsIndustries.Giza
                                        ICollection<Error> errors,
                                        bool endOfInput,
                                        ICollection<NodeMatch> matchTreeLeaves,
-                                       int lastIndex)
+                                       InputPosition lastPosition)
             {
                 Index = index;
                 Errors = errors;
                 EndOfInput = endOfInput;
                 MatchTreeLeaves = matchTreeLeaves;
-                LastIndex = lastIndex;
+                LastPosition = lastPosition;
             }
 
             public int Index;
             public ICollection<Error> Errors;
             public bool EndOfInput;
             public ICollection<NodeMatch> MatchTreeLeaves;
-            public int LastIndex;
+            public InputPosition LastPosition;
         }
 
         public IEnumerable<Token> GetTokensAtLocation(int index,
-                                                       List<Error> errors,
-                                                       out bool endOfInput,
-                                                       out int endOfInputIndex)
+                                                        List<Error> errors,
+                                                        out bool endOfInput,
+                                                        out InputPosition endOfInputPosition)
         {
             var tokenizations = new Queue<TokenizationByIndex>();
             var startIndexes = new Queue<int>();
@@ -74,11 +74,11 @@ namespace MetaphysicsIndustries.Giza
                 bool endOfInput2;
                 var errors2 = new List<Error>();
                 var tokenLeaves = new Set<NodeMatch>();
-                int endOfInputIndex2;
+                InputPosition endOfInputPosition2;
 
                 var leaves = _spanner.Match(_input, errors2,
                                             out endOfInput2,
-                                            out endOfInputIndex2,
+                                            out endOfInputPosition2,
                                             mustUseAllInput:false,
                                             startIndex:startIndex);
 
@@ -110,7 +110,7 @@ namespace MetaphysicsIndustries.Giza
                 {
                     var tokenization = new TokenizationByIndex(
                         startIndex, errors2, endOfInput2, tokenLeaves,
-                        endOfInputIndex2);
+                        endOfInputPosition2);
 
                     tokenizations.Enqueue(tokenization);
                 }
@@ -157,7 +157,7 @@ namespace MetaphysicsIndustries.Giza
 
             var tokens = new Set<Token>();
             endOfInput = false;
-            endOfInputIndex = -1;
+            endOfInputPosition = new InputPosition(-1);
 
             if (hasLeaves.Count > 0)
             {
@@ -185,10 +185,13 @@ namespace MetaphysicsIndustries.Giza
             if (hasEnd.Count > 0)
             {
                 endOfInput = true;
-                endOfInputIndex = index;
+                endOfInputPosition = Spanner.GetPosition(_input, index);
                 foreach (var tok in hasEnd)
                 {
-                    endOfInputIndex = Math.Max(endOfInputIndex, tok.LastIndex);
+                    if (tok.LastPosition.Index > endOfInputPosition.Index)
+                    {
+                        endOfInputPosition = tok.LastPosition;
+                    }
                 }
             }
 

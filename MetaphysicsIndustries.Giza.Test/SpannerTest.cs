@@ -261,11 +261,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Spanner spanner = new Spanner(exprDef);
             string input = "a + b";
             bool endOfInput;
-            int lastIndex;
+            InputPosition endOfInputPosition;
 
 
             var tokens = spanner.Match(input, errors,
-                                       out endOfInput, out lastIndex,
+                                       out endOfInput, out endOfInputPosition,
                                        mustUseAllInput: false, startIndex: 5);
 
 
@@ -274,7 +274,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(tokens);
             Assert.IsNotNull(errors);
             Assert.IsEmpty(errors);
-            Assert.AreEqual(5, lastIndex);
+            Assert.AreEqual(5, endOfInputPosition.Index);
         }
 
         [Test]
@@ -292,11 +292,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Spanner spanner = new Spanner(exprDef);
             string input = "a + b ";
             bool endOfInput;
-            int lastIndex;
+            InputPosition endOfInputPosition;
 
 
             var tokens = spanner.Match(input, errors,
-                                       out endOfInput, out lastIndex,
+                                       out endOfInput, out endOfInputPosition,
                                        mustUseAllInput: false, startIndex: 5);
 
 
@@ -305,7 +305,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(tokens);
             Assert.IsNotNull(errors);
             Assert.IsEmpty(errors);
-            Assert.AreEqual(6, lastIndex);
+            Assert.AreEqual(6, endOfInputPosition.Index);
         }
 
         [Test]
@@ -323,11 +323,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Spanner spanner = new Spanner(exprDef);
             string input = "a + b ";
             bool endOfInput;
-            int lastIndex;
+            InputPosition endOfInputPosition;
 
 
             var tokens = spanner.Match(input, errors,
-                                       out endOfInput, out lastIndex,
+                                       out endOfInput, out endOfInputPosition,
                                        mustUseAllInput: false, startIndex: 5);
 
 
@@ -336,7 +336,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(tokens);
             Assert.IsNotNull(errors);
             Assert.IsEmpty(errors);
-            Assert.AreEqual(6, lastIndex);
+            Assert.AreEqual(6, endOfInputPosition.Index);
         }
 
         [Test]

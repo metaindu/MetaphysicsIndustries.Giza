@@ -112,7 +112,7 @@ namespace MetaphysicsIndustries.Giza
             public bool LastEnderIsEndCandidate;
 
             public bool EndOfInput;
-            public int EndOfInputIndex;
+            public InputPosition EndOfInputPosition;
             public IEnumerable<Token> Tokens;
             public List<Error> TokenizationErrors;
 
@@ -222,7 +222,7 @@ namespace MetaphysicsIndustries.Giza
                         info.Source.Token.IndexOfNextToken,
                         info.TokenizationErrors,
                         out info.EndOfInput,
-                        out info.EndOfInputIndex);
+                        out info.EndOfInputPosition);
 
                     //if we get any tokenization errors, process them and reject
                     if (info.TokenizationErrors.ContainsNonWarnings())
@@ -274,18 +274,18 @@ namespace MetaphysicsIndustries.Giza
                     }
                     else if (info.EndOfInput)
                     {
-                        int line;
-                        int column;
-
-                        Spanner.GetPosition(input, info.EndOfInputIndex, out line, out column);
+//                        int line;
+//                        int column;
+//
+//                        Spanner.GetPosition(input, info.EndOfInputIndex, out line, out column);
 
                         var err = new ParserError {
                             ErrorType = ParserError.UnexpectedEndOfInput,
                             LastValidMatchingNode = info.Source.Node,
                             ExpectedNodes = GetExpectedNodes(info),
-                            Line = line,
-                            Column = column,
-                            Index = info.EndOfInputIndex,
+                            Line = info.EndOfInputPosition.Line,
+                            Column = info.EndOfInputPosition.Column,
+                            Index = info.EndOfInputPosition.Index,
                         };
                         foreach (var branch in info.Branches)
                         {
@@ -303,17 +303,13 @@ namespace MetaphysicsIndustries.Giza
                         {
                             var offendingToken = info.Tokens.First();
 
-                            int line;
-                            int column;
-
-                            Spanner.GetPosition(input, offendingToken.StartIndex,
-                                                out line, out column);
+                            var pos = Spanner.GetPosition(input, offendingToken.StartIndex);
 
                             var err = new ParserError {
                                 ErrorType = ParserError.ExcessRemainingInput,
                                 LastValidMatchingNode = info.Source.Node,
-                                Line = line,
-                                Column = column,
+                                Line = pos.Line,
+                                Column = pos.Column,
                                 Index = offendingToken.StartIndex,
                                 OffendingToken=offendingToken,
                             };
@@ -348,20 +344,17 @@ namespace MetaphysicsIndustries.Giza
                             // otherwise, reject it with null since it's a duplicate
                             if (!matched)
                             {
-                                int line;
-                                int column;
                                 var offendingToken = info.Tokens.First();
 
-                                Spanner.GetPosition(input, offendingToken.StartIndex,
-                                                    out line, out column);
+                                var pos = Spanner.GetPosition(input, offendingToken.StartIndex);
 
                                 err = new ParserError {
                                     ErrorType = ParserError.InvalidToken,
                                     LastValidMatchingNode = info.Source.Node,
                                     OffendingToken = offendingToken,
                                     ExpectedNodes = info.Source.Node.NextNodes,
-                                    Line = line,
-                                    Column = column,
+                                    Line = pos.Line,
+                                    Column = pos.Column,
                                     Index = offendingToken.StartIndex,
                                 };
                             }

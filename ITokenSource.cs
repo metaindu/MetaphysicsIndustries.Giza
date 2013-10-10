@@ -8,7 +8,7 @@ namespace MetaphysicsIndustries.Giza
         IEnumerable<Token> GetTokensAtLocation(int index,
                                                List<Error> errors,
                                                out bool endOfInput,
-                                               out int endOfInputIndex);
+                                               out InputPosition endOfInputPosition);
     }
 }
 

@@ -45,17 +45,17 @@ namespace MetaphysicsIndustries.Giza
         public IEnumerable<Token> GetTokensAtLocation(int index,
                                                       List<Error> errors,
                                                       out bool endOfInput,
-                                                      out int endOfInputIndex)
+                                                      out InputPosition endOfInputPosition)
         {
             if (index >= _intokens.Count)
             {
                 endOfInput = true;
-                endOfInputIndex = _intokens.Count;
+                endOfInputPosition = new InputPosition(_intokens.Count);
                 return new Token[0];
             }
 
             endOfInput = false;
-            endOfInputIndex = -1;
+            endOfInputPosition = new InputPosition(-1);
 
             if (_tokens[index].Value != null)
             {
