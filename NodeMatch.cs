@@ -102,7 +102,7 @@ namespace MetaphysicsIndustries.Giza
             else if (Node is DefRefNode) nodestr = (Node as DefRefNode).DefRef.Name;
             else nodestr = "<unknown>";
 
-            if (Token.Value.Length > 0)
+            if (!string.IsNullOrEmpty(Token.Value))
             {
                 return string.Format("[{0}] {1}:{2}, {3} nm nexts, token '{4}' as {5}",
                                      _id,
