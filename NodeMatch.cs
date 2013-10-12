@@ -22,7 +22,7 @@ namespace MetaphysicsIndustries.Giza
 
         public readonly int _id;
 
-        public int Index = -1;
+        public InputPosition StartPosition;
         public NodeMatch StartDef;
         public Token Token;
         public char MatchedChar;
@@ -88,7 +88,7 @@ namespace MetaphysicsIndustries.Giza
         public NodeMatch CloneWithNewToken(Token token)
         {
             NodeMatch nm = new NodeMatch(this.Node, this.Transition, this.Previous);
-            nm.Index = this.Index;
+            nm.StartPosition = this.StartPosition;
             nm.StartDef = this.StartDef;
             nm.Token = token;
 
@@ -303,10 +303,10 @@ namespace MetaphysicsIndustries.Giza
         public NodeMatch NodeMatch;
         public MatchStack MatchStack;
 
-        public static NodeMatchStackPair CreateStartDefMatch(Node node, NodeMatch match, MatchStack stack2, int index)
+        public static NodeMatchStackPair CreateStartDefMatch(Node node, NodeMatch match, MatchStack stack2, InputPosition pos)
         {
             NodeMatch match2 = new NodeMatch(node, NodeMatch.TransitionType.StartDef, match);
-            match2.Index = index;
+            match2.StartPosition = pos;
             return new NodeMatchStackPair(match2, stack2);
         }
 
@@ -318,15 +318,15 @@ namespace MetaphysicsIndustries.Giza
         public static NodeMatchStackPair CreateEndDefMatch(NodeMatch match, MatchStack stack)
         {
             NodeMatch match2 = new NodeMatch(stack.Node, NodeMatch.TransitionType.EndDef, match);
-            match2.Index = match.Index;
+            match2.StartPosition = match.StartPosition;
             match2.StartDef = stack.NodeMatch;
             return new NodeMatchStackPair(match2, stack.Parent);
         }
 
-        public static NodeMatchStackPair CreateFollowMatch(Node node, NodeMatch match, MatchStack stack, int index)
+        public static NodeMatchStackPair CreateFollowMatch(Node node, NodeMatch match, MatchStack stack, InputPosition pos)
         {
             NodeMatch match2 = new NodeMatch(node, NodeMatch.TransitionType.Follow, match);
-            match2.Index = index;
+            match2.StartPosition = pos;
             return new NodeMatchStackPair(match2, stack);
         }
 

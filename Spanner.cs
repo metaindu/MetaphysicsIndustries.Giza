@@ -69,7 +69,7 @@ namespace MetaphysicsIndustries.Giza
 
             DefRefNode implicitNode = new DefRefNode(_definition);
             NodeMatch root = new NodeMatch(implicitNode, NodeMatch.TransitionType.Root, null);
-            root.Index = -1;
+            root.StartPosition = new InputPosition(-1);
 
 
             Queue<NodeMatchStackPair> currents = new Queue<NodeMatchStackPair>();
@@ -137,12 +137,12 @@ namespace MetaphysicsIndustries.Giza
                         if ((cur.Node as CharNode).Matches(ch))
                         {
                             cur.MatchedChar = ch;
-                            cur.Index = k;
+                            cur.StartPosition = kpos;
 
                             //next nodes
                             foreach (Node n in cur.Node.NextNodes)
                             {
-                                accepts.Enqueue(NodeMatchStackPair.CreateFollowMatch(n, cur, stack, k));
+                                accepts.Enqueue(NodeMatchStackPair.CreateFollowMatch(n, cur, stack, kpos));
                             }
 
                             //end
@@ -172,7 +172,7 @@ namespace MetaphysicsIndustries.Giza
                         {
                             foreach (Node n in cur.Node.NextNodes)
                             {
-                                currents.Enqueue(NodeMatchStackPair.CreateFollowMatch(n, cur, stack, k));
+                                currents.Enqueue(NodeMatchStackPair.CreateFollowMatch(n, cur, stack, kpos));
                             }
 
                             if (cur.Node == implicitNode)
@@ -202,7 +202,7 @@ namespace MetaphysicsIndustries.Giza
                             MatchStack stack2 = new MatchStack(cur, stack);
                             foreach (Node start in (cur.Node as DefRefNode).DefRef.StartNodes)
                             {
-                                currents.Enqueue(NodeMatchStackPair.CreateStartDefMatch(start, cur, stack2, k));
+                                currents.Enqueue(NodeMatchStackPair.CreateStartDefMatch(start, cur, stack2, kpos));
                             }
                         }
                     }
@@ -325,7 +325,7 @@ namespace MetaphysicsIndustries.Giza
             {
                 if (lastRejectnm.Transition == NodeMatch.TransitionType.Root) return null;
 
-                char errorCh = input[lastRejectnm.Index];
+                char errorCh = input[lastRejectnm.StartPosition.Index];
 
                 IEnumerable<Node> expectedNodes;
                 Set<char> vowels = new Set<char> {
@@ -334,7 +334,7 @@ namespace MetaphysicsIndustries.Giza
                 };
                 StringBuilder sb = new StringBuilder();
 
-                var pos = GetPosition(input, lastRejectnm.Index);
+                var pos = lastRejectnm.StartPosition;
                 se.OffendingCharacter = errorCh;
                 se.Position = pos;
                 sb.AppendFormat("Invalid character '{0}' at ({1},{2})", errorCh, pos.Line, pos.Column);

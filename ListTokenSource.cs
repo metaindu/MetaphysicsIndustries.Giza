@@ -68,11 +68,11 @@ namespace MetaphysicsIndustries.Giza
             NodeMatch tokenEnd = leaf.Previous;
             NodeMatch tokenStart = tokenEnd.StartDef;
 
-            int length = leaf.Index - tokenStart.Index + 1;
+            int length = leaf.StartPosition.Index - tokenStart.StartPosition.Index + 1;
             var token = new Token(
                 definition: tokenEnd.Previous.Node.ParentDefinition,
-                startIndex: tokenStart.Index,
-                value: _intokens[index].Substring(tokenStart.Index, length)
+                startIndex: tokenStart.StartPosition.Index,
+                value: _intokens[index].Substring(tokenStart.StartPosition.Index, length)
             );
 
             _tokens[index] = token;

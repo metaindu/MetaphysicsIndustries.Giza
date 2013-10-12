@@ -90,8 +90,8 @@ namespace MetaphysicsIndustries.Giza
                         if (tokenEnd.DefRef.Directives.Contains(DefinitionDirective.Comment))
                         {
                             var tokenStart = tokenEnd.StartDef;
-                            var stindex = tokenStart.Index;
-                            var length = leaf.Index - tokenStart.Index + 1;
+                            var stindex = tokenStart.StartPosition.Index;
+                            var length = leaf.StartPosition.Index - tokenStart.StartPosition.Index + 1;
 
                             //skip the comment and start again
                             startIndexes.Enqueue(stindex + length);
@@ -173,11 +173,11 @@ namespace MetaphysicsIndustries.Giza
                     NodeMatch tokenEnd = leaf.Previous;
                     NodeMatch tokenStart = tokenEnd.StartDef;
 
-                    int length = leaf.Index - tokenStart.Index + 1;
+                    int length = leaf.StartPosition.Index - tokenStart.StartPosition.Index + 1;
                     tokens.Add(new Token(
                         definition: tokenEnd.Previous.Node.ParentDefinition,
-                        startIndex: tokenStart.Index,
-                        value: _input.Substring(tokenStart.Index, length)
+                        startIndex: tokenStart.StartPosition.Index,
+                        value: _input.Substring(tokenStart.StartPosition.Index, length)
                     ));
                 }
             }
