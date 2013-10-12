@@ -34,9 +34,7 @@ namespace MetaphysicsIndustries.Giza
 
             public string DescriptionString = string.Empty;
             public char OffendingCharacter;
-            public int Index;
-            public int Line;
-            public int Column;
+            public InputPosition Position;
             public Node PreviousNode;
             public Definition ExpectedDefinition;
             public IEnumerable<Node> ExpectedNodes;
@@ -85,10 +83,18 @@ namespace MetaphysicsIndustries.Giza
 
             int k;
             var kpos = GetPosition(input, startIndex);
-            int line = kpos.Line;
-            int column = kpos.Column;
-            int prevLine = 1;
-            int prevColumn = 0;
+            var prevpos = kpos;
+            if (startIndex <= 0)
+            {
+                prevpos.Index = -1;
+                prevpos.Line = 1;
+                prevpos.Column = 0;
+            }
+            else
+            {
+                prevpos = GetPosition(input, startIndex - 1);
+            }
+
             for (k = startIndex; k < input.Length; k++)
             {
                 char ch = input[k];
@@ -104,9 +110,7 @@ namespace MetaphysicsIndustries.Giza
                         rejects.Enqueue(pair2(end,
                             new SpannerError {
                                 ErrorType=SpannerError.ExcessRemainingInput,
-                                Line=prevLine,
-                                Column=prevColumn,
-                                Index=k-1,
+                                Position = prevpos,
                                 PreviousNode=end.Node,
                                 OffendingCharacter=input[k-1],
                             }));
@@ -182,9 +186,7 @@ namespace MetaphysicsIndustries.Giza
                                     rejects.Enqueue(pair2(cur,
                                                           new SpannerError {
                                         ErrorType=SpannerError.ExcessRemainingInput,
-                                        Line=line,
-                                        Column=column,
-                                        Index=k,
+                                        Position = kpos,
                                         PreviousNode=cur.Node,
                                         OffendingCharacter=input[k],
                                     }));
@@ -213,17 +215,17 @@ namespace MetaphysicsIndustries.Giza
                     currents.Enqueue(accepts.Dequeue());
                 }
 
-                prevLine = line;
-                prevColumn = column;
+                prevpos = kpos;
                 if (ch == '\n')
                 {
-                    line++;
-                    column = 1;
+                    kpos.Line++;
+                    kpos.Column = 1;
                 }
                 else
                 {
-                    column++;
+                    kpos.Column++;
                 }
+                kpos.Index++;
             }
 
             if (k >= input.Length &&
@@ -266,9 +268,7 @@ namespace MetaphysicsIndustries.Giza
                     SpannerError se = new SpannerError {
                         PreviousNode=cur.Previous.Node,
                         ErrorType=SpannerError.UnexpectedEndOfInput,
-                        Line=line,
-                        Column=column,
-                        Index = k,
+                        Position = kpos,
                     };
                     rejects.Enqueue(pair2(cur, se));
                 }
@@ -285,9 +285,7 @@ namespace MetaphysicsIndustries.Giza
                     SpannerError se = new SpannerError {
                         PreviousNode=cur.Node,
                         ErrorType=SpannerError.UnexpectedEndOfInput,
-                        Line=line,
-                        Column=column,
-                        Index = k,
+                        Position = kpos,
                     };
                     rejects.Enqueue(pair2(cur, se));
                 }
@@ -338,9 +336,7 @@ namespace MetaphysicsIndustries.Giza
 
                 var pos = GetPosition(input, lastRejectnm.Index);
                 se.OffendingCharacter = errorCh;
-                se.Line = pos.Line;
-                se.Column = pos.Column;
-                se.Index = lastRejectnm.Index;
+                se.Position = pos;
                 sb.AppendFormat("Invalid character '{0}' at ({1},{2})", errorCh, pos.Line, pos.Column);
 
                 NodeMatch cur = null;

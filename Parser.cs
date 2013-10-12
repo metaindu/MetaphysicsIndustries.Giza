@@ -15,9 +15,10 @@ namespace MetaphysicsIndustries.Giza
             public static readonly ErrorType ExcessRemainingInput = new ErrorType(name:"ExcessRemainingInput",  descriptionFormat:"ExcessRemainingInput"  );
 
             public Token OffendingToken;
-            public int Index;
-            public int Line;
-            public int Column;
+            public InputPosition Position;
+            public int Index { get { return Position.Index; } }
+            public int Line { get { return Position.Line; } }
+            public int Column { get { return Position.Column; } }
             public Node LastValidMatchingNode;
             public IEnumerable<Node> ExpectedNodes;
 
@@ -237,9 +238,7 @@ namespace MetaphysicsIndustries.Giza
                         if (se.ErrorType == Spanner.SpannerError.UnexpectedEndOfInput)
                         {
                             err.ErrorType = ParserError.UnexpectedEndOfInput;
-                            err.Column = se.Column;
-                            err.Line = se.Line;
-                            err.Index = se.Index;
+                            err.Position = se.Position;
                         }
                         else if (se.ErrorType == Spanner.SpannerError.ExcessRemainingInput)
                         {
@@ -250,12 +249,10 @@ namespace MetaphysicsIndustries.Giza
                         else if (se.ErrorType == Spanner.SpannerError.InvalidCharacter)
                         {
                             err.ErrorType = ParserError.InvalidToken;
-                            err.Column = se.Column;
-                            err.Line = se.Line;
-                            err.Index = se.Index;
-                            err.OffendingToken.StartIndex = se.Index;
+                            err.Position = se.Position;
+                            err.OffendingToken.StartIndex = err.Index;
                             err.OffendingToken.Definition = null;
-                            err.OffendingToken.Value = input[se.Index].ToString();
+                            err.OffendingToken.Value = input[err.Index].ToString();
                         }
                         else
                         {
@@ -283,9 +280,7 @@ namespace MetaphysicsIndustries.Giza
                             ErrorType = ParserError.UnexpectedEndOfInput,
                             LastValidMatchingNode = info.Source.Node,
                             ExpectedNodes = GetExpectedNodes(info),
-                            Line = info.EndOfInputPosition.Line,
-                            Column = info.EndOfInputPosition.Column,
-                            Index = info.EndOfInputPosition.Index,
+                            Position = info.EndOfInputPosition,
                         };
                         foreach (var branch in info.Branches)
                         {
@@ -308,9 +303,7 @@ namespace MetaphysicsIndustries.Giza
                             var err = new ParserError {
                                 ErrorType = ParserError.ExcessRemainingInput,
                                 LastValidMatchingNode = info.Source.Node,
-                                Line = pos.Line,
-                                Column = pos.Column,
-                                Index = offendingToken.StartIndex,
+                                Position = pos,
                                 OffendingToken=offendingToken,
                             };
                             rejects.Add(info.Enders.Last().NodeMatch, err);
@@ -353,9 +346,7 @@ namespace MetaphysicsIndustries.Giza
                                     LastValidMatchingNode = info.Source.Node,
                                     OffendingToken = offendingToken,
                                     ExpectedNodes = info.Source.Node.NextNodes,
-                                    Line = pos.Line,
-                                    Column = pos.Column,
-                                    Index = offendingToken.StartIndex,
+                                    Position = pos,
                                 };
                             }
 
