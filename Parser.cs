@@ -220,7 +220,7 @@ namespace MetaphysicsIndustries.Giza
                     //get all tokens, starting at end of source's token
                     info.TokenizationErrors = new List<Error>();
                     info.Tokens = tokenSource.GetTokensAtLocation(
-                        info.Source.Token.IndexOfNextToken,
+                        info.Source.Token.IndexOfNextTokenization,
                         info.TokenizationErrors,
                         out info.EndOfInput,
                         out info.EndOfInputPosition);

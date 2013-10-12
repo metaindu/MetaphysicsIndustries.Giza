@@ -4,23 +4,23 @@ namespace MetaphysicsIndustries.Giza
 {
     public struct Token
     {
-        public Token(Definition definition=null, int startIndex=0, string value="", int indexOfNextToken=-1)
+        public Token(Definition definition=null, int startIndex=0, string value="", int indexOfNextTokenization=-1)
         {
-            if (indexOfNextToken < 0)
+            if (indexOfNextTokenization < 0)
             {
-                indexOfNextToken = startIndex + (value ?? "").Length;
+                indexOfNextTokenization = startIndex + (value ?? "").Length;
             }
 
             Definition = definition;
             StartIndex = startIndex;
             Value = value;
-            IndexOfNextToken = indexOfNextToken;
+            IndexOfNextTokenization = indexOfNextTokenization;
         }
 
         public Definition Definition;
         public int StartIndex;
         public string Value;
-        public int IndexOfNextToken;
+        public int IndexOfNextTokenization;
     }
 }
 
