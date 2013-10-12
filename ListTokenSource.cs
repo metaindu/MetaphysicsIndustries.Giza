@@ -71,7 +71,7 @@ namespace MetaphysicsIndustries.Giza
             int length = leaf.StartPosition.Index - tokenStart.StartPosition.Index + 1;
             var token = new Token(
                 definition: tokenEnd.Previous.Node.ParentDefinition,
-                startIndex: tokenStart.StartPosition.Index,
+                startPosition: tokenStart.StartPosition,
                 value: _intokens[index].Substring(tokenStart.StartPosition.Index, length)
             );
 

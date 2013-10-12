@@ -250,7 +250,7 @@ namespace MetaphysicsIndustries.Giza
                         {
                             err.ErrorType = ParserError.InvalidToken;
                             err.Position = se.Position;
-                            err.OffendingToken.StartIndex = err.Index;
+                            err.OffendingToken.StartPosition = err.Position;
                             err.OffendingToken.Definition = null;
                             err.OffendingToken.Value = input[err.Index].ToString();
                         }
@@ -298,12 +298,10 @@ namespace MetaphysicsIndustries.Giza
                         {
                             var offendingToken = info.Tokens.First();
 
-                            var pos = Spanner.GetPosition(input, offendingToken.StartIndex);
-
                             var err = new ParserError {
                                 ErrorType = ParserError.ExcessRemainingInput,
                                 LastValidMatchingNode = info.Source.Node,
-                                Position = pos,
+                                Position = offendingToken.StartPosition,
                                 OffendingToken=offendingToken,
                             };
                             rejects.Add(info.Enders.Last().NodeMatch, err);
@@ -339,14 +337,12 @@ namespace MetaphysicsIndustries.Giza
                             {
                                 var offendingToken = info.Tokens.First();
 
-                                var pos = Spanner.GetPosition(input, offendingToken.StartIndex);
-
                                 err = new ParserError {
                                     ErrorType = ParserError.InvalidToken,
                                     LastValidMatchingNode = info.Source.Node,
                                     OffendingToken = offendingToken,
                                     ExpectedNodes = info.Source.Node.NextNodes,
-                                    Position = pos,
+                                    Position = offendingToken.StartPosition,
                                 };
                             }
 
