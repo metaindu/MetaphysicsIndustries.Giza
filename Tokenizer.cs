@@ -185,7 +185,7 @@ namespace MetaphysicsIndustries.Giza
             if (hasEnd.Count > 0)
             {
                 endOfInput = true;
-                endOfInputPosition = Spanner.GetPosition(_input, index);
+                endOfInputPosition = hasEnd[0].LastPosition;
                 foreach (var tok in hasEnd)
                 {
                     if (tok.LastPosition.Index > endOfInputPosition.Index)

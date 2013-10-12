@@ -84,6 +84,11 @@ namespace MetaphysicsIndustries.Giza
             currents.Enqueue(pair(root, null));
 
             int k;
+            var kpos = GetPosition(input, startIndex);
+            int line = kpos.Line;
+            int column = kpos.Column;
+            int prevLine = 1;
+            int prevColumn = 0;
             for (k = startIndex; k < input.Length; k++)
             {
                 char ch = input[k];
@@ -92,8 +97,6 @@ namespace MetaphysicsIndustries.Giza
 
                 if (mustUseAllInput && ends.Count > 0)
                 {
-                    var pos = GetPosition(input, k-1);
-
                     // move all ends to rejects
                     while (ends.Count > 0)
                     {
@@ -101,8 +104,8 @@ namespace MetaphysicsIndustries.Giza
                         rejects.Enqueue(pair2(end,
                             new SpannerError {
                                 ErrorType=SpannerError.ExcessRemainingInput,
-                                Line=pos.Line,
-                                Column=pos.Column,
+                                Line=prevLine,
+                                Column=prevColumn,
                                 Index=k-1,
                                 PreviousNode=end.Node,
                                 OffendingCharacter=input[k-1],
@@ -176,12 +179,11 @@ namespace MetaphysicsIndustries.Giza
                                 }
                                 else
                                 {
-                                    var pos = GetPosition(input, k);
                                     rejects.Enqueue(pair2(cur,
                                                           new SpannerError {
                                         ErrorType=SpannerError.ExcessRemainingInput,
-                                        Line=pos.Line,
-                                        Column=pos.Column,
+                                        Line=line,
+                                        Column=column,
                                         Index=k,
                                         PreviousNode=cur.Node,
                                         OffendingCharacter=input[k],
@@ -209,6 +211,18 @@ namespace MetaphysicsIndustries.Giza
                 while (accepts.Count > 0)
                 {
                     currents.Enqueue(accepts.Dequeue());
+                }
+
+                prevLine = line;
+                prevColumn = column;
+                if (ch == '\n')
+                {
+                    line++;
+                    column = 1;
+                }
+                else
+                {
+                    column++;
                 }
             }
 
@@ -249,12 +263,11 @@ namespace MetaphysicsIndustries.Giza
                         currents.Enqueue(NodeMatchStackPair.CreateEndDefMatch(cur.Previous, stack));
                     }
 
-                    var pos = GetPosition(input, k);
                     SpannerError se = new SpannerError {
                         PreviousNode=cur.Previous.Node,
                         ErrorType=SpannerError.UnexpectedEndOfInput,
-                        Line=pos.Line,
-                        Column=pos.Column,
+                        Line=line,
+                        Column=column,
                         Index = k,
                     };
                     rejects.Enqueue(pair2(cur, se));
@@ -269,12 +282,11 @@ namespace MetaphysicsIndustries.Giza
                 }
                 else
                 {
-                    var pos = GetPosition(input, k);
                     SpannerError se = new SpannerError {
                         PreviousNode=cur.Node,
                         ErrorType=SpannerError.UnexpectedEndOfInput,
-                        Line=pos.Line,
-                        Column=pos.Column,
+                        Line=line,
+                        Column=column,
                         Index = k,
                     };
                     rejects.Enqueue(pair2(cur, se));
