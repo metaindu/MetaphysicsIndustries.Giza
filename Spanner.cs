@@ -58,8 +58,10 @@ namespace MetaphysicsIndustries.Giza
             InputPosition endOfInputPosition;
             return Match(input, errors, out endOfInput, out endOfInputPosition, mustUseAllInput, startIndex);
         }
-        public NodeMatch[] Match(string input, List<Error> errors, out bool endOfInput, out InputPosition endOfInputPosition, bool mustUseAllInput=true, int startIndex=0)
+        public NodeMatch[] Match(string _input, List<Error> errors, out bool endOfInput, out InputPosition endOfInputPosition, bool mustUseAllInput=true, int startIndex=0)
         {
+            var input = new CharacterSource(_input);
+
             if (startIndex >= input.Length)
             {
                 endOfInput = true;
@@ -301,7 +303,7 @@ namespace MetaphysicsIndustries.Giza
 
             if (ends.Count < 1)
             {
-                var error = GenerateError(lastReject, _definition, input);
+                var error = GenerateError(lastReject, _definition, input.Value);
                 errors.Add(error);
             }
 
@@ -560,7 +562,7 @@ namespace MetaphysicsIndustries.Giza
             return expects2;
         }
 
-        public static InputPosition GetPosition(string input, int index)
+        public static InputPosition GetPosition(CharacterSource input, int index)
         {
             int line = 1;
             int column = 1;
