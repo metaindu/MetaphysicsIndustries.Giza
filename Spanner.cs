@@ -76,7 +76,7 @@ namespace MetaphysicsIndustries.Giza
             if (startIndex >= input.Length)
             {
                 endOfInput = true;
-                endOfInputPosition = GetPosition(input, input.Length);
+                endOfInputPosition = input.GetPosition(input.Length);
                 return new NodeMatch[0];
             }
 
@@ -95,7 +95,7 @@ namespace MetaphysicsIndustries.Giza
             currents.Enqueue(pair(root, null));
 
             int k;
-            var kpos = GetPosition(input, startIndex);
+            var kpos = input.GetPosition(startIndex);
             var prevpos = kpos;
             if (startIndex <= 0)
             {
@@ -105,7 +105,7 @@ namespace MetaphysicsIndustries.Giza
             }
             else
             {
-                prevpos = GetPosition(input, startIndex - 1);
+                prevpos = input.GetPosition(startIndex - 1);
             }
 
             for (k = startIndex; k < input.Length; k++)
@@ -247,7 +247,7 @@ namespace MetaphysicsIndustries.Giza
             {
                 //end of input on the root node
                 endOfInput = true;
-                endOfInputPosition = GetPosition(input, input.Length);
+                endOfInputPosition = input.GetPosition(input.Length);
                 return new NodeMatch[0];
             }
             else
@@ -573,29 +573,7 @@ namespace MetaphysicsIndustries.Giza
             return expects2;
         }
 
-        public static InputPosition GetPosition(CharacterSource input, int index)
-        {
-            int line = 1;
-            int column = 1;
 
-            int i;
-            for (i = 0; i < index; i++)
-            {
-                char ch = input[i];
-
-                if (ch == '\n')
-                {
-                    line++;
-                    column = 1;
-                }
-                else
-                {
-                    column++;
-                }
-            }
-
-            return new InputPosition(index, line, column);
-        }
 
         public static NodeMatchStackPair pair(NodeMatch nodeMatch, MatchStack matchStack)
         {
