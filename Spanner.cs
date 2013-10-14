@@ -56,11 +56,22 @@ namespace MetaphysicsIndustries.Giza
         {
             bool endOfInput;
             InputPosition endOfInputPosition;
+            var _input = new CharacterSource(input);
+            return Match(_input, errors, out endOfInput, out endOfInputPosition, mustUseAllInput, startIndex);
+        }
+        public NodeMatch[] Match(CharacterSource input, List<Error> errors, bool mustUseAllInput=true, int startIndex=0)
+        {
+            bool endOfInput;
+            InputPosition endOfInputPosition;
             return Match(input, errors, out endOfInput, out endOfInputPosition, mustUseAllInput, startIndex);
         }
-        public NodeMatch[] Match(string _input, List<Error> errors, out bool endOfInput, out InputPosition endOfInputPosition, bool mustUseAllInput=true, int startIndex=0)
+        public NodeMatch[] Match(string input, List<Error> errors, out bool endOfInput, out InputPosition endOfInputPosition, bool mustUseAllInput=true, int startIndex=0)
         {
-            var input = new CharacterSource(_input);
+            var _input = new CharacterSource(input);
+            return Match(_input, errors, out endOfInput, out endOfInputPosition, mustUseAllInput, startIndex);
+        }
+        public NodeMatch[] Match(CharacterSource input, List<Error> errors, out bool endOfInput, out InputPosition endOfInputPosition, bool mustUseAllInput=true, int startIndex=0)
+        {
 
             if (startIndex >= input.Length)
             {
