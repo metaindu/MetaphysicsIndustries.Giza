@@ -97,9 +97,9 @@ namespace MetaphysicsIndustries.Giza
 
             for (k = startIndex; k < input.Length; k++)
             {
-                char ch = input[k];
+                var ch = new InputChar(input[k], kpos);
 
-                bool isWhitespace = char.IsWhiteSpace(ch);
+                bool isWhitespace = char.IsWhiteSpace(ch.Value);
 
                 if (mustUseAllInput && ends.Count > 0)
                 {
@@ -134,15 +134,15 @@ namespace MetaphysicsIndustries.Giza
                     }
                     else if (cur.Node is CharNode)
                     {
-                        if ((cur.Node as CharNode).Matches(ch))
+                        if ((cur.Node as CharNode).Matches(ch.Value))
                         {
-                            cur.MatchedChar = ch;
-                            cur.StartPosition = kpos;
+                            cur.MatchedChar = ch.Value;
+                            cur.StartPosition = ch.Position;
 
                             //next nodes
                             foreach (Node n in cur.Node.NextNodes)
                             {
-                                accepts.Enqueue(NodeMatchStackPair.CreateFollowMatch(n, cur, stack, kpos));
+                                accepts.Enqueue(NodeMatchStackPair.CreateFollowMatch(n, cur, stack, ch.Position));
                             }
 
                             //end
@@ -172,7 +172,7 @@ namespace MetaphysicsIndustries.Giza
                         {
                             foreach (Node n in cur.Node.NextNodes)
                             {
-                                currents.Enqueue(NodeMatchStackPair.CreateFollowMatch(n, cur, stack, kpos));
+                                currents.Enqueue(NodeMatchStackPair.CreateFollowMatch(n, cur, stack, ch.Position));
                             }
 
                             if (cur.Node == implicitNode)
@@ -186,9 +186,9 @@ namespace MetaphysicsIndustries.Giza
                                     rejects.Enqueue(pair2(cur,
                                                           new SpannerError {
                                         ErrorType=SpannerError.ExcessRemainingInput,
-                                        Position = kpos,
+                                        Position = ch.Position,
                                         PreviousNode=cur.Node,
-                                        OffendingCharacter=input[k],
+                                        OffendingCharacter=ch.Value,
                                     }));
                                 }
                             }
@@ -202,7 +202,7 @@ namespace MetaphysicsIndustries.Giza
                             MatchStack stack2 = new MatchStack(cur, stack);
                             foreach (Node start in (cur.Node as DefRefNode).DefRef.StartNodes)
                             {
-                                currents.Enqueue(NodeMatchStackPair.CreateStartDefMatch(start, cur, stack2, kpos));
+                                currents.Enqueue(NodeMatchStackPair.CreateStartDefMatch(start, cur, stack2, ch.Position));
                             }
                         }
                     }
@@ -216,16 +216,16 @@ namespace MetaphysicsIndustries.Giza
                 }
 
                 prevpos = kpos;
-                if (ch == '\n')
+                InputPosition nextpos;
+                if (ch.Value == '\n')
                 {
-                    kpos.Line++;
-                    kpos.Column = 1;
+                    nextpos = new InputPosition(kpos.Index + 1, kpos.Line + 1, 1);
                 }
                 else
                 {
-                    kpos.Column++;
+                    nextpos = new InputPosition(kpos.Index + 1, kpos.Line, kpos.Column + 1);
                 }
-                kpos.Index++;
+                kpos = nextpos;
             }
 
             if (k >= input.Length &&
