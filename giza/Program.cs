@@ -223,7 +223,14 @@ namespace giza
 
         static void Render(List<string> args)
         {
-            args = _options2.Parse(args);
+            string ns = "MetaphysicsIndustries.Giza";
+
+            var options2 = new OptionSet() {
+                { "tokenized", x => tokenized = true },
+                { "namespace", x => ns = x ?? ns },
+            };
+
+            args = options2.Parse(args);
 
             if (args.Count < 2)
             {
