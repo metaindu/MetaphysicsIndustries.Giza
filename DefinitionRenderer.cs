@@ -14,9 +14,13 @@ namespace MetaphysicsIndustries.Giza
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("using System;");
             sb.AppendLine();
+
+            string ns = "MetaphysicsIndustries.Giza";
             string indent = "    ";
-            sb.AppendLine("namespace MetaphysicsIndustries.Giza");
+            sb.AppendFormat("namespace {0}", ns);
+            sb.AppendLine();
             sb.AppendLine("{");
+
             sb.Append(indent);
             sb.AppendFormat("public class {0} : Grammar", RenderIdentifier(className));
             sb.AppendLine();
@@ -155,7 +159,9 @@ namespace MetaphysicsIndustries.Giza
             sb.AppendLine("    }");
             sb.Append(indent);
             sb.AppendLine("}");
+
             sb.AppendLine("}");
+
             sb.AppendLine();
 
             return sb.ToString();
