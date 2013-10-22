@@ -227,7 +227,7 @@ namespace giza
 
             var options2 = new OptionSet() {
                 { "tokenized", x => tokenized = true },
-                { "namespace=", x => ns = x ?? ns },
+                { "ns|namespace=", x => ns = x ?? ns },
             };
 
             args = options2.Parse(args);
