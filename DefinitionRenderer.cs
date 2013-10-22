@@ -14,11 +14,14 @@ namespace MetaphysicsIndustries.Giza
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("using System;");
             sb.AppendLine();
+            string indent = "    ";
             sb.AppendLine("namespace MetaphysicsIndustries.Giza");
             sb.AppendLine("{");
-            sb.AppendFormat("    public class {0} : Grammar", RenderIdentifier(className));
+            sb.Append(indent);
+            sb.AppendFormat("public class {0} : Grammar", RenderIdentifier(className));
             sb.AppendLine();
-            sb.AppendLine("    {");
+            sb.Append(indent);
+            sb.AppendLine("{");
 
             foreach (Definition def in defs)
             {
@@ -26,8 +29,9 @@ namespace MetaphysicsIndustries.Giza
 
                 defnames[def] = name;
 
+                sb.Append(indent);
                 sb.AppendFormat(
-                    "        public Definition {0} = new Definition({1});",
+                    "    public Definition {0} = new Definition({1});",
                     name,
                     RenderString(def.Name));
                 sb.AppendLine();
@@ -60,20 +64,23 @@ namespace MetaphysicsIndustries.Giza
                         type = "DefRefNode";
                     }
 
-                    sb.AppendFormat("        public {0} {1};", type, name);
+                    sb.Append(indent);
+                    sb.AppendFormat("    public {0} {1};", type, name);
                     sb.AppendLine();
                 }
             }
 
             sb.AppendLine();
-            sb.AppendFormat("        public {0}()", RenderIdentifier(className));
+            sb.Append(indent);
+            sb.AppendFormat("    public {0}()", RenderIdentifier(className));
             sb.AppendLine();
-            sb.AppendLine("        {");
+            sb.Append(indent);
+            sb.AppendLine("    {");
 
-            string indent = "            ";
+            string indent2 = indent + "        ";
             foreach (Definition def in defs)
             {
-                sb.Append(indent);
+                sb.Append(indent2);
                 sb.AppendFormat("Definitions.Add({0});", defnames[def]);
                 sb.AppendLine();
             }
@@ -84,7 +91,7 @@ namespace MetaphysicsIndustries.Giza
             {
                 foreach (DefinitionDirective dd in def.Directives)
                 {
-                    sb.Append(indent);
+                    sb.Append(indent2);
                     sb.AppendFormat("{0}.Directives.Add(DefinitionDirective.{1});", defnames[def], dd);
                     sb.AppendLine();
                 }
@@ -93,7 +100,7 @@ namespace MetaphysicsIndustries.Giza
                 {
                     string name = nodenames[node];
 
-                    sb.Append(indent);
+                    sb.Append(indent2);
                     if (node is CharNode)
                     {
                         sb.AppendFormat(
@@ -114,20 +121,20 @@ namespace MetaphysicsIndustries.Giza
                 }
                 foreach (Node node in def.Nodes)
                 {
-                    sb.Append(indent);
+                    sb.Append(indent2);
                     sb.AppendFormat("{0}.Nodes.Add({1});", defnames[def], nodenames[node]);
                     sb.AppendLine();
                 }
 
                 foreach (Node node in def.StartNodes)
                 {
-                    sb.Append(indent);
+                    sb.Append(indent2);
                     sb.AppendFormat("{0}.StartNodes.Add({1});", defnames[def], nodenames[node]);
                     sb.AppendLine();
                 }
                 foreach (Node node in def.EndNodes)
                 {
-                    sb.Append(indent);
+                    sb.Append(indent2);
                     sb.AppendFormat("{0}.EndNodes.Add({1});", defnames[def], nodenames[node]);
                     sb.AppendLine();
                 }
@@ -136,7 +143,7 @@ namespace MetaphysicsIndustries.Giza
                 {
                     foreach (Node next in node.NextNodes)
                     {
-                        sb.Append(indent);
+                        sb.Append(indent2);
                         sb.AppendFormat("{0}.NextNodes.Add({1});", nodenames[node], nodenames[next]);
                         sb.AppendLine();
                     }
@@ -144,8 +151,10 @@ namespace MetaphysicsIndustries.Giza
                 sb.AppendLine();
             }
 
-            sb.AppendLine("        }");
+            sb.Append(indent);
             sb.AppendLine("    }");
+            sb.Append(indent);
+            sb.AppendLine("}");
             sb.AppendLine("}");
             sb.AppendLine();
 
