@@ -227,7 +227,7 @@ namespace giza
 
             var options2 = new OptionSet() {
                 { "tokenized", x => tokenized = true },
-                { "namespace", x => ns = x ?? ns },
+                { "namespace=", x => ns = x ?? ns },
             };
 
             args = options2.Parse(args);
@@ -315,7 +315,7 @@ namespace giza
             else
             {
                 var dr = new DefinitionRenderer();
-                Console.Write(dr.RenderDefinitionsAsCSharpClass(className, g.Definitions));
+                Console.Write(dr.RenderDefinitionsAsCSharpClass(className, g.Definitions, ns: ns));
             }
         }
 
