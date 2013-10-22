@@ -7,7 +7,7 @@ namespace MetaphysicsIndustries.Giza
 {
     public class DefinitionRenderer
     {
-        public string RenderDefinitionsAsCSharpClass(string className, IEnumerable<Definition> defs, string ns=null)
+        public string RenderDefinitionsAsCSharpClass(string className, IEnumerable<Definition> defs, string ns=null, bool singleton=false)
         {
             Dictionary<Definition, string> defnames = new Dictionary<Definition, string>();
 
@@ -37,6 +37,14 @@ namespace MetaphysicsIndustries.Giza
             sb.AppendLine();
             sb.Append(indent);
             sb.AppendLine("{");
+
+            if (singleton)
+            {
+                sb.Append(indent);
+                sb.AppendFormat("    public static readonly {0} Instance = new {0}();", RenderIdentifier(className));
+                sb.AppendLine();
+                sb.AppendLine();
+            }
 
             foreach (Definition def in defs)
             {

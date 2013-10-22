@@ -225,9 +225,12 @@ namespace giza
         {
             string ns = "MetaphysicsIndustries.Giza";
 
+            bool singleton = false;
+
             var options2 = new OptionSet() {
                 { "tokenized", x => tokenized = true },
                 { "ns|namespace=", x => ns = x ?? ns },
+                { "singleton", x => singleton = true },
             };
 
             args = options2.Parse(args);
@@ -315,7 +318,7 @@ namespace giza
             else
             {
                 var dr = new DefinitionRenderer();
-                Console.Write(dr.RenderDefinitionsAsCSharpClass(className, g.Definitions, ns: ns));
+                Console.Write(dr.RenderDefinitionsAsCSharpClass(className, g.Definitions, ns: ns, singleton: singleton));
             }
         }
 
