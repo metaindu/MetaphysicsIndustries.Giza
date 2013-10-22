@@ -7,19 +7,30 @@ namespace MetaphysicsIndustries.Giza
 {
     public class DefinitionRenderer
     {
-        public string RenderDefinitionsAsCSharpClass(string className, IEnumerable<Definition> defs)
+        public string RenderDefinitionsAsCSharpClass(string className, IEnumerable<Definition> defs, string ns=null)
         {
             Dictionary<Definition, string> defnames = new Dictionary<Definition, string>();
 
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("using System;");
+            if (ns != "MetaphysicsIndustries.Giza")
+            {
+                sb.AppendLine("using MetaphysicsIndustries.Giza;");
+            }
             sb.AppendLine();
 
-            string ns = "MetaphysicsIndustries.Giza";
-            string indent = "    ";
-            sb.AppendFormat("namespace {0}", ns);
-            sb.AppendLine();
-            sb.AppendLine("{");
+            string indent;
+            if (string.IsNullOrEmpty(ns))
+            {
+                indent = string.Empty;
+            }
+            else
+            {
+                indent = "    ";
+                sb.AppendFormat("namespace {0}", ns);
+                sb.AppendLine();
+                sb.AppendLine("{");
+            }
 
             sb.Append(indent);
             sb.AppendFormat("public class {0} : Grammar", RenderIdentifier(className));
@@ -160,7 +171,10 @@ namespace MetaphysicsIndustries.Giza
             sb.Append(indent);
             sb.AppendLine("}");
 
-            sb.AppendLine("}");
+            if (!string.IsNullOrEmpty(ns))
+            {
+                sb.AppendLine("}");
+            }
 
             sb.AppendLine();
 
