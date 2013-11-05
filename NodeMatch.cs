@@ -25,7 +25,7 @@ namespace MetaphysicsIndustries.Giza
         public InputPosition StartPosition;
         public NodeMatch StartDef;
         public Token Token;
-        public char MatchedChar;
+        public InputChar MatchedChar;
         public TransitionType Transition;
         public Node Node;
 
@@ -112,14 +112,14 @@ namespace MetaphysicsIndustries.Giza
                                      Token.Value,
                                      Token.Definition.Name);
             }
-            else if (MatchedChar != '\0')
+            else if (MatchedChar.Value != '\0')
             {
                 return string.Format("[{0}] {1}:{2}, {3} nm nexts, match char '{4}'",
                                      _id,
                                      nodestr,
                                      Transition,
                                      Nexts.Count,
-                                     MatchedChar.ToString());
+                                     MatchedChar.Value.ToString());
             }
             else
             {

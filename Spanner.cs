@@ -149,7 +149,7 @@ namespace MetaphysicsIndustries.Giza
                     {
                         if ((cur.Node as CharNode).Matches(ch.Value))
                         {
-                            cur.MatchedChar = ch.Value;
+                            cur.MatchedChar = ch;
                             cur.StartPosition = ch.Position;
 
                             //next nodes
@@ -531,7 +531,7 @@ namespace MetaphysicsIndustries.Giza
                     {
                         Span s = new Span();
                         s.Node = nm.Node;
-                        s.Value = nm.MatchedChar.ToString();
+                        s.Value = nm.MatchedChar.Value.ToString();
                         stack.Peek().Subspans.Add(s);
                     }
                 }
