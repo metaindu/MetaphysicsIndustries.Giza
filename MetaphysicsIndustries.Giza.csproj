@@ -91,6 +91,7 @@
     <Compile Include="InputPosition.cs" />
     <Compile Include="InputChar.cs" />
     <Compile Include="CharacterSource.cs" />
+    <Compile Include="PriorityQueue.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
