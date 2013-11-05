@@ -160,6 +160,44 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual("low", array[1]);
             Assert.AreEqual("low2", array[2]);
         }
+
+        [Test]
+        public void TestLowToHighAddSamePriorityHigh()
+        {
+            // setup
+            var pq = new PriorityQueue<string, int>(lowToHigh: true);
+            pq.Enqueue("high", 5);
+            pq.Enqueue("low", 1);
+            var array = new string[3];
+
+            // action
+            pq.Enqueue("high2", 5);
+            pq.CopyTo(array, 0);
+
+            // assertion
+            Assert.AreEqual("low", array[0]);
+            Assert.AreEqual("high", array[1]);
+            Assert.AreEqual("high2", array[2]);
+        }
+
+        [Test]
+        public void TestLowToHighAddSamePriorityLow()
+        {
+            // setup
+            var pq = new PriorityQueue<string, int>(lowToHigh: true);
+            pq.Enqueue("high", 5);
+            pq.Enqueue("low", 1);
+            var array = new string[3];
+
+            // action
+            pq.Enqueue("low2", 1);
+            pq.CopyTo(array, 0);
+
+            // assertion
+            Assert.AreEqual("low", array[0]);
+            Assert.AreEqual("low2", array[1]);
+            Assert.AreEqual("high", array[2]);
+        }
     }
 }
 

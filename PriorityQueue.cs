@@ -5,13 +5,20 @@ namespace MetaphysicsIndustries.Giza
 {
     public class PriorityQueue<TValue, TPriority>
     {
-        public PriorityQueue()
-            : this(Comparer<TPriority>.Default)
+        public PriorityQueue(bool lowToHigh=false)
+            : this(Comparer<TPriority>.Default, lowToHigh: lowToHigh)
         {
         }
-        public PriorityQueue(IComparer<TPriority> comparer)
+        public PriorityQueue(IComparer<TPriority> comparer, bool lowToHigh=false)
         {
-            _comparer = new ReverseComparer(comparer);
+            if (lowToHigh)
+            {
+                _comparer = comparer;
+            }
+            else
+            {
+                _comparer = new ReverseComparer(comparer);
+            }
         }
 
         class ReverseComparer : IComparer<TPriority>
