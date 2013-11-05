@@ -110,7 +110,8 @@ namespace MetaphysicsIndustries.Giza
 
             for (k = startIndex; k < input.Length; k++)
             {
-                var ch = new InputChar(input[k], kpos);
+                input.SetCurrentIndex(k);
+                var ch = input.CurrentValue;
 
                 bool isWhitespace = char.IsWhiteSpace(ch.Value);
 
