@@ -22,12 +22,32 @@ namespace MetaphysicsIndustries.Giza
 
         public readonly int _id;
 
-        public InputPosition StartPosition;
         public NodeMatch StartDef;
         public Token Token;
         public InputChar MatchedChar;
         public TransitionType Transition;
         public Node Node;
+
+        public InputPosition StartPosition
+        {
+            get
+             {
+                if (MatchedChar.Value != '\0')
+                {
+                    return MatchedChar.Position;
+                }
+                else if (!string.IsNullOrEmpty(Token.Value))
+                {
+                    return Token.StartPosition;
+                }
+                else
+                {
+                    return AlternateStartPosition;
+                }
+            }
+        }
+        public InputPosition AlternateStartPosition = new InputPosition(-1);
+
 
         public NodeMatch(Node node, TransitionType transition, NodeMatch previous)
         {
@@ -88,7 +108,6 @@ namespace MetaphysicsIndustries.Giza
         public NodeMatch CloneWithNewToken(Token token)
         {
             NodeMatch nm = new NodeMatch(this.Node, this.Transition, this.Previous);
-            nm.StartPosition = this.StartPosition;
             nm.StartDef = this.StartDef;
             nm.Token = token;
 
@@ -306,7 +325,7 @@ namespace MetaphysicsIndustries.Giza
         public static NodeMatchStackPair CreateStartDefMatch(Node node, NodeMatch match, MatchStack stack2, InputPosition pos)
         {
             NodeMatch match2 = new NodeMatch(node, NodeMatch.TransitionType.StartDef, match);
-            match2.StartPosition = pos;
+            match2.AlternateStartPosition = pos;
             return new NodeMatchStackPair(match2, stack2);
         }
 
@@ -318,7 +337,7 @@ namespace MetaphysicsIndustries.Giza
         public static NodeMatchStackPair CreateEndDefMatch(NodeMatch match, MatchStack stack)
         {
             NodeMatch match2 = new NodeMatch(stack.Node, NodeMatch.TransitionType.EndDef, match);
-            match2.StartPosition = match.StartPosition;
+            match2.AlternateStartPosition = match.StartPosition;
             match2.StartDef = stack.NodeMatch;
             return new NodeMatchStackPair(match2, stack.Parent);
         }
@@ -326,7 +345,7 @@ namespace MetaphysicsIndustries.Giza
         public static NodeMatchStackPair CreateFollowMatch(Node node, NodeMatch match, MatchStack stack, InputPosition pos)
         {
             NodeMatch match2 = new NodeMatch(node, NodeMatch.TransitionType.Follow, match);
-            match2.StartPosition = pos;
+            match2.AlternateStartPosition = pos;
             return new NodeMatchStackPair(match2, stack);
         }
 

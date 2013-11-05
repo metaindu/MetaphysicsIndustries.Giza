@@ -82,7 +82,6 @@ namespace MetaphysicsIndustries.Giza
 
             DefRefNode implicitNode = new DefRefNode(_definition);
             NodeMatch root = new NodeMatch(implicitNode, NodeMatch.TransitionType.Root, null);
-            root.StartPosition = new InputPosition(-1);
 
 
             Queue<NodeMatchStackPair> currents = new Queue<NodeMatchStackPair>();
@@ -151,7 +150,6 @@ namespace MetaphysicsIndustries.Giza
                         if ((cur.Node as CharNode).Matches(ch.Value))
                         {
                             cur.MatchedChar = ch;
-                            cur.StartPosition = ch.Position;
 
                             //next nodes
                             foreach (Node n in cur.Node.NextNodes)
