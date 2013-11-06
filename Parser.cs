@@ -8,22 +8,6 @@ namespace MetaphysicsIndustries.Giza
 {
     public class Parser
     {
-//        public static class Logger
-//        {
-//            public static readonly StringBuilder Log = new StringBuilder();
-//
-//            public static void WriteLine(string str)
-//            {
-//                Log.AppendLine(str);
-//            }
-//
-//            public static void WriteLine(string format, params object[] args)
-//            {
-//                Log.AppendFormat(format, args);
-//                Log.AppendLine();
-//            }
-//        }
-
         public Parser(Definition definition)
         {
             if (definition == null) throw new ArgumentNullException("definition");
