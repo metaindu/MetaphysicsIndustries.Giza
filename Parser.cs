@@ -8,6 +8,22 @@ namespace MetaphysicsIndustries.Giza
 {
     public class Parser
     {
+//        public static class Logger
+//        {
+//            public static readonly StringBuilder Log = new StringBuilder();
+//
+//            public static void WriteLine(string str)
+//            {
+//                Log.AppendLine(str);
+//            }
+//
+//            public static void WriteLine(string format, params object[] args)
+//            {
+//                Log.AppendFormat(format, args);
+//                Log.AppendLine();
+//            }
+//        }
+
         public class ParserError : Error
         {
             public static readonly ErrorType InvalidToken =         new ErrorType(name:"InvalidToken",          descriptionFormat:"InvalidToken"          );
@@ -127,7 +143,7 @@ namespace MetaphysicsIndustries.Giza
 
             ITokenSource tokenSource = new Tokenizer(_definition.ParentGrammar, input);
 
-            var sources = new Queue<NodeMatchStackPair>();
+            var sources = new PriorityQueue<NodeMatchStackPair, int>(lowToHigh: true);
             var ends = new List<NodeMatch>();
             var rootDef = new Definition("$rootDef");
             var rootNode = new DefRefNode(_definition, "$rootNode");
@@ -137,16 +153,19 @@ namespace MetaphysicsIndustries.Giza
             var root = new NodeMatch(rootNode, NodeMatch.TransitionType.Root, null);
             var rejects = new List<NodeMatchErrorPair>();
 
-            sources.Enqueue(pair(root, null));
+            sources.Enqueue(pair(root, null), -1);
+//            Logger.WriteLine("Starting");
 
             while (sources.Count > 0)
             {
-                var nextSources = new List<NodeMatchStackPair>();
 
                 while (sources.Count > 0)
                 {
+                    var nextSources = new List<NodeMatchStackPair>();
+
                     var info = new ParseInfo();
                     info.SourcePair = sources.Dequeue();
+//                    Logger.WriteLine("Dequeuing source with next index {0}", info.Source.Token.IndexOfNextTokenization);
 
                     var currents = new Queue<NodeMatchStackPair>();
 
@@ -349,11 +368,12 @@ namespace MetaphysicsIndustries.Giza
                             rejects.Add(branch.NodeMatch, err);
                         }
                     }
-                }
 
-                foreach (var next in nextSources)
-                {
-                    sources.Enqueue(next);
+                    foreach (var next in nextSources)
+                    {
+                        sources.Enqueue(next, next.NodeMatch.Token.IndexOfNextTokenization);
+//                        Logger.WriteLine("Enqueuing source with next index {0}", next.NodeMatch.Token.IndexOfNextTokenization);
+                    }
                 }
             }
 
