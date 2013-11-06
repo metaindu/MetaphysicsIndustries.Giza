@@ -931,6 +931,36 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreSame(threeDef, (err.LastValidMatchingNode as DefRefNode).DefRef);
             Assert.IsNull(err.ExpectedNodes);
         }
+
+        [Test]
+        [Explicit("A manual test for debugging the internal order of source node matches in the parser.")]
+        public void TestNodeMatchTokenOrder()
+        {
+            var testGrammarText =
+                "sequence = ( a abc c | aa bb+ cc );\n" +
+                "<token> a = 'a';\n" +
+                "<token> abc = 'abbbbc';\n" +
+                "<token> aa = 'aa';\n" +
+                "<token> bb = 'bb';\n" +
+                "<token> cc = 'cc';\n" +
+                "<token> c = 'c';";
+            var testInput = "aabbbbcc";
+            var sgs = new SupergrammarSpanner();
+            var errors = new List<Error>();
+            var dis = sgs.GetExpressions(testGrammarText, errors);
+            Assert.IsEmpty(errors);
+            var tgb = new TokenizedGrammarBuilder();
+            var testGrammar = tgb.BuildTokenizedGrammar(dis);
+            var sequenceDef = testGrammar.FindDefinitionByName("sequence");
+            var parser = new Parser(sequenceDef);
+
+
+            var spans = parser.Parse(testInput, errors);
+
+            Assert.IsNotNull(spans);
+            Assert.AreEqual(2, spans.Length);
+
+        }
     }
 }
 
