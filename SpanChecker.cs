@@ -7,18 +7,6 @@ namespace MetaphysicsIndustries.Giza
 {
     public class SpanChecker
     {
-        public class ScError : Error
-        {
-            public Span Span;
-
-            public static readonly ErrorType BadStartingNode =          new ErrorType(name:"BadStartingNode",       descriptionFormat:"BadStartingNode"       );
-            public static readonly ErrorType BadEndingNode =            new ErrorType(name:"BadEndingNode",         descriptionFormat:"BadEndingNode"         );
-            public static readonly ErrorType BadFollow =                new ErrorType(name:"BadFollow",             descriptionFormat:"BadFollow"             );
-            public static readonly ErrorType NodeInWrongDefinition =    new ErrorType(name:"NodeInWrongDefinition", descriptionFormat:"NodeInWrongDefinition" );
-            public static readonly ErrorType SpanHasNoSubspans =        new ErrorType(name:"SpanHasNoSubspans",     descriptionFormat:"SpanHasNoSubspans"     );
-            public static readonly ErrorType CycleInSubspans =          new ErrorType(name:"CycleInSubspans",       descriptionFormat:"CycleInSubspans"       );
-        }
-
         public List<Error> CheckSpan(Span span, Grammar grammar)
         {
             List<Error> errors = new List<Error>();
@@ -34,8 +22,8 @@ namespace MetaphysicsIndustries.Giza
 
             if (ancestorSpans.Contains(span))
             {
-                errors.Add(new ScError{
-                    ErrorType=ScError.CycleInSubspans,
+                errors.Add(new SpanError{
+                    ErrorType=SpanError.CycleInSubspans,
                     Span=span,
                 });
                 return;
@@ -47,8 +35,8 @@ namespace MetaphysicsIndustries.Giza
                 if (spandef != null &&
                     !spandef.StartNodes.Contains(first.Node))
                 {
-                    errors.Add(new ScError{
-                        ErrorType=ScError.BadStartingNode,
+                    errors.Add(new SpanError{
+                        ErrorType=SpanError.BadStartingNode,
                         Span=first,
                     });
                 }
@@ -64,8 +52,8 @@ namespace MetaphysicsIndustries.Giza
                         Span prev = span.Subspans[i - 1];
                         if (!prev.Node.NextNodes.Contains(next.Node))
                         {
-                            errors.Add(new ScError{
-                                ErrorType=ScError.BadFollow,
+                            errors.Add(new SpanError{
+                                ErrorType=SpanError.BadFollow,
                                 Span=next,
                             });
                         }
@@ -73,8 +61,8 @@ namespace MetaphysicsIndustries.Giza
 
                     if (next.Node.ParentDefinition != spandef)
                     {
-                        errors.Add(new ScError{
-                            ErrorType=ScError.NodeInWrongDefinition,
+                        errors.Add(new SpanError{
+                            ErrorType=SpanError.NodeInWrongDefinition,
                             Span=next,
                         });
                     }
@@ -89,8 +77,8 @@ namespace MetaphysicsIndustries.Giza
                 if (spandef != null &&
                     !spandef.EndNodes.Contains(span.Subspans.Last().Node))
                 {
-                    errors.Add(new ScError{
-                        ErrorType=ScError.BadEndingNode,
+                    errors.Add(new SpanError{
+                        ErrorType=SpanError.BadEndingNode,
                         Span=span.Subspans.Last(),
                     });
                 }
@@ -99,8 +87,8 @@ namespace MetaphysicsIndustries.Giza
             {
                 if (span.Node is DefRefNode)
                 {
-                    errors.Add(new ScError{
-                        ErrorType=ScError.SpanHasNoSubspans,
+                    errors.Add(new SpanError{
+                        ErrorType=SpanError.SpanHasNoSubspans,
                         Span=span,
                     });
                 }

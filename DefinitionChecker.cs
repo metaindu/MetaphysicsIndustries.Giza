@@ -17,18 +17,6 @@ namespace MetaphysicsIndustries.Giza
            Definition conforms to what the supergrammar can output (a narrower
            requirement). */
 
-        public class DcError : Error
-        {
-            public static readonly ErrorType NextNodeLinksOutsideOfDefinition =     new ErrorType(name:"NextNodeLinksOutsideOfDefinition",  descriptionFormat:"NextNodeLinksOutsideOfDefinition"  );
-            public static readonly ErrorType StartNodeHasWrongParentDefinition =    new ErrorType(name:"StartNodeHasWrongParentDefinition", descriptionFormat:"StartNodeHasWrongParentDefinition" );
-            public static readonly ErrorType EndNodeHasWrongParentDefinition =      new ErrorType(name:"EndNodeHasWrongParentDefinition",   descriptionFormat:"EndNodeHasWrongParentDefinition"   );
-            public static readonly ErrorType LeadingReferenceCycle =                new ErrorType(name:"LeadingReferenceCycle",             descriptionFormat:"LeadingReferenceCycle"             );
-            public static readonly ErrorType NodeHasNoPathFromStart =               new ErrorType(name:"NodeHasNoPathFromStart");
-            public static readonly ErrorType NodeHasNoPathToEnd =                   new ErrorType(name:"NodeHasNoPathToEnd");
-
-            public Node Node;
-            public List<Definition> Cycle;
-        }
 
         public IEnumerable<Error> CheckDefinitions(IEnumerable<Definition> defs)
         {
@@ -110,8 +98,8 @@ namespace MetaphysicsIndustries.Giza
                         leadingCycle.Add(current);
                     }
 
-                    errors.Add(new DcError {
-                        ErrorType=DcError.LeadingReferenceCycle,
+                    errors.Add(new DefinitionError {
+                        ErrorType=DefinitionError.LeadingReferenceCycle,
                         Cycle=leadingCycle,
                     });
                 }
@@ -140,8 +128,8 @@ namespace MetaphysicsIndustries.Giza
                 {
                     if (next.ParentDefinition != def)
                     {
-                        errors.Add(new DcError {
-                            ErrorType=DcError.NextNodeLinksOutsideOfDefinition,
+                        errors.Add(new DefinitionError {
+                            ErrorType=DefinitionError.NextNodeLinksOutsideOfDefinition,
                             Node = node,
                         });
                         checkPaths = false;
@@ -154,8 +142,8 @@ namespace MetaphysicsIndustries.Giza
             {
                 if (node.ParentDefinition != def)
                 {
-                    errors.Add(new DcError {
-                        ErrorType=DcError.StartNodeHasWrongParentDefinition,
+                    errors.Add(new DefinitionError {
+                        ErrorType=DefinitionError.StartNodeHasWrongParentDefinition,
                         Node=node,
                     });
                     checkPaths = false;
@@ -165,8 +153,8 @@ namespace MetaphysicsIndustries.Giza
             {
                 if (node.ParentDefinition != def)
                 {
-                    errors.Add(new DcError {
-                        ErrorType=DcError.EndNodeHasWrongParentDefinition,
+                    errors.Add(new DefinitionError {
+                        ErrorType=DefinitionError.EndNodeHasWrongParentDefinition,
                         Node=node,
                     });
                     checkPaths = false;
@@ -202,8 +190,8 @@ namespace MetaphysicsIndustries.Giza
 
                     foreach (var node in remaining)
                     {
-                        errors.Add(new DcError {
-                            ErrorType = DcError.NodeHasNoPathFromStart,
+                        errors.Add(new DefinitionError {
+                            ErrorType = DefinitionError.NodeHasNoPathFromStart,
                             Node = node,
                         });
                     }
@@ -250,8 +238,8 @@ namespace MetaphysicsIndustries.Giza
 
                     foreach (var node in remaining)
                     {
-                        errors.Add(new DcError {
-                            ErrorType = DcError.NodeHasNoPathToEnd,
+                        errors.Add(new DefinitionError {
+                            ErrorType = DefinitionError.NodeHasNoPathToEnd,
                             Node = node,
                         });
                     }

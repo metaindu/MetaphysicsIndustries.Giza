@@ -45,9 +45,9 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Assert.IsEmpty(spans);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<Spanner.SpannerError>(errors[0]);
-            var err = ((Spanner.SpannerError)errors[0]);
-            Assert.AreEqual(Spanner.SpannerError.InvalidCharacter, err.ErrorType);
+            Assert.IsInstanceOf<SpannerError>(errors[0]);
+            var err = ((SpannerError)errors[0]);
+            Assert.AreEqual(SpannerError.InvalidCharacter, err.ErrorType);
             Assert.AreEqual('w', err.OffendingCharacter);
             Assert.AreEqual(4, err.Position.Line);
             Assert.AreEqual(2, err.Position.Column);
@@ -81,9 +81,9 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Assert.IsEmpty(spans);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<Spanner.SpannerError>(errors[0]);
-            var err = ((Spanner.SpannerError)errors[0]);
-            Assert.AreEqual(Spanner.SpannerError.InvalidCharacter, err.ErrorType);
+            Assert.IsInstanceOf<SpannerError>(errors[0]);
+            var err = ((SpannerError)errors[0]);
+            Assert.AreEqual(SpannerError.InvalidCharacter, err.ErrorType);
             Assert.AreEqual('$', err.OffendingCharacter);
             Assert.AreEqual(1, err.Position.Line);
             Assert.AreEqual(1, err.Position.Column);
@@ -118,9 +118,9 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(0, spans.Length);
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<Spanner.SpannerError>(errors[0]);
-            var err = ((Spanner.SpannerError)errors[0]);
-            Assert.AreEqual(Spanner.SpannerError.UnexpectedEndOfInput, err.ErrorType);
+            Assert.IsInstanceOf<SpannerError>(errors[0]);
+            var err = ((SpannerError)errors[0]);
+            Assert.AreEqual(SpannerError.UnexpectedEndOfInput, err.ErrorType);
             Assert.AreEqual(1, err.Position.Line);
             Assert.AreEqual(15, err.Position.Column);
             Assert.AreEqual(14, err.Position.Index);
@@ -157,9 +157,9 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(0, spans.Length);
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<Spanner.SpannerError>(errors[0]);
-            var err = ((Spanner.SpannerError)errors[0]);
-            Assert.AreEqual(Spanner.SpannerError.UnexpectedEndOfInput, err.ErrorType);
+            Assert.IsInstanceOf<SpannerError>(errors[0]);
+            var err = ((SpannerError)errors[0]);
+            Assert.AreEqual(SpannerError.UnexpectedEndOfInput, err.ErrorType);
             Assert.AreEqual(1, err.Position.Line);
             Assert.AreEqual(14, err.Position.Column);
             Assert.AreEqual(13, err.Position.Index);
@@ -196,9 +196,9 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(0, spans.Length);
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<Spanner.SpannerError>(errors[0]);
-            var err = ((Spanner.SpannerError)errors[0]);
-            Assert.AreEqual(Spanner.SpannerError.UnexpectedEndOfInput, err.ErrorType);
+            Assert.IsInstanceOf<SpannerError>(errors[0]);
+            var err = ((SpannerError)errors[0]);
+            Assert.AreEqual(SpannerError.UnexpectedEndOfInput, err.ErrorType);
             Assert.AreEqual(1, err.Position.Line);
             Assert.AreEqual(13, err.Position.Column);
             Assert.AreEqual(12, err.Position.Index);
@@ -235,9 +235,9 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(0, spans.Length);
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<Spanner.SpannerError>(errors[0]);
-            var err = ((Spanner.SpannerError)errors[0]);
-            Assert.AreEqual(Spanner.SpannerError.ExcessRemainingInput, err.ErrorType);
+            Assert.IsInstanceOf<SpannerError>(errors[0]);
+            var err = ((SpannerError)errors[0]);
+            Assert.AreEqual(SpannerError.ExcessRemainingInput, err.ErrorType);
             Assert.AreEqual(1, err.Position.Line);
             Assert.AreEqual(15, err.Position.Column);
             Assert.AreEqual(14, err.Position.Index);

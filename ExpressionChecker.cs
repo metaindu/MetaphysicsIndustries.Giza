@@ -35,8 +35,8 @@ namespace MetaphysicsIndustries.Giza
 
                 if (numTokenizedDirectives > 1)
                 {
-                    errors.Add(new EcError {
-                        ErrorType = EcError.MixedTokenizedDirectives,
+                    errors.Add(new ExpressionError {
+                        ErrorType = ExpressionError.MixedTokenizedDirectives,
                         DefinitionInfo = def,
                     });
                 }
@@ -44,8 +44,8 @@ namespace MetaphysicsIndustries.Giza
                 if (!IsTokenized(def) &&
                     def.Directives.Contains(DefinitionDirective.Atomic))
                 {
-                    errors.Add(new EcError {
-                        ErrorType = EcError.AtomicInNonTokenDefinition,
+                    errors.Add(new ExpressionError {
+                        ErrorType = ExpressionError.AtomicInNonTokenDefinition,
                         DefinitionInfo = def,
                     });
                 }
@@ -53,8 +53,8 @@ namespace MetaphysicsIndustries.Giza
                 if (def.Directives.Contains(DefinitionDirective.Token) &&
                     def.Directives.Contains(DefinitionDirective.Atomic))
                 {
-                    errors.Add(new EcError {
-                        ErrorType = EcError.AtomicInTokenDefinition,
+                    errors.Add(new ExpressionError {
+                        ErrorType = ExpressionError.AtomicInTokenDefinition,
                         DefinitionInfo = def,
                     });
                 }
@@ -62,8 +62,8 @@ namespace MetaphysicsIndustries.Giza
                 if (def.Directives.Contains(DefinitionDirective.Comment) &&
                     def.Directives.Contains(DefinitionDirective.Atomic))
                 {
-                    errors.Add(new EcError {
-                        ErrorType = EcError.AtomicInCommentDefinition,
+                    errors.Add(new ExpressionError {
+                        ErrorType = ExpressionError.AtomicInCommentDefinition,
                         DefinitionInfo = def,
                     });
                 }
@@ -71,8 +71,8 @@ namespace MetaphysicsIndustries.Giza
                 if (!IsTokenized(def) &&
                     def.Directives.Contains(DefinitionDirective.MindWhitespace))
                 {
-                    errors.Add(new EcError {
-                        ErrorType = EcError.MindWhitespaceInNonTokenDefinition,
+                    errors.Add(new ExpressionError {
+                        ErrorType = ExpressionError.MindWhitespaceInNonTokenDefinition,
                         DefinitionInfo = def,
                     });
                 }
@@ -80,8 +80,8 @@ namespace MetaphysicsIndustries.Giza
                 if (IsTokenized(def) &&
                     def.Directives.Contains(DefinitionDirective.MindWhitespace))
                 {
-                    errors.Add(new EcError {
-                        ErrorType = EcError.MindWhitespaceInTokenizedDefinition,
+                    errors.Add(new ExpressionError {
+                        ErrorType = ExpressionError.MindWhitespaceInTokenizedDefinition,
                         DefinitionInfo = def,
                     });
                 }
@@ -95,8 +95,8 @@ namespace MetaphysicsIndustries.Giza
                     if (!IsTokenized(def) &&
                         target.Directives.Contains(DefinitionDirective.Subtoken))
                     {
-                        errors.Add(new EcError {
-                            ErrorType = EcError.NonTokenReferencesSubtoken,
+                        errors.Add(new ExpressionError {
+                            ErrorType = ExpressionError.NonTokenReferencesSubtoken,
                             ExpressionItem = defref,
                             DefinitionInfo = def,
                         });
@@ -105,8 +105,8 @@ namespace MetaphysicsIndustries.Giza
                     if (!IsTokenized(def) &&
                         target.Directives.Contains(DefinitionDirective.Comment))
                     {
-                        errors.Add(new EcError {
-                            ErrorType = EcError.NonTokenReferencesComment,
+                        errors.Add(new ExpressionError {
+                            ErrorType = ExpressionError.NonTokenReferencesComment,
                             ExpressionItem = defref,
                             DefinitionInfo = def,
                         });
@@ -115,8 +115,8 @@ namespace MetaphysicsIndustries.Giza
                     if (IsTokenized(def) &&
                         target.Directives.Contains(DefinitionDirective.Token))
                     {
-                        errors.Add(new EcError {
-                            ErrorType = EcError.TokenizedReferencesToken,
+                        errors.Add(new ExpressionError {
+                            ErrorType = ExpressionError.TokenizedReferencesToken,
                             ExpressionItem = defref,
                             DefinitionInfo = def,
                         });
@@ -125,8 +125,8 @@ namespace MetaphysicsIndustries.Giza
                     if (IsTokenized(def) &&
                         target.Directives.Contains(DefinitionDirective.Comment))
                     {
-                        errors.Add(new EcError {
-                            ErrorType = EcError.TokenizedReferencesComment,
+                        errors.Add(new ExpressionError {
+                            ErrorType = ExpressionError.TokenizedReferencesComment,
                             ExpressionItem = defref,
                             DefinitionInfo = def,
                         });
@@ -135,8 +135,8 @@ namespace MetaphysicsIndustries.Giza
                     if (IsTokenized(def) &&
                         !IsTokenized(target))
                     {
-                        errors.Add(new EcError {
-                            ErrorType = EcError.TokenizedReferencesNonToken,
+                        errors.Add(new ExpressionError {
+                            ErrorType = ExpressionError.TokenizedReferencesNonToken,
                             ExpressionItem = defref,
                             DefinitionInfo = def,
                         });
@@ -157,8 +157,8 @@ namespace MetaphysicsIndustries.Giza
                     def.Directives.Contains(DefinitionDirective.Subtoken) ||
                     def.Directives.Contains(DefinitionDirective.Comment))
                 {
-                    errors.Add(new EcError {
-                        ErrorType = EcError.TokenizedDirectiveInNonTokenizedGrammar,
+                    errors.Add(new ExpressionError {
+                        ErrorType = ExpressionError.TokenizedDirectiveInNonTokenizedGrammar,
                         DefinitionInfo = def,
                     });
                 }
@@ -188,8 +188,8 @@ namespace MetaphysicsIndustries.Giza
                 index++;
                 if (def == null)
                 {
-                    errors.Add(new EcError {
-                        ErrorType=EcError.NullDefinition,
+                    errors.Add(new ExpressionError {
+                        ErrorType=ExpressionError.NullDefinition,
                         Index=index,
                     });
                     continue;
@@ -207,8 +207,8 @@ namespace MetaphysicsIndustries.Giza
 
                 if (visitedDefs.Contains(def))
                 {
-                    errors.Add(new EcError {
-                        ErrorType=EcError.ReusedDefintion,
+                    errors.Add(new ExpressionError {
+                        ErrorType=ExpressionError.ReusedDefintion,
                         DefinitionInfo=def,
                         Index=index,
                     });
@@ -218,16 +218,16 @@ namespace MetaphysicsIndustries.Giza
 
                 if (string.IsNullOrEmpty(def.Name))
                 {
-                    errors.Add(new EcError {
-                        ErrorType=EcError.NullOrEmptyDefinitionName,
+                    errors.Add(new ExpressionError {
+                        ErrorType=ExpressionError.NullOrEmptyDefinitionName,
                         DefinitionInfo=def,
                         Index=index,
                     });
                 }
                 else if (defnames2.Contains(def.Name))
                 {
-                    errors.Add(new EcError {
-                        ErrorType=EcError.DuplicateDefinitionName,
+                    errors.Add(new ExpressionError {
+                        ErrorType=ExpressionError.DuplicateDefinitionName,
                         Index=index,
                         DefinitionInfo=def,
                     });
@@ -252,8 +252,8 @@ namespace MetaphysicsIndustries.Giza
         {
             if (visitedExprs.Contains(expr))
             {
-                errors.Add(new EcError {
-                    ErrorType=EcError.ReusedExpression,
+                errors.Add(new ExpressionError {
+                    ErrorType=ExpressionError.ReusedExpression,
                     Expression=expr,
                     DefinitionInfo=def,
                 });
@@ -263,8 +263,8 @@ namespace MetaphysicsIndustries.Giza
 
             if (expr.Items == null || expr.Items.Count < 1)
             {
-                errors.Add(new EcError {
-                    ErrorType = EcError.EmptyExpressionItems,
+                errors.Add(new ExpressionError {
+                    ErrorType = ExpressionError.EmptyExpressionItems,
                     Expression = expr,
                     DefinitionInfo = def,
                 });
@@ -278,8 +278,8 @@ namespace MetaphysicsIndustries.Giza
                 {
                     if (item == null)
                     {
-                        errors.Add(new EcError {
-                            ErrorType = EcError.NullExpressionItem,
+                        errors.Add(new ExpressionError {
+                            ErrorType = ExpressionError.NullExpressionItem,
                             Expression = expr,
                             Index = index,
                             DefinitionInfo = def
@@ -296,8 +296,8 @@ namespace MetaphysicsIndustries.Giza
 
                 if (skippable && expr.Items.Count > 0)
                 {
-                    errors.Add(new EcError {
-                        ErrorType = EcError.AllItemsSkippable,
+                    errors.Add(new ExpressionError {
+                        ErrorType = ExpressionError.AllItemsSkippable,
                         Expression = expr,
                         DefinitionInfo = def,
                     });
@@ -316,8 +316,8 @@ namespace MetaphysicsIndustries.Giza
 
             if (visitedItems.Contains(item))
             {
-                errors.Add(new EcError {
-                    ErrorType=EcError.ReusedExpressionItem,
+                errors.Add(new ExpressionError {
+                    ErrorType=ExpressionError.ReusedExpressionItem,
                     ExpressionItem=item,
                     DefinitionInfo=def,
                 });
@@ -330,8 +330,8 @@ namespace MetaphysicsIndustries.Giza
                 OrExpression orexor = (OrExpression)item;
                 if (orexor.Expressions.Count < 1)
                 {
-                    errors.Add(new EcError {
-                        ErrorType = EcError.EmptyOrexprExpressionList,
+                    errors.Add(new ExpressionError {
+                        ErrorType = ExpressionError.EmptyOrexprExpressionList,
                         DefinitionInfo = def,
                         ExpressionItem = item
                     });
@@ -343,8 +343,8 @@ namespace MetaphysicsIndustries.Giza
                     {
                         if (expr == null)
                         {
-                            errors.Add(new EcError {
-                                ErrorType = EcError.NullOrexprExpression,
+                            errors.Add(new ExpressionError {
+                                ErrorType = ExpressionError.NullOrexprExpression,
                                 ExpressionItem = item,
                                 Index = index,
                                 DefinitionInfo = def,
@@ -362,8 +362,8 @@ namespace MetaphysicsIndustries.Giza
             {
                 if ((item as SubExpression).Tag == null)
                 {
-                    errors.Add(new EcError {
-                        ErrorType = EcError.NullSubexprTag,
+                    errors.Add(new ExpressionError {
+                        ErrorType = ExpressionError.NullSubexprTag,
                         ExpressionItem = item,
                         DefinitionInfo = def,
                     });
@@ -373,8 +373,8 @@ namespace MetaphysicsIndustries.Giza
                 {
                     if (string.IsNullOrEmpty((item as LiteralSubExpression).Value))
                     {
-                        errors.Add(new EcError {
-                            ErrorType = EcError.NullOrEmptyLiteralValue,
+                        errors.Add(new ExpressionError {
+                            ErrorType = ExpressionError.NullOrEmptyLiteralValue,
                             ExpressionItem = item,
                             DefinitionInfo = def,
                         });
@@ -386,8 +386,8 @@ namespace MetaphysicsIndustries.Giza
 
                     if (cc == null || cc.GetAllCharsCount() < 1)
                     {
-                        errors.Add(new EcError {
-                            ErrorType = EcError.NullOrEmptyCharClass,
+                        errors.Add(new ExpressionError {
+                            ErrorType = ExpressionError.NullOrEmptyCharClass,
                             ExpressionItem = item,
                             DefinitionInfo = def
                         });
@@ -398,16 +398,16 @@ namespace MetaphysicsIndustries.Giza
                     string name = (item as DefRefSubExpression).DefinitionName;
                     if (string.IsNullOrEmpty(name))
                     {
-                        errors.Add(new EcError {
-                            ErrorType = EcError.NullOrEmptyDefrefName,
+                        errors.Add(new ExpressionError {
+                            ErrorType = ExpressionError.NullOrEmptyDefrefName,
                             ExpressionItem = item,
                             DefinitionInfo = def,
                         });
                     }
                     else if (!defNames.Contains(name))
                     {
-                        errors.Add(new EcError {
-                            ErrorType = EcError.DefRefNameNotFound,
+                        errors.Add(new ExpressionError {
+                            ErrorType = ExpressionError.DefRefNameNotFound,
                             ExpressionItem = item,
                             DefinitionInfo = def,
                         });

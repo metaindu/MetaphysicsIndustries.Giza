@@ -2,7 +2,6 @@ using System;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
-using ParserError = MetaphysicsIndustries.Giza.Parser.ParserError;
 
 namespace MetaphysicsIndustries.Giza.Test
 {

@@ -1,6 +1,5 @@
 using System;
 using NUnit.Framework;
-using ScError = MetaphysicsIndustries.Giza.SpanChecker.ScError;
 
 namespace MetaphysicsIndustries.Giza.Test
 {
@@ -75,9 +74,9 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<ScError>(errors[0]);
-            var e = (ScError)errors[0];
-            Assert.AreEqual(ScError.BadStartingNode, e.ErrorType);
+            Assert.IsInstanceOf<SpanError>(errors[0]);
+            var e = (SpanError)errors[0];
+            Assert.AreEqual(SpanError.BadStartingNode, e.ErrorType);
             Assert.AreSame(span.Subspans[0], e.Span);
         }
 
@@ -112,9 +111,9 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<ScError>(errors[0]);
-            var e = (ScError)errors[0];
-            Assert.AreEqual(ScError.BadEndingNode, e.ErrorType);
+            Assert.IsInstanceOf<SpanError>(errors[0]);
+            var e = (SpanError)errors[0];
+            Assert.AreEqual(SpanError.BadEndingNode, e.ErrorType);
             Assert.AreSame(span.Subspans[3], e.Span);
         }
 
@@ -141,9 +140,9 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<ScError>(errors[0]);
-            var e = (ScError)errors[0];
-            Assert.AreEqual(ScError.BadFollow, e.ErrorType);
+            Assert.IsInstanceOf<SpanError>(errors[0]);
+            var e = (SpanError)errors[0];
+            Assert.AreEqual(SpanError.BadFollow, e.ErrorType);
             Assert.AreSame(span.Subspans[1], e.Span);
         }
 
@@ -182,18 +181,18 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Assert.IsNotNull(errors);
             Assert.GreaterOrEqual(errors.Count, 1);
-            ScError e = null;
+            SpanError e = null;
             foreach (Error error in errors)
             {
-                if (error.ErrorType == ScError.NodeInWrongDefinition)
+                if (error.ErrorType == SpanError.NodeInWrongDefinition)
                 {
-                    Assert.IsInstanceOf<ScError>(error);
-                    e = (error as ScError);
+                    Assert.IsInstanceOf<SpanError>(error);
+                    e = (error as SpanError);
                     break;
                 }
             }
             Assert.IsNotNull(e);
-            Assert.AreEqual(ScError.NodeInWrongDefinition, e.ErrorType);
+            Assert.AreEqual(SpanError.NodeInWrongDefinition, e.ErrorType);
             Assert.AreSame(span.Subspans[2], e.Span);
         }
 
@@ -252,9 +251,9 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<ScError>(errors[0]);
-            var e = (ScError)errors[0];
-            Assert.AreEqual(ScError.NodeInWrongDefinition, e.ErrorType);
+            Assert.IsInstanceOf<SpanError>(errors[0]);
+            var e = (SpanError)errors[0];
+            Assert.AreEqual(SpanError.NodeInWrongDefinition, e.ErrorType);
             Assert.AreSame(span.Subspans[1], e.Span);
         }
 
@@ -273,9 +272,9 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<ScError>(errors[0]);
-            var e = (ScError)errors[0];
-            Assert.AreEqual(ScError.SpanHasNoSubspans, e.ErrorType);
+            Assert.IsInstanceOf<SpanError>(errors[0]);
+            var e = (SpanError)errors[0];
+            Assert.AreEqual(SpanError.SpanHasNoSubspans, e.ErrorType);
             Assert.AreSame(span, e.Span);
         }
 
@@ -311,18 +310,18 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Assert.IsNotNull(errors);
             Assert.GreaterOrEqual(errors.Count, 1);
-            ScError e = null;
+            SpanError e = null;
             foreach (Error error in errors)
             {
-                if (error.ErrorType == ScError.CycleInSubspans)
+                if (error.ErrorType == SpanError.CycleInSubspans)
                 {
-                    Assert.IsInstanceOf<ScError>(error);
-                    e = (error as ScError);
+                    Assert.IsInstanceOf<SpanError>(error);
+                    e = (error as SpanError);
                     break;
                 }
             }
             Assert.IsNotNull(e);
-            Assert.AreEqual(ScError.CycleInSubspans, e.ErrorType);
+            Assert.AreEqual(SpanError.CycleInSubspans, e.ErrorType);
             Assert.AreSame(span, e.Span);
             Assert.AreSame(span.Subspans[4], e.Span);
         }
@@ -367,9 +366,9 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<ScError>(errors[0]);
-            var e = (ScError)errors[0];
-            Assert.AreEqual(ScError.CycleInSubspans, e.ErrorType);
+            Assert.IsInstanceOf<SpanError>(errors[0]);
+            var e = (SpanError)errors[0];
+            Assert.AreEqual(SpanError.CycleInSubspans, e.ErrorType);
             Assert.AreSame(span, e.Span);
             Assert.AreSame(span.Subspans[1], e.Span);
         }

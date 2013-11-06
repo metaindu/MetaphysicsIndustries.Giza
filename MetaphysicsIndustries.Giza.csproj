@@ -85,13 +85,18 @@
     <Compile Include="Error.cs" />
     <Compile Include="StringFormatterGrammar.cs" />
     <Compile Include="StringFormatter.cs" />
-    <Compile Include="ExpressionChecker.EcError.cs" />
     <Compile Include="ITokenSource.cs" />
     <Compile Include="ListTokenSource.cs" />
     <Compile Include="InputPosition.cs" />
     <Compile Include="InputChar.cs" />
     <Compile Include="CharacterSource.cs" />
     <Compile Include="PriorityQueue.cs" />
+    <Compile Include="SpannerError.cs" />
+    <Compile Include="SupergrammarSpannerError.cs" />
+    <Compile Include="DefinitionError.cs" />
+    <Compile Include="SpanError.cs" />
+    <Compile Include="ExpressionError.cs" />
+    <Compile Include="ParserError.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />

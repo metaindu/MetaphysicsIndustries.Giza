@@ -4,7 +4,6 @@ using System;
 /**/
 using System.Collections.Generic;
 using System.Collections;
-using DcError = MetaphysicsIndustries.Giza.DefinitionChecker.DcError;
 
 
 namespace MetaphysicsIndustries.Giza.Test
@@ -55,7 +54,7 @@ namespace MetaphysicsIndustries.Giza.Test
             bool found = false;
             foreach (var ei in errors)
             {
-                if (ei.ErrorType == DefinitionChecker.DcError.LeadingReferenceCycle)
+                if (ei.ErrorType == DefinitionError.LeadingReferenceCycle)
                 {
                     found = true;
                 }
@@ -104,7 +103,7 @@ namespace MetaphysicsIndustries.Giza.Test
             bool found = false;
             foreach (Error ei in errors)
             {
-                if (ei.ErrorType == DefinitionChecker.DcError.LeadingReferenceCycle)
+                if (ei.ErrorType == DefinitionError.LeadingReferenceCycle)
                 {
                     found = true;
                 }
@@ -142,9 +141,9 @@ namespace MetaphysicsIndustries.Giza.Test
             // assertions
             Assert.IsNotNull(errorEnu);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<DcError>(errors[0]);
-            var err = (DcError)errors[0];
-            Assert.AreEqual(DcError.NodeHasNoPathFromStart, err.ErrorType);
+            Assert.IsInstanceOf<DefinitionError>(errors[0]);
+            var err = (DefinitionError)errors[0];
+            Assert.AreEqual(DefinitionError.NodeHasNoPathFromStart, err.ErrorType);
             Assert.AreSame(n2, err.Node);
         }
 
@@ -178,9 +177,9 @@ namespace MetaphysicsIndustries.Giza.Test
             // assertions
             Assert.IsNotNull(errorEnu);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<DcError>(errors[0]);
-            var err = (DcError)errors[0];
-            Assert.AreEqual(DcError.NodeHasNoPathToEnd, err.ErrorType);
+            Assert.IsInstanceOf<DefinitionError>(errors[0]);
+            var err = (DefinitionError)errors[0];
+            Assert.AreEqual(DefinitionError.NodeHasNoPathToEnd, err.ErrorType);
             Assert.AreSame(n2, err.Node);
         }
 
@@ -210,9 +209,9 @@ namespace MetaphysicsIndustries.Giza.Test
             // assertions
             Assert.IsNotNull(errorEnu);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<DcError>(errors[0]);
-            var err = (DcError)errors[0];
-            Assert.AreEqual(DcError.NextNodeLinksOutsideOfDefinition, err.ErrorType);
+            Assert.IsInstanceOf<DefinitionError>(errors[0]);
+            var err = (DefinitionError)errors[0];
+            Assert.AreEqual(DefinitionError.NextNodeLinksOutsideOfDefinition, err.ErrorType);
             Assert.AreSame(n1, err.Node);
         }
 
@@ -238,9 +237,9 @@ namespace MetaphysicsIndustries.Giza.Test
             // assertions
             Assert.IsNotNull(errorEnu);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<DcError>(errors[0]);
-            var err = (DcError)errors[0];
-            Assert.AreEqual(DcError.NextNodeLinksOutsideOfDefinition, err.ErrorType);
+            Assert.IsInstanceOf<DefinitionError>(errors[0]);
+            var err = (DefinitionError)errors[0];
+            Assert.AreEqual(DefinitionError.NextNodeLinksOutsideOfDefinition, err.ErrorType);
             Assert.AreSame(n1, err.Node);
         }
 
@@ -271,9 +270,9 @@ namespace MetaphysicsIndustries.Giza.Test
             // assertions
             Assert.IsNotNull(errorEnu);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<DcError>(errors[0]);
-            var err = (DcError)errors[0];
-            Assert.AreEqual(DcError.StartNodeHasWrongParentDefinition, err.ErrorType);
+            Assert.IsInstanceOf<DefinitionError>(errors[0]);
+            var err = (DefinitionError)errors[0];
+            Assert.AreEqual(DefinitionError.StartNodeHasWrongParentDefinition, err.ErrorType);
             Assert.AreSame(n2, err.Node);
         }
 
@@ -300,9 +299,9 @@ namespace MetaphysicsIndustries.Giza.Test
             // assertions
             Assert.IsNotNull(errorEnu);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<DcError>(errors[0]);
-            var err = (DcError)errors[0];
-            Assert.AreEqual(DcError.StartNodeHasWrongParentDefinition, err.ErrorType);
+            Assert.IsInstanceOf<DefinitionError>(errors[0]);
+            var err = (DefinitionError)errors[0];
+            Assert.AreEqual(DefinitionError.StartNodeHasWrongParentDefinition, err.ErrorType);
             Assert.AreSame(n2, err.Node);
         }
 
@@ -333,9 +332,9 @@ namespace MetaphysicsIndustries.Giza.Test
             // assertions
             Assert.IsNotNull(errorEnu);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<DcError>(errors[0]);
-            var err = (DcError)errors[0];
-            Assert.AreEqual(DcError.EndNodeHasWrongParentDefinition, err.ErrorType);
+            Assert.IsInstanceOf<DefinitionError>(errors[0]);
+            var err = (DefinitionError)errors[0];
+            Assert.AreEqual(DefinitionError.EndNodeHasWrongParentDefinition, err.ErrorType);
             Assert.AreSame(n2, err.Node);
         }
 
@@ -362,9 +361,9 @@ namespace MetaphysicsIndustries.Giza.Test
             // assertions
             Assert.IsNotNull(errorEnu);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<DcError>(errors[0]);
-            var err = (DcError)errors[0];
-            Assert.AreEqual(DcError.EndNodeHasWrongParentDefinition, err.ErrorType);
+            Assert.IsInstanceOf<DefinitionError>(errors[0]);
+            var err = (DefinitionError)errors[0];
+            Assert.AreEqual(DefinitionError.EndNodeHasWrongParentDefinition, err.ErrorType);
             Assert.AreSame(n2, err.Node);
         }
 
