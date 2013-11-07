@@ -75,20 +75,11 @@ namespace MetaphysicsIndustries.Giza
             currents.Enqueue(pair(root, null));
 
             int k;
-            var kpos = input.GetPosition(startIndex);
-            var prevpos = kpos;
-            if (startIndex <= 0)
-            {
-                prevpos.Index = -1;
-                prevpos.Line = 1;
-                prevpos.Column = 0;
-            }
-            else
-            {
-                prevpos = input.GetPosition(startIndex - 1);
-            }
 
             input.SetCurrentIndex(startIndex);
+
+            var prevpos = input.CurrentPosition;
+
             for (k = startIndex; k < input.Length; k++)
             {
                 if (input.IsAtEnd) break;
@@ -210,17 +201,7 @@ namespace MetaphysicsIndustries.Giza
                     currents.Enqueue(accepts.Dequeue());
                 }
 
-                prevpos = kpos;
-                InputPosition nextpos;
-                if (ch.Value == '\n')
-                {
-                    nextpos = new InputPosition(kpos.Index + 1, kpos.Line + 1, 1);
-                }
-                else
-                {
-                    nextpos = new InputPosition(kpos.Index + 1, kpos.Line, kpos.Column + 1);
-                }
-                kpos = nextpos;
+                prevpos = ch.Position;
             }
 
             if (k >= input.Length &&
@@ -263,7 +244,7 @@ namespace MetaphysicsIndustries.Giza
                     SpannerError se = new SpannerError {
                         PreviousNode=cur.Previous.Node,
                         ErrorType=SpannerError.UnexpectedEndOfInput,
-                        Position = kpos,
+                        Position = input.CurrentPosition,
                     };
                     rejects.Enqueue(pair2(cur, se));
                 }
@@ -280,7 +261,7 @@ namespace MetaphysicsIndustries.Giza
                     SpannerError se = new SpannerError {
                         PreviousNode=cur.Node,
                         ErrorType=SpannerError.UnexpectedEndOfInput,
-                        Position = kpos,
+                        Position = input.CurrentPosition,
                     };
                     rejects.Enqueue(pair2(cur, se));
                 }
