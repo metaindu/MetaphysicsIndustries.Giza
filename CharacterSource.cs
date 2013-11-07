@@ -52,7 +52,7 @@ namespace MetaphysicsIndustries.Giza
             }
             else if (index > CurrentPosition.Index)
             {
-                if (index >= Value.Length)
+                if (index >= Value.Length + 1)
                 {
                     throw new NotImplementedException();
                 }
@@ -74,15 +74,21 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        public InputChar CurrentValue
+        public InputChar Peek()
         {
-            get { return new InputChar(this[CurrentPosition.Index], CurrentPosition); }
+            return new InputChar(this[CurrentPosition.Index], CurrentPosition);
         }
 
         public InputChar GetNextValue()
         {
+            InputChar ch = Peek();
             SetCurrentIndex(CurrentPosition.Index + 1);
-            return CurrentValue;
+            return ch;
+        }
+
+        public bool IsAtEnd
+        {
+            get { return (CurrentPosition.Index >= Length); }
         }
     }
 }
