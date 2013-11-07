@@ -74,17 +74,16 @@ namespace MetaphysicsIndustries.Giza
 
             currents.Enqueue(pair(root, null));
 
-            int k;
-
             input.SetCurrentIndex(startIndex);
 
             var prevpos = input.CurrentPosition;
+            var ch = input.Peek();
+            var prevch = ch;
 
-            for (k = startIndex; k < input.Length; k++)
+            while (!input.IsAtEnd)
             {
-                if (input.IsAtEnd) break;
-
-                var ch = input.GetNextValue();
+                prevch = ch;
+                ch = input.GetNextValue();
 
                 bool isWhitespace = char.IsWhiteSpace(ch.Value);
 
@@ -99,7 +98,7 @@ namespace MetaphysicsIndustries.Giza
                                 ErrorType=SpannerError.ExcessRemainingInput,
                                 Position = prevpos,
                                 PreviousNode=end.Node,
-                                OffendingCharacter=input[k-1],
+                                OffendingCharacter=prevch.Value,
                             }));
                     }
                 }
@@ -163,7 +162,7 @@ namespace MetaphysicsIndustries.Giza
 
                             if (cur.Node == implicitNode)
                             {
-                                if (k < input.Length - 1 || !mustUseAllInput)
+                                if (!input.IsAtEnd || !mustUseAllInput)
                                 {
                                     ends.Enqueue(cur);
                                 }
@@ -204,7 +203,7 @@ namespace MetaphysicsIndustries.Giza
                 prevpos = ch.Position;
             }
 
-            if (k >= input.Length &&
+            if (input.IsAtEnd &&
                 currents.Count == 1 &&
                 currents.Peek().NodeMatch.Transition == NodeMatch.TransitionType.Root)
             {
