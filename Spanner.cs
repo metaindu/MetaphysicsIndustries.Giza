@@ -88,10 +88,12 @@ namespace MetaphysicsIndustries.Giza
                 prevpos = input.GetPosition(startIndex - 1);
             }
 
+            input.SetCurrentIndex(startIndex);
             for (k = startIndex; k < input.Length; k++)
             {
-                input.SetCurrentIndex(k);
-                var ch = input.CurrentValue;
+                if (input.IsAtEnd) break;
+
+                var ch = input.GetNextValue();
 
                 bool isWhitespace = char.IsWhiteSpace(ch.Value);
 
