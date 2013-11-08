@@ -173,11 +173,10 @@ namespace MetaphysicsIndustries.Giza
                     NodeMatch tokenEnd = leaf.Previous;
                     NodeMatch tokenStart = tokenEnd.StartDef;
 
-                    int length = leaf.StartPosition.Index - tokenStart.StartPosition.Index + 1;
                     tokens.Add(new Token(
                         definition: tokenEnd.Previous.Node.ParentDefinition,
                         startPosition: tokenStart.StartPosition,
-                        value: _input.Substring(tokenStart.StartPosition.Index, length)
+                        value: CollectValue(tokenEnd)
                     ));
                 }
             }
@@ -217,6 +216,27 @@ namespace MetaphysicsIndustries.Giza
 
                 return new Token[0];
             }
+        }
+
+        string CollectValue(NodeMatch tokenEnd)
+        {
+            if (tokenEnd == null) throw new ArgumentNullException("tokenEnd");
+            if (tokenEnd.Transition != NodeMatch.TransitionType.EndDef) throw new ArgumentException("tokenDef must be an EndDef");
+            if (tokenEnd.StartDef == null) throw new ArgumentException("tokenDef must have a corresponding StartDef");
+
+            var chs = new List<char>();
+            var cur = tokenEnd;
+
+            while (cur != tokenEnd.StartDef)
+            {
+                if (cur.MatchedChar.Value != '\0') chs.Add(cur.MatchedChar.Value);
+
+                cur = cur.Previous;
+            }
+
+            chs.Reverse();
+
+            return new string(chs.ToArray());
         }
     }
 }
