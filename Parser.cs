@@ -169,7 +169,7 @@ namespace MetaphysicsIndustries.Giza
                             err.Position = se.Position;
                             err.OffendingToken.StartPosition = err.Position;
                             err.OffendingToken.Definition = null;
-                            err.OffendingToken.Value = input[err.Index].ToString();
+                            err.OffendingToken.Value = se.OffendingCharacter.ToString();
                         }
                         else
                         {
