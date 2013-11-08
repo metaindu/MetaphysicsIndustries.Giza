@@ -26,30 +26,18 @@ namespace MetaphysicsIndustries.Giza
 
         Definition _definition;
 
-        public Span[] Process(string input, List<Error> errors)
+        public Span[] Process(CharacterSource input, List<Error> errors)
         {
             NodeMatch[] matchTreeLeaves = Match(input, errors);
 
             return MakeSpans(matchTreeLeaves);
         }
 
-        public NodeMatch[] Match(string input, List<Error> errors, bool mustUseAllInput=true, int startIndex=0)
-        {
-            bool endOfInput;
-            InputPosition endOfInputPosition;
-            var _input = new CharacterSource(input);
-            return Match(_input, errors, out endOfInput, out endOfInputPosition, mustUseAllInput, startIndex);
-        }
         public NodeMatch[] Match(CharacterSource input, List<Error> errors, bool mustUseAllInput=true, int startIndex=0)
         {
             bool endOfInput;
             InputPosition endOfInputPosition;
             return Match(input, errors, out endOfInput, out endOfInputPosition, mustUseAllInput, startIndex);
-        }
-        public NodeMatch[] Match(string input, List<Error> errors, out bool endOfInput, out InputPosition endOfInputPosition, bool mustUseAllInput=true, int startIndex=0)
-        {
-            var _input = new CharacterSource(input);
-            return Match(_input, errors, out endOfInput, out endOfInputPosition, mustUseAllInput, startIndex);
         }
         public NodeMatch[] Match(CharacterSource input, List<Error> errors, out bool endOfInput, out InputPosition endOfInputPosition, bool mustUseAllInput=true, int startIndex=0)
         {
