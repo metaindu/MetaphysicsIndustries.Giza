@@ -281,38 +281,38 @@ namespace MetaphysicsIndustries.Giza
                 {
                     StripReject(reject.NodeMatch);
                 }
-
-                return MakeSpans(ends);
-            }
-
-            if (rejects.Count > 0)
-            {
-                Error errorToUse = null;
-                foreach (var reject in (rejects as IEnumerable<NodeMatchErrorPair>).Reverse())
-                {
-                    if (reject.Error != null)
-                    {
-                        errorToUse = reject.Error;
-                        break;
-                    }
-                }
-
-                if (errorToUse != null)
-                {
-                    errors.Add(errorToUse);
-                }
-                else
-                {
-                    throw new InvalidOperationException("No errors among the rejects");
-                }
             }
             else
             {
-                // failed to start?
-                throw new NotImplementedException();
+                if (rejects.Count > 0)
+                {
+                    Error errorToUse = null;
+                    foreach (var reject in (rejects as IEnumerable<NodeMatchErrorPair>).Reverse())
+                    {
+                        if (reject.Error != null)
+                        {
+                            errorToUse = reject.Error;
+                            break;
+                        }
+                    }
+
+                    if (errorToUse != null)
+                    {
+                        errors.Add(errorToUse);
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("No errors among the rejects");
+                    }
+                }
+                else
+                {
+                    // failed to start?
+                    throw new NotImplementedException();
+                }
             }
 
-            return new Span[0];
+            return MakeSpans(ends);
         }
 
         static IEnumerable<Node> GetExpectedNodes(ParseInfo info)
