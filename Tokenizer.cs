@@ -28,13 +28,13 @@ namespace MetaphysicsIndustries.Giza
             }
 
             _spanner = new Spanner(_tokenDef);
-            _input = input;
+            _input = new CharacterSource(input);
         }
 
         Grammar _grammar;
         Spanner _spanner;
         Definition _tokenDef;
-        string _input;
+        CharacterSource _input;
 
         struct TokenizationByIndex
         {
