@@ -53,6 +53,7 @@ namespace MetaphysicsIndustries.Giza
         {
             if (index < CurrentPosition.Index)
             {
+                Logger.WriteLine("CharacterSource: Rewinding from {0} to {1}", CurrentPosition.Index, index);
                 CurrentPosition = GetPosition(index);
             }
             else if (index > CurrentPosition.Index)

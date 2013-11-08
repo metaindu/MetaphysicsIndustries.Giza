@@ -63,6 +63,8 @@ namespace MetaphysicsIndustries.Giza
                                                         out bool endOfInput,
                                                         out InputPosition endOfInputPosition)
         {
+            Logger.WriteLine("Tokenizer: Getting tokens at index {0}, current input position is {1}", index, _input.CurrentPosition.Index);
+
             var tokenizations = new Queue<TokenizationByIndex>();
             var startIndexes = new Queue<int>();
             startIndexes.Enqueue(index);
