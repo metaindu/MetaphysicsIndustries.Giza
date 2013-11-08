@@ -6,7 +6,7 @@ namespace MetaphysicsIndustries.Giza
 {
     public class Tokenizer : ITokenSource
     {
-        public Tokenizer(Grammar grammar, string input)
+        public Tokenizer(Grammar grammar, CharacterSource input)
         {
             if (grammar == null) throw new ArgumentNullException("grammar");
             if (input == null) throw new ArgumentNullException("input");
@@ -28,7 +28,7 @@ namespace MetaphysicsIndustries.Giza
             }
 
             _spanner = new Spanner(_tokenDef);
-            _input = new CharacterSource(input);
+            _input = input;
         }
 
         Grammar _grammar;
