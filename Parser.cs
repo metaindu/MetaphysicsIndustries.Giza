@@ -34,12 +34,19 @@ namespace MetaphysicsIndustries.Giza
             public List<NodeMatchStackPair> Branches;
         }
 
-        public Span[] Parse(string input, ICollection<Error> errors)
+        public Span[] Parse(CharacterSource input, ICollection<Error> errors)
         {
             if (input == null) throw new ArgumentNullException("input");
             if (errors == null) throw new ArgumentNullException("errors");
 
             ITokenSource tokenSource = new Tokenizer(_definition.ParentGrammar, input);
+
+            return Parse(tokenSource, errors);
+        }
+        public Span[] Parse(ITokenSource tokenSource, ICollection<Error> errors)
+        {
+            if (tokenSource == null) throw new ArgumentNullException("tokenSource");
+            if (errors == null) throw new ArgumentNullException("errors");
 
             var sources = new PriorityQueue<NodeMatchStackPair, int>(lowToHigh: true);
             var ends = new List<NodeMatch>();
