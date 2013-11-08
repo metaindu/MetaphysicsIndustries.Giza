@@ -9,6 +9,11 @@ namespace MetaphysicsIndustries.Giza
             Value = value;
         }
 
+        public static implicit operator CharacterSource(string value)
+        {
+            return new CharacterSource(value);
+        }
+
         public readonly string Value;
 
         public char this [ int index ]
