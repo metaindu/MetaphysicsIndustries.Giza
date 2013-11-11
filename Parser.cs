@@ -76,181 +76,17 @@ namespace MetaphysicsIndustries.Giza
                 while (sources.Count > 0)
                 {
 
-                    var info = new ParseInfo();
-                    info.SourcePair = sources.Dequeue();
+                    var info = GetParseInfoFromSource(sources.Dequeue(), tokenSource, tokenizationsByIndex, rejects, ends);
 //                    Logger.WriteLine("Dequeuing source with next index {0}", info.Source.Token.IndexOfNextTokenization);
 
-                    var currents = new Queue<NodeMatchStackPair>();
 
-                    currents.Enqueue(info.SourcePair);
-
-                    // find all ends
-                    var ender = info.SourcePair;
-                    info.Enders = new List<NodeMatchStackPair>();
-                    while (true)
+                    foreach (var branch in info.Branches)
                     {
-                        var nm = ender.NodeMatch;
-
-                        if (nm == null)
-                            break;
-                        if (nm.Transition == NodeMatch.TransitionType.Root)
-                            break;
-
-                        if (ender.MatchStack == null)
-                        {
-                            info.LastEnderIsEndCandidate = true;
-                            break;
-                        }
-
-                        if (nm.Node.IsEndNode)
-                        {
-                            ender = ender.CreateEndDefMatch();
-                            currents.Enqueue(ender);
-                            info.Enders.Add(ender);
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-
-                    //find all branches
-                    info.Branches = new List<NodeMatchStackPair>();
-                    while (currents.Count > 0)
-                    {
-                        NodeMatchStackPair current = currents.Dequeue();
-                        NodeMatch cur = current.NodeMatch;
-                        MatchStack curstack = current.MatchStack;
-
-                        if (cur.DefRef.IsTokenized &&
-                            cur != info.Source)
-                        {
-                            info.Branches.Add(current);
-                            branches2.Enqueue(new Tuple<NodeMatch, MatchStack, ParseInfo>(
-                                                  current.NodeMatch,
-                                                  current.MatchStack,
-                                                  info),
-                                              info.Source.Token.IndexOfNextTokenization);
-                            continue;
-                        }
-
-                        if (cur.DefRef.IsTokenized ||
-                            cur.Transition == NodeMatch.TransitionType.EndDef)
-                        {
-                            foreach (var next in cur.Node.NextNodes)
-                            {
-                                var nm = new NodeMatch(next, NodeMatch.TransitionType.Follow, cur);
-                                currents.Enqueue(pair(nm, curstack));
-                            }
-                        }
-                        else
-                        {
-                            var nextStack = new MatchStack(cur, curstack);
-                            foreach (var start in (cur.Node as DefRefNode).DefRef.StartNodes)
-                            {
-                                var nm = new NodeMatch(start, NodeMatch.TransitionType.StartDef, cur);
-                                currents.Enqueue(pair(nm, nextStack));
-                            }
-                        }
-                    }
-
-                    //get all tokens, starting at end of source's token
-                    var index = info.Source.Token.IndexOfNextTokenization;
-                    if (!tokenizationsByIndex.ContainsKey(index))
-                    {
-                        TokenizationInfo tinfo;
-                        tinfo.Errors = new List<Error>();
-                        tinfo.Tokens =
-                            tokenSource.GetTokensAtLocation(
-                            info.Source.Token.IndexOfNextTokenization,
-                            tinfo.Errors,
-                            out tinfo.EndOfInput,
-                            out tinfo.EndOfInputPosition);
-                        tokenizationsByIndex[index] = tinfo;
-                    }
-                    info.Tokenization = tokenizationsByIndex[index];
-
-                    //if we get any tokenization errors, process them and reject
-                    if (info.Tokenization.Errors.ContainsNonWarnings())
-                    {
-                        //reject branches with error
-                        SpannerError se = (info.Tokenization.Errors.GetFirstNonWarning() as SpannerError);
-                        var err = new ParserError();
-                        err.LastValidMatchingNode = info.Source.Node;
-
-                        err.ExpectedNodes = GetExpectedNodes(info);
-
-                        if (se.ErrorType == SpannerError.UnexpectedEndOfInput)
-                        {
-                            err.ErrorType = ParserError.UnexpectedEndOfInput;
-                            err.Position = se.Position;
-                        }
-                        else if (se.ErrorType == SpannerError.ExcessRemainingInput)
-                        {
-                            // this shouldn't happen. when we read tokens,
-                            // we set mustUseAllInput to false
-                            throw new InvalidOperationException("Excess remaining input when reading tokens");
-                        }
-                        else if (se.ErrorType == SpannerError.InvalidCharacter)
-                        {
-                            err.ErrorType = ParserError.InvalidToken;
-                            err.Position = se.Position;
-                            err.OffendingToken.StartPosition = err.Position;
-                            err.OffendingToken.Definition = null;
-                            err.OffendingToken.Value = se.OffendingCharacter.ToString();
-                        }
-                        else
-                        {
-                            throw new InvalidOperationException("Errors in definitions");
-                        }
-
-                        foreach (var branch in info.Branches)
-                        {
-                            rejects.Add(branch.NodeMatch, err);
-                        }
-
-                        if (info.LastEnderIsEndCandidate)
-                        {
-                            rejects.Add(info.Enders.Last().NodeMatch, err);
-                        }
-                    }
-                    else if (info.Tokenization.EndOfInput)
-                    {
-//                        int line;
-//                        int column;
-//
-//                        Spanner.GetPosition(input, info.EndOfInputIndex, out line, out column);
-
-                        var err = new ParserError {
-                            ErrorType = ParserError.UnexpectedEndOfInput,
-                            LastValidMatchingNode = info.Source.Node,
-                            ExpectedNodes = GetExpectedNodes(info),
-                            Position = info.Tokenization.EndOfInputPosition,
-                        };
-                        foreach (var branch in info.Branches)
-                        {
-                            rejects.Add(branch.NodeMatch, err);
-                        }
-
-                        if (info.LastEnderIsEndCandidate)
-                        {
-                            ends.Add(info.Enders.Last().NodeMatch);
-                        }
-                    }
-                    else // we have valid tokens
-                    {
-                        if (info.LastEnderIsEndCandidate)
-                        {
-                            var offendingToken = info.Tokenization.Tokens.First();
-
-                            var err = new ParserError {
-                                ErrorType = ParserError.ExcessRemainingInput,
-                                LastValidMatchingNode = info.Source.Node,
-                                Position = offendingToken.StartPosition,
-                                OffendingToken = offendingToken,
-                            };
-                            rejects.Add(info.Enders.Last().NodeMatch, err);
-                        }
+                        branches2.Enqueue(new Tuple<NodeMatch, MatchStack, ParseInfo>(
+                            branch.NodeMatch,
+                            branch.MatchStack,
+                            info),
+                                          info.Source.Token.IndexOfNextTokenization);
                     }
                 }
 
@@ -344,6 +180,188 @@ namespace MetaphysicsIndustries.Giza
             }
 
             return MakeSpans(ends);
+        }
+
+        ParseInfo GetParseInfoFromSource(NodeMatchStackPair source,
+                                    ITokenSource tokenSource,
+                                    Dictionary<int, TokenizationInfo> tokenizationsByIndex,
+                                    List<NodeMatchErrorPair> rejects,
+                                    List<NodeMatch> ends)
+        {
+
+
+            var info = new ParseInfo();
+            info.SourcePair = source;
+
+            var currents = new Queue<NodeMatchStackPair>();
+
+            currents.Enqueue(info.SourcePair);
+
+            // find all ends
+            var ender = info.SourcePair;
+            info.Enders = new List<NodeMatchStackPair>();
+            while (true)
+            {
+                var nm = ender.NodeMatch;
+
+                if (nm == null)
+                    break;
+                if (nm.Transition == NodeMatch.TransitionType.Root)
+                    break;
+
+                if (ender.MatchStack == null)
+                {
+                    info.LastEnderIsEndCandidate = true;
+                    break;
+                }
+
+                if (nm.Node.IsEndNode)
+                {
+                    ender = ender.CreateEndDefMatch();
+                    currents.Enqueue(ender);
+                    info.Enders.Add(ender);
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            //find all branches
+            info.Branches = new List<NodeMatchStackPair>();
+            while (currents.Count > 0)
+            {
+                NodeMatchStackPair current = currents.Dequeue();
+                NodeMatch cur = current.NodeMatch;
+                MatchStack curstack = current.MatchStack;
+
+                if (cur.DefRef.IsTokenized &&
+                    cur != info.Source)
+                {
+                    info.Branches.Add(current);
+                    continue;
+                }
+
+                if (cur.DefRef.IsTokenized ||
+                    cur.Transition == NodeMatch.TransitionType.EndDef)
+                {
+                    foreach (var next in cur.Node.NextNodes)
+                    {
+                        var nm = new NodeMatch(next, NodeMatch.TransitionType.Follow, cur);
+                        currents.Enqueue(pair(nm, curstack));
+                    }
+                }
+                else
+                {
+                    var nextStack = new MatchStack(cur, curstack);
+                    foreach (var start in (cur.Node as DefRefNode).DefRef.StartNodes)
+                    {
+                        var nm = new NodeMatch(start, NodeMatch.TransitionType.StartDef, cur);
+                        currents.Enqueue(pair(nm, nextStack));
+                    }
+                }
+            }
+
+            //get all tokens, starting at end of source's token
+            var index = info.Source.Token.IndexOfNextTokenization;
+            if (!tokenizationsByIndex.ContainsKey(index))
+            {
+                TokenizationInfo tinfo;
+                tinfo.Errors = new List<Error>();
+                tinfo.Tokens =
+                    tokenSource.GetTokensAtLocation(
+                        info.Source.Token.IndexOfNextTokenization,
+                        tinfo.Errors,
+                        out tinfo.EndOfInput,
+                        out tinfo.EndOfInputPosition);
+                tokenizationsByIndex[index] = tinfo;
+            }
+            info.Tokenization = tokenizationsByIndex[index];
+
+            //if we get any tokenization errors, process them and reject
+            if (info.Tokenization.Errors.ContainsNonWarnings())
+            {
+                //reject branches with error
+                SpannerError se = (info.Tokenization.Errors.GetFirstNonWarning() as SpannerError);
+                var err = new ParserError();
+                err.LastValidMatchingNode = info.Source.Node;
+
+                err.ExpectedNodes = GetExpectedNodes(info);
+
+                if (se.ErrorType == SpannerError.UnexpectedEndOfInput)
+                {
+                    err.ErrorType = ParserError.UnexpectedEndOfInput;
+                    err.Position = se.Position;
+                }
+                else if (se.ErrorType == SpannerError.ExcessRemainingInput)
+                {
+                    // this shouldn't happen. when we read tokens,
+                    // we set mustUseAllInput to false
+                    throw new InvalidOperationException("Excess remaining input when reading tokens");
+                }
+                else if (se.ErrorType == SpannerError.InvalidCharacter)
+                {
+                    err.ErrorType = ParserError.InvalidToken;
+                    err.Position = se.Position;
+                    err.OffendingToken.StartPosition = err.Position;
+                    err.OffendingToken.Definition = null;
+                    err.OffendingToken.Value = se.OffendingCharacter.ToString();
+                }
+                else
+                {
+                    throw new InvalidOperationException("Errors in definitions");
+                }
+
+                foreach (var branch in info.Branches)
+                {
+                    rejects.Add(branch.NodeMatch, err);
+                }
+
+                if (info.LastEnderIsEndCandidate)
+                {
+                    rejects.Add(info.Enders.Last().NodeMatch, err);
+                }
+            }
+            else if (info.Tokenization.EndOfInput)
+            {
+                //                        int line;
+                //                        int column;
+                //
+                //                        Spanner.GetPosition(input, info.EndOfInputIndex, out line, out column);
+
+                var err = new ParserError {
+                    ErrorType = ParserError.UnexpectedEndOfInput,
+                    LastValidMatchingNode = info.Source.Node,
+                    ExpectedNodes = GetExpectedNodes(info),
+                    Position = info.Tokenization.EndOfInputPosition,
+                };
+                foreach (var branch in info.Branches)
+                {
+                    rejects.Add(branch.NodeMatch, err);
+                }
+
+                if (info.LastEnderIsEndCandidate)
+                {
+                    ends.Add(info.Enders.Last().NodeMatch);
+                }
+            }
+            else // we have valid tokens
+            {
+                if (info.LastEnderIsEndCandidate)
+                {
+                    var offendingToken = info.Tokenization.Tokens.First();
+
+                    var err = new ParserError {
+                        ErrorType = ParserError.ExcessRemainingInput,
+                        LastValidMatchingNode = info.Source.Node,
+                        Position = offendingToken.StartPosition,
+                        OffendingToken = offendingToken,
+                    };
+                    rejects.Add(info.Enders.Last().NodeMatch, err);
+                }
+            }
+
+            return info;
         }
 
         static IEnumerable<Node> GetExpectedNodes(ParseInfo info)
