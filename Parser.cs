@@ -26,12 +26,17 @@ namespace MetaphysicsIndustries.Giza
             public List<NodeMatchStackPair> Enders;
             public bool LastEnderIsEndCandidate;
 
+            public TokenizationInfo Tokenization;
+
+            public List<NodeMatchStackPair> Branches;
+        }
+
+        struct TokenizationInfo
+        {
             public bool EndOfInput;
             public InputPosition EndOfInputPosition;
             public IEnumerable<Token> Tokens;
-            public List<Error> TokenizationErrors;
-
-            public List<NodeMatchStackPair> Branches;
+            public List<Error> Errors;
         }
 
         public Span[] Parse(CharacterSource input, ICollection<Error> errors)
@@ -57,6 +62,8 @@ namespace MetaphysicsIndustries.Giza
             rootDef.EndNodes.Add(rootNode);
             var root = new NodeMatch(rootNode, NodeMatch.TransitionType.Root, null);
             var rejects = new List<NodeMatchErrorPair>();
+
+            var tokenizationsByIndex = new Dictionary<int, TokenizationInfo>();
 
             sources.Enqueue(pair(root, null), -1);
 //            Logger.WriteLine("Starting");
@@ -142,18 +149,26 @@ namespace MetaphysicsIndustries.Giza
                     }
 
                     //get all tokens, starting at end of source's token
-                    info.TokenizationErrors = new List<Error>();
-                    info.Tokens = tokenSource.GetTokensAtLocation(
-                        info.Source.Token.IndexOfNextTokenization,
-                        info.TokenizationErrors,
-                        out info.EndOfInput,
-                        out info.EndOfInputPosition);
+                    var index = info.Source.Token.IndexOfNextTokenization;
+                    if (!tokenizationsByIndex.ContainsKey(index))
+                    {
+                        TokenizationInfo tinfo;
+                        tinfo.Errors = new List<Error>();
+                        tinfo.Tokens =
+                            tokenSource.GetTokensAtLocation(
+                                info.Source.Token.IndexOfNextTokenization,
+                                tinfo.Errors,
+                                out tinfo.EndOfInput,
+                                out tinfo.EndOfInputPosition);
+                        tokenizationsByIndex[index] = tinfo;
+                    }
+                    info.Tokenization = tokenizationsByIndex[index];
 
                     //if we get any tokenization errors, process them and reject
-                    if (info.TokenizationErrors.ContainsNonWarnings())
+                    if (info.Tokenization.Errors.ContainsNonWarnings())
                     {
                         //reject branches with error
-                        SpannerError se = (info.TokenizationErrors.GetFirstNonWarning() as SpannerError);
+                        SpannerError se = (info.Tokenization.Errors.GetFirstNonWarning() as SpannerError);
                         var err = new ParserError();
                         err.LastValidMatchingNode = info.Source.Node;
 
@@ -193,7 +208,7 @@ namespace MetaphysicsIndustries.Giza
                             rejects.Add(info.Enders.Last().NodeMatch, err);
                         }
                     }
-                    else if (info.EndOfInput)
+                    else if (info.Tokenization.EndOfInput)
                     {
 //                        int line;
 //                        int column;
@@ -204,7 +219,7 @@ namespace MetaphysicsIndustries.Giza
                             ErrorType = ParserError.UnexpectedEndOfInput,
                             LastValidMatchingNode = info.Source.Node,
                             ExpectedNodes = GetExpectedNodes(info),
-                            Position = info.EndOfInputPosition,
+                            Position = info.Tokenization.EndOfInputPosition,
                         };
                         foreach (var branch in info.Branches)
                         {
@@ -220,7 +235,7 @@ namespace MetaphysicsIndustries.Giza
                     {
                         if (info.LastEnderIsEndCandidate)
                         {
-                            var offendingToken = info.Tokens.First();
+                            var offendingToken = info.Tokenization.Tokens.First();
 
                             var err = new ParserError {
                                 ErrorType = ParserError.ExcessRemainingInput,
@@ -241,7 +256,7 @@ namespace MetaphysicsIndustries.Giza
                             var branchstack = branch.MatchStack;
 
                             bool matched = false;
-                            foreach (var intoken in info.Tokens)
+                            foreach (var intoken in info.Tokenization.Tokens)
                             {
                                 if ((branchnm.Node is DefRefNode) &&
                                     (branchnm.Node as DefRefNode).DefRef == intoken.Definition)
@@ -259,7 +274,7 @@ namespace MetaphysicsIndustries.Giza
                             // otherwise, reject it with null since it's a duplicate
                             if (!matched)
                             {
-                                var offendingToken = info.Tokens.First();
+                                var offendingToken = info.Tokenization.Tokens.First();
 
                                 err = new ParserError {
                                     ErrorType = ParserError.InvalidToken,
