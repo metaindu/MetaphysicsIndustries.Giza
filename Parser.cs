@@ -17,7 +17,7 @@ namespace MetaphysicsIndustries.Giza
 
         Definition _definition;
 
-        struct ParseInfo
+        class ParseInfo
         {
             public NodeMatchStackPair SourcePair;
             public NodeMatch Source { get { return SourcePair.NodeMatch; } }
@@ -64,6 +64,7 @@ namespace MetaphysicsIndustries.Giza
             var rejects = new List<NodeMatchErrorPair>();
 
             var tokenizationsByIndex = new Dictionary<int, TokenizationInfo>();
+            var branches2 = new PriorityQueue<Tuple<NodeMatch, MatchStack, ParseInfo>, int>();
 
             sources.Enqueue(pair(root, null), -1);
 //            Logger.WriteLine("Starting");
@@ -71,9 +72,9 @@ namespace MetaphysicsIndustries.Giza
             while (sources.Count > 0)
             {
 
+                var nextSources = new List<NodeMatchStackPair>();
                 while (sources.Count > 0)
                 {
-                    var nextSources = new List<NodeMatchStackPair>();
 
                     var info = new ParseInfo();
                     info.SourcePair = sources.Dequeue();
@@ -125,6 +126,11 @@ namespace MetaphysicsIndustries.Giza
                             cur != info.Source)
                         {
                             info.Branches.Add(current);
+                            branches2.Enqueue(new Tuple<NodeMatch, MatchStack, ParseInfo>(
+                                                  current.NodeMatch,
+                                                  current.MatchStack,
+                                                  info),
+                                              info.Source.Token.IndexOfNextTokenization);
                             continue;
                         }
 
@@ -156,10 +162,10 @@ namespace MetaphysicsIndustries.Giza
                         tinfo.Errors = new List<Error>();
                         tinfo.Tokens =
                             tokenSource.GetTokensAtLocation(
-                                info.Source.Token.IndexOfNextTokenization,
-                                tinfo.Errors,
-                                out tinfo.EndOfInput,
-                                out tinfo.EndOfInputPosition);
+                            info.Source.Token.IndexOfNextTokenization,
+                            tinfo.Errors,
+                            out tinfo.EndOfInput,
+                            out tinfo.EndOfInputPosition);
                         tokenizationsByIndex[index] = tinfo;
                     }
                     info.Tokenization = tokenizationsByIndex[index];
@@ -231,7 +237,7 @@ namespace MetaphysicsIndustries.Giza
                             ends.Add(info.Enders.Last().NodeMatch);
                         }
                     }
-                    else // we get valid tokens
+                    else // we have valid tokens
                     {
                         if (info.LastEnderIsEndCandidate)
                         {
@@ -241,59 +247,62 @@ namespace MetaphysicsIndustries.Giza
                                 ErrorType = ParserError.ExcessRemainingInput,
                                 LastValidMatchingNode = info.Source.Node,
                                 Position = offendingToken.StartPosition,
-                                OffendingToken=offendingToken,
+                                OffendingToken = offendingToken,
                             };
                             rejects.Add(info.Enders.Last().NodeMatch, err);
                         }
-
-                        // try to match branches to tokens
-                        var matchedBranches = new Set<NodeMatchStackPair>();
-                        var unmatchedBranches = new Set<NodeMatchStackPair>();
-                        unmatchedBranches.AddRange(info.Branches);
-                        foreach (var branch in info.Branches)
-                        {
-                            var branchnm = branch.NodeMatch;
-                            var branchstack = branch.MatchStack;
-
-                            bool matched = false;
-                            foreach (var intoken in info.Tokenization.Tokens)
-                            {
-                                if ((branchnm.Node is DefRefNode) &&
-                                    (branchnm.Node as DefRefNode).DefRef == intoken.Definition)
-                                {
-                                    var newNext = branchnm.CloneWithNewToken(intoken);
-                                    nextSources.Add(pair(newNext, branchstack));
-                                    matched = true;
-                                    matchedBranches.Add(branch);
-                                    unmatchedBranches.Remove(branch);
-                                }
-                            }
-
-                            ParserError err = null;
-                            // if the branch didn't match, reject it with InvalidToken
-                            // otherwise, reject it with null since it's a duplicate
-                            if (!matched)
-                            {
-                                var offendingToken = info.Tokenization.Tokens.First();
-
-                                err = new ParserError {
-                                    ErrorType = ParserError.InvalidToken,
-                                    LastValidMatchingNode = info.Source.Node,
-                                    OffendingToken = offendingToken,
-                                    ExpectedNodes = info.Source.Node.NextNodes,
-                                    Position = offendingToken.StartPosition,
-                                };
-                            }
-
-                            rejects.Add(branch.NodeMatch, err);
-                        }
                     }
+                }
 
-                    foreach (var next in nextSources)
+                while (branches2.Count > 0)
+                {
+                    var branchtuple = branches2.Dequeue();
+                    var branchnm = branchtuple.Item1;
+                    var branchstack = branchtuple.Item2;
+                    var info = branchtuple.Item3;
+
+                    if (!info.Tokenization.Errors.ContainsNonWarnings() &&
+                        !info.Tokenization.EndOfInput)
                     {
-                        sources.Enqueue(next, next.NodeMatch.Token.IndexOfNextTokenization);
-//                        Logger.WriteLine("Enqueuing source with next index {0}", next.NodeMatch.Token.IndexOfNextTokenization);
+                        // we have valid tokens
+
+                        // try to match branch to tokens
+                        bool matched = false;
+                        foreach (var intoken in info.Tokenization.Tokens)
+                        {
+                            if ((branchnm.Node is DefRefNode) &&
+                                (branchnm.Node as DefRefNode).DefRef == intoken.Definition)
+                            {
+                                var newNext = branchnm.CloneWithNewToken(intoken);
+                                nextSources.Add(pair(newNext, branchstack));
+                                matched = true;
+                            }
+                        }
+
+                        ParserError err2 = null;
+                        // if the branch didn't match, reject it with InvalidToken
+                        // otherwise, reject it with null since it's a duplicate
+                        if (!matched)
+                        {
+                            var offendingToken = info.Tokenization.Tokens.First();
+
+                            err2 = new ParserError {
+                                ErrorType = ParserError.InvalidToken,
+                                LastValidMatchingNode = info.Source.Node,
+                                OffendingToken = offendingToken,
+                                ExpectedNodes = info.Source.Node.NextNodes,
+                                Position = offendingToken.StartPosition,
+                            };
+                        }
+
+                        rejects.Add(branchnm, err2);
                     }
+                }
+
+                foreach (var next in nextSources)
+                {
+                    sources.Enqueue(next, next.NodeMatch.Token.IndexOfNextTokenization);
+//                    Logger.WriteLine("Enqueuing source with next index {0}", next.NodeMatch.Token.IndexOfNextTokenization);
                 }
             }
 
