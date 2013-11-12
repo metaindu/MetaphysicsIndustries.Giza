@@ -29,6 +29,28 @@ namespace MetaphysicsIndustries.Giza
             public TokenizationInfo Tokenization;
 
             public List<NodeMatchStackPair> Branches;
+
+            public IEnumerable<Node> GetExpectedNodes()
+            {
+                if (this.Source.Node.NextNodes.Count > 0)
+                {
+                    return this.Source.Node.NextNodes;
+                }
+
+                var stack = this.SourceStack;
+                while (stack != null &&
+                       stack.Node.NextNodes.Count < 1)
+                {
+                    stack = stack.Parent;
+                }
+
+                if (stack != null)
+                {
+                    return stack.Node.NextNodes;
+                }
+
+                return new Node[0];
+            }
         }
 
         struct TokenizationInfo
@@ -282,7 +304,7 @@ namespace MetaphysicsIndustries.Giza
                 var err = new ParserError();
                 err.LastValidMatchingNode = info.Source.Node;
 
-                err.ExpectedNodes = GetExpectedNodes(info);
+                err.ExpectedNodes = info.GetExpectedNodes();
 
                 if (se.ErrorType == SpannerError.UnexpectedEndOfInput)
                 {
@@ -328,7 +350,7 @@ namespace MetaphysicsIndustries.Giza
                 var err = new ParserError {
                     ErrorType = ParserError.UnexpectedEndOfInput,
                     LastValidMatchingNode = info.Source.Node,
-                    ExpectedNodes = GetExpectedNodes(info),
+                    ExpectedNodes = info.GetExpectedNodes(),
                     Position = info.Tokenization.EndOfInputPosition,
                 };
                 foreach (var branch in info.Branches)
@@ -358,28 +380,6 @@ namespace MetaphysicsIndustries.Giza
             }
 
             return info;
-        }
-
-        static IEnumerable<Node> GetExpectedNodes(ParseInfo info)
-        {
-            if (info.Source.Node.NextNodes.Count > 0)
-            {
-                return info.Source.Node.NextNodes;
-            }
-
-            var stack = info.SourceStack;
-            while (stack != null &&
-                   stack.Node.NextNodes.Count < 1)
-            {
-                stack = stack.Parent;
-            }
-
-            if (stack != null)
-            {
-                return stack.Node.NextNodes;
-            }
-
-            return new Node[0];
         }
 
         static Span[] MakeSpans(IEnumerable<NodeMatch> matchTreeLeaves)
