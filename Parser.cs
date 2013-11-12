@@ -98,6 +98,11 @@ namespace MetaphysicsIndustries.Giza
                     var info = GetParseInfoFromSource(sources.Dequeue());
 //                    Logger.WriteLine("Dequeuing source with next index {0}", info.Source.Token.IndexOfNextTokenization);
 
+                    if (info.EndCandidate != null)
+                    {
+                        ends.Add(info.EndCandidate);
+                    }
+
                     //get all tokens, starting at end of source's token
                     var index = info.Source.Token.IndexOfNextTokenization;
                     if (!tokenizationsByIndex.ContainsKey(index))
@@ -153,10 +158,7 @@ namespace MetaphysicsIndustries.Giza
                             rejects.Add(branch.NodeMatch, err);
                         }
 
-                        if (info.EndCandidate != null)
-                        {
-                            rejects.Add(info.EndCandidate, err);
-                        }
+                        RejectEndCandidate(info, rejects, ends, err);
                     }
                     else if (tokenization.EndOfInput)
                     {
@@ -170,26 +172,19 @@ namespace MetaphysicsIndustries.Giza
                         {
                             rejects.Add(branch.NodeMatch, err);
                         }
-
-                        if (info.EndCandidate != null)
-                        {
-                            ends.Add(info.EndCandidate);
-                        }
                     }
                     else // we have valid tokens
                     {
-                        if (info.EndCandidate != null)
-                        {
-                            var offendingToken = tokenization.Tokens.First();
+                        var offendingToken = tokenization.Tokens.First();
 
-                            var err = new ParserError {
-                                ErrorType = ParserError.ExcessRemainingInput,
-                                LastValidMatchingNode = info.Source.Node,
-                                Position = offendingToken.StartPosition,
-                                OffendingToken = offendingToken,
-                            };
-                            rejects.Add(info.EndCandidate, err);
-                        }
+                        var err = new ParserError {
+                            ErrorType = ParserError.ExcessRemainingInput,
+                            LastValidMatchingNode = info.Source.Node,
+                            Position = offendingToken.StartPosition,
+                            OffendingToken = offendingToken,
+                        };
+
+                        RejectEndCandidate(info, rejects, ends, err);
                     }
 
                     foreach (var branch in info.Branches)
@@ -228,6 +223,15 @@ namespace MetaphysicsIndustries.Giza
                         !tokenization.EndOfInput)
                     {
                         // we have valid tokens
+                        var offendingToken = tokenization.Tokens.First();
+                        var err = new ParserError {
+                            ErrorType = ParserError.ExcessRemainingInput,
+                            LastValidMatchingNode = info.Source.Node,
+                            Position = offendingToken.StartPosition,
+                            OffendingToken = offendingToken,
+                        };
+
+                        RejectEndCandidate(info, rejects, ends, err);
 
                         // try to match branch to tokens
                         bool matched = false;
@@ -247,8 +251,6 @@ namespace MetaphysicsIndustries.Giza
                         // otherwise, reject it with null since it's a duplicate
                         if (!matched)
                         {
-                            var offendingToken = tokenization.Tokens.First();
-
                             err2 = new ParserError {
                                 ErrorType = ParserError.InvalidToken,
                                 LastValidMatchingNode = info.Source.Node,
@@ -307,6 +309,16 @@ namespace MetaphysicsIndustries.Giza
             }
 
             return MakeSpans(ends);
+        }
+
+        void RejectEndCandidate(ParseInfo info, List<NodeMatchErrorPair> rejects, List<NodeMatch> ends, Error err)
+        {
+            if (info.EndCandidate != null)
+            {
+                ends.Remove(info.EndCandidate);
+                rejects.Add(info.EndCandidate, err);
+                info.EndCandidate = null;
+            }
         }
 
         ParseInfo GetParseInfoFromSource(NodeMatchStackPair source)
