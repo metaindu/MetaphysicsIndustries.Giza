@@ -95,7 +95,7 @@ namespace MetaphysicsIndustries.Giza
                 while (sources.Count > 0)
                 {
 
-                    var info = GetParseInfoFromSource(sources.Dequeue(), tokenSource, tokenizationsByIndex, rejects, ends);
+                    var info = GetParseInfoFromSource(sources.Dequeue());
 //                    Logger.WriteLine("Dequeuing source with next index {0}", info.Source.Token.IndexOfNextTokenization);
 
                     //get all tokens, starting at end of source's token
@@ -309,14 +309,8 @@ namespace MetaphysicsIndustries.Giza
             return MakeSpans(ends);
         }
 
-        ParseInfo GetParseInfoFromSource(NodeMatchStackPair source,
-                                    ITokenSource tokenSource,
-                                    Dictionary<int, TokenizationInfo> tokenizationsByIndex,
-                                    List<NodeMatchErrorPair> rejects,
-                                    List<NodeMatch> ends)
+        ParseInfo GetParseInfoFromSource(NodeMatchStackPair source)
         {
-
-
             var info = new ParseInfo();
             info.SourcePair = source;
 
