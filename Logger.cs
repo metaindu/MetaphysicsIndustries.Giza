@@ -12,13 +12,13 @@ namespace MetaphysicsIndustries.Giza
         public static void WriteLine(string str)
         {
             Log.AppendLine(str);
+            Console.WriteLine(str);
         }
 
         [Conditional("DEBUG")]
         public static void WriteLine(string format, params object[] args)
         {
-            Log.AppendFormat(format, args);
-            Log.AppendLine();
+            WriteLine(string.Format(format, args));
         }
     }
 }
