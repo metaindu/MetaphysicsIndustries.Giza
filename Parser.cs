@@ -367,12 +367,16 @@ namespace MetaphysicsIndustries.Giza
                 return info.Source.Node.NextNodes;
             }
 
-            foreach (var ender in info.Enders)
+            var stack = info.SourceStack;
+            while (stack != null &&
+                   stack.Node.NextNodes.Count < 1)
             {
-                if (ender.NodeMatch.Node.NextNodes.Count > 0)
-                {
-                    return ender.NodeMatch.Node.NextNodes;
-                }
+                stack = stack.Parent;
+            }
+
+            if (stack != null)
+            {
+                return stack.Node.NextNodes;
             }
 
             return new Node[0];
