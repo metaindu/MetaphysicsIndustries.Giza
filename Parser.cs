@@ -23,8 +23,7 @@ namespace MetaphysicsIndustries.Giza
             public NodeMatch Source { get { return SourcePair.NodeMatch; } }
             public MatchStack SourceStack { get { return SourcePair.MatchStack; } }
 
-            public List<NodeMatchStackPair> Enders;
-            public bool LastEnderIsEndCandidate;
+            public NodeMatch EndCandidate;
 
             public TokenizationInfo Tokenization;
 
@@ -220,7 +219,7 @@ namespace MetaphysicsIndustries.Giza
             currents.Enqueue(info.SourcePair);
 
             // find all ends
-            info.Enders = new List<NodeMatchStackPair>();
+            var enders = new List<NodeMatchStackPair>();
             if (info.Source.Transition != NodeMatch.TransitionType.Root)
             {
                 var ender = info.SourcePair;
@@ -230,17 +229,17 @@ namespace MetaphysicsIndustries.Giza
                        ender.NodeMatch.Node.IsEndNode)
                 {
                     ender = ender.CreateEndDefMatch();
-                    info.Enders.Add(ender);
+                    enders.Add(ender);
                 }
 
                 if (ender.NodeMatch != null &&
                     ender.MatchStack == null)
                 {
-                    info.LastEnderIsEndCandidate = true;
+                    info.EndCandidate = ender.NodeMatch;
                 }
             }
 
-            foreach (var ender in info.Enders)
+            foreach (var ender in enders)
             {
                 currents.Enqueue(ender);
             }
@@ -335,9 +334,9 @@ namespace MetaphysicsIndustries.Giza
                     rejects.Add(branch.NodeMatch, err);
                 }
 
-                if (info.LastEnderIsEndCandidate)
+                if (info.EndCandidate != null)
                 {
-                    rejects.Add(info.Enders.Last().NodeMatch, err);
+                    rejects.Add(info.EndCandidate, err);
                 }
             }
             else if (info.Tokenization.EndOfInput)
@@ -358,14 +357,14 @@ namespace MetaphysicsIndustries.Giza
                     rejects.Add(branch.NodeMatch, err);
                 }
 
-                if (info.LastEnderIsEndCandidate)
+                if (info.EndCandidate != null)
                 {
-                    ends.Add(info.Enders.Last().NodeMatch);
+                    ends.Add(info.EndCandidate);
                 }
             }
             else // we have valid tokens
             {
-                if (info.LastEnderIsEndCandidate)
+                if (info.EndCandidate != null)
                 {
                     var offendingToken = info.Tokenization.Tokens.First();
 
@@ -375,7 +374,7 @@ namespace MetaphysicsIndustries.Giza
                         Position = offendingToken.StartPosition,
                         OffendingToken = offendingToken,
                     };
-                    rejects.Add(info.Enders.Last().NodeMatch, err);
+                    rejects.Add(info.EndCandidate, err);
                 }
             }
 
