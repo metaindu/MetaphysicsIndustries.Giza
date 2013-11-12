@@ -198,33 +198,29 @@ namespace MetaphysicsIndustries.Giza
             currents.Enqueue(info.SourcePair);
 
             // find all ends
-            var ender = info.SourcePair;
             info.Enders = new List<NodeMatchStackPair>();
-            while (true)
+            if (info.Source.Transition != NodeMatch.TransitionType.Root)
             {
-                var nm = ender.NodeMatch;
+                var ender = info.SourcePair;
 
-                if (nm == null)
-                    break;
-                if (nm.Transition == NodeMatch.TransitionType.Root)
-                    break;
-
-                if (ender.MatchStack == null)
-                {
-                    info.LastEnderIsEndCandidate = true;
-                    break;
-                }
-
-                if (nm.Node.IsEndNode)
+                while (ender.NodeMatch != null &&
+                       ender.MatchStack != null &&
+                       ender.NodeMatch.Node.IsEndNode)
                 {
                     ender = ender.CreateEndDefMatch();
-                    currents.Enqueue(ender);
                     info.Enders.Add(ender);
                 }
-                else
+
+                if (ender.NodeMatch != null &&
+                    ender.MatchStack == null)
                 {
-                    break;
+                    info.LastEnderIsEndCandidate = true;
                 }
+            }
+
+            foreach (var ender in info.Enders)
+            {
+                currents.Enqueue(ender);
             }
 
             //find all branches
