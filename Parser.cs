@@ -50,14 +50,6 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        struct TokenizationInfo
-        {
-            public bool EndOfInput;
-            public InputPosition EndOfInputPosition;
-            public IEnumerable<Token> Tokens;
-            public List<Error> Errors;
-        }
-
         public Span[] Parse(CharacterSource input, ICollection<Error> errors)
         {
             if (input == null) throw new ArgumentNullException("input");
@@ -94,9 +86,9 @@ namespace MetaphysicsIndustries.Giza
                 var nextSources = new List<NodeMatchStackPair>();
                 while (sources.Count > 0)
                 {
+                    var sourcepair = sources.Dequeue();
 
-                    var info = GetParseInfoFromSource(sources.Dequeue());
-//                    Logger.WriteLine("Dequeuing source with next index {0}", info.Source.Token.IndexOfNextTokenization);
+                    var info = GetParseInfoFromSource(sourcepair);
 
                     if (info.EndCandidate != null)
                     {
