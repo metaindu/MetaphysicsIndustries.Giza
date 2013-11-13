@@ -99,8 +99,7 @@ namespace MetaphysicsIndustries.Giza
                     var index = info.Source.Token.IndexOfNextTokenization;
                     if (!tokenizationsByIndex.ContainsKey(index))
                     {
-                        TokenizationInfo tinfo;
-                        tinfo.Errors = new List<Error>();
+                        TokenizationInfo tinfo = new TokenizationInfo();
                         tinfo.Tokens =
                             tokenSource.GetTokensAtLocation(
                                 info.Source.Token.IndexOfNextTokenization,
@@ -199,8 +198,7 @@ namespace MetaphysicsIndustries.Giza
                     var index = info.Source.Token.IndexOfNextTokenization;
                     if (!tokenizationsByIndex.ContainsKey(index))
                     {
-                        TokenizationInfo tinfo;
-                        tinfo.Errors = new List<Error>();
+                        TokenizationInfo tinfo = new TokenizationInfo();
                         tinfo.Tokens =
                             tokenSource.GetTokensAtLocation(
                                 info.Source.Token.IndexOfNextTokenization,
