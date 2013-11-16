@@ -58,12 +58,11 @@ namespace MetaphysicsIndustries.Giza
             public InputPosition LastPosition;
         }
 
-        public IEnumerable<Token> GetTokensAtLocation(int index,
-                                                        List<Error> errors,
-                                                        out bool endOfInput,
-                                                        out InputPosition endOfInputPosition)
+        public TokenizationInfo GetTokensAtLocation(int index)
         {
             Logger.WriteLine("Tokenizer: Getting tokens at index {0}, current input position is {1}", index, _input.CurrentPosition.Index);
+
+            TokenizationInfo tinfo = new TokenizationInfo();
 
             var tokenizations = new Queue<TokenizationByIndex>();
             var startIndexes = new Queue<int>();
@@ -158,8 +157,8 @@ namespace MetaphysicsIndustries.Giza
             }
 
             var tokens = new Set<Token>();
-            endOfInput = false;
-            endOfInputPosition = new InputPosition(-1);
+            tinfo.EndOfInput = false;
+            tinfo.EndOfInputPosition = new InputPosition(-1);
 
             if (hasLeaves.Count > 0)
             {
@@ -185,20 +184,21 @@ namespace MetaphysicsIndustries.Giza
 
             if (hasEnd.Count > 0)
             {
-                endOfInput = true;
-                endOfInputPosition = hasEnd[0].LastPosition;
+                tinfo.EndOfInput = true;
+                tinfo.EndOfInputPosition = hasEnd[0].LastPosition;
                 foreach (var tok in hasEnd)
                 {
-                    if (tok.LastPosition.Index > endOfInputPosition.Index)
+                    if (tok.LastPosition.Index > tinfo.EndOfInputPosition.Index)
                     {
-                        endOfInputPosition = tok.LastPosition;
+                        tinfo.EndOfInputPosition = tok.LastPosition;
                     }
                 }
             }
 
             if (hasLeaves.Count > 0 || hasEnd.Count > 0)
             {
-                return tokens.ToArray();
+                tinfo.Tokens = tokens.ToArray();
+                return tinfo;
             }
             else
             {
@@ -214,9 +214,9 @@ namespace MetaphysicsIndustries.Giza
                     }
                 }
 
-                errors.AddRange(mintok.Errors);
-
-                return new Token[0];
+                tinfo.Errors.AddRange(mintok.Errors);
+                tinfo.Tokens = new Token[0];
+                return tinfo;
             }
         }
 

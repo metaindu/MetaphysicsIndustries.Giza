@@ -42,27 +42,28 @@ namespace MetaphysicsIndustries.Giza
         List<string> _intokens;
         List<Token> _tokens = new List<Token>();
 
-        public IEnumerable<Token> GetTokensAtLocation(int index,
-                                                      List<Error> errors,
-                                                      out bool endOfInput,
-                                                      out InputPosition endOfInputPosition)
+        public TokenizationInfo GetTokensAtLocation(int index)
         {
+            TokenizationInfo tinfo = new TokenizationInfo();
+
             if (index >= _intokens.Count)
             {
-                endOfInput = true;
-                endOfInputPosition = new InputPosition(_intokens.Count);
-                return new Token[0];
+                tinfo.EndOfInput = true;
+                tinfo.EndOfInputPosition = new InputPosition(_intokens.Count);
+                tinfo.Tokens = new Token[0];
+                return tinfo;
             }
 
-            endOfInput = false;
-            endOfInputPosition = new InputPosition(-1);
+            tinfo.EndOfInput = false;
+            tinfo.EndOfInputPosition = new InputPosition(-1);
 
             if (_tokens[index].Value != null)
             {
-                return new Token[] { _tokens[index] };
+                tinfo.Tokens = new Token[] { _tokens[index] };
+                return tinfo;
             }
 
-            var nodeMatches = _spanner.Match(_intokens[index], errors);
+            var nodeMatches = _spanner.Match(_intokens[index], tinfo.Errors);
             var leaf = nodeMatches[0];
 
             NodeMatch tokenEnd = leaf.Previous;
@@ -77,7 +78,8 @@ namespace MetaphysicsIndustries.Giza
 
             _tokens[index] = token;
 
-            return new Token[] { _tokens[index] };
+            tinfo.Tokens = new Token[] { _tokens[index] };
+            return tinfo;
         }
     }
 }
