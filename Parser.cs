@@ -74,7 +74,6 @@ namespace MetaphysicsIndustries.Giza
             var root = new NodeMatch(rootNode, NodeMatch.TransitionType.Root, null);
             var rejects = new List<NodeMatchErrorPair>();
 
-            var tokenizationsByIndex = new Dictionary<int, TokenizationInfo>();
             var branches2 = new PriorityQueue<Tuple<NodeMatch, MatchStack, ParseInfo>, int>();
 
             sources.Enqueue(pair(root, null), -1);
@@ -96,13 +95,7 @@ namespace MetaphysicsIndustries.Giza
                     }
 
                     //get all tokens, starting at end of source's token
-                    var index = info.Source.Token.IndexOfNextTokenization;
-                    if (!tokenizationsByIndex.ContainsKey(index))
-                    {
-                        TokenizationInfo tinfo = tokenSource.GetTokensAtLocation(index);
-                        tokenizationsByIndex[index] = tinfo;
-                    }
-                    var tokenization = tokenizationsByIndex[index];
+                    var tokenization = tokenSource.GetTokensAtLocation(info.Source.Token.IndexOfNextTokenization);
 
                     //if we get any tokenization errors, process them and reject
                     if (tokenization.Errors.ContainsNonWarnings())
@@ -189,13 +182,7 @@ namespace MetaphysicsIndustries.Giza
                     var branchstack = branchtuple.Item2;
                     var info = branchtuple.Item3;
 
-                    var index = info.Source.Token.IndexOfNextTokenization;
-                    if (!tokenizationsByIndex.ContainsKey(index))
-                    {
-                        TokenizationInfo tinfo = tokenSource.GetTokensAtLocation(index);
-                        tokenizationsByIndex[index] = tinfo;
-                    }
-                    var tokenization = tokenizationsByIndex[index];
+                    var tokenization = tokenSource.GetTokensAtLocation(info.Source.Token.IndexOfNextTokenization);
 
                     if (!tokenization.Errors.ContainsNonWarnings() &&
                         !tokenization.EndOfInput)
