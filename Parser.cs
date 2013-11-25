@@ -247,19 +247,19 @@ namespace MetaphysicsIndustries.Giza
             {
                 if (rejects.Count > 0)
                 {
-                    Error errorToUse = null;
+                    IEnumerable<Error> errorsToUse = null;
                     foreach (var reject in (rejects as IEnumerable<NodeMatchErrorPair>).Reverse())
                     {
-                        if (reject.Error != null)
+                        if (reject.Errors != null && reject.Errors.Count > 0)
                         {
-                            errorToUse = reject.Error;
+                            errorsToUse = reject.Errors;
                             break;
                         }
                     }
 
-                    if (errorToUse != null)
+                    if (errorsToUse != null)
                     {
-                        errors.Add(errorToUse);
+                        errors.AddRange(errorsToUse);
                     }
                     else
                     {
