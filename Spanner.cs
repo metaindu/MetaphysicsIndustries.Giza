@@ -535,11 +535,6 @@ namespace MetaphysicsIndustries.Giza
             return new NodeMatchErrorPair{NodeMatch=nodeMatch, Error=err};
         }
 
-        public static NodeMatchErrorPair pair2(NodeMatch nodeMatch, ErrorType et)
-        {
-            return new NodeMatchErrorPair{NodeMatch=nodeMatch, Error=new SpannerError{ErrorType=et}};
-        }
-
 
         void PurgeRejects(Queue<NodeMatchErrorPair> rejects, ref NodeMatchErrorPair lastReject)
         {
