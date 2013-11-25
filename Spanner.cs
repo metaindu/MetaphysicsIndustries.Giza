@@ -232,6 +232,7 @@ namespace MetaphysicsIndustries.Giza
                         PreviousNode=cur.Previous.Node,
                         ErrorType=SpannerError.UnexpectedEndOfInput,
                         Position = input.CurrentPosition,
+                        ExpectedNodes = cur.Previous.Node.NextNodes,
                     };
                     rejects.Enqueue(pair2(cur, se));
                 }
@@ -249,6 +250,7 @@ namespace MetaphysicsIndustries.Giza
                         PreviousNode=cur.Node,
                         ErrorType=SpannerError.UnexpectedEndOfInput,
                         Position = input.CurrentPosition,
+                        ExpectedNodes = cur.Node.NextNodes,
                     };
                     rejects.Enqueue(pair2(cur, se));
                 }
@@ -418,16 +420,6 @@ namespace MetaphysicsIndustries.Giza
             }
             else if (se.ErrorType == SpannerError.UnexpectedEndOfInput)
             {
-//                var expectedNodes = new Set<Node>();
-//                var cur = lastRejectnm;
-//                while (cur.Transition == NodeMatch.TransitionType.EndDef)
-//                {
-//                    expectedNodes.AddRange(cur.Node.NextNodes);
-//                    cur = cur.Previous;
-//                }
-//                expectedNodes.AddRange(cur.Node.NextNodes);
-//                se.ExpectedNodes = expectedNodes;
-                se.ExpectedNodes = se.PreviousNode.NextNodes;
                 return se;
             }
             else // (se.ErrorType == SpannerError.ExcessRemainingInput)
