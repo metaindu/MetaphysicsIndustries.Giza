@@ -353,14 +353,19 @@ namespace MetaphysicsIndustries.Giza
 
     public struct NodeMatchErrorPair
     {
-        public NodeMatchErrorPair(NodeMatch nm, Error error)
+        public NodeMatchErrorPair(NodeMatch nm, params Error[] errors)
         {
             NodeMatch = nm;
-            Error = error;
+            Errors = errors;
         }
 
         public NodeMatch NodeMatch;
-        public Error Error;
+        public ICollection<Error> Errors;
+        public Error Error
+        {
+            get { return ((Errors != null && Errors.Count > 0) ? Errors.First() : null); }
+            set { Errors = new Error[] { value }; }
+        }
     }
 
     public static class NodeMatchErrorPairHelper
