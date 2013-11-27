@@ -60,6 +60,41 @@ namespace MetaphysicsIndustries.Giza.Test
         }
 
         [Test()]
+        public void TestInvalidCharacterErrorDescription()
+        {
+            string testGrammarText =
+                " // test grammar \r\n" +
+                "sequence = item+; \r\n" +
+                "item = ( id-item1 | id-item2 ); \r\n" +
+                "<whitespace, atomic> id-item1 = 'item1'; \r\n" +
+                "<whitespace, atomic> id-item2 = 'item2'; \r\n";
+
+            Supergrammar sg = new Supergrammar();
+            Spanner s = new Spanner(sg.def_grammar);
+            var errors = new List<Error>();
+            Span[] spans = s.Process(testGrammarText, errors);
+
+            Assert.IsEmpty(spans);
+            Assert.AreEqual(1, errors.Count);
+            Assert.IsInstanceOf<SpannerError>(errors[0]);
+            var err = ((SpannerError)errors[0]);
+            Assert.AreEqual(SpannerError.InvalidCharacter, err.ErrorType);
+            Assert.AreEqual('w', err.OffendingCharacter);
+            Assert.AreEqual(4, err.Position.Line);
+            Assert.AreEqual(2, err.Position.Column);
+            Assert.AreEqual(74, err.Position.Index);
+            Assert.IsInstanceOf<CharNode>(err.PreviousNode);
+            var charnode = (err.PreviousNode as CharNode);
+            Assert.AreEqual("<", charnode.CharClass.ToUndelimitedString());
+            Assert.AreEqual(1, err.ExpectedNodes.Count());
+            Assert.AreEqual("directive-item", (err.ExpectedNodes.First() as DefRefNode).DefRef.Name);
+
+            Assert.AreEqual(
+                "Invalid character 'w' at (4,2), after a directive: expected directive-item",
+                err.Description);
+        }
+
+        [Test()]
         public void TestErrorInvalidCharacterAtStart()
         {
             string testGrammarText =
