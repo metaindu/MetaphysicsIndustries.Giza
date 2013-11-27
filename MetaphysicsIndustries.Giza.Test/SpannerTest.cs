@@ -90,7 +90,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual("directive-item", (err.ExpectedNodes.First() as DefRefNode).DefRef.Name);
 
             Assert.AreEqual(
-                "Invalid character 'w' at (4,2), after a directive: expected directive-item",
+                "Invalid character 'w' at (4,2), after a '<': expected directive-item",
                 err.Description);
         }
 
