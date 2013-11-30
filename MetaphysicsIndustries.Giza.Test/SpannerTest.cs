@@ -52,8 +52,8 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(4, err.Position.Line);
             Assert.AreEqual(2, err.Position.Column);
             Assert.AreEqual(74, err.Position.Index);
-            Assert.IsInstanceOf<CharNode>(err.PreviousNode);
-            var charnode = (err.PreviousNode as CharNode);
+            Assert.IsInstanceOf<CharNode>(err.LastValidMatchingNode);
+            var charnode = (err.LastValidMatchingNode as CharNode);
             Assert.AreEqual("<", charnode.CharClass.ToUndelimitedString());
             Assert.AreEqual(1, err.ExpectedNodes.Count());
             Assert.AreEqual("directive-item", (err.ExpectedNodes.First() as DefRefNode).DefRef.Name);
@@ -83,8 +83,8 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(4, err.Position.Line);
             Assert.AreEqual(2, err.Position.Column);
             Assert.AreEqual(74, err.Position.Index);
-            Assert.IsInstanceOf<CharNode>(err.PreviousNode);
-            var charnode = (err.PreviousNode as CharNode);
+            Assert.IsInstanceOf<CharNode>(err.LastValidMatchingNode);
+            var charnode = (err.LastValidMatchingNode as CharNode);
             Assert.AreEqual("<", charnode.CharClass.ToUndelimitedString());
             Assert.AreEqual(1, err.ExpectedNodes.Count());
             Assert.AreEqual("directive-item", (err.ExpectedNodes.First() as DefRefNode).DefRef.Name);
@@ -123,7 +123,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(1, err.Position.Line);
             Assert.AreEqual(1, err.Position.Column);
             Assert.AreEqual(0, err.Position.Index);
-            Assert.IsNull(err.PreviousNode);
+            Assert.IsNull(err.LastValidMatchingNode);
             Assert.AreEqual(1, err.ExpectedNodes.Count());
             Assert.AreEqual("item", (err.ExpectedNodes.First() as DefRefNode).DefRef.Name);
         }
@@ -159,8 +159,8 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(1, err.Position.Line);
             Assert.AreEqual(15, err.Position.Column);
             Assert.AreEqual(14, err.Position.Index);
-            Assert.IsInstanceOf<DefRefNode>(err.PreviousNode);
-            Assert.AreEqual("sequence", (err.PreviousNode as DefRefNode).DefRef.Name);
+            Assert.IsInstanceOf<DefRefNode>(err.LastValidMatchingNode);
+            Assert.AreEqual("sequence", (err.LastValidMatchingNode as DefRefNode).DefRef.Name);
             Assert.IsNotNull(err.ExpectedNodes);
             Assert.AreEqual(1, err.ExpectedNodes.Count());
             Assert.IsInstanceOf<CharNode>(err.ExpectedNodes.First());
@@ -198,8 +198,8 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(1, err.Position.Line);
             Assert.AreEqual(14, err.Position.Column);
             Assert.AreEqual(13, err.Position.Index);
-            Assert.IsInstanceOf<DefRefNode>(err.PreviousNode);
-            Assert.AreEqual("sequence", (err.PreviousNode as DefRefNode).DefRef.Name);
+            Assert.IsInstanceOf<DefRefNode>(err.LastValidMatchingNode);
+            Assert.AreEqual("sequence", (err.LastValidMatchingNode as DefRefNode).DefRef.Name);
             Assert.IsNotNull(err.ExpectedNodes);
             Assert.AreEqual(1, err.ExpectedNodes.Count());
             Assert.IsInstanceOf<CharNode>(err.ExpectedNodes.First());
@@ -237,8 +237,8 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(1, err.Position.Line);
             Assert.AreEqual(13, err.Position.Column);
             Assert.AreEqual(12, err.Position.Index);
-            Assert.IsInstanceOf<CharNode>(err.PreviousNode);
-            Assert.AreEqual("m", (err.PreviousNode as CharNode).CharClass.ToUndelimitedString());
+            Assert.IsInstanceOf<CharNode>(err.LastValidMatchingNode);
+            Assert.AreEqual("m", (err.LastValidMatchingNode as CharNode).CharClass.ToUndelimitedString());
             Assert.IsNotNull(err.ExpectedNodes);
             Assert.AreEqual(1, err.ExpectedNodes.Count());
             Assert.IsInstanceOf<CharNode>(err.ExpectedNodes.First());
@@ -276,8 +276,8 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(1, err.Position.Line);
             Assert.AreEqual(15, err.Position.Column);
             Assert.AreEqual(14, err.Position.Index);
-            Assert.IsInstanceOf<DefRefNode>(err.PreviousNode);
-            Assert.AreEqual("sequence", (err.PreviousNode as DefRefNode).DefRef.Name);
+            Assert.IsInstanceOf<DefRefNode>(err.LastValidMatchingNode);
+            Assert.AreEqual("sequence", (err.LastValidMatchingNode as DefRefNode).DefRef.Name);
             Assert.IsNull(err.ExpectedNodes);
         }
 

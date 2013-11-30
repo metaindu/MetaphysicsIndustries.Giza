@@ -18,7 +18,7 @@ namespace MetaphysicsIndustries.Giza
         public int Index { get { return Position.Index; } }
         public int Line { get { return Position.Line; } }
         public int Column { get { return Position.Column; } }
-        public Node PreviousNode;
+        public Node LastValidMatchingNode;
         public Definition ExpectedDefinition;
         public IEnumerable<Node> ExpectedNodes;
 
@@ -36,18 +36,18 @@ namespace MetaphysicsIndustries.Giza
 
                     sb.AppendFormat("Invalid character '{0}' at ({1},{2})", OffendingCharacter, Position.Line, Position.Column);
 
-                    if (PreviousNode != null)
+                    if (LastValidMatchingNode != null)
                     {
                         string an = "a";
                         string after = "";
 
-                        if (PreviousNode is CharNode)
+                        if (LastValidMatchingNode is CharNode)
                         {
-                            after = GetDescriptionsOfCharClass((PreviousNode as CharNode).CharClass)[0];
+                            after = GetDescriptionsOfCharClass((LastValidMatchingNode as CharNode).CharClass)[0];
                         }
                         else
                         {
-                            after = (PreviousNode as DefRefNode).DefRef.Name;
+                            after = (LastValidMatchingNode as DefRefNode).DefRef.Name;
                         }
 
                         if (vowels.Contains(after[0]))
@@ -57,7 +57,7 @@ namespace MetaphysicsIndustries.Giza
                         sb.AppendFormat(", after {0} {1}: expected ", an, after);
                     }
 
-                    if (PreviousNode == null)
+                    if (LastValidMatchingNode == null)
                     {
                         //failed to start
 

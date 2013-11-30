@@ -85,7 +85,7 @@ namespace MetaphysicsIndustries.Giza
                             new SpannerError {
                                 ErrorType=SpannerError.ExcessRemainingInput,
                                 Position = prevpos,
-                                PreviousNode=end.Node,
+                                LastValidMatchingNode=end.Node,
                                 OffendingCharacter=prevch.Value,
                             }));
                     }
@@ -181,14 +181,14 @@ namespace MetaphysicsIndustries.Giza
                             else if (cur2.Node is CharNode)
                             {
                                 expectedNodes = cur2.Node.NextNodes;
-                                se.PreviousNode = cur2.Node;
-                                se.ExpectedNodes = se.PreviousNode.NextNodes;
+                                se.LastValidMatchingNode = cur2.Node;
+                                se.ExpectedNodes = se.LastValidMatchingNode.NextNodes;
                             }
                             else // cur.Node is DefRefNode
                             {
                                 expectedNodes = (cur2.Node as DefRefNode).DefRef.StartNodes;
-                                se.PreviousNode = cur2.Node;
-                                se.ExpectedNodes = se.PreviousNode.NextNodes;
+                                se.LastValidMatchingNode = cur2.Node;
+                                se.ExpectedNodes = se.LastValidMatchingNode.NextNodes;
                             }
 
                             if (expectedNodes != null)
@@ -243,7 +243,7 @@ namespace MetaphysicsIndustries.Giza
                                                           new SpannerError {
                                         ErrorType=SpannerError.ExcessRemainingInput,
                                         Position = ch.Position,
-                                        PreviousNode=cur.Node,
+                                        LastValidMatchingNode=cur.Node,
                                         OffendingCharacter=ch.Value,
                                     }));
                                 }
@@ -312,7 +312,7 @@ namespace MetaphysicsIndustries.Giza
                     }
 
                     SpannerError se = new SpannerError {
-                        PreviousNode=cur.Previous.Node,
+                        LastValidMatchingNode=cur.Previous.Node,
                         ErrorType=SpannerError.UnexpectedEndOfInput,
                         Position = input.CurrentPosition,
                         ExpectedNodes = cur.Previous.Node.NextNodes,
@@ -330,7 +330,7 @@ namespace MetaphysicsIndustries.Giza
                 else
                 {
                     SpannerError se = new SpannerError {
-                        PreviousNode=cur.Node,
+                        LastValidMatchingNode=cur.Node,
                         ErrorType=SpannerError.UnexpectedEndOfInput,
                         Position = input.CurrentPosition,
                         ExpectedNodes = cur.Node.NextNodes,
