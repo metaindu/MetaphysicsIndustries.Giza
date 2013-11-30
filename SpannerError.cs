@@ -15,6 +15,9 @@ namespace MetaphysicsIndustries.Giza
         public string DescriptionString = string.Empty;
         public char OffendingCharacter;
         public InputPosition Position;
+        public int Index { get { return Position.Index; } }
+        public int Line { get { return Position.Line; } }
+        public int Column { get { return Position.Column; } }
         public Node PreviousNode;
         public Definition ExpectedDefinition;
         public IEnumerable<Node> ExpectedNodes;
