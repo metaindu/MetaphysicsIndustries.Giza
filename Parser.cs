@@ -285,6 +285,15 @@ namespace MetaphysicsIndustries.Giza
                 info.EndCandidate = null;
             }
         }
+        void RejectEndCandidate(ParseInfo info, List<NodeMatchErrorPair> rejects, List<NodeMatch> ends, ICollection<Error> errors)
+        {
+            if (info.EndCandidate != null)
+            {
+                ends.Remove(info.EndCandidate);
+                rejects.Add(info.EndCandidate, errors);
+                info.EndCandidate = null;
+            }
+        }
 
         ParseInfo GetParseInfoFromSource(NodeMatchStackPair source)
         {

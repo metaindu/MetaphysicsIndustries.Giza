@@ -354,6 +354,10 @@ namespace MetaphysicsIndustries.Giza
     public struct NodeMatchErrorPair
     {
         public NodeMatchErrorPair(NodeMatch nm, params Error[] errors)
+            : this(nm, (ICollection<Error>)errors)
+        {
+        }
+        public NodeMatchErrorPair(NodeMatch nm, ICollection<Error> errors)
         {
             NodeMatch = nm;
             Errors = errors;
@@ -371,6 +375,10 @@ namespace MetaphysicsIndustries.Giza
     public static class NodeMatchErrorPairHelper
     {
         public static void Add(this ICollection<NodeMatchErrorPair> collection, NodeMatch nm, params Error[] errors)
+        {
+            collection.Add(new NodeMatchErrorPair(nm, errors));
+        }
+        public static void Add(this ICollection<NodeMatchErrorPair> collection, NodeMatch nm, ICollection<Error> errors)
         {
             collection.Add(new NodeMatchErrorPair(nm, errors));
         }
