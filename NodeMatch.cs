@@ -370,9 +370,9 @@ namespace MetaphysicsIndustries.Giza
 
     public static class NodeMatchErrorPairHelper
     {
-        public static void Add(this ICollection<NodeMatchErrorPair> collection, NodeMatch nm, Error err)
+        public static void Add(this ICollection<NodeMatchErrorPair> collection, NodeMatch nm, params Error[] errors)
         {
-            collection.Add(new NodeMatchErrorPair(nm, err));
+            collection.Add(new NodeMatchErrorPair(nm, errors));
         }
     }
 }
