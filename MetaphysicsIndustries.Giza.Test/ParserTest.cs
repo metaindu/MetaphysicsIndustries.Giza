@@ -708,6 +708,7 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestUnexpectedEndOfInputInToken()
         {
+            Assert.Fail();
             string testGrammarText =
                 " // test grammar \r\n" +
                     "sequence = item+; \r\n" +
@@ -845,6 +846,8 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestInvalidCharacter()
         {
+            Assert.Fail();
+
             string testGrammarText =
                 " // test grammar \r\n" +
                     "sequence = item+; \r\n" +
@@ -959,6 +962,66 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsNotNull(spans);
             Assert.AreEqual(2, spans.Length);
 
+        }
+
+        public class MockTokenSource : ITokenSource
+        {
+            public readonly Dictionary<int, TokenizationInfo> Tokenizations = new Dictionary<int, TokenizationInfo>();
+
+            public TokenizationInfo GetTokensAtLocation(int index)
+            {
+                return Tokenizations[index];
+            }
+        }
+
+        public class MockError : Error
+        {
+            public static readonly ErrorType MockErrorType = new ErrorType(name: "MockErrorType");
+        }
+
+        [Test]
+        public void TestErrorsFromTokenSource()
+        {
+            // setup
+            var tokenSource = new MockTokenSource();
+            var def = new Definition("A");
+            def.Directives.Add(DefinitionDirective.Token);
+            CharNode anode = new CharNode('a');
+            def.StartNodes.Add(anode);
+            def.EndNodes.Add(anode);
+            def.Nodes.Add(anode);
+            tokenSource.Tokenizations[0] = new TokenizationInfo() {
+                Tokens = new Token[] {
+                    new Token(def, new InputPosition(0), "a", 1)
+                },
+            };
+            tokenSource.Tokenizations[1] = new TokenizationInfo() {
+                Errors = new List<Error> {
+                    new MockError() {
+                        ErrorType = MockError.MockErrorType
+                    },
+                }
+            };
+
+            var def2 = new Definition("sequence");
+            var node = new DefRefNode(def);
+            node.NextNodes.Add(node);
+            def2.StartNodes.Add(node);
+            def2.EndNodes.Add(node);
+            def2.Nodes.Add(node);
+
+            var parser = new Parser(def2);
+            List<Error> errors = new List<Error>();
+
+            // action
+            var spans = parser.Parse(tokenSource, errors);
+
+            // assertions
+            Assert.IsNotNull(spans);
+            Assert.AreEqual(0, spans.Length);
+            Assert.AreEqual(1, errors.Count);
+            Assert.IsInstanceOf<MockError>(errors[0]);
+            Assert.AreEqual(MockError.MockErrorType, errors[0].ErrorType);
         }
     }
 }
