@@ -708,7 +708,6 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestUnexpectedEndOfInputInToken()
         {
-            Assert.Fail();
             string testGrammarText =
                 " // test grammar \r\n" +
                     "sequence = item+; \r\n" +
@@ -735,17 +734,17 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(0, spans.Length);
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<ParserError>(errors[0]);
-            var err = ((ParserError)errors[0]);
-            Assert.AreEqual(ParserError.UnexpectedEndOfInput, err.ErrorType);
+            Assert.IsInstanceOf<SpannerError>(errors[0]);
+            var err = ((SpannerError)errors[0]);
+            Assert.AreEqual(SpannerError.UnexpectedEndOfInput, err.ErrorType);
             Assert.AreEqual(1, err.Line);
             Assert.AreEqual(13, err.Column);
-            Assert.IsInstanceOf<DefRefNode>(err.LastValidMatchingNode);
-            Assert.AreSame(oparenDef, (err.LastValidMatchingNode as DefRefNode).DefRef);
+            Assert.IsInstanceOf<CharNode>(err.LastValidMatchingNode);
+            Assert.AreEqual("m", (err.LastValidMatchingNode as CharNode).CharClass.ToUndelimitedString());
             Assert.IsNotNull(err.ExpectedNodes);
             Assert.AreEqual(1, err.ExpectedNodes.Count());
-            Assert.IsInstanceOf<DefRefNode>(err.ExpectedNodes.First());
-            Assert.AreSame(sequenceDef, (err.ExpectedNodes.First() as DefRefNode).DefRef);
+//            Assert.IsInstanceOf<DefRefNode>(err.ExpectedNodes.First());
+//            Assert.AreSame(sequenceDef, (err.ExpectedNodes.First() as DefRefNode).DefRef);
         }
 
         [Test]
@@ -846,8 +845,6 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestInvalidCharacter()
         {
-            Assert.Fail();
-
             string testGrammarText =
                 " // test grammar \r\n" +
                     "sequence = item+; \r\n" +
@@ -874,21 +871,20 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(0, spans.Length);
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<ParserError>(errors[0]);
-            var err = ((ParserError)errors[0]);
-            Assert.AreEqual(ParserError.InvalidToken, err.ErrorType);
+            Assert.IsInstanceOf<SpannerError>(errors[0]);
+            var err = ((SpannerError)errors[0]);
+            Assert.AreEqual(SpannerError.InvalidCharacter, err.ErrorType);
             Assert.AreEqual(1, err.Line);
             Assert.AreEqual(9, err.Column);
             Assert.AreEqual(8, err.Index);
-            Assert.AreEqual(8, err.OffendingToken.StartPosition.Index);
-            Assert.AreEqual("$", err.OffendingToken.Value);
-            Assert.IsNull(err.OffendingToken.Definition);
-            Assert.IsInstanceOf<DefRefNode>(err.LastValidMatchingNode);
-            Assert.AreSame(oparenDef, (err.LastValidMatchingNode as DefRefNode).DefRef);
-            Assert.IsNotNull(err.ExpectedNodes);
-            Assert.AreEqual(1, err.ExpectedNodes.Count());
-            Assert.IsInstanceOf<DefRefNode>(err.ExpectedNodes.First());
-            Assert.AreSame(sequenceDef, (err.ExpectedNodes.First() as DefRefNode).DefRef);
+//            Assert.AreEqual(8, err.OffendingToken.StartPosition.Index);
+            Assert.AreEqual('$', err.OffendingCharacter);
+//            Assert.IsInstanceOf<DefRefNode>(err.LastValidMatchingNode);
+//            Assert.AreSame(oparenDef, (err.LastValidMatchingNode as DefRefNode).DefRef);
+//            Assert.IsNotNull(err.ExpectedNodes);
+//            Assert.AreEqual(1, err.ExpectedNodes.Count());
+//            Assert.IsInstanceOf<DefRefNode>(err.ExpectedNodes.First());
+//            Assert.AreSame(sequenceDef, (err.ExpectedNodes.First() as DefRefNode).DefRef);
         }
 
         [Test]
