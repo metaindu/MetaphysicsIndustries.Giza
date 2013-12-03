@@ -376,10 +376,24 @@ namespace MetaphysicsIndustries.Giza
     {
         public static void Add(this ICollection<NodeMatchErrorPair> collection, NodeMatch nm, params Error[] errors)
         {
+            // if all errors are null, replace with an empty array
+            if (errors.Length > 0 &&
+                errors.All(x => x == null))
+            {
+                errors = new Error[0];
+            }
+
             collection.Add(new NodeMatchErrorPair(nm, errors));
         }
         public static void Add(this ICollection<NodeMatchErrorPair> collection, NodeMatch nm, ICollection<Error> errors)
         {
+            // if all errors are null, replace with an empty collection
+            if (errors.Count > 0 &&
+                errors.All(x => x == null))
+            {
+                errors = new List<Error>();
+            }
+
             collection.Add(new NodeMatchErrorPair(nm, errors));
         }
     }

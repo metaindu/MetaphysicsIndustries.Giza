@@ -100,43 +100,14 @@ namespace MetaphysicsIndustries.Giza
                     //if we get any tokenization errors, process them and reject
                     if (tokenization.Errors.ContainsNonWarnings())
                     {
-                        //reject branches with error
-                        SpannerError se = (tokenization.Errors.GetFirstNonWarning() as SpannerError);
-                        var err = new ParserError();
-                        err.LastValidMatchingNode = info.Source.Node;
-
-                        err.ExpectedNodes = info.GetExpectedNodes();
-
-                        if (se.ErrorType == SpannerError.UnexpectedEndOfInput)
-                        {
-                            err.ErrorType = ParserError.UnexpectedEndOfInput;
-                            err.Position = se.Position;
-                        }
-                        else if (se.ErrorType == SpannerError.ExcessRemainingInput)
-                        {
-                            // this shouldn't happen. when we read tokens,
-                            // we set mustUseAllInput to false
-                            throw new InvalidOperationException("Excess remaining input when reading tokens");
-                        }
-                        else if (se.ErrorType == SpannerError.InvalidCharacter)
-                        {
-                            err.ErrorType = ParserError.InvalidToken;
-                            err.Position = se.Position;
-                            err.OffendingToken.StartPosition = err.Position;
-                            err.OffendingToken.Definition = null;
-                            err.OffendingToken.Value = se.OffendingCharacter.ToString();
-                        }
-                        else
-                        {
-                            throw new InvalidOperationException("Errors in definitions");
-                        }
+                        //reject branches with errors
 
                         foreach (var branch in info.Branches)
                         {
-                            rejects.Add(branch.NodeMatch, err);
+                            rejects.Add(branch.NodeMatch, tokenization.Errors);
                         }
 
-                        RejectEndCandidate(info, rejects, ends, err);
+                        RejectEndCandidate(info, rejects, ends, tokenization.Errors);
                     }
                     else if (tokenization.EndOfInput)
                     {
@@ -163,15 +134,15 @@ namespace MetaphysicsIndustries.Giza
                         };
 
                         RejectEndCandidate(info, rejects, ends, err);
-                    }
 
-                    foreach (var branch in info.Branches)
-                    {
-                        branches2.Enqueue(new Tuple<NodeMatch, MatchStack, ParseInfo>(
-                                            branch.NodeMatch,
-                                            branch.MatchStack,
-                                            info),
-                                          info.Source.Token.IndexOfNextTokenization);
+                        foreach (var branch in info.Branches)
+                        {
+                            branches2.Enqueue(new Tuple<NodeMatch, MatchStack, ParseInfo>(
+                                branch.NodeMatch,
+                                branch.MatchStack,
+                                info),
+                                info.Source.Token.IndexOfNextTokenization);
+                        }
                     }
                 }
 
