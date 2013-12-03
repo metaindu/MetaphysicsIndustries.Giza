@@ -64,6 +64,24 @@ namespace MetaphysicsIndustries.Giza
             if (tokenSource == null) throw new ArgumentNullException("tokenSource");
             if (errors == null) throw new ArgumentNullException("errors");
 
+            var matchTreeLeaves = Match(tokenSource, errors);
+
+            return MakeSpans(matchTreeLeaves);
+        }
+        public NodeMatch[] Match(CharacterSource input, ICollection<Error> errors)
+        {
+            if (input == null) throw new ArgumentNullException("input");
+            if (errors == null) throw new ArgumentNullException("errors");
+
+            ITokenSource tokenSource = new Tokenizer(_definition.ParentGrammar, input);
+
+            return Match(tokenSource, errors);
+        }
+        public NodeMatch[] Match(ITokenSource tokenSource, ICollection<Error> errors)
+        {
+            if (tokenSource == null) throw new ArgumentNullException("tokenSource");
+            if (errors == null) throw new ArgumentNullException("errors");
+
             var sources = new PriorityQueue<NodeMatchStackPair, int>(lowToHigh: true);
             var ends = new List<NodeMatch>();
             var rootDef = new Definition("$rootDef");
@@ -244,7 +262,7 @@ namespace MetaphysicsIndustries.Giza
                 }
             }
 
-            return MakeSpans(ends);
+            return ends.ToArray();
         }
 
         void RejectEndCandidate(ParseInfo info, List<NodeMatchErrorPair> rejects, List<NodeMatch> ends, Error err)
