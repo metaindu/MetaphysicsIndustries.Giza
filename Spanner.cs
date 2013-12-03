@@ -7,9 +7,16 @@ using System.Linq;
 
 namespace MetaphysicsIndustries.Giza
 {
-    public class Spanner
+    public class Spanner : Spanner1
     {
         public Spanner(Definition definition)
+            : base(definition)
+        {
+        }
+    }
+    public class Spanner1
+    {
+        public Spanner1(Definition definition)
         {
             if (definition == null) throw new ArgumentNullException("definition");
 
