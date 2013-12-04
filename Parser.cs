@@ -335,7 +335,7 @@ namespace MetaphysicsIndustries.Giza
                 NodeMatch cur = current.NodeMatch;
                 MatchStack curstack = current.MatchStack;
 
-                if (cur.DefRef.IsTokenized &&
+                if (IsBranchTip(cur) &&
                     cur != info.Source)
                 {
                     info.Branches.Add(current);
@@ -363,6 +363,11 @@ namespace MetaphysicsIndustries.Giza
             }
 
             return info;
+        }
+
+        protected virtual bool IsBranchTip(NodeMatch cur)
+        {
+            return cur.DefRef.IsTokenized;
         }
 
         static Span[] MakeSpans(IEnumerable<NodeMatch> matchTreeLeaves)

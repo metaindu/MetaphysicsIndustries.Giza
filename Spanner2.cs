@@ -23,6 +23,11 @@ namespace MetaphysicsIndustries.Giza
 
             return Match(input, errors);
         }
+
+        protected override bool IsBranchTip(NodeMatch cur)
+        {
+            return (cur.Node is CharNode);
+        }
     }
 }
 
