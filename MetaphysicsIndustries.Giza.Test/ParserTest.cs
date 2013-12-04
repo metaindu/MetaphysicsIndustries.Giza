@@ -973,6 +973,7 @@ namespace MetaphysicsIndustries.Giza.Test
         public class MockError : Error
         {
             public static readonly ErrorType MockErrorType = new ErrorType(name: "MockErrorType");
+            public static readonly ErrorType MockErrorType2 = new ErrorType(name: "MockErrorType2");
         }
 
         [Test]
@@ -996,6 +997,9 @@ namespace MetaphysicsIndustries.Giza.Test
                     new MockError() {
                         ErrorType = MockError.MockErrorType
                     },
+                    new MockError() {
+                        ErrorType = MockError.MockErrorType2
+                    },
                 }
             };
 
@@ -1015,9 +1019,11 @@ namespace MetaphysicsIndustries.Giza.Test
             // assertions
             Assert.IsNotNull(spans);
             Assert.AreEqual(0, spans.Length);
-            Assert.AreEqual(1, errors.Count);
+            Assert.AreEqual(2, errors.Count);
             Assert.IsInstanceOf<MockError>(errors[0]);
             Assert.AreEqual(MockError.MockErrorType, errors[0].ErrorType);
+            Assert.IsInstanceOf<MockError>(errors[1]);
+            Assert.AreEqual(MockError.MockErrorType2, errors[1].ErrorType);
         }
     }
 }
