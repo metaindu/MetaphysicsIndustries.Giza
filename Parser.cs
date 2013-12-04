@@ -6,9 +6,17 @@ using System.Text;
 
 namespace MetaphysicsIndustries.Giza
 {
-    public class Parser
+    public class Parser : ParserBase
     {
         public Parser(Definition definition)
+            : base(definition)
+        {
+        }
+    }
+
+    public class ParserBase
+    {
+        public ParserBase(Definition definition)
         {
             if (definition == null) throw new ArgumentNullException("definition");
 
