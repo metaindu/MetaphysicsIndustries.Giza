@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Giza
 {
-    public class TokenizationInfo
+    public class InputElementSet
     {
         public bool EndOfInput;
         public InputPosition EndOfInputPosition;

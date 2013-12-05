@@ -42,9 +42,9 @@ namespace MetaphysicsIndustries.Giza
         List<string> _intokens;
         List<Token> _tokens = new List<Token>();
 
-        public TokenizationInfo GetTokensAtLocation(int index)
+        public InputElementSet GetTokensAtLocation(int index)
         {
-            TokenizationInfo tinfo = new TokenizationInfo();
+            InputElementSet tinfo = new InputElementSet();
 
             if (index >= _intokens.Count)
             {

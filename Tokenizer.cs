@@ -35,7 +35,7 @@ namespace MetaphysicsIndustries.Giza
         Spanner _spanner;
         Definition _tokenDef;
         CharacterSource _input;
-        readonly Dictionary<int, TokenizationInfo> _tokenizationsByIndex = new Dictionary<int, TokenizationInfo>();
+        readonly Dictionary<int, InputElementSet> _tokenizationsByIndex = new Dictionary<int, InputElementSet>();
 
         struct TokenizationByIndex
         {
@@ -59,7 +59,7 @@ namespace MetaphysicsIndustries.Giza
             public InputPosition LastPosition;
         }
 
-        public TokenizationInfo GetTokensAtLocation(int index)
+        public InputElementSet GetTokensAtLocation(int index)
         {
             Logger.WriteLine("Tokenizer: Getting tokens at index {0}, current input position is {1}", index, _input.CurrentPosition.Index);
 
@@ -68,7 +68,7 @@ namespace MetaphysicsIndustries.Giza
                 return _tokenizationsByIndex[index];
             }
 
-            TokenizationInfo tinfo = new TokenizationInfo();
+            InputElementSet tinfo = new InputElementSet();
             _tokenizationsByIndex[index] = tinfo;
 
             var tokenizations = new Queue<TokenizationByIndex>();
