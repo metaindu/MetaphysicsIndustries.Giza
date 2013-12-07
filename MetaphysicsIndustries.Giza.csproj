@@ -101,6 +101,7 @@
     <Compile Include="Spanner2.cs" />
     <Compile Include="IInputElement.cs" />
     <Compile Include="InputElementSet.cs" />
+    <Compile Include="IInputSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
