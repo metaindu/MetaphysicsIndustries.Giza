@@ -3,11 +3,12 @@ using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Giza
 {
-    public class InputElementSet
+    public class InputElementSet<T>
+        where T : IInputElement
     {
         public bool EndOfInput;
         public InputPosition EndOfInputPosition;
-        public IEnumerable<Token> Tokens;
+        public IEnumerable<T> Tokens;
         public List<Error> Errors = new List<Error>();
     }
 
