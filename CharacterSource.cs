@@ -2,7 +2,7 @@ using System;
 
 namespace MetaphysicsIndustries.Giza
 {
-    public class CharacterSource
+    public class CharacterSource : IInputSource<InputChar>
     {
         public CharacterSource(string value)
         {
@@ -96,6 +96,19 @@ namespace MetaphysicsIndustries.Giza
         {
             get { return (CurrentPosition.Index >= Length); }
         }
+
+        #region IInputSource implementation
+
+        public InputElementSet<InputChar> GetInputAtLocation(int index)
+        {
+            return new InputElementSet<InputChar> {
+                InputElements = new InputChar[] {
+                    new InputChar(this[index], GetPosition(index))
+                }
+            };
+        }
+
+        #endregion
     }
 }
 
