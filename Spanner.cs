@@ -35,7 +35,7 @@ namespace MetaphysicsIndustries.Giza
 
         public Span[] Process(CharacterSource input, List<Error> errors)
         {
-            NodeMatch[] matchTreeLeaves = Match(input, errors);
+            var matchTreeLeaves = Match(input, errors);
 
             return MakeSpans(matchTreeLeaves);
         }
@@ -56,16 +56,16 @@ namespace MetaphysicsIndustries.Giza
                 return new NodeMatch[0];
             }
 
-            DefRefNode implicitNode = new DefRefNode(_definition);
-            NodeMatch root = new NodeMatch(implicitNode, NodeMatch.TransitionType.Root, null);
+            var implicitNode = new DefRefNode(_definition);
+            var root = new NodeMatch(implicitNode, NodeMatch.TransitionType.Root, null);
 
 
-            Queue<NodeMatchStackPair> currents = new Queue<NodeMatchStackPair>();
-            Queue<NodeMatchStackPair> accepts = new Queue<NodeMatchStackPair>();
-            Queue<NodeMatchErrorPair> rejects = new Queue<NodeMatchErrorPair>();
-            Queue<NodeMatch> ends = new Queue<NodeMatch>();
+            var currents = new Queue<NodeMatchStackPair>();
+            var accepts = new Queue<NodeMatchStackPair>();
+            var rejects = new Queue<NodeMatchErrorPair>();
+            var ends = new Queue<NodeMatch>();
 
-            NodeMatchErrorPair lastReject = pair2(null, new SpannerError{ ErrorType=SpannerError.ExcessRemainingInput });
+            var lastReject = pair2(null, new SpannerError{ ErrorType=SpannerError.ExcessRemainingInput });
 
             currents.Enqueue(pair(root, null));
 
@@ -103,9 +103,9 @@ namespace MetaphysicsIndustries.Giza
                 var enddefs = new Set<NodeMatch>();
                 while (currents.Count > 0)
                 {
-                    NodeMatchStackPair p = currents.Dequeue();
-                    NodeMatch cur = p.NodeMatch;
-                    MatchStack stack = p.MatchStack;
+                    var p = currents.Dequeue();
+                    var cur = p.NodeMatch;
+                    var stack = p.MatchStack;
 
                     if (isWhitespace &&
                         ((stack == null && cur.Node is DefRefNode && !(cur.Node as DefRefNode).DefRef.MindWhitespace) ||
@@ -165,7 +165,7 @@ namespace MetaphysicsIndustries.Giza
                             se.OffendingCharacter = errorCh;
                             se.Position = pos;
 
-                            NodeMatch cur2 = cur.Previous;
+                            var cur2 = cur.Previous;
 
                             while (cur2 != null &&
                                 cur2.Transition == NodeMatch.TransitionType.StartDef)
@@ -262,8 +262,8 @@ namespace MetaphysicsIndustries.Giza
                         }
                         else
                         {
-                            MatchStack stack2 = new MatchStack(cur, stack);
-                            foreach (Node start in (cur.Node as DefRefNode).DefRef.StartNodes)
+                            var stack2 = new MatchStack(cur, stack);
+                            foreach (var start in (cur.Node as DefRefNode).DefRef.StartNodes)
                             {
                                 currents.Enqueue(NodeMatchStackPair.CreateStartDefMatch(start, cur, stack2, ch.Position));
                             }
@@ -301,9 +301,9 @@ namespace MetaphysicsIndustries.Giza
             // immediately after the CharNodes that matched a char.
             while (currents.Count > 0)
             {
-                NodeMatchStackPair p = currents.Dequeue();
-                NodeMatch cur = p.NodeMatch;
-                MatchStack stack = p.MatchStack;
+                var p = currents.Dequeue();
+                var cur = p.NodeMatch;
+                var stack = p.MatchStack;
 
                 if (cur.Node is CharNode ||
                     cur.Transition != NodeMatch.TransitionType.EndDef)
@@ -361,7 +361,7 @@ namespace MetaphysicsIndustries.Giza
 
             PurgeReject(lastReject.NodeMatch);
 
-            List<NodeMatch> matchTreeLeaves = new List<NodeMatch>();
+            var matchTreeLeaves = new List<NodeMatch>();
             while (ends.Count > 0)
             {
                 matchTreeLeaves.Add(ends.Dequeue());
@@ -372,11 +372,11 @@ namespace MetaphysicsIndustries.Giza
 
         static Span[] MakeSpans(IEnumerable<NodeMatch> matchTreeLeaves)
         {
-            List<List<NodeMatch>> lists = new List<List<NodeMatch>>();
-            foreach (NodeMatch leaf in matchTreeLeaves)
+            var lists = new List<List<NodeMatch>>();
+            foreach (var leaf in matchTreeLeaves)
             {
-                NodeMatch cur = leaf;
-                List<NodeMatch> list = new List<NodeMatch>();
+                var cur = leaf;
+                var list = new List<NodeMatch>();
 
                 while (cur != null)
                 {
@@ -389,13 +389,13 @@ namespace MetaphysicsIndustries.Giza
             }
 
             List<Span> spans = new List<Span>();
-            foreach (List<NodeMatch> list in lists)
+            foreach (var list in lists)
             {
-                Stack<Span> stack = new Stack<Span>();
+                var stack = new Stack<Span>();
 
                 Span rootSpan = null;
 
-                foreach (NodeMatch nm in list)
+                foreach (var nm in list)
                 {
                     if (nm.Transition == NodeMatch.TransitionType.EndDef)
                     {
@@ -457,7 +457,7 @@ namespace MetaphysicsIndustries.Giza
             while (reject != null &&
                    reject.Nexts.Count < 1)
             {
-                NodeMatch prev = reject.Previous;
+                var prev = reject.Previous;
                 reject.Previous = null;
                 //recycle the NodeMatch object here, if desired
                 reject = prev;

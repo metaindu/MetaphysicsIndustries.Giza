@@ -176,10 +176,10 @@ namespace MetaphysicsIndustries.Giza
                     matchTreeLeaves.AddRange(tok.MatchTreeLeaves);
                 }
 
-                foreach (NodeMatch leaf in matchTreeLeaves)
+                foreach (var leaf in matchTreeLeaves)
                 {
-                    NodeMatch tokenEnd = leaf.Previous;
-                    NodeMatch tokenStart = tokenEnd.StartDef;
+                    var tokenEnd = leaf.Previous;
+                    var tokenStart = tokenEnd.StartDef;
 
                     tokens.Add(new Token(
                         definition: tokenEnd.Previous.Node.ParentDefinition,

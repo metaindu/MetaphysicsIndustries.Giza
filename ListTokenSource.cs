@@ -66,8 +66,8 @@ namespace MetaphysicsIndustries.Giza
             var nodeMatches = _spanner.Match(_intokens[index], tinfo.Errors);
             var leaf = nodeMatches[0];
 
-            NodeMatch tokenEnd = leaf.Previous;
-            NodeMatch tokenStart = tokenEnd.StartDef;
+            var tokenEnd = leaf.Previous;
+            var tokenStart = tokenEnd.StartDef;
 
             int length = leaf.StartPosition.Index - tokenStart.StartPosition.Index + 1;
             var token = new Token(

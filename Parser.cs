@@ -331,9 +331,9 @@ namespace MetaphysicsIndustries.Giza
             info.Branches = new List<NodeMatchStackPair>();
             while (currents.Count > 0)
             {
-                NodeMatchStackPair current = currents.Dequeue();
-                NodeMatch cur = current.NodeMatch;
-                MatchStack curstack = current.MatchStack;
+                var current = currents.Dequeue();
+                var cur = current.NodeMatch;
+                var curstack = current.MatchStack;
 
                 if (IsBranchTip(cur) &&
                     cur != info.Source)
@@ -373,9 +373,9 @@ namespace MetaphysicsIndustries.Giza
         static Span[] MakeSpans(IEnumerable<NodeMatch> matchTreeLeaves)
         {
             var lists = new List<List<NodeMatch>>();
-            foreach (NodeMatch leaf in matchTreeLeaves)
+            foreach (var leaf in matchTreeLeaves)
             {
-                NodeMatch cur = leaf;
+                var cur = leaf;
                 var list = new List<NodeMatch>();
 
                 while (cur != null)
@@ -389,13 +389,13 @@ namespace MetaphysicsIndustries.Giza
             }
 
             var spans = new List<Span>();
-            foreach (List<NodeMatch> list in lists)
+            foreach (var list in lists)
             {
                 var stack = new Stack<Span>();
 
                 Span rootSpan = null;
 
-                foreach (NodeMatch nm in list)
+                foreach (var nm in list)
                 {
                     if (nm.Transition == NodeMatch.TransitionType.EndDef)
                     {
@@ -434,8 +434,8 @@ namespace MetaphysicsIndustries.Giza
 
         public static void StripReject(NodeMatch reject)
         {
-            NodeMatch cur = reject;
-            NodeMatch next = cur;
+            var cur = reject;
+            var next = cur;
             while (cur != null &&
                    cur.Nexts.Count < 2)
             {
