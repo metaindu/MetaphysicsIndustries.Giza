@@ -3,9 +3,8 @@ using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Giza
 {
-    public interface ITokenSource
+    public interface ITokenSource : IInputSource<Token>
     {
-        InputElementSet<Token> GetInputAtLocation(int index);
     }
 }
 
