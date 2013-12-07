@@ -50,7 +50,7 @@ namespace MetaphysicsIndustries.Giza
             {
                 tinfo.EndOfInput = true;
                 tinfo.EndOfInputPosition = new InputPosition(_intokens.Count);
-                tinfo.Tokens = new Token[0];
+                tinfo.InputElements = new Token[0];
                 return tinfo;
             }
 
@@ -59,7 +59,7 @@ namespace MetaphysicsIndustries.Giza
 
             if (_tokens[index].Value != null)
             {
-                tinfo.Tokens = new Token[] { _tokens[index] };
+                tinfo.InputElements = new Token[] { _tokens[index] };
                 return tinfo;
             }
 
@@ -78,7 +78,7 @@ namespace MetaphysicsIndustries.Giza
 
             _tokens[index] = token;
 
-            tinfo.Tokens = new Token[] { _tokens[index] };
+            tinfo.InputElements = new Token[] { _tokens[index] };
             return tinfo;
         }
     }

@@ -32,8 +32,8 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Assert.IsEmpty(tinfo.Errors);
             Assert.IsFalse(tinfo.EndOfInput);
-            Assert.AreEqual(1, tinfo.Tokens.Count());
-            var first = tinfo.Tokens.First();
+            Assert.AreEqual(1, tinfo.InputElements.Count());
+            var first = tinfo.InputElements.First();
             Assert.AreEqual(item1Def, first.Definition);
             Assert.AreEqual(0, first.StartPosition.Index);
             Assert.AreEqual("item1", first.Value);
@@ -42,8 +42,8 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Assert.IsEmpty(tinfo.Errors);
             Assert.IsFalse(tinfo.EndOfInput);
-            Assert.AreEqual(1, tinfo.Tokens.Count());
-            first = tinfo.Tokens.First();
+            Assert.AreEqual(1, tinfo.InputElements.Count());
+            first = tinfo.InputElements.First();
             Assert.AreEqual(item2Def, first.Definition);
             Assert.AreEqual(6, first.StartPosition.Index);
             Assert.AreEqual("item2", first.Value);
@@ -78,8 +78,8 @@ namespace MetaphysicsIndustries.Giza.Test
             var tinfo = t.GetTokensAtLocation(0);
             Assert.IsEmpty(errors);
             Assert.IsFalse(tinfo.EndOfInput);
-            Assert.AreEqual(1, tinfo.Tokens.Count());
-            var first = tinfo.Tokens.First();
+            Assert.AreEqual(1, tinfo.InputElements.Count());
+            var first = tinfo.InputElements.First();
             Assert.AreEqual(varrefDef, first.Definition);
             Assert.AreEqual(0, first.StartPosition.Index);
             Assert.AreEqual("a", first.Value);
@@ -87,9 +87,9 @@ namespace MetaphysicsIndustries.Giza.Test
             tinfo = t.GetTokensAtLocation(1);
             Assert.IsEmpty(errors);
             Assert.IsFalse(tinfo.EndOfInput);
-            Assert.AreEqual(2, tinfo.Tokens.Count());
-            first = tinfo.Tokens.First();
-            var second = tinfo.Tokens.ElementAt(1);
+            Assert.AreEqual(2, tinfo.InputElements.Count());
+            first = tinfo.InputElements.First();
+            var second = tinfo.InputElements.ElementAt(1);
             Assert.IsTrue(first.Definition == plusplusDef || first.Definition == operDef);
             Assert.IsTrue(second.Definition == plusplusDef || second.Definition == operDef);
             Assert.IsFalse(first.Definition == second.Definition);
@@ -139,8 +139,8 @@ namespace MetaphysicsIndustries.Giza.Test
             var tinfo = t.GetTokensAtLocation(0);
             Assert.IsEmpty(errors);
             Assert.IsFalse(tinfo.EndOfInput);
-            Assert.AreEqual(1, tinfo.Tokens.Count());
-            var first = tinfo.Tokens.First();
+            Assert.AreEqual(1, tinfo.InputElements.Count());
+            var first = tinfo.InputElements.First();
             Assert.AreEqual(itemDef, first.Definition);
             Assert.AreEqual(0, first.StartPosition.Index);
             Assert.AreEqual("a", first.Value);
@@ -148,9 +148,9 @@ namespace MetaphysicsIndustries.Giza.Test
             tinfo = t.GetTokensAtLocation(1);
             Assert.IsEmpty(errors);
             Assert.IsFalse(tinfo.EndOfInput);
-            Assert.AreEqual(2, tinfo.Tokens.Count());
-            first = tinfo.Tokens.First();
-            var second = tinfo.Tokens.ElementAt(1);
+            Assert.AreEqual(2, tinfo.InputElements.Count());
+            first = tinfo.InputElements.First();
+            var second = tinfo.InputElements.ElementAt(1);
             Assert.AreEqual(2, first.StartPosition.Index);
             Assert.AreEqual(2, second.StartPosition.Index);
             Assert.AreEqual(operDef, first.Definition);
@@ -183,9 +183,9 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Assert.IsEmpty(errors);
             Assert.IsFalse(tinfo.EndOfInput);
-            Assert.IsNotNull(tinfo.Tokens);
-            Assert.AreEqual(1, tinfo.Tokens.Count());
-            var first = tinfo.Tokens.First();
+            Assert.IsNotNull(tinfo.InputElements);
+            Assert.AreEqual(1, tinfo.InputElements.Count());
+            var first = tinfo.InputElements.First();
             Assert.AreSame(operandDef, first.Definition);
             Assert.AreEqual(0, first.StartPosition.Index);
             Assert.AreEqual("a", first.Value);
@@ -215,9 +215,9 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Assert.IsEmpty(errors);
             Assert.IsFalse(tinfo.EndOfInput);
-            Assert.IsNotNull(tinfo.Tokens);
-            Assert.AreEqual(1, tinfo.Tokens.Count());
-            var first = tinfo.Tokens.First();
+            Assert.IsNotNull(tinfo.InputElements);
+            Assert.AreEqual(1, tinfo.InputElements.Count());
+            var first = tinfo.InputElements.First();
             Assert.AreSame(operatorDef, first.Definition);
             Assert.AreEqual(2, first.StartPosition.Index);
             Assert.AreEqual("+", first.Value);
@@ -247,9 +247,9 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Assert.IsEmpty(errors);
             Assert.IsFalse(tinfo.EndOfInput);
-            Assert.IsNotNull(tinfo.Tokens);
-            Assert.AreEqual(1, tinfo.Tokens.Count());
-            var first = tinfo.Tokens.First();
+            Assert.IsNotNull(tinfo.InputElements);
+            Assert.AreEqual(1, tinfo.InputElements.Count());
+            var first = tinfo.InputElements.First();
             Assert.AreSame(operatorDef, first.Definition);
             Assert.AreEqual(2, first.StartPosition.Index);
             Assert.AreEqual("+", first.Value);
@@ -279,9 +279,9 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Assert.IsEmpty(errors);
             Assert.IsFalse(tinfo.EndOfInput);
-            Assert.IsNotNull(tinfo.Tokens);
-            Assert.AreEqual(1, tinfo.Tokens.Count());
-            var first = tinfo.Tokens.First();
+            Assert.IsNotNull(tinfo.InputElements);
+            Assert.AreEqual(1, tinfo.InputElements.Count());
+            var first = tinfo.InputElements.First();
             Assert.AreSame(operandDef, first.Definition);
             Assert.AreEqual(4, first.StartPosition.Index);
             Assert.AreEqual("b", first.Value);
@@ -311,9 +311,9 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Assert.IsEmpty(errors);
             Assert.IsFalse(tinfo.EndOfInput);
-            Assert.IsNotNull(tinfo.Tokens);
-            Assert.AreEqual(1, tinfo.Tokens.Count());
-            var first = tinfo.Tokens.First();
+            Assert.IsNotNull(tinfo.InputElements);
+            Assert.AreEqual(1, tinfo.InputElements.Count());
+            var first = tinfo.InputElements.First();
             Assert.AreSame(operandDef, first.Definition);
             Assert.AreEqual(4, first.StartPosition.Index);
             Assert.AreEqual("b", first.Value);
@@ -341,8 +341,8 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Assert.IsEmpty(errors);
             Assert.IsTrue(tinfo.EndOfInput);
-            Assert.IsNotNull(tinfo.Tokens);
-            Assert.AreEqual(0, tinfo.Tokens.Count());
+            Assert.IsNotNull(tinfo.InputElements);
+            Assert.AreEqual(0, tinfo.InputElements.Count());
             Assert.AreEqual(5, tinfo.EndOfInputPosition.Index);
         }
 
@@ -366,8 +366,8 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             Assert.IsTrue(tinfo.EndOfInput);
-            Assert.IsNotNull(tinfo.Tokens);
-            Assert.IsEmpty(tinfo.Tokens);
+            Assert.IsNotNull(tinfo.InputElements);
+            Assert.IsEmpty(tinfo.InputElements);
             Assert.IsNotNull(errors);
             Assert.IsEmpty(errors);
             Assert.AreEqual(5, tinfo.EndOfInputPosition.Index);
@@ -393,8 +393,8 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             Assert.IsTrue(tinfo.EndOfInput);
-            Assert.IsNotNull(tinfo.Tokens);
-            Assert.IsEmpty(tinfo.Tokens);
+            Assert.IsNotNull(tinfo.InputElements);
+            Assert.IsEmpty(tinfo.InputElements);
             Assert.IsNotNull(errors);
             Assert.IsEmpty(errors);
             Assert.AreEqual(6, tinfo.EndOfInputPosition.Index);
@@ -420,8 +420,8 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             Assert.IsTrue(tinfo.EndOfInput);
-            Assert.IsNotNull(tinfo.Tokens);
-            Assert.IsEmpty(tinfo.Tokens);
+            Assert.IsNotNull(tinfo.InputElements);
+            Assert.IsEmpty(tinfo.InputElements);
             Assert.IsNotNull(errors);
             Assert.IsEmpty(errors);
             Assert.AreEqual(6, tinfo.EndOfInputPosition.Index);
@@ -448,8 +448,8 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             Assert.IsTrue(tinfo.EndOfInput);
-            Assert.IsNotNull(tinfo.Tokens);
-            Assert.IsEmpty(tinfo.Tokens);
+            Assert.IsNotNull(tinfo.InputElements);
+            Assert.IsEmpty(tinfo.InputElements);
             Assert.IsNotNull(errors);
             Assert.IsEmpty(errors);
             Assert.AreEqual(16, tinfo.EndOfInputPosition.Index);
@@ -476,8 +476,8 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             Assert.IsTrue(tinfo.EndOfInput);
-            Assert.IsNotNull(tinfo.Tokens);
-            Assert.IsEmpty(tinfo.Tokens);
+            Assert.IsNotNull(tinfo.InputElements);
+            Assert.IsEmpty(tinfo.InputElements);
             Assert.IsNotNull(errors);
             Assert.IsEmpty(errors);
             Assert.AreEqual(17, tinfo.EndOfInputPosition.Index);
@@ -504,8 +504,8 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             Assert.IsTrue(tinfo.EndOfInput);
-            Assert.IsNotNull(tinfo.Tokens);
-            Assert.IsEmpty(tinfo.Tokens);
+            Assert.IsNotNull(tinfo.InputElements);
+            Assert.IsEmpty(tinfo.InputElements);
             Assert.IsNotNull(errors);
             Assert.IsEmpty(errors);
             Assert.AreEqual(17, tinfo.EndOfInputPosition.Index);
@@ -536,9 +536,9 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsTrue(tinfo.EndOfInput);
             Assert.IsNotNull(errors);
             Assert.IsEmpty(errors);
-            Assert.IsNotNull(tinfo.Tokens);
-            Assert.AreEqual(1, tinfo.Tokens.Count());
-            var first = tinfo.Tokens.First();
+            Assert.IsNotNull(tinfo.InputElements);
+            Assert.AreEqual(1, tinfo.InputElements.Count());
+            var first = tinfo.InputElements.First();
             Assert.AreSame(strangeDef, first.Definition);
             Assert.AreEqual(5, first.StartPosition.Index);
             Assert.AreEqual("/*comment", first.Value);
@@ -578,9 +578,9 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
             Assert.IsFalse(tinfo.EndOfInput);
             Assert.AreEqual(-1, tinfo.EndOfInputPosition.Index);
-            Assert.IsNotNull(tinfo.Tokens);
-            Assert.AreEqual(1, tinfo.Tokens.Count());
-            var first = tinfo.Tokens.First();
+            Assert.IsNotNull(tinfo.InputElements);
+            Assert.AreEqual(1, tinfo.InputElements.Count());
+            var first = tinfo.InputElements.First();
             Assert.AreSame(itemDef, first.Definition);
             Assert.AreEqual(0, first.StartPosition.Index);
             Assert.AreEqual("start-ABCD-end", first.Value);

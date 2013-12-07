@@ -150,7 +150,7 @@ namespace MetaphysicsIndustries.Giza
                     }
                     else // we have valid tokens
                     {
-                        var offendingToken = tokenization.Tokens.First();
+                        var offendingToken = tokenization.InputElements.First();
 
                         var err = new ParserError {
                             ErrorType = ParserError.ExcessRemainingInput,
@@ -185,7 +185,7 @@ namespace MetaphysicsIndustries.Giza
                         !tokenization.EndOfInput)
                     {
                         // we have valid tokens
-                        var offendingToken = tokenization.Tokens.First();
+                        var offendingToken = tokenization.InputElements.First();
                         var err = new ParserError {
                             ErrorType = ParserError.ExcessRemainingInput,
                             LastValidMatchingNode = info.Source.Node,
@@ -197,7 +197,7 @@ namespace MetaphysicsIndustries.Giza
 
                         // try to match branch to tokens
                         bool matched = false;
-                        foreach (var intoken in tokenization.Tokens)
+                        foreach (var intoken in tokenization.InputElements)
                         {
                             if ((branchnm.Node is DefRefNode) &&
                                 (branchnm.Node as DefRefNode).DefRef == intoken.Definition)

@@ -204,7 +204,7 @@ namespace MetaphysicsIndustries.Giza
 
             if (hasLeaves.Count > 0 || hasEnd.Count > 0)
             {
-                tinfo.Tokens = tokens.ToArray();
+                tinfo.InputElements = tokens.ToArray();
                 return tinfo;
             }
             else
@@ -222,7 +222,7 @@ namespace MetaphysicsIndustries.Giza
                 }
 
                 tinfo.Errors.AddRange(mintok.Errors);
-                tinfo.Tokens = new Token[0];
+                tinfo.InputElements = new Token[0];
                 return tinfo;
             }
         }

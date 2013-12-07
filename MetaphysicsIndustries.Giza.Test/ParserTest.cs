@@ -988,7 +988,7 @@ namespace MetaphysicsIndustries.Giza.Test
             def.EndNodes.Add(anode);
             def.Nodes.Add(anode);
             tokenSource.InputElementSetsByIndex[0] = new InputElementSet<Token>() {
-                Tokens = new Token[] {
+                InputElements = new Token[] {
                     new Token(def, new InputPosition(0), "a", 1)
                 },
             };
