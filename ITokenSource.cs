@@ -5,7 +5,7 @@ namespace MetaphysicsIndustries.Giza
 {
     public interface ITokenSource
     {
-        InputElementSet<Token> GetTokensAtLocation(int index);
+        InputElementSet<Token> GetInputAtLocation(int index);
     }
 }
 

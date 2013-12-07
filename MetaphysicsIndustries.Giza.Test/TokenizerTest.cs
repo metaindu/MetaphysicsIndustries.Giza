@@ -28,7 +28,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Tokenizer t = new Tokenizer(testGrammar, "item1 item2");
 
-            var tinfo = t.GetTokensAtLocation(0);
+            var tinfo = t.GetInputAtLocation(0);
 
             Assert.IsEmpty(tinfo.Errors);
             Assert.IsFalse(tinfo.EndOfInput);
@@ -38,7 +38,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(0, first.StartPosition.Index);
             Assert.AreEqual("item1", first.Value);
 
-            tinfo = t.GetTokensAtLocation(5);
+            tinfo = t.GetInputAtLocation(5);
 
             Assert.IsEmpty(tinfo.Errors);
             Assert.IsFalse(tinfo.EndOfInput);
@@ -75,7 +75,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Tokenizer t = new Tokenizer(testGrammar, testInput);
 
-            var tinfo = t.GetTokensAtLocation(0);
+            var tinfo = t.GetInputAtLocation(0);
             Assert.IsEmpty(errors);
             Assert.IsFalse(tinfo.EndOfInput);
             Assert.AreEqual(1, tinfo.InputElements.Count());
@@ -84,7 +84,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(0, first.StartPosition.Index);
             Assert.AreEqual("a", first.Value);
 
-            tinfo = t.GetTokensAtLocation(1);
+            tinfo = t.GetInputAtLocation(1);
             Assert.IsEmpty(errors);
             Assert.IsFalse(tinfo.EndOfInput);
             Assert.AreEqual(2, tinfo.InputElements.Count());
@@ -136,7 +136,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Tokenizer t = new Tokenizer(testGrammar, testInput);
 
-            var tinfo = t.GetTokensAtLocation(0);
+            var tinfo = t.GetInputAtLocation(0);
             Assert.IsEmpty(errors);
             Assert.IsFalse(tinfo.EndOfInput);
             Assert.AreEqual(1, tinfo.InputElements.Count());
@@ -145,7 +145,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(0, first.StartPosition.Index);
             Assert.AreEqual("a", first.Value);
 
-            tinfo = t.GetTokensAtLocation(1);
+            tinfo = t.GetInputAtLocation(1);
             Assert.IsEmpty(errors);
             Assert.IsFalse(tinfo.EndOfInput);
             Assert.AreEqual(2, tinfo.InputElements.Count());
@@ -179,7 +179,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Tokenizer tokenizer = new Tokenizer(grammar, input);
 
 
-            var tinfo = tokenizer.GetTokensAtLocation(0);
+            var tinfo = tokenizer.GetInputAtLocation(0);
 
             Assert.IsEmpty(errors);
             Assert.IsFalse(tinfo.EndOfInput);
@@ -211,7 +211,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Tokenizer tokenizer = new Tokenizer(grammar, input);
 
 
-            var tinfo = tokenizer.GetTokensAtLocation(1);
+            var tinfo = tokenizer.GetInputAtLocation(1);
 
             Assert.IsEmpty(errors);
             Assert.IsFalse(tinfo.EndOfInput);
@@ -243,7 +243,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Tokenizer tokenizer = new Tokenizer(grammar, input);
 
 
-            var tinfo = tokenizer.GetTokensAtLocation(2);
+            var tinfo = tokenizer.GetInputAtLocation(2);
 
             Assert.IsEmpty(errors);
             Assert.IsFalse(tinfo.EndOfInput);
@@ -275,7 +275,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Tokenizer tokenizer = new Tokenizer(grammar, input);
 
 
-            var tinfo = tokenizer.GetTokensAtLocation(3);
+            var tinfo = tokenizer.GetInputAtLocation(3);
 
             Assert.IsEmpty(errors);
             Assert.IsFalse(tinfo.EndOfInput);
@@ -307,7 +307,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Tokenizer tokenizer = new Tokenizer(grammar, input);
 
 
-            var tinfo = tokenizer.GetTokensAtLocation(4);
+            var tinfo = tokenizer.GetInputAtLocation(4);
 
             Assert.IsEmpty(errors);
             Assert.IsFalse(tinfo.EndOfInput);
@@ -337,7 +337,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Tokenizer tokenizer = new Tokenizer(grammar, input);
 
 
-            var tinfo = tokenizer.GetTokensAtLocation(5);
+            var tinfo = tokenizer.GetInputAtLocation(5);
 
             Assert.IsEmpty(errors);
             Assert.IsTrue(tinfo.EndOfInput);
@@ -362,7 +362,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Tokenizer tokenizer = new Tokenizer(grammar, input);
 
 
-            var tinfo = tokenizer.GetTokensAtLocation(5);
+            var tinfo = tokenizer.GetInputAtLocation(5);
 
 
             Assert.IsTrue(tinfo.EndOfInput);
@@ -389,7 +389,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Tokenizer tokenizer = new Tokenizer(grammar, input);
 
 
-            var tinfo = tokenizer.GetTokensAtLocation(5);
+            var tinfo = tokenizer.GetInputAtLocation(5);
 
 
             Assert.IsTrue(tinfo.EndOfInput);
@@ -416,7 +416,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Tokenizer tokenizer = new Tokenizer(grammar, input);
 
 
-            var tinfo = tokenizer.GetTokensAtLocation(6);
+            var tinfo = tokenizer.GetInputAtLocation(6);
 
 
             Assert.IsTrue(tinfo.EndOfInput);
@@ -444,7 +444,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Tokenizer tokenizer = new Tokenizer(grammar, input);
 
 
-            var tinfo = tokenizer.GetTokensAtLocation(5);
+            var tinfo = tokenizer.GetInputAtLocation(5);
 
 
             Assert.IsTrue(tinfo.EndOfInput);
@@ -472,7 +472,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Tokenizer tokenizer = new Tokenizer(grammar, input);
 
 
-            var tinfo = tokenizer.GetTokensAtLocation(5);
+            var tinfo = tokenizer.GetInputAtLocation(5);
 
 
             Assert.IsTrue(tinfo.EndOfInput);
@@ -500,7 +500,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Tokenizer tokenizer = new Tokenizer(grammar, input);
 
 
-            var tinfo = tokenizer.GetTokensAtLocation(5);
+            var tinfo = tokenizer.GetInputAtLocation(5);
 
 
             Assert.IsTrue(tinfo.EndOfInput);
@@ -530,7 +530,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Tokenizer tokenizer = new Tokenizer(grammar, input);
 
 
-            var tinfo = tokenizer.GetTokensAtLocation(5);
+            var tinfo = tokenizer.GetInputAtLocation(5);
 
 
             Assert.IsTrue(tinfo.EndOfInput);
@@ -571,7 +571,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Tokenizer tokenizer = new Tokenizer(grammar, testInputText);
 
 
-            var tinfo = tokenizer.GetTokensAtLocation(0);
+            var tinfo = tokenizer.GetInputAtLocation(0);
 
 
             Assert.IsNotNull(errors);

@@ -42,7 +42,7 @@ namespace MetaphysicsIndustries.Giza
         List<string> _intokens;
         List<Token> _tokens = new List<Token>();
 
-        public InputElementSet<Token> GetTokensAtLocation(int index)
+        public InputElementSet<Token> GetInputAtLocation(int index)
         {
             var tinfo = new InputElementSet<Token>();
 

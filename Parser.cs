@@ -121,7 +121,7 @@ namespace MetaphysicsIndustries.Giza
                     }
 
                     //get all tokens, starting at end of source's token
-                    var tokenization = tokenSource.GetTokensAtLocation(info.Source.Token.IndexOfNextTokenization);
+                    var tokenization = tokenSource.GetInputAtLocation(info.Source.Token.IndexOfNextTokenization);
 
                     //if we get any tokenization errors, process them and reject
                     if (tokenization.Errors.ContainsNonWarnings())
@@ -179,7 +179,7 @@ namespace MetaphysicsIndustries.Giza
                     var branchstack = branchtuple.Item2;
                     var info = branchtuple.Item3;
 
-                    var tokenization = tokenSource.GetTokensAtLocation(info.Source.Token.IndexOfNextTokenization);
+                    var tokenization = tokenSource.GetInputAtLocation(info.Source.Token.IndexOfNextTokenization);
 
                     if (!tokenization.Errors.ContainsNonWarnings() &&
                         !tokenization.EndOfInput)

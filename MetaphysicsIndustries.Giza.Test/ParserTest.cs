@@ -964,7 +964,7 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             public readonly Dictionary<int, InputElementSet<Token>> InputElementSetsByIndex = new Dictionary<int, InputElementSet<Token>>();
 
-            public InputElementSet<Token> GetTokensAtLocation(int index)
+            public InputElementSet<Token> GetInputAtLocation(int index)
             {
                 return InputElementSetsByIndex[index];
             }

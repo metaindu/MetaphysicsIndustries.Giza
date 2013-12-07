@@ -59,7 +59,7 @@ namespace MetaphysicsIndustries.Giza
             public InputPosition LastPosition;
         }
 
-        public InputElementSet<Token> GetTokensAtLocation(int index)
+        public InputElementSet<Token> GetInputAtLocation(int index)
         {
             Logger.WriteLine("Tokenizer: Getting tokens at index {0}, current input position is {1}", index, _input.CurrentPosition.Index);
 
