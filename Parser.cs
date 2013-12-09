@@ -6,7 +6,7 @@ using System.Text;
 
 namespace MetaphysicsIndustries.Giza
 {
-    public class Parser : ParserBase
+    public class Parser : ParserBase<Token>
     {
         public Parser(Definition definition)
             : base(definition)
@@ -33,7 +33,8 @@ namespace MetaphysicsIndustries.Giza
         }
     }
 
-    public class ParserBase
+    public class ParserBase<T>
+        where T : IInputElement
     {
         public ParserBase(Definition definition)
         {

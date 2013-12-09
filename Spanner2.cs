@@ -5,7 +5,7 @@ using MetaphysicsIndustries.Collections;
 
 namespace MetaphysicsIndustries.Giza
 {
-    public class Spanner2 : ParserBase
+    public class Spanner2 : ParserBase<InputChar>
     {
         public Spanner2(Definition definition)
             : base(definition)
