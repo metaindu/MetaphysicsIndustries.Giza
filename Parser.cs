@@ -77,7 +77,7 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        public Span[] Parse(ITokenSource tokenSource, ICollection<Error> errors)
+        public Span[] Parse(IInputSource<Token> tokenSource, ICollection<Error> errors)
         {
             if (tokenSource == null) throw new ArgumentNullException("tokenSource");
             if (errors == null) throw new ArgumentNullException("errors");
@@ -86,7 +86,7 @@ namespace MetaphysicsIndustries.Giza
 
             return MakeSpans(matchTreeLeaves);
         }
-        public NodeMatch[] Match(ITokenSource tokenSource, ICollection<Error> errors)
+        public NodeMatch[] Match(IInputSource<Token> tokenSource, ICollection<Error> errors)
         {
             if (tokenSource == null) throw new ArgumentNullException("tokenSource");
             if (errors == null) throw new ArgumentNullException("errors");

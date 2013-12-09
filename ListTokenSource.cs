@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Giza
 {
-    public class ListTokenSource : ITokenSource
+    public class ListTokenSource : IInputSource<Token>
     {
         public ListTokenSource(Grammar grammar, params string[] intokens)
             : this(grammar, (IEnumerable<string>)intokens)

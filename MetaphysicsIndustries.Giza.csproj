@@ -85,7 +85,6 @@
     <Compile Include="Error.cs" />
     <Compile Include="StringFormatterGrammar.cs" />
     <Compile Include="StringFormatter.cs" />
-    <Compile Include="ITokenSource.cs" />
     <Compile Include="ListTokenSource.cs" />
     <Compile Include="InputPosition.cs" />
     <Compile Include="InputChar.cs" />

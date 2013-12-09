@@ -960,7 +960,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
         }
 
-        public class MockTokenSource : ITokenSource
+        public class MockTokenSource : IInputSource<Token>
         {
             public readonly Dictionary<int, InputElementSet<Token>> InputElementSetsByIndex = new Dictionary<int, InputElementSet<Token>>();
 
