@@ -157,7 +157,7 @@ namespace MetaphysicsIndustries.Giza
                                 throw new NotImplementedException();
                             }
 
-                            char errorCh = input[cur.StartPosition.Index];
+                            char errorCh = input.GetInputAtLocation(cur.StartPosition.Index).InputElements.First().Value;
 
                             IEnumerable<Node> expectedNodes;
 

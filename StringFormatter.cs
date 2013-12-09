@@ -22,7 +22,7 @@ namespace MetaphysicsIndustries.Giza
             if (values == null) throw new ArgumentNullException("values");
 
             var errors = new List<Error>();
-            var spans = _spanner.Process(format, errors);
+            var spans = _spanner.Process(format.ToCharacterSource(), errors);
 
             if (errors.ContainsNonWarnings())
             {

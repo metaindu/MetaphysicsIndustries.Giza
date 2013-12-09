@@ -63,7 +63,7 @@ namespace MetaphysicsIndustries.Giza
                 return tinfo;
             }
 
-            var nodeMatches = _spanner.Match(_intokens[index], tinfo.Errors);
+            var nodeMatches = _spanner.Match(_intokens[index].ToCharacterSource(), tinfo.Errors);
             var leaf = nodeMatches[0];
 
             var tokenEnd = leaf.Previous;
@@ -85,6 +85,42 @@ namespace MetaphysicsIndustries.Giza
         public InputPosition CurrentPosition
         {
             get { return new InputPosition(_tokens.Count - 1); }
+        }
+
+        public InputPosition GetPosition(int index)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetCurrentIndex(int index)
+        {
+            throw new NotImplementedException();
+        }
+
+        public InputChar Peek()
+        {
+            throw new NotImplementedException();
+        }
+
+        public InputChar GetNextValue()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Length
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public bool IsAtEnd
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

@@ -973,6 +973,42 @@ namespace MetaphysicsIndustries.Giza.Test
             {
                 get { throw new NotImplementedException(); }
             }
+
+            public InputPosition GetPosition(int index)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void SetCurrentIndex(int index)
+            {
+                throw new NotImplementedException();
+            }
+
+            public InputChar Peek()
+            {
+                throw new NotImplementedException();
+            }
+
+            public InputChar GetNextValue()
+            {
+                throw new NotImplementedException();
+            }
+
+            public int Length
+            {
+                get
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
+            public bool IsAtEnd
+            {
+                get
+                {
+                    throw new NotImplementedException();
+                }
+            }
         }
 
         public class MockError : Error
