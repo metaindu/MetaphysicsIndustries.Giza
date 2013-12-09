@@ -5,19 +5,10 @@ using System.Text;
 
 namespace MetaphysicsIndustries.Giza
 {
-    public class ParserError : Error
+    public class ParserError<T> : ParserError
+        where T : IInputElement
     {
-        public static readonly ErrorType InvalidToken =         new ErrorType(name:"InvalidToken",          descriptionFormat:"InvalidToken"          );
-        public static readonly ErrorType UnexpectedEndOfInput = new ErrorType(name:"UnexpectedEndOfInput",  descriptionFormat:"UnexpectedEndOfInput"  );
-        public static readonly ErrorType ExcessRemainingInput = new ErrorType(name:"ExcessRemainingInput",  descriptionFormat:"ExcessRemainingInput"  );
-
         public Token OffendingToken;
-        public InputPosition Position;
-        public int Index { get { return Position.Index; } }
-        public int Line { get { return Position.Line; } }
-        public int Column { get { return Position.Column; } }
-        public Node LastValidMatchingNode;
-        public IEnumerable<Node> ExpectedNodes;
 
         public override string Description
         {
@@ -44,7 +35,31 @@ namespace MetaphysicsIndustries.Giza
                         GetExpectedNodesString(),
                         Index);
                 }
-                else if (ErrorType == UnexpectedEndOfInput)
+                else
+                {
+                    return base.Description;
+                }
+            }
+        }
+    }
+    public abstract class ParserError : Error
+    {
+        public static readonly ErrorType InvalidToken =         new ErrorType(name:"InvalidToken",          descriptionFormat:"InvalidToken"          );
+        public static readonly ErrorType UnexpectedEndOfInput = new ErrorType(name:"UnexpectedEndOfInput",  descriptionFormat:"UnexpectedEndOfInput"  );
+        public static readonly ErrorType ExcessRemainingInput = new ErrorType(name:"ExcessRemainingInput",  descriptionFormat:"ExcessRemainingInput"  );
+
+        public InputPosition Position;
+        public int Index { get { return Position.Index; } }
+        public int Line { get { return Position.Line; } }
+        public int Column { get { return Position.Column; } }
+        public Node LastValidMatchingNode;
+        public IEnumerable<Node> ExpectedNodes;
+
+        public override string Description
+        {
+            get
+            {
+                if (ErrorType == UnexpectedEndOfInput)
                 {
                     return string.Format(
                         "Unexpected end of input at position {0},{1} (index {2}). {3}",
@@ -58,7 +73,7 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        string GetExpectedNodesString()
+        protected string GetExpectedNodesString()
         {
             if (ExpectedNodes == null) return "";
 

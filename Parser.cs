@@ -145,8 +145,8 @@ namespace MetaphysicsIndustries.Giza
                     }
                     else if (tokenization.EndOfInput)
                     {
-                        var err = new ParserError {
-                            ErrorType = ParserError.UnexpectedEndOfInput,
+                        var err = new ParserError<Token> {
+                            ErrorType = ParserError<Token>.UnexpectedEndOfInput,
                             LastValidMatchingNode = info.Source.Node,
                             ExpectedNodes = info.GetExpectedNodes(),
                             Position = tokenization.EndOfInputPosition,
@@ -160,8 +160,8 @@ namespace MetaphysicsIndustries.Giza
                     {
                         var offendingToken = tokenization.InputElements.First();
 
-                        var err = new ParserError {
-                            ErrorType = ParserError.ExcessRemainingInput,
+                        var err = new ParserError<Token> {
+                            ErrorType = ParserError<Token>.ExcessRemainingInput,
                             LastValidMatchingNode = info.Source.Node,
                             Position = offendingToken.StartPosition,
                             OffendingToken = offendingToken,
@@ -194,8 +194,8 @@ namespace MetaphysicsIndustries.Giza
                     {
                         // we have valid tokens
                         var offendingToken = tokenization.InputElements.First();
-                        var err = new ParserError {
-                            ErrorType = ParserError.ExcessRemainingInput,
+                        var err = new ParserError<Token> {
+                            ErrorType = ParserError<Token>.ExcessRemainingInput,
                             LastValidMatchingNode = info.Source.Node,
                             Position = offendingToken.StartPosition,
                             OffendingToken = offendingToken,
@@ -215,13 +215,13 @@ namespace MetaphysicsIndustries.Giza
                             }
                         }
 
-                        ParserError err2 = null;
+                        ParserError<Token> err2 = null;
                         // if the branch didn't match, reject it with InvalidToken
                         // otherwise, reject it with null since it's a duplicate
                         if (!matched)
                         {
-                            err2 = new ParserError {
-                                ErrorType = ParserError.InvalidToken,
+                            err2 = new ParserError<Token> {
+                                ErrorType = ParserError<Token>.InvalidToken,
                                 LastValidMatchingNode = info.Source.Node,
                                 OffendingToken = offendingToken,
                                 ExpectedNodes = info.Source.Node.NextNodes,

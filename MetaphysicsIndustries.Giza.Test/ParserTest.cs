@@ -777,8 +777,8 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(0, spans.Length);
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<ParserError>(errors[0]);
-            var err = ((ParserError)errors[0]);
+            Assert.IsInstanceOf<ParserError<Token>>(errors[0]);
+            var err = ((ParserError<Token>)errors[0]);
             Assert.AreEqual(ParserError.InvalidToken, err.ErrorType);
             Assert.AreEqual(1, err.Line);
             Assert.AreEqual(9, err.Column);
@@ -825,8 +825,8 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(0, spans.Length);
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<ParserError>(errors[0]);
-            var err = ((ParserError)errors[0]);
+            Assert.IsInstanceOf<ParserError<Token>>(errors[0]);
+            var err = ((ParserError<Token>)errors[0]);
             Assert.AreEqual(ParserError.InvalidToken, err.ErrorType);
             Assert.AreEqual(1, err.Line);
             Assert.AreEqual(9, err.Column);
@@ -916,8 +916,8 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(0, spans.Length);
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<ParserError>(errors[0]);
-            var err = ((ParserError)errors[0]);
+            Assert.IsInstanceOf<ParserError<Token>>(errors[0]);
+            var err = ((ParserError<Token>)errors[0]);
             Assert.AreEqual(ParserError.ExcessRemainingInput, err.ErrorType);
             Assert.AreEqual(1, err.Line);
             Assert.AreEqual(15, err.Column);
