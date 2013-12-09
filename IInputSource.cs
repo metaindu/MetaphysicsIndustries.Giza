@@ -6,5 +6,7 @@ namespace MetaphysicsIndustries.Giza
         where T : IInputElement
     {
         InputElementSet<T> GetInputAtLocation(int index);
+
+        InputPosition CurrentPosition { get; }
     }
 }

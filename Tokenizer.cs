@@ -227,6 +227,11 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
+        public InputPosition CurrentPosition
+        {
+            get { return _input.CurrentPosition; }
+        }
+
         string CollectValue(NodeMatch tokenEnd)
         {
             if (tokenEnd == null) throw new ArgumentNullException("tokenEnd");

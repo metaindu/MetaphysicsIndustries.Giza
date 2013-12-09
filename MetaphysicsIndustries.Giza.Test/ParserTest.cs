@@ -968,6 +968,11 @@ namespace MetaphysicsIndustries.Giza.Test
             {
                 return InputElementSetsByIndex[index];
             }
+
+            public InputPosition CurrentPosition
+            {
+                get { throw new NotImplementedException(); }
+            }
         }
 
         public class MockError : Error

@@ -81,6 +81,11 @@ namespace MetaphysicsIndustries.Giza
             tinfo.InputElements = new Token[] { _tokens[index] };
             return tinfo;
         }
+
+        public InputPosition CurrentPosition
+        {
+            get { return new InputPosition(_tokens.Count - 1); }
+        }
     }
 }
 

@@ -7,6 +7,7 @@ namespace MetaphysicsIndustries.Giza
         public CharacterSource(string value)
         {
             Value = value;
+            CurrentPosition = new InputPosition(index: 0, line: 1, column: 1);
         }
 
         public static implicit operator CharacterSource(string value)
@@ -47,7 +48,7 @@ namespace MetaphysicsIndustries.Giza
             return new InputPosition(index, line, column);
         }
 
-        public InputPosition CurrentPosition = new InputPosition(index: 0, line: 1, column: 1);
+        public InputPosition CurrentPosition { get; set; }
 
         public void SetCurrentIndex(int index)
         {
@@ -63,19 +64,22 @@ namespace MetaphysicsIndustries.Giza
                     throw new NotImplementedException();
                 }
 
-                for (; CurrentPosition.Index < index; CurrentPosition.Index++)
+                while (CurrentPosition.Index < index)
                 {
                     char ch = this[CurrentPosition.Index];
 
+                    var newpos = CurrentPosition;
                     if (ch == '\n')
                     {
-                        CurrentPosition.Line++;
-                        CurrentPosition.Column = 1;
+                        newpos.Line++;
+                        newpos.Column = 1;
                     }
                     else
                     {
-                        CurrentPosition.Column++;
+                        newpos.Column++;
                     }
+                    newpos.Index++;
+                    CurrentPosition = newpos;
                 }
             }
         }
