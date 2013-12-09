@@ -114,5 +114,13 @@ namespace MetaphysicsIndustries.Giza
 
         #endregion
     }
+
+    public static class CharacterSourceHelper
+    {
+        public static CharacterSource ToCharacterSource(this string s)
+        {
+            return new CharacterSource(s);
+        }
+    }
 }
 
