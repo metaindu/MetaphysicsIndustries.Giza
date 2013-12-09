@@ -779,7 +779,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(1, errors.Count);
             Assert.IsInstanceOf<ParserError<Token>>(errors[0]);
             var err = ((ParserError<Token>)errors[0]);
-            Assert.AreEqual(ParserError.InvalidToken, err.ErrorType);
+            Assert.AreEqual(ParserError.InvalidInputElement, err.ErrorType);
             Assert.AreEqual(1, err.Line);
             Assert.AreEqual(9, err.Column);
             Assert.AreEqual(8, err.Index);
@@ -827,7 +827,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(1, errors.Count);
             Assert.IsInstanceOf<ParserError<Token>>(errors[0]);
             var err = ((ParserError<Token>)errors[0]);
-            Assert.AreEqual(ParserError.InvalidToken, err.ErrorType);
+            Assert.AreEqual(ParserError.InvalidInputElement, err.ErrorType);
             Assert.AreEqual(1, err.Line);
             Assert.AreEqual(9, err.Column);
             Assert.AreEqual(8, err.Index);

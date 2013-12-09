@@ -221,12 +221,12 @@ namespace MetaphysicsIndustries.Giza
                         }
 
                         ParserError<T> err2 = null;
-                        // if the branch didn't match, reject it with InvalidToken
+                        // if the branch didn't match, reject it with InvalidInputElement
                         // otherwise, reject it with null since it's a duplicate
                         if (!matched)
                         {
                             err2 = new ParserError<T> {
-                                ErrorType = ParserError.InvalidToken,
+                                ErrorType = ParserError.InvalidInputElement,
                                 LastValidMatchingNode = info.Source.Node,
                                 OffendingInputElement = offendingInputElement,
                                 ExpectedNodes = info.Source.Node.NextNodes,

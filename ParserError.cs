@@ -14,7 +14,7 @@ namespace MetaphysicsIndustries.Giza
         {
             get
             {
-                if (ErrorType == InvalidToken)
+                if (ErrorType == InvalidInputElement)
                 {
                     return string.Format(
                         "Invalid token '{0}' at position {1},{2} (index {4}). {3}",
@@ -44,7 +44,7 @@ namespace MetaphysicsIndustries.Giza
     }
     public abstract class ParserError : Error
     {
-        public static readonly ErrorType InvalidToken =         new ErrorType(name:"InvalidToken",          descriptionFormat:"InvalidToken"          );
+        public static readonly ErrorType InvalidInputElement =  new ErrorType(name:"InvalidInputElement",   descriptionFormat:"InvalidInputElement"   );
         public static readonly ErrorType UnexpectedEndOfInput = new ErrorType(name:"UnexpectedEndOfInput",  descriptionFormat:"UnexpectedEndOfInput"  );
         public static readonly ErrorType ExcessRemainingInput = new ErrorType(name:"ExcessRemainingInput",  descriptionFormat:"ExcessRemainingInput"  );
 
