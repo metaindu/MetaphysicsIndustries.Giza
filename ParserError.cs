@@ -8,7 +8,7 @@ namespace MetaphysicsIndustries.Giza
     public class ParserError<T> : ParserError
         where T : IInputElement
     {
-        public Token OffendingInputElement;
+        public T OffendingInputElement;
 
         public override string Description
         {
