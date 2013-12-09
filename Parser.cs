@@ -241,7 +241,6 @@ namespace MetaphysicsIndustries.Giza
                 foreach (var next in nextSources)
                 {
                     sources.Enqueue(next, next.NodeMatch.InputElement.IndexOfNextElement);
-//                    Logger.WriteLine("Enqueuing source with next index {0}", next.NodeMatch.Token.IndexOfNextTokenization);
                 }
             }
 
