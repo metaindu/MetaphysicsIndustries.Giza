@@ -210,11 +210,11 @@ namespace MetaphysicsIndustries.Giza
 
                         // try to match branch to input elements
                         bool matched = false;
-                        foreach (var intoken in inputElementSet.InputElements)
+                        foreach (var inputElement in inputElementSet.InputElements)
                         {
-                            if (BranchTipMatchesInputElement(branchnm, intoken))
+                            if (BranchTipMatchesInputElement(branchnm, inputElement))
                             {
-                                var newNext = branchnm.CloneWithNewInputElement(intoken);
+                                var newNext = branchnm.CloneWithNewInputElement(inputElement);
                                 nextSources.Add(pair(newNext, branchstack));
                                 matched = true;
                             }
