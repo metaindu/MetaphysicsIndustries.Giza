@@ -31,9 +31,15 @@ namespace MetaphysicsIndustries.Giza
 
             return Match(tokenSource, errors);
         }
+
+        protected override bool BranchTipMatchesInputElement(NodeMatch branchTip, Token inputElement)
+        {
+            return (branchTip.Node is DefRefNode) &&
+                (branchTip.Node as DefRefNode).DefRef == inputElement.Definition;
+        }
     }
 
-    public class ParserBase<T>
+    public abstract class ParserBase<T>
         where T : IInputElement
     {
         public ParserBase(Definition definition)
@@ -201,8 +207,7 @@ namespace MetaphysicsIndustries.Giza
                         bool matched = false;
                         foreach (var intoken in tokenization.InputElements)
                         {
-                            if ((branchnm.Node is DefRefNode) &&
-                                (branchnm.Node as DefRefNode).DefRef == intoken.Definition)
+                            if (BranchTipMatchesInputElement(branchnm, intoken))
                             {
                                 var newNext = branchnm.CloneWithNewToken(intoken);
                                 nextSources.Add(pair(newNext, branchstack));
@@ -371,6 +376,7 @@ namespace MetaphysicsIndustries.Giza
         {
             return cur.DefRef.IsTokenized;
         }
+        protected abstract bool BranchTipMatchesInputElement(NodeMatch branchTip, Token inputElement);
 
         static Span[] MakeSpans(IEnumerable<NodeMatch> matchTreeLeaves)
         {

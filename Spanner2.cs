@@ -38,6 +38,12 @@ namespace MetaphysicsIndustries.Giza
         {
             return (cur.Node is CharNode);
         }
+
+        protected override bool BranchTipMatchesInputElement(NodeMatch branchTip, Token inputElement)
+        {
+            throw new NotImplementedException();
+            //return (branchTip.Node as CharNode).Matches(inputElement.Value);
+        }
     }
 }
 
