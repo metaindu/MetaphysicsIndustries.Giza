@@ -279,7 +279,7 @@ namespace MetaphysicsIndustries.Giza
 
             while (cur != tokenEnd.StartDef)
             {
-                if (cur.MatchedChar.Value != '\0') chs.Add(cur.MatchedChar.Value);
+                if (cur.InputElement.Value != '\0') chs.Add(cur.InputElement.Value);
 
                 cur = cur.Previous;
             }

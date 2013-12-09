@@ -16,8 +16,7 @@ namespace MetaphysicsIndustries.Giza
         public readonly int _id;
 
         public NodeMatch<T> StartDef;
-        public Token Token;
-        public InputChar MatchedChar;
+        public T InputElement;
         public TransitionType Transition;
         public Node Node;
 
@@ -25,13 +24,10 @@ namespace MetaphysicsIndustries.Giza
         {
             get
              {
-                if (MatchedChar.Value != '\0')
+                if (!string.IsNullOrEmpty(InputElement.Value) &&
+                         InputElement.Value != "\0")
                 {
-                    return MatchedChar.Position;
-                }
-                else if (!string.IsNullOrEmpty(Token.Value))
-                {
-                    return Token.StartPosition;
+                    return InputElement.Position;
                 }
                 else
                 {
@@ -98,11 +94,11 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        public NodeMatch<T> CloneWithNewToken(Token token)
+        public NodeMatch<T> CloneWithNewInputElement(T inputElement)
         {
             var nm = new NodeMatch<T>(this.Node, this.Transition, this.Previous);
             nm.StartDef = this.StartDef;
-            nm.Token = token;
+            nm.InputElement = inputElement;
 
             return nm;
         }
@@ -114,24 +110,14 @@ namespace MetaphysicsIndustries.Giza
             else if (Node is DefRefNode) nodestr = (Node as DefRefNode).DefRef.Name;
             else nodestr = "<unknown>";
 
-            if (!string.IsNullOrEmpty(Token.Value))
+            if (!string.IsNullOrEmpty(InputElement.Value))
             {
-                return string.Format("[{0}] {1}:{2}, {3} nm nexts, token '{4}' as {5}",
+                return string.Format("[{0}] {1}:{2}, {3} nm nexts, input element '{4}' as {{unknown definition}}",
                                      _id,
                                      nodestr,
                                      Transition,
                                      Nexts.Count,
-                                     Token.Value,
-                                     Token.Definition.Name);
-            }
-            else if (MatchedChar.Value != '\0')
-            {
-                return string.Format("[{0}] {1}:{2}, {3} nm nexts, match char '{4}'",
-                                     _id,
-                                     nodestr,
-                                     Transition,
-                                     Nexts.Count,
-                                     MatchedChar.Value.ToString());
+                                     InputElement.Value);
             }
             else
             {

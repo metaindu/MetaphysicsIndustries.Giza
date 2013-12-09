@@ -122,7 +122,7 @@ namespace MetaphysicsIndustries.Giza
                     {
                         if ((cur.Node as CharNode).Matches(ch.Value))
                         {
-                            cur.MatchedChar = ch;
+                            cur.InputElement = ch;
 
                             //next nodes
                             foreach (Node n in cur.Node.NextNodes)
@@ -420,7 +420,7 @@ namespace MetaphysicsIndustries.Giza
                     {
                         Span s = new Span();
                         s.Node = nm.Node;
-                        s.Value = nm.MatchedChar.Value.ToString();
+                        s.Value = nm.InputElement.Value.ToString();
                         stack.Peek().Subspans.Add(s);
                     }
                 }
