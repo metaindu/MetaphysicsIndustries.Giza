@@ -193,12 +193,12 @@ namespace MetaphysicsIndustries.Giza
                         !inputElementSet.EndOfInput)
                     {
                         // we have valid input elements
-                        var offendingToken = inputElementSet.InputElements.First();
+                        var offendingInputElement = inputElementSet.InputElements.First();
                         var err = new ParserError<T> {
                             ErrorType = ParserError.ExcessRemainingInput,
                             LastValidMatchingNode = info.Source.Node,
-                            Position = offendingToken.Position,
-                            OffendingInputElement = offendingToken,
+                            Position = offendingInputElement.Position,
+                            OffendingInputElement = offendingInputElement,
                         };
 
                         RejectEndCandidate(info, rejects, ends, err);
@@ -223,9 +223,9 @@ namespace MetaphysicsIndustries.Giza
                             err2 = new ParserError<T> {
                                 ErrorType = ParserError.InvalidToken,
                                 LastValidMatchingNode = info.Source.Node,
-                                OffendingInputElement = offendingToken,
+                                OffendingInputElement = offendingInputElement,
                                 ExpectedNodes = info.Source.Node.NextNodes,
-                                Position = offendingToken.Position,
+                                Position = offendingInputElement.Position,
                             };
                         }
 
