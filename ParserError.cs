@@ -8,7 +8,7 @@ namespace MetaphysicsIndustries.Giza
     public class ParserError<T> : ParserError
         where T : IInputElement
     {
-        public Token OffendingToken;
+        public Token OffendingInputElement;
 
         public override string Description
         {
@@ -18,7 +18,7 @@ namespace MetaphysicsIndustries.Giza
                 {
                     return string.Format(
                         "Invalid token '{0}' at position {1},{2} (index {4}). {3}",
-                        OffendingToken.Value,
+                        OffendingInputElement.Value,
                         Line,
                         Column,
                         GetExpectedNodesString(),
@@ -29,7 +29,7 @@ namespace MetaphysicsIndustries.Giza
                     return string.Format(
                         "Excess remaining input after parsing had completed. " +
                         "Got token '{0}' at position {1},{2} (index {4}). {3}",
-                        OffendingToken.Value,
+                        OffendingInputElement.Value,
                         Line,
                         Column,
                         GetExpectedNodesString(),

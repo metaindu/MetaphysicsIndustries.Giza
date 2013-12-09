@@ -164,7 +164,7 @@ namespace MetaphysicsIndustries.Giza
                             ErrorType = ParserError<Token>.ExcessRemainingInput,
                             LastValidMatchingNode = info.Source.Node,
                             Position = offendingToken.StartPosition,
-                            OffendingToken = offendingToken,
+                            OffendingInputElement = offendingToken,
                         };
 
                         RejectEndCandidate(info, rejects, ends, err);
@@ -198,7 +198,7 @@ namespace MetaphysicsIndustries.Giza
                             ErrorType = ParserError<Token>.ExcessRemainingInput,
                             LastValidMatchingNode = info.Source.Node,
                             Position = offendingToken.StartPosition,
-                            OffendingToken = offendingToken,
+                            OffendingInputElement = offendingToken,
                         };
 
                         RejectEndCandidate(info, rejects, ends, err);
@@ -223,7 +223,7 @@ namespace MetaphysicsIndustries.Giza
                             err2 = new ParserError<Token> {
                                 ErrorType = ParserError<Token>.InvalidToken,
                                 LastValidMatchingNode = info.Source.Node,
-                                OffendingToken = offendingToken,
+                                OffendingInputElement = offendingToken,
                                 ExpectedNodes = info.Source.Node.NextNodes,
                                 Position = offendingToken.StartPosition,
                             };
