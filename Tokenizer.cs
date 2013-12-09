@@ -271,7 +271,7 @@ namespace MetaphysicsIndustries.Giza
         string CollectValue(NodeMatch<InputChar> tokenEnd)
         {
             if (tokenEnd == null) throw new ArgumentNullException("tokenEnd");
-            if (tokenEnd.Transition != NodeMatch<InputChar>.TransitionType.EndDef) throw new ArgumentException("tokenDef must be an EndDef");
+            if (tokenEnd.Transition != TransitionType.EndDef) throw new ArgumentException("tokenDef must be an EndDef");
             if (tokenEnd.StartDef == null) throw new ArgumentException("tokenDef must have a corresponding StartDef");
 
             var chs = new List<char>();

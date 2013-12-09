@@ -62,7 +62,7 @@ namespace MetaphysicsIndustries.Giza
             }
 
             var implicitNode = new DefRefNode(_definition);
-            var root = new NodeMatch(implicitNode, NodeMatch.TransitionType.Root, null);
+            var root = new NodeMatch(implicitNode, TransitionType.Root, null);
 
 
             var currents = new Queue<NodeMatchStackPair>();
@@ -157,7 +157,7 @@ namespace MetaphysicsIndustries.Giza
                             SpannerError se = new SpannerError();
                             se.ErrorType = SpannerError.InvalidCharacter;
 
-                            if (cur.Transition == NodeMatch.TransitionType.Root)
+                            if (cur.Transition == TransitionType.Root)
                             {
                                 throw new NotImplementedException();
                             }
@@ -173,7 +173,7 @@ namespace MetaphysicsIndustries.Giza
                             var cur2 = cur.Previous;
 
                             while (cur2 != null &&
-                                cur2.Transition == NodeMatch.TransitionType.StartDef)
+                                cur2.Transition == TransitionType.StartDef)
                             {
                                 cur2 = cur2.Previous;
                             }
@@ -236,7 +236,7 @@ namespace MetaphysicsIndustries.Giza
                     }
                     else // cur.Node is DefRefNode
                     {
-                        if (cur.Transition == NodeMatch.TransitionType.EndDef)
+                        if (cur.Transition == TransitionType.EndDef)
                         {
                             foreach (Node n in cur.Node.NextNodes)
                             {
@@ -288,7 +288,7 @@ namespace MetaphysicsIndustries.Giza
 
             if (input.IsAtEnd &&
                 currents.Count == 1 &&
-                currents.Peek().NodeMatch.Transition == NodeMatch.TransitionType.Root)
+                currents.Peek().NodeMatch.Transition == TransitionType.Root)
             {
                 //end of input on the root node
                 endOfInput = true;
@@ -311,7 +311,7 @@ namespace MetaphysicsIndustries.Giza
                 var stack = p.MatchStack;
 
                 if (cur.Node is CharNode ||
-                    cur.Transition != NodeMatch.TransitionType.EndDef)
+                    cur.Transition != TransitionType.EndDef)
                 {
                     if (stack != null &&
                         stack.Definition != null &&
@@ -402,7 +402,7 @@ namespace MetaphysicsIndustries.Giza
 
                 foreach (var nm in list)
                 {
-                    if (nm.Transition == NodeMatch.TransitionType.EndDef)
+                    if (nm.Transition == TransitionType.EndDef)
                     {
                         rootSpan = stack.Pop();
                     }

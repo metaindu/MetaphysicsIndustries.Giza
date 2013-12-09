@@ -11,14 +11,6 @@ namespace MetaphysicsIndustries.Giza
     public class NodeMatch<T>
         where T : IInputElement
     {
-        public enum TransitionType
-        {
-            StartDef,
-            EndDef,
-            Follow,
-            Root,
-        }
-
         private static int __id = 0;
 
         public readonly int _id;
@@ -327,7 +319,7 @@ namespace MetaphysicsIndustries.Giza
 
         public static NodeMatchStackPair<T> CreateStartDefMatch(Node node, NodeMatch<T> match, MatchStack<T> stack2, InputPosition pos)
         {
-            var match2 = new NodeMatch<T>(node, NodeMatch<T>.TransitionType.StartDef, match);
+            var match2 = new NodeMatch<T>(node, TransitionType.StartDef, match);
             match2.AlternateStartPosition = pos;
             return new NodeMatchStackPair<T>(match2, stack2);
         }
@@ -339,7 +331,7 @@ namespace MetaphysicsIndustries.Giza
 
         public static NodeMatchStackPair<T> CreateEndDefMatch(NodeMatch<T> match, MatchStack<T> stack)
         {
-            var match2 = new NodeMatch<T>(stack.Node, NodeMatch<T>.TransitionType.EndDef, match);
+            var match2 = new NodeMatch<T>(stack.Node, TransitionType.EndDef, match);
             match2.AlternateStartPosition = match.StartPosition;
             match2.StartDef = stack.NodeMatch;
             return new NodeMatchStackPair<T>(match2, stack.Parent);
@@ -347,7 +339,7 @@ namespace MetaphysicsIndustries.Giza
 
         public static NodeMatchStackPair<T> CreateFollowMatch(Node node, NodeMatch<T> match, MatchStack<T> stack, InputPosition pos)
         {
-            var match2 = new NodeMatch<T>(node, NodeMatch<T>.TransitionType.Follow, match);
+            var match2 = new NodeMatch<T>(node, TransitionType.Follow, match);
             match2.AlternateStartPosition = pos;
             return new NodeMatchStackPair<T>(match2, stack);
         }

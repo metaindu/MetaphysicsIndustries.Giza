@@ -105,7 +105,7 @@ namespace MetaphysicsIndustries.Giza
             rootDef.Nodes.Add(rootNode);
             rootDef.StartNodes.Add(rootNode);
             rootDef.EndNodes.Add(rootNode);
-            var root = new NodeMatch<Token>(rootNode, NodeMatch<Token>.TransitionType.Root, null);
+            var root = new NodeMatch<Token>(rootNode, TransitionType.Root, null);
             var rejects = new List<NodeMatchErrorPair<Token>>();
 
             var branches2 = new PriorityQueue<Tuple<NodeMatch<Token>, MatchStack<Token>, ParseInfo>, int>();
@@ -310,7 +310,7 @@ namespace MetaphysicsIndustries.Giza
 
             // find all ends
             var enders = new List<NodeMatchStackPair<Token>>();
-            if (info.Source.Transition != NodeMatch<Token>.TransitionType.Root)
+            if (info.Source.Transition != TransitionType.Root)
             {
                 var ender = info.SourcePair;
 
@@ -350,11 +350,11 @@ namespace MetaphysicsIndustries.Giza
                 }
 
                 if (cur.DefRef.IsTokenized ||
-                    cur.Transition == NodeMatch<Token>.TransitionType.EndDef)
+                    cur.Transition == TransitionType.EndDef)
                 {
                     foreach (var next in cur.Node.NextNodes)
                     {
-                        var nm = new NodeMatch<Token>(next, NodeMatch<Token>.TransitionType.Follow, cur);
+                        var nm = new NodeMatch<Token>(next, TransitionType.Follow, cur);
                         currents.Enqueue(pair(nm, curstack));
                     }
                 }
@@ -363,7 +363,7 @@ namespace MetaphysicsIndustries.Giza
                     var nextStack = new MatchStack<Token>(cur, curstack);
                     foreach (var start in (cur.Node as DefRefNode).DefRef.StartNodes)
                     {
-                        var nm = new NodeMatch<Token>(start, NodeMatch<Token>.TransitionType.StartDef, cur);
+                        var nm = new NodeMatch<Token>(start, TransitionType.StartDef, cur);
                         currents.Enqueue(pair(nm, nextStack));
                     }
                 }
@@ -405,7 +405,7 @@ namespace MetaphysicsIndustries.Giza
 
                 foreach (var nm in list)
                 {
-                    if (nm.Transition == NodeMatch<Token>.TransitionType.EndDef)
+                    if (nm.Transition == TransitionType.EndDef)
                     {
                         rootSpan = stack.Pop();
                     }
