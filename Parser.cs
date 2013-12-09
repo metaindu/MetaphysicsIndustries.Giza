@@ -32,6 +32,11 @@ namespace MetaphysicsIndustries.Giza
             return Match(tokenSource, errors);
         }
 
+        protected override bool IsBranchTip(NodeMatch<Token> cur)
+        {
+            return cur.DefRef.IsTokenized;
+        }
+
         protected override bool BranchTipMatchesInputElement(NodeMatch<Token> branchTip, Token inputElement)
         {
             return (branchTip.Node is DefRefNode) &&
@@ -374,10 +379,7 @@ namespace MetaphysicsIndustries.Giza
             return info;
         }
 
-        protected virtual bool IsBranchTip(NodeMatch<T> cur)
-        {
-            return cur.DefRef.IsTokenized;
-        }
+        protected abstract bool IsBranchTip(NodeMatch<T> cur);
         protected abstract bool BranchTipMatchesInputElement(NodeMatch<T> branchTip, T inputElement);
 
         Span[] MakeSpans(IEnumerable<NodeMatch<T>> matchTreeLeaves)
