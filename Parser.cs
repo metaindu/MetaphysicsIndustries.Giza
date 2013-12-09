@@ -380,7 +380,7 @@ namespace MetaphysicsIndustries.Giza
         }
         protected abstract bool BranchTipMatchesInputElement(NodeMatch<T> branchTip, T inputElement);
 
-        static Span[] MakeSpans(IEnumerable<NodeMatch<T>> matchTreeLeaves)
+        Span[] MakeSpans(IEnumerable<NodeMatch<T>> matchTreeLeaves)
         {
             var lists = new List<List<NodeMatch<T>>>();
             foreach (var leaf in matchTreeLeaves)
@@ -411,7 +411,7 @@ namespace MetaphysicsIndustries.Giza
                     {
                         rootSpan = stack.Pop();
                     }
-                    else if (!nm.DefRef.IsTokenized)
+                    else if (!IsBranchTip(nm))
                     {
                         var s = new Span();
                         s.Node = nm.Node;
