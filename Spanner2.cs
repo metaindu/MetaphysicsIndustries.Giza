@@ -37,8 +37,7 @@ namespace MetaphysicsIndustries.Giza
 
         protected override bool BranchTipMatchesInputElement(NodeMatch<InputChar> branchTip, InputChar inputElement)
         {
-            throw new NotImplementedException();
-            //return (branchTip.Node as CharNode).Matches(inputElement.Value);
+            return (branchTip.Node as CharNode).Matches(inputElement.Value);
         }
     }
 }
