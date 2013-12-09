@@ -342,14 +342,16 @@ namespace MetaphysicsIndustries.Giza
                 var cur = current.NodeMatch;
                 var curstack = current.MatchStack;
 
-                if (IsBranchTip(cur) &&
+                var isBranchTip = IsBranchTip(cur);
+
+                if (isBranchTip &&
                     cur != info.Source)
                 {
                     info.Branches.Add(current);
                     continue;
                 }
 
-                if (cur.DefRef.IsTokenized ||
+                if (isBranchTip ||
                     cur.Transition == TransitionType.EndDef)
                 {
                     foreach (var next in cur.Node.NextNodes)
