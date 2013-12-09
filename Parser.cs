@@ -13,7 +13,7 @@ namespace MetaphysicsIndustries.Giza
         {
         }
 
-        public Span[] Parse(CharacterSource input, ICollection<Error> errors)
+        public Span[] Parse(IInputSource<InputChar> input, ICollection<Error> errors)
         {
             if (input == null) throw new ArgumentNullException("input");
             if (errors == null) throw new ArgumentNullException("errors");
@@ -22,7 +22,7 @@ namespace MetaphysicsIndustries.Giza
 
             return Parse(tokenSource, errors);
         }
-        public NodeMatch[] Match(CharacterSource input, ICollection<Error> errors)
+        public NodeMatch[] Match(IInputSource<InputChar> input, ICollection<Error> errors)
         {
             if (input == null) throw new ArgumentNullException("input");
             if (errors == null) throw new ArgumentNullException("errors");

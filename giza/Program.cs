@@ -406,7 +406,7 @@ namespace giza
 
             var parser = new Parser(startDefinition);
             var inputErrors = new List<Error>();
-            Span[] ss = parser.Parse(input, inputErrors);
+            Span[] ss = parser.Parse(input.ToCharacterSource(), inputErrors);
 
             if (inputErrors.ContainsNonWarnings())
             {

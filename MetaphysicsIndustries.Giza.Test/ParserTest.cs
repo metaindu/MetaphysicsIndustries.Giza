@@ -30,7 +30,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
 
-            Span[] s = parser.Parse("a + b", errors);
+            Span[] s = parser.Parse("a + b".ToCharacterSource(), errors);
 
 
 
@@ -76,7 +76,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
 
-            Span[] s = parser.Parse("a+++b", errors);
+            Span[] s = parser.Parse("a+++b".ToCharacterSource(), errors);
 
 
 
@@ -161,7 +161,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             // action
-            var spans = parser.Parse(testInputText, errors);
+            var spans = parser.Parse(testInputText.ToCharacterSource(), errors);
 
 
             // assertions
@@ -209,7 +209,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             // action
-            var spans = parser.Parse(testInputText, errors);
+            var spans = parser.Parse(testInputText.ToCharacterSource(), errors);
 
 
             // assertions
@@ -258,7 +258,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             // action
-            var spans = parser.Parse(testInputText, errors);
+            var spans = parser.Parse(testInputText.ToCharacterSource(), errors);
 
 
             // assertions
@@ -307,7 +307,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             // action
-            var spans = parser.Parse(testInputText, errors);
+            var spans = parser.Parse(testInputText.ToCharacterSource(), errors);
 
 
             // assertions
@@ -356,7 +356,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             // action
-            var spans = parser.Parse(testInputText, errors);
+            var spans = parser.Parse(testInputText.ToCharacterSource(), errors);
 
 
             // assertions
@@ -397,7 +397,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             // action
-            var spans = parser.Parse(testInputText, errors);
+            var spans = parser.Parse(testInputText.ToCharacterSource(), errors);
 
 
 
@@ -438,7 +438,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             // action
-            var spans = parser.Parse(testInputText, errors);
+            var spans = parser.Parse(testInputText.ToCharacterSource(), errors);
 
 
             // assertions
@@ -487,7 +487,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             // action
-            var spans = parser.Parse(testInputText, errors);
+            var spans = parser.Parse(testInputText.ToCharacterSource(), errors);
 
 
             // assertions
@@ -537,7 +537,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             // action
-            var spans = parser.Parse(testInputText, errors);
+            var spans = parser.Parse(testInputText.ToCharacterSource(), errors);
 
 
             // assertions
@@ -593,7 +593,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             // action
-            var spans = parser.Parse(testInputText, errors);
+            var spans = parser.Parse(testInputText.ToCharacterSource(), errors);
 
 
             // assertions
@@ -645,7 +645,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var itemDef = testGrammar.FindDefinitionByName("item");
             var parser = new Parser(testGrammar.FindDefinitionByName("sequence"));
 
-            Span[] spans = parser.Parse(testInput, errors);
+            Span[] spans = parser.Parse(testInput.ToCharacterSource(), errors);
 
             Assert.IsNotNull(spans);
             Assert.AreEqual(0, spans.Length);
@@ -686,7 +686,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var itemDef = testGrammar.FindDefinitionByName("item");
             var parser = new Parser(testGrammar.FindDefinitionByName("sequence"));
 
-            Span[] spans = parser.Parse(testInput, errors);
+            Span[] spans = parser.Parse(testInput.ToCharacterSource(), errors);
 
             Assert.IsNotNull(spans);
             Assert.AreEqual(0, spans.Length);
@@ -728,7 +728,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var sequenceDef = testGrammar.FindDefinitionByName("sequence");
             var parser = new Parser(testGrammar.FindDefinitionByName("sequence"));
 
-            Span[] spans = parser.Parse(testInput, errors);
+            Span[] spans = parser.Parse(testInput.ToCharacterSource(), errors);
 
             Assert.IsNotNull(spans);
             Assert.AreEqual(0, spans.Length);
@@ -771,7 +771,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var sequenceDef = testGrammar.FindDefinitionByName("sequence");
             var parser = new Parser(testGrammar.FindDefinitionByName("sequence"));
 
-            Span[] spans = parser.Parse(testInput, errors);
+            Span[] spans = parser.Parse(testInput.ToCharacterSource(), errors);
 
             Assert.IsNotNull(spans);
             Assert.AreEqual(0, spans.Length);
@@ -819,7 +819,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var sequenceDef = testGrammar.FindDefinitionByName("sequence");
             var parser = new Parser(testGrammar.FindDefinitionByName("sequence"));
 
-            Span[] spans = parser.Parse(testInput, errors);
+            Span[] spans = parser.Parse(testInput.ToCharacterSource(), errors);
 
             Assert.IsNotNull(spans);
             Assert.AreEqual(0, spans.Length);
@@ -865,7 +865,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var sequenceDef = testGrammar.FindDefinitionByName("sequence");
             var parser = new Parser(testGrammar.FindDefinitionByName("sequence"));
 
-            Span[] spans = parser.Parse(testInput, errors);
+            Span[] spans = parser.Parse(testInput.ToCharacterSource(), errors);
 
             Assert.IsNotNull(spans);
             Assert.AreEqual(0, spans.Length);
@@ -909,7 +909,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var parser = new Parser(sequenceDef);
 
 
-            Span[] spans = parser.Parse(testInput, errors);
+            Span[] spans = parser.Parse(testInput.ToCharacterSource(), errors);
 
 
             Assert.IsNotNull(spans);
@@ -942,7 +942,7 @@ namespace MetaphysicsIndustries.Giza.Test
                 "<token> bb = 'bb';\n" +
                 "<token> cc = 'cc';\n" +
                 "<token> c = 'c';";
-            var testInput = "aabbbbcc";
+            var testInput = "aabbbbcc".ToCharacterSource();
             var sgs = new SupergrammarSpanner();
             var errors = new List<Error>();
             var dis = sgs.GetExpressions(testGrammarText, errors);
