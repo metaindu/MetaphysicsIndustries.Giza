@@ -163,13 +163,13 @@ namespace MetaphysicsIndustries.Giza
                     }
                     else // we have valid input elements
                     {
-                        var offendingToken = inputElementSet.InputElements.First();
+                        var offendingInputElement = inputElementSet.InputElements.First();
 
                         var err = new ParserError<T> {
                             ErrorType = ParserError.ExcessRemainingInput,
                             LastValidMatchingNode = info.Source.Node,
-                            Position = offendingToken.Position,
-                            OffendingInputElement = offendingToken,
+                            Position = offendingInputElement.Position,
+                            OffendingInputElement = offendingInputElement,
                         };
 
                         RejectEndCandidate(info, rejects, ends, err);
