@@ -6,7 +6,7 @@ namespace MetaphysicsIndustries.Giza
 {
     public class Tokenizer : IInputSource<Token>
     {
-        public Tokenizer(Grammar grammar, CharacterSource input)
+        public Tokenizer(Grammar grammar, IInputSource<InputChar> input)
         {
             if (grammar == null) throw new ArgumentNullException("grammar");
             if (input == null) throw new ArgumentNullException("input");
@@ -34,7 +34,7 @@ namespace MetaphysicsIndustries.Giza
         Grammar _grammar;
         Spanner _spanner;
         Definition _tokenDef;
-        CharacterSource _input;
+        IInputSource<InputChar> _input;
         readonly Dictionary<int, InputElementSet<Token>> _tokenizationsByIndex = new Dictionary<int, InputElementSet<Token>>();
 
         struct TokenizationByIndex

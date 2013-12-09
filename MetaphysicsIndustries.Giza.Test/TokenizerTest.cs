@@ -26,7 +26,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Definition item1Def = testGrammar.FindDefinitionByName("id-item1");
             Definition item2Def = testGrammar.FindDefinitionByName("id-item2");
 
-            Tokenizer t = new Tokenizer(testGrammar, "item1 item2");
+            Tokenizer t = new Tokenizer(testGrammar, "item1 item2".ToCharacterSource());
 
             var tinfo = t.GetInputAtLocation(0);
 
@@ -73,7 +73,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Definition plusplusDef = testGrammar.FindDefinitionByName("plusplus");
             Definition operDef = testGrammar.FindDefinitionByName("oper");
 
-            Tokenizer t = new Tokenizer(testGrammar, testInput);
+            Tokenizer t = new Tokenizer(testGrammar, testInput.ToCharacterSource());
 
             var tinfo = t.GetInputAtLocation(0);
             Assert.IsEmpty(errors);
@@ -134,7 +134,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Definition itemDef = testGrammar.FindDefinitionByName("item");
             Definition operDef = testGrammar.FindDefinitionByName("oper");
 
-            Tokenizer t = new Tokenizer(testGrammar, testInput);
+            Tokenizer t = new Tokenizer(testGrammar, testInput.ToCharacterSource());
 
             var tinfo = t.GetInputAtLocation(0);
             Assert.IsEmpty(errors);
@@ -176,7 +176,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Definition operandDef = grammar.FindDefinitionByName("operand");
 
             string input = "a + b";
-            Tokenizer tokenizer = new Tokenizer(grammar, input);
+            Tokenizer tokenizer = new Tokenizer(grammar, input.ToCharacterSource());
 
 
             var tinfo = tokenizer.GetInputAtLocation(0);
@@ -208,7 +208,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Definition operatorDef = grammar.FindDefinitionByName("$implicit literal +");
 
             string input = "a + b";
-            Tokenizer tokenizer = new Tokenizer(grammar, input);
+            Tokenizer tokenizer = new Tokenizer(grammar, input.ToCharacterSource());
 
 
             var tinfo = tokenizer.GetInputAtLocation(1);
@@ -240,7 +240,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Definition operatorDef = grammar.FindDefinitionByName("$implicit literal +");
 
             string input = "a + b";
-            Tokenizer tokenizer = new Tokenizer(grammar, input);
+            Tokenizer tokenizer = new Tokenizer(grammar, input.ToCharacterSource());
 
 
             var tinfo = tokenizer.GetInputAtLocation(2);
@@ -272,7 +272,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Definition operandDef = grammar.FindDefinitionByName("operand");
 
             string input = "a + b";
-            Tokenizer tokenizer = new Tokenizer(grammar, input);
+            Tokenizer tokenizer = new Tokenizer(grammar, input.ToCharacterSource());
 
 
             var tinfo = tokenizer.GetInputAtLocation(3);
@@ -304,7 +304,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Definition operandDef = grammar.FindDefinitionByName("operand");
 
             string input = "a + b";
-            Tokenizer tokenizer = new Tokenizer(grammar, input);
+            Tokenizer tokenizer = new Tokenizer(grammar, input.ToCharacterSource());
 
 
             var tinfo = tokenizer.GetInputAtLocation(4);
@@ -334,7 +334,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
 
             string input = "a + b";
-            Tokenizer tokenizer = new Tokenizer(grammar, input);
+            Tokenizer tokenizer = new Tokenizer(grammar, input.ToCharacterSource());
 
 
             var tinfo = tokenizer.GetInputAtLocation(5);
@@ -359,7 +359,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
             string input = "a + b";
-            Tokenizer tokenizer = new Tokenizer(grammar, input);
+            Tokenizer tokenizer = new Tokenizer(grammar, input.ToCharacterSource());
 
 
             var tinfo = tokenizer.GetInputAtLocation(5);
@@ -386,7 +386,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
             string input = "a + b ";
-            Tokenizer tokenizer = new Tokenizer(grammar, input);
+            Tokenizer tokenizer = new Tokenizer(grammar, input.ToCharacterSource());
 
 
             var tinfo = tokenizer.GetInputAtLocation(5);
@@ -413,7 +413,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
             string input = "a + b ";
-            Tokenizer tokenizer = new Tokenizer(grammar, input);
+            Tokenizer tokenizer = new Tokenizer(grammar, input.ToCharacterSource());
 
 
             var tinfo = tokenizer.GetInputAtLocation(6);
@@ -441,7 +441,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
             string input = "a + b/*comment*/";
-            Tokenizer tokenizer = new Tokenizer(grammar, input);
+            Tokenizer tokenizer = new Tokenizer(grammar, input.ToCharacterSource());
 
 
             var tinfo = tokenizer.GetInputAtLocation(5);
@@ -469,7 +469,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
             string input = "a + b /*comment*/";
-            Tokenizer tokenizer = new Tokenizer(grammar, input);
+            Tokenizer tokenizer = new Tokenizer(grammar, input.ToCharacterSource());
 
 
             var tinfo = tokenizer.GetInputAtLocation(5);
@@ -497,7 +497,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
             string input = "a + b/*comment*/ ";
-            Tokenizer tokenizer = new Tokenizer(grammar, input);
+            Tokenizer tokenizer = new Tokenizer(grammar, input.ToCharacterSource());
 
 
             var tinfo = tokenizer.GetInputAtLocation(5);
@@ -527,7 +527,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
             Definition strangeDef = grammar.FindDefinitionByName("strange");
             string input = "a + b/*comment*/";
-            Tokenizer tokenizer = new Tokenizer(grammar, input);
+            Tokenizer tokenizer = new Tokenizer(grammar, input.ToCharacterSource());
 
 
             var tinfo = tokenizer.GetInputAtLocation(5);
@@ -568,7 +568,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
             Grammar grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(dis);
             Definition itemDef = grammar.FindDefinitionByName("item");
-            Tokenizer tokenizer = new Tokenizer(grammar, testInputText);
+            Tokenizer tokenizer = new Tokenizer(grammar, testInputText.ToCharacterSource());
 
 
             var tinfo = tokenizer.GetInputAtLocation(0);
