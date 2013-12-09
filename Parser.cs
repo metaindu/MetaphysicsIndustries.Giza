@@ -128,37 +128,37 @@ namespace MetaphysicsIndustries.Giza
                         ends.Add(info.EndCandidate);
                     }
 
-                    //get all tokens, starting at end of source's token
-                    var tokenization = inputSource.GetInputAtLocation(info.Source.InputElement.IndexOfNextElement);
+                    //get all input elements and errors and end-of-input, starting at end of source's element
+                    var inputElementSet = inputSource.GetInputAtLocation(info.Source.InputElement.IndexOfNextElement);
 
-                    //if we get any tokenization errors, process them and reject
-                    if (tokenization.Errors.ContainsNonWarnings())
+                    //if we get any errors, process them and reject
+                    if (inputElementSet.Errors.ContainsNonWarnings())
                     {
                         //reject branches with errors
 
                         foreach (var branch in info.Branches)
                         {
-                            rejects.Add(branch.NodeMatch, tokenization.Errors);
+                            rejects.Add(branch.NodeMatch, inputElementSet.Errors);
                         }
 
-                        RejectEndCandidate(info, rejects, ends, tokenization.Errors);
+                        RejectEndCandidate(info, rejects, ends, inputElementSet.Errors);
                     }
-                    else if (tokenization.EndOfInput)
+                    else if (inputElementSet.EndOfInput)
                     {
                         var err = new ParserError<T> {
                             ErrorType = ParserError.UnexpectedEndOfInput,
                             LastValidMatchingNode = info.Source.Node,
                             ExpectedNodes = info.GetExpectedNodes(),
-                            Position = tokenization.EndOfInputPosition,
+                            Position = inputElementSet.EndOfInputPosition,
                         };
                         foreach (var branch in info.Branches)
                         {
                             rejects.Add(branch.NodeMatch, err);
                         }
                     }
-                    else // we have valid tokens
+                    else // we have valid input elements
                     {
-                        var offendingToken = tokenization.InputElements.First();
+                        var offendingToken = inputElementSet.InputElements.First();
 
                         var err = new ParserError<T> {
                             ErrorType = ParserError.ExcessRemainingInput,
@@ -187,13 +187,13 @@ namespace MetaphysicsIndustries.Giza
                     var branchstack = branchtuple.Item2;
                     var info = branchtuple.Item3;
 
-                    var tokenization = inputSource.GetInputAtLocation(info.Source.InputElement.IndexOfNextElement);
+                    var inputElementSet = inputSource.GetInputAtLocation(info.Source.InputElement.IndexOfNextElement);
 
-                    if (!tokenization.Errors.ContainsNonWarnings() &&
-                        !tokenization.EndOfInput)
+                    if (!inputElementSet.Errors.ContainsNonWarnings() &&
+                        !inputElementSet.EndOfInput)
                     {
-                        // we have valid tokens
-                        var offendingToken = tokenization.InputElements.First();
+                        // we have valid input elements
+                        var offendingToken = inputElementSet.InputElements.First();
                         var err = new ParserError<T> {
                             ErrorType = ParserError.ExcessRemainingInput,
                             LastValidMatchingNode = info.Source.Node,
@@ -203,9 +203,9 @@ namespace MetaphysicsIndustries.Giza
 
                         RejectEndCandidate(info, rejects, ends, err);
 
-                        // try to match branch to tokens
+                        // try to match branch to input elements
                         bool matched = false;
-                        foreach (var intoken in tokenization.InputElements)
+                        foreach (var intoken in inputElementSet.InputElements)
                         {
                             if (BranchTipMatchesInputElement(branchnm, intoken))
                             {
