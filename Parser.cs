@@ -84,18 +84,18 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        public Span[] Parse(IInputSource<T> tokenSource, ICollection<Error> errors)
+        public Span[] Parse(IInputSource<T> inputSource, ICollection<Error> errors)
         {
-            if (tokenSource == null) throw new ArgumentNullException("tokenSource");
+            if (inputSource == null) throw new ArgumentNullException("inputSource");
             if (errors == null) throw new ArgumentNullException("errors");
 
-            var matchTreeLeaves = Match(tokenSource, errors);
+            var matchTreeLeaves = Match(inputSource, errors);
 
             return MakeSpans(matchTreeLeaves);
         }
-        public NodeMatch<T> [] Match(IInputSource<T> tokenSource, ICollection<Error> errors)
+        public NodeMatch<T>[] Match(IInputSource<T> inputSource, ICollection<Error> errors)
         {
-            if (tokenSource == null) throw new ArgumentNullException("tokenSource");
+            if (inputSource == null) throw new ArgumentNullException("inputSource");
             if (errors == null) throw new ArgumentNullException("errors");
 
             var sources = new PriorityQueue<NodeMatchStackPair<T> , int>(lowToHigh: true);
@@ -129,7 +129,7 @@ namespace MetaphysicsIndustries.Giza
                     }
 
                     //get all tokens, starting at end of source's token
-                    var tokenization = tokenSource.GetInputAtLocation(info.Source.InputElement.IndexOfNextElement);
+                    var tokenization = inputSource.GetInputAtLocation(info.Source.InputElement.IndexOfNextElement);
 
                     //if we get any tokenization errors, process them and reject
                     if (tokenization.Errors.ContainsNonWarnings())
@@ -187,7 +187,7 @@ namespace MetaphysicsIndustries.Giza
                     var branchstack = branchtuple.Item2;
                     var info = branchtuple.Item3;
 
-                    var tokenization = tokenSource.GetInputAtLocation(info.Source.InputElement.IndexOfNextElement);
+                    var tokenization = inputSource.GetInputAtLocation(info.Source.InputElement.IndexOfNextElement);
 
                     if (!tokenization.Errors.ContainsNonWarnings() &&
                         !tokenization.EndOfInput)
