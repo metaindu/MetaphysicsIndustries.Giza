@@ -12,14 +12,14 @@ namespace MetaphysicsIndustries.Giza
         {
         }
 
-        public Span[] Process(CharacterSource input, ICollection<Error> errors)
+        public Span[] Process(IInputSource<InputChar> input, ICollection<Error> errors)
         {
             if (input == null) throw new ArgumentNullException("input");
             if (errors == null) throw new ArgumentNullException("errors");
 
             return Parse(input, errors);
         }
-        public NodeMatch<InputChar>[] Match(CharacterSource input, List<Error> errors, out bool endOfInput, out InputPosition endOfInputPosition, bool mustUseAllInput=true, int startIndex=0)
+        public NodeMatch<InputChar>[] Match(IInputSource<InputChar> input, List<Error> errors, out bool endOfInput, out InputPosition endOfInputPosition, bool mustUseAllInput=true, int startIndex=0)
         {
             if (input == null) throw new ArgumentNullException("input");
             if (errors == null) throw new ArgumentNullException("errors");
