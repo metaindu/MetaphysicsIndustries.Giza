@@ -5,6 +5,11 @@ using System.Reflection;
 using MetaphysicsIndustries.Collections;
 using System.Linq;
 
+using NodeMatch = MetaphysicsIndustries.Giza.NodeMatch<MetaphysicsIndustries.Giza.InputChar>;
+using NodeMatchStackPair = MetaphysicsIndustries.Giza.NodeMatchStackPair<MetaphysicsIndustries.Giza.InputChar>;
+using NodeMatchErrorPair = MetaphysicsIndustries.Giza.NodeMatchErrorPair<MetaphysicsIndustries.Giza.InputChar>;
+using MatchStack = MetaphysicsIndustries.Giza.MatchStack<MetaphysicsIndustries.Giza.InputChar>;
+
 namespace MetaphysicsIndustries.Giza
 {
     public class Spanner : Spanner1

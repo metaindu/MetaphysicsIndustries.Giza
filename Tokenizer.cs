@@ -42,7 +42,7 @@ namespace MetaphysicsIndustries.Giza
             public TokenizationByIndex(int index,
                                        ICollection<Error> errors,
                                        bool endOfInput,
-                                       ICollection<NodeMatch> matchTreeLeaves,
+                                       ICollection<NodeMatch<InputChar>> matchTreeLeaves,
                                        InputPosition lastPosition)
             {
                 Index = index;
@@ -55,7 +55,7 @@ namespace MetaphysicsIndustries.Giza
             public int Index;
             public ICollection<Error> Errors;
             public bool EndOfInput;
-            public ICollection<NodeMatch> MatchTreeLeaves;
+            public ICollection<NodeMatch<InputChar>> MatchTreeLeaves;
             public InputPosition LastPosition;
         }
 
@@ -81,7 +81,7 @@ namespace MetaphysicsIndustries.Giza
 
                 bool endOfInput2;
                 var errors2 = new List<Error>();
-                var tokenLeaves = new Set<NodeMatch>();
+                var tokenLeaves = new Set<NodeMatch<InputChar>>();
                 InputPosition endOfInputPosition2;
 
                 var leaves = _spanner.Match(_input, errors2,
@@ -169,7 +169,7 @@ namespace MetaphysicsIndustries.Giza
 
             if (hasLeaves.Count > 0)
             {
-                var matchTreeLeaves = new Set<NodeMatch>();
+                var matchTreeLeaves = new Set<NodeMatch<InputChar>>();
 
                 foreach (var tok in hasLeaves)
                 {
@@ -268,10 +268,10 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        string CollectValue(NodeMatch tokenEnd)
+        string CollectValue(NodeMatch<InputChar> tokenEnd)
         {
             if (tokenEnd == null) throw new ArgumentNullException("tokenEnd");
-            if (tokenEnd.Transition != NodeMatch.TransitionType.EndDef) throw new ArgumentException("tokenDef must be an EndDef");
+            if (tokenEnd.Transition != NodeMatch<InputChar>.TransitionType.EndDef) throw new ArgumentException("tokenDef must be an EndDef");
             if (tokenEnd.StartDef == null) throw new ArgumentException("tokenDef must have a corresponding StartDef");
 
             var chs = new List<char>();

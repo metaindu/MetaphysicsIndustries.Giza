@@ -8,7 +8,8 @@ using System.IO;
 
 namespace MetaphysicsIndustries.Giza
 {
-    public class NodeMatch
+    public class NodeMatch<T>
+        where T : IInputElement
     {
         public enum TransitionType
         {
@@ -22,7 +23,7 @@ namespace MetaphysicsIndustries.Giza
 
         public readonly int _id;
 
-        public NodeMatch StartDef;
+        public NodeMatch<T> StartDef;
         public Token Token;
         public InputChar MatchedChar;
         public TransitionType Transition;
@@ -49,7 +50,7 @@ namespace MetaphysicsIndustries.Giza
         public InputPosition AlternateStartPosition = new InputPosition(-1);
 
 
-        public NodeMatch(Node node, TransitionType transition, NodeMatch previous)
+        public NodeMatch(Node node, TransitionType transition, NodeMatch<T> previous)
         {
             if (node == null) throw new ArgumentNullException("node");
 
@@ -64,13 +65,13 @@ namespace MetaphysicsIndustries.Giza
         }
 
         NodeMatchNodeMatchPreviousNextsCollection _nexts;
-        public ICollection<NodeMatch> Nexts
+        public ICollection<NodeMatch<T>> Nexts
         {
             get { return _nexts; }
         }
 
-        NodeMatch _previous;
-        public NodeMatch Previous
+        NodeMatch<T> _previous;
+        public NodeMatch<T> Previous
         {
             get { return _previous; }
             set
@@ -105,9 +106,9 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        public NodeMatch CloneWithNewToken(Token token)
+        public NodeMatch<T> CloneWithNewToken(Token token)
         {
-            var nm = new NodeMatch(this.Node, this.Transition, this.Previous);
+            var nm = new NodeMatch<T>(this.Node, this.Transition, this.Previous);
             nm.StartDef = this.StartDef;
             nm.Token = token;
 
@@ -166,7 +167,7 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        public static string RenderPathToLeaf(NodeMatch leaf)
+        public static string RenderPathToLeaf(NodeMatch<T> leaf)
         {
             StringBuilder sb = new StringBuilder();
             StringWriter sw = new StringWriter(sb);
@@ -175,9 +176,9 @@ namespace MetaphysicsIndustries.Giza
 
             return sb.ToString();
         }
-        public static void RenderPathToLeaf(NodeMatch leaf, TextWriter writer)
+        public static void RenderPathToLeaf(NodeMatch<T> leaf, TextWriter writer)
         {
-            var nodeMatches = new List<NodeMatch>();
+            var nodeMatches = new List<NodeMatch<T>>();
             var cur = leaf;
             while (cur != null)
             {
@@ -207,21 +208,21 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        class NodeMatchNodeMatchPreviousNextsCollection : ICollection<NodeMatch>
+        class NodeMatchNodeMatchPreviousNextsCollection : ICollection<NodeMatch<T>>
         {
-            public NodeMatchNodeMatchPreviousNextsCollection(NodeMatch container)
+            public NodeMatchNodeMatchPreviousNextsCollection(NodeMatch<T> container)
             {
                 if (container == null) throw new ArgumentNullException("container");
 
                 _container = container;
             }
 
-            NodeMatch _container;
-            Set<NodeMatch> _collection = new Set<NodeMatch>();
+            NodeMatch<T> _container;
+            Set<NodeMatch<T>> _collection = new Set<NodeMatch<T>>();
 
             #region ICollection implementation
 
-            public void Add(NodeMatch item)
+            public void Add(NodeMatch<T> item)
             {
                 if (!this.Contains(item))
                 {
@@ -238,17 +239,17 @@ namespace MetaphysicsIndustries.Giza
                 }
             }
 
-            public bool Contains(NodeMatch item)
+            public bool Contains(NodeMatch<T> item)
             {
                 return _collection.Contains(item);
             }
 
-            public void CopyTo(NodeMatch[] array, int arrayIndex)
+            public void CopyTo(NodeMatch<T>[] array, int arrayIndex)
             {
                 _collection.CopyTo(array, arrayIndex);
             }
 
-            public bool Remove(NodeMatch item)
+            public bool Remove(NodeMatch<T> item)
             {
                 if (_collection.Remove(item))
                 {
@@ -277,7 +278,7 @@ namespace MetaphysicsIndustries.Giza
 
             #region IEnumerable implementation
 
-            public IEnumerator<NodeMatch> GetEnumerator()
+            public IEnumerator<NodeMatch<T>> GetEnumerator()
             {
                 return _collection.GetEnumerator();
             }
@@ -295,9 +296,10 @@ namespace MetaphysicsIndustries.Giza
         }
     }
 
-    public class MatchStack
+    public class MatchStack<T>
+        where T : IInputElement
     {
-        public MatchStack(NodeMatch nodeMatch, MatchStack parent)
+        public MatchStack(NodeMatch<T> nodeMatch, MatchStack<T> parent)
         {
             if (nodeMatch == null) throw new ArgumentNullException("nodeMatch");
 
@@ -305,65 +307,67 @@ namespace MetaphysicsIndustries.Giza
             Parent = parent;
         }
 
-        public NodeMatch NodeMatch { get; protected set; }
-        public MatchStack Parent { get; protected set; }
+        public NodeMatch<T> NodeMatch { get; protected set; }
+        public MatchStack<T> Parent { get; protected set; }
         public DefRefNode Node { get { return (DefRefNode)NodeMatch.Node; } }
         public Definition Definition { get { return Node.DefRef; } }
     }
 
-    public struct NodeMatchStackPair
+    public struct NodeMatchStackPair<T>
+        where T : IInputElement
     {
-        public NodeMatchStackPair(NodeMatch nm, MatchStack stack)
+        public NodeMatchStackPair(NodeMatch<T> nm, MatchStack<T> stack)
         {
             NodeMatch = nm;
             MatchStack = stack;
         }
 
-        public NodeMatch NodeMatch;
-        public MatchStack MatchStack;
+        public NodeMatch<T> NodeMatch;
+        public MatchStack<T> MatchStack;
 
-        public static NodeMatchStackPair CreateStartDefMatch(Node node, NodeMatch match, MatchStack stack2, InputPosition pos)
+        public static NodeMatchStackPair<T> CreateStartDefMatch(Node node, NodeMatch<T> match, MatchStack<T> stack2, InputPosition pos)
         {
-            var match2 = new NodeMatch(node, NodeMatch.TransitionType.StartDef, match);
+            var match2 = new NodeMatch<T>(node, NodeMatch<T>.TransitionType.StartDef, match);
             match2.AlternateStartPosition = pos;
-            return new NodeMatchStackPair(match2, stack2);
+            return new NodeMatchStackPair<T>(match2, stack2);
         }
 
-        public NodeMatchStackPair CreateEndDefMatch()
+        public NodeMatchStackPair<T> CreateEndDefMatch()
         {
             return CreateEndDefMatch(this.NodeMatch, this.MatchStack);
         }
 
-        public static NodeMatchStackPair CreateEndDefMatch(NodeMatch match, MatchStack stack)
+        public static NodeMatchStackPair<T> CreateEndDefMatch(NodeMatch<T> match, MatchStack<T> stack)
         {
-            var match2 = new NodeMatch(stack.Node, NodeMatch.TransitionType.EndDef, match);
+            var match2 = new NodeMatch<T>(stack.Node, NodeMatch<T>.TransitionType.EndDef, match);
             match2.AlternateStartPosition = match.StartPosition;
             match2.StartDef = stack.NodeMatch;
-            return new NodeMatchStackPair(match2, stack.Parent);
+            return new NodeMatchStackPair<T>(match2, stack.Parent);
         }
 
-        public static NodeMatchStackPair CreateFollowMatch(Node node, NodeMatch match, MatchStack stack, InputPosition pos)
+        public static NodeMatchStackPair<T> CreateFollowMatch(Node node, NodeMatch<T> match, MatchStack<T> stack, InputPosition pos)
         {
-            var match2 = new NodeMatch(node, NodeMatch.TransitionType.Follow, match);
+            var match2 = new NodeMatch<T>(node, NodeMatch<T>.TransitionType.Follow, match);
             match2.AlternateStartPosition = pos;
-            return new NodeMatchStackPair(match2, stack);
+            return new NodeMatchStackPair<T>(match2, stack);
         }
 
     }
 
-    public struct NodeMatchErrorPair
+    public struct NodeMatchErrorPair<T>
+        where T : IInputElement
     {
-        public NodeMatchErrorPair(NodeMatch nm, params Error[] errors)
+        public NodeMatchErrorPair(NodeMatch<T> nm, params Error[] errors)
             : this(nm, (ICollection<Error>)errors)
         {
         }
-        public NodeMatchErrorPair(NodeMatch nm, ICollection<Error> errors)
+        public NodeMatchErrorPair(NodeMatch<T> nm, ICollection<Error> errors)
         {
             NodeMatch = nm;
             Errors = errors;
         }
 
-        public NodeMatch NodeMatch;
+        public NodeMatch<T> NodeMatch;
         public ICollection<Error> Errors;
         public Error Error
         {
@@ -374,7 +378,8 @@ namespace MetaphysicsIndustries.Giza
 
     public static class NodeMatchErrorPairHelper
     {
-        public static void Add(this ICollection<NodeMatchErrorPair> collection, NodeMatch nm, params Error[] errors)
+        public static void Add<T>(this ICollection<NodeMatchErrorPair<T>> collection, NodeMatch<T> nm, params Error[] errors)
+            where T : IInputElement
         {
             // if all errors are null, replace with an empty array
             if (errors.Length > 0 &&
@@ -383,9 +388,10 @@ namespace MetaphysicsIndustries.Giza
                 errors = new Error[0];
             }
 
-            collection.Add(new NodeMatchErrorPair(nm, errors));
+            collection.Add(new NodeMatchErrorPair<T>(nm, errors));
         }
-        public static void Add(this ICollection<NodeMatchErrorPair> collection, NodeMatch nm, ICollection<Error> errors)
+        public static void Add<T>(this ICollection<NodeMatchErrorPair<T>> collection, NodeMatch<T> nm, ICollection<Error> errors)
+            where T : IInputElement
         {
             // if all errors are null, replace with an empty collection
             if (errors.Count > 0 &&
@@ -394,7 +400,7 @@ namespace MetaphysicsIndustries.Giza
                 errors = new List<Error>();
             }
 
-            collection.Add(new NodeMatchErrorPair(nm, errors));
+            collection.Add(new NodeMatchErrorPair<T>(nm, errors));
         }
     }
 }

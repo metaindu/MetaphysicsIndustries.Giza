@@ -21,7 +21,7 @@ namespace MetaphysicsIndustries.Giza
 
             return Parse(tokenSource, errors);
         }
-        public NodeMatch[] Match(CharacterSource input, List<Error> errors, out bool endOfInput, out InputPosition endOfInputPosition, bool mustUseAllInput=true, int startIndex=0)
+        public NodeMatch<Token>[] Match(CharacterSource input, List<Error> errors, out bool endOfInput, out InputPosition endOfInputPosition, bool mustUseAllInput=true, int startIndex=0)
         {
             if (input == null) throw new ArgumentNullException("input");
             if (errors == null) throw new ArgumentNullException("errors");
@@ -34,12 +34,12 @@ namespace MetaphysicsIndustries.Giza
             return Match(tokenSource, errors);
         }
 
-        protected override bool IsBranchTip(NodeMatch cur)
+        protected override bool IsBranchTip(NodeMatch<Token> cur)
         {
             return (cur.Node is CharNode);
         }
 
-        protected override bool BranchTipMatchesInputElement(NodeMatch branchTip, Token inputElement)
+        protected override bool BranchTipMatchesInputElement(NodeMatch<Token> branchTip, Token inputElement)
         {
             throw new NotImplementedException();
             //return (branchTip.Node as CharNode).Matches(inputElement.Value);

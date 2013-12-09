@@ -22,7 +22,7 @@ namespace MetaphysicsIndustries.Giza
 
             return Parse(tokenSource, errors);
         }
-        public NodeMatch[] Match(IInputSource<InputChar> input, ICollection<Error> errors)
+        public NodeMatch<Token>[] Match(IInputSource<InputChar> input, ICollection<Error> errors)
         {
             if (input == null) throw new ArgumentNullException("input");
             if (errors == null) throw new ArgumentNullException("errors");
@@ -32,7 +32,7 @@ namespace MetaphysicsIndustries.Giza
             return Match(tokenSource, errors);
         }
 
-        protected override bool BranchTipMatchesInputElement(NodeMatch branchTip, Token inputElement)
+        protected override bool BranchTipMatchesInputElement(NodeMatch<Token> branchTip, Token inputElement)
         {
             return (branchTip.Node is DefRefNode) &&
                 (branchTip.Node as DefRefNode).DefRef == inputElement.Definition;
@@ -53,13 +53,13 @@ namespace MetaphysicsIndustries.Giza
 
         class ParseInfo
         {
-            public NodeMatchStackPair SourcePair;
-            public NodeMatch Source { get { return SourcePair.NodeMatch; } }
-            public MatchStack SourceStack { get { return SourcePair.MatchStack; } }
+            public NodeMatchStackPair<Token> SourcePair;
+            public NodeMatch<Token> Source { get { return SourcePair.NodeMatch; } }
+            public MatchStack<Token> SourceStack { get { return SourcePair.MatchStack; } }
 
-            public NodeMatch EndCandidate;
+            public NodeMatch<Token> EndCandidate;
 
-            public List<NodeMatchStackPair> Branches;
+            public List<NodeMatchStackPair<Token>> Branches;
 
             public IEnumerable<Node> GetExpectedNodes()
             {
@@ -93,22 +93,22 @@ namespace MetaphysicsIndustries.Giza
 
             return MakeSpans(matchTreeLeaves);
         }
-        public NodeMatch[] Match(IInputSource<Token> tokenSource, ICollection<Error> errors)
+        public NodeMatch<Token>[] Match(IInputSource<Token> tokenSource, ICollection<Error> errors)
         {
             if (tokenSource == null) throw new ArgumentNullException("tokenSource");
             if (errors == null) throw new ArgumentNullException("errors");
 
-            var sources = new PriorityQueue<NodeMatchStackPair, int>(lowToHigh: true);
-            var ends = new List<NodeMatch>();
+            var sources = new PriorityQueue<NodeMatchStackPair<Token>, int>(lowToHigh: true);
+            var ends = new List<NodeMatch<Token>>();
             var rootDef = new Definition("$rootDef");
             var rootNode = new DefRefNode(_definition, "$rootNode");
             rootDef.Nodes.Add(rootNode);
             rootDef.StartNodes.Add(rootNode);
             rootDef.EndNodes.Add(rootNode);
-            var root = new NodeMatch(rootNode, NodeMatch.TransitionType.Root, null);
-            var rejects = new List<NodeMatchErrorPair>();
+            var root = new NodeMatch<Token>(rootNode, NodeMatch<Token>.TransitionType.Root, null);
+            var rejects = new List<NodeMatchErrorPair<Token>>();
 
-            var branches2 = new PriorityQueue<Tuple<NodeMatch, MatchStack, ParseInfo>, int>();
+            var branches2 = new PriorityQueue<Tuple<NodeMatch<Token>, MatchStack<Token>, ParseInfo>, int>();
 
             sources.Enqueue(pair(root, null), -1);
 //            Logger.WriteLine("Starting");
@@ -116,7 +116,7 @@ namespace MetaphysicsIndustries.Giza
             while (sources.Count > 0)
             {
 
-                var nextSources = new List<NodeMatchStackPair>();
+                var nextSources = new List<NodeMatchStackPair<Token>>();
                 while (sources.Count > 0)
                 {
                     var sourcepair = sources.Dequeue();
@@ -171,7 +171,7 @@ namespace MetaphysicsIndustries.Giza
 
                         foreach (var branch in info.Branches)
                         {
-                            branches2.Enqueue(new Tuple<NodeMatch, MatchStack, ParseInfo>(
+                            branches2.Enqueue(new Tuple<NodeMatch<Token>, MatchStack<Token>, ParseInfo>(
                                 branch.NodeMatch,
                                 branch.MatchStack,
                                 info),
@@ -252,7 +252,7 @@ namespace MetaphysicsIndustries.Giza
                 if (rejects.Count > 0)
                 {
                     IEnumerable<Error> errorsToUse = null;
-                    foreach (var reject in (rejects as IEnumerable<NodeMatchErrorPair>).Reverse())
+                    foreach (var reject in (rejects as IEnumerable<NodeMatchErrorPair<Token>>).Reverse())
                     {
                         if (reject.Errors != null && reject.Errors.Count > 0)
                         {
@@ -280,7 +280,7 @@ namespace MetaphysicsIndustries.Giza
             return ends.ToArray();
         }
 
-        void RejectEndCandidate(ParseInfo info, List<NodeMatchErrorPair> rejects, List<NodeMatch> ends, Error err)
+        void RejectEndCandidate(ParseInfo info, List<NodeMatchErrorPair<Token>> rejects, List<NodeMatch<Token>> ends, Error err)
         {
             if (info.EndCandidate != null)
             {
@@ -289,7 +289,7 @@ namespace MetaphysicsIndustries.Giza
                 info.EndCandidate = null;
             }
         }
-        void RejectEndCandidate(ParseInfo info, List<NodeMatchErrorPair> rejects, List<NodeMatch> ends, ICollection<Error> errors)
+        void RejectEndCandidate(ParseInfo info, List<NodeMatchErrorPair<Token>> rejects, List<NodeMatch<Token>> ends, ICollection<Error> errors)
         {
             if (info.EndCandidate != null)
             {
@@ -299,18 +299,18 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        ParseInfo GetParseInfoFromSource(NodeMatchStackPair source)
+        ParseInfo GetParseInfoFromSource(NodeMatchStackPair<Token> source)
         {
             var info = new ParseInfo();
             info.SourcePair = source;
 
-            var currents = new Queue<NodeMatchStackPair>();
+            var currents = new Queue<NodeMatchStackPair<Token>>();
 
             currents.Enqueue(info.SourcePair);
 
             // find all ends
-            var enders = new List<NodeMatchStackPair>();
-            if (info.Source.Transition != NodeMatch.TransitionType.Root)
+            var enders = new List<NodeMatchStackPair<Token>>();
+            if (info.Source.Transition != NodeMatch<Token>.TransitionType.Root)
             {
                 var ender = info.SourcePair;
 
@@ -335,7 +335,7 @@ namespace MetaphysicsIndustries.Giza
             }
 
             //find all branches
-            info.Branches = new List<NodeMatchStackPair>();
+            info.Branches = new List<NodeMatchStackPair<Token>>();
             while (currents.Count > 0)
             {
                 var current = currents.Dequeue();
@@ -350,20 +350,20 @@ namespace MetaphysicsIndustries.Giza
                 }
 
                 if (cur.DefRef.IsTokenized ||
-                    cur.Transition == NodeMatch.TransitionType.EndDef)
+                    cur.Transition == NodeMatch<Token>.TransitionType.EndDef)
                 {
                     foreach (var next in cur.Node.NextNodes)
                     {
-                        var nm = new NodeMatch(next, NodeMatch.TransitionType.Follow, cur);
+                        var nm = new NodeMatch<Token>(next, NodeMatch<Token>.TransitionType.Follow, cur);
                         currents.Enqueue(pair(nm, curstack));
                     }
                 }
                 else
                 {
-                    var nextStack = new MatchStack(cur, curstack);
+                    var nextStack = new MatchStack<Token>(cur, curstack);
                     foreach (var start in (cur.Node as DefRefNode).DefRef.StartNodes)
                     {
-                        var nm = new NodeMatch(start, NodeMatch.TransitionType.StartDef, cur);
+                        var nm = new NodeMatch<Token>(start, NodeMatch<Token>.TransitionType.StartDef, cur);
                         currents.Enqueue(pair(nm, nextStack));
                     }
                 }
@@ -372,19 +372,19 @@ namespace MetaphysicsIndustries.Giza
             return info;
         }
 
-        protected virtual bool IsBranchTip(NodeMatch cur)
+        protected virtual bool IsBranchTip(NodeMatch<Token> cur)
         {
             return cur.DefRef.IsTokenized;
         }
-        protected abstract bool BranchTipMatchesInputElement(NodeMatch branchTip, Token inputElement);
+        protected abstract bool BranchTipMatchesInputElement(NodeMatch<Token> branchTip, Token inputElement);
 
-        static Span[] MakeSpans(IEnumerable<NodeMatch> matchTreeLeaves)
+        static Span[] MakeSpans(IEnumerable<NodeMatch<Token>> matchTreeLeaves)
         {
-            var lists = new List<List<NodeMatch>>();
+            var lists = new List<List<NodeMatch<Token>>>();
             foreach (var leaf in matchTreeLeaves)
             {
                 var cur = leaf;
-                var list = new List<NodeMatch>();
+                var list = new List<NodeMatch<Token>>();
 
                 while (cur != null)
                 {
@@ -405,7 +405,7 @@ namespace MetaphysicsIndustries.Giza
 
                 foreach (var nm in list)
                 {
-                    if (nm.Transition == NodeMatch.TransitionType.EndDef)
+                    if (nm.Transition == NodeMatch<Token>.TransitionType.EndDef)
                     {
                         rootSpan = stack.Pop();
                     }
@@ -434,13 +434,13 @@ namespace MetaphysicsIndustries.Giza
             return spans.ToArray();
         }
 
-        public static NodeMatchStackPair pair(NodeMatch nodeMatch, MatchStack matchStack)
+        public static NodeMatchStackPair<Token> pair(NodeMatch<Token> nodeMatch, MatchStack<Token> matchStack)
         {
-            return new NodeMatchStackPair{NodeMatch = nodeMatch, MatchStack = matchStack};
+            return new NodeMatchStackPair<Token>{NodeMatch = nodeMatch, MatchStack = matchStack};
         }
 
 
-        public static void StripReject(NodeMatch reject)
+        public static void StripReject(NodeMatch<Token> reject)
         {
             var cur = reject;
             var next = cur;
