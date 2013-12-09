@@ -12,6 +12,25 @@ namespace MetaphysicsIndustries.Giza
             : base(definition)
         {
         }
+
+        public Span[] Parse(CharacterSource input, ICollection<Error> errors)
+        {
+            if (input == null) throw new ArgumentNullException("input");
+            if (errors == null) throw new ArgumentNullException("errors");
+
+            var tokenSource = new Tokenizer(_definition.ParentGrammar, input);
+
+            return Parse(tokenSource, errors);
+        }
+        public NodeMatch[] Match(CharacterSource input, ICollection<Error> errors)
+        {
+            if (input == null) throw new ArgumentNullException("input");
+            if (errors == null) throw new ArgumentNullException("errors");
+
+            var tokenSource = new Tokenizer(_definition.ParentGrammar, input);
+
+            return Match(tokenSource, errors);
+        }
     }
 
     public class ParserBase
@@ -23,7 +42,7 @@ namespace MetaphysicsIndustries.Giza
             _definition = definition;
         }
 
-        Definition _definition;
+        protected Definition _definition;
 
         class ParseInfo
         {
@@ -58,15 +77,6 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        public Span[] Parse(CharacterSource input, ICollection<Error> errors)
-        {
-            if (input == null) throw new ArgumentNullException("input");
-            if (errors == null) throw new ArgumentNullException("errors");
-
-            ITokenSource tokenSource = new Tokenizer(_definition.ParentGrammar, input);
-
-            return Parse(tokenSource, errors);
-        }
         public Span[] Parse(ITokenSource tokenSource, ICollection<Error> errors)
         {
             if (tokenSource == null) throw new ArgumentNullException("tokenSource");
@@ -75,15 +85,6 @@ namespace MetaphysicsIndustries.Giza
             var matchTreeLeaves = Match(tokenSource, errors);
 
             return MakeSpans(matchTreeLeaves);
-        }
-        public NodeMatch[] Match(CharacterSource input, ICollection<Error> errors)
-        {
-            if (input == null) throw new ArgumentNullException("input");
-            if (errors == null) throw new ArgumentNullException("errors");
-
-            ITokenSource tokenSource = new Tokenizer(_definition.ParentGrammar, input);
-
-            return Match(tokenSource, errors);
         }
         public NodeMatch[] Match(ITokenSource tokenSource, ICollection<Error> errors)
         {

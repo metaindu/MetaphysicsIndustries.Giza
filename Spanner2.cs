@@ -14,14 +14,24 @@ namespace MetaphysicsIndustries.Giza
 
         public Span[] Process(CharacterSource input, ICollection<Error> errors)
         {
-            return Parse(input, errors);
+            if (input == null) throw new ArgumentNullException("input");
+            if (errors == null) throw new ArgumentNullException("errors");
+
+            var tokenSource = new Tokenizer(_definition.ParentGrammar, input);
+
+            return Parse(tokenSource, errors);
         }
         public NodeMatch[] Match(CharacterSource input, List<Error> errors, out bool endOfInput, out InputPosition endOfInputPosition, bool mustUseAllInput=true, int startIndex=0)
         {
+            if (input == null) throw new ArgumentNullException("input");
+            if (errors == null) throw new ArgumentNullException("errors");
+
+            var tokenSource = new Tokenizer(_definition.ParentGrammar, input);
+
             endOfInput = false;
             endOfInputPosition = new InputPosition();
 
-            return Match(input, errors);
+            return Match(tokenSource, errors);
         }
 
         protected override bool IsBranchTip(NodeMatch cur)
