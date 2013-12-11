@@ -11,19 +11,48 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestOrExpr()
         {
-            string testGrammarText =
-                "def1 = ( 'qwer' | 'asdf' );";
+            // setup
+            //def1 = ( 'qwer' | 'asdf' );
+            var testGrammar = new Grammar {
+                Definitions = {
+                    new Definition(
+                        name: "def1",
+                        nodes: new [] {
+                            new CharNode('q', "qwer"),
+                            new CharNode('w', "qwer"),
+                            new CharNode('e', "qwer"),
+                            new CharNode('r', "qwer"),
+                            new CharNode('a', "asdf"),
+                            new CharNode('s', "asdf"),
+                            new CharNode('d', "asdf"),
+                            new CharNode('f', "asdf"),
+                        },
+                        nexts: new [] {
+                            0, 1,
+                            1, 2,
+                            2, 3,
+                            4, 5,
+                            5, 6,
+                            6, 7,
+                        },
+                        startNodes: new [] { 0, 4 },
+                        endNodes: new [] { 3, 7 }
+                    )
+                }
+            };
             var errors = new List<Error>();
-            Grammar testGrammar = (new SupergrammarSpanner()).GetGrammar(testGrammarText, errors);
-            Assert.IsEmpty(errors);
-
             Spanner s = new Spanner(testGrammar.FindDefinitionByName("def1"));
 
+            // action
             Span[] spans = s.Process("qwer".ToCharacterSource(), errors);
+
+            // assertions
             Assert.AreEqual(1, spans.Length);
             Assert.IsEmpty(errors);
 
+            // action
             spans = s.Process("asdf".ToCharacterSource(), errors);
+            // assertions
             Assert.AreEqual(1, spans.Length);
             Assert.IsEmpty(errors);
         }
@@ -97,23 +126,79 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test()]
         public void TestErrorInvalidCharacterAtStart()
         {
-            string testGrammarText =
-                " // test grammar \r\n" +
-                "sequence = item+; \r\n" +
-                "item = ( id-item1 | id-item2 ); \r\n" +
-                "<mind whitespace, atomic> id-item1 = 'item1'; \r\n" +
-                "<mind whitespace, atomic> id-item2 = 'item2'; \r\n";
+            // setup
+            //sequence = item+;
+            //item = ( id-item1 | id-item2 );
+            //<mind whitespace, atomic> id-item1 = 'item1';
+            //<mind whitespace, atomic> id-item2 = 'item2';
+            var item1Def =
+                new Definition(
+                    name: "id-item1",
+                    nodes: new [] {
+                        new CharNode('i', "item1"),
+                        new CharNode('t', "item1"),
+                        new CharNode('e', "item1"),
+                        new CharNode('m', "item1"),
+                        new CharNode('1', "item1"),
+                    },
+                    nexts: new [] { 0, 1, 1, 2, 2, 3, 3, 4, },
+                    startNodes: new [] { 0 },
+                    endNodes: new [] { 4 },
+                    directives: new [] {
+                        DefinitionDirective.Atomic,
+                        DefinitionDirective.MindWhitespace,
+                    }
+                );
+            var item2Def =
+                new Definition(
+                    name: "id-item2",
+                    nodes: new [] {
+                        new CharNode('i', "item2"),
+                        new CharNode('t', "item2"),
+                        new CharNode('e', "item2"),
+                        new CharNode('m', "item2"),
+                        new CharNode('2', "item2"),
+                    },
+                    nexts: new [] { 0, 1, 1, 2, 2, 3, 3, 4, },
+                    startNodes: new [] { 0 },
+                    endNodes: new [] { 4 },
+                    directives: new [] {
+                        DefinitionDirective.Atomic,
+                        DefinitionDirective.MindWhitespace,
+                    }
+                );
+            var itemDef =
+                new Definition(
+                    name: "item",
+                    nodes: new [] {
+                        new DefRefNode(item1Def),
+                        new DefRefNode(item2Def),
+                    },
+                    startNodes: new [] { 0, 1 },
+                    endNodes: new [] { 0, 1 }
+                );
+            var sequenceDef =
+                new Definition(
+                    name: "sequence",
+                    nodes: new [] { new DefRefNode(itemDef) },
+                    nexts: new [] { 0, 0 },
+                    startNodes: new [] { 0 },
+                    endNodes: new [] { 0 }
+                );
+            var testGrammar = new Grammar {
+                Definitions = { sequenceDef, itemDef, item1Def, item2Def }
+            };
 
             string testInput = "$ item1 item2 ";
 
-            SupergrammarSpanner sgs = new SupergrammarSpanner();
             var errors = new List<Error>();
-            Grammar testGrammar = sgs.GetGrammar(testGrammarText, errors);
-            Assert.IsEmpty(errors);
 
             Spanner s = new Spanner(testGrammar.FindDefinitionByName("sequence"));
+
+            // action
             Span[] spans = s.Process(testInput.ToCharacterSource(), errors);
 
+            // assertions
             Assert.IsEmpty(spans);
             Assert.AreEqual(1, errors.Count);
             Assert.IsInstanceOf<SpannerError>(errors[0]);
@@ -128,27 +213,104 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual("item", (err.ExpectedNodes.First() as DefRefNode).DefRef.Name);
         }
 
+        static Grammar CreateGrammarForTestUnexpectedEndOfInput()
+        {
+            //sequence = item+;
+            //item = ( id-item1 | id-item2 | paren );
+            //<mind whitespace, atomic> id-item1 = 'item1';
+            //<mind whitespace, atomic> id-item2 = 'item2';
+            //paren = '(' sequence ')';
+
+            var item1Def =
+                new Definition(
+                    name: "id-item1",
+                    nodes: new [] {
+                        new CharNode('i', "item1"),
+                        new CharNode('t', "item1"),
+                        new CharNode('e', "item1"),
+                        new CharNode('m', "item1"),
+                        new CharNode('1', "item1"),
+                    },
+                    nexts: new [] { 0, 1, 1, 2, 2, 3, 3, 4, },
+                    startNodes: new [] { 0 },
+                    endNodes: new [] { 4 },
+                    directives: new [] {
+                        DefinitionDirective.Atomic,
+                        DefinitionDirective.MindWhitespace,
+                    }
+                );
+            var item2Def =
+                new Definition(
+                    name: "id-item2",
+                    nodes: new [] {
+                        new CharNode('i', "item2"),
+                        new CharNode('t', "item2"),
+                        new CharNode('e', "item2"),
+                        new CharNode('m', "item2"),
+                        new CharNode('2', "item2"),
+                    },
+                    nexts: new [] { 0, 1, 1, 2, 2, 3, 3, 4, },
+                    startNodes: new [] { 0 },
+                    endNodes: new [] { 4 },
+                    directives: new [] {
+                        DefinitionDirective.Atomic,
+                        DefinitionDirective.MindWhitespace,
+                    }
+                );
+            var sequenceDef = new Definition("sequence");
+            var parenDef =
+                new Definition(
+                    name: "paren",
+                    nodes: new Node[] {
+                        new CharNode('('),
+                        new DefRefNode(sequenceDef),
+                        new CharNode(')'),
+                    },
+                    nexts: new [] { 0, 1, 1, 2 },
+                    startNodes: new [] { 0 },
+                    endNodes: new [] { 2 }
+                );
+            var itemDef =
+                new Definition(
+                    name: "item",
+                    nodes: new [] {
+                        new DefRefNode(item1Def),
+                        new DefRefNode(item2Def),
+                        new DefRefNode(parenDef),
+                    },
+                    startNodes: new [] { 0, 1, 2 },
+                    endNodes: new [] { 0, 1, 2 }
+                );
+
+            sequenceDef.Nodes.Add(new DefRefNode(itemDef));
+            sequenceDef.Nodes[0].NextNodes.Add(sequenceDef.Nodes[0]);
+            sequenceDef.StartNodes.Add(sequenceDef.Nodes[0]);
+            sequenceDef.EndNodes.Add(sequenceDef.Nodes[0]);
+
+            return new Grammar(new [] { sequenceDef, itemDef, item1Def, item2Def, parenDef });
+        }
+
         [Test]
         public void TestUnexpectedEndOfInput1()
         {
-            string testGrammarText =
-                " // test grammar \r\n" +
-                "sequence = item+; \r\n" +
-                "item = ( id-item1 | id-item2 | paren ); \r\n" +
-                "<mind whitespace, atomic> id-item1 = 'item1'; \r\n" +
-                "<mind whitespace, atomic> id-item2 = 'item2'; \r\n" +
-                "paren = '(' sequence ')'; \r\n";
+            // setup
 
+            //sequence = item+;
+            //item = ( id-item1 | id-item2 | paren );
+            //<mind whitespace, atomic> id-item1 = 'item1';
+            //<mind whitespace, atomic> id-item2 = 'item2';
+            //paren = '(' sequence ')';
+
+            var testGrammar = CreateGrammarForTestUnexpectedEndOfInput();
+
+            var errors = new List<Error>();
+            Spanner s = new Spanner(testGrammar.FindDefinitionByName("sequence"));
             string testInput = "item1 ( item2 ";
 
-            SupergrammarSpanner sgs = new SupergrammarSpanner();
-            var errors = new List<Error>();
-            Grammar testGrammar = sgs.GetGrammar(testGrammarText, errors);
-            Assert.IsEmpty(errors);
-
-            Spanner s = new Spanner(testGrammar.FindDefinitionByName("sequence"));
+            // action
             Span[] spans = s.Process(testInput.ToCharacterSource(), errors);
 
+            // assertions
             Assert.IsNotNull(spans);
             Assert.AreEqual(0, spans.Length);
             Assert.IsNotNull(errors);
@@ -170,24 +332,24 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestUnexpectedEndOfInput2()
         {
-            string testGrammarText =
-                " // test grammar \r\n" +
-                    "sequence = item+; \r\n" +
-                    "item = ( id-item1 | id-item2 | paren ); \r\n" +
-                    "<mind whitespace, atomic> id-item1 = 'item1'; \r\n" +
-                    "<mind whitespace, atomic> id-item2 = 'item2'; \r\n" +
-                    "paren = '(' sequence ')'; \r\n";
+            // setup
 
+            //sequence = item+;
+            //item = ( id-item1 | id-item2 | paren );
+            //<mind whitespace, atomic> id-item1 = 'item1';
+            //<mind whitespace, atomic> id-item2 = 'item2';
+            //paren = '(' sequence ')';
+
+            var testGrammar = CreateGrammarForTestUnexpectedEndOfInput();
+
+            var errors = new List<Error>();
+            Spanner s = new Spanner(testGrammar.FindDefinitionByName("sequence"));
             string testInput = "item1 ( item2";
 
-            SupergrammarSpanner sgs = new SupergrammarSpanner();
-            var errors = new List<Error>();
-            Grammar testGrammar = sgs.GetGrammar(testGrammarText, errors);
-            Assert.IsEmpty(errors);
-
-            Spanner s = new Spanner(testGrammar.FindDefinitionByName("sequence"));
+            // action
             Span[] spans = s.Process(testInput.ToCharacterSource(), errors);
 
+            // assertions
             Assert.IsNotNull(spans);
             Assert.AreEqual(0, spans.Length);
             Assert.IsNotNull(errors);
@@ -209,24 +371,24 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestUnexpectedEndOfInput3()
         {
-            string testGrammarText =
-                " // test grammar \r\n" +
-                    "sequence = item+; \r\n" +
-                    "item = ( id-item1 | id-item2 | paren ); \r\n" +
-                    "<mind whitespace, atomic> id-item1 = 'item1'; \r\n" +
-                    "<mind whitespace, atomic> id-item2 = 'item2'; \r\n" +
-                    "paren = '(' sequence ')'; \r\n";
+            // setup
 
+            //sequence = item+;
+            //item = ( id-item1 | id-item2 | paren );
+            //<mind whitespace, atomic> id-item1 = 'item1';
+            //<mind whitespace, atomic> id-item2 = 'item2';
+            //paren = '(' sequence ')';
+
+            var testGrammar = CreateGrammarForTestUnexpectedEndOfInput();
+
+            var errors = new List<Error>();
+            Spanner s = new Spanner(testGrammar.FindDefinitionByName("sequence"));
             string testInput = "item1 ( item";
 
-            SupergrammarSpanner sgs = new SupergrammarSpanner();
-            var errors = new List<Error>();
-            Grammar testGrammar = sgs.GetGrammar(testGrammarText, errors);
-            Assert.IsEmpty(errors);
-
-            Spanner s = new Spanner(testGrammar.FindDefinitionByName("sequence"));
+            // action
             Span[] spans = s.Process(testInput.ToCharacterSource(), errors);
 
+            // assertions
             Assert.IsNotNull(spans);
             Assert.AreEqual(0, spans.Length);
             Assert.IsNotNull(errors);
@@ -249,23 +411,86 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestExcessRemainingInput()
         {
-            string testGrammarText =
-                " // test grammar \r\n" +
-                "sequence = id-one id-two id-three; \r\n" +
-                "<mind whitespace, atomic> id-one = 'one'; \r\n" +
-                "<mind whitespace, atomic> id-two = 'two'; \r\n" +
-                "<mind whitespace, atomic> id-three = 'three'; \r\n";
+            // setup
+            //sequence = id-one id-two id-three;
+            //<mind whitespace, atomic> id-one = 'one';
+            //<mind whitespace, atomic> id-two = 'two';
+            //<mind whitespace, atomic> id-three = 'three';
+
+            var oneDef =
+                new Definition(
+                    name: "id-one",
+                    nodes: new [] {
+                        new CharNode('o', "one"),
+                        new CharNode('n', "one"),
+                        new CharNode('e', "one"),
+                    },
+                    nexts: new [] { 0, 1, 1, 2 },
+                    startNodes: new [] { 0 },
+                    endNodes: new [] { 2 },
+                    directives: new [] {
+                        DefinitionDirective.MindWhitespace,
+                        DefinitionDirective.Atomic,
+                    }
+                );
+            var twoDef =
+                new Definition(
+                    name: "id-two",
+                    nodes: new [] {
+                        new CharNode('t', "two"),
+                        new CharNode('w', "two"),
+                        new CharNode('o', "two"),
+                    },
+                    nexts: new [] { 0, 1, 1, 2 },
+                    startNodes: new [] { 0 },
+                    endNodes: new [] { 2 },
+                    directives: new [] {
+                        DefinitionDirective.MindWhitespace,
+                        DefinitionDirective.Atomic,
+                    }
+                );
+            var threeDef =
+                new Definition(
+                    name: "id-three",
+                    nodes: new [] {
+                        new CharNode('t', "three"),
+                        new CharNode('h', "three"),
+                        new CharNode('r', "three"),
+                        new CharNode('e', "three"),
+                        new CharNode('e', "three"),
+                    },
+                    nexts: new [] { 0, 1, 1, 2, 2, 3, 3, 4 },
+                    startNodes: new [] { 0 },
+                    endNodes: new [] { 4 },
+                    directives: new [] {
+                        DefinitionDirective.MindWhitespace,
+                        DefinitionDirective.Atomic,
+                    }
+                );
+            var sequenceDef =
+                new Definition(
+                    name: "sequence",
+                    nodes: new [] {
+                        new DefRefNode(oneDef),
+                        new DefRefNode(twoDef),
+                        new DefRefNode(threeDef),
+                    },
+                    nexts: new [] { 0, 1, 1, 2 },
+                    startNodes: new [] { 0 },
+                    endNodes: new [] { 2 }
+                );
+            var testGrammar = new Grammar(sequenceDef, oneDef, twoDef, threeDef);
 
             string testInput = "one two three four";
                               //123456789012345678
-            SupergrammarSpanner sgs = new SupergrammarSpanner();
             var errors = new List<Error>();
-            Grammar testGrammar = sgs.GetGrammar(testGrammarText, errors);
-            Assert.IsEmpty(errors);
 
             Spanner s = new Spanner(testGrammar.FindDefinitionByName("sequence"));
+
+            // action
             Span[] spans = s.Process(testInput.ToCharacterSource(), errors);
 
+            // assertions
             Assert.IsNotNull(spans);
             Assert.AreEqual(0, spans.Length);
             Assert.IsNotNull(errors);
@@ -281,16 +506,53 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsNull(err.ExpectedNodes);
         }
 
+        static Grammar CreateGrammarForTestEndOfInputParameter()
+        {
+            //expr = operand '+' operand;
+            //<atomic> operand = [\l_] [\l\d_]*;
+
+            var operandDef =
+                new Definition(
+                    name: "operand",
+                    nodes: new [] {
+                        new CharNode(CharClass.FromUndelimitedCharClassText("\\l_")),
+                        new CharNode(CharClass.FromUndelimitedCharClassText("\\l\\d_")),
+                    },
+                    nexts: new [] { 0, 1, 1, 1 },
+                    startNodes: new [] { 0 },
+                    endNodes: new [] { 0, 1 },
+                    directives: new [] { DefinitionDirective.Atomic }
+                );
+            var grammar = new Grammar {
+                Definitions = {
+                    new Definition(
+                        name: "expr",
+                        nodes: new Node[] {
+                            new DefRefNode(operandDef),
+                            new CharNode('+'),
+                            new DefRefNode(operandDef),
+                        },
+                        nexts: new [] { 0, 1, 1, 2 },
+                        startNodes: new [] { 0 },
+                        endNodes: new [] { 2 }
+                    ),
+                    operandDef
+                }
+            };
+            return grammar;
+        }
+
         [Test]
         public void TestEndOfInputParameter1()
         {
-            string grammarText =
-                "expr = operand '+' operand;\n" +
-                "<atomic> operand = [\\l_] [\\l\\d_]*;";
+            // setup
+
+            //expr = operand '+' operand;
+            //<atomic> operand = [\l_] [\l\d_]*;
+
+            var grammar = CreateGrammarForTestEndOfInputParameter();
 
             var errors = new List<Error>();
-            Grammar grammar = (new SupergrammarSpanner()).GetGrammar(grammarText, errors);
-            Assert.IsEmpty(errors);
 
             var exprDef = grammar.FindDefinitionByName("expr");
             Spanner spanner = new Spanner(exprDef);
@@ -298,12 +560,12 @@ namespace MetaphysicsIndustries.Giza.Test
             bool endOfInput;
             InputPosition endOfInputPosition;
 
-
+            // action
             var tokens = spanner.Match(input.ToCharacterSource(), errors,
                                        out endOfInput, out endOfInputPosition,
                                        mustUseAllInput: false, startIndex: 5);
 
-
+            // assertions
             Assert.IsTrue(endOfInput);
             Assert.IsNotNull(tokens);
             Assert.IsEmpty(tokens);
@@ -315,13 +577,14 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestEndOfInputParameter2()
         {
-            string grammarText =
-                "expr = operand '+' operand;\n" +
-                "<atomic> operand = [\\l_] [\\l\\d_]*;";
+            // setup
+
+            //expr = operand '+' operand;
+            //<atomic> operand = [\l_] [\l\d_]*;
+
+            var grammar = CreateGrammarForTestEndOfInputParameter();
 
             var errors = new List<Error>();
-            Grammar grammar = (new SupergrammarSpanner()).GetGrammar(grammarText, errors);
-            Assert.IsEmpty(errors);
 
             var exprDef = grammar.FindDefinitionByName("expr");
             Spanner spanner = new Spanner(exprDef);
@@ -346,13 +609,14 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestEndOfInputParameter3()
         {
-            string grammarText =
-                "expr = operand '+' operand;\n" +
-                "<atomic> operand = [\\l_] [\\l\\d_]*;";
+            // setup
+
+            //expr = operand '+' operand;
+            //<atomic> operand = [\l_] [\l\d_]*;
+
+            var grammar = CreateGrammarForTestEndOfInputParameter();
 
             var errors = new List<Error>();
-            Grammar grammar = (new SupergrammarSpanner()).GetGrammar(grammarText, errors);
-            Assert.IsEmpty(errors);
 
             var exprDef = grammar.FindDefinitionByName("expr");
             Spanner spanner = new Spanner(exprDef);
@@ -378,23 +642,87 @@ namespace MetaphysicsIndustries.Giza.Test
         public void TestEndDefAtLastCharacter()
         {
             // setup
-            string testGrammarText =
-                "<mind whitespace> format = ( text | param )+; \r\n" +
-                "<atomic, mind whitespace> text = [^{}]+ ; \r\n" +
-                "<mind whitespace> param = '{' [\\s]* name [\\s]* '}' ; \r\n" +
-                "<mind whitespace> name = [\\l_] [\\l\\d]* ; \r\n";
+            //<mind whitespace> format = ( text | param )+;
+            //<atomic, mind whitespace> text = [^{}]+ ;
+            //<mind whitespace> param = '{' [\s]* name [\s]* '}' ;
+            //<mind whitespace> name = [\l_] [\l\d]* ;
+
+            var nameDef =
+                new Definition(
+                    name: "name",
+                    nodes: new [] {
+                        new CharNode(CharClass.FromUndelimitedCharClassText("\\l_")),
+                        new CharNode(CharClass.FromUndelimitedCharClassText("\\l\\d")),
+                    },
+                    nexts: new [] { 0, 1, 1, 1 },
+                    startNodes: new [] { 0 },
+                    endNodes: new [] { 0, 1 },
+                    directives: new [] {
+                        DefinitionDirective.MindWhitespace
+                    }
+                );
+            var paramDef =
+                new Definition(
+                    name: "param",
+                    nodes: new Node[] {
+                        new CharNode('{'),
+                        new CharNode(CharClass.FromUndelimitedCharClassText("\\s")),
+                        new DefRefNode(nameDef),
+                        new CharNode(CharClass.FromUndelimitedCharClassText("\\s")),
+                        new CharNode('}'),
+                    },
+                    nexts: new [] {
+                        0, 1,
+                        1, 1,
+                        1, 2,
+                        2, 3,
+                        3, 3,
+                        3, 4,
+                        0, 2,
+                        2, 4,
+                    },
+                    startNodes: new [] { 0 },
+                    endNodes: new [] { 4 },
+                    directives: new [] {
+                        DefinitionDirective.MindWhitespace
+                    }
+                );
+            var textDef =
+                new Definition(
+                    name: "text",
+                    nodes: new [] { new CharNode(CharClass.FromUndelimitedCharClassText("^{}")) },
+                    nexts: new [] { 0, 0 },
+                    startNodes: new [] { 0 },
+                    endNodes: new [] { 0 },
+                    directives: new [] {
+                        DefinitionDirective.Atomic,
+                        DefinitionDirective.MindWhitespace
+                    }
+                );
+            var formatDef =
+                new Definition(
+                    name: "format",
+                    nodes: new [] {
+                        new DefRefNode(textDef),
+                        new DefRefNode(paramDef),
+                    },
+                    nexts: new [] { 0, 0, 0, 1, 1, 1, 1, 0 },
+                    startNodes: new [] { 0, 1 },
+                    endNodes: new [] { 0, 1 },
+                    directives: new [] {
+                        DefinitionDirective.MindWhitespace
+                    }
+                );
+            var grammar = new Grammar(formatDef, textDef, paramDef, nameDef);
+
             string testInput = "leading {delimited}x";
             var errors = new List<Error>();
-            var grammar = (new SupergrammarSpanner()).GetGrammar(testGrammarText, errors);
-            Assert.IsEmpty(errors);
-            var formatDef = grammar.FindDefinitionByName("format");
-            var textDef = grammar.FindDefinitionByName("text");
-            var paramDef = grammar.FindDefinitionByName("param");
-            var nameDef = grammar.FindDefinitionByName("name");
-            var spanner = new Spanner(formatDef);
+            var spanner = new Spanner(grammar.FindDefinitionByName("format"));
 
+            // action
             var spans = spanner.Process(testInput.ToCharacterSource(), errors);
 
+            // assertions
             Assert.IsNotNull(errors);
             Assert.AreEqual(0, errors.Count);
             Assert.IsNotNull(spans);
@@ -436,14 +764,68 @@ namespace MetaphysicsIndustries.Giza.Test
                 "line1,fielda,fieldb\n"+
                 "line2,fielda,fieldb,fieldc\n"+
                 "line3,fielda,fieldb\n";
-            var grammar =
-                "<mind whitespace, atomic>\nfile = record (('\\r'? '\\n')+ record?)* ;\n\n" +
-                "<mind whitespace>\nrecord = field (',' field?)* ;\n\n" +
-                "<mind whitespace>\nfield = [\\d\\l]+;\n\n";
+
+            //<mind whitespace, atomic> file = record (('\r'? '\n')+ record?)* ;
+            //<mind whitespace> record = field (',' field?)* ;
+            //<mind whitespace> field = [\d\l]+;
+
+            var fieldDef =
+                new Definition(
+                    name: "field",
+                    nodes: new [] {
+                        new CharNode(CharClass.FromUndelimitedCharClassText("\\d\\l"))
+                    },
+                    nexts: new [] { 0, 0 },
+                    startNodes: new [] { 0 },
+                    endNodes: new [] { 0 },
+                    directives: new [] {
+                        DefinitionDirective.MindWhitespace
+                    }
+                );
+            var recordDef =
+                new Definition(
+                    name: "record",
+                    nodes: new Node[] {
+                        new DefRefNode(fieldDef),
+                        new CharNode(','),
+                        new DefRefNode(fieldDef),
+                    },
+                    nexts: new [] { 0, 1, 1, 1, 1, 2, 2, 1 },
+                    startNodes: new [] { 0 },
+                    endNodes: new [] { 0, 1, 2 },
+                    directives: new [] {
+                        DefinitionDirective.MindWhitespace
+                    }
+                );
+            var fileDef =
+                new Definition(
+                    name: "file",
+                    nodes: new Node[] {
+                        new DefRefNode(recordDef),
+                        new CharNode('\r', "\r"),
+                        new CharNode('\n', "\n"),
+                        new DefRefNode(recordDef),
+                    },
+                    nexts: new [] {
+                        0, 1,
+                        0, 2,
+                        1, 2,
+                        2, 1,
+                        2, 2,
+                        2, 3,
+                        3, 1,
+                        3, 2,
+                    },
+                    startNodes: new [] { 0 },
+                    endNodes: new [] { 0, 2, 3 },
+                    directives: new [] {
+                        DefinitionDirective.MindWhitespace,
+                        DefinitionDirective.Atomic
+                    }
+                );
+            var grammar = new Grammar(fileDef, recordDef, fieldDef);
             var errors = new List<Error>();
-            var g = (new SupergrammarSpanner()).GetGrammar(grammar, errors);
-            Assert.IsEmpty(errors);
-            var spanner = new Spanner(g.FindDefinitionByName("file"));
+            var spanner = new Spanner(grammar.FindDefinitionByName("file"));
 
             // action
             var spans = spanner.Process(input.ToCharacterSource(), errors);
