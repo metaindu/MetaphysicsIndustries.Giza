@@ -11,12 +11,15 @@ namespace MetaphysicsIndustries.Giza.Test
         public void TestImplicitLiteral()
         {
             // setup
-            string testGrammarText = "def = 'value';";
-            var sgs = new SupergrammarSpanner();
-            var errors = new List<Error>();
-            var dis = sgs.GetExpressions(testGrammarText, errors);
-            Assert.IsNotNull(errors);
-            Assert.IsEmpty(errors);
+            //def = 'value';
+            var dis = new [] {
+                new DefinitionExpression(
+                    name: "def",
+                    items: new [] {
+                        new LiteralSubExpression(value: "value")
+                    }
+                )
+            };
             var tgb = new TokenizedGrammarBuilder();
 
 
@@ -66,12 +69,15 @@ namespace MetaphysicsIndustries.Giza.Test
         public void TestImplicitCharClass()
         {
             // setup
-            string testGrammarText = "def = [\\d];";
-            var sgs = new SupergrammarSpanner();
-            var errors = new List<Error>();
-            var dis = sgs.GetExpressions(testGrammarText, errors);
-            Assert.IsNotNull(errors);
-            Assert.IsEmpty(errors);
+            //"def = [\\d];
+            var dis = new [] {
+                new DefinitionExpression(
+                    name: "def",
+                    items: new [] {
+                        new CharClassSubExpression(charClass: CharClass.FromUndelimitedCharClassText("\\d"))
+                    }
+                )
+            };
             var tgb = new TokenizedGrammarBuilder();
 
 
@@ -121,12 +127,18 @@ namespace MetaphysicsIndustries.Giza.Test
         public void TestImplicitIgnoreCaseLiteral()
         {
             // setup
-            string testGrammarText = "<ignore case> def = 'value';";
-            var sgs = new SupergrammarSpanner();
-            var errors = new List<Error>();
-            var dis = sgs.GetExpressions(testGrammarText, errors);
-            Assert.IsNotNull(errors);
-            Assert.IsEmpty(errors);
+            //<ignore case> def = 'value';
+            var dis = new [] {
+                new DefinitionExpression(
+                    name: "def",
+                    items: new [] {
+                        new LiteralSubExpression(value: "value")
+                    },
+                    directives: new [] {
+                        DefinitionDirective.IgnoreCase
+                    }
+                )
+            };
             var tgb = new TokenizedGrammarBuilder();
 
 
@@ -177,12 +189,19 @@ namespace MetaphysicsIndustries.Giza.Test
         public void TestImplicitIgnoreCaseCharClass()
         {
             // setup
-            string testGrammarText = "<ignore case> def = [\\d];";
-            var sgs = new SupergrammarSpanner();
-            var errors = new List<Error>();
-            var dis = sgs.GetExpressions(testGrammarText, errors);
-            Assert.IsNotNull(errors);
-            Assert.IsEmpty(errors);
+            //<ignore case> def = [\\d];
+
+            var dis = new [] {
+                new DefinitionExpression(
+                    name: "def",
+                    items: new [] {
+                        new CharClassSubExpression(charClass: CharClass.FromUndelimitedCharClassText("\\d"))
+                    },
+                    directives: new [] {
+                        DefinitionDirective.IgnoreCase
+                    }
+                )
+            };
             var tgb = new TokenizedGrammarBuilder();
 
 
@@ -233,12 +252,25 @@ namespace MetaphysicsIndustries.Giza.Test
         public void TestNonTokenWithoutDirectives()
         {
             // setup
-            string testGrammarText = "def = token; <token> token = 'token'; ";
-            var sgs = new SupergrammarSpanner();
-            var errors = new List<Error>();
-            var dis = sgs.GetExpressions(testGrammarText, errors);
-            Assert.IsNotNull(errors);
-            Assert.IsEmpty(errors);
+            //def = token;
+            //<token> token = 'token';
+            var dis = new [] {
+                new DefinitionExpression(
+                    name: "def",
+                    items: new [] {
+                        new DefRefSubExpression("token")
+                    }
+                ),
+                new DefinitionExpression(
+                    name: "token",
+                    items: new [] {
+                        new LiteralSubExpression("token")
+                    },
+                    directives: new [] {
+                        DefinitionDirective.Token
+                    }
+                )
+            };
             var tgb = new TokenizedGrammarBuilder();
 
 
@@ -270,12 +302,18 @@ namespace MetaphysicsIndustries.Giza.Test
         public void TestTokenDirective()
         {
             // setup
-            string testGrammarText = "<token> something = 'value'; ";
-            var sgs = new SupergrammarSpanner();
-            var errors = new List<Error>();
-            var dis = sgs.GetExpressions(testGrammarText, errors);
-            Assert.IsNotNull(errors);
-            Assert.IsEmpty(errors);
+            //<token> something = 'value';
+            var dis = new [] {
+                new DefinitionExpression(
+                    name: "something",
+                    directives: new [] {
+                        DefinitionDirective.Token
+                    },
+                    items: new [] {
+                        new LiteralSubExpression("value")
+                    }
+                )
+            };
             var tgb = new TokenizedGrammarBuilder();
 
 
@@ -310,12 +348,18 @@ namespace MetaphysicsIndustries.Giza.Test
         public void TestSubtokenDirective()
         {
             // setup
-            string testGrammarText = "<subtoken> something = 'value'; ";
-            var sgs = new SupergrammarSpanner();
-            var errors = new List<Error>();
-            var dis = sgs.GetExpressions(testGrammarText, errors);
-            Assert.IsNotNull(errors);
-            Assert.IsEmpty(errors);
+            //<subtoken> something = 'value';
+            var dis = new [] {
+                new DefinitionExpression(
+                    name: "something",
+                    directives: new [] {
+                        DefinitionDirective.Subtoken
+                    },
+                    items: new [] {
+                        new LiteralSubExpression("value")
+                    }
+                )
+            };
             var tgb = new TokenizedGrammarBuilder();
 
 
@@ -349,12 +393,18 @@ namespace MetaphysicsIndustries.Giza.Test
         public void TestCommentDirective()
         {
             // setup
-            string testGrammarText = "<comment> something = 'value'; ";
-            var sgs = new SupergrammarSpanner();
-            var errors = new List<Error>();
-            var dis = sgs.GetExpressions(testGrammarText, errors);
-            Assert.IsNotNull(errors);
-            Assert.IsEmpty(errors);
+            //<comment> something = 'value';
+            var dis = new [] {
+                new DefinitionExpression(
+                    name: "something",
+                    directives: new [] {
+                        DefinitionDirective.Comment
+                    },
+                    items: new [] {
+                        new LiteralSubExpression("value")
+                    }
+                )
+            };
             var tgb = new TokenizedGrammarBuilder();
 
 
@@ -389,12 +439,28 @@ namespace MetaphysicsIndustries.Giza.Test
         public void TestAtomicDirectiveInNonToken()
         {
             // setup
-            string testGrammarText = "<atomic> def = token; <token> token = 'token'; ";
-            var sgs = new SupergrammarSpanner();
-            var errors = new List<Error>();
-            var dis = sgs.GetExpressions(testGrammarText, errors);
-            Assert.IsNotNull(errors);
-            Assert.IsEmpty(errors);
+            //<atomic> def = token;
+            //<token> token = 'token';
+            var dis = new [] {
+                new DefinitionExpression(
+                    name: "def",
+                    directives: new [] {
+                        DefinitionDirective.Atomic,
+                    },
+                    items: new [] {
+                        new DefRefSubExpression("token")
+                    }
+                ),
+                new DefinitionExpression(
+                    name: "token",
+                    directives: new [] {
+                        DefinitionDirective.Token,
+                    },
+                    items: new [] {
+                        new LiteralSubExpression("token")
+                    }
+                )
+            };
             var tgb = new TokenizedGrammarBuilder();
 
 
@@ -426,12 +492,19 @@ namespace MetaphysicsIndustries.Giza.Test
         public void TestAtomicDirectiveInToken()
         {
             // setup
-            string testGrammarText = "<token, atomic> something = 'value'; ";
-            var sgs = new SupergrammarSpanner();
-            var errors = new List<Error>();
-            var dis = sgs.GetExpressions(testGrammarText, errors);
-            Assert.IsNotNull(errors);
-            Assert.IsEmpty(errors);
+            //<token, atomic> something = 'value';
+            var dis = new [] {
+                new DefinitionExpression(
+                    name: "something",
+                    directives: new [] {
+                        DefinitionDirective.Token,
+                        DefinitionDirective.Atomic
+                    },
+                    items: new [] {
+                        new LiteralSubExpression("value")
+                    }
+                )
+            };
             var tgb = new TokenizedGrammarBuilder();
 
 
@@ -466,12 +539,19 @@ namespace MetaphysicsIndustries.Giza.Test
         public void TestAtomicDirectiveInSubtoken()
         {
             // setup
-            string testGrammarText = "<subtoken, atomic> something = 'value'; ";
-            var sgs = new SupergrammarSpanner();
-            var errors = new List<Error>();
-            var dis = sgs.GetExpressions(testGrammarText, errors);
-            Assert.IsNotNull(errors);
-            Assert.IsEmpty(errors);
+            //<subtoken, atomic> something = 'value';
+            var dis = new [] {
+                new DefinitionExpression(
+                    name: "something",
+                    directives: new [] {
+                        DefinitionDirective.Subtoken,
+                        DefinitionDirective.Atomic
+                    },
+                    items: new [] {
+                        new LiteralSubExpression("value")
+                    }
+                )
+            };
             var tgb = new TokenizedGrammarBuilder();
 
 
@@ -506,12 +586,19 @@ namespace MetaphysicsIndustries.Giza.Test
         public void TestAtomicDirectiveInComment()
         {
             // setup
-            string testGrammarText = "<comment, atomic> something = 'value'; ";
-            var sgs = new SupergrammarSpanner();
-            var errors = new List<Error>();
-            var dis = sgs.GetExpressions(testGrammarText, errors);
-            Assert.IsNotNull(errors);
-            Assert.IsEmpty(errors);
+            //<comment, atomic> something = 'value';
+            var dis = new [] {
+                new DefinitionExpression(
+                    name: "something",
+                    directives: new [] {
+                        DefinitionDirective.Comment,
+                        DefinitionDirective.Atomic
+                    },
+                    items: new [] {
+                        new LiteralSubExpression("value")
+                    }
+                )
+            };
             var tgb = new TokenizedGrammarBuilder();
 
 
