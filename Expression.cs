@@ -5,6 +5,14 @@ namespace MetaphysicsIndustries.Giza
 {
     public class Expression
     {
+        public Expression(IEnumerable<ExpressionItem> items=null)
+        {
+            if (items != null)
+            {
+                Items.AddRange(items);
+            }
+        }
+
         public readonly List<ExpressionItem> Items = new List<ExpressionItem>();
 
         public IEnumerable<DefRefSubExpression> EnumerateDefRefs()
