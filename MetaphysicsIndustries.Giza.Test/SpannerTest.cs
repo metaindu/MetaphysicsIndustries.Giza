@@ -363,7 +363,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
             var tokens = spanner.Match(input.ToCharacterSource(), errors,
                                        out endOfInput, out endOfInputPosition,
-                                       mustUseAllInput: false, startIndex: 5);
+                                       mustUseAllInput: false, startIndex: 6);
 
 
             Assert.IsTrue(endOfInput);
