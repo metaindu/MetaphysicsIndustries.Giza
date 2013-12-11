@@ -8,15 +8,65 @@ namespace MetaphysicsIndustries.Giza
 {
     public class Definition
     {
-        public Definition()
-            : this(string.Empty)
+        public Definition(
+            string name="",
+            Node[] nodes=null,
+            int[] nexts=null,
+            int[] startNodes=null,
+            int[] endNodes=null,
+            DefinitionDirective[] directives=null)
         {
-        }
-        public Definition(string name)
-        {
+            Nodes = new DefinitionNodeOrderedParentChildrenCollection(this);
+
             Name = name;
 
-            Nodes = new DefinitionNodeOrderedParentChildrenCollection(this);
+            if (nodes != null)
+            {
+                Nodes.AddRange(nodes);
+
+                if (nexts != null)
+                {
+                    int i;
+                    for (i = 0; i < nexts.Length; i += 2)
+                    {
+                        int from = nexts[i];
+                        int to = nexts[i + 1];
+
+                        if (from < nodes.Length &&
+                            to < nodes.Length)
+                        {
+                            nodes[from].NextNodes.Add(nodes[to]);
+                        }
+                    }
+                }
+
+                if (startNodes != null)
+                {
+                    foreach (var i in startNodes)
+                    {
+                        if (i < nodes.Length)
+                        {
+                            StartNodes.Add(nodes[i]);
+                        }
+                    }
+                }
+
+                if (endNodes != null)
+                {
+                    foreach (var i in endNodes)
+                    {
+                        if (i < nodes.Length)
+                        {
+                            EndNodes.Add(nodes[i]);
+                        }
+                    }
+                }
+            }
+
+            if (directives != null)
+            {
+                Directives.AddRange(directives);
+            }
         }
 
         public string Name;
