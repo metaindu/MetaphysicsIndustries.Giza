@@ -724,8 +724,6 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
             var tgb = new TokenizedGrammarBuilder();
             Grammar testGrammar = tgb.BuildTokenizedGrammar(dis);
-            var oparenDef = testGrammar.FindDefinitionByName("$implicit literal (");
-            var sequenceDef = testGrammar.FindDefinitionByName("sequence");
             var parser = new Parser(testGrammar.FindDefinitionByName("sequence"));
 
             Span[] spans = parser.Parse(testInput.ToCharacterSource(), errors);
@@ -861,8 +859,6 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
             var tgb = new TokenizedGrammarBuilder();
             var testGrammar = tgb.BuildTokenizedGrammar(dis);
-            var oparenDef = testGrammar.FindDefinitionByName("$implicit literal (");
-            var sequenceDef = testGrammar.FindDefinitionByName("sequence");
             var parser = new Parser(testGrammar.FindDefinitionByName("sequence"));
 
             Span[] spans = parser.Parse(testInput.ToCharacterSource(), errors);
