@@ -2,14 +2,22 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
+using System.Linq;
 
 namespace MetaphysicsIndustries.Giza
 {
     public class Span
     {
-        public Span()
+        public Span(Node node=null, string value=null, params Span[] subspans)
         {
             _subspans = new SpanSpanOrderedParentChildrenCollection(this);
+
+            Node = node;
+            Value = value;
+            if (subspans != null)
+            {
+                Subspans.AddRange(subspans);
+            }
         }
 
         private SpanSpanOrderedParentChildrenCollection _subspans;
