@@ -1,13 +1,23 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MetaphysicsIndustries.Giza
 {
     public class Grammar
     {
-        public Grammar()
+        public Grammar(params Definition[] definitions)
+            : this((IEnumerable<Definition>)definitions)
+        {
+        }
+        public Grammar(IEnumerable<Definition> definitions=null)
         {
             _definitions = new GrammarDefinitionOrderedParentChildrenCollection(this);
+
+            if (definitions != null)
+            {
+                Definitions.AddRange(definitions);
+            }
         }
 
         private GrammarDefinitionOrderedParentChildrenCollection _definitions;
