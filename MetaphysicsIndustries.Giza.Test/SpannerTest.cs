@@ -428,6 +428,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual("x", s2.CollectValue());
         }
 
+        [Ignore("Will not fix")]
         public void TestAmbiguityAtEndOfAtomicDef()
         {
             // setup
