@@ -16,6 +16,17 @@ namespace MetaphysicsIndustries.Giza
             int[] endNodes=null,
             DefinitionDirective[] directives=null)
         {
+            Init(name, nodes, nexts, startNodes, endNodes, directives);
+        }
+
+        public void Init(
+            string name="",
+            Node[] nodes=null,
+            int[] nexts=null,
+            int[] startNodes=null,
+            int[] endNodes=null,
+            DefinitionDirective[] directives=null)
+        {
             Nodes = new DefinitionNodeOrderedParentChildrenCollection(this);
 
             Name = name;
