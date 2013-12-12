@@ -5,6 +5,10 @@ namespace MetaphysicsIndustries.Giza
 {
     public class Expression
     {
+        public Expression(params ExpressionItem[] items)
+            : this((IEnumerable<ExpressionItem>)items)
+        {
+        }
         public Expression(IEnumerable<ExpressionItem> items=null)
         {
             if (items != null)
