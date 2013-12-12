@@ -118,6 +118,9 @@ namespace MetaphysicsIndustries.Giza
             sources.Enqueue(pair(root, null), -1);
 //            Logger.WriteLine("Starting");
 
+            var endCandidatesByIndex = new Dictionary<int, Set<NodeMatch<T>>>();
+            var branchTipsByIndex = new Dictionary<int, Set<NodeMatchStackPair<T>>>();
+
             while (sources.Count > 0)
             {
 
@@ -125,23 +128,33 @@ namespace MetaphysicsIndustries.Giza
                 while (sources.Count > 0)
                 {
                     var sourcepair = sources.Dequeue();
-
+                    var source = sourcepair.NodeMatch;
+                    int index = sourcepair.NodeMatch.InputElement.IndexOfNextElement;
                     var info = GetParseInfoFromSource(sourcepair);
+                    var endCandidate = info.EndCandidate;
+                    var branches = info.Branches;
 
-                    if (info.EndCandidate != null)
+
+                    if (endCandidate != null)
                     {
-                        ends.Add(info.EndCandidate);
+                        ends.Add(endCandidate);
+                        endCandidatesByIndex.AddToSet(index, endCandidate);
+                    }
+
+                    foreach (var branchTip in branches)
+                    {
+                        branchTipsByIndex.AddToSet(index, branchTip);
                     }
 
                     //get all input elements and errors and end-of-input, starting at end of source's element
-                    var inputElementSet = inputSource.GetInputAtLocation(info.Source.InputElement.IndexOfNextElement);
+                    var inputElementSet = inputSource.GetInputAtLocation(index);
 
                     //if we get any errors, process them and reject
                     if (inputElementSet.Errors.ContainsNonWarnings())
                     {
                         //reject branches with errors
 
-                        foreach (var branch in info.Branches)
+                        foreach (var branch in branches)
                         {
                             rejects.Add(branch.NodeMatch, inputElementSet.Errors);
                         }
@@ -152,11 +165,11 @@ namespace MetaphysicsIndustries.Giza
                     {
                         var err = new ParserError<T> {
                             ErrorType = ParserError.UnexpectedEndOfInput,
-                            LastValidMatchingNode = info.Source.Node,
+                            LastValidMatchingNode = source.Node,
                             ExpectedNodes = info.GetExpectedNodes(),
                             Position = inputElementSet.EndOfInputPosition,
                         };
-                        foreach (var branch in info.Branches)
+                        foreach (var branch in branches)
                         {
                             rejects.Add(branch.NodeMatch, err);
                         }
@@ -167,20 +180,20 @@ namespace MetaphysicsIndustries.Giza
 
                         var err = new ParserError<T> {
                             ErrorType = ParserError.ExcessRemainingInput,
-                            LastValidMatchingNode = info.Source.Node,
+                            LastValidMatchingNode = source.Node,
                             Position = offendingInputElement.Position,
                             OffendingInputElement = offendingInputElement,
                         };
 
                         RejectEndCandidate(info, rejects, ends, err);
 
-                        foreach (var branch in info.Branches)
+                        foreach (var branch in branches)
                         {
                             branches2.Enqueue(new Tuple<NodeMatch<T> , MatchStack<T> , ParseInfo>(
                                 branch.NodeMatch,
                                 branch.MatchStack,
                                 info),
-                                info.Source.InputElement.IndexOfNextElement);
+                                source.InputElement.IndexOfNextElement);
                         }
                     }
                 }
