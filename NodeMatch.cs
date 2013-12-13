@@ -16,7 +16,17 @@ namespace MetaphysicsIndustries.Giza
         public readonly int _id;
 
         public NodeMatch<T> StartDef;
-        public T InputElement;
+        public bool HasMatchedInput { get; protected set; }
+        T _inputElement;
+        public T InputElement
+        {
+            get { return _inputElement; }
+            set
+            {
+                _inputElement = value;
+                HasMatchedInput = true;
+            }
+        }
         public TransitionType Transition;
         public Node Node;
 
@@ -26,8 +36,7 @@ namespace MetaphysicsIndustries.Giza
         {
             get
              {
-                if (!string.IsNullOrEmpty(InputElement.Value) &&
-                         InputElement.Value != "\0")
+                if (HasMatchedInput)
                 {
                     return InputElement.Position;
                 }
@@ -112,7 +121,7 @@ namespace MetaphysicsIndustries.Giza
             else if (Node is DefRefNode) nodestr = (Node as DefRefNode).DefRef.Name;
             else nodestr = "<unknown>";
 
-            if (!string.IsNullOrEmpty(InputElement.Value))
+            if (HasMatchedInput)
             {
                 return string.Format("[{0}] {1}:{2}, {3} nm nexts, input element '{4}' as {{unknown definition}}",
                                      _id,
