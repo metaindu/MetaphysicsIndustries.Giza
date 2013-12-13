@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Giza
 {
@@ -84,16 +85,21 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        public InputChar Peek()
+        public InputElementSet<InputChar> Peek()
         {
-            return new InputChar(this[CurrentPosition.Index], CurrentPosition);
+            return new InputElementSet<InputChar> {
+                EndOfInput = false,
+                EndOfInputPosition = new InputPosition(-1),
+                Errors = new List<Error>(),
+                InputElements = new [] { new InputChar(this[CurrentPosition.Index], CurrentPosition) }
+            };
         }
 
-        public InputChar GetNextValue()
+        public InputElementSet<InputChar> GetNextValue()
         {
-            InputChar ch = Peek();
+            InputElementSet<InputChar> ies = Peek();
             SetCurrentIndex(CurrentPosition.Index + 1);
-            return ch;
+            return ies;
         }
 
         public bool IsAtEnd

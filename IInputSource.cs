@@ -13,8 +13,8 @@ namespace MetaphysicsIndustries.Giza
 
         // stream access
         InputPosition CurrentPosition { get; }
-        InputChar Peek();
-        InputChar GetNextValue();
+        InputElementSet<T> Peek();
+        InputElementSet<T> GetNextValue();
         bool IsAtEnd { get; }
     }
 }

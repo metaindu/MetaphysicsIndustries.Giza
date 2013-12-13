@@ -1,5 +1,6 @@
 using System;
 using NUnit.Framework;
+using System.Linq;
 
 namespace MetaphysicsIndustries.Giza.Test
 {
@@ -18,9 +19,22 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(0, cs.CurrentPosition.Index);
             Assert.AreEqual(1, cs.CurrentPosition.Line);
             Assert.AreEqual(1, cs.CurrentPosition.Column);
-            Assert.AreEqual('O', cs.Peek().Value);
+            var ies = cs.Peek();
+            Assert.IsFalse(ies.EndOfInput);
+            Assert.IsNotNull(ies.Errors);
+            Assert.IsEmpty(ies.Errors);
+            Assert.IsNotNull(ies.InputElements);
+            Assert.AreEqual(1, ies.InputElements.Count());
+            Assert.AreEqual(cs.CurrentPosition, ies.InputElements.First().Position);
+            Assert.AreEqual('O', ies.InputElements.First().Value);
 
-            var ch = cs.GetNextValue();
+            ies = cs.GetNextValue();
+            Assert.IsFalse(ies.EndOfInput);
+            Assert.IsNotNull(ies.Errors);
+            Assert.IsEmpty(ies.Errors);
+            Assert.IsNotNull(ies.InputElements);
+            Assert.AreEqual(1, ies.InputElements.Count());
+            var ch = ies.InputElements.First();
 
             Assert.AreEqual(0, ch.Position.Index);
             Assert.AreEqual(1, ch.Position.Line);
@@ -30,51 +44,100 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(1, cs.CurrentPosition.Index);
             Assert.AreEqual(1, cs.CurrentPosition.Line);
             Assert.AreEqual(2, cs.CurrentPosition.Column);
-            Assert.AreEqual('n', cs.Peek().Value);
+            ies = cs.Peek();
+            Assert.IsFalse(ies.EndOfInput);
+            Assert.IsNotNull(ies.Errors);
+            Assert.IsEmpty(ies.Errors);
+            Assert.IsNotNull(ies.InputElements);
+            Assert.AreEqual(1, ies.InputElements.Count());
+            Assert.AreEqual(cs.CurrentPosition, ies.InputElements.First().Position);
+            Assert.AreEqual('n', ies.InputElements.First().Value);
 
-            ch = cs.GetNextValue();
+            ies = cs.GetNextValue();
+            Assert.IsFalse(ies.EndOfInput);
+            Assert.IsNotNull(ies.Errors);
+            Assert.IsEmpty(ies.Errors);
+            Assert.IsNotNull(ies.InputElements);
+            Assert.AreEqual(1, ies.InputElements.Count());
+            ch = ies.InputElements.First();
 
             Assert.AreEqual(1, ch.Position.Index);
             Assert.AreEqual(1, ch.Position.Line);
             Assert.AreEqual(2, ch.Position.Column);
             Assert.AreEqual('n', ch.Value);
 
-            ch = cs.GetNextValue();
+            ies = cs.GetNextValue();
+            Assert.IsFalse(ies.EndOfInput);
+            Assert.IsNotNull(ies.Errors);
+            Assert.IsEmpty(ies.Errors);
+            Assert.IsNotNull(ies.InputElements);
+            Assert.AreEqual(1, ies.InputElements.Count());
+            ch = ies.InputElements.First();
 
             Assert.AreEqual(2, ch.Position.Index);
             Assert.AreEqual(1, ch.Position.Line);
             Assert.AreEqual(3, ch.Position.Column);
             Assert.AreEqual('e', ch.Value);
 
-            ch = cs.GetNextValue();
+            ies = cs.GetNextValue();
+            Assert.IsFalse(ies.EndOfInput);
+            Assert.IsNotNull(ies.Errors);
+            Assert.IsEmpty(ies.Errors);
+            Assert.IsNotNull(ies.InputElements);
+            Assert.AreEqual(1, ies.InputElements.Count());
+            ch = ies.InputElements.First();
 
             Assert.AreEqual(3, ch.Position.Index);
             Assert.AreEqual(1, ch.Position.Line);
             Assert.AreEqual(4, ch.Position.Column);
             Assert.AreEqual(' ', ch.Value);
 
-            ch = cs.GetNextValue();
+            ies = cs.GetNextValue();
+            Assert.IsFalse(ies.EndOfInput);
+            Assert.IsNotNull(ies.Errors);
+            Assert.IsEmpty(ies.Errors);
+            Assert.IsNotNull(ies.InputElements);
+            Assert.AreEqual(1, ies.InputElements.Count());
+            ch = ies.InputElements.First();
 
             Assert.AreEqual(4, ch.Position.Index);
             Assert.AreEqual(1, ch.Position.Line);
             Assert.AreEqual(5, ch.Position.Column);
             Assert.AreEqual('t', ch.Value);
 
-            ch = cs.GetNextValue();
+            ies = cs.GetNextValue();
+            Assert.IsFalse(ies.EndOfInput);
+            Assert.IsNotNull(ies.Errors);
+            Assert.IsEmpty(ies.Errors);
+            Assert.IsNotNull(ies.InputElements);
+            Assert.AreEqual(1, ies.InputElements.Count());
+            ch = ies.InputElements.First();
 
             Assert.AreEqual(5, ch.Position.Index);
             Assert.AreEqual(1, ch.Position.Line);
             Assert.AreEqual(6, ch.Position.Column);
             Assert.AreEqual('w', ch.Value);
 
-            ch = cs.GetNextValue();
+            ies = cs.GetNextValue();
+            Assert.IsFalse(ies.EndOfInput);
+            Assert.IsNotNull(ies.Errors);
+            Assert.IsEmpty(ies.Errors);
+            Assert.IsNotNull(ies.InputElements);
+            Assert.AreEqual(1, ies.InputElements.Count());
+            ch = ies.InputElements.First();
 
             Assert.AreEqual(6, ch.Position.Index);
             Assert.AreEqual(1, ch.Position.Line);
             Assert.AreEqual(7, ch.Position.Column);
             Assert.AreEqual('o', ch.Value);
 
-            ch = cs.GetNextValue();
+            ies = cs.GetNextValue();
+            Assert.IsFalse(ies.EndOfInput);
+            Assert.IsNotNull(ies.Errors);
+            Assert.IsEmpty(ies.Errors);
+            Assert.IsNotNull(ies.InputElements);
+            Assert.AreEqual(1, ies.InputElements.Count());
+            ch = ies.InputElements.First();
 
             Assert.AreEqual(7, ch.Position.Index);
             Assert.AreEqual(1, ch.Position.Line);
@@ -84,9 +147,22 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(8, cs.CurrentPosition.Index);
             Assert.AreEqual(1, cs.CurrentPosition.Line);
             Assert.AreEqual(9, cs.CurrentPosition.Column);
-            Assert.AreEqual('\n', cs.Peek().Value);
+            ies = cs.Peek();
+            Assert.IsFalse(ies.EndOfInput);
+            Assert.IsNotNull(ies.Errors);
+            Assert.IsEmpty(ies.Errors);
+            Assert.IsNotNull(ies.InputElements);
+            Assert.AreEqual(1, ies.InputElements.Count());
+            Assert.AreEqual(cs.CurrentPosition, ies.InputElements.First().Position);
+            Assert.AreEqual('\n', ies.InputElements.First().Value);
 
-            ch = cs.GetNextValue();
+            ies = cs.GetNextValue();
+            Assert.IsFalse(ies.EndOfInput);
+            Assert.IsNotNull(ies.Errors);
+            Assert.IsEmpty(ies.Errors);
+            Assert.IsNotNull(ies.InputElements);
+            Assert.AreEqual(1, ies.InputElements.Count());
+            ch = ies.InputElements.First();
 
             Assert.AreEqual(8, ch.Position.Index);
             Assert.AreEqual(1, ch.Position.Line);
@@ -96,30 +172,61 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(9, cs.CurrentPosition.Index);
             Assert.AreEqual(2, cs.CurrentPosition.Line);
             Assert.AreEqual(1, cs.CurrentPosition.Column);
-            Assert.AreEqual('t', cs.Peek().Value);
+            ies = cs.Peek();
+            Assert.IsFalse(ies.EndOfInput);
+            Assert.IsNotNull(ies.Errors);
+            Assert.IsEmpty(ies.Errors);
+            Assert.IsNotNull(ies.InputElements);
+            Assert.AreEqual(1, ies.InputElements.Count());
+            Assert.AreEqual(cs.CurrentPosition, ies.InputElements.First().Position);
+            Assert.AreEqual('t', ies.InputElements.First().Value);
 
-            ch = cs.GetNextValue();
+            ies = cs.GetNextValue();
+            Assert.IsFalse(ies.EndOfInput);
+            Assert.IsNotNull(ies.Errors);
+            Assert.IsEmpty(ies.Errors);
+            Assert.IsNotNull(ies.InputElements);
+            Assert.AreEqual(1, ies.InputElements.Count());
+            ch = ies.InputElements.First();
 
             Assert.AreEqual(9, ch.Position.Index);
             Assert.AreEqual(2, ch.Position.Line);
             Assert.AreEqual(1, ch.Position.Column);
             Assert.AreEqual('t', ch.Value);
 
-            ch = cs.GetNextValue();
+            ies = cs.GetNextValue();
+            Assert.IsFalse(ies.EndOfInput);
+            Assert.IsNotNull(ies.Errors);
+            Assert.IsEmpty(ies.Errors);
+            Assert.IsNotNull(ies.InputElements);
+            Assert.AreEqual(1, ies.InputElements.Count());
+            ch = ies.InputElements.First();
 
             Assert.AreEqual(10, ch.Position.Index);
             Assert.AreEqual(2, ch.Position.Line);
             Assert.AreEqual(2, ch.Position.Column);
             Assert.AreEqual('h', ch.Value);
 
-            ch = cs.GetNextValue();
+            ies = cs.GetNextValue();
+            Assert.IsFalse(ies.EndOfInput);
+            Assert.IsNotNull(ies.Errors);
+            Assert.IsEmpty(ies.Errors);
+            Assert.IsNotNull(ies.InputElements);
+            Assert.AreEqual(1, ies.InputElements.Count());
+            ch = ies.InputElements.First();
 
             Assert.AreEqual(11, ch.Position.Index);
             Assert.AreEqual(2, ch.Position.Line);
             Assert.AreEqual(3, ch.Position.Column);
             Assert.AreEqual('r', ch.Value);
 
-            ch = cs.GetNextValue();
+            ies = cs.GetNextValue();
+            Assert.IsFalse(ies.EndOfInput);
+            Assert.IsNotNull(ies.Errors);
+            Assert.IsEmpty(ies.Errors);
+            Assert.IsNotNull(ies.InputElements);
+            Assert.AreEqual(1, ies.InputElements.Count());
+            ch = ies.InputElements.First();
 
             Assert.AreEqual(12, ch.Position.Index);
             Assert.AreEqual(2, ch.Position.Line);
@@ -129,9 +236,22 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(13, cs.CurrentPosition.Index);
             Assert.AreEqual(2, cs.CurrentPosition.Line);
             Assert.AreEqual(5, cs.CurrentPosition.Column);
-            Assert.AreEqual('e', cs.Peek().Value);
+            ies = cs.Peek();
+            Assert.IsFalse(ies.EndOfInput);
+            Assert.IsNotNull(ies.Errors);
+            Assert.IsEmpty(ies.Errors);
+            Assert.IsNotNull(ies.InputElements);
+            Assert.AreEqual(1, ies.InputElements.Count());
+            Assert.AreEqual(cs.CurrentPosition, ies.InputElements.First().Position);
+            Assert.AreEqual('e', ies.InputElements.First().Value);
 
-            ch = cs.GetNextValue();
+            ies = cs.GetNextValue();
+            Assert.IsFalse(ies.EndOfInput);
+            Assert.IsNotNull(ies.Errors);
+            Assert.IsEmpty(ies.Errors);
+            Assert.IsNotNull(ies.InputElements);
+            Assert.AreEqual(1, ies.InputElements.Count());
+            ch = ies.InputElements.First();
 
             Assert.AreEqual(13, ch.Position.Index);
             Assert.AreEqual(2, ch.Position.Line);
@@ -141,11 +261,24 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(14, cs.CurrentPosition.Index);
             Assert.AreEqual(2, cs.CurrentPosition.Line);
             Assert.AreEqual(6, cs.CurrentPosition.Column);
-            Assert.AreEqual('\n', cs.Peek().Value);
+            ies = cs.Peek();
+            Assert.IsFalse(ies.EndOfInput);
+            Assert.IsNotNull(ies.Errors);
+            Assert.IsEmpty(ies.Errors);
+            Assert.IsNotNull(ies.InputElements);
+            Assert.AreEqual(1, ies.InputElements.Count());
+            Assert.AreEqual(cs.CurrentPosition, ies.InputElements.First().Position);
+            Assert.AreEqual('\n', ies.InputElements.First().Value);
 
             Assert.IsFalse(cs.IsAtEnd);
 
-            ch = cs.GetNextValue();
+            ies = cs.GetNextValue();
+            Assert.IsFalse(ies.EndOfInput);
+            Assert.IsNotNull(ies.Errors);
+            Assert.IsEmpty(ies.Errors);
+            Assert.IsNotNull(ies.InputElements);
+            Assert.AreEqual(1, ies.InputElements.Count());
+            ch = ies.InputElements.First();
 
             Assert.AreEqual(14, ch.Position.Index);
             Assert.AreEqual(2, ch.Position.Line);

@@ -77,13 +77,13 @@ namespace MetaphysicsIndustries.Giza
             input.SetCurrentIndex(startIndex);
 
             var prevpos = input.CurrentPosition;
-            var ch = input.Peek();
+            var ch = input.Peek().InputElements.First();
             var prevch = ch;
 
             while (!input.IsAtEnd)
             {
                 prevch = ch;
-                ch = input.GetNextValue();
+                ch = input.GetNextValue().InputElements.First();
 
                 bool isWhitespace = char.IsWhiteSpace(ch.Value);
 

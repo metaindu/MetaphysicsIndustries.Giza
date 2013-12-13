@@ -1634,12 +1634,12 @@ namespace MetaphysicsIndustries.Giza.Test
                 throw new NotImplementedException();
             }
 
-            public InputChar Peek()
+            public InputElementSet<Token> Peek()
             {
                 throw new NotImplementedException();
             }
 
-            public InputChar GetNextValue()
+            public InputElementSet<Token> GetNextValue()
             {
                 throw new NotImplementedException();
             }
