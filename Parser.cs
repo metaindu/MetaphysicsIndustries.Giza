@@ -168,7 +168,7 @@ namespace MetaphysicsIndustries.Giza
                             rejects.Add(branch.NodeMatch, inputElementSet.Errors);
                         }
 
-                        RejectEndCandidate(info.EndCandidate, rejects, inputElementSet.Errors);
+                        RejectNodeMatch(info.EndCandidate, rejects, inputElementSet.Errors);
                     }
                     else if (inputElementSet.EndOfInput)
                     {
@@ -194,7 +194,7 @@ namespace MetaphysicsIndustries.Giza
                             OffendingInputElement = offendingInputElement,
                         };
 
-                        RejectEndCandidate(info.EndCandidate, rejects, err);
+                        RejectNodeMatch(info.EndCandidate, rejects, err);
 
                         foreach (var branch in branches)
                         {
@@ -228,7 +228,7 @@ namespace MetaphysicsIndustries.Giza
                             OffendingInputElement = offendingInputElement,
                         };
 
-                        RejectEndCandidate(info.EndCandidate, rejects, err);
+                        RejectNodeMatch(info.EndCandidate, rejects, err);
 
                         // try to match branch to input elements
                         bool matched = false;
@@ -306,11 +306,11 @@ namespace MetaphysicsIndustries.Giza
             return ends.ToArray();
         }
 
-        void RejectEndCandidate(NodeMatch<T> reject, List<NodeMatchErrorPair<T>> rejects, params Error[] errors)
+        void RejectNodeMatch(NodeMatch<T> reject, List<NodeMatchErrorPair<T>> rejects, params Error[] errors)
         {
-            RejectEndCandidate(reject, rejects, (ICollection<Error>)errors);
+            RejectNodeMatch(reject, rejects, (ICollection<Error>)errors);
         }
-        void RejectEndCandidate(NodeMatch<T> reject, List<NodeMatchErrorPair<T>> rejects, ICollection<Error> errors)
+        void RejectNodeMatch(NodeMatch<T> reject, List<NodeMatchErrorPair<T>> rejects, ICollection<Error> errors)
         {
             if (reject != null &&
                 reject.WhenRejected != null)
