@@ -366,6 +366,13 @@ namespace MetaphysicsIndustries.Giza
         public static void AddReject<T>(this ICollection<NodeMatchErrorPair<T>> collection, NodeMatch<T> nm, ICollection<Error> errors)
             where T : IInputElement
         {
+
+            if (nm != null &&
+                nm.WhenRejected != null)
+            {
+                nm.WhenRejected();
+            }
+
             // if all errors are null, replace with an empty collection
             if (errors.Count > 0 &&
                 errors.All(x => x == null))

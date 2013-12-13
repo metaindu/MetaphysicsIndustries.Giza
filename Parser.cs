@@ -312,12 +312,6 @@ namespace MetaphysicsIndustries.Giza
         }
         void RejectNodeMatch(NodeMatch<T> reject, List<NodeMatchErrorPair<T>> rejects, ICollection<Error> errors)
         {
-            if (reject != null &&
-                reject.WhenRejected != null)
-            {
-                reject.WhenRejected();
-            }
-
             rejects.AddReject(reject, errors);
         }
 
