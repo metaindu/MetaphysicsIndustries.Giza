@@ -306,15 +306,9 @@ namespace MetaphysicsIndustries.Giza
             return ends.ToArray();
         }
 
-        void RejectEndCandidate(NodeMatch<T> reject, List<NodeMatchErrorPair<T>> rejects, List<NodeMatch<T>> ends, Error err)
+        void RejectEndCandidate(NodeMatch<T> reject, List<NodeMatchErrorPair<T>> rejects, List<NodeMatch<T>> ends, params Error[] errors)
         {
-            if (reject != null &&
-                reject.WhenRejected != null)
-            {
-                reject.WhenRejected();
-            }
-
-            rejects.Add(reject, err);
+            RejectEndCandidate(reject, rejects, ends, (ICollection<Error>)errors);
         }
         void RejectEndCandidate(NodeMatch<T> reject, List<NodeMatchErrorPair<T>> rejects, List<NodeMatch<T>> ends, ICollection<Error> errors)
         {
