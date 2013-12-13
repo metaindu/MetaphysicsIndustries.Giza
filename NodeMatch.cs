@@ -358,7 +358,7 @@ namespace MetaphysicsIndustries.Giza
 
     public static class NodeMatchErrorPairHelper
     {
-        public static void Add<T>(this ICollection<NodeMatchErrorPair<T>> collection, NodeMatch<T> nm, params Error[] errors)
+        public static void AddReject<T>(this ICollection<NodeMatchErrorPair<T>> collection, NodeMatch<T> nm, params Error[] errors)
             where T : IInputElement
         {
             // if all errors are null, replace with an empty array
@@ -370,7 +370,7 @@ namespace MetaphysicsIndustries.Giza
 
             collection.Add(new NodeMatchErrorPair<T>(nm, errors));
         }
-        public static void Add<T>(this ICollection<NodeMatchErrorPair<T>> collection, NodeMatch<T> nm, ICollection<Error> errors)
+        public static void AddReject<T>(this ICollection<NodeMatchErrorPair<T>> collection, NodeMatch<T> nm, ICollection<Error> errors)
             where T : IInputElement
         {
             // if all errors are null, replace with an empty collection

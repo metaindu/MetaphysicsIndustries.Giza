@@ -165,7 +165,7 @@ namespace MetaphysicsIndustries.Giza
 
                         foreach (var branch in branches)
                         {
-                            rejects.Add(branch.NodeMatch, inputElementSet.Errors);
+                            rejects.AddReject(branch.NodeMatch, inputElementSet.Errors);
                         }
 
                         RejectNodeMatch(info.EndCandidate, rejects, inputElementSet.Errors);
@@ -180,7 +180,7 @@ namespace MetaphysicsIndustries.Giza
                         };
                         foreach (var branch in branches)
                         {
-                            rejects.Add(branch.NodeMatch, err);
+                            rejects.AddReject(branch.NodeMatch, err);
                         }
                     }
                     else // we have valid input elements
@@ -256,7 +256,7 @@ namespace MetaphysicsIndustries.Giza
                             };
                         }
 
-                        rejects.Add(branchnm, err2);
+                        rejects.AddReject(branchnm, err2);
                     }
                 }
 
@@ -318,7 +318,7 @@ namespace MetaphysicsIndustries.Giza
                 reject.WhenRejected();
             }
 
-            rejects.Add(reject, errors);
+            rejects.AddReject(reject, errors);
         }
 
         ParseInfo GetParseInfoFromSource(NodeMatchStackPair<T> source)
