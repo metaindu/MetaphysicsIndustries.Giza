@@ -168,7 +168,7 @@ namespace MetaphysicsIndustries.Giza
                             rejects.AddReject(branch.NodeMatch, inputElementSet.Errors);
                         }
 
-                        RejectNodeMatch(info.EndCandidate, rejects, inputElementSet.Errors);
+                        rejects.AddReject(info.EndCandidate, inputElementSet.Errors);
                     }
                     else if (inputElementSet.EndOfInput)
                     {
@@ -194,7 +194,7 @@ namespace MetaphysicsIndustries.Giza
                             OffendingInputElement = offendingInputElement,
                         };
 
-                        RejectNodeMatch(info.EndCandidate, rejects, err);
+                        rejects.AddReject(info.EndCandidate, err);
 
                         foreach (var branch in branches)
                         {
@@ -228,7 +228,7 @@ namespace MetaphysicsIndustries.Giza
                             OffendingInputElement = offendingInputElement,
                         };
 
-                        RejectNodeMatch(info.EndCandidate, rejects, err);
+                        rejects.AddReject(info.EndCandidate, err);
 
                         // try to match branch to input elements
                         bool matched = false;
