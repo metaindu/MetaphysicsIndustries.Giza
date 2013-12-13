@@ -280,7 +280,7 @@ namespace MetaphysicsIndustries.Giza
                     IEnumerable<Error> errorsToUse = null;
                     foreach (var reject in (rejects as IEnumerable<NodeMatchErrorPair<T>>).Reverse())
                     {
-                        if (reject.Errors != null && reject.Errors.Count > 0)
+                        if (reject.Errors != null && reject.Errors.Any())
                         {
                             errorsToUse = reject.Errors;
                             break;

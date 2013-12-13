@@ -338,20 +338,20 @@ namespace MetaphysicsIndustries.Giza
         where T : IInputElement
     {
         public NodeMatchErrorPair(NodeMatch<T> nm, params Error[] errors)
-            : this(nm, (ICollection<Error>)errors)
+            : this(nm, (IEnumerable<Error>)errors)
         {
         }
-        public NodeMatchErrorPair(NodeMatch<T> nm, ICollection<Error> errors)
+        public NodeMatchErrorPair(NodeMatch<T> nm, IEnumerable<Error> errors)
         {
             NodeMatch = nm;
             Errors = errors;
         }
 
         public NodeMatch<T> NodeMatch;
-        public ICollection<Error> Errors;
+        public IEnumerable<Error> Errors;
         public Error Error
         {
-            get { return ((Errors != null && Errors.Count > 0) ? Errors.First() : null); }
+            get { return ((Errors != null && Errors.Any()) ? Errors.First() : null); }
             set { Errors = new Error[] { value }; }
         }
     }
@@ -361,9 +361,9 @@ namespace MetaphysicsIndustries.Giza
         public static void AddReject<T>(this ICollection<NodeMatchErrorPair<T>> collection, NodeMatch<T> nm, params Error[] errors)
             where T : IInputElement
         {
-            AddReject(collection, nm, (ICollection<Error>)errors);
+            AddReject(collection, nm, (IEnumerable<Error>)errors);
         }
-        public static void AddReject<T>(this ICollection<NodeMatchErrorPair<T>> collection, NodeMatch<T> nm, ICollection<Error> errors)
+        public static void AddReject<T>(this ICollection<NodeMatchErrorPair<T>> collection, NodeMatch<T> nm, IEnumerable<Error> errors)
             where T : IInputElement
         {
 
@@ -374,7 +374,7 @@ namespace MetaphysicsIndustries.Giza
             }
 
             // if all errors are null, replace with an empty collection
-            if (errors.Count > 0 &&
+            if (errors.Any() &&
                 errors.All(x => x == null))
             {
                 errors = new List<Error>();
