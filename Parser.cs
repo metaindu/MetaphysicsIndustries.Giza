@@ -130,30 +130,9 @@ namespace MetaphysicsIndustries.Giza
                     var sourcepair = sources.Dequeue();
                     var source = sourcepair.NodeMatch;
                     int index = sourcepair.NodeMatch.InputElement.IndexOfNextElement;
-                    var info = GetParseInfoFromSource(sourcepair);
-                    var endCandidate = info.EndCandidate;
+                    var info = GetParseInfoFromSource(sourcepair, branchTipsByIndex, endCandidatesByIndex, ends);
                     var branches = info.Branches;
 
-
-                    if (endCandidate != null)
-                    {
-                        ends.Add(endCandidate);
-                        endCandidatesByIndex.AddToSet(index, endCandidate);
-
-                        endCandidate.WhenRejected +=
-                            () => {
-                            ends.Remove(endCandidate);
-                            info.EndCandidate = null;
-                            endCandidatesByIndex[index].Remove(endCandidate);
-                        };
-                    }
-
-                    foreach (var branchTip in branches)
-                    {
-                        branchTipsByIndex.AddToSet(index, branchTip);
-                        var tempBranchTip = branchTip;
-                        branchTip.NodeMatch.WhenRejected += () => branchTipsByIndex[index].Remove(tempBranchTip);
-                    }
 
                     //get all input elements and errors and end-of-input, starting at end of source's element
                     var inputElementSet = inputSource.GetInputAtLocation(index);
@@ -306,7 +285,11 @@ namespace MetaphysicsIndustries.Giza
             return ends.ToArray();
         }
 
-        ParseInfo GetParseInfoFromSource(NodeMatchStackPair<T> source)
+        ParseInfo GetParseInfoFromSource(
+            NodeMatchStackPair<T> source,
+            Dictionary<int, Set<NodeMatchStackPair<T>>> branchTipsByIndex,
+            Dictionary<int, Set<NodeMatch<T>>> endCandidatesByIndex,
+            List<NodeMatch<T>> ends)
         {
             var info = new ParseInfo();
             info.SourcePair = source;
@@ -377,6 +360,31 @@ namespace MetaphysicsIndustries.Giza
                     }
                 }
             }
+
+            var endCandidate = info.EndCandidate;
+            var branches = info.Branches;
+            int index = info.Source.InputElement.IndexOfNextElement;
+
+            if (endCandidate != null)
+            {
+                ends.Add(endCandidate);
+                endCandidatesByIndex.AddToSet(index, endCandidate);
+
+                endCandidate.WhenRejected +=
+                    () => {
+                    ends.Remove(endCandidate);
+                    info.EndCandidate = null;
+                    endCandidatesByIndex[index].Remove(endCandidate);
+                };
+            }
+
+            foreach (var branchTip in branches)
+            {
+                branchTipsByIndex.AddToSet(index, branchTip);
+                var tempBranchTip = branchTip;
+                branchTip.NodeMatch.WhenRejected += () => branchTipsByIndex[index].Remove(tempBranchTip);
+            }
+
 
             return info;
         }
