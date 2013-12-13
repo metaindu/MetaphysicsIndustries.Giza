@@ -306,15 +306,6 @@ namespace MetaphysicsIndustries.Giza
             return ends.ToArray();
         }
 
-        void RejectNodeMatch(NodeMatch<T> reject, List<NodeMatchErrorPair<T>> rejects, params Error[] errors)
-        {
-            RejectNodeMatch(reject, rejects, (ICollection<Error>)errors);
-        }
-        void RejectNodeMatch(NodeMatch<T> reject, List<NodeMatchErrorPair<T>> rejects, ICollection<Error> errors)
-        {
-            rejects.AddReject(reject, errors);
-        }
-
         ParseInfo GetParseInfoFromSource(NodeMatchStackPair<T> source)
         {
             var info = new ParseInfo();
