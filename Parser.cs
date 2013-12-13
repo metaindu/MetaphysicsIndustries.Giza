@@ -139,11 +139,20 @@ namespace MetaphysicsIndustries.Giza
                     {
                         ends.Add(endCandidate);
                         endCandidatesByIndex.AddToSet(index, endCandidate);
+
+                        endCandidate.WhenRejected +=
+                            () => {
+                            ends.Remove(endCandidate);
+                            info.EndCandidate = null;
+                            endCandidatesByIndex[index].Remove(endCandidate);
+                        };
                     }
 
                     foreach (var branchTip in branches)
                     {
                         branchTipsByIndex.AddToSet(index, branchTip);
+                        var tempBranchTip = branchTip;
+                        branchTip.NodeMatch.WhenRejected += () => branchTipsByIndex[index].Remove(tempBranchTip);
                     }
 
                     //get all input elements and errors and end-of-input, starting at end of source's element
@@ -159,7 +168,7 @@ namespace MetaphysicsIndustries.Giza
                             rejects.Add(branch.NodeMatch, inputElementSet.Errors);
                         }
 
-                        RejectEndCandidate(info, rejects, ends, inputElementSet.Errors);
+                        RejectEndCandidate(info.EndCandidate, rejects, ends, inputElementSet.Errors);
                     }
                     else if (inputElementSet.EndOfInput)
                     {
@@ -185,7 +194,7 @@ namespace MetaphysicsIndustries.Giza
                             OffendingInputElement = offendingInputElement,
                         };
 
-                        RejectEndCandidate(info, rejects, ends, err);
+                        RejectEndCandidate(info.EndCandidate, rejects, ends, err);
 
                         foreach (var branch in branches)
                         {
@@ -219,7 +228,7 @@ namespace MetaphysicsIndustries.Giza
                             OffendingInputElement = offendingInputElement,
                         };
 
-                        RejectEndCandidate(info, rejects, ends, err);
+                        RejectEndCandidate(info.EndCandidate, rejects, ends, err);
 
                         // try to match branch to input elements
                         bool matched = false;
@@ -297,23 +306,25 @@ namespace MetaphysicsIndustries.Giza
             return ends.ToArray();
         }
 
-        void RejectEndCandidate(ParseInfo info, List<NodeMatchErrorPair<T>> rejects, List<NodeMatch<T>> ends, Error err)
+        void RejectEndCandidate(NodeMatch<T> reject, List<NodeMatchErrorPair<T>> rejects, List<NodeMatch<T>> ends, Error err)
         {
-            if (info.EndCandidate != null)
+            if (reject != null &&
+                reject.WhenRejected != null)
             {
-                ends.Remove(info.EndCandidate);
-                rejects.Add(info.EndCandidate, err);
-                info.EndCandidate = null;
+                reject.WhenRejected();
             }
+
+            rejects.Add(reject, err);
         }
-        void RejectEndCandidate(ParseInfo info, List<NodeMatchErrorPair<T>> rejects, List<NodeMatch<T>> ends, ICollection<Error> errors)
+        void RejectEndCandidate(NodeMatch<T> reject, List<NodeMatchErrorPair<T>> rejects, List<NodeMatch<T>> ends, ICollection<Error> errors)
         {
-            if (info.EndCandidate != null)
+            if (reject != null &&
+                reject.WhenRejected != null)
             {
-                ends.Remove(info.EndCandidate);
-                rejects.Add(info.EndCandidate, errors);
-                info.EndCandidate = null;
+                reject.WhenRejected();
             }
+
+            rejects.Add(reject, errors);
         }
 
         ParseInfo GetParseInfoFromSource(NodeMatchStackPair<T> source)

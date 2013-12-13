@@ -20,6 +20,8 @@ namespace MetaphysicsIndustries.Giza
         public TransitionType Transition;
         public Node Node;
 
+        public Action WhenRejected = null;
+
         public InputPosition StartPosition
         {
             get
