@@ -98,13 +98,31 @@ namespace MetaphysicsIndustries.Giza
 
             return MakeSpans(matchTreeLeaves);
         }
+        void LogState(
+            EndCandidatesByIndexCollection<T> endCandidatesByIndex,
+            BranchTipsByIndexCollection<T> branchTipsByIndex)
+        {
+            foreach (var kvp in branchTipsByIndex)
+            {
+                foreach (var branchTip in kvp.Value)
+                {
+                    Logger.WriteLine("b index {0}: [{1}]", kvp.Key, branchTip.Branch.NodeMatch.ToString());
+                }
+            }
+            foreach (var kvp in endCandidatesByIndex)
+            {
+                foreach (var endCandidate in kvp.Value)
+                {
+                    Logger.WriteLine("e index {0}: [{1}]", kvp.Key, endCandidate.ToString());
+                }
+            }
+        }
         public NodeMatch<T>[] Match(IInputSource<T> inputSource, ICollection<Error> errors)
         {
             if (inputSource == null) throw new ArgumentNullException("inputSource");
             if (errors == null) throw new ArgumentNullException("errors");
 
             var sources = new PriorityQueue<NodeMatchStackPair<T> , int>(lowToHigh: true);
-            var ends = new List<NodeMatch<T>>();
             var rootDef = new Definition("$rootDef");
             var rootNode = new DefRefNode(_definition, "$rootNode");
             rootDef.Nodes.Add(rootNode);
@@ -118,96 +136,83 @@ namespace MetaphysicsIndustries.Giza
             sources.Enqueue(pair(root, null), -1);
 //            Logger.WriteLine("Starting");
 
-            var endCandidatesByIndex = new Dictionary<int, Set<NodeMatch<T>>>();
-            var branchTipsByIndex = new Dictionary<int, Set<NodeMatchStackPair<T>>>();
+            var endCandidatesByIndex = new EndCandidatesByIndexCollection<T>();
+            var branchTipsByIndex = new BranchTipsByIndexCollection<T>();
 
-            while (sources.Count > 0)
+
+            var rootInfo = GetParseInfoFromSource(pair(root, null), branchTipsByIndex, endCandidatesByIndex);
+
+
+            while (!inputSource.IsAtEnd)
             {
+                var index = inputSource.CurrentPosition.Index;
 
-                var nextSources = new List<NodeMatchStackPair<T>>();
-                while (sources.Count > 0)
+                Logger.WriteLine("");
+                Logger.WriteLine("Main Parse Loop");
+                Logger.WriteLine("index {0}, source is {1}at end", index, (inputSource.IsAtEnd ? "" : "not "));
+                LogState(endCandidatesByIndex, branchTipsByIndex);
+
+                if (!branchTipsByIndex.Values.SelectMany(x => x).Any() &&
+                    !endCandidatesByIndex.Values.SelectMany(x => x).Any())
                 {
-                    var sourcepair = sources.Dequeue();
-                    var source = sourcepair.NodeMatch;
-                    int index = sourcepair.NodeMatch.InputElement.IndexOfNextElement;
-                    var info = GetParseInfoFromSource(sourcepair, branchTipsByIndex, endCandidatesByIndex, ends);
-                    var branches = info.Branches;
-
-
-                    //get all input elements and errors and end-of-input, starting at end of source's element
-                    var inputElementSet = inputSource.GetInputAtLocation(index);
-
-                    //if we get any errors, process them and reject
-                    if (inputElementSet.Errors.ContainsNonWarnings())
-                    {
-                        //reject branches with errors
-
-                        foreach (var branch in branches)
-                        {
-                            rejects.AddReject(branch.NodeMatch, inputElementSet.Errors);
-                        }
-
-                        rejects.AddReject(info.EndCandidate, inputElementSet.Errors);
-                    }
-                    else if (inputElementSet.EndOfInput)
-                    {
-                        var err = new ParserError<T> {
-                            ErrorType = ParserError.UnexpectedEndOfInput,
-                            LastValidMatchingNode = source.Node,
-                            ExpectedNodes = info.GetExpectedNodes(),
-                            Position = inputElementSet.EndOfInputPosition,
-                        };
-                        foreach (var branch in branches)
-                        {
-                            rejects.AddReject(branch.NodeMatch, err);
-                        }
-                    }
-                    else // we have valid input elements
-                    {
-                        var offendingInputElement = inputElementSet.InputElements.First();
-
-                        var err = new ParserError<T> {
-                            ErrorType = ParserError.ExcessRemainingInput,
-                            LastValidMatchingNode = source.Node,
-                            Position = offendingInputElement.Position,
-                            OffendingInputElement = offendingInputElement,
-                        };
-
-                        rejects.AddReject(info.EndCandidate, err);
-
-                        foreach (var branch in branches)
-                        {
-                            branches2.Enqueue(new Tuple<NodeMatch<T> , MatchStack<T> , ParseInfo>(
-                                branch.NodeMatch,
-                                branch.MatchStack,
-                                info),
-                                source.InputElement.IndexOfNextElement);
-                        }
-                    }
+                    // no branch tips or end candidates left
+                    Logger.WriteLine("Out of branch tips and end candidates. Leaving main parse loop.");
+                    break;
                 }
 
-                while (branches2.Count > 0)
+                var inputElementSet = inputSource.GetNextValue();
+
+                //if we get any errors, process them and reject
+                if (inputElementSet.Errors.ContainsNonWarnings())
                 {
-                    var branchtuple = branches2.Dequeue();
-                    var branchnm = branchtuple.Item1;
-                    var branchstack = branchtuple.Item2;
-                    var info = branchtuple.Item3;
-
-                    var inputElementSet = inputSource.GetInputAtLocation(info.Source.InputElement.IndexOfNextElement);
-
-                    if (!inputElementSet.Errors.ContainsNonWarnings() &&
-                        !inputElementSet.EndOfInput)
+                    while (branchTipsByIndex[index].Count > 0)
                     {
-                        // we have valid input elements
-                        var offendingInputElement = inputElementSet.InputElements.First();
+                        var branchTip = branchTipsByIndex[index].Dequeue();
+                        rejects.AddReject(branchTip.Branch.NodeMatch, inputElementSet.Errors);
+                    }
+
+                    while (endCandidatesByIndex[index].Count > 0)
+                    {
+                        var endCandidate = endCandidatesByIndex[index].Dequeue();
+                        rejects.AddReject(endCandidate, inputElementSet.Errors);
+                    }
+                }
+                else if (inputElementSet.EndOfInput)
+                {
+                    while (branchTipsByIndex[index].Count > 0)
+                    {
+                        var branchTip = branchTipsByIndex[index].Dequeue();
+                        var source = branchTip.Source;
+                        var err = new ParserError<T> {
+                            ErrorType = ParserError.UnexpectedEndOfInput,
+                            LastValidMatchingNode = source.NodeMatch.Node,
+                            ExpectedNodes = source.GetExpectedNodes(),
+                            Position = inputElementSet.EndOfInputPosition,
+                        };
+                        rejects.AddReject(branchTip.Branch.NodeMatch, err);
+                    }
+                }
+                else // we have valid input elements
+                {
+                    var offendingInputElement = inputElementSet.InputElements.First();
+
+                    while (endCandidatesByIndex[index].Count > 0)
+                    {
+                        var endCandidate = endCandidatesByIndex[index].Dequeue();
                         var err = new ParserError<T> {
                             ErrorType = ParserError.ExcessRemainingInput,
-                            LastValidMatchingNode = info.Source.Node,
+                            LastValidMatchingNode = endCandidate.GetLastValidMatch().Node,
                             Position = offendingInputElement.Position,
                             OffendingInputElement = offendingInputElement,
                         };
+                        rejects.AddReject(endCandidate, err);
+                    }
 
-                        rejects.AddReject(info.EndCandidate, err);
+                    while (branchTipsByIndex[index].Count > 0)
+                    {
+                        var branchTip = branchTipsByIndex[index].Dequeue();
+                        var branchnm = branchTip.Branch.NodeMatch;
+                        var branchstack = branchTip.Branch.MatchStack;
 
                         // try to match branch to input elements
                         bool matched = false;
@@ -215,8 +220,9 @@ namespace MetaphysicsIndustries.Giza
                         {
                             if (BranchTipMatchesInputElement(branchnm, inputElement))
                             {
+                                Logger.WriteLine("Branch [{0}] matches [{1}]", branchnm.ToString(), inputElement.Value);
                                 var newNext = branchnm.CloneWithNewInputElement(inputElement);
-                                nextSources.Add(pair(newNext, branchstack));
+                                var newNextInfo = GetParseInfoFromSource(pair(newNext, branchstack), branchTipsByIndex, endCandidatesByIndex);
                                 matched = true;
                             }
                         }
@@ -226,11 +232,13 @@ namespace MetaphysicsIndustries.Giza
                         // otherwise, reject it with null since it's a duplicate
                         if (!matched)
                         {
+                            Logger.WriteLine("Branch [{0}] does not match", branchnm.ToString());
+                            var source = branchnm.GetLastValidMatch();
                             err2 = new ParserError<T> {
                                 ErrorType = ParserError.InvalidInputElement,
-                                LastValidMatchingNode = info.Source.Node,
+                                LastValidMatchingNode = source.Node,
                                 OffendingInputElement = offendingInputElement,
-                                ExpectedNodes = info.Source.Node.NextNodes,
+                                ExpectedNodes = source.Node.NextNodes,
                                 Position = offendingInputElement.Position,
                             };
                         }
@@ -238,15 +246,38 @@ namespace MetaphysicsIndustries.Giza
                         rejects.AddReject(branchnm, err2);
                     }
                 }
+            }
 
-                foreach (var next in nextSources)
+            if (inputSource.IsAtEnd)
+            {
+                Logger.WriteLine("input source is at end.");
+            }
+
+            Logger.WriteLine("Main parse loop ended.");
+
+            var ends = new List<NodeMatch<T>>();
+            foreach (var collection in endCandidatesByIndex.Values)
+            {
+                ends.AddRange(collection);
+            }
+            foreach (var collection in branchTipsByIndex.Values)
+            {
+                foreach (var branchTip in collection)
                 {
-                    sources.Enqueue(next, next.NodeMatch.InputElement.IndexOfNextElement);
+                    var source = branchTip.Source;
+                    var err = new ParserError<T> {
+                        ErrorType = ParserError.UnexpectedEndOfInput,
+                        LastValidMatchingNode = source.NodeMatch.Node,
+                        ExpectedNodes = source.GetExpectedNodes(),
+                        Position = inputSource.CurrentPosition,
+                    };
+                    rejects.AddReject(branchTip.Branch.NodeMatch, err);
                 }
             }
 
             if (ends.Count > 0)
             {
+                Logger.WriteLine("Stripping rejects");
                 foreach (var reject in rejects)
                 {
                     StripReject(reject.NodeMatch);
@@ -256,14 +287,22 @@ namespace MetaphysicsIndustries.Giza
             {
                 if (rejects.Count > 0)
                 {
+                    NodeMatch<T> rejectToUse = null;
                     IEnumerable<Error> errorsToUse = null;
                     foreach (var reject in (rejects as IEnumerable<NodeMatchErrorPair<T>>).Reverse())
                     {
                         if (reject.Errors != null && reject.Errors.Any())
                         {
+                            rejectToUse = reject.NodeMatch;
                             errorsToUse = reject.Errors;
                             break;
                         }
+                    }
+
+                    Logger.WriteLine("Chosen reject: [{0}]", rejectToUse);
+                    foreach (var error in errorsToUse)
+                    {
+                        Logger.WriteLine("Rejecting with error: {0}", error.Description);
                     }
 
                     if (errorsToUse != null)
@@ -287,10 +326,10 @@ namespace MetaphysicsIndustries.Giza
 
         ParseInfo GetParseInfoFromSource(
             NodeMatchStackPair<T> source,
-            Dictionary<int, Set<NodeMatchStackPair<T>>> branchTipsByIndex,
-            Dictionary<int, Set<NodeMatch<T>>> endCandidatesByIndex,
-            List<NodeMatch<T>> ends)
+            BranchTipsByIndexCollection<T> branchTipsByIndex,
+            EndCandidatesByIndexCollection<T> endCandidatesByIndex)
         {
+            Logger.WriteLine("Branching from [{0}]", source.NodeMatch.ToString());
             var info = new ParseInfo();
             info.SourcePair = source;
 
@@ -315,6 +354,7 @@ namespace MetaphysicsIndustries.Giza
                 if (ender.NodeMatch != null &&
                     ender.MatchStack == null)
                 {
+                    Logger.WriteLine("Found end candidate [{0}]", ender.NodeMatch.ToString());
                     info.EndCandidate = ender.NodeMatch;
                 }
             }
@@ -337,6 +377,7 @@ namespace MetaphysicsIndustries.Giza
                 if (isBranchTip &&
                     cur != info.Source)
                 {
+                    Logger.WriteLine("Found branch tip [{0}]", current.NodeMatch.ToString());
                     info.Branches.Add(current);
                     continue;
                 }
@@ -367,22 +408,29 @@ namespace MetaphysicsIndustries.Giza
 
             if (endCandidate != null)
             {
-                ends.Add(endCandidate);
-                endCandidatesByIndex.AddToSet(index, endCandidate);
+//                ends.Add(endCandidate);
+                endCandidatesByIndex[index].Enqueue(endCandidate);
+                Logger.WriteLine("Adding end candidate at index {0}", index);
 
                 endCandidate.WhenRejected +=
                     () => {
-                    ends.Remove(endCandidate);
+//                    ends.Remove(endCandidate);
                     info.EndCandidate = null;
-                    endCandidatesByIndex[index].Remove(endCandidate);
+//                    endCandidatesByIndex[index].Remove(endCandidate);
                 };
             }
 
             foreach (var branchTip in branches)
             {
-                branchTipsByIndex.AddToSet(index, branchTip);
-                var tempBranchTip = branchTip;
-                branchTip.NodeMatch.WhenRejected += () => branchTipsByIndex[index].Remove(tempBranchTip);
+                Logger.WriteLine("Adding branch tip [{0}] at index {1}", branchTip.NodeMatch.ToString(), index);
+                branchTipsByIndex[index].Enqueue(
+                    new BranchTip<T> {
+                        Branch = branchTip,
+                        Source = source
+                    });
+//                var tempBranchTip = branchTip;
+//                branchTip.NodeMatch.WhenRejected += () => branchTipsByIndex[index].Remove(tempBranchTip);
+//                branchTip.NodeMatch.WhenMatched += () => branchTipsByIndex[index].Remove(tempBranchTip);
             }
 
 

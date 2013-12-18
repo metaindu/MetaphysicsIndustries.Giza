@@ -102,6 +102,8 @@
     <Compile Include="InputElementSet.cs" />
     <Compile Include="IInputSource.cs" />
     <Compile Include="TransitionType.cs" />
+    <Compile Include="EndCandidatesByIndexCollection.cs" />
+    <Compile Include="BranchTipsByIndexCollection.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />

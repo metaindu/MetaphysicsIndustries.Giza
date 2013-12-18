@@ -1613,20 +1613,22 @@ namespace MetaphysicsIndustries.Giza.Test
         public class MockTokenSource : IInputSource<Token>
         {
             public readonly Dictionary<int, InputElementSet<Token>> InputElementSetsByIndex = new Dictionary<int, InputElementSet<Token>>();
+            int _index = 0;
 
             public InputElementSet<Token> GetInputAtLocation(int index)
             {
+                _index = index;
                 return InputElementSetsByIndex[index];
             }
 
             public InputPosition CurrentPosition
             {
-                get { throw new NotImplementedException(); }
+                get { return new InputPosition(_index); }
             }
 
             public InputPosition GetPosition(int index)
             {
-                throw new NotImplementedException();
+                return new InputPosition(index);
             }
 
             public void SetCurrentIndex(int index)
@@ -1636,12 +1638,14 @@ namespace MetaphysicsIndustries.Giza.Test
 
             public InputElementSet<Token> Peek()
             {
-                throw new NotImplementedException();
+                return GetInputAtLocation(_index);
             }
 
             public InputElementSet<Token> GetNextValue()
             {
-                throw new NotImplementedException();
+                var ies = Peek();
+                _index++;
+                return ies;
             }
 
             public int Length
@@ -1654,10 +1658,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
             public bool IsAtEnd
             {
-                get
-                {
-                    throw new NotImplementedException();
-                }
+                get { return false; }
             }
         }
 

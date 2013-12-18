@@ -114,6 +114,22 @@ namespace MetaphysicsIndustries.Giza
             return nm;
         }
 
+        public NodeMatch<T> GetLastValidMatch()
+        {
+            if (Transition == TransitionType.Root) return null;
+            if (Previous == null) return null;
+
+            var current = this.Previous;
+            while (current != null &&
+                   current.Transition != TransitionType.Root &&
+                   !current.HasMatchedInput)
+            {
+                current = current.Previous;
+            }
+
+            return current;
+        }
+
         public override string ToString()
         {
             string nodestr;
@@ -341,6 +357,34 @@ namespace MetaphysicsIndustries.Giza
             return new NodeMatchStackPair<T>(match2, stack);
         }
 
+        public IEnumerable<Node> GetExpectedNodes()
+        {
+            if (NodeMatch.Node.NextNodes.Count > 0)
+            {
+                return NodeMatch.Node.NextNodes;
+            }
+
+            var stack = MatchStack;
+            while (stack != null &&
+                stack.Node.NextNodes.Count < 1)
+            {
+                stack = stack.Parent;
+            }
+
+            if (stack != null)
+            {
+                return stack.Node.NextNodes;
+            }
+
+            return new Node[0];
+        }
+    }
+
+    public struct BranchTip<T>
+        where T : IInputElement
+    {
+        public NodeMatchStackPair<T> Branch;
+        public NodeMatchStackPair<T> Source;
     }
 
     public struct NodeMatchErrorPair<T>
@@ -375,7 +419,7 @@ namespace MetaphysicsIndustries.Giza
         public static void AddReject<T>(this ICollection<NodeMatchErrorPair<T>> collection, NodeMatch<T> nm, IEnumerable<Error> errors)
             where T : IInputElement
         {
-
+            Logger.WriteLine("Rejecting {0} with {1} errors", nm.ToString(), (errors == null ? 0 : errors.Count()));
             if (nm != null &&
                 nm.WhenRejected != null)
             {

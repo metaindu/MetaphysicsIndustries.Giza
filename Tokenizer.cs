@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Collections;
+using System.Linq;
 
 namespace MetaphysicsIndustries.Giza
 {
@@ -239,17 +240,24 @@ namespace MetaphysicsIndustries.Giza
 
         public void SetCurrentIndex(int index)
         {
-            throw new NotImplementedException();
+            _input.SetCurrentIndex(index);
         }
 
         public InputElementSet<Token> Peek()
         {
-            throw new NotImplementedException();
+            return GetInputAtLocation(CurrentPosition.Index);
         }
 
         public InputElementSet<Token> GetNextValue()
         {
-            throw new NotImplementedException();
+            var ies = Peek();
+            if (!ies.EndOfInput &&
+                !ies.Errors.Any())
+            {
+                var nextIndex = ies.InputElements.Select((x) => x.IndexOfNextTokenization).Min();
+                SetCurrentIndex(nextIndex);
+            }
+            return ies;
         }
 
         public int Length
@@ -264,7 +272,7 @@ namespace MetaphysicsIndustries.Giza
         {
             get
             {
-                throw new NotImplementedException();
+                return _input.IsAtEnd;
             }
         }
 
