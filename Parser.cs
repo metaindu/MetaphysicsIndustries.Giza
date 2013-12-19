@@ -56,39 +56,6 @@ namespace MetaphysicsIndustries.Giza
 
         protected Definition _definition;
 
-        class ParseInfo
-        {
-            public NodeMatchStackPair<T> SourcePair;
-            public NodeMatch<T> Source { get { return SourcePair.NodeMatch; } }
-            public MatchStack<T> SourceStack { get { return SourcePair.MatchStack; } }
-
-            public NodeMatch<T> EndCandidate;
-
-            public List<NodeMatchStackPair<T>> Branches;
-
-            public IEnumerable<Node> GetExpectedNodes()
-            {
-                if (this.Source.Node.NextNodes.Count > 0)
-                {
-                    return this.Source.Node.NextNodes;
-                }
-
-                var stack = this.SourceStack;
-                while (stack != null &&
-                       stack.Node.NextNodes.Count < 1)
-                {
-                    stack = stack.Parent;
-                }
-
-                if (stack != null)
-                {
-                    return stack.Node.NextNodes;
-                }
-
-                return new Node[0];
-            }
-        }
-
         public Span[] Parse(IInputSource<T> inputSource, ICollection<Error> errors)
         {
             if (inputSource == null) throw new ArgumentNullException("inputSource");
@@ -131,8 +98,6 @@ namespace MetaphysicsIndustries.Giza
             var root = new NodeMatch<T>(rootNode, TransitionType.Root, null);
             var rejects = new List<NodeMatchErrorPair<T>>();
 
-            var branches2 = new PriorityQueue<Tuple<NodeMatch<T> , MatchStack<T> , ParseInfo>, int>();
-
             sources.Enqueue(pair(root, null), -1);
 //            Logger.WriteLine("Starting");
 
@@ -140,7 +105,7 @@ namespace MetaphysicsIndustries.Giza
             var branchTipsByIndex = new BranchTipsByIndexCollection<T>();
 
 
-            var rootInfo = GetParseInfoFromSource(pair(root, null), branchTipsByIndex, endCandidatesByIndex);
+            GetParseInfoFromSource(pair(root, null), branchTipsByIndex, endCandidatesByIndex);
 
 
             while (!inputSource.IsAtEnd)
@@ -222,7 +187,7 @@ namespace MetaphysicsIndustries.Giza
                             {
                                 Logger.WriteLine("Branch [{0}] matches [{1}]", branchnm.ToString(), inputElement.Value);
                                 var newNext = branchnm.CloneWithNewInputElement(inputElement);
-                                var newNextInfo = GetParseInfoFromSource(pair(newNext, branchstack), branchTipsByIndex, endCandidatesByIndex);
+                                GetParseInfoFromSource(pair(newNext, branchstack), branchTipsByIndex, endCandidatesByIndex);
                                 matched = true;
                             }
                         }
@@ -324,24 +289,23 @@ namespace MetaphysicsIndustries.Giza
             return ends.ToArray();
         }
 
-        ParseInfo GetParseInfoFromSource(
+        void GetParseInfoFromSource(
             NodeMatchStackPair<T> source,
             BranchTipsByIndexCollection<T> branchTipsByIndex,
             EndCandidatesByIndexCollection<T> endCandidatesByIndex)
         {
             Logger.WriteLine("Branching from [{0}]", source.NodeMatch.ToString());
-            var info = new ParseInfo();
-            info.SourcePair = source;
 
             var currents = new Queue<NodeMatchStackPair<T>>();
 
-            currents.Enqueue(info.SourcePair);
+            currents.Enqueue(source);
 
             // find all ends
             var enders = new List<NodeMatchStackPair<T>>();
-            if (info.Source.Transition != TransitionType.Root)
+            NodeMatch<T> endCandidate = null;
+            if (source.NodeMatch.Transition != TransitionType.Root)
             {
-                var ender = info.SourcePair;
+                var ender = source;
 
                 while (ender.NodeMatch != null &&
                        ender.MatchStack != null &&
@@ -355,7 +319,7 @@ namespace MetaphysicsIndustries.Giza
                     ender.MatchStack == null)
                 {
                     Logger.WriteLine("Found end candidate [{0}]", ender.NodeMatch.ToString());
-                    info.EndCandidate = ender.NodeMatch;
+                    endCandidate = ender.NodeMatch;
                 }
             }
 
@@ -365,7 +329,7 @@ namespace MetaphysicsIndustries.Giza
             }
 
             //find all branches
-            info.Branches = new List<NodeMatchStackPair<T>>();
+            var branches = new List<NodeMatchStackPair<T>>();
             while (currents.Count > 0)
             {
                 var current = currents.Dequeue();
@@ -375,10 +339,10 @@ namespace MetaphysicsIndustries.Giza
                 var isBranchTip = IsBranchTip(cur);
 
                 if (isBranchTip &&
-                    cur != info.Source)
+                    cur != source.NodeMatch)
                 {
                     Logger.WriteLine("Found branch tip [{0}]", current.NodeMatch.ToString());
-                    info.Branches.Add(current);
+                    branches.Add(current);
                     continue;
                 }
 
@@ -402,22 +366,12 @@ namespace MetaphysicsIndustries.Giza
                 }
             }
 
-            var endCandidate = info.EndCandidate;
-            var branches = info.Branches;
-            int index = info.Source.InputElement.IndexOfNextElement;
+            int index = source.NodeMatch.InputElement.IndexOfNextElement;
 
             if (endCandidate != null)
             {
-//                ends.Add(endCandidate);
                 endCandidatesByIndex[index].Enqueue(endCandidate);
                 Logger.WriteLine("Adding end candidate at index {0}", index);
-
-                endCandidate.WhenRejected +=
-                    () => {
-//                    ends.Remove(endCandidate);
-                    info.EndCandidate = null;
-//                    endCandidatesByIndex[index].Remove(endCandidate);
-                };
             }
 
             foreach (var branchTip in branches)
@@ -428,13 +382,7 @@ namespace MetaphysicsIndustries.Giza
                         Branch = branchTip,
                         Source = source
                     });
-//                var tempBranchTip = branchTip;
-//                branchTip.NodeMatch.WhenRejected += () => branchTipsByIndex[index].Remove(tempBranchTip);
-//                branchTip.NodeMatch.WhenMatched += () => branchTipsByIndex[index].Remove(tempBranchTip);
             }
-
-
-            return info;
         }
 
         protected abstract bool IsBranchTip(NodeMatch<T> cur);
