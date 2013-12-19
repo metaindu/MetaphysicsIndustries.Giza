@@ -61,7 +61,9 @@ DefinitionRenderer - render to grammar text
 Move rendering classes to a separate 'Rendering' assembly, and/or move classes for parsing into a 'Light' assembly.
 
 operate on streams
-    character position
+    implement a spanner with a parser acting on single-char tokens, e.g.:
+        InputElement
+        InputSource<T> --> Tokenizer, Charizer
 
 repl
 
@@ -70,9 +72,6 @@ user-defined reductions
 whitspace as tokenized def
     remove 'mind whitespace'
 
-implement a spanner with a parser acting on single-char tokens
-    InputElement
-    InputSource<T> --> Tokenizer, Charizer
 
 
 
