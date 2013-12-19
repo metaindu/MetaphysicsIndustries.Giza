@@ -162,11 +162,11 @@ namespace MetaphysicsIndustries.Giza
                                 throw new NotImplementedException();
                             }
 
-                            char errorCh = input.GetInputAtLocation(cur.StartPosition.Index).InputElements.First().Value;
+                            char errorCh = ch.Value;
 
                             IEnumerable<Node> expectedNodes;
 
-                            var pos = cur.StartPosition;
+                            var pos = ch.Position;
                             se.OffendingCharacter = errorCh;
                             se.Position = pos;
 
