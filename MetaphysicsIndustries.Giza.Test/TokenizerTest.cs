@@ -868,6 +868,162 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(0, first.StartPosition.Index);
             Assert.AreEqual("start-ABCD-end", first.Value);
         }
+
+        [Test]
+        public void TestReadInOrder()
+        {
+            // setup
+            var grammarText = "sequence = ('a' | 'ab' | 'abc' | 'bca' | 'bc' | 'cab' | 'c')+;";
+            var errors = new List<Error>();
+            var defs = (new SupergrammarSpanner()).GetExpressions(grammarText, errors);
+            Assert.IsEmpty(errors);
+            var grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(defs);
+            var implicitA = grammar.FindDefinitionByName("$implicit literal a");
+            var implicitAb = grammar.FindDefinitionByName("$implicit literal ab");
+            var implicitAbc = grammar.FindDefinitionByName("$implicit literal abc");
+            var implicitBca = grammar.FindDefinitionByName("$implicit literal bca");
+            var implicitCab = grammar.FindDefinitionByName("$implicit literal cab");
+            var implicitBc = grammar.FindDefinitionByName("$implicit literal bc");
+            var implicitC = grammar.FindDefinitionByName("$implicit literal c");
+            var input = "abcabc";
+            var tokenizer = new Tokenizer(grammar, input.ToCharacterSource());
+            InputElementSet<Token> ies = null;
+            Token token;
+
+            // action
+            ies = tokenizer.GetNextValue();
+
+            // assertions
+            Assert.IsFalse(ies.EndOfInput);
+            Assert.IsNotNull(ies.Errors);
+            Assert.IsEmpty(ies.Errors);
+            Assert.IsNotNull(ies.InputElements);
+            Assert.AreEqual(3, ies.InputElements.Count());
+            Assert.IsTrue(ies.InputElements.Any(x => x.Definition == implicitA));
+            Assert.IsTrue(ies.InputElements.Any(x => x.Definition == implicitAb));
+            Assert.IsTrue(ies.InputElements.Any(x => x.Definition == implicitAbc));
+            token = ies.InputElements.First(x => x.Definition == implicitA);
+            Assert.AreEqual(1, token.IndexOfNextTokenization);
+            Assert.AreEqual(new InputPosition(0, 1, 1), token.StartPosition);
+            Assert.AreEqual("a", token.Value);
+            token = ies.InputElements.First(x => x.Definition == implicitAb);
+            Assert.AreEqual(2, token.IndexOfNextTokenization);
+            Assert.AreEqual(new InputPosition(0, 1, 1), token.StartPosition);
+            Assert.AreEqual("ab", token.Value);
+            token = ies.InputElements.First(x => x.Definition == implicitAbc);
+            Assert.AreEqual(3, token.IndexOfNextTokenization);
+            Assert.AreEqual(new InputPosition(0, 1, 1), token.StartPosition);
+            Assert.AreEqual("abc", token.Value);
+            Assert.AreEqual(1, tokenizer.CurrentPosition.Index);
+            Assert.IsFalse(tokenizer.IsAtEnd);
+
+            // action
+            ies = tokenizer.GetNextValue();
+
+            // assertions
+            Assert.IsFalse(ies.EndOfInput);
+            Assert.IsNotNull(ies.Errors);
+            Assert.IsEmpty(ies.Errors);
+            Assert.IsNotNull(ies.InputElements);
+            Assert.AreEqual(2, ies.InputElements.Count());
+            Assert.IsTrue(ies.InputElements.Any(x => x.Definition == implicitBc));
+            Assert.IsTrue(ies.InputElements.Any(x => x.Definition == implicitBca));
+            token = ies.InputElements.First(x => x.Definition == implicitBc);
+            Assert.AreEqual(3, token.IndexOfNextTokenization);
+            Assert.AreEqual(new InputPosition(1, 1, 2), token.StartPosition);
+            Assert.AreEqual("bc", token.Value);
+            token = ies.InputElements.First(x => x.Definition == implicitBca);
+            Assert.AreEqual(4, token.IndexOfNextTokenization);
+            Assert.AreEqual(new InputPosition(1, 1, 2), token.StartPosition);
+            Assert.AreEqual("bca", token.Value);
+            Assert.AreEqual(2, tokenizer.CurrentPosition.Index);
+            Assert.IsFalse(tokenizer.IsAtEnd);
+
+            // action
+            ies = tokenizer.GetNextValue();
+
+            // assertions
+            Assert.IsFalse(ies.EndOfInput);
+            Assert.IsNotNull(ies.Errors);
+            Assert.IsEmpty(ies.Errors);
+            Assert.IsNotNull(ies.InputElements);
+            Assert.AreEqual(2, ies.InputElements.Count());
+            Assert.IsTrue(ies.InputElements.Any(x => x.Definition == implicitC));
+            Assert.IsTrue(ies.InputElements.Any(x => x.Definition == implicitCab));
+            token = ies.InputElements.First(x => x.Definition == implicitC);
+            Assert.AreEqual(3, token.IndexOfNextTokenization);
+            Assert.AreEqual(new InputPosition(2, 1, 3), token.StartPosition);
+            Assert.AreEqual("c", token.Value);
+            token = ies.InputElements.First(x => x.Definition == implicitCab);
+            Assert.AreEqual(5, token.IndexOfNextTokenization);
+            Assert.AreEqual(new InputPosition(2, 1, 3), token.StartPosition);
+            Assert.AreEqual("cab", token.Value);
+            Assert.AreEqual(3, tokenizer.CurrentPosition.Index);
+            Assert.IsFalse(tokenizer.IsAtEnd);
+
+            // action
+            ies = tokenizer.GetNextValue();
+
+            // assertions
+            Assert.IsFalse(ies.EndOfInput);
+            Assert.IsNotNull(ies.Errors);
+            Assert.IsEmpty(ies.Errors);
+            Assert.IsNotNull(ies.InputElements);
+            Assert.AreEqual(3, ies.InputElements.Count());
+            Assert.IsTrue(ies.InputElements.Any(x => x.Definition == implicitA));
+            Assert.IsTrue(ies.InputElements.Any(x => x.Definition == implicitAb));
+            Assert.IsTrue(ies.InputElements.Any(x => x.Definition == implicitAbc));
+            token = ies.InputElements.First(x => x.Definition == implicitA);
+            Assert.AreEqual(4, token.IndexOfNextTokenization);
+            Assert.AreEqual(new InputPosition(3, 1, 4), token.StartPosition);
+            Assert.AreEqual("a", token.Value);
+            token = ies.InputElements.First(x => x.Definition == implicitAb);
+            Assert.AreEqual(5, token.IndexOfNextTokenization);
+            Assert.AreEqual(new InputPosition(3, 1, 4), token.StartPosition);
+            Assert.AreEqual("ab", token.Value);
+            token = ies.InputElements.First(x => x.Definition == implicitAbc);
+            Assert.AreEqual(6, token.IndexOfNextTokenization);
+            Assert.AreEqual(new InputPosition(3, 1, 4), token.StartPosition);
+            Assert.AreEqual("abc", token.Value);
+            Assert.AreEqual(4, tokenizer.CurrentPosition.Index);
+            Assert.IsFalse(tokenizer.IsAtEnd);
+
+            // action
+            ies = tokenizer.GetNextValue();
+
+            // assertions
+            Assert.IsFalse(ies.EndOfInput);
+            Assert.IsNotNull(ies.Errors);
+            Assert.IsEmpty(ies.Errors);
+            Assert.IsNotNull(ies.InputElements);
+            Assert.AreEqual(1, ies.InputElements.Count());
+            token = ies.InputElements.First();
+            Assert.AreSame(implicitBc, token.Definition);
+            Assert.AreEqual(6, token.IndexOfNextTokenization);
+            Assert.AreEqual(new InputPosition(4, 1, 5), token.StartPosition);
+            Assert.AreEqual("bc", token.Value);
+            Assert.AreEqual(5, tokenizer.CurrentPosition.Index);
+            Assert.IsFalse(tokenizer.IsAtEnd);
+
+            // action
+            ies = tokenizer.GetNextValue();
+
+            // assertions
+            Assert.IsFalse(ies.EndOfInput);
+            Assert.IsNotNull(ies.Errors);
+            Assert.IsEmpty(ies.Errors);
+            Assert.IsNotNull(ies.InputElements);
+            Assert.AreEqual(1, ies.InputElements.Count());
+            token = ies.InputElements.First();
+            Assert.AreSame(implicitC, token.Definition);
+            Assert.AreEqual(6, token.IndexOfNextTokenization);
+            Assert.AreEqual(new InputPosition(5, 1, 6), token.StartPosition);
+            Assert.AreEqual("c", token.Value);
+            Assert.AreEqual(6, tokenizer.CurrentPosition.Index);
+            Assert.IsTrue(tokenizer.IsAtEnd);
+
+
+        }
     }
 }
 
