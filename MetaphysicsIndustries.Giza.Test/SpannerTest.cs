@@ -834,6 +834,77 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsNotNull(spans);
             Assert.AreEqual(1, spans.Length);
         }
+
+        [Test]
+        public void TestIgnoreCase1()
+        {
+            // setup
+            var item =
+                new DefinitionExpression(
+                    name: "item",
+                    directives: new [] { DefinitionDirective.IgnoreCase },
+                    items: new [] { new LiteralSubExpression("item") }
+                );
+            var defs = (new DefinitionBuilder()).BuildDefinitions(new [] { item });
+            var grammar = new Grammar(defs);
+            var itemDef = grammar.FindDefinitionByName("item");
+            var spanner = new Spanner(itemDef);
+            var input = "iTeM";
+            var errors = new List<Error>();
+
+            // action
+            var spans = spanner.Process(input.ToCharacterSource(), errors);
+
+            // assertions
+            Assert.IsEmpty(errors);
+            Assert.IsNotNull(spans);
+            Assert.AreEqual(1, spans.Length);
+            var s = spans[0];
+            Assert.AreSame(itemDef, s.DefRef);
+            Assert.AreEqual(4, s.Subspans.Count);
+            Assert.AreSame(itemDef.Nodes[0], s.Subspans[0].Node);
+            Assert.AreEqual("i", s.Subspans[0].Value);
+            Assert.IsEmpty(s.Subspans[0].Subspans);
+            Assert.AreSame(itemDef.Nodes[1], s.Subspans[1].Node);
+            Assert.AreEqual("T", s.Subspans[1].Value);
+            Assert.IsEmpty(s.Subspans[1].Subspans);
+            Assert.AreSame(itemDef.Nodes[2], s.Subspans[2].Node);
+            Assert.AreEqual("e", s.Subspans[2].Value);
+            Assert.IsEmpty(s.Subspans[2].Subspans);
+            Assert.AreSame(itemDef.Nodes[3], s.Subspans[3].Node);
+            Assert.AreEqual("M", s.Subspans[3].Value);
+            Assert.IsEmpty(s.Subspans[3].Subspans);
+        }
+
+        [Test]
+        public void TestIgnoreCase2()
+        {
+            // setup
+            var item =
+                new DefinitionExpression(
+                    name: "item",
+                    items: new [] { new LiteralSubExpression("item") }
+                );
+            var defs = (new DefinitionBuilder()).BuildDefinitions(new [] { item });
+            var grammar = new Grammar(defs);
+            var itemDef = grammar.FindDefinitionByName("item");
+            var spanner = new Spanner(itemDef);
+            var input = "iTeM";
+            var errors = new List<Error>();
+
+            // action
+            var spans = spanner.Process(input.ToCharacterSource(), errors);
+
+            // assertions
+            Assert.AreEqual(1, errors.Count);
+            Assert.IsInstanceOf<SpannerError>(errors[0]);
+            var e = (SpannerError)(errors[0]);
+            Assert.AreEqual(SpannerError.InvalidCharacter, e.ErrorType);
+            Assert.AreEqual('T', e.OffendingCharacter);
+            Assert.AreEqual(new InputPosition(1, 1, 2), e.Position);
+            Assert.IsNotNull(spans);
+            Assert.AreEqual(0, spans.Length);
+        }
     }
 }
 
