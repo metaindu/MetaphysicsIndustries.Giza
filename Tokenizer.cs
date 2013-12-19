@@ -37,6 +37,7 @@ namespace MetaphysicsIndustries.Giza
         Definition _tokenDef;
         IInputSource<InputChar> _input;
         readonly Dictionary<int, InputElementSet<Token>> _tokenizationsByIndex = new Dictionary<int, InputElementSet<Token>>();
+        readonly Set<int> _startIndexes = new Set<int>();
 
         struct TokenizationByIndex
         {
@@ -254,7 +255,9 @@ namespace MetaphysicsIndustries.Giza
             if (!ies.EndOfInput &&
                 !ies.Errors.Any())
             {
-                var nextIndex = ies.InputElements.Select((x) => x.IndexOfNextTokenization).Min();
+                _startIndexes.AddRange(ies.InputElements.Select(x => x.IndexOfNextTokenization));
+                var nextIndex = _startIndexes.Min();
+                _startIndexes.Remove(nextIndex);
                 SetCurrentIndex(nextIndex);
             }
             return ies;
