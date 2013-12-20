@@ -50,7 +50,7 @@
     <Compile Include="StringFormatterTest.cs" />
     <Compile Include="PriorityQueueTest.cs" />
     <Compile Include="CharacterSourceTest.cs" />
-    <Compile Include="SpannerTest_Sequence.cs" />
+    <Compile Include="SpannerTest\Sequence.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -69,5 +69,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SpannerTest\" />
   </ItemGroup>
 </Project>

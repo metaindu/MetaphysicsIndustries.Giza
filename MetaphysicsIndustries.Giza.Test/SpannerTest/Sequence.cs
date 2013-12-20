@@ -2,10 +2,10 @@ using System;
 using NUnit.Framework;
 using System.Collections.Generic;
 
-namespace MetaphysicsIndustries.Giza.Test
+namespace MetaphysicsIndustries.Giza.Test.SpannerTest
 {
     [TestFixture]
-    public class SpannerTest_Sequence
+    public class Sequence
     {
         Spanner spanner;
         Definition sequenceDef;
