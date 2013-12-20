@@ -66,7 +66,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             Assert.IsInstanceOf<SpannerError>(errors[0]);
             var se = (SpannerError)errors[0];
             Assert.AreEqual(SpannerError.ExcessRemainingInput, se.ErrorType);
-            Assert.AreEqual('d', se.OffendingCharacter);
+            Assert.AreEqual('d', se.OffendingInputElement);
             Assert.AreEqual(new InputPosition(3, 1, 4), se.Position);
         }
 
@@ -82,7 +82,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             Assert.IsInstanceOf<SpannerError>(errors[0]);
             var se = (SpannerError)errors[0];
             Assert.AreEqual(SpannerError.InvalidCharacter, se.ErrorType);
-            Assert.AreEqual('c', se.OffendingCharacter);
+            Assert.AreEqual('c', se.OffendingInputElement);
             Assert.AreEqual(new InputPosition(1, 1, 2), se.Position);
         }
 
@@ -98,7 +98,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             Assert.IsInstanceOf<SpannerError>(errors[0]);
             var se = (SpannerError)errors[0];
             Assert.AreEqual(SpannerError.InvalidCharacter, se.ErrorType);
-            Assert.AreEqual('d', se.OffendingCharacter);
+            Assert.AreEqual('d', se.OffendingInputElement);
             Assert.AreEqual(new InputPosition(2, 1, 3), se.Position);
         }
 
@@ -114,7 +114,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             Assert.IsInstanceOf<SpannerError>(errors[0]);
             var se = (SpannerError)errors[0];
             Assert.AreEqual(SpannerError.InvalidCharacter, se.ErrorType);
-            Assert.AreEqual('b', se.OffendingCharacter);
+            Assert.AreEqual('b', se.OffendingInputElement);
             Assert.AreEqual(new InputPosition(2, 1, 3), se.Position);
         }
 
@@ -130,7 +130,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             Assert.IsInstanceOf<SpannerError>(errors[0]);
             var se = (SpannerError)errors[0];
             Assert.AreEqual(SpannerError.InvalidCharacter, se.ErrorType);
-            Assert.AreEqual('b', se.OffendingCharacter);
+            Assert.AreEqual('b', se.OffendingInputElement);
             Assert.AreEqual(new InputPosition(0, 1, 1), se.Position);
         }
 

@@ -98,7 +98,7 @@ namespace MetaphysicsIndustries.Giza
                                 ErrorType=SpannerError.ExcessRemainingInput,
                                 Position = prevpos,
                                 LastValidMatchingNode=end.Node,
-                                OffendingCharacter=prevch.Value,
+                                OffendingInputElement=prevch.Value,
                             }));
                     }
                 }
@@ -167,7 +167,7 @@ namespace MetaphysicsIndustries.Giza
                             IEnumerable<Node> expectedNodes;
 
                             var pos = ch.Position;
-                            se.OffendingCharacter = errorCh;
+                            se.OffendingInputElement = errorCh;
                             se.Position = pos;
 
                             var cur2 = cur.Previous;
@@ -256,7 +256,7 @@ namespace MetaphysicsIndustries.Giza
                                         ErrorType=SpannerError.ExcessRemainingInput,
                                         Position = ch.Position,
                                         LastValidMatchingNode=cur.Node,
-                                        OffendingCharacter=ch.Value,
+                                        OffendingInputElement=ch.Value,
                                     }));
                                 }
                             }

@@ -1448,7 +1448,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(9, err.Column);
             Assert.AreEqual(8, err.Index);
 //            Assert.AreEqual(8, err.OffendingToken.StartPosition.Index);
-            Assert.AreEqual('$', err.OffendingCharacter);
+            Assert.AreEqual('$', err.OffendingInputElement);
 //            Assert.IsInstanceOf<DefRefNode>(err.LastValidMatchingNode);
 //            Assert.AreSame(oparenDef, (err.LastValidMatchingNode as DefRefNode).DefRef);
 //            Assert.IsNotNull(err.ExpectedNodes);
