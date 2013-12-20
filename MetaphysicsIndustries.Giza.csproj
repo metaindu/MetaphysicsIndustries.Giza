@@ -90,7 +90,6 @@
     <Compile Include="InputChar.cs" />
     <Compile Include="CharacterSource.cs" />
     <Compile Include="PriorityQueue.cs" />
-    <Compile Include="SpannerError.cs" />
     <Compile Include="SupergrammarSpannerError.cs" />
     <Compile Include="DefinitionError.cs" />
     <Compile Include="SpanError.cs" />
