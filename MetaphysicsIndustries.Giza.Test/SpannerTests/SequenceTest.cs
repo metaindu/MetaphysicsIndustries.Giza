@@ -63,9 +63,9 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             // assertions
             Assert.IsEmpty(spans);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<SpannerError>(errors[0]);
-            var se = (SpannerError)errors[0];
-            Assert.AreEqual(SpannerError.ExcessRemainingInput, se.ErrorType);
+            Assert.IsInstanceOf<ParserError<InputChar>>(errors[0]);
+            var se = (ParserError<InputChar>)errors[0];
+            Assert.AreEqual(ParserError.ExcessRemainingInput, se.ErrorType);
             Assert.AreEqual('d', se.OffendingInputElement.Value);
             Assert.AreEqual(new InputPosition(3, 1, 4), se.Position);
         }
@@ -79,9 +79,9 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             // assertions
             Assert.IsEmpty(spans);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<SpannerError>(errors[0]);
-            var se = (SpannerError)errors[0];
-            Assert.AreEqual(SpannerError.InvalidInputElement, se.ErrorType);
+            Assert.IsInstanceOf<ParserError<InputChar>>(errors[0]);
+            var se = (ParserError<InputChar>)errors[0];
+            Assert.AreEqual(ParserError.InvalidInputElement, se.ErrorType);
             Assert.AreEqual('c', se.OffendingInputElement.Value);
             Assert.AreEqual(new InputPosition(1, 1, 2), se.Position);
         }
@@ -95,9 +95,9 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             // assertions
             Assert.IsEmpty(spans);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<SpannerError>(errors[0]);
-            var se = (SpannerError)errors[0];
-            Assert.AreEqual(SpannerError.InvalidInputElement, se.ErrorType);
+            Assert.IsInstanceOf<ParserError<InputChar>>(errors[0]);
+            var se = (ParserError<InputChar>)errors[0];
+            Assert.AreEqual(ParserError.InvalidInputElement, se.ErrorType);
             Assert.AreEqual('d', se.OffendingInputElement.Value);
             Assert.AreEqual(new InputPosition(2, 1, 3), se.Position);
         }
@@ -111,9 +111,9 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             // assertions
             Assert.IsEmpty(spans);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<SpannerError>(errors[0]);
-            var se = (SpannerError)errors[0];
-            Assert.AreEqual(SpannerError.InvalidInputElement, se.ErrorType);
+            Assert.IsInstanceOf<ParserError<InputChar>>(errors[0]);
+            var se = (ParserError<InputChar>)errors[0];
+            Assert.AreEqual(ParserError.InvalidInputElement, se.ErrorType);
             Assert.AreEqual('b', se.OffendingInputElement.Value);
             Assert.AreEqual(new InputPosition(2, 1, 3), se.Position);
         }
@@ -127,9 +127,9 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             // assertions
             Assert.IsEmpty(spans);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<SpannerError>(errors[0]);
-            var se = (SpannerError)errors[0];
-            Assert.AreEqual(SpannerError.InvalidInputElement, se.ErrorType);
+            Assert.IsInstanceOf<ParserError<InputChar>>(errors[0]);
+            var se = (ParserError<InputChar>)errors[0];
+            Assert.AreEqual(ParserError.InvalidInputElement, se.ErrorType);
             Assert.AreEqual('b', se.OffendingInputElement.Value);
             Assert.AreEqual(new InputPosition(0, 1, 1), se.Position);
         }
@@ -143,9 +143,9 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             // assertions
             Assert.IsEmpty(spans);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<SpannerError>(errors[0]);
-            var se = (SpannerError)errors[0];
-            Assert.AreEqual(SpannerError.UnexpectedEndOfInput, se.ErrorType);
+            Assert.IsInstanceOf<ParserError>(errors[0]);
+            var se = (ParserError)errors[0];
+            Assert.AreEqual(ParserError.UnexpectedEndOfInput, se.ErrorType);
             Assert.AreEqual(new InputPosition(2, 1, 3), se.Position);
         }
     }

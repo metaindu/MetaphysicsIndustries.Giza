@@ -74,9 +74,9 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
 
             Assert.IsEmpty(spans);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<SpannerError>(errors[0]);
-            var err = ((SpannerError)errors[0]);
-            Assert.AreEqual(SpannerError.InvalidInputElement, err.ErrorType);
+            Assert.IsInstanceOf<ParserError<InputChar>>(errors[0]);
+            var err = ((ParserError<InputChar>)errors[0]);
+            Assert.AreEqual(ParserError.InvalidInputElement, err.ErrorType);
             Assert.AreEqual('w', err.OffendingInputElement.Value);
             Assert.AreEqual(4, err.Position.Line);
             Assert.AreEqual(2, err.Position.Column);
@@ -105,9 +105,9 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
 
             Assert.IsEmpty(spans);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<SpannerError>(errors[0]);
-            var err = ((SpannerError)errors[0]);
-            Assert.AreEqual(SpannerError.InvalidInputElement, err.ErrorType);
+            Assert.IsInstanceOf<ParserError<InputChar>>(errors[0]);
+            var err = ((ParserError<InputChar>)errors[0]);
+            Assert.AreEqual(ParserError.InvalidInputElement, err.ErrorType);
             Assert.AreEqual('w', err.OffendingInputElement.Value);
             Assert.AreEqual(4, err.Position.Line);
             Assert.AreEqual(2, err.Position.Column);
@@ -119,7 +119,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             Assert.AreEqual("directive-item", (err.ExpectedNodes.First() as DefRefNode).DefRef.Name);
 
             Assert.AreEqual(
-                "Invalid character 'w' at (4,2), after a '<': expected directive-item",
+                "Invalid token 'w' at position 4,2 (index 74). Expected directive-item.",
                 err.Description);
         }
 
@@ -201,9 +201,9 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             // assertions
             Assert.IsEmpty(spans);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<SpannerError>(errors[0]);
-            var err = ((SpannerError)errors[0]);
-            Assert.AreEqual(SpannerError.InvalidInputElement, err.ErrorType);
+            Assert.IsInstanceOf<ParserError<InputChar>>(errors[0]);
+            var err = ((ParserError<InputChar>)errors[0]);
+            Assert.AreEqual(ParserError.InvalidInputElement, err.ErrorType);
             Assert.AreEqual('$', err.OffendingInputElement.Value);
             Assert.AreEqual(1, err.Position.Line);
             Assert.AreEqual(1, err.Position.Column);
@@ -315,9 +315,9 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             Assert.AreEqual(0, spans.Length);
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<SpannerError>(errors[0]);
-            var err = ((SpannerError)errors[0]);
-            Assert.AreEqual(SpannerError.UnexpectedEndOfInput, err.ErrorType);
+            Assert.IsInstanceOf<ParserError>(errors[0]);
+            var err = ((ParserError)errors[0]);
+            Assert.AreEqual(ParserError.UnexpectedEndOfInput, err.ErrorType);
             Assert.AreEqual(1, err.Position.Line);
             Assert.AreEqual(15, err.Position.Column);
             Assert.AreEqual(14, err.Position.Index);
@@ -354,9 +354,9 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             Assert.AreEqual(0, spans.Length);
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<SpannerError>(errors[0]);
-            var err = ((SpannerError)errors[0]);
-            Assert.AreEqual(SpannerError.UnexpectedEndOfInput, err.ErrorType);
+            Assert.IsInstanceOf<ParserError>(errors[0]);
+            var err = ((ParserError)errors[0]);
+            Assert.AreEqual(ParserError.UnexpectedEndOfInput, err.ErrorType);
             Assert.AreEqual(1, err.Position.Line);
             Assert.AreEqual(14, err.Position.Column);
             Assert.AreEqual(13, err.Position.Index);
@@ -393,9 +393,9 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             Assert.AreEqual(0, spans.Length);
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<SpannerError>(errors[0]);
-            var err = ((SpannerError)errors[0]);
-            Assert.AreEqual(SpannerError.UnexpectedEndOfInput, err.ErrorType);
+            Assert.IsInstanceOf<ParserError>(errors[0]);
+            var err = ((ParserError)errors[0]);
+            Assert.AreEqual(ParserError.UnexpectedEndOfInput, err.ErrorType);
             Assert.AreEqual(1, err.Position.Line);
             Assert.AreEqual(13, err.Position.Column);
             Assert.AreEqual(12, err.Position.Index);
@@ -495,9 +495,9 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             Assert.AreEqual(0, spans.Length);
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<SpannerError>(errors[0]);
-            var err = ((SpannerError)errors[0]);
-            Assert.AreEqual(SpannerError.ExcessRemainingInput, err.ErrorType);
+            Assert.IsInstanceOf<ParserError>(errors[0]);
+            var err = ((ParserError)errors[0]);
+            Assert.AreEqual(ParserError.ExcessRemainingInput, err.ErrorType);
             Assert.AreEqual(1, err.Position.Line);
             Assert.AreEqual(15, err.Position.Column);
             Assert.AreEqual(14, err.Position.Index);
@@ -897,9 +897,9 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
 
             // assertions
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<SpannerError>(errors[0]);
-            var e = (SpannerError)(errors[0]);
-            Assert.AreEqual(SpannerError.InvalidInputElement, e.ErrorType);
+            Assert.IsInstanceOf<ParserError<InputChar>>(errors[0]);
+            var e = (ParserError<InputChar>)(errors[0]);
+            Assert.AreEqual(ParserError.InvalidInputElement, e.ErrorType);
             Assert.AreEqual('T', e.OffendingInputElement.Value);
             Assert.AreEqual(new InputPosition(1, 1, 2), e.Position);
             Assert.IsNotNull(spans);

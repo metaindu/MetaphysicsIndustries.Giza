@@ -70,7 +70,7 @@ namespace MetaphysicsIndustries.Giza
             var rejects = new Queue<NodeMatchErrorPair>();
             var ends = new Queue<NodeMatch>();
 
-            var lastReject = pair2(null, new SpannerError{ ErrorType=SpannerError.ExcessRemainingInput });
+            var lastReject = pair2(null, new ParserError<InputChar>{ ErrorType=ParserError.ExcessRemainingInput });
 
             currents.Enqueue(pair(root, null));
 
@@ -93,8 +93,8 @@ namespace MetaphysicsIndustries.Giza
                     {
                         var end = ends.Dequeue();
                         rejects.Enqueue(pair2(end,
-                            new SpannerError {
-                                ErrorType=SpannerError.ExcessRemainingInput,
+                            new ParserError<InputChar> {
+                                ErrorType=ParserError.ExcessRemainingInput,
                                 Position = prevch.Position,
                                 LastValidMatchingNode=end.Node,
                                 OffendingInputElement=prevch,
@@ -153,8 +153,8 @@ namespace MetaphysicsIndustries.Giza
 
                             // GenerateError
 
-                            SpannerError se = new SpannerError();
-                            se.ErrorType = SpannerError.InvalidInputElement;
+                            var se = new ParserError<InputChar>();
+                            se.ErrorType = ParserError.InvalidInputElement;
 
                             if (cur.Transition == TransitionType.Root)
                             {
@@ -184,7 +184,6 @@ namespace MetaphysicsIndustries.Giza
                             {
                                 //failed to start
                                 expectedNodes = _definition.StartNodes;
-                                se.ExpectedDefinition = _definition;
                                 se.ExpectedNodes = _definition.StartNodes;
                             }
                             else if (cur2.Node is CharNode)
@@ -249,8 +248,8 @@ namespace MetaphysicsIndustries.Giza
                                 else
                                 {
                                     rejects.Enqueue(pair2(cur,
-                                                          new SpannerError {
-                                        ErrorType=SpannerError.ExcessRemainingInput,
+                                        new ParserError<InputChar> {
+                                        ErrorType=ParserError.ExcessRemainingInput,
                                         Position = ch.Position,
                                         LastValidMatchingNode=cur.Node,
                                         OffendingInputElement=ch,
@@ -318,9 +317,9 @@ namespace MetaphysicsIndustries.Giza
                         currents.Enqueue(NodeMatchStackPair.CreateEndDefMatch(cur.Previous, stack));
                     }
 
-                    SpannerError se = new SpannerError {
+                    ParserError se = new ParserError<InputChar> {
                         LastValidMatchingNode=cur.Previous.Node,
-                        ErrorType=SpannerError.UnexpectedEndOfInput,
+                        ErrorType=ParserError.UnexpectedEndOfInput,
                         Position = input.CurrentPosition,
                         ExpectedNodes = cur.Previous.Node.NextNodes,
                     };
@@ -336,9 +335,9 @@ namespace MetaphysicsIndustries.Giza
                 }
                 else
                 {
-                    SpannerError se = new SpannerError {
+                    ParserError se = new ParserError<InputChar> {
                         LastValidMatchingNode=cur.Node,
-                        ErrorType=SpannerError.UnexpectedEndOfInput,
+                        ErrorType=ParserError.UnexpectedEndOfInput,
                         Position = input.CurrentPosition,
                         ExpectedNodes = cur.Node.NextNodes,
                     };
@@ -433,7 +432,7 @@ namespace MetaphysicsIndustries.Giza
             return new NodeMatchStackPair{NodeMatch = nodeMatch, MatchStack = matchStack};
         }
 
-        public static NodeMatchErrorPair pair2(NodeMatch nodeMatch, SpannerError err)
+        public static NodeMatchErrorPair pair2(NodeMatch nodeMatch, ParserError err)
         {
             return new NodeMatchErrorPair{NodeMatch=nodeMatch, Error=err};
         }

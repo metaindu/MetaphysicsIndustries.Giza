@@ -1157,9 +1157,9 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(0, spans.Length);
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<SpannerError>(errors[0]);
-            var err = ((SpannerError)errors[0]);
-            Assert.AreEqual(SpannerError.UnexpectedEndOfInput, err.ErrorType);
+            Assert.IsInstanceOf<ParserError>(errors[0]);
+            var err = ((ParserError)errors[0]);
+            Assert.AreEqual(ParserError.UnexpectedEndOfInput, err.ErrorType);
             Assert.AreEqual(1, err.Line);
             Assert.AreEqual(13, err.Column);
             Assert.IsInstanceOf<CharNode>(err.LastValidMatchingNode);
@@ -1441,9 +1441,9 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(0, spans.Length);
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
-            Assert.IsInstanceOf<SpannerError>(errors[0]);
-            var err = ((SpannerError)errors[0]);
-            Assert.AreEqual(SpannerError.InvalidInputElement, err.ErrorType);
+            Assert.IsInstanceOf<ParserError<InputChar>>(errors[0]);
+            var err = ((ParserError<InputChar>)errors[0]);
+            Assert.AreEqual(ParserError.InvalidInputElement, err.ErrorType);
             Assert.AreEqual(1, err.Line);
             Assert.AreEqual(9, err.Column);
             Assert.AreEqual(8, err.Index);

@@ -99,7 +99,15 @@ namespace MetaphysicsIndustries.Giza
             }
             else if (ExpectedNodes.Count() > 0)
             {
-                expect = string.Format("Expected {0}.", ((DefRefNode)ExpectedNodes.First()).DefRef.Name);
+                var expectedNode = ExpectedNodes.First();
+                if (expectedNode is DefRefNode)
+                {
+                    expect = string.Format("Expected {0}.", ((DefRefNode)expectedNode).DefRef.Name);
+                }
+                else //expectedNode is CharNode
+                {
+                    expect = string.Format("Expected [{0}].", ((CharNode)expectedNode).CharClass.ToUndelimitedString());
+                }
             }
 
             return expect;
