@@ -8,7 +8,7 @@ namespace MetaphysicsIndustries.Giza
 {
     public class SpannerError : Error
     {
-        public static readonly ErrorType InvalidCharacter =     new ErrorType(name:"InvalidCharacter",      descriptionFormat:"InvalidCharacter"      );
+        public static readonly ErrorType InvalidInputElement  = new ErrorType(name:"InvalidInputElement",   descriptionFormat:"InvalidInputElement"   );
         public static readonly ErrorType UnexpectedEndOfInput = new ErrorType(name:"UnexpectedEndOfInput",  descriptionFormat:"UnexpectedEndOfInput"  );
         public static readonly ErrorType ExcessRemainingInput = new ErrorType(name:"ExcessRemainingInput",  descriptionFormat:"ExcessRemainingInput"  );
 
@@ -26,7 +26,7 @@ namespace MetaphysicsIndustries.Giza
         {
             get
             {
-                if (ErrorType == InvalidCharacter)
+                if (ErrorType == InvalidInputElement)
                 {
                     Set<char> vowels = new Set<char> {
                         'a', 'e', 'i', 'o', 'u',

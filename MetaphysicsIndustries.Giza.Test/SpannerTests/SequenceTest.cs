@@ -81,7 +81,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             Assert.AreEqual(1, errors.Count);
             Assert.IsInstanceOf<SpannerError>(errors[0]);
             var se = (SpannerError)errors[0];
-            Assert.AreEqual(SpannerError.InvalidCharacter, se.ErrorType);
+            Assert.AreEqual(SpannerError.InvalidInputElement, se.ErrorType);
             Assert.AreEqual('c', se.OffendingInputElement.Value);
             Assert.AreEqual(new InputPosition(1, 1, 2), se.Position);
         }
@@ -97,7 +97,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             Assert.AreEqual(1, errors.Count);
             Assert.IsInstanceOf<SpannerError>(errors[0]);
             var se = (SpannerError)errors[0];
-            Assert.AreEqual(SpannerError.InvalidCharacter, se.ErrorType);
+            Assert.AreEqual(SpannerError.InvalidInputElement, se.ErrorType);
             Assert.AreEqual('d', se.OffendingInputElement.Value);
             Assert.AreEqual(new InputPosition(2, 1, 3), se.Position);
         }
@@ -113,7 +113,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             Assert.AreEqual(1, errors.Count);
             Assert.IsInstanceOf<SpannerError>(errors[0]);
             var se = (SpannerError)errors[0];
-            Assert.AreEqual(SpannerError.InvalidCharacter, se.ErrorType);
+            Assert.AreEqual(SpannerError.InvalidInputElement, se.ErrorType);
             Assert.AreEqual('b', se.OffendingInputElement.Value);
             Assert.AreEqual(new InputPosition(2, 1, 3), se.Position);
         }
@@ -129,7 +129,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             Assert.AreEqual(1, errors.Count);
             Assert.IsInstanceOf<SpannerError>(errors[0]);
             var se = (SpannerError)errors[0];
-            Assert.AreEqual(SpannerError.InvalidCharacter, se.ErrorType);
+            Assert.AreEqual(SpannerError.InvalidInputElement, se.ErrorType);
             Assert.AreEqual('b', se.OffendingInputElement.Value);
             Assert.AreEqual(new InputPosition(0, 1, 1), se.Position);
         }

@@ -154,7 +154,7 @@ namespace MetaphysicsIndustries.Giza
                             // GenerateError
 
                             SpannerError se = new SpannerError();
-                            se.ErrorType = SpannerError.InvalidCharacter;
+                            se.ErrorType = SpannerError.InvalidInputElement;
 
                             if (cur.Transition == TransitionType.Root)
                             {

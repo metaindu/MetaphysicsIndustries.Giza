@@ -76,7 +76,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             Assert.AreEqual(1, errors.Count);
             Assert.IsInstanceOf<SpannerError>(errors[0]);
             var err = ((SpannerError)errors[0]);
-            Assert.AreEqual(SpannerError.InvalidCharacter, err.ErrorType);
+            Assert.AreEqual(SpannerError.InvalidInputElement, err.ErrorType);
             Assert.AreEqual('w', err.OffendingInputElement.Value);
             Assert.AreEqual(4, err.Position.Line);
             Assert.AreEqual(2, err.Position.Column);
@@ -107,7 +107,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             Assert.AreEqual(1, errors.Count);
             Assert.IsInstanceOf<SpannerError>(errors[0]);
             var err = ((SpannerError)errors[0]);
-            Assert.AreEqual(SpannerError.InvalidCharacter, err.ErrorType);
+            Assert.AreEqual(SpannerError.InvalidInputElement, err.ErrorType);
             Assert.AreEqual('w', err.OffendingInputElement.Value);
             Assert.AreEqual(4, err.Position.Line);
             Assert.AreEqual(2, err.Position.Column);
@@ -203,7 +203,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             Assert.AreEqual(1, errors.Count);
             Assert.IsInstanceOf<SpannerError>(errors[0]);
             var err = ((SpannerError)errors[0]);
-            Assert.AreEqual(SpannerError.InvalidCharacter, err.ErrorType);
+            Assert.AreEqual(SpannerError.InvalidInputElement, err.ErrorType);
             Assert.AreEqual('$', err.OffendingInputElement.Value);
             Assert.AreEqual(1, err.Position.Line);
             Assert.AreEqual(1, err.Position.Column);
@@ -899,7 +899,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             Assert.AreEqual(1, errors.Count);
             Assert.IsInstanceOf<SpannerError>(errors[0]);
             var e = (SpannerError)(errors[0]);
-            Assert.AreEqual(SpannerError.InvalidCharacter, e.ErrorType);
+            Assert.AreEqual(SpannerError.InvalidInputElement, e.ErrorType);
             Assert.AreEqual('T', e.OffendingInputElement.Value);
             Assert.AreEqual(new InputPosition(1, 1, 2), e.Position);
             Assert.IsNotNull(spans);

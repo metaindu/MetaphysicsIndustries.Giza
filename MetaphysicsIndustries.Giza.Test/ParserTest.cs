@@ -1443,7 +1443,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(1, errors.Count);
             Assert.IsInstanceOf<SpannerError>(errors[0]);
             var err = ((SpannerError)errors[0]);
-            Assert.AreEqual(SpannerError.InvalidCharacter, err.ErrorType);
+            Assert.AreEqual(SpannerError.InvalidInputElement, err.ErrorType);
             Assert.AreEqual(1, err.Line);
             Assert.AreEqual(9, err.Column);
             Assert.AreEqual(8, err.Index);
