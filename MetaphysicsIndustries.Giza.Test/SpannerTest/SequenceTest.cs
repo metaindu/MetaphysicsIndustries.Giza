@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace MetaphysicsIndustries.Giza.Test.SpannerTest
 {
     [TestFixture]
-    public class Sequence
+    public class SequenceTest
     {
         Spanner spanner;
         Definition sequenceDef;

@@ -3,10 +3,10 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MetaphysicsIndustries.Giza.Test
+namespace MetaphysicsIndustries.Giza.Test.SpannerTest
 {
     [TestFixture()]
-    public class SpannerTest
+    public class BasicTest
     {
         [Test]
         public void TestOrExpr()
