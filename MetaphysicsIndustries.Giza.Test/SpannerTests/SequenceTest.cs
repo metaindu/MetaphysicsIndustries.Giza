@@ -2,7 +2,7 @@ using System;
 using NUnit.Framework;
 using System.Collections.Generic;
 
-namespace MetaphysicsIndustries.Giza.Test.SpannerTest
+namespace MetaphysicsIndustries.Giza.Test.SpannerTests
 {
     [TestFixture]
     public class SequenceTest

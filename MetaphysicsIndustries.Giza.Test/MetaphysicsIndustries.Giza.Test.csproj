@@ -49,8 +49,8 @@
     <Compile Include="StringFormatterTest.cs" />
     <Compile Include="PriorityQueueTest.cs" />
     <Compile Include="CharacterSourceTest.cs" />
-    <Compile Include="SpannerTest\BasicTest.cs" />
-    <Compile Include="SpannerTest\SequenceTest.cs" />
+    <Compile Include="SpannerTests\SequenceTest.cs" />
+    <Compile Include="SpannerTests\BasicTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -71,6 +71,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="SpannerTest\" />
+    <Folder Include="SpannerTests\" />
   </ItemGroup>
 </Project>
