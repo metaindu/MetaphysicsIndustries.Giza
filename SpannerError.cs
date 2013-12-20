@@ -13,7 +13,7 @@ namespace MetaphysicsIndustries.Giza
         public static readonly ErrorType ExcessRemainingInput = new ErrorType(name:"ExcessRemainingInput",  descriptionFormat:"ExcessRemainingInput"  );
 
         public string DescriptionString = string.Empty;
-        public char OffendingInputElement;
+        public InputChar OffendingInputElement;
         public InputPosition Position;
         public int Index { get { return Position.Index; } }
         public int Line { get { return Position.Line; } }
@@ -34,7 +34,7 @@ namespace MetaphysicsIndustries.Giza
                     };
                     StringBuilder sb = new StringBuilder();
 
-                    sb.AppendFormat("Invalid character '{0}' at ({1},{2})", OffendingInputElement, Position.Line, Position.Column);
+                    sb.AppendFormat("Invalid character '{0}' at ({1},{2})", OffendingInputElement.Value, Position.Line, Position.Column);
 
                     if (LastValidMatchingNode != null)
                     {
