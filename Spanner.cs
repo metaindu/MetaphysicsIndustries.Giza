@@ -76,7 +76,6 @@ namespace MetaphysicsIndustries.Giza
 
             input.SetCurrentIndex(startIndex);
 
-            var prevpos = input.CurrentPosition;
             var ch = input.Peek().InputElements.First();
             var prevch = ch;
 
@@ -96,7 +95,7 @@ namespace MetaphysicsIndustries.Giza
                         rejects.Enqueue(pair2(end,
                             new SpannerError {
                                 ErrorType=SpannerError.ExcessRemainingInput,
-                                Position = prevpos,
+                                Position = prevch.Position,
                                 LastValidMatchingNode=end.Node,
                                 OffendingInputElement=prevch.Value,
                             }));
@@ -282,8 +281,6 @@ namespace MetaphysicsIndustries.Giza
                 {
                     currents.Enqueue(accepts.Dequeue());
                 }
-
-                prevpos = ch.Position;
             }
 
             if (input.IsAtEnd &&
