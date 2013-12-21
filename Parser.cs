@@ -105,7 +105,7 @@ namespace MetaphysicsIndustries.Giza
             var branchTipsByIndex = new BranchTipsByIndexCollection<T>();
 
 
-            GetParseInfoFromSource(pair(root, null), branchTipsByIndex, endCandidatesByIndex, 0);
+            FindBranchTipsAndEndCandidates(pair(root, null), branchTipsByIndex, endCandidatesByIndex, 0);
 
 
             while (!inputSource.IsAtEnd)
@@ -202,7 +202,7 @@ namespace MetaphysicsIndustries.Giza
                             {
                                 Logger.WriteLine("Branch [{0}] matches [{1}]", branchnm.ToString(), inputElement.Value);
                                 var newNext = branchnm.CloneWithNewInputElement(inputElement);
-                                GetParseInfoFromSource(
+                                FindBranchTipsAndEndCandidates(
                                     pair(newNext, branchstack),
                                     branchTipsByIndex,
                                     endCandidatesByIndex,
@@ -308,7 +308,7 @@ namespace MetaphysicsIndustries.Giza
             return ends.ToArray();
         }
 
-        void GetParseInfoFromSource(
+        void FindBranchTipsAndEndCandidates(
             NodeMatchStackPair<T> source,
             BranchTipsByIndexCollection<T> branchTipsByIndex,
             EndCandidatesByIndexCollection<T> endCandidatesByIndex,
