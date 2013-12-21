@@ -125,11 +125,18 @@ namespace MetaphysicsIndustries.Giza
                     break;
                 }
 
+                Logger.WriteLine("Getting the next input element set");
                 var inputElementSet = inputSource.GetNextValue();
 
                 //if we get any errors, process them and reject
                 if (inputElementSet.Errors.ContainsNonWarnings())
                 {
+                    Logger.WriteLine("Got the following errors:");
+                    foreach (var err in inputElementSet.Errors.Where(x => !x.IsWarning))
+                    {
+                        Logger.WriteLine("  {0}", err.Description);
+                    }
+
                     while (branchTipsByIndex[index].Count > 0)
                     {
                         var branchTip = branchTipsByIndex[index].Dequeue();
@@ -144,6 +151,8 @@ namespace MetaphysicsIndustries.Giza
                 }
                 else if (inputElementSet.EndOfInput)
                 {
+                    Logger.WriteLine("Input source is at end");
+
                     while (branchTipsByIndex[index].Count > 0)
                     {
                         var branchTip = branchTipsByIndex[index].Dequeue();
@@ -159,6 +168,12 @@ namespace MetaphysicsIndustries.Giza
                 }
                 else // we have valid input elements
                 {
+                    Logger.WriteLine("Got valid input elements:");
+                    foreach (var inputElement in inputElementSet.InputElements)
+                    {
+                        Logger.WriteLine("  {0}", inputElement.Value);
+                    }
+
                     var offendingInputElement = inputElementSet.InputElements.First();
 
                     while (endCandidatesByIndex[index].Count > 0)
