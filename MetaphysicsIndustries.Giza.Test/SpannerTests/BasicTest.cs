@@ -1101,6 +1101,81 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             Assert.IsEmpty(s.Subspans[1].Subspans[0].Subspans);
             Assert.IsEmpty(s.Subspans[2].Subspans[0].Subspans);
         }
+
+        [Test]
+        public void TestSingleCharNode()
+        {
+            // setup
+            var def =
+                new Definition(
+                    name: "def",
+                    nodes: new [] {
+                        new CharNode('a')
+                    },
+                    startNodes: new [] { 0 },
+                    endNodes: new [] { 0 }
+                );
+            var grammar = new Grammar(def);
+            var spanner = new Spanner(def);
+            var errors = new List<Error>();
+
+            // action
+            var spans = spanner.Process("a".ToCharacterSource(), errors);
+
+            // assertions
+            Assert.IsEmpty(errors);
+            Assert.AreEqual(1, spans.Length);
+            Assert.AreSame(def, spans[0].DefRef);
+            Assert.AreEqual(1, spans[0].Subspans.Count);
+            Assert.AreSame(def.Nodes[0], spans[0].Subspans[0].Node);
+            Assert.IsEmpty(spans[0].Subspans[0].Subspans);
+            Assert.AreEqual("a", spans[0].Subspans[0].Value);
+        }
+
+        [Test]
+        public void TestDefRefNode()
+        {
+            var chardef =
+                new Definition(
+                    name: "chardef",
+                    nodes: new [] {
+                        new CharNode('a')
+                    },
+                    startNodes: new [] { 0 },
+                    endNodes: new [] { 0 }
+                );
+            var defdef =
+                new Definition(
+                    name: "defdef",
+                    nodes: new [] {
+                        new DefRefNode(chardef)
+                    },
+                    startNodes: new [] { 0 },
+                    endNodes: new [] { 0 }
+                );
+            var grammar = new Grammar(defdef, chardef);
+            var spanner = new Spanner(defdef);
+            var errors = new List<Error>();
+
+            // action
+            var spans = spanner.Process("a".ToCharacterSource(), errors);
+
+            // assertions
+            Assert.IsEmpty(errors);
+            Assert.AreEqual(1, spans.Length);
+            var s = spans[0];
+            Assert.AreSame(defdef, s.DefRef);
+            Assert.AreEqual(1, s.Subspans.Count);
+            var s2 = s.Subspans[0];
+            Assert.AreSame(chardef, s2.DefRef);
+            Assert.AreEqual(1, s2.Subspans.Count);
+            var s3 = s2.Subspans[0];
+            Assert.AreSame(chardef.Nodes[0], s3.Node);
+            Assert.AreEqual("a", s3.Value);
+            Assert.IsEmpty(s3.Subspans);
+
+
+        }
     }
 }
 
