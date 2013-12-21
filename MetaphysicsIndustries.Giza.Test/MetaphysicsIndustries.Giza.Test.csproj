@@ -51,6 +51,8 @@
     <Compile Include="CharacterSourceTest.cs" />
     <Compile Include="SpannerTests\SequenceTest.cs" />
     <Compile Include="SpannerTests\BasicTest.cs" />
+    <Compile Include="SpannerTests\MindWhitespaceOff.cs" />
+    <Compile Include="SpannerTests\MindWhitespaceOn.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

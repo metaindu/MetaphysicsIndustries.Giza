@@ -1173,8 +1173,6 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             Assert.AreSame(chardef.Nodes[0], s3.Node);
             Assert.AreEqual("a", s3.Value);
             Assert.IsEmpty(s3.Subspans);
-
-
         }
     }
 }
