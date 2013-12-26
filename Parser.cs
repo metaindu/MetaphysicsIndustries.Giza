@@ -201,12 +201,7 @@ namespace MetaphysicsIndustries.Giza
                             if (BranchTipMatchesInputElement(branchnm, inputElement))
                             {
                                 Logger.WriteLine("Branch [{0}] matches [{1}]", branchnm.ToString(), inputElement.Value);
-                                var newNext = branchnm.CloneWithNewInputElement(inputElement);
-                                FindBranchTipsAndEndCandidates(
-                                    pair(newNext, branchstack),
-                                    branchTipsByIndex,
-                                    endCandidatesByIndex,
-                                    inputElement.IndexOfNextElement);
+                                BindInputElementToBranchTip(inputElement, branchTip, branchTipsByIndex, endCandidatesByIndex);
                                 matched = true;
                             }
                         }
@@ -306,6 +301,20 @@ namespace MetaphysicsIndustries.Giza
             }
 
             return ends.ToArray();
+        }
+
+        protected virtual void BindInputElementToBranchTip(
+            T inputElement,
+            BranchTip<T> branchTip,
+            BranchTipsByIndexCollection<T> branchTipsByIndex,
+            EndCandidatesByIndexCollection<T> endCandidatesByIndex)
+        {
+            var newNext = branchTip.Branch.NodeMatch.CloneWithNewInputElement(inputElement);
+            FindBranchTipsAndEndCandidates(
+                pair(newNext, branchTip.Branch.MatchStack),
+                branchTipsByIndex,
+                endCandidatesByIndex,
+                inputElement.IndexOfNextElement);
         }
 
         void FindBranchTipsAndEndCandidates(
