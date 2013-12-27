@@ -105,10 +105,16 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        public NodeMatch<T> CloneWithNewInputElement(T inputElement)
+        public NodeMatch<T> Clone()
         {
             var nm = new NodeMatch<T>(this.Node, this.Transition, this.Previous);
             nm.StartDef = this.StartDef;
+            return nm;
+        }
+        public NodeMatch<T> CloneWithNewInputElement(T inputElement)
+        {
+            var nm = Clone();
+
             nm.InputElement = inputElement;
 
             return nm;
