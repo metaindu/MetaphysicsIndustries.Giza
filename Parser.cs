@@ -204,6 +204,12 @@ namespace MetaphysicsIndustries.Giza
                                 BindInputElementToBranchTip(inputElement, branchTip, branchTipsByIndex, endCandidatesByIndex);
                                 matched = true;
                             }
+                            else if (BranchTipIgnoresInputElement(branchTip, inputElement))
+                            {
+                                Logger.WriteLine("Branch [{0}] ignores [{1}]", branchnm.ToString(), inputElement.Value);
+                                IgnoreInputElementForBranchTip(inputElement, branchTip, branchTipsByIndex, endCandidatesByIndex);
+                                matched = true;
+                            }
                         }
 
                         ParserError<T> err2 = null;
@@ -301,6 +307,16 @@ namespace MetaphysicsIndustries.Giza
             }
 
             return ends.ToArray();
+        }
+
+        protected virtual bool BranchTipIgnoresInputElement(BranchTip<T> branchTip, T inputElement)
+        {
+            return false;
+        }
+
+        protected virtual void IgnoreInputElementForBranchTip(T inputElement, BranchTip<T> branchTip, BranchTipsByIndexCollection<T> branchTipsByIndex, EndCandidatesByIndexCollection<T> endCandidatesByIndex)
+        {
+            throw new NotImplementedException();
         }
 
         protected virtual void BindInputElementToBranchTip(
