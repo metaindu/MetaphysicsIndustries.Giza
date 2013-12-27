@@ -39,6 +39,37 @@ namespace MetaphysicsIndustries.Giza
         {
             return (branchTip.Node as CharNode).Matches(inputElement.Value);
         }
+
+        protected override bool BranchTipIgnoresInputElement(BranchTip<InputChar> branchTip, InputChar inputElement)
+        {
+            if (char.IsWhiteSpace(inputElement.Value) &&
+                !branchTip.Branch.NodeMatch.Node.ParentDefinition.MindWhitespace)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        protected override void IgnoreInputElementForBranchTip(InputChar inputElement, BranchTip<InputChar> branchTip, BranchTipsByIndexCollection<InputChar> branchTipsByIndex, EndCandidatesByIndexCollection<InputChar> endCandidatesByIndex)
+        {
+            var nm = branchTip.Branch.NodeMatch;
+            var clone = nm.Clone();
+            var index = ((IInputElement)inputElement).IndexOfNextElement;
+            clone.AlternateStartPosition =
+                new InputPosition(
+                    index,
+                    nm.AlternateStartPosition.Line,
+                    nm.AlternateStartPosition.Column
+                );
+            branchTipsByIndex[index].Enqueue(
+                new BranchTip<InputChar> {
+                    Branch = pair(clone, branchTip.Branch.MatchStack),
+                    Source = branchTip.Source
+                }
+            );
+        }
     }
 }
 
