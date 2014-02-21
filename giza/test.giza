@@ -1,0 +1,10 @@
+﻿
+expr = ( add-expr | mult-expr | value );
+
+add-expr = mult-expr2 ( '+' mult-expr2 )+;
+
+mult-expr2 = ( mult-expr | value );
+
+mult-expr = value ( '*' value )+;
+
+value = ( [_\l]:char[_\l\d]*:char | [\d]+:char );

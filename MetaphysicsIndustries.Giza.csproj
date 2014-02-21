@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{98B42ACF-8370-4428-9D41-73FF1CEFB2E4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MetaphysicsIndustries.Giza</RootNamespace>
+    <AssemblyName>MetaphysicsIndustries.Giza</AssemblyName>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseSpanner.cs" />
+    <Compile Include="BinarySpanner.cs" />
+    <Compile Include="CharClass.cs" />
+    <Compile Include="GenericSpanner.cs" />
+    <Compile Include="GrammarElement.cs" />
+    <Compile Include="Span.cs" />
+    <Compile Include="SpannerBuilder.cs" />
+    <Compile Include="SpannerServices.cs" />
+    <Compile Include="SupergrammarRenderer.cs" />
+    <Compile Include="SimpleDefinitionNode.cs" />
+    <Compile Include="SimpleNode.cs" />
+    <Compile Include="SupergrammarSpanner.cs" />
+    <Content Include="BinarySpanner example grammar.txt" />
+    <Content Include="BinarySpannerGrammar.txt" />
+    <Content Include="BitmapBinaryGrammar.txt" />
+    <Content Include="CSharp2SyntacticGrammar.txt" />
+    <Compile Include="CSharpCompiler.cs" />
+    <Compile Include="DefinitionBuilder.cs" />
+    <Compile Include="DefinitionNode.cs" />
+    <Compile Include="Node.cs" />
+    <Compile Include="NodeType.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Giza.cd" />
+    <None Include="key.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MetaphysicsIndustries.Build\MetaphysicsIndustries.Build.csproj">
+      <Project>{81E21BB7-DD6A-49AC-93DD-D53F55CF7C60}</Project>
+      <Name>MetaphysicsIndustries.Build</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MetaphysicsIndustries.Collections\MetaphysicsIndustries.Collections.csproj">
+      <Project>{FF2B8A90-E8D2-4CF6-81E6-4A7BCE1FF900}</Project>
+      <Name>MetaphysicsIndustries.Collections</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CppCliGrammar.txt" />
+    <Content Include="CSharp2LexicalGrammar.txt" />
+    <Content Include="CSharp3Grammar.txt" />
+    <Content Include="ExeBinaryGrammar.txt" />
+    <Content Include="Supergrammar.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

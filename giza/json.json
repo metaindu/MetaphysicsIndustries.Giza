@@ -1,0 +1,14 @@
+﻿{
+	"text": "this is json",
+	"integer": 12345,
+	"float": 12.345e6,
+	"string": "string",
+	"hash": {
+		"value": "this is a hash",
+		"stuff": "it has keys and values"
+	},
+	"array": [
+		"this is an array",
+		"it has elements"
+	]
+}

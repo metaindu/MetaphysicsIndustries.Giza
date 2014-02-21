@@ -1,0 +1,1783 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<StringSerializationGraph xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Objects>
+    <Object TypeIndex="0" Index="0">
+      <ArrayLowerBounds>
+        <int>0</int>
+      </ArrayLowerBounds>
+      <ArrayUpperBounds>
+        <int>10</int>
+      </ArrayUpperBounds>
+      <Fields>
+        <ReferenceField FieldName="" ReferenceIndex="1" />
+        <ReferenceField FieldName="" ReferenceIndex="2" />
+        <ReferenceField FieldName="" ReferenceIndex="3" />
+        <ReferenceField FieldName="" ReferenceIndex="4" />
+        <ReferenceField FieldName="" ReferenceIndex="5" />
+        <ReferenceField FieldName="" ReferenceIndex="6" />
+        <ReferenceField FieldName="" ReferenceIndex="7" />
+        <ReferenceField FieldName="" ReferenceIndex="8" />
+        <ReferenceField FieldName="" ReferenceIndex="9" />
+        <ReferenceField FieldName="" ReferenceIndex="10" />
+        <ReferenceField FieldName="" ReferenceIndex="11" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="1" Index="1">
+      <Fields>
+        <ValueField FieldName="asdhhfgjr5d" Type="System.String" Value="asdf" />
+        <ReferenceField FieldName="AmethystElement+_node" ReferenceIndex="12" />
+        <ReferenceField FieldName="AmethystElement+_terminals" ReferenceIndex="13" />
+        <ReferenceField FieldName="AmethystElement+_terminalsByConnection" ReferenceIndex="14" />
+        <ReferenceField FieldName="Element+LocationChanged" ReferenceIndex="null" />
+        <ReferenceField FieldName="Element+SizeChanging" ReferenceIndex="null" />
+        <ReferenceField FieldName="Element+LocationChanging" ReferenceIndex="null" />
+        <ReferenceField FieldName="Element+SizeChanged" ReferenceIndex="null" />
+        <ReferenceField FieldName="Element+_inbound" ReferenceIndex="15" />
+        <ReferenceField FieldName="Element+_outbound" ReferenceIndex="16" />
+        <ReferenceField FieldName="Box+_text" ReferenceIndex="null" />
+        <ReferenceField FieldName="Box+_rect" ReferenceIndex="17" />
+        <ReferenceField FieldName="Entity+BoundingBoxChanged" ReferenceIndex="null" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="2" Index="2">
+      <Fields>
+        <ReferenceField FieldName="AmethystElement+_node" ReferenceIndex="18" />
+        <ReferenceField FieldName="AmethystElement+_terminals" ReferenceIndex="19" />
+        <ReferenceField FieldName="AmethystElement+_terminalsByConnection" ReferenceIndex="20" />
+        <ReferenceField FieldName="Element+LocationChanged" ReferenceIndex="null" />
+        <ReferenceField FieldName="Element+SizeChanging" ReferenceIndex="null" />
+        <ReferenceField FieldName="Element+LocationChanging" ReferenceIndex="null" />
+        <ReferenceField FieldName="Element+SizeChanged" ReferenceIndex="null" />
+        <ReferenceField FieldName="Element+_inbound" ReferenceIndex="21" />
+        <ReferenceField FieldName="Element+_outbound" ReferenceIndex="22" />
+        <ReferenceField FieldName="Box+_text" ReferenceIndex="null" />
+        <ReferenceField FieldName="Box+_rect" ReferenceIndex="23" />
+        <ReferenceField FieldName="Entity+BoundingBoxChanged" ReferenceIndex="null" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="3" Index="3">
+      <Fields>
+        <ReferenceField FieldName="_node" ReferenceIndex="24" />
+        <ReferenceField FieldName="_terminals" ReferenceIndex="25" />
+        <ReferenceField FieldName="_terminalsByConnection" ReferenceIndex="26" />
+        <ReferenceField FieldName="_inbound" ReferenceIndex="27" />
+        <ReferenceField FieldName="_outbound" ReferenceIndex="28" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="29" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="4" Index="4">
+      <Fields>
+        <ReferenceField FieldName="_node" ReferenceIndex="30" />
+        <ReferenceField FieldName="_terminals" ReferenceIndex="31" />
+        <ReferenceField FieldName="_terminalsByConnection" ReferenceIndex="32" />
+        <ReferenceField FieldName="_inbound" ReferenceIndex="33" />
+        <ReferenceField FieldName="_outbound" ReferenceIndex="34" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="35" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="5" Index="5">
+      <Fields>
+        <ReferenceField FieldName="_node" ReferenceIndex="36" />
+        <ReferenceField FieldName="_terminals" ReferenceIndex="37" />
+        <ReferenceField FieldName="_terminalsByConnection" ReferenceIndex="38" />
+        <ReferenceField FieldName="_inbound" ReferenceIndex="39" />
+        <ReferenceField FieldName="_outbound" ReferenceIndex="40" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="41" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="6" Index="6">
+      <Fields>
+        <ReferenceField FieldName="_fromTerminal" ReferenceIndex="42" />
+        <ReferenceField FieldName="_toTerminal" ReferenceIndex="43" />
+        <ReferenceField FieldName="Path+_pathJoints" ReferenceIndex="44" />
+        <ReferenceField FieldName="Path+_to" ReferenceIndex="5" />
+        <ReferenceField FieldName="Path+_from" ReferenceIndex="4" />
+        <ReferenceField FieldName="Entity+BoundingBoxChanged" ReferenceIndex="null" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="6" Index="7">
+      <Fields>
+        <ReferenceField FieldName="_fromTerminal" ReferenceIndex="45" />
+        <ReferenceField FieldName="_toTerminal" ReferenceIndex="46" />
+        <ReferenceField FieldName="Path+_pathJoints" ReferenceIndex="47" />
+        <ReferenceField FieldName="Path+_to" ReferenceIndex="4" />
+        <ReferenceField FieldName="Path+_from" ReferenceIndex="3" />
+        <ReferenceField FieldName="Entity+BoundingBoxChanged" ReferenceIndex="null" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="6" Index="8">
+      <Fields>
+        <ReferenceField FieldName="_fromTerminal" ReferenceIndex="48" />
+        <ReferenceField FieldName="_toTerminal" ReferenceIndex="49" />
+        <ReferenceField FieldName="Path+_pathJoints" ReferenceIndex="50" />
+        <ReferenceField FieldName="Path+_to" ReferenceIndex="3" />
+        <ReferenceField FieldName="Path+_from" ReferenceIndex="2" />
+        <ReferenceField FieldName="Entity+BoundingBoxChanged" ReferenceIndex="null" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="6" Index="9">
+      <Fields>
+        <ReferenceField FieldName="_fromTerminal" ReferenceIndex="51" />
+        <ReferenceField FieldName="_toTerminal" ReferenceIndex="52" />
+        <ReferenceField FieldName="Path+_pathJoints" ReferenceIndex="53" />
+        <ReferenceField FieldName="Path+_to" ReferenceIndex="2" />
+        <ReferenceField FieldName="Path+_from" ReferenceIndex="1" />
+        <ReferenceField FieldName="Entity+BoundingBoxChanged" ReferenceIndex="null" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="10">
+      <Fields>
+        <ReferenceField FieldName="AmethystElement+_node" ReferenceIndex="54" />
+        <ReferenceField FieldName="AmethystElement+_terminals" ReferenceIndex="55" />
+        <ReferenceField FieldName="AmethystElement+_terminalsByConnection" ReferenceIndex="56" />
+        <ReferenceField FieldName="Element+LocationChanged" ReferenceIndex="null" />
+        <ReferenceField FieldName="Element+SizeChanging" ReferenceIndex="null" />
+        <ReferenceField FieldName="Element+LocationChanging" ReferenceIndex="null" />
+        <ReferenceField FieldName="Element+SizeChanged" ReferenceIndex="null" />
+        <ReferenceField FieldName="Element+_inbound" ReferenceIndex="57" />
+        <ReferenceField FieldName="Element+_outbound" ReferenceIndex="58" />
+        <ReferenceField FieldName="Box+_text" ReferenceIndex="null" />
+        <ReferenceField FieldName="Box+_rect" ReferenceIndex="59" />
+        <ReferenceField FieldName="Entity+BoundingBoxChanged" ReferenceIndex="null" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="6" Index="11">
+      <Fields>
+        <ReferenceField FieldName="_fromTerminal" ReferenceIndex="60" />
+        <ReferenceField FieldName="_toTerminal" ReferenceIndex="61" />
+        <ReferenceField FieldName="Path+_pathJoints" ReferenceIndex="62" />
+        <ReferenceField FieldName="Path+_to" ReferenceIndex="5" />
+        <ReferenceField FieldName="Path+_from" ReferenceIndex="10" />
+        <ReferenceField FieldName="Entity+BoundingBoxChanged" ReferenceIndex="null" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="8" Index="12">
+      <Fields>
+        <ValueField FieldName="_value" Type="System.String" Value="C:\Metaphysics Industries\Projects\MetaphysicsIndustries.Giza\CSharp2LexicalGrammar.txt" />
+        <ReferenceField FieldName="_output" ReferenceIndex="63" />
+        <ValueField FieldName="Node+_name" Type="System.String" Value="String Literal" />
+        <ReferenceField FieldName="Node+_inputConnectionBases" ReferenceIndex="64" />
+        <ReferenceField FieldName="Node+_outputConnectionBases" ReferenceIndex="65" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="13">
+      <Fields>
+        <ReferenceField FieldName="_parent" ReferenceIndex="1" />
+        <ReferenceField FieldName="_set" ReferenceIndex="66" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="10" Index="14">
+      <Fields>
+        <ValueField FieldName="Version" Type="System.Int32" Value="1" />
+        <ReferenceField FieldName="Comparer" ReferenceIndex="67" />
+        <ValueField FieldName="HashSize" Type="System.Int32" Value="3" />
+        <ReferenceField FieldName="KeyValuePairs" ReferenceIndex="68" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="11" Index="15">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="1" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="69" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="12" Index="16">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="1" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="70" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="13" Index="17">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="203" />
+        <ValueField FieldName="_y" Type="System.Single" Value="126" />
+        <ValueField FieldName="_width" Type="System.Single" Value="150" />
+        <ValueField FieldName="_height" Type="System.Single" Value="30" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="14" Index="18">
+      <Fields>
+        <ReferenceField FieldName="_input" ReferenceIndex="71" />
+        <ReferenceField FieldName="_output" ReferenceIndex="72" />
+        <ValueField FieldName="Node+_name" Type="System.String" Value="Load Text File" />
+        <ReferenceField FieldName="Node+_inputConnectionBases" ReferenceIndex="73" />
+        <ReferenceField FieldName="Node+_outputConnectionBases" ReferenceIndex="74" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="19">
+      <Fields>
+        <ReferenceField FieldName="_parent" ReferenceIndex="2" />
+        <ReferenceField FieldName="_set" ReferenceIndex="75" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="10" Index="20">
+      <Fields>
+        <ValueField FieldName="Version" Type="System.Int32" Value="2" />
+        <ReferenceField FieldName="Comparer" ReferenceIndex="67" />
+        <ValueField FieldName="HashSize" Type="System.Int32" Value="3" />
+        <ReferenceField FieldName="KeyValuePairs" ReferenceIndex="76" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="11" Index="21">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="2" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="77" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="12" Index="22">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="2" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="78" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="13" Index="23">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="252" />
+        <ValueField FieldName="_y" Type="System.Single" Value="223" />
+        <ValueField FieldName="_width" Type="System.Single" Value="120" />
+        <ValueField FieldName="_height" Type="System.Single" Value="60" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="15" Index="24">
+      <Fields>
+        <ReferenceField FieldName="_input" ReferenceIndex="79" />
+        <ReferenceField FieldName="_output" ReferenceIndex="80" />
+        <ValueField FieldName="_name" Type="System.String" Value="SupergrammarParser" />
+        <ReferenceField FieldName="_inputConnectionBases" ReferenceIndex="81" />
+        <ReferenceField FieldName="_outputConnectionBases" ReferenceIndex="82" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="25">
+      <Fields>
+        <ReferenceField FieldName="_parent" ReferenceIndex="3" />
+        <ReferenceField FieldName="_set" ReferenceIndex="83" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="10" Index="26">
+      <Fields>
+        <ValueField FieldName="Version" Type="System.Int32" Value="2" />
+        <ReferenceField FieldName="Comparer" ReferenceIndex="67" />
+        <ValueField FieldName="HashSize" Type="System.Int32" Value="3" />
+        <ReferenceField FieldName="KeyValuePairs" ReferenceIndex="84" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="11" Index="27">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="3" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="85" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="12" Index="28">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="3" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="86" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="13" Index="29">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="428" />
+        <ValueField FieldName="_y" Type="System.Single" Value="219" />
+        <ValueField FieldName="_width" Type="System.Single" Value="80" />
+        <ValueField FieldName="_height" Type="System.Single" Value="60" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="16" Index="30">
+      <Fields>
+        <ReferenceField FieldName="_input" ReferenceIndex="87" />
+        <ReferenceField FieldName="_output" ReferenceIndex="88" />
+        <ValueField FieldName="_name" Type="System.String" Value="DefinitionBuilder" />
+        <ReferenceField FieldName="_inputConnectionBases" ReferenceIndex="89" />
+        <ReferenceField FieldName="_outputConnectionBases" ReferenceIndex="90" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="31">
+      <Fields>
+        <ReferenceField FieldName="_parent" ReferenceIndex="4" />
+        <ReferenceField FieldName="_set" ReferenceIndex="91" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="10" Index="32">
+      <Fields>
+        <ValueField FieldName="Version" Type="System.Int32" Value="2" />
+        <ReferenceField FieldName="Comparer" ReferenceIndex="67" />
+        <ValueField FieldName="HashSize" Type="System.Int32" Value="3" />
+        <ReferenceField FieldName="KeyValuePairs" ReferenceIndex="92" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="11" Index="33">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="4" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="93" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="12" Index="34">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="4" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="94" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="13" Index="35">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="567" />
+        <ValueField FieldName="_y" Type="System.Single" Value="231" />
+        <ValueField FieldName="_width" Type="System.Single" Value="80" />
+        <ValueField FieldName="_height" Type="System.Single" Value="60" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="17" Index="36">
+      <Fields>
+        <ReferenceField FieldName="_input" ReferenceIndex="95" />
+        <ReferenceField FieldName="_className" ReferenceIndex="96" />
+        <ReferenceField FieldName="_output" ReferenceIndex="97" />
+        <ValueField FieldName="_name" Type="System.String" Value="ParserBuilder" />
+        <ReferenceField FieldName="_inputConnectionBases" ReferenceIndex="98" />
+        <ReferenceField FieldName="_outputConnectionBases" ReferenceIndex="99" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="37">
+      <Fields>
+        <ReferenceField FieldName="_parent" ReferenceIndex="5" />
+        <ReferenceField FieldName="_set" ReferenceIndex="100" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="10" Index="38">
+      <Fields>
+        <ValueField FieldName="Version" Type="System.Int32" Value="3" />
+        <ReferenceField FieldName="Comparer" ReferenceIndex="67" />
+        <ValueField FieldName="HashSize" Type="System.Int32" Value="3" />
+        <ReferenceField FieldName="KeyValuePairs" ReferenceIndex="101" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="11" Index="39">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="5" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="102" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="12" Index="40">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="5" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="103" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="13" Index="41">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="689" />
+        <ValueField FieldName="_y" Type="System.Single" Value="234" />
+        <ValueField FieldName="_width" Type="System.Single" Value="80" />
+        <ValueField FieldName="_height" Type="System.Single" Value="60" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="18" Index="42">
+      <Fields>
+        <ReferenceField FieldName="_outputConnectionBase" ReferenceIndex="88" />
+        <ReferenceField FieldName="_amethystPaths" ReferenceIndex="104" />
+        <ReferenceField FieldName="Terminal+_side" ReferenceIndex="105" />
+        <ValueField FieldName="Terminal+_position" Type="System.Single" Value="30" />
+        <ValueField FieldName="Terminal+_size" Type="System.Single" Value="7" />
+        <ReferenceField FieldName="Terminal+_parentAmethystElement" ReferenceIndex="4" />
+        <ReferenceField FieldName="Terminal+_displayText" ReferenceIndex="null" />
+        <ReferenceField FieldName="Entity+BoundingBoxChanged" ReferenceIndex="null" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="19" Index="43">
+      <Fields>
+        <ReferenceField FieldName="_inputConnectionBase" ReferenceIndex="95" />
+        <ReferenceField FieldName="_path" ReferenceIndex="6" />
+        <ReferenceField FieldName="Terminal+_side" ReferenceIndex="106" />
+        <ValueField FieldName="Terminal+_position" Type="System.Single" Value="30" />
+        <ValueField FieldName="Terminal+_size" Type="System.Single" Value="7" />
+        <ReferenceField FieldName="Terminal+_parentAmethystElement" ReferenceIndex="5" />
+        <ReferenceField FieldName="Terminal+_displayText" ReferenceIndex="null" />
+        <ReferenceField FieldName="Entity+BoundingBoxChanged" ReferenceIndex="null" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="20" Index="44">
+      <Fields>
+        <ReferenceField FieldName="_items" ReferenceIndex="107" />
+        <ValueField FieldName="_size" Type="System.Int32" Value="4" />
+        <ValueField FieldName="_version" Type="System.Int32" Value="33" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="18" Index="45">
+      <Fields>
+        <ReferenceField FieldName="_outputConnectionBase" ReferenceIndex="80" />
+        <ReferenceField FieldName="_amethystPaths" ReferenceIndex="108" />
+        <ReferenceField FieldName="Terminal+_side" ReferenceIndex="105" />
+        <ValueField FieldName="Terminal+_position" Type="System.Single" Value="30" />
+        <ValueField FieldName="Terminal+_size" Type="System.Single" Value="7" />
+        <ReferenceField FieldName="Terminal+_parentAmethystElement" ReferenceIndex="3" />
+        <ReferenceField FieldName="Terminal+_displayText" ReferenceIndex="null" />
+        <ReferenceField FieldName="Entity+BoundingBoxChanged" ReferenceIndex="null" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="19" Index="46">
+      <Fields>
+        <ReferenceField FieldName="_inputConnectionBase" ReferenceIndex="87" />
+        <ReferenceField FieldName="_path" ReferenceIndex="7" />
+        <ReferenceField FieldName="Terminal+_side" ReferenceIndex="106" />
+        <ValueField FieldName="Terminal+_position" Type="System.Single" Value="30" />
+        <ValueField FieldName="Terminal+_size" Type="System.Single" Value="7" />
+        <ReferenceField FieldName="Terminal+_parentAmethystElement" ReferenceIndex="4" />
+        <ReferenceField FieldName="Terminal+_displayText" ReferenceIndex="null" />
+        <ReferenceField FieldName="Entity+BoundingBoxChanged" ReferenceIndex="null" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="20" Index="47">
+      <Fields>
+        <ReferenceField FieldName="_items" ReferenceIndex="109" />
+        <ValueField FieldName="_size" Type="System.Int32" Value="4" />
+        <ValueField FieldName="_version" Type="System.Int32" Value="33" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="18" Index="48">
+      <Fields>
+        <ReferenceField FieldName="_outputConnectionBase" ReferenceIndex="72" />
+        <ReferenceField FieldName="_amethystPaths" ReferenceIndex="110" />
+        <ReferenceField FieldName="Terminal+_side" ReferenceIndex="105" />
+        <ValueField FieldName="Terminal+_position" Type="System.Single" Value="30" />
+        <ValueField FieldName="Terminal+_size" Type="System.Single" Value="7" />
+        <ReferenceField FieldName="Terminal+_parentAmethystElement" ReferenceIndex="2" />
+        <ReferenceField FieldName="Terminal+_displayText" ReferenceIndex="null" />
+        <ReferenceField FieldName="Entity+BoundingBoxChanged" ReferenceIndex="null" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="19" Index="49">
+      <Fields>
+        <ReferenceField FieldName="_inputConnectionBase" ReferenceIndex="79" />
+        <ReferenceField FieldName="_path" ReferenceIndex="8" />
+        <ReferenceField FieldName="Terminal+_side" ReferenceIndex="106" />
+        <ValueField FieldName="Terminal+_position" Type="System.Single" Value="30" />
+        <ValueField FieldName="Terminal+_size" Type="System.Single" Value="7" />
+        <ReferenceField FieldName="Terminal+_parentAmethystElement" ReferenceIndex="3" />
+        <ReferenceField FieldName="Terminal+_displayText" ReferenceIndex="null" />
+        <ReferenceField FieldName="Entity+BoundingBoxChanged" ReferenceIndex="null" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="20" Index="50">
+      <Fields>
+        <ReferenceField FieldName="_items" ReferenceIndex="111" />
+        <ValueField FieldName="_size" Type="System.Int32" Value="4" />
+        <ValueField FieldName="_version" Type="System.Int32" Value="33" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="18" Index="51">
+      <Fields>
+        <ReferenceField FieldName="_outputConnectionBase" ReferenceIndex="63" />
+        <ReferenceField FieldName="_amethystPaths" ReferenceIndex="112" />
+        <ReferenceField FieldName="Terminal+_side" ReferenceIndex="105" />
+        <ValueField FieldName="Terminal+_position" Type="System.Single" Value="15" />
+        <ValueField FieldName="Terminal+_size" Type="System.Single" Value="7" />
+        <ReferenceField FieldName="Terminal+_parentAmethystElement" ReferenceIndex="1" />
+        <ReferenceField FieldName="Terminal+_displayText" ReferenceIndex="null" />
+        <ReferenceField FieldName="Entity+BoundingBoxChanged" ReferenceIndex="null" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="19" Index="52">
+      <Fields>
+        <ReferenceField FieldName="_inputConnectionBase" ReferenceIndex="71" />
+        <ReferenceField FieldName="_path" ReferenceIndex="9" />
+        <ReferenceField FieldName="Terminal+_side" ReferenceIndex="106" />
+        <ValueField FieldName="Terminal+_position" Type="System.Single" Value="30" />
+        <ValueField FieldName="Terminal+_size" Type="System.Single" Value="7" />
+        <ReferenceField FieldName="Terminal+_parentAmethystElement" ReferenceIndex="2" />
+        <ReferenceField FieldName="Terminal+_displayText" ReferenceIndex="null" />
+        <ReferenceField FieldName="Entity+BoundingBoxChanged" ReferenceIndex="null" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="20" Index="53">
+      <Fields>
+        <ReferenceField FieldName="_items" ReferenceIndex="113" />
+        <ValueField FieldName="_size" Type="System.Int32" Value="6" />
+        <ValueField FieldName="_version" Type="System.Int32" Value="33" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="8" Index="54">
+      <Fields>
+        <ValueField FieldName="_value" Type="System.String" Value="CSharp2Lexical" />
+        <ReferenceField FieldName="_output" ReferenceIndex="114" />
+        <ValueField FieldName="Node+_name" Type="System.String" Value="String Literal" />
+        <ReferenceField FieldName="Node+_inputConnectionBases" ReferenceIndex="115" />
+        <ReferenceField FieldName="Node+_outputConnectionBases" ReferenceIndex="116" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="55">
+      <Fields>
+        <ReferenceField FieldName="_parent" ReferenceIndex="10" />
+        <ReferenceField FieldName="_set" ReferenceIndex="117" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="10" Index="56">
+      <Fields>
+        <ValueField FieldName="Version" Type="System.Int32" Value="1" />
+        <ReferenceField FieldName="Comparer" ReferenceIndex="67" />
+        <ValueField FieldName="HashSize" Type="System.Int32" Value="3" />
+        <ReferenceField FieldName="KeyValuePairs" ReferenceIndex="118" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="11" Index="57">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="10" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="119" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="12" Index="58">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="10" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="120" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="13" Index="59">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="569" />
+        <ValueField FieldName="_y" Type="System.Single" Value="114" />
+        <ValueField FieldName="_width" Type="System.Single" Value="150" />
+        <ValueField FieldName="_height" Type="System.Single" Value="30" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="18" Index="60">
+      <Fields>
+        <ReferenceField FieldName="_outputConnectionBase" ReferenceIndex="114" />
+        <ReferenceField FieldName="_amethystPaths" ReferenceIndex="121" />
+        <ReferenceField FieldName="Terminal+_side" ReferenceIndex="105" />
+        <ValueField FieldName="Terminal+_position" Type="System.Single" Value="15" />
+        <ValueField FieldName="Terminal+_size" Type="System.Single" Value="7" />
+        <ReferenceField FieldName="Terminal+_parentAmethystElement" ReferenceIndex="10" />
+        <ReferenceField FieldName="Terminal+_displayText" ReferenceIndex="null" />
+        <ReferenceField FieldName="Entity+BoundingBoxChanged" ReferenceIndex="null" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="19" Index="61">
+      <Fields>
+        <ReferenceField FieldName="_inputConnectionBase" ReferenceIndex="96" />
+        <ReferenceField FieldName="_path" ReferenceIndex="11" />
+        <ReferenceField FieldName="Terminal+_side" ReferenceIndex="122" />
+        <ValueField FieldName="Terminal+_position" Type="System.Single" Value="26.66667" />
+        <ValueField FieldName="Terminal+_size" Type="System.Single" Value="7" />
+        <ReferenceField FieldName="Terminal+_parentAmethystElement" ReferenceIndex="5" />
+        <ValueField FieldName="Terminal+_displayText" Type="System.String" Value="name" />
+        <ReferenceField FieldName="Entity+BoundingBoxChanged" ReferenceIndex="null" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="20" Index="62">
+      <Fields>
+        <ReferenceField FieldName="_items" ReferenceIndex="123" />
+        <ValueField FieldName="_size" Type="System.Int32" Value="5" />
+        <ValueField FieldName="_version" Type="System.Int32" Value="35" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="21" Index="63">
+      <Fields>
+        <ReferenceField FieldName="_typeForConnection" ReferenceIndex="124" />
+        <ReferenceField FieldName="OutputConnectionBase+_dependencies" ReferenceIndex="125" />
+        <ReferenceField FieldName="OutputConnectionBase+_outboundConnections" ReferenceIndex="126" />
+        <ValueField FieldName="Connection+_name" Type="System.String" Value="Output" />
+        <ReferenceField FieldName="Connection+_parentNode" ReferenceIndex="12" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="22" Index="64">
+      <Fields>
+        <ReferenceField FieldName="_parent" ReferenceIndex="12" />
+        <ReferenceField FieldName="_set" ReferenceIndex="127" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="23" Index="65">
+      <Fields>
+        <ReferenceField FieldName="_parent" ReferenceIndex="12" />
+        <ReferenceField FieldName="_set" ReferenceIndex="128" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="24" Index="66">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="51" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="25" Index="67">
+      <Fields />
+    </Object>
+    <Object TypeIndex="26" Index="68">
+      <ArrayLowerBounds>
+        <int>0</int>
+      </ArrayLowerBounds>
+      <ArrayUpperBounds>
+        <int>0</int>
+      </ArrayUpperBounds>
+      <Fields>
+        <ReferenceField FieldName="" ReferenceIndex="129" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="27" Index="69">
+      <Fields />
+    </Object>
+    <Object TypeIndex="27" Index="70">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="9" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="28" Index="71">
+      <Fields>
+        <ReferenceField FieldName="_typeForConnection" ReferenceIndex="124" />
+        <ReferenceField FieldName="InputConnectionBase+_dependants" ReferenceIndex="130" />
+        <ReferenceField FieldName="InputConnectionBase+_inboundConnection" ReferenceIndex="63" />
+        <ValueField FieldName="Connection+_name" Type="System.String" Value="Input" />
+        <ReferenceField FieldName="Connection+_parentNode" ReferenceIndex="18" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="21" Index="72">
+      <Fields>
+        <ReferenceField FieldName="_typeForConnection" ReferenceIndex="124" />
+        <ReferenceField FieldName="OutputConnectionBase+_dependencies" ReferenceIndex="131" />
+        <ReferenceField FieldName="OutputConnectionBase+_outboundConnections" ReferenceIndex="132" />
+        <ValueField FieldName="Connection+_name" Type="System.String" Value="Output" />
+        <ReferenceField FieldName="Connection+_parentNode" ReferenceIndex="18" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="22" Index="73">
+      <Fields>
+        <ReferenceField FieldName="_parent" ReferenceIndex="18" />
+        <ReferenceField FieldName="_set" ReferenceIndex="133" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="23" Index="74">
+      <Fields>
+        <ReferenceField FieldName="_parent" ReferenceIndex="18" />
+        <ReferenceField FieldName="_set" ReferenceIndex="134" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="24" Index="75">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="52" />
+        <ReferenceField FieldName="1" ReferenceIndex="48" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="26" Index="76">
+      <ArrayLowerBounds>
+        <int>0</int>
+      </ArrayLowerBounds>
+      <ArrayUpperBounds>
+        <int>1</int>
+      </ArrayUpperBounds>
+      <Fields>
+        <ReferenceField FieldName="" ReferenceIndex="135" />
+        <ReferenceField FieldName="" ReferenceIndex="136" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="27" Index="77">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="9" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="27" Index="78">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="8" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="28" Index="79">
+      <Fields>
+        <ReferenceField FieldName="_typeForConnection" ReferenceIndex="124" />
+        <ReferenceField FieldName="InputConnectionBase+_dependants" ReferenceIndex="137" />
+        <ReferenceField FieldName="InputConnectionBase+_inboundConnection" ReferenceIndex="72" />
+        <ValueField FieldName="Connection+_name" Type="System.String" Value="Input" />
+        <ReferenceField FieldName="Connection+_parentNode" ReferenceIndex="24" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="29" Index="80">
+      <Fields>
+        <ReferenceField FieldName="_typeForConnection" ReferenceIndex="138" />
+        <ReferenceField FieldName="OutputConnectionBase+_dependencies" ReferenceIndex="139" />
+        <ReferenceField FieldName="OutputConnectionBase+_outboundConnections" ReferenceIndex="140" />
+        <ValueField FieldName="Connection+_name" Type="System.String" Value="Output" />
+        <ReferenceField FieldName="Connection+_parentNode" ReferenceIndex="24" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="22" Index="81">
+      <Fields>
+        <ReferenceField FieldName="_parent" ReferenceIndex="24" />
+        <ReferenceField FieldName="_set" ReferenceIndex="141" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="23" Index="82">
+      <Fields>
+        <ReferenceField FieldName="_parent" ReferenceIndex="24" />
+        <ReferenceField FieldName="_set" ReferenceIndex="142" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="24" Index="83">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="49" />
+        <ReferenceField FieldName="1" ReferenceIndex="45" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="26" Index="84">
+      <ArrayLowerBounds>
+        <int>0</int>
+      </ArrayLowerBounds>
+      <ArrayUpperBounds>
+        <int>1</int>
+      </ArrayUpperBounds>
+      <Fields>
+        <ReferenceField FieldName="" ReferenceIndex="143" />
+        <ReferenceField FieldName="" ReferenceIndex="144" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="27" Index="85">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="8" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="27" Index="86">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="7" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="30" Index="87">
+      <Fields>
+        <ReferenceField FieldName="_typeForConnection" ReferenceIndex="138" />
+        <ReferenceField FieldName="InputConnectionBase+_dependants" ReferenceIndex="145" />
+        <ReferenceField FieldName="InputConnectionBase+_inboundConnection" ReferenceIndex="80" />
+        <ValueField FieldName="Connection+_name" Type="System.String" Value="Input" />
+        <ReferenceField FieldName="Connection+_parentNode" ReferenceIndex="30" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="31" Index="88">
+      <Fields>
+        <ReferenceField FieldName="_typeForConnection" ReferenceIndex="146" />
+        <ReferenceField FieldName="OutputConnectionBase+_dependencies" ReferenceIndex="147" />
+        <ReferenceField FieldName="OutputConnectionBase+_outboundConnections" ReferenceIndex="148" />
+        <ValueField FieldName="Connection+_name" Type="System.String" Value="Output" />
+        <ReferenceField FieldName="Connection+_parentNode" ReferenceIndex="30" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="22" Index="89">
+      <Fields>
+        <ReferenceField FieldName="_parent" ReferenceIndex="30" />
+        <ReferenceField FieldName="_set" ReferenceIndex="149" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="23" Index="90">
+      <Fields>
+        <ReferenceField FieldName="_parent" ReferenceIndex="30" />
+        <ReferenceField FieldName="_set" ReferenceIndex="150" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="24" Index="91">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="46" />
+        <ReferenceField FieldName="1" ReferenceIndex="42" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="26" Index="92">
+      <ArrayLowerBounds>
+        <int>0</int>
+      </ArrayLowerBounds>
+      <ArrayUpperBounds>
+        <int>1</int>
+      </ArrayUpperBounds>
+      <Fields>
+        <ReferenceField FieldName="" ReferenceIndex="151" />
+        <ReferenceField FieldName="" ReferenceIndex="152" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="27" Index="93">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="7" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="27" Index="94">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="6" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="32" Index="95">
+      <Fields>
+        <ReferenceField FieldName="_typeForConnection" ReferenceIndex="146" />
+        <ReferenceField FieldName="InputConnectionBase+_dependants" ReferenceIndex="153" />
+        <ReferenceField FieldName="InputConnectionBase+_inboundConnection" ReferenceIndex="88" />
+        <ValueField FieldName="Connection+_name" Type="System.String" Value="Input" />
+        <ReferenceField FieldName="Connection+_parentNode" ReferenceIndex="36" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="28" Index="96">
+      <Fields>
+        <ReferenceField FieldName="_typeForConnection" ReferenceIndex="124" />
+        <ReferenceField FieldName="InputConnectionBase+_dependants" ReferenceIndex="154" />
+        <ReferenceField FieldName="InputConnectionBase+_inboundConnection" ReferenceIndex="114" />
+        <ValueField FieldName="Connection+_name" Type="System.String" Value="Class Name" />
+        <ReferenceField FieldName="Connection+_parentNode" ReferenceIndex="null" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="33" Index="97">
+      <Fields>
+        <ReferenceField FieldName="_typeForConnection" ReferenceIndex="155" />
+        <ReferenceField FieldName="OutputConnectionBase+_dependencies" ReferenceIndex="156" />
+        <ReferenceField FieldName="OutputConnectionBase+_outboundConnections" ReferenceIndex="157" />
+        <ValueField FieldName="Connection+_name" Type="System.String" Value="Output" />
+        <ReferenceField FieldName="Connection+_parentNode" ReferenceIndex="36" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="22" Index="98">
+      <Fields>
+        <ReferenceField FieldName="_parent" ReferenceIndex="36" />
+        <ReferenceField FieldName="_set" ReferenceIndex="158" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="23" Index="99">
+      <Fields>
+        <ReferenceField FieldName="_parent" ReferenceIndex="36" />
+        <ReferenceField FieldName="_set" ReferenceIndex="159" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="24" Index="100">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="43" />
+        <ReferenceField FieldName="1" ReferenceIndex="61" />
+        <ReferenceField FieldName="2" ReferenceIndex="160" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="26" Index="101">
+      <ArrayLowerBounds>
+        <int>0</int>
+      </ArrayLowerBounds>
+      <ArrayUpperBounds>
+        <int>2</int>
+      </ArrayUpperBounds>
+      <Fields>
+        <ReferenceField FieldName="" ReferenceIndex="161" />
+        <ReferenceField FieldName="" ReferenceIndex="162" />
+        <ReferenceField FieldName="" ReferenceIndex="163" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="27" Index="102">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="6" />
+        <ReferenceField FieldName="1" ReferenceIndex="11" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="27" Index="103">
+      <Fields />
+    </Object>
+    <Object TypeIndex="34" Index="104">
+      <Fields>
+        <ReferenceField FieldName="_parent" ReferenceIndex="42" />
+        <ReferenceField FieldName="_set" ReferenceIndex="164" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="35" Index="105">
+      <Fields>
+        <ValueField FieldName="value__" Type="System.Int32" Value="2" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="35" Index="106">
+      <Fields>
+        <ValueField FieldName="value__" Type="System.Int32" Value="0" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="36" Index="107">
+      <ArrayLowerBounds>
+        <int>0</int>
+      </ArrayLowerBounds>
+      <ArrayUpperBounds>
+        <int>3</int>
+      </ArrayUpperBounds>
+      <Fields>
+        <ReferenceField FieldName="" ReferenceIndex="165" />
+        <ReferenceField FieldName="" ReferenceIndex="166" />
+        <ReferenceField FieldName="" ReferenceIndex="167" />
+        <ReferenceField FieldName="" ReferenceIndex="168" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="34" Index="108">
+      <Fields>
+        <ReferenceField FieldName="_parent" ReferenceIndex="45" />
+        <ReferenceField FieldName="_set" ReferenceIndex="169" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="36" Index="109">
+      <ArrayLowerBounds>
+        <int>0</int>
+      </ArrayLowerBounds>
+      <ArrayUpperBounds>
+        <int>3</int>
+      </ArrayUpperBounds>
+      <Fields>
+        <ReferenceField FieldName="" ReferenceIndex="170" />
+        <ReferenceField FieldName="" ReferenceIndex="171" />
+        <ReferenceField FieldName="" ReferenceIndex="172" />
+        <ReferenceField FieldName="" ReferenceIndex="173" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="34" Index="110">
+      <Fields>
+        <ReferenceField FieldName="_parent" ReferenceIndex="48" />
+        <ReferenceField FieldName="_set" ReferenceIndex="174" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="36" Index="111">
+      <ArrayLowerBounds>
+        <int>0</int>
+      </ArrayLowerBounds>
+      <ArrayUpperBounds>
+        <int>3</int>
+      </ArrayUpperBounds>
+      <Fields>
+        <ReferenceField FieldName="" ReferenceIndex="175" />
+        <ReferenceField FieldName="" ReferenceIndex="176" />
+        <ReferenceField FieldName="" ReferenceIndex="177" />
+        <ReferenceField FieldName="" ReferenceIndex="178" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="34" Index="112">
+      <Fields>
+        <ReferenceField FieldName="_parent" ReferenceIndex="51" />
+        <ReferenceField FieldName="_set" ReferenceIndex="179" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="36" Index="113">
+      <ArrayLowerBounds>
+        <int>0</int>
+      </ArrayLowerBounds>
+      <ArrayUpperBounds>
+        <int>7</int>
+      </ArrayUpperBounds>
+      <Fields>
+        <ReferenceField FieldName="" ReferenceIndex="180" />
+        <ReferenceField FieldName="" ReferenceIndex="181" />
+        <ReferenceField FieldName="" ReferenceIndex="182" />
+        <ReferenceField FieldName="" ReferenceIndex="183" />
+        <ReferenceField FieldName="" ReferenceIndex="184" />
+        <ReferenceField FieldName="" ReferenceIndex="185" />
+        <ReferenceField FieldName="" ReferenceIndex="186" />
+        <ReferenceField FieldName="" ReferenceIndex="186" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="21" Index="114">
+      <Fields>
+        <ReferenceField FieldName="_typeForConnection" ReferenceIndex="124" />
+        <ReferenceField FieldName="OutputConnectionBase+_dependencies" ReferenceIndex="187" />
+        <ReferenceField FieldName="OutputConnectionBase+_outboundConnections" ReferenceIndex="188" />
+        <ValueField FieldName="Connection+_name" Type="System.String" Value="Output" />
+        <ReferenceField FieldName="Connection+_parentNode" ReferenceIndex="54" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="22" Index="115">
+      <Fields>
+        <ReferenceField FieldName="_parent" ReferenceIndex="54" />
+        <ReferenceField FieldName="_set" ReferenceIndex="189" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="23" Index="116">
+      <Fields>
+        <ReferenceField FieldName="_parent" ReferenceIndex="54" />
+        <ReferenceField FieldName="_set" ReferenceIndex="190" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="24" Index="117">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="60" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="26" Index="118">
+      <ArrayLowerBounds>
+        <int>0</int>
+      </ArrayLowerBounds>
+      <ArrayUpperBounds>
+        <int>0</int>
+      </ArrayUpperBounds>
+      <Fields>
+        <ReferenceField FieldName="" ReferenceIndex="191" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="27" Index="119">
+      <Fields />
+    </Object>
+    <Object TypeIndex="27" Index="120">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="11" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="34" Index="121">
+      <Fields>
+        <ReferenceField FieldName="_parent" ReferenceIndex="60" />
+        <ReferenceField FieldName="_set" ReferenceIndex="192" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="35" Index="122">
+      <Fields>
+        <ValueField FieldName="value__" Type="System.Int32" Value="1" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="36" Index="123">
+      <ArrayLowerBounds>
+        <int>0</int>
+      </ArrayLowerBounds>
+      <ArrayUpperBounds>
+        <int>7</int>
+      </ArrayUpperBounds>
+      <Fields>
+        <ReferenceField FieldName="" ReferenceIndex="193" />
+        <ReferenceField FieldName="" ReferenceIndex="194" />
+        <ReferenceField FieldName="" ReferenceIndex="195" />
+        <ReferenceField FieldName="" ReferenceIndex="196" />
+        <ReferenceField FieldName="" ReferenceIndex="197" />
+        <ReferenceField FieldName="" ReferenceIndex="186" />
+        <ReferenceField FieldName="" ReferenceIndex="186" />
+        <ReferenceField FieldName="" ReferenceIndex="186" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="37" Index="124">
+      <Fields>
+        <ValueField FieldName="Assembly.FullName" Type="System.String" Value="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+        <ValueField FieldName="FullName" Type="System.String" Value="System.String" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="38" Index="125">
+      <Fields>
+        <ReferenceField FieldName="_container" ReferenceIndex="63" />
+        <ReferenceField FieldName="_collection" ReferenceIndex="198" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="39" Index="126">
+      <Fields>
+        <ReferenceField FieldName="_parent" ReferenceIndex="63" />
+        <ReferenceField FieldName="_set" ReferenceIndex="199" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="40" Index="127">
+      <Fields />
+    </Object>
+    <Object TypeIndex="41" Index="128">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="63" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="42" Index="129">
+      <Fields>
+        <ReferenceField FieldName="key" ReferenceIndex="63" />
+        <ReferenceField FieldName="value" ReferenceIndex="51" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="43" Index="130">
+      <Fields>
+        <ReferenceField FieldName="_container" ReferenceIndex="71" />
+        <ReferenceField FieldName="_collection" ReferenceIndex="200" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="38" Index="131">
+      <Fields>
+        <ReferenceField FieldName="_container" ReferenceIndex="72" />
+        <ReferenceField FieldName="_collection" ReferenceIndex="201" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="39" Index="132">
+      <Fields>
+        <ReferenceField FieldName="_parent" ReferenceIndex="72" />
+        <ReferenceField FieldName="_set" ReferenceIndex="202" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="40" Index="133">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="71" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="41" Index="134">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="72" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="42" Index="135">
+      <Fields>
+        <ReferenceField FieldName="key" ReferenceIndex="71" />
+        <ReferenceField FieldName="value" ReferenceIndex="52" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="42" Index="136">
+      <Fields>
+        <ReferenceField FieldName="key" ReferenceIndex="72" />
+        <ReferenceField FieldName="value" ReferenceIndex="48" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="43" Index="137">
+      <Fields>
+        <ReferenceField FieldName="_container" ReferenceIndex="79" />
+        <ReferenceField FieldName="_collection" ReferenceIndex="203" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="37" Index="138">
+      <Fields>
+        <ValueField FieldName="Assembly.FullName" Type="System.String" Value="MetaphysicsIndustries.Giza, Version=1.0.4023.23553, Culture=neutral, PublicKeyToken=8c1c75689cc4981a" />
+        <ValueField FieldName="FullName" Type="System.String" Value="MetaphysicsIndustries.Giza.ParseSpan" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="38" Index="139">
+      <Fields>
+        <ReferenceField FieldName="_container" ReferenceIndex="80" />
+        <ReferenceField FieldName="_collection" ReferenceIndex="204" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="39" Index="140">
+      <Fields>
+        <ReferenceField FieldName="_parent" ReferenceIndex="80" />
+        <ReferenceField FieldName="_set" ReferenceIndex="205" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="40" Index="141">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="79" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="41" Index="142">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="80" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="42" Index="143">
+      <Fields>
+        <ReferenceField FieldName="key" ReferenceIndex="79" />
+        <ReferenceField FieldName="value" ReferenceIndex="49" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="42" Index="144">
+      <Fields>
+        <ReferenceField FieldName="key" ReferenceIndex="80" />
+        <ReferenceField FieldName="value" ReferenceIndex="45" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="43" Index="145">
+      <Fields>
+        <ReferenceField FieldName="_container" ReferenceIndex="87" />
+        <ReferenceField FieldName="_collection" ReferenceIndex="206" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="37" Index="146">
+      <Fields>
+        <ValueField FieldName="Assembly.FullName" Type="System.String" Value="MetaphysicsIndustries.Giza, Version=1.0.4023.23553, Culture=neutral, PublicKeyToken=8c1c75689cc4981a" />
+        <ValueField FieldName="FullName" Type="System.String" Value="MetaphysicsIndustries.Giza.SimpleDefinitionNode[]" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="38" Index="147">
+      <Fields>
+        <ReferenceField FieldName="_container" ReferenceIndex="88" />
+        <ReferenceField FieldName="_collection" ReferenceIndex="207" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="39" Index="148">
+      <Fields>
+        <ReferenceField FieldName="_parent" ReferenceIndex="88" />
+        <ReferenceField FieldName="_set" ReferenceIndex="208" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="40" Index="149">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="87" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="41" Index="150">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="88" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="42" Index="151">
+      <Fields>
+        <ReferenceField FieldName="key" ReferenceIndex="87" />
+        <ReferenceField FieldName="value" ReferenceIndex="46" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="42" Index="152">
+      <Fields>
+        <ReferenceField FieldName="key" ReferenceIndex="88" />
+        <ReferenceField FieldName="value" ReferenceIndex="42" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="43" Index="153">
+      <Fields>
+        <ReferenceField FieldName="_container" ReferenceIndex="95" />
+        <ReferenceField FieldName="_collection" ReferenceIndex="209" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="43" Index="154">
+      <Fields>
+        <ReferenceField FieldName="_container" ReferenceIndex="96" />
+        <ReferenceField FieldName="_collection" ReferenceIndex="210" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="37" Index="155">
+      <Fields>
+        <ValueField FieldName="Assembly.FullName" Type="System.String" Value="MetaphysicsIndustries.Build, Version=1.0.3985.31445, Culture=neutral, PublicKeyToken=75d864555b96b705" />
+        <ValueField FieldName="FullName" Type="System.String" Value="MetaphysicsIndustries.Build.Class" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="38" Index="156">
+      <Fields>
+        <ReferenceField FieldName="_container" ReferenceIndex="97" />
+        <ReferenceField FieldName="_collection" ReferenceIndex="211" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="39" Index="157">
+      <Fields>
+        <ReferenceField FieldName="_parent" ReferenceIndex="97" />
+        <ReferenceField FieldName="_set" ReferenceIndex="212" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="40" Index="158">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="95" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="41" Index="159">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="97" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="18" Index="160">
+      <Fields>
+        <ReferenceField FieldName="_outputConnectionBase" ReferenceIndex="97" />
+        <ReferenceField FieldName="_amethystPaths" ReferenceIndex="213" />
+        <ReferenceField FieldName="Terminal+_side" ReferenceIndex="105" />
+        <ValueField FieldName="Terminal+_position" Type="System.Single" Value="30" />
+        <ValueField FieldName="Terminal+_size" Type="System.Single" Value="7" />
+        <ReferenceField FieldName="Terminal+_parentAmethystElement" ReferenceIndex="5" />
+        <ReferenceField FieldName="Terminal+_displayText" ReferenceIndex="null" />
+        <ReferenceField FieldName="Entity+BoundingBoxChanged" ReferenceIndex="null" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="42" Index="161">
+      <Fields>
+        <ReferenceField FieldName="key" ReferenceIndex="95" />
+        <ReferenceField FieldName="value" ReferenceIndex="43" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="42" Index="162">
+      <Fields>
+        <ReferenceField FieldName="key" ReferenceIndex="96" />
+        <ReferenceField FieldName="value" ReferenceIndex="61" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="42" Index="163">
+      <Fields>
+        <ReferenceField FieldName="key" ReferenceIndex="97" />
+        <ReferenceField FieldName="value" ReferenceIndex="160" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="44" Index="164">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="6" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="45" Index="165">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="647" />
+        <ValueField FieldName="_y" Type="System.Single" Value="261" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="45" Index="166">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="668" />
+        <ValueField FieldName="_y" Type="System.Single" Value="261" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="45" Index="167">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="668" />
+        <ValueField FieldName="_y" Type="System.Single" Value="264" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="45" Index="168">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="689" />
+        <ValueField FieldName="_y" Type="System.Single" Value="264" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="44" Index="169">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="7" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="45" Index="170">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="508" />
+        <ValueField FieldName="_y" Type="System.Single" Value="249" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="45" Index="171">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="537.5" />
+        <ValueField FieldName="_y" Type="System.Single" Value="249" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="45" Index="172">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="537.5" />
+        <ValueField FieldName="_y" Type="System.Single" Value="261" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="45" Index="173">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="567" />
+        <ValueField FieldName="_y" Type="System.Single" Value="261" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="44" Index="174">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="8" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="45" Index="175">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="372" />
+        <ValueField FieldName="_y" Type="System.Single" Value="253" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="45" Index="176">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="400" />
+        <ValueField FieldName="_y" Type="System.Single" Value="253" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="45" Index="177">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="400" />
+        <ValueField FieldName="_y" Type="System.Single" Value="249" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="45" Index="178">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="428" />
+        <ValueField FieldName="_y" Type="System.Single" Value="249" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="44" Index="179">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="9" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="45" Index="180">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="353" />
+        <ValueField FieldName="_y" Type="System.Single" Value="141" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="45" Index="181">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="363" />
+        <ValueField FieldName="_y" Type="System.Single" Value="141" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="45" Index="182">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="363" />
+        <ValueField FieldName="_y" Type="System.Single" Value="197" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="45" Index="183">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="242" />
+        <ValueField FieldName="_y" Type="System.Single" Value="197" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="45" Index="184">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="242" />
+        <ValueField FieldName="_y" Type="System.Single" Value="253" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="45" Index="185">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="252" />
+        <ValueField FieldName="_y" Type="System.Single" Value="253" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="45" Index="186">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="0" />
+        <ValueField FieldName="_y" Type="System.Single" Value="0" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="38" Index="187">
+      <Fields>
+        <ReferenceField FieldName="_container" ReferenceIndex="114" />
+        <ReferenceField FieldName="_collection" ReferenceIndex="214" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="39" Index="188">
+      <Fields>
+        <ReferenceField FieldName="_parent" ReferenceIndex="114" />
+        <ReferenceField FieldName="_set" ReferenceIndex="215" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="40" Index="189">
+      <Fields />
+    </Object>
+    <Object TypeIndex="41" Index="190">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="114" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="42" Index="191">
+      <Fields>
+        <ReferenceField FieldName="key" ReferenceIndex="114" />
+        <ReferenceField FieldName="value" ReferenceIndex="60" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="44" Index="192">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="11" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="45" Index="193">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="719" />
+        <ValueField FieldName="_y" Type="System.Single" Value="129" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="45" Index="194">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="729" />
+        <ValueField FieldName="_y" Type="System.Single" Value="129" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="45" Index="195">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="729" />
+        <ValueField FieldName="_y" Type="System.Single" Value="189" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="45" Index="196">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="715.6667" />
+        <ValueField FieldName="_y" Type="System.Single" Value="189" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="45" Index="197">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="715.6667" />
+        <ValueField FieldName="_y" Type="System.Single" Value="234" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="40" Index="198">
+      <Fields />
+    </Object>
+    <Object TypeIndex="40" Index="199">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="71" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="41" Index="200">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="72" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="40" Index="201">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="71" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="40" Index="202">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="79" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="41" Index="203">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="80" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="40" Index="204">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="79" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="40" Index="205">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="87" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="41" Index="206">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="88" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="40" Index="207">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="87" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="40" Index="208">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="95" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="41" Index="209">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="97" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="41" Index="210">
+      <Fields />
+    </Object>
+    <Object TypeIndex="40" Index="211">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="95" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="40" Index="212">
+      <Fields />
+    </Object>
+    <Object TypeIndex="34" Index="213">
+      <Fields>
+        <ReferenceField FieldName="_parent" ReferenceIndex="160" />
+        <ReferenceField FieldName="_set" ReferenceIndex="216" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="40" Index="214">
+      <Fields />
+    </Object>
+    <Object TypeIndex="40" Index="215">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="96" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="44" Index="216">
+      <Fields />
+    </Object>
+  </Objects>
+  <TypeRefs>
+    <TypeReference TypeIndex="0" Assembly="MetaphysicsIndustries.Crystalline, Version=1.0.3985.31440, Culture=neutral, PublicKeyToken=218c142be34d0c18" Name="MetaphysicsIndustries.Crystalline.Entity[]" ArrayRank="1">
+      <TypeArguments>
+        <TypeReference TypeIndex="-1" Assembly="MetaphysicsIndustries.Crystalline, Version=1.0.3985.31440, Culture=neutral, PublicKeyToken=218c142be34d0c18" Name="MetaphysicsIndustries.Crystalline.Entity" ArrayRank="0">
+          <TypeArguments />
+        </TypeReference>
+      </TypeArguments>
+    </TypeReference>
+    <TypeReference TypeIndex="1" Assembly="MetaphysicsIndustries.Amethyst, Version=1.0.4023.23554, Culture=neutral, PublicKeyToken=9d7cbd784aa922ee" Name="MetaphysicsIndustries.Amethyst.GetOpenFilenameElement" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+    <TypeReference TypeIndex="2" Assembly="MetaphysicsIndustries.Amethyst, Version=1.0.4023.23554, Culture=neutral, PublicKeyToken=9d7cbd784aa922ee" Name="MetaphysicsIndustries.Amethyst.LoadTextFileElement" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+    <TypeReference TypeIndex="3" Assembly="MetaphysicsIndustries.Amethyst, Version=1.0.4023.23554, Culture=neutral, PublicKeyToken=9d7cbd784aa922ee" Name="MetaphysicsIndustries.Amethyst.SupergrammarParserElement" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+    <TypeReference TypeIndex="4" Assembly="MetaphysicsIndustries.Amethyst, Version=1.0.4023.23554, Culture=neutral, PublicKeyToken=9d7cbd784aa922ee" Name="MetaphysicsIndustries.Amethyst.DefinitionBuilderElement" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+    <TypeReference TypeIndex="5" Assembly="MetaphysicsIndustries.Amethyst, Version=1.0.4023.23554, Culture=neutral, PublicKeyToken=9d7cbd784aa922ee" Name="MetaphysicsIndustries.Amethyst.ParserBuilderElement" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+    <TypeReference TypeIndex="6" Assembly="MetaphysicsIndustries.Amethyst, Version=1.0.4023.23554, Culture=neutral, PublicKeyToken=9d7cbd784aa922ee" Name="MetaphysicsIndustries.Amethyst.AmethystPath" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+    <TypeReference TypeIndex="7" Assembly="MetaphysicsIndustries.Amethyst, Version=1.0.4023.23554, Culture=neutral, PublicKeyToken=9d7cbd784aa922ee" Name="MetaphysicsIndustries.Amethyst.StringLiteralElement" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+    <TypeReference TypeIndex="8" Assembly="MetaphysicsIndustries.Amethyst, Version=1.0.4023.23554, Culture=neutral, PublicKeyToken=9d7cbd784aa922ee" Name="MetaphysicsIndustries.Amethyst.LiteralElement`1+LiteralNode" ArrayRank="0">
+      <TypeArguments>
+        <TypeReference TypeIndex="-1" Assembly="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Name="System.String" ArrayRank="0">
+          <TypeArguments />
+        </TypeReference>
+      </TypeArguments>
+    </TypeReference>
+    <TypeReference TypeIndex="9" Assembly="MetaphysicsIndustries.Amethyst, Version=1.0.4023.23554, Culture=neutral, PublicKeyToken=9d7cbd784aa922ee" Name="MetaphysicsIndustries.Amethyst.AmethystElementTerminalParentChildrenCollection" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+    <TypeReference TypeIndex="10" Assembly="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Name="System.Collections.Generic.Dictionary`2" ArrayRank="0">
+      <TypeArguments>
+        <TypeReference TypeIndex="-1" Assembly="MetaphysicsIndustries.Epiphany, Version=1.0.3985.31441, Culture=neutral, PublicKeyToken=58f5df2252b85e38" Name="MetaphysicsIndustries.Epiphany.Connection" ArrayRank="0">
+          <TypeArguments />
+        </TypeReference>
+        <TypeReference TypeIndex="-1" Assembly="MetaphysicsIndustries.Amethyst, Version=1.0.4023.23554, Culture=neutral, PublicKeyToken=9d7cbd784aa922ee" Name="MetaphysicsIndustries.Amethyst.Terminal" ArrayRank="0">
+          <TypeArguments />
+        </TypeReference>
+      </TypeArguments>
+    </TypeReference>
+    <TypeReference TypeIndex="11" Assembly="MetaphysicsIndustries.Crystalline, Version=1.0.3985.31440, Culture=neutral, PublicKeyToken=218c142be34d0c18" Name="MetaphysicsIndustries.Crystalline.InboundToElementPathChildrenCollection" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+    <TypeReference TypeIndex="12" Assembly="MetaphysicsIndustries.Crystalline, Version=1.0.3985.31440, Culture=neutral, PublicKeyToken=218c142be34d0c18" Name="MetaphysicsIndustries.Crystalline.OutboundFromElementPathChildrenCollection" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+    <TypeReference TypeIndex="13" Assembly="MetaphysicsIndustries.Utilities, Version=1.0.3946.27367, Culture=neutral, PublicKeyToken=5f5e1ffe7b0daeef" Name="MetaphysicsIndustries.Utilities.RectangleV" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+    <TypeReference TypeIndex="14" Assembly="MetaphysicsIndustries.Amethyst, Version=1.0.4023.23554, Culture=neutral, PublicKeyToken=9d7cbd784aa922ee" Name="MetaphysicsIndustries.Amethyst.LoadTextFileElement+LoadTextFileNode" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+    <TypeReference TypeIndex="15" Assembly="MetaphysicsIndustries.Amethyst, Version=1.0.4023.23554, Culture=neutral, PublicKeyToken=9d7cbd784aa922ee" Name="MetaphysicsIndustries.Amethyst.SupergrammarParserElement+SupergrammarParserNode" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+    <TypeReference TypeIndex="16" Assembly="MetaphysicsIndustries.Amethyst, Version=1.0.4023.23554, Culture=neutral, PublicKeyToken=9d7cbd784aa922ee" Name="MetaphysicsIndustries.Amethyst.DefinitionBuilderElement+DefinitionBuilderNode" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+    <TypeReference TypeIndex="17" Assembly="MetaphysicsIndustries.Amethyst, Version=1.0.4023.23554, Culture=neutral, PublicKeyToken=9d7cbd784aa922ee" Name="MetaphysicsIndustries.Amethyst.ParserBuilderElement+ParserBuilderNode" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+    <TypeReference TypeIndex="18" Assembly="MetaphysicsIndustries.Amethyst, Version=1.0.4023.23554, Culture=neutral, PublicKeyToken=9d7cbd784aa922ee" Name="MetaphysicsIndustries.Amethyst.OutputTerminal" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+    <TypeReference TypeIndex="19" Assembly="MetaphysicsIndustries.Amethyst, Version=1.0.4023.23554, Culture=neutral, PublicKeyToken=9d7cbd784aa922ee" Name="MetaphysicsIndustries.Amethyst.InputTerminal" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+    <TypeReference TypeIndex="20" Assembly="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Name="System.Collections.Generic.List`1" ArrayRank="0">
+      <TypeArguments>
+        <TypeReference TypeIndex="-1" Assembly="MetaphysicsIndustries.Utilities, Version=1.0.3946.27367, Culture=neutral, PublicKeyToken=5f5e1ffe7b0daeef" Name="MetaphysicsIndustries.Utilities.Vector" ArrayRank="0">
+          <TypeArguments />
+        </TypeReference>
+      </TypeArguments>
+    </TypeReference>
+    <TypeReference TypeIndex="21" Assembly="MetaphysicsIndustries.Epiphany, Version=1.0.3985.31441, Culture=neutral, PublicKeyToken=58f5df2252b85e38" Name="MetaphysicsIndustries.Epiphany.OutputConnection`1" ArrayRank="0">
+      <TypeArguments>
+        <TypeReference TypeIndex="-1" Assembly="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Name="System.String" ArrayRank="0">
+          <TypeArguments />
+        </TypeReference>
+      </TypeArguments>
+    </TypeReference>
+    <TypeReference TypeIndex="22" Assembly="MetaphysicsIndustries.Epiphany, Version=1.0.3985.31441, Culture=neutral, PublicKeyToken=58f5df2252b85e38" Name="MetaphysicsIndustries.Epiphany.NodeInputConnectionBaseParentChildrenCollection" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+    <TypeReference TypeIndex="23" Assembly="MetaphysicsIndustries.Epiphany, Version=1.0.3985.31441, Culture=neutral, PublicKeyToken=58f5df2252b85e38" Name="MetaphysicsIndustries.Epiphany.NodeOutputConnectionBaseParentChildrenCollection" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+    <TypeReference TypeIndex="24" Assembly="MetaphysicsIndustries.Collections, Version=1.0.3960.38731, Culture=neutral, PublicKeyToken=31ed9843e1f1bd54" Name="MetaphysicsIndustries.Collections.Set`1" ArrayRank="0">
+      <TypeArguments>
+        <TypeReference TypeIndex="-1" Assembly="MetaphysicsIndustries.Amethyst, Version=1.0.4023.23554, Culture=neutral, PublicKeyToken=9d7cbd784aa922ee" Name="MetaphysicsIndustries.Amethyst.Terminal" ArrayRank="0">
+          <TypeArguments />
+        </TypeReference>
+      </TypeArguments>
+    </TypeReference>
+    <TypeReference TypeIndex="25" Assembly="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Name="System.Collections.Generic.ObjectEqualityComparer`1" ArrayRank="0">
+      <TypeArguments>
+        <TypeReference TypeIndex="-1" Assembly="MetaphysicsIndustries.Epiphany, Version=1.0.3985.31441, Culture=neutral, PublicKeyToken=58f5df2252b85e38" Name="MetaphysicsIndustries.Epiphany.Connection" ArrayRank="0">
+          <TypeArguments />
+        </TypeReference>
+      </TypeArguments>
+    </TypeReference>
+    <TypeReference TypeIndex="26" Assembly="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Name="System.Collections.Generic.KeyValuePair`2[]" ArrayRank="1">
+      <TypeArguments>
+        <TypeReference TypeIndex="-1" Assembly="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Name="System.Collections.Generic.KeyValuePair`2" ArrayRank="0">
+          <TypeArguments>
+            <TypeReference TypeIndex="-1" Assembly="MetaphysicsIndustries.Epiphany, Version=1.0.3985.31441, Culture=neutral, PublicKeyToken=58f5df2252b85e38" Name="MetaphysicsIndustries.Epiphany.Connection" ArrayRank="0">
+              <TypeArguments />
+            </TypeReference>
+            <TypeReference TypeIndex="-1" Assembly="MetaphysicsIndustries.Amethyst, Version=1.0.4023.23554, Culture=neutral, PublicKeyToken=9d7cbd784aa922ee" Name="MetaphysicsIndustries.Amethyst.Terminal" ArrayRank="0">
+              <TypeArguments />
+            </TypeReference>
+          </TypeArguments>
+        </TypeReference>
+      </TypeArguments>
+    </TypeReference>
+    <TypeReference TypeIndex="27" Assembly="MetaphysicsIndustries.Collections, Version=1.0.3960.38731, Culture=neutral, PublicKeyToken=31ed9843e1f1bd54" Name="MetaphysicsIndustries.Collections.Set`1" ArrayRank="0">
+      <TypeArguments>
+        <TypeReference TypeIndex="-1" Assembly="MetaphysicsIndustries.Crystalline, Version=1.0.3985.31440, Culture=neutral, PublicKeyToken=218c142be34d0c18" Name="MetaphysicsIndustries.Crystalline.Path" ArrayRank="0">
+          <TypeArguments />
+        </TypeReference>
+      </TypeArguments>
+    </TypeReference>
+    <TypeReference TypeIndex="28" Assembly="MetaphysicsIndustries.Epiphany, Version=1.0.3985.31441, Culture=neutral, PublicKeyToken=58f5df2252b85e38" Name="MetaphysicsIndustries.Epiphany.InputConnection`1" ArrayRank="0">
+      <TypeArguments>
+        <TypeReference TypeIndex="-1" Assembly="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Name="System.String" ArrayRank="0">
+          <TypeArguments />
+        </TypeReference>
+      </TypeArguments>
+    </TypeReference>
+    <TypeReference TypeIndex="29" Assembly="MetaphysicsIndustries.Epiphany, Version=1.0.3985.31441, Culture=neutral, PublicKeyToken=58f5df2252b85e38" Name="MetaphysicsIndustries.Epiphany.OutputConnection`1" ArrayRank="0">
+      <TypeArguments>
+        <TypeReference TypeIndex="-1" Assembly="MetaphysicsIndustries.Giza, Version=1.0.4023.23553, Culture=neutral, PublicKeyToken=8c1c75689cc4981a" Name="MetaphysicsIndustries.Giza.ParseSpan" ArrayRank="0">
+          <TypeArguments />
+        </TypeReference>
+      </TypeArguments>
+    </TypeReference>
+    <TypeReference TypeIndex="30" Assembly="MetaphysicsIndustries.Epiphany, Version=1.0.3985.31441, Culture=neutral, PublicKeyToken=58f5df2252b85e38" Name="MetaphysicsIndustries.Epiphany.InputConnection`1" ArrayRank="0">
+      <TypeArguments>
+        <TypeReference TypeIndex="-1" Assembly="MetaphysicsIndustries.Giza, Version=1.0.4023.23553, Culture=neutral, PublicKeyToken=8c1c75689cc4981a" Name="MetaphysicsIndustries.Giza.ParseSpan" ArrayRank="0">
+          <TypeArguments />
+        </TypeReference>
+      </TypeArguments>
+    </TypeReference>
+    <TypeReference TypeIndex="31" Assembly="MetaphysicsIndustries.Epiphany, Version=1.0.3985.31441, Culture=neutral, PublicKeyToken=58f5df2252b85e38" Name="MetaphysicsIndustries.Epiphany.OutputConnection`1" ArrayRank="0">
+      <TypeArguments>
+        <TypeReference TypeIndex="-1" Assembly="MetaphysicsIndustries.Giza, Version=1.0.4023.23553, Culture=neutral, PublicKeyToken=8c1c75689cc4981a" Name="MetaphysicsIndustries.Giza.SimpleDefinitionNode[]" ArrayRank="1">
+          <TypeArguments>
+            <TypeReference TypeIndex="-1" Assembly="MetaphysicsIndustries.Giza, Version=1.0.4023.23553, Culture=neutral, PublicKeyToken=8c1c75689cc4981a" Name="MetaphysicsIndustries.Giza.SimpleDefinitionNode" ArrayRank="0">
+              <TypeArguments />
+            </TypeReference>
+          </TypeArguments>
+        </TypeReference>
+      </TypeArguments>
+    </TypeReference>
+    <TypeReference TypeIndex="32" Assembly="MetaphysicsIndustries.Epiphany, Version=1.0.3985.31441, Culture=neutral, PublicKeyToken=58f5df2252b85e38" Name="MetaphysicsIndustries.Epiphany.InputConnection`1" ArrayRank="0">
+      <TypeArguments>
+        <TypeReference TypeIndex="-1" Assembly="MetaphysicsIndustries.Giza, Version=1.0.4023.23553, Culture=neutral, PublicKeyToken=8c1c75689cc4981a" Name="MetaphysicsIndustries.Giza.SimpleDefinitionNode[]" ArrayRank="1">
+          <TypeArguments>
+            <TypeReference TypeIndex="-1" Assembly="MetaphysicsIndustries.Giza, Version=1.0.4023.23553, Culture=neutral, PublicKeyToken=8c1c75689cc4981a" Name="MetaphysicsIndustries.Giza.SimpleDefinitionNode" ArrayRank="0">
+              <TypeArguments />
+            </TypeReference>
+          </TypeArguments>
+        </TypeReference>
+      </TypeArguments>
+    </TypeReference>
+    <TypeReference TypeIndex="33" Assembly="MetaphysicsIndustries.Epiphany, Version=1.0.3985.31441, Culture=neutral, PublicKeyToken=58f5df2252b85e38" Name="MetaphysicsIndustries.Epiphany.OutputConnection`1" ArrayRank="0">
+      <TypeArguments>
+        <TypeReference TypeIndex="-1" Assembly="MetaphysicsIndustries.Build, Version=1.0.3985.31445, Culture=neutral, PublicKeyToken=75d864555b96b705" Name="MetaphysicsIndustries.Build.Class" ArrayRank="0">
+          <TypeArguments />
+        </TypeReference>
+      </TypeArguments>
+    </TypeReference>
+    <TypeReference TypeIndex="34" Assembly="MetaphysicsIndustries.Amethyst, Version=1.0.4023.23554, Culture=neutral, PublicKeyToken=9d7cbd784aa922ee" Name="MetaphysicsIndustries.Amethyst.OutputTerminalAmethystPathParentChildrenCollection" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+    <TypeReference TypeIndex="35" Assembly="MetaphysicsIndustries.Crystalline, Version=1.0.3985.31440, Culture=neutral, PublicKeyToken=218c142be34d0c18" Name="MetaphysicsIndustries.Crystalline.BoxOrientation" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+    <TypeReference TypeIndex="36" Assembly="MetaphysicsIndustries.Utilities, Version=1.0.3946.27367, Culture=neutral, PublicKeyToken=5f5e1ffe7b0daeef" Name="MetaphysicsIndustries.Utilities.Vector[]" ArrayRank="1">
+      <TypeArguments>
+        <TypeReference TypeIndex="-1" Assembly="MetaphysicsIndustries.Utilities, Version=1.0.3946.27367, Culture=neutral, PublicKeyToken=5f5e1ffe7b0daeef" Name="MetaphysicsIndustries.Utilities.Vector" ArrayRank="0">
+          <TypeArguments />
+        </TypeReference>
+      </TypeArguments>
+    </TypeReference>
+    <TypeReference TypeIndex="37" Assembly="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Name="System.Type" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+    <TypeReference TypeIndex="38" Assembly="MetaphysicsIndustries.Epiphany, Version=1.0.3985.31441, Culture=neutral, PublicKeyToken=58f5df2252b85e38" Name="MetaphysicsIndustries.Epiphany.OutputConnectionBaseInputConnectionBaseNeighborsCollection" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+    <TypeReference TypeIndex="39" Assembly="MetaphysicsIndustries.Epiphany, Version=1.0.3985.31441, Culture=neutral, PublicKeyToken=58f5df2252b85e38" Name="MetaphysicsIndustries.Epiphany.OutputConnectionInputConnectionParentChildrenCollection" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+    <TypeReference TypeIndex="40" Assembly="MetaphysicsIndustries.Collections, Version=1.0.3960.38731, Culture=neutral, PublicKeyToken=31ed9843e1f1bd54" Name="MetaphysicsIndustries.Collections.Set`1" ArrayRank="0">
+      <TypeArguments>
+        <TypeReference TypeIndex="-1" Assembly="MetaphysicsIndustries.Epiphany, Version=1.0.3985.31441, Culture=neutral, PublicKeyToken=58f5df2252b85e38" Name="MetaphysicsIndustries.Epiphany.InputConnectionBase" ArrayRank="0">
+          <TypeArguments />
+        </TypeReference>
+      </TypeArguments>
+    </TypeReference>
+    <TypeReference TypeIndex="41" Assembly="MetaphysicsIndustries.Collections, Version=1.0.3960.38731, Culture=neutral, PublicKeyToken=31ed9843e1f1bd54" Name="MetaphysicsIndustries.Collections.Set`1" ArrayRank="0">
+      <TypeArguments>
+        <TypeReference TypeIndex="-1" Assembly="MetaphysicsIndustries.Epiphany, Version=1.0.3985.31441, Culture=neutral, PublicKeyToken=58f5df2252b85e38" Name="MetaphysicsIndustries.Epiphany.OutputConnectionBase" ArrayRank="0">
+          <TypeArguments />
+        </TypeReference>
+      </TypeArguments>
+    </TypeReference>
+    <TypeReference TypeIndex="42" Assembly="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Name="System.Collections.Generic.KeyValuePair`2" ArrayRank="0">
+      <TypeArguments>
+        <TypeReference TypeIndex="-1" Assembly="MetaphysicsIndustries.Epiphany, Version=1.0.3985.31441, Culture=neutral, PublicKeyToken=58f5df2252b85e38" Name="MetaphysicsIndustries.Epiphany.Connection" ArrayRank="0">
+          <TypeArguments />
+        </TypeReference>
+        <TypeReference TypeIndex="-1" Assembly="MetaphysicsIndustries.Amethyst, Version=1.0.4023.23554, Culture=neutral, PublicKeyToken=9d7cbd784aa922ee" Name="MetaphysicsIndustries.Amethyst.Terminal" ArrayRank="0">
+          <TypeArguments />
+        </TypeReference>
+      </TypeArguments>
+    </TypeReference>
+    <TypeReference TypeIndex="43" Assembly="MetaphysicsIndustries.Epiphany, Version=1.0.3985.31441, Culture=neutral, PublicKeyToken=58f5df2252b85e38" Name="MetaphysicsIndustries.Epiphany.InputConnectionBaseOutputConnectionBaseNeighborsCollection" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+    <TypeReference TypeIndex="44" Assembly="MetaphysicsIndustries.Collections, Version=1.0.3960.38731, Culture=neutral, PublicKeyToken=31ed9843e1f1bd54" Name="MetaphysicsIndustries.Collections.Set`1" ArrayRank="0">
+      <TypeArguments>
+        <TypeReference TypeIndex="-1" Assembly="MetaphysicsIndustries.Amethyst, Version=1.0.4023.23554, Culture=neutral, PublicKeyToken=9d7cbd784aa922ee" Name="MetaphysicsIndustries.Amethyst.AmethystPath" ArrayRank="0">
+          <TypeArguments />
+        </TypeReference>
+      </TypeArguments>
+    </TypeReference>
+    <TypeReference TypeIndex="45" Assembly="MetaphysicsIndustries.Utilities, Version=1.0.3946.27367, Culture=neutral, PublicKeyToken=5f5e1ffe7b0daeef" Name="MetaphysicsIndustries.Utilities.Vector" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+  </TypeRefs>
+</StringSerializationGraph>

@@ -1,0 +1,28 @@
+
+File =		Header : header
+			Block[header.numblocks]:blocks;
+			
+Header =	uint32 : tag
+			uint32 : numblocks;
+			
+Block =		uint32:blocktype
+			if (blocktype == ~~~)
+			{
+				~
+				~
+				~
+			}
+			if (blocktype == ~~~)
+			{
+				~
+				~
+				~
+			};
+			
+Segment =	uint32:size
+			uint8[size]:contents
+			as
+			{
+				~~~:~~
+				~~~:~~
+			};

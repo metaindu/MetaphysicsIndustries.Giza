@@ -1,0 +1,46 @@
+
+/*****************************************************************************
+ *                                                                           *
+ *  Supergrammar.txt                                                         *
+ *  3 May 2010                                                               *
+ *  Project: MetaphysicsIndustries.FortranLib                                *
+ *  Written by: Richard Sartor                                               *
+ *  Copyright © 2010 Metaphysics Industries, Inc.                            *
+ *                                                                           *
+ *  The supergrammar - this grammar defines the language used to write       *
+ *    other grammars.                                                        *
+ *                                                                           *
+ *****************************************************************************/
+
+grammar = ( definition | comment )+;
+
+definition = defmod* identifier '=' expr ';';
+
+defmod = '<' defmod-item ( ',' defmod-item )* '>';
+defmod-item = ( id-whitespace | id-ignore '-'? id-case );
+<whitespace, ignore case> id-whitespace = 'whitespace';
+<whitespace, ignore case> id-ignore = 'ignore';
+<whitespace, ignore case> id-case = 'case';
+
+expr = ( subexpr | orexpr | comment )+;
+
+orexpr = '(' expr ( '|' expr )* ')' modifier?;
+
+subexpr = ( identifier | literal | charclass ) modifier? ( ':' identifier:tag )?;
+
+modifier = [*+?];
+
+<whitespace> number = [\d]+;
+
+<whitespace> identifier = [\w-_] [\w-_\d]*;
+
+<whitespace> literal = '\'' litchar+ '\'';
+<whitespace> litchar = ( [^\\'] | '\\' [wldsrnt\\'] | unicodechar );
+
+<whitespace> charclass = '[' '^'? charclasschar+ ']';
+<whitespace> charclasschar = ( [^\\\[\]] | '\\' [wldsrnt\\\[\]] | unicodechar );
+
+<whitespace, ignore case> unicodechar = '\\x' [\dabcdef][\dabcdef][\dabcdef][\dabcdef];
+
+<whitespace> comment = ( '/*' ( [^*] | '*'+ [^*/] )* '*'+ '/' | '//' [^\r\n]* [\r\n]+ );
+

@@ -1,0 +1,16 @@
+/* A.1 Keywords */
+typedef-name = identifier;
+namespace-name = ( original-namespace-name | namespace-alias );
+original-namespace-name = identifier;
+namespace-alias = identifier;
+class-name = ( identifier | template-id );
+enum-name = identifier;
+template-name = identifier;
+property-or-event-name = ( identifier | 'default' );
+
+/* A.2 Lexicalconventions */
+hex-quad = hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit;
+universal-character-name = ( '\\u' hex-quad | '\\U' hex-quad hex-quad );
+preprocessing-token = ( header-name | identifier | pp-number | character-literal | string-literal | preprocessing-op-or-punc | &&&each non-white-space character that cannot be one of the above
+token = ( identifier | keyword | literal | operator | punctuator );
+

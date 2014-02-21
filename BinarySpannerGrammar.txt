@@ -1,0 +1,66 @@
+
+grammar = definition+;
+
+definition = identifier:name '=' exprlist:exprs ';';
+
+exprlist = expr+;
+expr = ( chunk | ifexpr | literal );
+
+chunk = type
+		('[' quantifier  ']')? 
+		(':' identifier:name )? 
+		(id-as '{'  exprlist:exprs  '}' )?;
+<whitespace, ignore case>
+id-as = 'as';
+
+quantifier = ( [\d]+ | member );
+member = (identifier:parent '.')*  identifier:name;
+
+
+ifexpr = id-if '(' condition ')' '{' exprlist:exprs '}'
+		 (id-else '{' exprlist:elseexprs '}')?;
+<whitespace, ignore case>
+id-if = 'if';
+<whitespace, ignore case>
+id-else = 'else';
+
+<whitespace, ignore case>
+type = ( 'uint8' | 
+		 'uint16' ('le':endian|'be':endian)? | 
+		'uint32' ('le':endian|'be':endian)? | 
+		'uint64' ('le':endian|'be':endian)? | 
+		'int8' | 
+		 'int16' ('le':endian|'be':endian)? | 
+		 'int32' ('le':endian|'be':endian)? | 
+		 'int64' ('le':endian|'be':endian)? | 
+		 'float8'| 
+		 'float16' ('le':endian|'be':endian)? | 
+		 'float32' ('le':endian|'be':endian)? | 
+		 'float64' ('le':endian|'be':endian)? | 
+		 'bool8' | 
+		 'bool16' | 
+		 'bool32' | 
+		 'bool64' |
+		 'utf8' | 
+		 'utf16' | 
+		 'utf32' | 
+		 identifier );
+
+<whitespace> identifier = [\w-_] [\w-_\d]*;
+
+<whitespace> literal = ( string | hexstring );
+
+<whitespace> string = '\'' stringchar+ '\'';
+<whitespace> stringchar = ( [^\\'] | '\\' [wldsrnt\\'] | hexbyte );
+<whitespace> hexstring = 'x\'' ( [\dabcdef] [\dabcdef] )+ '\'';
+
+<whitespace> charclass = '[' '^'? charclasschar+ ']';
+<whitespace> charclasschar = ( [^\\\[\]] | '\\' [wldsrnt\\\[\]] | hexbyte );
+
+<whitespace, ignore case> hexbyte = '\\x' [\dabcdef][\dabcdef];
+
+<whitespace> comment = ( '/*' ( [^*] | '*'+ [^*/] )* '*'+ '/' | '//' [^\r\n]* [\r\n]+ );
+
+
+
+

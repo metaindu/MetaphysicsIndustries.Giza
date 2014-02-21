@@ -1,0 +1,29 @@
+﻿
+// JSON
+// JavaScript Object Notation
+// http://tools.ietf.org/html/rfc4627
+// March 21, 2012
+// Richard Sartor
+//
+// Not perfectly compliant, but close enough for our purposes for now.
+//
+
+json = value;
+
+object = '{' ( member:members ( ',' member:members )* )? '}';
+
+member = string:key ':' value:value;
+
+value = ( 'false' | 'null' | 'true' | object | array | number | string );
+
+number = [-]? ( '0' | [123456789] [\d]* ) ( '.' [\d]+ )? ( [eE] [+-]? [\d]+ )?;
+
+string = '"' char* '"';
+
+char = ( unescaped |
+		 '\\' (  ["\\/bfnrt] |
+				'u' [\dabcdef] [\dabcdef] [\dabcdef] [\dabcdef] ) );
+
+unescaped = [ !#$%&'()*+,-./\d:;<=>?@\d\l\[\]^_`{}|~];
+
+array = '[' ( value ( ',' value )* )? ']';

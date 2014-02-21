@@ -1,0 +1,1965 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<StringSerializationGraph xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Objects>
+    <Object TypeIndex="0" Index="0">
+      <ArrayLowerBounds>
+        <int>0</int>
+      </ArrayLowerBounds>
+      <ArrayUpperBounds>
+        <int>68</int>
+      </ArrayUpperBounds>
+      <Fields>
+        <ReferenceField FieldName="" ReferenceIndex="1" />
+        <ReferenceField FieldName="" ReferenceIndex="2" />
+        <ReferenceField FieldName="" ReferenceIndex="3" />
+        <ReferenceField FieldName="" ReferenceIndex="4" />
+        <ReferenceField FieldName="" ReferenceIndex="5" />
+        <ReferenceField FieldName="" ReferenceIndex="6" />
+        <ReferenceField FieldName="" ReferenceIndex="7" />
+        <ReferenceField FieldName="" ReferenceIndex="8" />
+        <ReferenceField FieldName="" ReferenceIndex="9" />
+        <ReferenceField FieldName="" ReferenceIndex="10" />
+        <ReferenceField FieldName="" ReferenceIndex="11" />
+        <ReferenceField FieldName="" ReferenceIndex="12" />
+        <ReferenceField FieldName="" ReferenceIndex="13" />
+        <ReferenceField FieldName="" ReferenceIndex="14" />
+        <ReferenceField FieldName="" ReferenceIndex="15" />
+        <ReferenceField FieldName="" ReferenceIndex="16" />
+        <ReferenceField FieldName="" ReferenceIndex="17" />
+        <ReferenceField FieldName="" ReferenceIndex="18" />
+        <ReferenceField FieldName="" ReferenceIndex="19" />
+        <ReferenceField FieldName="" ReferenceIndex="20" />
+        <ReferenceField FieldName="" ReferenceIndex="21" />
+        <ReferenceField FieldName="" ReferenceIndex="22" />
+        <ReferenceField FieldName="" ReferenceIndex="23" />
+        <ReferenceField FieldName="" ReferenceIndex="24" />
+        <ReferenceField FieldName="" ReferenceIndex="25" />
+        <ReferenceField FieldName="" ReferenceIndex="26" />
+        <ReferenceField FieldName="" ReferenceIndex="27" />
+        <ReferenceField FieldName="" ReferenceIndex="28" />
+        <ReferenceField FieldName="" ReferenceIndex="29" />
+        <ReferenceField FieldName="" ReferenceIndex="30" />
+        <ReferenceField FieldName="" ReferenceIndex="31" />
+        <ReferenceField FieldName="" ReferenceIndex="32" />
+        <ReferenceField FieldName="" ReferenceIndex="33" />
+        <ReferenceField FieldName="" ReferenceIndex="34" />
+        <ReferenceField FieldName="" ReferenceIndex="35" />
+        <ReferenceField FieldName="" ReferenceIndex="36" />
+        <ReferenceField FieldName="" ReferenceIndex="37" />
+        <ReferenceField FieldName="" ReferenceIndex="38" />
+        <ReferenceField FieldName="" ReferenceIndex="39" />
+        <ReferenceField FieldName="" ReferenceIndex="40" />
+        <ReferenceField FieldName="" ReferenceIndex="41" />
+        <ReferenceField FieldName="" ReferenceIndex="42" />
+        <ReferenceField FieldName="" ReferenceIndex="43" />
+        <ReferenceField FieldName="" ReferenceIndex="44" />
+        <ReferenceField FieldName="" ReferenceIndex="45" />
+        <ReferenceField FieldName="" ReferenceIndex="46" />
+        <ReferenceField FieldName="" ReferenceIndex="47" />
+        <ReferenceField FieldName="" ReferenceIndex="48" />
+        <ReferenceField FieldName="" ReferenceIndex="49" />
+        <ReferenceField FieldName="" ReferenceIndex="50" />
+        <ReferenceField FieldName="" ReferenceIndex="51" />
+        <ReferenceField FieldName="" ReferenceIndex="52" />
+        <ReferenceField FieldName="" ReferenceIndex="53" />
+        <ReferenceField FieldName="" ReferenceIndex="54" />
+        <ReferenceField FieldName="" ReferenceIndex="55" />
+        <ReferenceField FieldName="" ReferenceIndex="56" />
+        <ReferenceField FieldName="" ReferenceIndex="57" />
+        <ReferenceField FieldName="" ReferenceIndex="58" />
+        <ReferenceField FieldName="" ReferenceIndex="59" />
+        <ReferenceField FieldName="" ReferenceIndex="60" />
+        <ReferenceField FieldName="" ReferenceIndex="61" />
+        <ReferenceField FieldName="" ReferenceIndex="62" />
+        <ReferenceField FieldName="" ReferenceIndex="63" />
+        <ReferenceField FieldName="" ReferenceIndex="64" />
+        <ReferenceField FieldName="" ReferenceIndex="65" />
+        <ReferenceField FieldName="" ReferenceIndex="66" />
+        <ReferenceField FieldName="" ReferenceIndex="67" />
+        <ReferenceField FieldName="" ReferenceIndex="68" />
+        <ReferenceField FieldName="" ReferenceIndex="69" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="1" Index="1">
+      <Fields>
+        <ReferenceField FieldName="_stateTransitionBox" ReferenceIndex="6" />
+        <ReferenceField FieldName="_pathJoints" ReferenceIndex="70" />
+        <ReferenceField FieldName="_to" ReferenceIndex="4" />
+        <ReferenceField FieldName="_from" ReferenceIndex="5" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="2" Index="2">
+      <Fields>
+        <ReferenceField FieldName="_inbound" ReferenceIndex="71" />
+        <ReferenceField FieldName="_outbound" ReferenceIndex="72" />
+        <ValueField FieldName="_text" Type="System.String" Value="end" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="73" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="2" Index="3">
+      <Fields>
+        <ReferenceField FieldName="_inbound" ReferenceIndex="74" />
+        <ReferenceField FieldName="_outbound" ReferenceIndex="75" />
+        <ValueField FieldName="_text" Type="System.String" Value="binop" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="76" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="2" Index="4">
+      <Fields>
+        <ReferenceField FieldName="_inbound" ReferenceIndex="77" />
+        <ReferenceField FieldName="_outbound" ReferenceIndex="78" />
+        <ValueField FieldName="_text" Type="System.String" Value="paren" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="79" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="2" Index="5">
+      <Fields>
+        <ReferenceField FieldName="_inbound" ReferenceIndex="80" />
+        <ReferenceField FieldName="_outbound" ReferenceIndex="81" />
+        <ValueField FieldName="_text" Type="System.String" Value="expr" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="82" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="3" Index="6">
+      <Fields>
+        <ValueField FieldName="_needCalcSize" Type="System.Boolean" Value="False" />
+        <ReferenceField FieldName="_parentPath" ReferenceIndex="1" />
+        <ValueField FieldName="_text" Type="System.String" Value="" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="83" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="2" Index="7">
+      <Fields>
+        <ReferenceField FieldName="_inbound" ReferenceIndex="84" />
+        <ReferenceField FieldName="_outbound" ReferenceIndex="85" />
+        <ValueField FieldName="_text" Type="System.String" Value="paren" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="86" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="2" Index="8">
+      <Fields>
+        <ReferenceField FieldName="_inbound" ReferenceIndex="87" />
+        <ReferenceField FieldName="_outbound" ReferenceIndex="88" />
+        <ValueField FieldName="_text" Type="System.String" Value="'('" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="89" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="1" Index="9">
+      <Fields>
+        <ReferenceField FieldName="_stateTransitionBox" ReferenceIndex="10" />
+        <ReferenceField FieldName="_pathJoints" ReferenceIndex="90" />
+        <ReferenceField FieldName="_to" ReferenceIndex="2" />
+        <ReferenceField FieldName="_from" ReferenceIndex="3" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="3" Index="10">
+      <Fields>
+        <ValueField FieldName="_needCalcSize" Type="System.Boolean" Value="False" />
+        <ReferenceField FieldName="_parentPath" ReferenceIndex="9" />
+        <ValueField FieldName="_text" Type="System.String" Value="" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="91" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="1" Index="11">
+      <Fields>
+        <ReferenceField FieldName="_stateTransitionBox" ReferenceIndex="12" />
+        <ReferenceField FieldName="_pathJoints" ReferenceIndex="92" />
+        <ReferenceField FieldName="_to" ReferenceIndex="3" />
+        <ReferenceField FieldName="_from" ReferenceIndex="5" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="3" Index="12">
+      <Fields>
+        <ValueField FieldName="_needCalcSize" Type="System.Boolean" Value="False" />
+        <ReferenceField FieldName="_parentPath" ReferenceIndex="11" />
+        <ValueField FieldName="_text" Type="System.String" Value="" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="93" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="1" Index="13">
+      <Fields>
+        <ReferenceField FieldName="_stateTransitionBox" ReferenceIndex="14" />
+        <ReferenceField FieldName="_pathJoints" ReferenceIndex="94" />
+        <ReferenceField FieldName="_to" ReferenceIndex="2" />
+        <ReferenceField FieldName="_from" ReferenceIndex="4" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="3" Index="14">
+      <Fields>
+        <ValueField FieldName="_needCalcSize" Type="System.Boolean" Value="False" />
+        <ReferenceField FieldName="_parentPath" ReferenceIndex="13" />
+        <ValueField FieldName="_text" Type="System.String" Value="" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="95" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="2" Index="15">
+      <Fields>
+        <ReferenceField FieldName="_inbound" ReferenceIndex="96" />
+        <ReferenceField FieldName="_outbound" ReferenceIndex="97" />
+        <ValueField FieldName="_text" Type="System.String" Value="expr" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="98" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="2" Index="16">
+      <Fields>
+        <ReferenceField FieldName="_inbound" ReferenceIndex="99" />
+        <ReferenceField FieldName="_outbound" ReferenceIndex="100" />
+        <ValueField FieldName="_text" Type="System.String" Value="')'" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="101" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="2" Index="17">
+      <Fields>
+        <ReferenceField FieldName="_inbound" ReferenceIndex="102" />
+        <ReferenceField FieldName="_outbound" ReferenceIndex="103" />
+        <ValueField FieldName="_text" Type="System.String" Value="end" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="104" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="1" Index="18">
+      <Fields>
+        <ReferenceField FieldName="_stateTransitionBox" ReferenceIndex="19" />
+        <ReferenceField FieldName="_pathJoints" ReferenceIndex="105" />
+        <ReferenceField FieldName="_to" ReferenceIndex="8" />
+        <ReferenceField FieldName="_from" ReferenceIndex="7" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="3" Index="19">
+      <Fields>
+        <ValueField FieldName="_needCalcSize" Type="System.Boolean" Value="False" />
+        <ReferenceField FieldName="_parentPath" ReferenceIndex="18" />
+        <ValueField FieldName="_text" Type="System.String" Value="" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="106" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="1" Index="20">
+      <Fields>
+        <ReferenceField FieldName="_stateTransitionBox" ReferenceIndex="21" />
+        <ReferenceField FieldName="_pathJoints" ReferenceIndex="107" />
+        <ReferenceField FieldName="_to" ReferenceIndex="15" />
+        <ReferenceField FieldName="_from" ReferenceIndex="8" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="3" Index="21">
+      <Fields>
+        <ValueField FieldName="_needCalcSize" Type="System.Boolean" Value="False" />
+        <ReferenceField FieldName="_parentPath" ReferenceIndex="20" />
+        <ValueField FieldName="_text" Type="System.String" Value="" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="108" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="1" Index="22">
+      <Fields>
+        <ReferenceField FieldName="_stateTransitionBox" ReferenceIndex="23" />
+        <ReferenceField FieldName="_pathJoints" ReferenceIndex="109" />
+        <ReferenceField FieldName="_to" ReferenceIndex="16" />
+        <ReferenceField FieldName="_from" ReferenceIndex="15" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="3" Index="23">
+      <Fields>
+        <ValueField FieldName="_needCalcSize" Type="System.Boolean" Value="False" />
+        <ReferenceField FieldName="_parentPath" ReferenceIndex="22" />
+        <ValueField FieldName="_text" Type="System.String" Value="" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="110" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="1" Index="24">
+      <Fields>
+        <ReferenceField FieldName="_stateTransitionBox" ReferenceIndex="25" />
+        <ReferenceField FieldName="_pathJoints" ReferenceIndex="111" />
+        <ReferenceField FieldName="_to" ReferenceIndex="17" />
+        <ReferenceField FieldName="_from" ReferenceIndex="16" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="3" Index="25">
+      <Fields>
+        <ValueField FieldName="_needCalcSize" Type="System.Boolean" Value="False" />
+        <ReferenceField FieldName="_parentPath" ReferenceIndex="24" />
+        <ValueField FieldName="_text" Type="System.String" Value="" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="112" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="2" Index="26">
+      <Fields>
+        <ReferenceField FieldName="_inbound" ReferenceIndex="113" />
+        <ReferenceField FieldName="_outbound" ReferenceIndex="114" />
+        <ValueField FieldName="_text" Type="System.String" Value="binop" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="115" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="2" Index="27">
+      <Fields>
+        <ReferenceField FieldName="_inbound" ReferenceIndex="116" />
+        <ReferenceField FieldName="_outbound" ReferenceIndex="117" />
+        <ValueField FieldName="_text" Type="System.String" Value="operand" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="118" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="2" Index="28">
+      <Fields>
+        <ReferenceField FieldName="_inbound" ReferenceIndex="119" />
+        <ReferenceField FieldName="_outbound" ReferenceIndex="120" />
+        <ValueField FieldName="_text" Type="System.String" Value="'+'" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="121" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="2" Index="29">
+      <Fields>
+        <ReferenceField FieldName="_inbound" ReferenceIndex="122" />
+        <ReferenceField FieldName="_outbound" ReferenceIndex="123" />
+        <ValueField FieldName="_text" Type="System.String" Value="'*'" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="124" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="2" Index="30">
+      <Fields>
+        <ReferenceField FieldName="_inbound" ReferenceIndex="125" />
+        <ReferenceField FieldName="_outbound" ReferenceIndex="126" />
+        <ValueField FieldName="_text" Type="System.String" Value="'**'" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="127" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="2" Index="31">
+      <Fields>
+        <ReferenceField FieldName="_inbound" ReferenceIndex="128" />
+        <ReferenceField FieldName="_outbound" ReferenceIndex="129" />
+        <ValueField FieldName="_text" Type="System.String" Value="expr" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="130" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="2" Index="32">
+      <Fields>
+        <ReferenceField FieldName="_inbound" ReferenceIndex="131" />
+        <ReferenceField FieldName="_outbound" ReferenceIndex="132" />
+        <ValueField FieldName="_text" Type="System.String" Value="end" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="133" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="1" Index="33">
+      <Fields>
+        <ReferenceField FieldName="_stateTransitionBox" ReferenceIndex="34" />
+        <ReferenceField FieldName="_pathJoints" ReferenceIndex="134" />
+        <ReferenceField FieldName="_to" ReferenceIndex="27" />
+        <ReferenceField FieldName="_from" ReferenceIndex="26" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="3" Index="34">
+      <Fields>
+        <ValueField FieldName="_needCalcSize" Type="System.Boolean" Value="False" />
+        <ReferenceField FieldName="_parentPath" ReferenceIndex="33" />
+        <ValueField FieldName="_text" Type="System.String" Value="" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="135" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="1" Index="35">
+      <Fields>
+        <ReferenceField FieldName="_stateTransitionBox" ReferenceIndex="36" />
+        <ReferenceField FieldName="_pathJoints" ReferenceIndex="136" />
+        <ReferenceField FieldName="_to" ReferenceIndex="28" />
+        <ReferenceField FieldName="_from" ReferenceIndex="27" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="3" Index="36">
+      <Fields>
+        <ValueField FieldName="_needCalcSize" Type="System.Boolean" Value="False" />
+        <ReferenceField FieldName="_parentPath" ReferenceIndex="35" />
+        <ValueField FieldName="_text" Type="System.String" Value="" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="137" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="1" Index="37">
+      <Fields>
+        <ReferenceField FieldName="_stateTransitionBox" ReferenceIndex="38" />
+        <ReferenceField FieldName="_pathJoints" ReferenceIndex="138" />
+        <ReferenceField FieldName="_to" ReferenceIndex="31" />
+        <ReferenceField FieldName="_from" ReferenceIndex="28" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="3" Index="38">
+      <Fields>
+        <ValueField FieldName="_needCalcSize" Type="System.Boolean" Value="False" />
+        <ReferenceField FieldName="_parentPath" ReferenceIndex="37" />
+        <ValueField FieldName="_text" Type="System.String" Value="" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="139" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="1" Index="39">
+      <Fields>
+        <ReferenceField FieldName="_stateTransitionBox" ReferenceIndex="40" />
+        <ReferenceField FieldName="_pathJoints" ReferenceIndex="140" />
+        <ReferenceField FieldName="_to" ReferenceIndex="30" />
+        <ReferenceField FieldName="_from" ReferenceIndex="27" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="3" Index="40">
+      <Fields>
+        <ValueField FieldName="_needCalcSize" Type="System.Boolean" Value="False" />
+        <ReferenceField FieldName="_parentPath" ReferenceIndex="39" />
+        <ValueField FieldName="_text" Type="System.String" Value="" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="141" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="1" Index="41">
+      <Fields>
+        <ReferenceField FieldName="_stateTransitionBox" ReferenceIndex="42" />
+        <ReferenceField FieldName="_pathJoints" ReferenceIndex="142" />
+        <ReferenceField FieldName="_to" ReferenceIndex="31" />
+        <ReferenceField FieldName="_from" ReferenceIndex="30" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="3" Index="42">
+      <Fields>
+        <ValueField FieldName="_needCalcSize" Type="System.Boolean" Value="False" />
+        <ReferenceField FieldName="_parentPath" ReferenceIndex="41" />
+        <ValueField FieldName="_text" Type="System.String" Value="" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="143" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="1" Index="43">
+      <Fields>
+        <ReferenceField FieldName="_stateTransitionBox" ReferenceIndex="44" />
+        <ReferenceField FieldName="_pathJoints" ReferenceIndex="144" />
+        <ReferenceField FieldName="_to" ReferenceIndex="32" />
+        <ReferenceField FieldName="_from" ReferenceIndex="31" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="3" Index="44">
+      <Fields>
+        <ValueField FieldName="_needCalcSize" Type="System.Boolean" Value="False" />
+        <ReferenceField FieldName="_parentPath" ReferenceIndex="43" />
+        <ValueField FieldName="_text" Type="System.String" Value="" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="145" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="1" Index="45">
+      <Fields>
+        <ReferenceField FieldName="_stateTransitionBox" ReferenceIndex="46" />
+        <ReferenceField FieldName="_pathJoints" ReferenceIndex="146" />
+        <ReferenceField FieldName="_to" ReferenceIndex="29" />
+        <ReferenceField FieldName="_from" ReferenceIndex="27" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="3" Index="46">
+      <Fields>
+        <ValueField FieldName="_needCalcSize" Type="System.Boolean" Value="False" />
+        <ReferenceField FieldName="_parentPath" ReferenceIndex="45" />
+        <ValueField FieldName="_text" Type="System.String" Value="" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="147" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="1" Index="47">
+      <Fields>
+        <ReferenceField FieldName="_stateTransitionBox" ReferenceIndex="48" />
+        <ReferenceField FieldName="_pathJoints" ReferenceIndex="148" />
+        <ReferenceField FieldName="_to" ReferenceIndex="31" />
+        <ReferenceField FieldName="_from" ReferenceIndex="29" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="3" Index="48">
+      <Fields>
+        <ValueField FieldName="_needCalcSize" Type="System.Boolean" Value="False" />
+        <ReferenceField FieldName="_parentPath" ReferenceIndex="47" />
+        <ValueField FieldName="_text" Type="System.String" Value="" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="149" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="2" Index="49">
+      <Fields>
+        <ReferenceField FieldName="_inbound" ReferenceIndex="150" />
+        <ReferenceField FieldName="_outbound" ReferenceIndex="151" />
+        <ValueField FieldName="_text" Type="System.String" Value="operand" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="152" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="2" Index="50">
+      <Fields>
+        <ReferenceField FieldName="_inbound" ReferenceIndex="153" />
+        <ReferenceField FieldName="_outbound" ReferenceIndex="154" />
+        <ValueField FieldName="_text" Type="System.String" Value="paren" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="155" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="2" Index="51">
+      <Fields>
+        <ReferenceField FieldName="_inbound" ReferenceIndex="156" />
+        <ReferenceField FieldName="_outbound" ReferenceIndex="157" />
+        <ValueField FieldName="_text" Type="System.String" Value="identifier" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="158" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="2" Index="52">
+      <Fields>
+        <ReferenceField FieldName="_inbound" ReferenceIndex="159" />
+        <ReferenceField FieldName="_outbound" ReferenceIndex="160" />
+        <ValueField FieldName="_text" Type="System.String" Value="end" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="161" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="1" Index="53">
+      <Fields>
+        <ReferenceField FieldName="_stateTransitionBox" ReferenceIndex="54" />
+        <ReferenceField FieldName="_pathJoints" ReferenceIndex="162" />
+        <ReferenceField FieldName="_to" ReferenceIndex="50" />
+        <ReferenceField FieldName="_from" ReferenceIndex="49" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="3" Index="54">
+      <Fields>
+        <ValueField FieldName="_needCalcSize" Type="System.Boolean" Value="False" />
+        <ReferenceField FieldName="_parentPath" ReferenceIndex="53" />
+        <ValueField FieldName="_text" Type="System.String" Value="" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="163" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="1" Index="55">
+      <Fields>
+        <ReferenceField FieldName="_stateTransitionBox" ReferenceIndex="56" />
+        <ReferenceField FieldName="_pathJoints" ReferenceIndex="164" />
+        <ReferenceField FieldName="_to" ReferenceIndex="52" />
+        <ReferenceField FieldName="_from" ReferenceIndex="50" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="3" Index="56">
+      <Fields>
+        <ValueField FieldName="_needCalcSize" Type="System.Boolean" Value="False" />
+        <ReferenceField FieldName="_parentPath" ReferenceIndex="55" />
+        <ValueField FieldName="_text" Type="System.String" Value="" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="165" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="1" Index="57">
+      <Fields>
+        <ReferenceField FieldName="_stateTransitionBox" ReferenceIndex="58" />
+        <ReferenceField FieldName="_pathJoints" ReferenceIndex="166" />
+        <ReferenceField FieldName="_to" ReferenceIndex="52" />
+        <ReferenceField FieldName="_from" ReferenceIndex="51" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="3" Index="58">
+      <Fields>
+        <ValueField FieldName="_needCalcSize" Type="System.Boolean" Value="False" />
+        <ReferenceField FieldName="_parentPath" ReferenceIndex="57" />
+        <ValueField FieldName="_text" Type="System.String" Value="" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="167" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="1" Index="59">
+      <Fields>
+        <ReferenceField FieldName="_stateTransitionBox" ReferenceIndex="60" />
+        <ReferenceField FieldName="_pathJoints" ReferenceIndex="168" />
+        <ReferenceField FieldName="_to" ReferenceIndex="51" />
+        <ReferenceField FieldName="_from" ReferenceIndex="49" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="3" Index="60">
+      <Fields>
+        <ValueField FieldName="_needCalcSize" Type="System.Boolean" Value="False" />
+        <ReferenceField FieldName="_parentPath" ReferenceIndex="59" />
+        <ValueField FieldName="_text" Type="System.String" Value="" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="169" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="2" Index="61">
+      <Fields>
+        <ReferenceField FieldName="_inbound" ReferenceIndex="170" />
+        <ReferenceField FieldName="_outbound" ReferenceIndex="171" />
+        <ValueField FieldName="_text" Type="System.String" Value="identifier" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="172" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="2" Index="62">
+      <Fields>
+        <ReferenceField FieldName="_inbound" ReferenceIndex="173" />
+        <ReferenceField FieldName="_outbound" ReferenceIndex="174" />
+        <ValueField FieldName="_text" Type="System.String" Value="[\w]" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="175" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="2" Index="63">
+      <Fields>
+        <ReferenceField FieldName="_inbound" ReferenceIndex="176" />
+        <ReferenceField FieldName="_outbound" ReferenceIndex="177" />
+        <ValueField FieldName="_text" Type="System.String" Value="end" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="178" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="1" Index="64">
+      <Fields>
+        <ReferenceField FieldName="_stateTransitionBox" ReferenceIndex="65" />
+        <ReferenceField FieldName="_pathJoints" ReferenceIndex="179" />
+        <ReferenceField FieldName="_to" ReferenceIndex="62" />
+        <ReferenceField FieldName="_from" ReferenceIndex="61" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="3" Index="65">
+      <Fields>
+        <ValueField FieldName="_needCalcSize" Type="System.Boolean" Value="False" />
+        <ReferenceField FieldName="_parentPath" ReferenceIndex="64" />
+        <ValueField FieldName="_text" Type="System.String" Value="" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="180" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="1" Index="66">
+      <Fields>
+        <ReferenceField FieldName="_stateTransitionBox" ReferenceIndex="67" />
+        <ReferenceField FieldName="_pathJoints" ReferenceIndex="181" />
+        <ReferenceField FieldName="_to" ReferenceIndex="63" />
+        <ReferenceField FieldName="_from" ReferenceIndex="62" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="3" Index="67">
+      <Fields>
+        <ValueField FieldName="_needCalcSize" Type="System.Boolean" Value="False" />
+        <ReferenceField FieldName="_parentPath" ReferenceIndex="66" />
+        <ValueField FieldName="_text" Type="System.String" Value="" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="182" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="1" Index="68">
+      <Fields>
+        <ReferenceField FieldName="_stateTransitionBox" ReferenceIndex="69" />
+        <ReferenceField FieldName="_pathJoints" ReferenceIndex="183" />
+        <ReferenceField FieldName="_to" ReferenceIndex="62" />
+        <ReferenceField FieldName="_from" ReferenceIndex="62" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="3" Index="69">
+      <Fields>
+        <ValueField FieldName="_needCalcSize" Type="System.Boolean" Value="False" />
+        <ReferenceField FieldName="_parentPath" ReferenceIndex="68" />
+        <ValueField FieldName="_text" Type="System.String" Value="" />
+        <ReferenceField FieldName="_rect" ReferenceIndex="184" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="4" Index="70">
+      <Fields>
+        <ReferenceField FieldName="_items" ReferenceIndex="185" />
+        <ValueField FieldName="_size" Type="System.Int32" Value="0" />
+        <ValueField FieldName="_version" Type="System.Int32" Value="678" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="5" Index="71">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="2" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="186" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="6" Index="72">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="2" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="187" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="73">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="592" />
+        <ValueField FieldName="_y" Type="System.Single" Value="159" />
+        <ValueField FieldName="_width" Type="System.Single" Value="50" />
+        <ValueField FieldName="_height" Type="System.Single" Value="50" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="5" Index="74">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="3" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="188" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="6" Index="75">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="3" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="189" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="76">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="442" />
+        <ValueField FieldName="_y" Type="System.Single" Value="209" />
+        <ValueField FieldName="_width" Type="System.Single" Value="50" />
+        <ValueField FieldName="_height" Type="System.Single" Value="50" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="5" Index="77">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="4" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="190" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="6" Index="78">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="4" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="191" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="79">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="442" />
+        <ValueField FieldName="_y" Type="System.Single" Value="109" />
+        <ValueField FieldName="_width" Type="System.Single" Value="50" />
+        <ValueField FieldName="_height" Type="System.Single" Value="50" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="5" Index="80">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="5" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="192" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="6" Index="81">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="5" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="193" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="82">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="292" />
+        <ValueField FieldName="_y" Type="System.Single" Value="159" />
+        <ValueField FieldName="_width" Type="System.Single" Value="50" />
+        <ValueField FieldName="_height" Type="System.Single" Value="50" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="83">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="359.7668" />
+        <ValueField FieldName="_y" Type="System.Single" Value="175.082" />
+        <ValueField FieldName="_width" Type="System.Single" Value="14.46647" />
+        <ValueField FieldName="_height" Type="System.Single" Value="17.83593" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="5" Index="84">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="7" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="194" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="6" Index="85">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="7" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="195" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="86">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="238" />
+        <ValueField FieldName="_y" Type="System.Single" Value="294" />
+        <ValueField FieldName="_width" Type="System.Single" Value="50" />
+        <ValueField FieldName="_height" Type="System.Single" Value="50" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="5" Index="87">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="8" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="196" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="6" Index="88">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="8" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="197" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="89">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="338" />
+        <ValueField FieldName="_y" Type="System.Single" Value="294" />
+        <ValueField FieldName="_width" Type="System.Single" Value="50" />
+        <ValueField FieldName="_height" Type="System.Single" Value="50" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="4" Index="90">
+      <Fields>
+        <ReferenceField FieldName="_items" ReferenceIndex="185" />
+        <ValueField FieldName="_size" Type="System.Int32" Value="0" />
+        <ValueField FieldName="_version" Type="System.Int32" Value="678" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="91">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="559.7668" />
+        <ValueField FieldName="_y" Type="System.Single" Value="175.082" />
+        <ValueField FieldName="_width" Type="System.Single" Value="14.46647" />
+        <ValueField FieldName="_height" Type="System.Single" Value="17.83593" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="4" Index="92">
+      <Fields>
+        <ReferenceField FieldName="_items" ReferenceIndex="198" />
+        <ValueField FieldName="_size" Type="System.Int32" Value="0" />
+        <ValueField FieldName="_version" Type="System.Int32" Value="629" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="93">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="384.7668" />
+        <ValueField FieldName="_y" Type="System.Single" Value="200.082" />
+        <ValueField FieldName="_width" Type="System.Single" Value="14.46647" />
+        <ValueField FieldName="_height" Type="System.Single" Value="17.83593" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="4" Index="94">
+      <Fields>
+        <ReferenceField FieldName="_items" ReferenceIndex="199" />
+        <ValueField FieldName="_size" Type="System.Int32" Value="0" />
+        <ValueField FieldName="_version" Type="System.Int32" Value="603" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="95">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="534.7668" />
+        <ValueField FieldName="_y" Type="System.Single" Value="150.082" />
+        <ValueField FieldName="_width" Type="System.Single" Value="14.46647" />
+        <ValueField FieldName="_height" Type="System.Single" Value="17.83593" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="5" Index="96">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="15" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="200" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="6" Index="97">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="15" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="201" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="98">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="438" />
+        <ValueField FieldName="_y" Type="System.Single" Value="294" />
+        <ValueField FieldName="_width" Type="System.Single" Value="50" />
+        <ValueField FieldName="_height" Type="System.Single" Value="50" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="5" Index="99">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="16" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="202" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="6" Index="100">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="16" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="203" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="101">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="538" />
+        <ValueField FieldName="_y" Type="System.Single" Value="294" />
+        <ValueField FieldName="_width" Type="System.Single" Value="50" />
+        <ValueField FieldName="_height" Type="System.Single" Value="50" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="5" Index="102">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="17" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="204" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="6" Index="103">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="17" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="205" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="104">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="638" />
+        <ValueField FieldName="_y" Type="System.Single" Value="294" />
+        <ValueField FieldName="_width" Type="System.Single" Value="50" />
+        <ValueField FieldName="_height" Type="System.Single" Value="50" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="4" Index="105">
+      <Fields>
+        <ReferenceField FieldName="_items" ReferenceIndex="185" />
+        <ValueField FieldName="_size" Type="System.Int32" Value="0" />
+        <ValueField FieldName="_version" Type="System.Int32" Value="559" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="106">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="305.7668" />
+        <ValueField FieldName="_y" Type="System.Single" Value="310.082" />
+        <ValueField FieldName="_width" Type="System.Single" Value="14.46647" />
+        <ValueField FieldName="_height" Type="System.Single" Value="17.83593" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="4" Index="107">
+      <Fields>
+        <ReferenceField FieldName="_items" ReferenceIndex="185" />
+        <ValueField FieldName="_size" Type="System.Int32" Value="0" />
+        <ValueField FieldName="_version" Type="System.Int32" Value="559" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="108">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="405.7668" />
+        <ValueField FieldName="_y" Type="System.Single" Value="310.082" />
+        <ValueField FieldName="_width" Type="System.Single" Value="14.46647" />
+        <ValueField FieldName="_height" Type="System.Single" Value="17.83593" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="4" Index="109">
+      <Fields>
+        <ReferenceField FieldName="_items" ReferenceIndex="185" />
+        <ValueField FieldName="_size" Type="System.Int32" Value="0" />
+        <ValueField FieldName="_version" Type="System.Int32" Value="559" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="110">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="505.7668" />
+        <ValueField FieldName="_y" Type="System.Single" Value="310.082" />
+        <ValueField FieldName="_width" Type="System.Single" Value="14.46647" />
+        <ValueField FieldName="_height" Type="System.Single" Value="17.83593" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="4" Index="111">
+      <Fields>
+        <ReferenceField FieldName="_items" ReferenceIndex="185" />
+        <ValueField FieldName="_size" Type="System.Int32" Value="0" />
+        <ValueField FieldName="_version" Type="System.Int32" Value="559" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="112">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="605.7668" />
+        <ValueField FieldName="_y" Type="System.Single" Value="310.082" />
+        <ValueField FieldName="_width" Type="System.Single" Value="14.46647" />
+        <ValueField FieldName="_height" Type="System.Single" Value="17.83593" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="5" Index="113">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="26" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="206" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="6" Index="114">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="26" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="207" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="115">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="197" />
+        <ValueField FieldName="_y" Type="System.Single" Value="462" />
+        <ValueField FieldName="_width" Type="System.Single" Value="50" />
+        <ValueField FieldName="_height" Type="System.Single" Value="50" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="5" Index="116">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="27" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="208" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="6" Index="117">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="27" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="209" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="118">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="297" />
+        <ValueField FieldName="_y" Type="System.Single" Value="462" />
+        <ValueField FieldName="_width" Type="System.Single" Value="50" />
+        <ValueField FieldName="_height" Type="System.Single" Value="50" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="5" Index="119">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="28" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="210" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="6" Index="120">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="28" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="211" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="121">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="497" />
+        <ValueField FieldName="_y" Type="System.Single" Value="362" />
+        <ValueField FieldName="_width" Type="System.Single" Value="50" />
+        <ValueField FieldName="_height" Type="System.Single" Value="50" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="5" Index="122">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="29" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="212" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="6" Index="123">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="29" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="213" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="124">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="497" />
+        <ValueField FieldName="_y" Type="System.Single" Value="462" />
+        <ValueField FieldName="_width" Type="System.Single" Value="50" />
+        <ValueField FieldName="_height" Type="System.Single" Value="50" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="5" Index="125">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="30" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="214" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="6" Index="126">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="30" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="215" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="127">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="497" />
+        <ValueField FieldName="_y" Type="System.Single" Value="562" />
+        <ValueField FieldName="_width" Type="System.Single" Value="50" />
+        <ValueField FieldName="_height" Type="System.Single" Value="50" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="5" Index="128">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="31" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="216" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="6" Index="129">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="31" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="217" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="130">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="697" />
+        <ValueField FieldName="_y" Type="System.Single" Value="461" />
+        <ValueField FieldName="_width" Type="System.Single" Value="50" />
+        <ValueField FieldName="_height" Type="System.Single" Value="50" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="5" Index="131">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="32" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="218" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="6" Index="132">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="32" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="219" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="133">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="797" />
+        <ValueField FieldName="_y" Type="System.Single" Value="462" />
+        <ValueField FieldName="_width" Type="System.Single" Value="50" />
+        <ValueField FieldName="_height" Type="System.Single" Value="50" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="4" Index="134">
+      <Fields>
+        <ReferenceField FieldName="_items" ReferenceIndex="220" />
+        <ValueField FieldName="_size" Type="System.Int32" Value="0" />
+        <ValueField FieldName="_version" Type="System.Int32" Value="755" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="135">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="264.7668" />
+        <ValueField FieldName="_y" Type="System.Single" Value="478.082" />
+        <ValueField FieldName="_width" Type="System.Single" Value="14.46647" />
+        <ValueField FieldName="_height" Type="System.Single" Value="17.83593" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="4" Index="136">
+      <Fields>
+        <ReferenceField FieldName="_items" ReferenceIndex="221" />
+        <ValueField FieldName="_size" Type="System.Int32" Value="0" />
+        <ValueField FieldName="_version" Type="System.Int32" Value="831" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="137">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="412.7668" />
+        <ValueField FieldName="_y" Type="System.Single" Value="426.082" />
+        <ValueField FieldName="_width" Type="System.Single" Value="14.46647" />
+        <ValueField FieldName="_height" Type="System.Single" Value="17.83593" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="4" Index="138">
+      <Fields>
+        <ReferenceField FieldName="_items" ReferenceIndex="222" />
+        <ValueField FieldName="_size" Type="System.Int32" Value="0" />
+        <ValueField FieldName="_version" Type="System.Int32" Value="305" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="139">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="614.7668" />
+        <ValueField FieldName="_y" Type="System.Single" Value="428.082" />
+        <ValueField FieldName="_width" Type="System.Single" Value="14.46647" />
+        <ValueField FieldName="_height" Type="System.Single" Value="17.83593" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="4" Index="140">
+      <Fields>
+        <ReferenceField FieldName="_items" ReferenceIndex="223" />
+        <ValueField FieldName="_size" Type="System.Int32" Value="0" />
+        <ValueField FieldName="_version" Type="System.Int32" Value="378" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="141">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="414.7668" />
+        <ValueField FieldName="_y" Type="System.Single" Value="528.082" />
+        <ValueField FieldName="_width" Type="System.Single" Value="14.46647" />
+        <ValueField FieldName="_height" Type="System.Single" Value="17.83593" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="4" Index="142">
+      <Fields>
+        <ReferenceField FieldName="_items" ReferenceIndex="224" />
+        <ValueField FieldName="_size" Type="System.Int32" Value="0" />
+        <ValueField FieldName="_version" Type="System.Int32" Value="868" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="143">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="618.7668" />
+        <ValueField FieldName="_y" Type="System.Single" Value="534.082" />
+        <ValueField FieldName="_width" Type="System.Single" Value="14.46647" />
+        <ValueField FieldName="_height" Type="System.Single" Value="17.83593" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="4" Index="144">
+      <Fields>
+        <ReferenceField FieldName="_items" ReferenceIndex="225" />
+        <ValueField FieldName="_size" Type="System.Int32" Value="0" />
+        <ValueField FieldName="_version" Type="System.Int32" Value="762" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="145">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="764.7668" />
+        <ValueField FieldName="_y" Type="System.Single" Value="478.082" />
+        <ValueField FieldName="_width" Type="System.Single" Value="14.46647" />
+        <ValueField FieldName="_height" Type="System.Single" Value="17.83593" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="4" Index="146">
+      <Fields>
+        <ReferenceField FieldName="_items" ReferenceIndex="226" />
+        <ValueField FieldName="_size" Type="System.Int32" Value="0" />
+        <ValueField FieldName="_version" Type="System.Int32" Value="434" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="147">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="414.7668" />
+        <ValueField FieldName="_y" Type="System.Single" Value="478.082" />
+        <ValueField FieldName="_width" Type="System.Single" Value="14.46647" />
+        <ValueField FieldName="_height" Type="System.Single" Value="17.83593" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="4" Index="148">
+      <Fields>
+        <ReferenceField FieldName="_items" ReferenceIndex="227" />
+        <ValueField FieldName="_size" Type="System.Int32" Value="0" />
+        <ValueField FieldName="_version" Type="System.Int32" Value="213" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="149">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="614.7668" />
+        <ValueField FieldName="_y" Type="System.Single" Value="477.582" />
+        <ValueField FieldName="_width" Type="System.Single" Value="14.46647" />
+        <ValueField FieldName="_height" Type="System.Single" Value="17.83593" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="5" Index="150">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="49" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="228" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="6" Index="151">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="49" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="229" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="152">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="772" />
+        <ValueField FieldName="_y" Type="System.Single" Value="103" />
+        <ValueField FieldName="_width" Type="System.Single" Value="50" />
+        <ValueField FieldName="_height" Type="System.Single" Value="50" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="5" Index="153">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="50" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="230" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="6" Index="154">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="50" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="231" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="155">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="921" />
+        <ValueField FieldName="_y" Type="System.Single" Value="52" />
+        <ValueField FieldName="_width" Type="System.Single" Value="50" />
+        <ValueField FieldName="_height" Type="System.Single" Value="50" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="5" Index="156">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="51" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="232" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="6" Index="157">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="51" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="233" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="158">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="921" />
+        <ValueField FieldName="_y" Type="System.Single" Value="152" />
+        <ValueField FieldName="_width" Type="System.Single" Value="50" />
+        <ValueField FieldName="_height" Type="System.Single" Value="50" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="5" Index="159">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="52" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="234" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="6" Index="160">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="52" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="235" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="161">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="1071" />
+        <ValueField FieldName="_y" Type="System.Single" Value="102" />
+        <ValueField FieldName="_width" Type="System.Single" Value="50" />
+        <ValueField FieldName="_height" Type="System.Single" Value="50" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="4" Index="162">
+      <Fields>
+        <ReferenceField FieldName="_items" ReferenceIndex="236" />
+        <ValueField FieldName="_size" Type="System.Int32" Value="0" />
+        <ValueField FieldName="_version" Type="System.Int32" Value="391" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="163">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="838.7668" />
+        <ValueField FieldName="_y" Type="System.Single" Value="118.082" />
+        <ValueField FieldName="_width" Type="System.Single" Value="14.46647" />
+        <ValueField FieldName="_height" Type="System.Single" Value="17.83593" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="4" Index="164">
+      <Fields>
+        <ReferenceField FieldName="_items" ReferenceIndex="237" />
+        <ValueField FieldName="_size" Type="System.Int32" Value="0" />
+        <ValueField FieldName="_version" Type="System.Int32" Value="84" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="165">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="1013.767" />
+        <ValueField FieldName="_y" Type="System.Single" Value="93.08203" />
+        <ValueField FieldName="_width" Type="System.Single" Value="14.46647" />
+        <ValueField FieldName="_height" Type="System.Single" Value="17.83593" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="4" Index="166">
+      <Fields>
+        <ReferenceField FieldName="_items" ReferenceIndex="238" />
+        <ValueField FieldName="_size" Type="System.Int32" Value="0" />
+        <ValueField FieldName="_version" Type="System.Int32" Value="384" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="167">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="1038.767" />
+        <ValueField FieldName="_y" Type="System.Single" Value="118.082" />
+        <ValueField FieldName="_width" Type="System.Single" Value="14.46647" />
+        <ValueField FieldName="_height" Type="System.Single" Value="17.83593" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="4" Index="168">
+      <Fields>
+        <ReferenceField FieldName="_items" ReferenceIndex="239" />
+        <ValueField FieldName="_size" Type="System.Int32" Value="0" />
+        <ValueField FieldName="_version" Type="System.Int32" Value="118" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="169">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="864.2668" />
+        <ValueField FieldName="_y" Type="System.Single" Value="143.582" />
+        <ValueField FieldName="_width" Type="System.Single" Value="14.46647" />
+        <ValueField FieldName="_height" Type="System.Single" Value="17.83593" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="5" Index="170">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="61" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="240" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="6" Index="171">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="61" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="241" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="172">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="855" />
+        <ValueField FieldName="_y" Type="System.Single" Value="253" />
+        <ValueField FieldName="_width" Type="System.Single" Value="50" />
+        <ValueField FieldName="_height" Type="System.Single" Value="50" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="5" Index="173">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="62" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="242" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="6" Index="174">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="62" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="243" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="175">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="954" />
+        <ValueField FieldName="_y" Type="System.Single" Value="253" />
+        <ValueField FieldName="_width" Type="System.Single" Value="50" />
+        <ValueField FieldName="_height" Type="System.Single" Value="50" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="5" Index="176">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="63" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="244" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="6" Index="177">
+      <Fields>
+        <ReferenceField FieldName="ElementPathChildrenCollection+_parent" ReferenceIndex="63" />
+        <ReferenceField FieldName="ElementPathChildrenCollection+_set" ReferenceIndex="245" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="178">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="1055" />
+        <ValueField FieldName="_y" Type="System.Single" Value="253" />
+        <ValueField FieldName="_width" Type="System.Single" Value="50" />
+        <ValueField FieldName="_height" Type="System.Single" Value="50" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="4" Index="179">
+      <Fields>
+        <ReferenceField FieldName="_items" ReferenceIndex="246" />
+        <ValueField FieldName="_size" Type="System.Int32" Value="0" />
+        <ValueField FieldName="_version" Type="System.Int32" Value="57" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="180">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="922.7668" />
+        <ValueField FieldName="_y" Type="System.Single" Value="269.082" />
+        <ValueField FieldName="_width" Type="System.Single" Value="14.46647" />
+        <ValueField FieldName="_height" Type="System.Single" Value="17.83593" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="4" Index="181">
+      <Fields>
+        <ReferenceField FieldName="_items" ReferenceIndex="247" />
+        <ValueField FieldName="_size" Type="System.Int32" Value="0" />
+        <ValueField FieldName="_version" Type="System.Int32" Value="57" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="182">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="1022.767" />
+        <ValueField FieldName="_y" Type="System.Single" Value="269.082" />
+        <ValueField FieldName="_width" Type="System.Single" Value="14.46647" />
+        <ValueField FieldName="_height" Type="System.Single" Value="17.83593" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="4" Index="183">
+      <Fields>
+        <ReferenceField FieldName="_items" ReferenceIndex="248" />
+        <ValueField FieldName="_size" Type="System.Int32" Value="0" />
+        <ValueField FieldName="_version" Type="System.Int32" Value="61" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="7" Index="184">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="972.7668" />
+        <ValueField FieldName="_y" Type="System.Single" Value="323.082" />
+        <ValueField FieldName="_width" Type="System.Single" Value="14.46647" />
+        <ValueField FieldName="_height" Type="System.Single" Value="17.83593" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="8" Index="185">
+      <ArrayLowerBounds>
+        <int>0</int>
+      </ArrayLowerBounds>
+      <ArrayUpperBounds>
+        <int>-1</int>
+      </ArrayUpperBounds>
+      <Fields />
+    </Object>
+    <Object TypeIndex="9" Index="186">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="9" />
+        <ReferenceField FieldName="1" ReferenceIndex="13" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="187">
+      <Fields />
+    </Object>
+    <Object TypeIndex="9" Index="188">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="11" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="189">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="9" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="190">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="1" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="191">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="13" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="192">
+      <Fields />
+    </Object>
+    <Object TypeIndex="9" Index="193">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="1" />
+        <ReferenceField FieldName="1" ReferenceIndex="11" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="194">
+      <Fields />
+    </Object>
+    <Object TypeIndex="9" Index="195">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="18" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="196">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="18" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="197">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="20" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="8" Index="198">
+      <ArrayLowerBounds>
+        <int>0</int>
+      </ArrayLowerBounds>
+      <ArrayUpperBounds>
+        <int>3</int>
+      </ArrayUpperBounds>
+      <Fields>
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="8" Index="199">
+      <ArrayLowerBounds>
+        <int>0</int>
+      </ArrayLowerBounds>
+      <ArrayUpperBounds>
+        <int>3</int>
+      </ArrayUpperBounds>
+      <Fields>
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="200">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="20" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="201">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="22" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="202">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="22" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="203">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="24" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="204">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="24" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="205">
+      <Fields />
+    </Object>
+    <Object TypeIndex="9" Index="206">
+      <Fields />
+    </Object>
+    <Object TypeIndex="9" Index="207">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="33" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="208">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="33" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="209">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="35" />
+        <ReferenceField FieldName="1" ReferenceIndex="45" />
+        <ReferenceField FieldName="2" ReferenceIndex="39" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="210">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="35" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="211">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="37" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="212">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="45" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="213">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="47" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="214">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="39" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="215">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="41" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="216">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="41" />
+        <ReferenceField FieldName="1" ReferenceIndex="37" />
+        <ReferenceField FieldName="2" ReferenceIndex="47" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="217">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="43" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="218">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="43" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="219">
+      <Fields />
+    </Object>
+    <Object TypeIndex="8" Index="220">
+      <ArrayLowerBounds>
+        <int>0</int>
+      </ArrayLowerBounds>
+      <ArrayUpperBounds>
+        <int>3</int>
+      </ArrayUpperBounds>
+      <Fields>
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="8" Index="221">
+      <ArrayLowerBounds>
+        <int>0</int>
+      </ArrayLowerBounds>
+      <ArrayUpperBounds>
+        <int>3</int>
+      </ArrayUpperBounds>
+      <Fields>
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="8" Index="222">
+      <ArrayLowerBounds>
+        <int>0</int>
+      </ArrayLowerBounds>
+      <ArrayUpperBounds>
+        <int>3</int>
+      </ArrayUpperBounds>
+      <Fields>
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="8" Index="223">
+      <ArrayLowerBounds>
+        <int>0</int>
+      </ArrayLowerBounds>
+      <ArrayUpperBounds>
+        <int>3</int>
+      </ArrayUpperBounds>
+      <Fields>
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="8" Index="224">
+      <ArrayLowerBounds>
+        <int>0</int>
+      </ArrayLowerBounds>
+      <ArrayUpperBounds>
+        <int>3</int>
+      </ArrayUpperBounds>
+      <Fields>
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="8" Index="225">
+      <ArrayLowerBounds>
+        <int>0</int>
+      </ArrayLowerBounds>
+      <ArrayUpperBounds>
+        <int>3</int>
+      </ArrayUpperBounds>
+      <Fields>
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="8" Index="226">
+      <ArrayLowerBounds>
+        <int>0</int>
+      </ArrayLowerBounds>
+      <ArrayUpperBounds>
+        <int>3</int>
+      </ArrayUpperBounds>
+      <Fields>
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="8" Index="227">
+      <ArrayLowerBounds>
+        <int>0</int>
+      </ArrayLowerBounds>
+      <ArrayUpperBounds>
+        <int>3</int>
+      </ArrayUpperBounds>
+      <Fields>
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="228">
+      <Fields />
+    </Object>
+    <Object TypeIndex="9" Index="229">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="53" />
+        <ReferenceField FieldName="1" ReferenceIndex="59" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="230">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="53" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="231">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="55" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="232">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="59" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="233">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="57" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="234">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="57" />
+        <ReferenceField FieldName="1" ReferenceIndex="55" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="235">
+      <Fields />
+    </Object>
+    <Object TypeIndex="8" Index="236">
+      <ArrayLowerBounds>
+        <int>0</int>
+      </ArrayLowerBounds>
+      <ArrayUpperBounds>
+        <int>3</int>
+      </ArrayUpperBounds>
+      <Fields>
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="8" Index="237">
+      <ArrayLowerBounds>
+        <int>0</int>
+      </ArrayLowerBounds>
+      <ArrayUpperBounds>
+        <int>3</int>
+      </ArrayUpperBounds>
+      <Fields>
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="8" Index="238">
+      <ArrayLowerBounds>
+        <int>0</int>
+      </ArrayLowerBounds>
+      <ArrayUpperBounds>
+        <int>3</int>
+      </ArrayUpperBounds>
+      <Fields>
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="8" Index="239">
+      <ArrayLowerBounds>
+        <int>0</int>
+      </ArrayLowerBounds>
+      <ArrayUpperBounds>
+        <int>3</int>
+      </ArrayUpperBounds>
+      <Fields>
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="240">
+      <Fields />
+    </Object>
+    <Object TypeIndex="9" Index="241">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="64" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="242">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="64" />
+        <ReferenceField FieldName="1" ReferenceIndex="68" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="243">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="66" />
+        <ReferenceField FieldName="1" ReferenceIndex="68" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="244">
+      <Fields>
+        <ReferenceField FieldName="0" ReferenceIndex="66" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="9" Index="245">
+      <Fields />
+    </Object>
+    <Object TypeIndex="8" Index="246">
+      <ArrayLowerBounds>
+        <int>0</int>
+      </ArrayLowerBounds>
+      <ArrayUpperBounds>
+        <int>3</int>
+      </ArrayUpperBounds>
+      <Fields>
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="8" Index="247">
+      <ArrayLowerBounds>
+        <int>0</int>
+      </ArrayLowerBounds>
+      <ArrayUpperBounds>
+        <int>3</int>
+      </ArrayUpperBounds>
+      <Fields>
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="8" Index="248">
+      <ArrayLowerBounds>
+        <int>0</int>
+      </ArrayLowerBounds>
+      <ArrayUpperBounds>
+        <int>3</int>
+      </ArrayUpperBounds>
+      <Fields>
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+        <ReferenceField FieldName="" ReferenceIndex="249" />
+      </Fields>
+    </Object>
+    <Object TypeIndex="10" Index="249">
+      <Fields>
+        <ValueField FieldName="_x" Type="System.Single" Value="0" />
+        <ValueField FieldName="_y" Type="System.Single" Value="0" />
+      </Fields>
+    </Object>
+  </Objects>
+  <TypeRefs>
+    <TypeReference TypeIndex="0" Assembly="MetaphysicsIndustries.Crystalline, Version=1.0.3751.30859, Culture=neutral, PublicKeyToken=218c142be34d0c18" Name="MetaphysicsIndustries.Crystalline.Entity[]" ArrayRank="1">
+      <TypeArguments>
+        <TypeReference TypeIndex="-1" Assembly="MetaphysicsIndustries.Crystalline, Version=1.0.3751.30859, Culture=neutral, PublicKeyToken=218c142be34d0c18" Name="MetaphysicsIndustries.Crystalline.Entity" ArrayRank="0">
+          <TypeArguments />
+        </TypeReference>
+      </TypeArguments>
+    </TypeReference>
+    <TypeReference TypeIndex="1" Assembly="MetaphysicsIndustries.Emerald, Version=1.0.3751.42675, Culture=neutral, PublicKeyToken=452d595601755a1d" Name="MetaphysicsIndustries.Emerald.EmeraldPath" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+    <TypeReference TypeIndex="2" Assembly="MetaphysicsIndustries.Emerald, Version=1.0.3751.42675, Culture=neutral, PublicKeyToken=452d595601755a1d" Name="MetaphysicsIndustries.Emerald.EmeraldElement" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+    <TypeReference TypeIndex="3" Assembly="MetaphysicsIndustries.Emerald, Version=1.0.3751.42675, Culture=neutral, PublicKeyToken=452d595601755a1d" Name="MetaphysicsIndustries.Emerald.StateTransitionBox" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+    <TypeReference TypeIndex="4" Assembly="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" Name="System.Collections.Generic.List`1" ArrayRank="0">
+      <TypeArguments>
+        <TypeReference TypeIndex="-1" Assembly="MetaphysicsIndustries.Utilities, Version=1.0.3751.2167, Culture=neutral, PublicKeyToken=5f5e1ffe7b0daeef" Name="MetaphysicsIndustries.Utilities.Vector" ArrayRank="0">
+          <TypeArguments />
+        </TypeReference>
+      </TypeArguments>
+    </TypeReference>
+    <TypeReference TypeIndex="5" Assembly="MetaphysicsIndustries.Crystalline, Version=1.0.3751.30859, Culture=neutral, PublicKeyToken=218c142be34d0c18" Name="MetaphysicsIndustries.Crystalline.InboundToElementPathChildrenCollection" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+    <TypeReference TypeIndex="6" Assembly="MetaphysicsIndustries.Crystalline, Version=1.0.3751.30859, Culture=neutral, PublicKeyToken=218c142be34d0c18" Name="MetaphysicsIndustries.Crystalline.OutboundFromElementPathChildrenCollection" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+    <TypeReference TypeIndex="7" Assembly="MetaphysicsIndustries.Utilities, Version=1.0.3751.2167, Culture=neutral, PublicKeyToken=5f5e1ffe7b0daeef" Name="MetaphysicsIndustries.Utilities.RectangleV" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+    <TypeReference TypeIndex="8" Assembly="MetaphysicsIndustries.Utilities, Version=1.0.3751.2167, Culture=neutral, PublicKeyToken=5f5e1ffe7b0daeef" Name="MetaphysicsIndustries.Utilities.Vector[]" ArrayRank="1">
+      <TypeArguments>
+        <TypeReference TypeIndex="-1" Assembly="MetaphysicsIndustries.Utilities, Version=1.0.3751.2167, Culture=neutral, PublicKeyToken=5f5e1ffe7b0daeef" Name="MetaphysicsIndustries.Utilities.Vector" ArrayRank="0">
+          <TypeArguments />
+        </TypeReference>
+      </TypeArguments>
+    </TypeReference>
+    <TypeReference TypeIndex="9" Assembly="MetaphysicsIndustries.Collections, Version=1.0.3751.2166, Culture=neutral, PublicKeyToken=31ed9843e1f1bd54" Name="MetaphysicsIndustries.Collections.Set`1" ArrayRank="0">
+      <TypeArguments>
+        <TypeReference TypeIndex="-1" Assembly="MetaphysicsIndustries.Crystalline, Version=1.0.3751.30859, Culture=neutral, PublicKeyToken=218c142be34d0c18" Name="MetaphysicsIndustries.Crystalline.Path" ArrayRank="0">
+          <TypeArguments />
+        </TypeReference>
+      </TypeArguments>
+    </TypeReference>
+    <TypeReference TypeIndex="10" Assembly="MetaphysicsIndustries.Utilities, Version=1.0.3751.2167, Culture=neutral, PublicKeyToken=5f5e1ffe7b0daeef" Name="MetaphysicsIndustries.Utilities.Vector" ArrayRank="0">
+      <TypeArguments />
+    </TypeReference>
+  </TypeRefs>
+</StringSerializationGraph>
