@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MetaphysicsIndustries.Giza</RootNamespace>
     <AssemblyName>MetaphysicsIndustries.Giza</AssemblyName>
-    <SignAssembly>True</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileUpgradeFlags>
@@ -109,7 +109,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Giza.cd" />
-    <None Include="key.snk" />
     <None Include="todo.txt" />
     <None Include="docs\Directives.txt" />
     <None Include="StringFormatterGrammar.giza" />
