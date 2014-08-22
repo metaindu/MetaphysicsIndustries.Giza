@@ -7,8 +7,8 @@ namespace MetaphysicsIndustries.Giza
 {
     public class CharClass
     {
-        public CharClass()
-            : this(new char[0], false, false, false, false)
+        public CharClass(char ch)
+            : this(new char[1]{ch})
         {
         }
         public CharClass(char[] chars)
@@ -104,15 +104,48 @@ namespace MetaphysicsIndustries.Giza
             return Exclude;
         }
 
+        public bool MatchesIgnoringCase(char ch)
+        {
+            if (Letter && char.IsLetter(ch))
+            {
+                return !Exclude;
+            }
+            if (Digit && char.IsDigit(ch))
+            {
+                return !Exclude;
+            }
+            if (Whitespace && char.IsWhiteSpace(ch))
+            {
+                return !Exclude;
+            }
+
+            char lower = char.ToLower(ch);
+            foreach (char ch2 in _chars)
+            {
+                if (lower == char.ToLower(ch2))
+                {
+                    return !Exclude;
+                }
+            }
+
+            return Exclude;
+        }
+
         public override string ToString()
         {
+            return "[" + ToUndelimitedString() + "]";
+        }
+
+        public string ToUndelimitedString()
+        {
             StringBuilder sb = new StringBuilder();
-            sb.Append("[");
             if (Exclude) sb.Append("^");
             if (Letter) sb.Append("\\l");
             if (Digit) sb.Append("\\d");
             if (Whitespace) sb.Append("\\s");
-            foreach (char ch in _chars)
+            var chs = new List<char>(_chars);
+            chs.Sort();
+            foreach (char ch in chs)
             {
                 if (ch == ']' || ch == '\\' || ch == '[')
                 {
@@ -124,7 +157,6 @@ namespace MetaphysicsIndustries.Giza
                 else if (ch == '\n') sb.Append("\\n");
                 else sb.Append(ch.ToString());
             }
-            sb.Append("]");
 
             return sb.ToString();
         }
@@ -152,9 +184,25 @@ namespace MetaphysicsIndustries.Giza
             return chs.ToArray();
         }
 
+        public int GetAllCharsCount()
+        {
+            int count = GetNonClassCharsCount();
+
+            if (Letter) count += LetterChars.Length;
+            if (Digit) count += DigitChars.Length;
+            if (Whitespace) count += WhitespaceChars.Length;
+
+            return count;
+        }
+
         public char[] GetNonClassChars()
         {
             return (char[])_chars.Clone();
+        }
+
+        public int GetNonClassCharsCount()
+        {
+            return _chars.Length;
         }
 
         public CharClass GetIgnoreCase()

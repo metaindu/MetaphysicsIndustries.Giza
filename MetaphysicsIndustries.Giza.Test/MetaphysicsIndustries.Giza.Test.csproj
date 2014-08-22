@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0F60D61D-FF19-4954-9838-3D53E2CEEE3A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>MetaphysicsIndustries.Giza.Test</RootNamespace>
+    <AssemblyName>MetaphysicsIndustries.Giza.Test</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\Ligra\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DefinitionCheckerTest.cs" />
+    <Compile Include="TokenizerTest.cs" />
+    <Compile Include="DefinitionBuilderTest.cs" />
+    <Compile Include="ExpressionCheckerTest.cs" />
+    <Compile Include="ParserTest.cs" />
+    <Compile Include="CommandLineTest.cs" />
+    <Compile Include="SpanCheckerTest.cs" />
+    <Compile Include="NodeMatchTest.cs" />
+    <Compile Include="ExpressionCheckerTest.DirectivesAndDefRefs.cs" />
+    <Compile Include="ExpressionCheckerTest.Directives.cs" />
+    <Compile Include="TokenizedGrammarBuilderTest.cs" />
+    <Compile Include="StringFormatterTest.cs" />
+    <Compile Include="PriorityQueueTest.cs" />
+    <Compile Include="CharacterSourceTest.cs" />
+    <Compile Include="SpannerTests\SequenceTest.cs" />
+    <Compile Include="SpannerTests\BasicTest.cs" />
+    <Compile Include="SpannerTests\MindWhitespaceOff.cs" />
+    <Compile Include="SpannerTests\MindWhitespaceOn.cs" />
+    <Compile Include="SpannerTests\AtomicTest.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\MetaphysicsIndustries.Giza.csproj">
+      <Project>{98B42ACF-8370-4428-9D41-73FF1CEFB2E4}</Project>
+      <Name>MetaphysicsIndustries.Giza</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MetaphysicsIndustries.Collections\MetaphysicsIndustries.Collections.csproj">
+      <Project>{FF2B8A90-E8D2-4CF6-81E6-4A7BCE1FF900}</Project>
+      <Name>MetaphysicsIndustries.Collections</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\giza\giza.csproj">
+      <Project>{3CB3C1B6-0838-4E0A-94BA-254B974D8D6E}</Project>
+      <Name>giza</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SpannerTests\" />
+  </ItemGroup>
+</Project>

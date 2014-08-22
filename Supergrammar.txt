@@ -3,9 +3,9 @@
  *                                                                           *
  *  Supergrammar.txt                                                         *
  *  3 May 2010                                                               *
- *  Project: MetaphysicsIndustries.FortranLib                                *
+ *  Project: MetaphysicsIndustries.Giza                                      *
  *  Written by: Richard Sartor                                               *
- *  Copyright © 2010 Metaphysics Industries, Inc.                            *
+ *  Copyright © 2010-2013 Metaphysics Industries, Inc.                       *
  *                                                                           *
  *  The supergrammar - this grammar defines the language used to write       *
  *    other grammars.                                                        *
@@ -14,13 +14,25 @@
 
 grammar = ( definition | comment )+;
 
-definition = defmod* identifier '=' expr ';';
+definition = directive* identifier '=' expr ';';
 
-defmod = '<' defmod-item ( ',' defmod-item )* '>';
-defmod-item = ( id-whitespace | id-ignore '-'? id-case );
-<whitespace, ignore case> id-whitespace = 'whitespace';
-<whitespace, ignore case> id-ignore = 'ignore';
-<whitespace, ignore case> id-case = 'case';
+directive = '<' directive-item ( ',' directive-item )* '>';
+directive-item = (
+    id-mind id-whitespace |
+    id-ignore id-case |
+    id-atomic |
+    id-token |
+    id-subtoken |
+    id-comment
+);
+<mind whitespace, ignore case> id-mind = 'mind';
+<mind whitespace, ignore case> id-whitespace = 'whitespace';
+<mind whitespace, ignore case> id-ignore = 'ignore';
+<mind whitespace, ignore case> id-case = 'case';
+<mind whitespace, ignore case> id-atomic = 'atomic';
+<mind whitespace, ignore case> id-token = 'token';
+<mind whitespace, ignore case> id-subtoken = 'subtoken';
+<mind whitespace, ignore case> id-comment = 'comment';
 
 expr = ( subexpr | orexpr | comment )+;
 
@@ -30,17 +42,15 @@ subexpr = ( identifier | literal | charclass ) modifier? ( ':' identifier:tag )?
 
 modifier = [*+?];
 
-<whitespace> number = [\d]+;
+<mind whitespace, atomic> number = [\d]+;
 
-<whitespace> identifier = [\w-_] [\w-_\d]*;
+<mind whitespace, atomic> identifier = [\w-_] [\w-_\d]*;
 
-<whitespace> literal = '\'' litchar+ '\'';
-<whitespace> litchar = ( [^\\'] | '\\' [wldsrnt\\'] | unicodechar );
+<mind whitespace> literal = '\'' ( [^\\'] | '\\' [rnt\\'] | unicodechar )+ '\'';
 
-<whitespace> charclass = '[' '^'? charclasschar+ ']';
-<whitespace> charclasschar = ( [^\\\[\]] | '\\' [wldsrnt\\\[\]] | unicodechar );
+<mind whitespace> charclass = '[' ( [^\\\[\]] | '\\' [wldsrnt\\\[\]] | unicodechar )+ ']';
 
-<whitespace, ignore case> unicodechar = '\\x' [\dabcdef][\dabcdef][\dabcdef][\dabcdef];
+<mind whitespace, ignore case> unicodechar = '\\x' [\dabcdef][\dabcdef][\dabcdef][\dabcdef];
 
-<whitespace> comment = ( '/*' ( [^*] | '*'+ [^*/] )* '*'+ '/' | '//' [^\r\n]* [\r\n]+ );
+<mind whitespace> comment = ( '/*' ( [^*] | '*'+ [^*/] )* '*'+ '/' | '//' [^\n]* '\n' );
 

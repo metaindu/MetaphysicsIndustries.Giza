@@ -1,349 +1,279 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Text;
 using MetaphysicsIndustries.Collections;
+using System.Linq;
 
 namespace MetaphysicsIndustries.Giza
 {
     public class DefinitionBuilder
     {
-        public SimpleDefinitionNode[] BuildDefinitions(Span span)
+        public Definition[] BuildDefinitions(DefinitionExpression[] defs)
         {
-            if (span.Tag != "grammar") { throw new ArgumentException("span"); }
-
-            List<SimpleDefinitionNode> defs = new List<SimpleDefinitionNode>();
-            foreach (Span subspan in span.Subspans)
+            var ec = new ExpressionChecker();
+            List<Error> errors = ec.CheckDefinitionInfosForSpanning(defs);
+            if (errors.ContainsNonWarnings())
             {
-                if (subspan.Tag == "comment") continue;
-
-                SimpleDefinitionNode def = BuildSingleDefinition(subspan);
-                defs.Add(def);
+                throw new InvalidOperationException("Errors in expressions.");
             }
-            return defs.ToArray();
+
+            var defs2 = new List<Definition>();
+            var defsByName = new Dictionary<string, Definition>();
+            var exprsByDef = new Dictionary<Definition, Expression>();
+            foreach (DefinitionExpression di in defs)
+            {
+                var def = new Definition(di.Name);
+                defs2.Add(def);
+                defsByName[di.Name] = def;
+                def.Directives.AddRange(di.Directives);
+                exprsByDef[def] = di;
+            }
+
+            foreach (Definition def in defs2)
+            {
+                NodeBundle bundle = GetNodesFromExpression(exprsByDef[def], defsByName);
+
+                if (bundle.IsSkippable) throw new InvalidOperationException();
+
+                def.StartNodes.AddRange(bundle.StartNodes);
+
+                def.Nodes.AddRange(bundle.Nodes);
+
+                def.EndNodes.AddRange(bundle.EndNodes);
+            }
+
+            return defs2.ToArray();
         }
 
-        SimpleDefinitionNode BuildSingleDefinition(Span span)
+        NodeBundle GetNodesFromExpression(Expression expr, Dictionary<string, Definition> defsByName)
         {
-            if (span.Tag != "definition") { throw new ArgumentException("span"); }
+            NodeBundle first = null;
+            NodeBundle last = null;
+            var bundles = new List<NodeBundle>();
+            foreach (ExpressionItem item in expr.Items)
+            {
+                NodeBundle bundle = null;
+                if (item is SubExpression)
+                {
+                    bundle = GetNodesFromSubExpression((SubExpression)item, defsByName);
+                }
+                else // (item is OrExpression)
+                {
+                    bundle = GetNodesFromOrExpression((OrExpression)item, defsByName);
+                }
 
-            SimpleDefinitionNode def = new SimpleDefinitionNode();
-            def.IgnoreWhitespace = true;
+                if (bundle != null)
+                {
+                    if (first == null)
+                    {
+                        first = bundle;
+                    }
+
+                    last = bundle;
+
+                    bundles.Add(bundle);
+                }
+            }
+
+            var starts = new Set<Node>();
+            var ends = new Set<Node>();
+            var nodes = new List<Node>();
+
+            foreach (NodeBundle bundle in bundles)
+            {
+                nodes.AddRange(bundle.Nodes);
+            }
+            starts.AddRange(first.StartNodes);
+            ends.AddRange(last.EndNodes);
+
+            // connect the nodes
+            int i;
+            // inter-bundle connections
+            for (i = 1; i < bundles.Count; i++)
+            {
+                foreach (Node prev in bundles[i-1].EndNodes)
+                {
+                    prev.NextNodes.AddRange(bundles[i].StartNodes);
+                }
+            }
+
+            // inter-bundle skips
+            for (i = 2; i < bundles.Count; i++)
+            {
+                if (bundles[i - 1].IsSkippable)
+                {
+                    foreach (Node prev in bundles[i-2].EndNodes)
+                    {
+                        prev.NextNodes.AddRange(bundles[i].StartNodes);
+                    }
+                }
+            }
+
+            // skip from start to inner bundle
+            bool skippable = true;
+            for (i = 1; i < bundles.Count; i++)
+            {
+                if (bundles[i - 1].IsSkippable)
+                {
+                    starts.AddRange(bundles[i].StartNodes);
+                }
+                else
+                {
+                    skippable = false;
+                    break;
+                }
+            }
+            if (skippable)
+            {
+                if (bundles[bundles.Count - 1].IsSkippable)
+                {
+                }
+                else
+                {
+                    skippable = false;
+                }
+            }
+
+            // skip from inner bundle to end
+            for (i = bundles.Count - 1; i > 0; i--)
+            {
+                if (bundles[i].IsSkippable)
+                {
+                    ends.AddRange(bundles[i - 1].EndNodes);
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return new NodeBundle{StartNodes = starts,
+                EndNodes = ends,
+                Nodes = nodes,
+                IsSkippable = skippable};
+        }
+
+        static NodeBundle GetNodesFromSubExpression(SubExpression subexpr, Dictionary<string, Definition> defsByName)
+        {
+            if (subexpr is DefRefSubExpression)
+            {
+                return GetNodesFromDefRefSubExpression((DefRefSubExpression)subexpr, defsByName);
+            }
+            else if (subexpr is LiteralSubExpression)
+            {
+                return GetNodesFromLiteralSubExpression((LiteralSubExpression)subexpr);
+            }
+            else // (subexpr is CharClassSubExpression)
+            {
+                return GetNodesFromCharClassSubExpression((CharClassSubExpression)subexpr);
+            }
+        }
+
+        static NodeBundle GetNodesFromDefRefSubExpression(DefRefSubExpression defref, IDictionary<string, Definition> defsByName)
+        {
+            var node = new DefRefNode(defsByName[defref.DefinitionName], defref.Tag);
+            if (defref.IsRepeatable)
+            {
+                node.NextNodes.Add(node);
+            }
+
+            var bundle = new NodeBundle();
+            bundle.Nodes = new List<Node> { node };
+            bundle.StartNodes = new Set<Node> { node };
+            bundle.EndNodes = new Set<Node> { node };
+            bundle.IsSkippable = defref.IsSkippable;
+
+            return bundle;
+        }
+
+        static NodeBundle GetNodesFromLiteralSubExpression(LiteralSubExpression literal)
+        {
+            var nodes = new List<Node>();
+
+            foreach (char ch in literal.Value)
+            {
+                var node = new CharNode(ch, literal.Tag);
+                nodes.Add(node);
+            }
 
             int i;
-            bool ignoreWhitespace = true;
-            bool ignoreCase = false;
-            for (i = 0; i < span.Subspans.Length; i++)
+            for (i = 1; i < nodes.Count; i++)
             {
-                if (span.Subspans[i].Tag != "defmod") break;
-
-                Span defmod = span.Subspans[i];
-                foreach (Span item in defmod.Subspans)
-                {
-                    if (item.Tag == "defmod-item")
-                    {
-                        if (item.Value == "whitespace")
-                        {
-                            ignoreWhitespace = false;
-                        }
-                        else if (
-                            item.Subspans.Length > 0 && 
-                            item.Subspans[0].Value == "ignore" && 
-                            (
-                                item.Subspans.Length ==2 && 
-                                item.Subspans[1].Value == "case" 
-                            )
-                            ||
-                            (
-                                item.Subspans.Length ==3 && 
-                                item.Subspans[1].Value == "-" && 
-                                item.Subspans[2].Value == "case" 
-                            ))
-                        {
-                            ignoreCase = true;
-                        }
-                    }
-                }
+                nodes[i - 1].NextNodes.Add(nodes[i]);
             }
 
-            def.IgnoreWhitespace = ignoreWhitespace;
-            def.IgnoreCase = ignoreCase;
-
-            if (span.Subspans[i].Tag != "identifier") throw new NotImplementedException();
-            def.Name = span.Subspans[i].Value;
-
-            if (span.Subspans[i + 1].Value != "=") throw new NotImplementedException();
-            if (span.Subspans[i + 2].Tag != "expr") throw new NotImplementedException();
-
-            SimpleNode start = SimpleNode.Start(def.Name);
-            def.start = start;
-
-            SimpleNode end = SimpleNode.End();
-            def.end = end;
-
-            SimpleNode[] frontNodes;
-            SimpleNode[] backNodes;
-            bool skipAll;
-            ProcessExpr(span.Subspans[i + 2], out frontNodes, out backNodes, out skipAll);
-
-            start.NextNodes.AddRange(frontNodes);
-            foreach (SimpleNode node in backNodes)
+            if (literal.IsRepeatable)
             {
-                node.NextNodes.Add(end);
+                nodes.Last().NextNodes.Add(nodes[0]);
             }
-            //if (skipAll)
-            //{
-            //    //should we allow this?
-            //    start.NextNodes.Add(end);
-            //}
 
-            def.Nodes.AddRange(SpannerServices.GatherSimpleNodes(start));
+            var bundle = new NodeBundle();
+            bundle.Nodes = nodes;
+            bundle.StartNodes = new Set<Node> { nodes[0] };
+            bundle.EndNodes = new Set<Node> { nodes.Last() };
+            bundle.IsSkippable = literal.IsSkippable;
 
-            return def;
+            return bundle;
         }
 
-        private void ProcessExpr(Span expr, out SimpleNode[] frontNodes, out SimpleNode[] backNodes, out bool skipAll)
+        static NodeBundle GetNodesFromCharClassSubExpression(CharClassSubExpression cc)
         {
-            if (expr.Tag != "expr") throw new ArgumentException("expr");
+            var node = new CharNode(cc.CharClass, cc.Tag);
 
-            List<SimpleNode[]> fronts = new List<SimpleNode[]>();
-            List<SimpleNode[]> backs = new List<SimpleNode[]>();
-            List<bool> skips = new List<bool>();
-
-            foreach (Span sub in expr.Subspans)
+            if (cc.IsRepeatable)
             {
-                if (sub.Tag == "comment") continue;
-
-                SimpleNode[] frontNodes2;
-                SimpleNode[] backNodes2;
-                Span modifier;
-                if (sub.Tag == "subexpr")
-                {
-                    ProcessSubExpr(sub, out frontNodes2, out backNodes2, out modifier);
-                }
-                else if (sub.Tag == "orexpr")
-                {
-                    ProcessOrExpr(sub, out frontNodes2, out backNodes2, out modifier);
-                }
-                else
-                {
-                    throw new InvalidOperationException();
-                }
-
-                bool skip = false;
-                if (modifier != null)
-                {
-                    if (modifier.Value == "*" ||
-                        modifier.Value == "?")
-                    {
-                        skip = true;
-                    }
-                    if (modifier.Value == "*" ||
-                        modifier.Value == "+")
-                    {
-                    }
-                }
-
-                skips.Add(skip);
-                fronts.Add(frontNodes2);
-                backs.Add(backNodes2);
+                node.NextNodes.Add(node);
             }
 
-            int i;
-            for (i = 1; i < fronts.Count; i++)
-            {
-                foreach (SimpleNode b in backs[i - 1])
-                {
-                    b.NextNodes.AddRange(fronts[i]);
-                }
-            }
-
-            for (i = 0; i < skips.Count; i++)
-            {
-                int j;
-                for (j = i + 1; j < skips.Count-1; j++)
-                {
-                    if (skips[j])
-                    {
-                        foreach (SimpleNode b in backs[i])
-                        {
-                            b.NextNodes.AddRange(fronts[j + 1]);
-                        }
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-
-            Set<SimpleNode> frontNodes3 = new Set<SimpleNode>();
-            Set<SimpleNode> backNodes3 = new Set<SimpleNode>();
-
-            skipAll = skips[0];
-            for (i = 0; i < skips.Count-1; i++)
-            {
-                if (skips[i])
-                {
-                    frontNodes3.AddRange(fronts[i + 1]);
-                }
-                else
-                {
-                    skipAll = false;
-                    break;
-                }
-            }
-            for (i = 1; i < skips.Count; i++)
-            {
-                if (skips[i])
-                {
-                    backNodes3.AddRange(backs[i - 1]);
-                }
-                else
-                {
-                    backNodes3.Clear();
-                }
-            }
-
-            frontNodes3.AddRange(fronts[0]);
-            backNodes3.AddRange(backs[backs.Count - 1]);
-
-            frontNodes = frontNodes3.ToArray();
-            backNodes = backNodes3.ToArray();
+            return new NodeBundle {
+                    Nodes = new List<Node> { node },
+                    StartNodes = new Set<Node> { node },
+                    EndNodes = new Set<Node>{ node },
+                    IsSkippable = cc.IsSkippable
+                };
         }
 
-        private void ProcessSubExpr(Span subexpr, out SimpleNode[] frontNodes, out SimpleNode[] backNodes, out Span modifier)
+        NodeBundle GetNodesFromOrExpression(OrExpression orexpr, Dictionary<string, Definition> defsByName)
         {
-            if (subexpr.Tag != "subexpr") throw new ArgumentException("subexpr");
+            var bundles = new List<NodeBundle>();
 
-            Span main = null;
-            Span tag = null;
-
-            modifier = null;
-
-            foreach (Span subspan in subexpr.Subspans)
+            foreach (Expression expr in orexpr.Expressions)
             {
-                if (subspan.Tag == "modifier")
+                bundles.Add(GetNodesFromExpression(expr, defsByName));
+            }
+
+            var starts = new Set<Node>();
+            var ends = new Set<Node>();
+            var nodes = new List<Node>();
+            foreach (NodeBundle bundle in bundles)
+            {
+                nodes.AddRange(bundle.Nodes);
+                starts.AddRange(bundle.StartNodes);
+                ends.AddRange(bundle.EndNodes);
+            }
+
+            if (orexpr.IsRepeatable)
+            {
+                foreach (Node end in ends)
                 {
-                    modifier = subspan;
-                }
-                else if (subspan.Tag == "tag")
-                {
-                    tag = subspan;
-                }
-                else if (subspan.Tag == "identifier" ||
-                        subspan.Tag == "literal" ||
-                        subspan.Tag == "charclass")
-                {
-                    main = subspan;
-                }
-            }
-
-            if (main == null) throw new InvalidOperationException();
-
-            SimpleNode node = new SimpleNode();
-            string value = main.Value;
-            if (main.Tag == "identifier")
-            {
-                node.Type = NodeType.defref;
-            }
-            if (main.Tag == "literal")
-            {
-                node.Type = NodeType.literal;
-                value = SpannerServices.UnescapeForLiteralNode(value);
-            }
-            if (main.Tag == "charclass")
-            {
-                node.Type = NodeType.charclass;
-                value = SpannerServices.UndelimitForCharClass(value);
-            }
-            node.Text = value;
-            if (tag == null)
-            {
-                node.Tag = value;
-            }
-            else
-            {
-                node.Tag = tag.Value;
-            }
-
-            if (modifier != null)
-            {
-                if (modifier.Value == "*" ||
-                    modifier.Value == "+")
-                {
-                    node.NextNodes.Add(node);
+                    end.NextNodes.AddRange(starts);
                 }
             }
 
-            frontNodes = backNodes = new SimpleNode[] { node };
-        }
-
-        private void ProcessOrExpr(Span orexpr, out SimpleNode[] frontNodes, out SimpleNode[] backNodes, out Span modifier)
-        {
-            //orexpr = '(' expr:exprs[] ( '|' expr:exprs[] )* ')' modifier?;
-            if (orexpr.Tag != "orexpr") throw new ArgumentException("orexpr");
-
-            if (orexpr.Subspans[0].Value != "(") throw new InvalidOperationException();
-
-            List<SimpleNode[]> fronts = new List<SimpleNode[]>();
-            List<SimpleNode[]> backs = new List<SimpleNode[]>();
-            int i = 1;
-            for (i=1;i<orexpr.Subspans.Length;i++)
-            {
-                if (orexpr.Subspans[i].Tag != "expr") throw new InvalidOperationException();
-                SimpleNode[] frontNodes2;
-                SimpleNode[] backNodes2;
-                bool skipAll;
-                ProcessExpr(orexpr.Subspans[i], out frontNodes2, out backNodes2, out skipAll);
-                fronts.Add(frontNodes2);
-                backs.Add(backNodes2);
-                //ignore skipAll for now
-                i++;
-
-                if (orexpr.Subspans[i].Value == ")")
-                {
-                    break;
-                }
-                if (orexpr.Subspans[i].Value != "|") throw new InvalidOperationException();
-            }
-
-            Set<SimpleNode> frontNodes3 = new Set<SimpleNode>();
-            foreach (SimpleNode[] nodes in fronts)
-            {
-                frontNodes3.AddRange(nodes);
-            }
-            Set<SimpleNode> backNodes3 = new Set<SimpleNode>();
-            foreach (SimpleNode[] nodes in backs)
-            {
-                backNodes3.AddRange(nodes);
-            }
-
-            if (orexpr.Subspans[i].Value != ")") throw new InvalidOperationException();
-            i++;
-            modifier = null;
-            for (; i < orexpr.Subspans.Length; i++)
-            {
-                if (orexpr.Subspans[i].Tag == "modifier")
-                {
-                    modifier = orexpr.Subspans[i];
-                    break;
-                }
-            }
-
-            if (modifier != null)
-            {
-                if (modifier.Value == "*" ||
-                    modifier.Value == "+")
-                {
-                    foreach (SimpleNode b in backNodes3)
-                    {
-                        b.NextNodes.AddRange(frontNodes3);
-                    }
-                }
-            }
-
-            frontNodes = frontNodes3.ToArray();
-            backNodes = backNodes3.ToArray();
+            return new NodeBundle{
+                StartNodes=starts,
+                EndNodes=ends,
+                Nodes=nodes,
+                IsSkippable=orexpr.IsSkippable
+            };
         }
     }
+
+    public class NodeBundle
+    {
+        public Set<Node> StartNodes;
+        public Set<Node> EndNodes;
+        public List<Node> Nodes;
+        public bool IsSkippable;
+    }
+
 }

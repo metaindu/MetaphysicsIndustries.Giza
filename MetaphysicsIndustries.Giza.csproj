@@ -10,13 +10,14 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MetaphysicsIndustries.Giza</RootNamespace>
     <AssemblyName>MetaphysicsIndustries.Giza</AssemblyName>
-    <SignAssembly>True</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>2.0</OldToolsVersion>
     <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
@@ -39,52 +40,87 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseSpanner.cs" />
     <Compile Include="BinarySpanner.cs" />
     <Compile Include="CharClass.cs" />
-    <Compile Include="GenericSpanner.cs" />
-    <Compile Include="GrammarElement.cs" />
     <Compile Include="Span.cs" />
-    <Compile Include="SpannerBuilder.cs" />
-    <Compile Include="SpannerServices.cs" />
-    <Compile Include="SupergrammarRenderer.cs" />
-    <Compile Include="SimpleDefinitionNode.cs" />
-    <Compile Include="SimpleNode.cs" />
     <Compile Include="SupergrammarSpanner.cs" />
     <Content Include="BinarySpanner example grammar.txt" />
     <Content Include="BinarySpannerGrammar.txt" />
     <Content Include="BitmapBinaryGrammar.txt" />
-    <Content Include="CSharp2SyntacticGrammar.txt" />
-    <Compile Include="CSharpCompiler.cs" />
     <Compile Include="DefinitionBuilder.cs" />
-    <Compile Include="DefinitionNode.cs" />
     <Compile Include="Node.cs" />
-    <Compile Include="NodeType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Definition.cs" />
+    <Compile Include="Grammar.cs" />
+    <Compile Include="DefinitionRenderer.cs" />
+    <Compile Include="Supergrammar.cs" />
+    <Compile Include="DefinitionNodeOrderedParentChildrenCollection.cs.cs" />
+    <Compile Include="CharNode.cs" />
+    <Compile Include="DefRefNode.cs" />
+    <Compile Include="Spanner.cs" />
+    <Compile Include="DefinitionChecker.cs" />
+    <Compile Include="SpanChecker.cs" />
+    <Compile Include="DefinitionDirective.cs" />
+    <Compile Include="Tokenizer.cs" />
+    <Compile Include="Token.cs" />
+    <Compile Include="Expression.cs" />
+    <Compile Include="SubExpression.cs" />
+    <Compile Include="OrExpression.cs" />
+    <Compile Include="DefRefSubExpression.cs" />
+    <Compile Include="LiteralSubExpression.cs" />
+    <Compile Include="CharClassSubExpression.cs" />
+    <Compile Include="ExpressionItem.cs" />
+    <Compile Include="GrammarComparer.cs" />
+    <Compile Include="ExpressionBuilder.cs" />
+    <Compile Include="GrammarDefinitionOrderedParentChildrenCollection.cs" />
+    <Compile Include="TokenizedGrammarBuilder.cs" />
+    <Compile Include="ExpressionChecker.cs" />
+    <Compile Include="Parser.cs" />
+    <Compile Include="NodeMatch.cs" />
+    <Compile Include="DefinitionExpression.cs" />
+    <Compile Include="ErrorType.cs" />
+    <Compile Include="Error.cs" />
+    <Compile Include="StringFormatterGrammar.cs" />
+    <Compile Include="StringFormatter.cs" />
+    <Compile Include="ListTokenSource.cs" />
+    <Compile Include="InputPosition.cs" />
+    <Compile Include="InputChar.cs" />
+    <Compile Include="CharacterSource.cs" />
+    <Compile Include="PriorityQueue.cs" />
+    <Compile Include="SupergrammarSpannerError.cs" />
+    <Compile Include="DefinitionError.cs" />
+    <Compile Include="SpanError.cs" />
+    <Compile Include="ExpressionError.cs" />
+    <Compile Include="ParserError.cs" />
+    <Compile Include="Logger.cs" />
+    <Compile Include="Spanner2.cs" />
+    <Compile Include="IInputElement.cs" />
+    <Compile Include="InputElementSet.cs" />
+    <Compile Include="IInputSource.cs" />
+    <Compile Include="TransitionType.cs" />
+    <Compile Include="EndCandidatesByIndexCollection.cs" />
+    <Compile Include="BranchTipsByIndexCollection.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Giza.cd" />
-    <None Include="key.snk" />
+    <None Include="todo.txt" />
+    <None Include="docs\Directives.txt" />
+    <None Include="StringFormatterGrammar.giza" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MetaphysicsIndustries.Collections\MetaphysicsIndustries.Collections.csproj">
       <Project>{FF2B8A90-E8D2-4CF6-81E6-4A7BCE1FF900}</Project>
       <Name>MetaphysicsIndustries.Collections</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MetaphysicsIndustries.Build\MetaphysicsIndustries.Build.csproj">
-      <Project>{81E21BB7-DD6A-49AC-93DD-D53F55CF7C60}</Project>
-      <Name>MetaphysicsIndustries.Build</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="CppCliGrammar.txt" />
-    <Content Include="CSharp2LexicalGrammar.txt" />
-    <Content Include="CSharp3Grammar.txt" />
     <Content Include="ExeBinaryGrammar.txt" />
     <Content Include="Supergrammar.txt" />
   </ItemGroup>
@@ -100,4 +136,7 @@
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="docs\" />
+  </ItemGroup>
 </Project>

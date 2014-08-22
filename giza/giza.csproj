@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="NDesk.Options.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MetaphysicsIndustries.Collections\MetaphysicsIndustries.Collections.csproj">
@@ -52,10 +53,6 @@
     <ProjectReference Include="..\MetaphysicsIndustries.Giza.csproj">
       <Project>{98B42ACF-8370-4428-9D41-73FF1CEFB2E4}</Project>
       <Name>MetaphysicsIndustries.Giza</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\MetaphysicsIndustries.Build\MetaphysicsIndustries.Build.csproj">
-      <Project>{81E21BB7-DD6A-49AC-93DD-D53F55CF7C60}</Project>
-      <Name>MetaphysicsIndustries.Build</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

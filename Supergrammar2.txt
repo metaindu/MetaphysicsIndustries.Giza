@@ -1,0 +1,51 @@
+
+/*****************************************************************************
+ *                                                                           *
+ *  Supergrammar2.txt                                                        *
+ *  22 April 2013                                                            *
+ *  Project: MetaphysicsIndustries.FortranLib                                *
+ *  Written by: Richard Sartor                                               *
+ *  Copyright © 2013 Metaphysics Industries, Inc.                            *
+ *                                                                           *
+ *  The new supergrammar - defines grammars with a parser/lexer distinction. *
+ *                                                                           *
+ *****************************************************************************/
+
+// idea:
+// #whitespace [ \t\r\n]
+// #auto-token [=;<>,()|:]
+//
+
+grammar = definition+;
+
+definition = defmod* identifier '=' expr ';';
+
+defmod = '<' defmod-item ( ',' defmod-item )* '>';
+defmod-item = ( dm-suppressed? dm-token | dm-ignore dm-case );
+
+expr = ( subexpr | orexpr )+;
+
+orexpr = '(' expr ( '|' expr )* ')' modifier?;
+
+subexpr = ( identifier | literal | charclass ) modifier? ( ':' identifier:tag )?;
+
+
+// tokens
+<token> dm-token = 'token';
+<token> dm-ignore = 'ignore';
+<token> dm-case = 'case';
+<token> dm-suppressed = 'suppressed';
+
+<token> number = [\d]+;
+
+<token> identifier = [\w-_] [\w-_\d]*;
+
+<token> literal = '\'' ( [^\\'] | '\\' [wldsrnt\\'] | unicodechar )+ '\'';
+
+<token> charclass = '[' '^'? ( [^\\\[\]] | '\\' [wldsrnt\\\[\]] | unicodechar )+ ']';
+
+<ignore case> unicodechar = '\\x' [\dabcdef][\dabcdef][\dabcdef][\dabcdef];
+
+<suppressed token> comment = ( '/*' ( [^*] | '*'+ [^*/] )* '*'+ '/' | '//' [^\r\n]* [\r\n]+ );
+
+<token> modifier = [*+?];

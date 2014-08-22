@@ -1,0 +1,78 @@
+tokenized parsing
+    definitions and directives
+    all of this is checked by ExpressionChecker
+    some of it is checked by DefinitionChecker
+    some of it also goes into DefinitionBuilder and TokenizedGrammarBuilder
+
+    in all grammars, combinations of token, subtoken, and comment yield an error
+    in a spanned grammar
+        definitions, by default have no directives, which means that they ignore whitespace, mind case, and aren't atomic.
+            test in DefinitionBuilder
+        ignore case, mind whitespace, and atomic perform as advertized
+            test in SpannerTest
+        references between definitions work normally, no matter what tokenizing directives are applied to either def
+            test in DefinitionBuilder
+        directives have no effect on inter-definition references, as token, subtoken, and comment are ignored
+    in a parsed grammar
+        definitions, by default have no directives, which means that they ignore whitespace, mind case, and aren't atomic.
+        in a nontoken definition
+            ignore case applies to implicit tokens only (see below)
+            test in ExpressionCheckerTest
+            test in ParserTest
+        in a token or comment definition
+            atomic is automatic. adding it produces a warning
+            mind whitespace is automatic. adding it produces a warning
+            ignore case ignores case
+        in a subtoken definition
+            atomic is not automatic. adding it makes the definition atomic, and produces no warnings or errors
+            mind whitespace is automatic. adding it produces a warning
+            ignore case ignores case
+        in an implicit token definition
+            token is automatic
+            atomic is automatic
+            mind whitespace is automatic
+            it is impossible to add directives
+            ignore case is specified on the containing non-token def (see above)
+                changes names from "$implicit literal value" to "$implicit ignore case literal value"
+                changes names from "$implicit charclass \dabcdef" to "$implicit ignore case charclass \dabcdef"
+
+key.snk !
+
+resilience
+    full analysis and tests for Spanner, Tokenizer, Parser
+    full analysis and tests for other classes
+    DefinitionChecker
+        check that all defrefs point to defs in the same grammar?
+        check for duplicate names
+        more thorough analysis
+    SpanChecker - more thorough analysis
+style
+    Rename DefinitionRenderer to GrammarRenderer, rename methods, make it take a Grammar instead of Definition[].
+    Convert all lists and arrays to IEnumerable<> ?
+    rename DefinitionChecker to GrammarChecker ?
+
+Define a grammar for Solus. Create a SolusGrammar class.
+Create a SolusSpanner class around SolusGrammar. Put both classes into MetaphysicsIndustries.Solus.
+
+re-org and add docs
+
+DefinitionRenderer - render to grammar text
+
+Move rendering classes to a separate 'Rendering' assembly, and/or move classes for parsing into a 'Light' assembly.
+
+operate on streams
+    implement a spanner with a parser acting on single-char tokens, e.g.:
+        InputElement
+        InputSource<T> --> Tokenizer, Charizer
+
+repl
+
+user-defined reductions
+
+whitspace as tokenized def
+    remove 'mind whitespace'
+
+
+
+
+
