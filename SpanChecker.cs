@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MetaphysicsIndustries.Collections;
+
 
 namespace MetaphysicsIndustries.Giza
 {
@@ -11,12 +11,12 @@ namespace MetaphysicsIndustries.Giza
         {
             List<Error> errors = new List<Error>();
 
-            CheckSpan(span, grammar, new Set<Span>(), new Set<Span>(), errors);
+            CheckSpan(span, grammar, new HashSet<Span>(), new HashSet<Span>(), errors);
 
             return errors;
         }
 
-        void CheckSpan(Span span, Grammar grammar, Set<Span> visited, Set<Span> ancestorSpans, List<Error> errors)
+        void CheckSpan(Span span, Grammar grammar, HashSet<Span> visited, HashSet<Span> ancestorSpans, List<Error> errors)
         {
             Definition spandef = (span.Node as DefRefNode).DefRef;
 

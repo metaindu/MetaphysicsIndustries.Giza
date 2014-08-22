@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
-using MetaphysicsIndustries.Collections;
+
 using System.Linq;
 
 using NodeMatch = MetaphysicsIndustries.Giza.NodeMatch<MetaphysicsIndustries.Giza.InputChar>;
@@ -104,7 +104,7 @@ namespace MetaphysicsIndustries.Giza
 
                 if (currents.Count < 1) break;
 
-                var enddefs = new Set<NodeMatch>();
+                var enddefs = new HashSet<NodeMatch>();
                 while (currents.Count > 0)
                 {
                     var p = currents.Dequeue();
@@ -202,7 +202,7 @@ namespace MetaphysicsIndustries.Giza
                             if (expectedNodes != null)
                             {
                                 CharClass expectedChars = new CharClass(new char[0]);
-                                Set<Definition> expectedDefs = new Set<Definition>();
+                                HashSet<Definition> expectedDefs = new HashSet<Definition>();
                                 foreach (Node node in expectedNodes)
                                 {
                                     if (node is CharNode)

@@ -70,7 +70,7 @@ namespace MetaphysicsIndustries.Giza
                 {
                     def2.EndNodes.Add(nodeMatchup[end]);
                 }
-                def2.Directives.AddRange(def.Directives);
+                def2.Directives.UnionWith(def.Directives);
             }
 
             Grammar grammar = new Grammar();

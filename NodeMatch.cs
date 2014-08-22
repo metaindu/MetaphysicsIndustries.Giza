@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
-using MetaphysicsIndustries.Collections;
+
 using System.Linq;
 using System.IO;
 
@@ -229,7 +229,7 @@ namespace MetaphysicsIndustries.Giza
             }
 
             NodeMatch<T> _container;
-            Set<NodeMatch<T>> _collection = new Set<NodeMatch<T>>();
+            HashSet<NodeMatch<T>> _collection = new HashSet<NodeMatch<T>>();
 
             #region ICollection implementation
 

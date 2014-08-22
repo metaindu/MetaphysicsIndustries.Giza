@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using NUnit.Framework;
+using System.Linq;
 
 namespace MetaphysicsIndustries.Giza.Test
 {

@@ -50,7 +50,7 @@ namespace MetaphysicsIndustries.Giza
                     }
                 }
 
-                def.Directives.AddRange(directives);
+                def.Directives.UnionWith(directives);
             }
 
             return defs.ToArray();

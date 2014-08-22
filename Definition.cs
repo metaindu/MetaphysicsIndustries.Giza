@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using MetaphysicsIndustries.Collections;
+
 using System.Diagnostics;
 
 namespace MetaphysicsIndustries.Giza
@@ -76,16 +76,16 @@ namespace MetaphysicsIndustries.Giza
 
             if (directives != null)
             {
-                Directives.AddRange(directives);
+                Directives.UnionWith(directives);
             }
         }
 
         public string Name;
         public DefinitionNodeOrderedParentChildrenCollection Nodes;
-        public Set<Node> StartNodes = new Set<Node>();
-        public Set<Node> EndNodes = new Set<Node>();
+        public HashSet<Node> StartNodes = new HashSet<Node>();
+        public HashSet<Node> EndNodes = new HashSet<Node>();
 
-        public readonly Set<DefinitionDirective> Directives = new Set<DefinitionDirective>();
+        public readonly HashSet<DefinitionDirective> Directives = new HashSet<DefinitionDirective>();
         public bool MindWhitespace { get { return Directives.Contains(DefinitionDirective.MindWhitespace); } }
         public bool IgnoreCase { get { return Directives.Contains(DefinitionDirective.IgnoreCase); } }
         public bool Atomic { get { return Directives.Contains(DefinitionDirective.Atomic); } }

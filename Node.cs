@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using MetaphysicsIndustries.Collections;
+
 using System.Diagnostics;
 using System.Linq;
 
@@ -49,8 +49,8 @@ namespace MetaphysicsIndustries.Giza
             _tag = tag;
         }
 
-        public Set<Node> _nextNodes = new Set<Node>();
-        public Set<Node> NextNodes
+        public HashSet<Node> _nextNodes = new HashSet<Node>();
+        public HashSet<Node> NextNodes
         {
             get { return _nextNodes; }
         }

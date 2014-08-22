@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using MetaphysicsIndustries.Collections;
+
 using System.Linq;
 using System.Text;
 
@@ -178,9 +178,9 @@ namespace MetaphysicsIndustries.Giza
             // ADGs. ADGs are not much of a problem, but reference cycles 
             // would cause the checker to go into an infinite loop if we 
             // weren't expecting it.
-            Set<Expression> visitedExprs = new Set<Expression>();
-            Set<ExpressionItem> visitedItems = new Set<ExpressionItem>();
-            Set<DefinitionExpression> visitedDefs = new Set<DefinitionExpression>();
+            HashSet<Expression> visitedExprs = new HashSet<Expression>();
+            HashSet<ExpressionItem> visitedItems = new HashSet<ExpressionItem>();
+            HashSet<DefinitionExpression> visitedDefs = new HashSet<DefinitionExpression>();
             int index = -1;
             List<string> defNames = new List<string>();
             foreach (DefinitionExpression def in defs)
@@ -198,7 +198,7 @@ namespace MetaphysicsIndustries.Giza
                 defNames.Add(def.Name);
             }
 
-            var defnames2 = new Set<string>();
+            var defnames2 = new HashSet<string>();
             index = -1;
             foreach (DefinitionExpression def in defs)
             {
@@ -246,8 +246,8 @@ namespace MetaphysicsIndustries.Giza
         protected virtual void CheckExpression(DefinitionExpression def,
                              Expression expr,
                              List<string> defNames,
-                             Set<Expression> visitedExprs,
-                             Set<ExpressionItem> visitedItems,
+                             HashSet<Expression> visitedExprs,
+                             HashSet<ExpressionItem> visitedItems,
                              List<Error> errors)
         {
             if (visitedExprs.Contains(expr))
@@ -308,8 +308,8 @@ namespace MetaphysicsIndustries.Giza
         protected virtual void CheckExpressionItem(DefinitionExpression def,
                                  ExpressionItem item,
                                  List<string> defNames,
-                                 Set<Expression> visitedExprs,
-                                 Set<ExpressionItem> visitedItems,
+                                 HashSet<Expression> visitedExprs,
+                                 HashSet<ExpressionItem> visitedItems,
                                  List<Error> errors)
         {
             if (item == null) throw new ArgumentNullException("item");

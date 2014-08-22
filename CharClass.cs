@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using MetaphysicsIndustries.Collections;
+using System.Linq;
 
 namespace MetaphysicsIndustries.Giza
 {
@@ -28,24 +28,24 @@ namespace MetaphysicsIndustries.Giza
             _whitespace = whitespace;
             _exclude = exclude;
 
-            Set<char> chs = new Set<char>(chars);
+            HashSet<char> chs = new HashSet<char>(chars);
 
-            if (_letter || Collection.ContainsAll(chs, LetterChars))
+            if (_letter || chs.ContainsAll(LetterChars))
             {
                 _letter = true;
-                chs.RemoveRange(LetterChars);
+                chs.ExceptWith(LetterChars);
             }
 
-            if (_digit || Collection.ContainsAll(chs, DigitChars))
+            if (_digit || chs.ContainsAll(DigitChars))
             {
                 _digit = true;
-                chs.RemoveRange(DigitChars);
+                chs.ExceptWith(DigitChars);
             }
 
-            if (_whitespace || Collection.ContainsAll(chs, WhitespaceChars))
+            if (_whitespace || chs.ContainsAll(WhitespaceChars))
             {
                 _whitespace = true;
-                chs.RemoveRange(WhitespaceChars);
+                chs.ExceptWith(WhitespaceChars);
             }
 
             _chars = chs.ToArray();
@@ -175,11 +175,11 @@ namespace MetaphysicsIndustries.Giza
 
         public char[] GetAllChars()
         {
-            Set<char> chs = new Set<char>(_chars);
+            HashSet<char> chs = new HashSet<char>(_chars);
 
-            if (Letter) chs.AddRange(LetterChars);
-            if (Digit) chs.AddRange(DigitChars);
-            if (Whitespace) chs.AddRange(WhitespaceChars);
+            if (Letter) chs.UnionWith(LetterChars);
+            if (Digit) chs.UnionWith(DigitChars);
+            if (Whitespace) chs.UnionWith(WhitespaceChars);
 
             return chs.ToArray();
         }
@@ -208,9 +208,9 @@ namespace MetaphysicsIndustries.Giza
         public CharClass GetIgnoreCase()
         {
             List<char> list = new List<char>(GetAllChars());
-            Set<char> set = new Set<char>();
+            HashSet<char> set = new HashSet<char>();
 
-            set.AddRange(list);
+            set.UnionWith(list);
             foreach (char ch in list)
             {
                 if (char.IsLetter(ch))
@@ -227,9 +227,9 @@ namespace MetaphysicsIndustries.Giza
         {
             bool exclude = false;
 
-            Set<char> achs = new Set<char>(a.GetAllChars());
-            Set<char> bchs = new Set<char>(b.GetAllChars());
-            Set<char> cchs = new Set<char>();
+            HashSet<char> achs = new HashSet<char>(a.GetAllChars());
+            HashSet<char> bchs = new HashSet<char>(b.GetAllChars());
+            HashSet<char> cchs = new HashSet<char>();
 
             if (a.Exclude && b.Exclude)
             {
@@ -237,26 +237,26 @@ namespace MetaphysicsIndustries.Giza
 
                 exclude = true;
 
-                cchs.AddRange(Set<char>.Intersection(achs, bchs));
+                cchs.UnionWith(achs.Intersect(bchs));
             }
             else if (a.Exclude)
             {
                 //!a || b == !(a-b)
                 exclude = true;
-                cchs.AddRange(Set<char>.Difference(achs.ToArray(), bchs.ToArray()));
+                cchs.UnionWith(achs.Except(bchs));
             }
             else if (b.Exclude)
             {
                 //a || !b == !(b-a)
                 exclude = true;
-                cchs.AddRange(Set<char>.Difference(bchs.ToArray(), achs.ToArray()));
+                cchs.UnionWith(bchs.Except(achs));
             }
             else
             {
                 //a || b == a || b
                 exclude = false;
-                cchs.AddRange(achs);
-                cchs.AddRange(bchs);
+                cchs.UnionWith(achs);
+                cchs.UnionWith(bchs);
             }
 
             return new CharClass(cchs.ToArray(), exclude);
@@ -266,34 +266,34 @@ namespace MetaphysicsIndustries.Giza
         {
             bool exclude = false;
 
-            Set<char> achs = new Set<char>(a.GetAllChars());
-            Set<char> bchs = new Set<char>(b.GetAllChars());
-            Set<char> cchs = new Set<char>();
+            HashSet<char> achs = new HashSet<char>(a.GetAllChars());
+            HashSet<char> bchs = new HashSet<char>(b.GetAllChars());
+            HashSet<char> cchs = new HashSet<char>();
 
             if (a.Exclude && b.Exclude)
             {
                 //!a && !b == !(a || b)
 
                 exclude = true;
-                cchs.AddRange(Set<char>.Union(achs, bchs));
+                cchs.UnionWith(achs.Union(bchs));
             }
             else if (a.Exclude)
             {
                 //!a && b == (b-a)
                 exclude = false;
-                cchs.AddRange(Set<char>.Difference(bchs.ToArray(), achs.ToArray()));
+                cchs.UnionWith(bchs.Except(achs));
             }
             else if (b.Exclude)
             {
                 //a && !b == (a-b)
                 exclude = false;
-                cchs.AddRange(Set<char>.Difference(achs.ToArray(), bchs.ToArray()));
+                cchs.UnionWith(achs.Except(bchs));
             }
             else
             {
                 //a && b == a && b
                 exclude = false;
-                cchs.AddRange(Set<char>.Intersection(achs, bchs));
+                cchs.UnionWith(achs.Intersect(bchs));
             }
 
             return new CharClass(cchs.ToArray(), exclude);
@@ -307,7 +307,7 @@ namespace MetaphysicsIndustries.Giza
             bool space = false;
 
             int i = 0;
-            Set<char> chars = new Set<char>();
+            HashSet<char> chars = new HashSet<char>();
             if (text[0] == '^')
             {
                 exclude = true;
@@ -349,15 +349,15 @@ namespace MetaphysicsIndustries.Giza
 
             if (letter)
             {
-                chars.AddRange(CharClass.LetterChars);
+                chars.UnionWith(CharClass.LetterChars);
             }
             if (digit)
             {
-                chars.AddRange(CharClass.DigitChars);
+                chars.UnionWith(CharClass.DigitChars);
             }
             if (space)
             {
-                chars.AddRange(CharClass.WhitespaceChars);
+                chars.UnionWith(CharClass.WhitespaceChars);
             }
 
             return new CharClass(chars.ToArray(), exclude);

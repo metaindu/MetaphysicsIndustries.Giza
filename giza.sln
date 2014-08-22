@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaphysicsIndustries.Collections", "..\MetaphysicsIndustries.Collections\MetaphysicsIndustries.Collections.csproj", "{FF2B8A90-E8D2-4CF6-81E6-4A7BCE1FF900}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaphysicsIndustries.Giza", "MetaphysicsIndustries.Giza.csproj", "{98B42ACF-8370-4428-9D41-73FF1CEFB2E4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "giza", "giza\giza.csproj", "{3CB3C1B6-0838-4E0A-94BA-254B974D8D6E}"
@@ -55,16 +53,6 @@ Global
 		{98B42ACF-8370-4428-9D41-73FF1CEFB2E4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{98B42ACF-8370-4428-9D41-73FF1CEFB2E4}.Release|x86.ActiveCfg = Release|Any CPU
 		{98B42ACF-8370-4428-9D41-73FF1CEFB2E4}.Release|x86.Build.0 = Release|Any CPU
-		{FF2B8A90-E8D2-4CF6-81E6-4A7BCE1FF900}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FF2B8A90-E8D2-4CF6-81E6-4A7BCE1FF900}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FF2B8A90-E8D2-4CF6-81E6-4A7BCE1FF900}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{FF2B8A90-E8D2-4CF6-81E6-4A7BCE1FF900}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{FF2B8A90-E8D2-4CF6-81E6-4A7BCE1FF900}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{FF2B8A90-E8D2-4CF6-81E6-4A7BCE1FF900}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FF2B8A90-E8D2-4CF6-81E6-4A7BCE1FF900}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FF2B8A90-E8D2-4CF6-81E6-4A7BCE1FF900}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{FF2B8A90-E8D2-4CF6-81E6-4A7BCE1FF900}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{FF2B8A90-E8D2-4CF6-81E6-4A7BCE1FF900}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = giza\giza.csproj

@@ -290,8 +290,10 @@ namespace MetaphysicsIndustries.Giza.Test
                 },
             };
             operDef.Nodes[1].NextNodes.Add(operDef.Nodes[2]);
-            operDef.StartNodes.AddRange(operDef.Nodes[0], operDef.Nodes[1]);
-            operDef.EndNodes.AddRange(operDef.Nodes[0], operDef.Nodes[2]);
+            operDef.StartNodes.Add(operDef.Nodes[0]);
+            operDef.StartNodes.Add(operDef.Nodes[1]);
+            operDef.EndNodes.Add(operDef.Nodes[0]);
+            operDef.EndNodes.Add(operDef.Nodes[2]);
             operDef.Directives.Add(DefinitionDirective.Token);
             operDef.Directives.Add(DefinitionDirective.Atomic);
             operDef.Directives.Add(DefinitionDirective.MindWhitespace);

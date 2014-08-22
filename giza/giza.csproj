@@ -46,10 +46,6 @@
     <Compile Include="NDesk.Options.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\MetaphysicsIndustries.Collections\MetaphysicsIndustries.Collections.csproj">
-      <Project>{FF2B8A90-E8D2-4CF6-81E6-4A7BCE1FF900}</Project>
-      <Name>MetaphysicsIndustries.Collections</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MetaphysicsIndustries.Giza.csproj">
       <Project>{98B42ACF-8370-4428-9D41-73FF1CEFB2E4}</Project>
       <Name>MetaphysicsIndustries.Giza</Name>

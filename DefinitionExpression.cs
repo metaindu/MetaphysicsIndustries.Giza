@@ -1,5 +1,5 @@
 using System;
-using MetaphysicsIndustries.Collections;
+
 using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Giza
@@ -14,12 +14,12 @@ namespace MetaphysicsIndustries.Giza
             Name = name;
             if (directives != null)
             {
-                Directives.AddRange(directives);
+                Directives.UnionWith(directives);
             }
         }
 
         public string Name = string.Empty;
-        public readonly Set<DefinitionDirective> Directives = new Set<DefinitionDirective>();
+        public readonly HashSet<DefinitionDirective> Directives = new HashSet<DefinitionDirective>();
     }
 }
 

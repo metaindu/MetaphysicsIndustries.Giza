@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using MetaphysicsIndustries.Collections;
+
 using System.Linq;
 
 namespace MetaphysicsIndustries.Giza
@@ -37,7 +37,7 @@ namespace MetaphysicsIndustries.Giza
         Definition _tokenDef;
         IInputSource<InputChar> _input;
         readonly Dictionary<int, InputElementSet<Token>> _tokenizationsByIndex = new Dictionary<int, InputElementSet<Token>>();
-        readonly Set<int> _startIndexes = new Set<int>();
+        readonly HashSet<int> _startIndexes = new HashSet<int>();
 
         struct TokenizationByIndex
         {
@@ -83,7 +83,7 @@ namespace MetaphysicsIndustries.Giza
 
                 bool endOfInput2;
                 var errors2 = new List<Error>();
-                var tokenLeaves = new Set<NodeMatch<InputChar>>();
+                var tokenLeaves = new HashSet<NodeMatch<InputChar>>();
                 InputPosition endOfInputPosition2;
 
                 var leaves = _spanner.Match(_input, errors2,
@@ -165,17 +165,17 @@ namespace MetaphysicsIndustries.Giza
                 }
             }
 
-            var tokens = new Set<Token>();
+            var tokens = new HashSet<Token>();
             tinfo.EndOfInput = false;
             tinfo.EndOfInputPosition = new InputPosition(-1);
 
             if (hasLeaves.Count > 0)
             {
-                var matchTreeLeaves = new Set<NodeMatch<InputChar>>();
+                var matchTreeLeaves = new HashSet<NodeMatch<InputChar>>();
 
                 foreach (var tok in hasLeaves)
                 {
-                    matchTreeLeaves.AddRange(tok.MatchTreeLeaves);
+                    matchTreeLeaves.UnionWith(tok.MatchTreeLeaves);
                 }
 
                 foreach (var leaf in matchTreeLeaves)
@@ -255,7 +255,7 @@ namespace MetaphysicsIndustries.Giza
             if (!ies.EndOfInput &&
                 !ies.Errors.Any())
             {
-                _startIndexes.AddRange(ies.InputElements.Select(x => x.IndexOfNextTokenization));
+                _startIndexes.UnionWith(ies.InputElements.Select(x => x.IndexOfNextTokenization));
                 var nextIndex = _startIndexes.Min();
                 _startIndexes.Remove(nextIndex);
                 SetCurrentIndex(nextIndex);

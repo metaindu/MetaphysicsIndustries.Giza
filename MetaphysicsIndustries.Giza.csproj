@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{98B42ACF-8370-4428-9D41-73FF1CEFB2E4}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -103,6 +103,7 @@
     <Compile Include="TransitionType.cs" />
     <Compile Include="EndCandidatesByIndexCollection.cs" />
     <Compile Include="BranchTipsByIndexCollection.cs" />
+    <Compile Include="Collection.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
@@ -112,12 +113,6 @@
     <None Include="todo.txt" />
     <None Include="docs\Directives.txt" />
     <None Include="StringFormatterGrammar.giza" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MetaphysicsIndustries.Collections\MetaphysicsIndustries.Collections.csproj">
-      <Project>{FF2B8A90-E8D2-4CF6-81E6-4A7BCE1FF900}</Project>
-      <Name>MetaphysicsIndustries.Collections</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="CppCliGrammar.txt" />

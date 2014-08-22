@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using MetaphysicsIndustries.Collections;
+
 using System.Linq;
 
 namespace MetaphysicsIndustries.Giza
@@ -24,7 +24,7 @@ namespace MetaphysicsIndustries.Giza
                 var def = new Definition(di.Name);
                 defs2.Add(def);
                 defsByName[di.Name] = def;
-                def.Directives.AddRange(di.Directives);
+                def.Directives.UnionWith(di.Directives);
                 exprsByDef[def] = di;
             }
 
@@ -34,11 +34,11 @@ namespace MetaphysicsIndustries.Giza
 
                 if (bundle.IsSkippable) throw new InvalidOperationException();
 
-                def.StartNodes.AddRange(bundle.StartNodes);
+                def.StartNodes.UnionWith(bundle.StartNodes);
 
                 def.Nodes.AddRange(bundle.Nodes);
 
-                def.EndNodes.AddRange(bundle.EndNodes);
+                def.EndNodes.UnionWith(bundle.EndNodes);
             }
 
             return defs2.ToArray();
@@ -74,16 +74,16 @@ namespace MetaphysicsIndustries.Giza
                 }
             }
 
-            var starts = new Set<Node>();
-            var ends = new Set<Node>();
+            var starts = new HashSet<Node>();
+            var ends = new HashSet<Node>();
             var nodes = new List<Node>();
 
             foreach (NodeBundle bundle in bundles)
             {
                 nodes.AddRange(bundle.Nodes);
             }
-            starts.AddRange(first.StartNodes);
-            ends.AddRange(last.EndNodes);
+            starts.UnionWith(first.StartNodes);
+            ends.UnionWith(last.EndNodes);
 
             // connect the nodes
             int i;
@@ -92,7 +92,7 @@ namespace MetaphysicsIndustries.Giza
             {
                 foreach (Node prev in bundles[i-1].EndNodes)
                 {
-                    prev.NextNodes.AddRange(bundles[i].StartNodes);
+                    prev.NextNodes.UnionWith(bundles[i].StartNodes);
                 }
             }
 
@@ -103,7 +103,7 @@ namespace MetaphysicsIndustries.Giza
                 {
                     foreach (Node prev in bundles[i-2].EndNodes)
                     {
-                        prev.NextNodes.AddRange(bundles[i].StartNodes);
+                        prev.NextNodes.UnionWith(bundles[i].StartNodes);
                     }
                 }
             }
@@ -114,7 +114,7 @@ namespace MetaphysicsIndustries.Giza
             {
                 if (bundles[i - 1].IsSkippable)
                 {
-                    starts.AddRange(bundles[i].StartNodes);
+                    starts.UnionWith(bundles[i].StartNodes);
                 }
                 else
                 {
@@ -138,7 +138,7 @@ namespace MetaphysicsIndustries.Giza
             {
                 if (bundles[i].IsSkippable)
                 {
-                    ends.AddRange(bundles[i - 1].EndNodes);
+                    ends.UnionWith(bundles[i - 1].EndNodes);
                 }
                 else
                 {
@@ -178,8 +178,8 @@ namespace MetaphysicsIndustries.Giza
 
             var bundle = new NodeBundle();
             bundle.Nodes = new List<Node> { node };
-            bundle.StartNodes = new Set<Node> { node };
-            bundle.EndNodes = new Set<Node> { node };
+            bundle.StartNodes = new HashSet<Node> { node };
+            bundle.EndNodes = new HashSet<Node> { node };
             bundle.IsSkippable = defref.IsSkippable;
 
             return bundle;
@@ -208,8 +208,8 @@ namespace MetaphysicsIndustries.Giza
 
             var bundle = new NodeBundle();
             bundle.Nodes = nodes;
-            bundle.StartNodes = new Set<Node> { nodes[0] };
-            bundle.EndNodes = new Set<Node> { nodes.Last() };
+            bundle.StartNodes = new HashSet<Node> { nodes[0] };
+            bundle.EndNodes = new HashSet<Node> { nodes.Last() };
             bundle.IsSkippable = literal.IsSkippable;
 
             return bundle;
@@ -226,8 +226,8 @@ namespace MetaphysicsIndustries.Giza
 
             return new NodeBundle {
                     Nodes = new List<Node> { node },
-                    StartNodes = new Set<Node> { node },
-                    EndNodes = new Set<Node>{ node },
+                    StartNodes = new HashSet<Node> { node },
+                    EndNodes = new HashSet<Node>{ node },
                     IsSkippable = cc.IsSkippable
                 };
         }
@@ -241,21 +241,21 @@ namespace MetaphysicsIndustries.Giza
                 bundles.Add(GetNodesFromExpression(expr, defsByName));
             }
 
-            var starts = new Set<Node>();
-            var ends = new Set<Node>();
+            var starts = new HashSet<Node>();
+            var ends = new HashSet<Node>();
             var nodes = new List<Node>();
             foreach (NodeBundle bundle in bundles)
             {
                 nodes.AddRange(bundle.Nodes);
-                starts.AddRange(bundle.StartNodes);
-                ends.AddRange(bundle.EndNodes);
+                starts.UnionWith(bundle.StartNodes);
+                ends.UnionWith(bundle.EndNodes);
             }
 
             if (orexpr.IsRepeatable)
             {
                 foreach (Node end in ends)
                 {
-                    end.NextNodes.AddRange(starts);
+                    end.NextNodes.UnionWith(starts);
                 }
             }
 
@@ -270,8 +270,8 @@ namespace MetaphysicsIndustries.Giza
 
     public class NodeBundle
     {
-        public Set<Node> StartNodes;
-        public Set<Node> EndNodes;
+        public HashSet<Node> StartNodes;
+        public HashSet<Node> EndNodes;
         public List<Node> Nodes;
         public bool IsSkippable;
     }

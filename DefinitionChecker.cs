@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using MetaphysicsIndustries.Collections;
+
 using System.Linq;
 
 namespace MetaphysicsIndustries.Giza
@@ -37,7 +37,7 @@ namespace MetaphysicsIndustries.Giza
                 var defErrors = CheckDefinition(def);
                 if (defErrors.Count() > 0)
                 {
-                    Collection.AddRange(errors, defErrors);
+                    errors.AddRange(defErrors);
                     foundErrors = true;
                 }
             }
@@ -45,10 +45,10 @@ namespace MetaphysicsIndustries.Giza
             if (!foundErrors)
             {
                 // check for leading cycles
-                var leaders = new Dictionary<Definition, Set<Definition>>();
+                var leaders = new Dictionary<Definition, HashSet<Definition>>();
                 foreach (Definition def in defs)
                 {
-                    Set<Definition> s = new Set<Definition>();
+                    HashSet<Definition> s = new HashSet<Definition>();
                     leaders[def] = s;
 
                     foreach (Node start in def.StartNodes)
@@ -166,26 +166,26 @@ namespace MetaphysicsIndustries.Giza
                 // check path-from-start
                 if (true)
                 {
-                    var knownPathFromStart = new Set<Node>();
-                    var remaining = new Set<Node>();
-                    var nexts = new Set<Node>();
-                    remaining.AddRange(def.Nodes);
-                    knownPathFromStart.AddRange(def.StartNodes);
-                    remaining.RemoveRange(knownPathFromStart);
+                    var knownPathFromStart = new HashSet<Node>();
+                    var remaining = new HashSet<Node>();
+                    var nexts = new HashSet<Node>();
+                    remaining.UnionWith(def.Nodes);
+                    knownPathFromStart.UnionWith(def.StartNodes);
+                    remaining.ExceptWith(knownPathFromStart);
 
                     while (remaining.Count > 0)
                     {
                         nexts.Clear();
                         foreach (var node in knownPathFromStart)
                         {
-                            nexts.AddRange(node.NextNodes);
+                            nexts.UnionWith(node.NextNodes);
                         }
-                        nexts.RemoveRange(knownPathFromStart);
+                        nexts.ExceptWith(knownPathFromStart);
 
                         if (nexts.Count < 1) break;
 
-                        knownPathFromStart.AddRange(nexts);
-                        remaining.RemoveRange(nexts);
+                        knownPathFromStart.UnionWith(nexts);
+                        remaining.ExceptWith(nexts);
                     }
 
                     foreach (var node in remaining)
@@ -200,10 +200,10 @@ namespace MetaphysicsIndustries.Giza
                 // check path-to-end
                 if (true)
                 {
-                    var previousNodes = new Dictionary<Node, Set<Node>>();
+                    var previousNodes = new Dictionary<Node, HashSet<Node>>();
                     foreach (var node in def.Nodes)
                     {
-                        previousNodes[node] = new Set<Node>();
+                        previousNodes[node] = new HashSet<Node>();
                     }
                     foreach (var node in def.Nodes)
                     {
@@ -213,27 +213,27 @@ namespace MetaphysicsIndustries.Giza
                         }
                     }
 
-                    var knownPathToEnd = new Set<Node>();
-                    var remaining = new Set<Node>(def.Nodes);
-                    var prevs = new Set<Node>();
+                    var knownPathToEnd = new HashSet<Node>();
+                    var remaining = new HashSet<Node>(def.Nodes);
+                    var prevs = new HashSet<Node>();
 
-                    knownPathToEnd.AddRange(def.EndNodes);
-                    remaining.RemoveRange(knownPathToEnd);
+                    knownPathToEnd.UnionWith(def.EndNodes);
+                    remaining.ExceptWith(knownPathToEnd);
 
                     while (remaining.Count > 0)
                     {
                         prevs.Clear();
                         foreach (var node in knownPathToEnd)
                         {
-                            prevs.AddRange(previousNodes[node]);
+                            prevs.UnionWith(previousNodes[node]);
                         }
 
-                        prevs.RemoveRange(knownPathToEnd);
+                        prevs.ExceptWith(knownPathToEnd);
 
                         if (prevs.Count < 1) break;
 
-                        knownPathToEnd.AddRange(prevs);
-                        remaining.RemoveRange(prevs);
+                        knownPathToEnd.UnionWith(prevs);
+                        remaining.ExceptWith(prevs);
                     }
 
                     foreach (var node in remaining)

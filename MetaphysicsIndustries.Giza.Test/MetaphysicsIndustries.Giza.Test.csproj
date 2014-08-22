@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{0F60D61D-FF19-4954-9838-3D53E2CEEE3A}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -60,10 +60,6 @@
     <ProjectReference Include="..\MetaphysicsIndustries.Giza.csproj">
       <Project>{98B42ACF-8370-4428-9D41-73FF1CEFB2E4}</Project>
       <Name>MetaphysicsIndustries.Giza</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\MetaphysicsIndustries.Collections\MetaphysicsIndustries.Collections.csproj">
-      <Project>{FF2B8A90-E8D2-4CF6-81E6-4A7BCE1FF900}</Project>
-      <Name>MetaphysicsIndustries.Collections</Name>
     </ProjectReference>
     <ProjectReference Include="..\giza\giza.csproj">
       <Project>{3CB3C1B6-0838-4E0A-94BA-254B974D8D6E}</Project>
