@@ -8,11 +8,20 @@ namespace MetaphysicsIndustries.Giza
     {
         public static readonly StringBuilder Log = new StringBuilder();
 
+        public static bool WriteToInternalLog = true;
+        public static bool WriteToStderr = false;
+
         [Conditional("DEBUG")]
         public static void WriteLine(string str)
         {
-            Log.AppendLine(str);
-            Console.WriteLine(str);
+            if (WriteToInternalLog)
+            {
+                Log.AppendLine(str);
+            }
+            if (WriteToStderr)
+            {
+                Console.Error.WriteLine(str);
+            }
         }
 
         [Conditional("DEBUG")]
