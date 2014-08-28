@@ -825,7 +825,10 @@ namespace Mono.Terminal {
             Render ();
             ForceCursor (cursor);
         }
-        
+
+        public bool StopEditingOnInterrupt = false;
+        public event EventHandler EditingInterrupted;
+
         public string Edit (string prompt, string initial)
         {
             edit_thread = Thread.CurrentThread;
@@ -847,9 +850,21 @@ namespace Mono.Terminal {
                 } catch (ThreadAbortException){
                     searching = 0;
                     Thread.ResetAbort ();
-                    Console.WriteLine ();
-                    SetPrompt (prompt);
-                    SetText ("");
+                    if (StopEditingOnInterrupt)
+                    {
+                        done = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine ();
+                        SetPrompt (prompt);
+                        SetText ("");
+                    }
+
+                    if (EditingInterrupted != null)
+                    {
+                        EditingInterrupted(this, EventArgs.Empty);
+                    }
                 }
             } while (!done);
             Console.WriteLine ();
