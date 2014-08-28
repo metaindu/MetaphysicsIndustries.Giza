@@ -610,15 +610,20 @@ namespace giza
                 if (command.StartsWith("delete "))
                 {
                     var defsToDelete = command.Split(new []{' '}, StringSplitOptions.RemoveEmptyEntries).Skip(1);
+                    var someAreMissing = false;
                     foreach (var name in defsToDelete)
                     {
-                        if (env.ContainsKey(name))
-                        {
-                            env.Remove(name);
-                        }
-                        else
+                        if (!env.ContainsKey(name))
                         {
                             Console.WriteLine("There is no definition named \"{0}\".", name);
+                            someAreMissing = true;
+                        }
+                    }
+                    if (!someAreMissing)
+                    {
+                        foreach (var name in defsToDelete)
+                        {
+                            env.Remove(name);
                         }
                     }
                     continue;
