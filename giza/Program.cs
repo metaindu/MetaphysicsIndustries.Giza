@@ -551,6 +551,7 @@ namespace giza
         static void Repl()
         {
             var spanner = new SupergrammarSpanner();
+            var env = new Dictionary<string, DefinitionExpression>();
 
             var buffer = new StringBuilder();
             string primaryPrompt = ">>> ";
@@ -579,20 +580,40 @@ namespace giza
 
                 buffer.AppendLine(line);
 
+                if (line.Trim() == "list")
+                {
+                    var names = env.Keys.ToList();
+                    names.Sort();
+                    foreach (var name in names)
+                    {
+                        Console.WriteLine("  " + name);
+                    }
+                    Console.WriteLine();
+                    continue;
+                }
+
                 try
                 {
                     while (true)
                     {
                         var errors = new List<Error>();
-                        var exprs = spanner.GetExpressions(buffer.ToString(), errors);
+                        var defexprs = spanner.GetExpressions(buffer.ToString(), errors);
                         if (!errors.ContainsNonWarnings())
                         {
                             // good to go
-                            Console.WriteLine("Do something with the exprs here");
+
+                            // print any errors
                             foreach (var error in errors)
                             {
                                 Console.WriteLine(error.Description);
                             }
+
+                            // add new definitions to the list
+                            foreach (var defexpr in defexprs)
+                            {
+                                env[defexpr.Name] = defexpr;
+                            }
+
                             break;
                         }
 
