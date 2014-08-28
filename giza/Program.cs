@@ -5,6 +5,7 @@ using System.Text;
 using MetaphysicsIndustries.Giza;
 using System.IO;
 using NDesk.Options;
+using Mono.Terminal;
 
 namespace giza
 {
@@ -39,7 +40,7 @@ namespace giza
 
             try
             {
-                if (showHelp || args.Length < 1)
+                if (showHelp)
                 {
                     ShowUsage();
                     return;
@@ -48,6 +49,12 @@ namespace giza
                 if (showVersion)
                 {
                     ShowVersion();
+                    return;
+                }
+
+                if (args.Length < 1)
+                {
+                    Repl();
                     return;
                 }
 
@@ -539,6 +546,82 @@ namespace giza
                     Console.WriteLine(ss[0].RenderSpanHierarchy());
                 }
             }
+        }
+
+        static void Repl()
+        {
+            var spanner = new SupergrammarSpanner();
+
+            var buffer = new StringBuilder();
+            string primaryPrompt = ">>> ";
+            string secondaryPrompt = "... ";
+
+            bool gotCtrlC = false;
+            EventHandler onInterrupt = (sender, a) => {
+                gotCtrlC = true;
+            };
+            var editor = new LineEditor("giza");
+            editor.StopEditingOnInterrupt = true;
+            editor.EditingInterrupted += onInterrupt;
+
+            string line;
+
+            while (true)
+            {
+                buffer.Clear();
+
+                gotCtrlC = false;
+                line = editor.Edit(primaryPrompt, "");
+                if (gotCtrlC) continue;
+                if (line == null) break; // Ctrl+D
+
+                if (line == "") continue;
+
+                buffer.AppendLine(line);
+
+                try
+                {
+                    while (true)
+                    {
+                        var errors = new List<Error>();
+                        var exprs = spanner.GetExpressions(buffer.ToString(), errors);
+                        if (!errors.ContainsNonWarnings())
+                        {
+                            // good to go
+                            Console.WriteLine("Do something with the exprs here");
+                            foreach (var error in errors)
+                            {
+                                Console.WriteLine(error.Description);
+                            }
+                            break;
+                        }
+
+                        if (errors.Any(e => !e.IsWarning && e.ErrorType != ParserError.UnexpectedEndOfInput))
+                        {
+                            // something is wrong with the input
+                            foreach (var error in errors)
+                            {
+                                Console.WriteLine(error.Description);
+                            }
+                            break;
+                        }
+
+                        gotCtrlC = false;
+                        line = editor.Edit(secondaryPrompt, "");
+                        if (gotCtrlC) break;
+                        if (line == null) break; // Ctrl+D
+
+                        buffer.AppendLine(line);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.Write("There was an internal error: ");
+                    Console.WriteLine(ex);
+                }
+            }
+
+
         }
     }
 }
