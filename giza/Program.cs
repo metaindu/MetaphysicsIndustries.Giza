@@ -580,7 +580,9 @@ namespace giza
 
                 buffer.AppendLine(line);
 
-                if (line.Trim() == "list")
+                var command = line.Trim();
+
+                if (command == "list")
                 {
                     var names = env.Keys.ToList();
                     names.Sort();
@@ -592,7 +594,7 @@ namespace giza
                     continue;
                 }
 
-                if (line.Trim() == "print")
+                if (command == "print")
                 {
                     var dr = new DefinitionRenderer();
                     int? width = Console.WindowWidth;
@@ -602,6 +604,23 @@ namespace giza
                     names.Sort();
                     var defs = names.Select(name => env[name]);
                     Console.Write(dr.RenderDefinitionExprsAsGrammarText(defs, width));
+                    continue;
+                }
+
+                if (command.StartsWith("delete "))
+                {
+                    var defsToDelete = command.Split(new []{' '}, StringSplitOptions.RemoveEmptyEntries).Skip(1);
+                    foreach (var name in defsToDelete)
+                    {
+                        if (env.ContainsKey(name))
+                        {
+                            env.Remove(name);
+                        }
+                        else
+                        {
+                            Console.WriteLine("There is no definition named \"{0}\".", name);
+                        }
+                    }
                     continue;
                 }
 
