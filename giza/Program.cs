@@ -592,6 +592,19 @@ namespace giza
                     continue;
                 }
 
+                if (line.Trim() == "print")
+                {
+                    var dr = new DefinitionRenderer();
+                    int? width = Console.WindowWidth;
+                    if (width < 20)
+                        width = null;
+                    var names = env.Keys.ToList();
+                    names.Sort();
+                    var defs = names.Select(name => env[name]);
+                    Console.Write(dr.RenderDefinitionExprsAsGrammarText(defs, width));
+                    continue;
+                }
+
                 try
                 {
                     while (true)
