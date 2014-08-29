@@ -582,6 +582,11 @@ namespace giza
 
                 var command = line.Trim();
 
+                if (command == "exit" || command == "quit")
+                {
+                    break;
+                }
+
                 if (command == "list")
                 {
                     var names = env.Keys.ToList();
@@ -590,7 +595,6 @@ namespace giza
                     {
                         Console.WriteLine(name);
                     }
-                    Console.WriteLine();
                     continue;
                 }
 
