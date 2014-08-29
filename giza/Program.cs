@@ -759,6 +759,53 @@ namespace giza
                     continue;
                 }
 
+                if (command == "check" || command.StartsWith("check "))
+                {
+
+                    var defnames = command.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Skip(1).ToList();
+                    if (defnames.Count < 1)
+                    {
+                        defnames = env.Keys.ToList();
+                    }
+                    else
+                    {
+                        bool someAreMissing = false;
+                        foreach (var name in defnames)
+                        {
+                            if (!env.ContainsKey(name))
+                            {
+                                Console.WriteLine("There is no definition named \"{0}\".", name);
+                                someAreMissing = true;
+                            }
+                        }
+                        if (someAreMissing) continue;
+                    }
+
+                    var ec = new ExpressionChecker();
+                    var defs = defnames.Select(name => env[name]);
+                    var errors = ec.CheckDefinitionInfosForSpanning(defs);
+
+                    if (errors.ContainsNonWarnings())
+                    {
+                        Console.WriteLine("There are errors:");
+                    }
+                    else if (errors.Count > 0)
+                    {
+                        Console.WriteLine("There are warnings:");
+                    }
+                    else
+                    {
+                        Console.WriteLine("There are no errors or warnings.");
+                    }
+
+                    foreach (var error in errors)
+                    {
+                        Console.WriteLine(error.Description);
+                    }
+
+                    continue;
+                }
+
                 try
                 {
                     while (true)
