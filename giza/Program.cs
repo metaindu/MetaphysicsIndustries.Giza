@@ -594,15 +594,20 @@ namespace giza
                     continue;
                 }
 
-                if (command == "print")
+                if (command == "print" || command.StartsWith("print "))
                 {
+                    var defnames = command.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Skip(1).ToList();
+
                     var dr = new DefinitionRenderer();
                     int? width = Console.WindowWidth;
                     if (width < 20)
                         width = null;
-                    var names = env.Keys.ToList();
-                    names.Sort();
-                    var defs = names.Select(name => env[name]);
+                    if (defnames.Count < 1)
+                    {
+                        defnames = env.Keys.ToList();
+                    }
+                    defnames.Sort();
+                    var defs = defnames.Select(name => env[name]);
                     Console.Write(dr.RenderDefinitionExprsAsGrammarText(defs, width));
                     continue;
                 }
