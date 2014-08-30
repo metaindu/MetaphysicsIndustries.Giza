@@ -31,6 +31,13 @@ namespace giza
 
             var args2 = options.Parse(args);
 
+            var commands = new Dictionary<string, Action<List<string>>> {
+                { "check", CheckCommand },
+                { "render", RenderCommand },
+                { "parse", (x) => ParseCommand(x, verbose) },
+                { "span", (x) => SpanCommand(x, verbose) },
+            };
+
             try
             {
                 if (showHelp)
@@ -54,21 +61,9 @@ namespace giza
                 var command = args2[0].ToLower();
                 args2.RemoveAt(0);
 
-                if (command == "check")
+                if (commands.ContainsKey(command))
                 {
-                    CheckCommand(args2);
-                }
-                else if (command == "render")
-                {
-                    RenderCommand(args2);
-                }
-                else if (command == "parse")
-                {
-                    ParseCommand(args2, verbose);
-                }
-                else if (command == "span")
-                {
-                    SpanCommand(args2, verbose);
+                    commands[command](args2);
                 }
                 else
                 {
