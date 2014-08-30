@@ -124,7 +124,43 @@ namespace giza
                 }
                 else if (command == "parse")
                 {
-                    Parse(args2, verbose);
+
+                    if (args2.Count < 3)
+                    {
+                        ShowUsage();
+                        return;
+                    }
+
+                    var grammarFilename = args2[0];
+                    var startSymbol = args2[1];
+                    var inputFilename = args2[2];
+
+                    string grammar = File.ReadAllText(grammarFilename);
+
+                    string input;
+                    if (inputFilename == "-")
+                    {
+                        input = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
+                    }
+                    else
+                    {
+                        try
+                        {
+                            input = File.ReadAllText(inputFilename);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine("There was an error while trying to open the input file:");
+                            Console.WriteLine("  {0}", e.Message);
+                            if (verbose)
+                            {
+                                Console.WriteLine("  {0}", e.ToString());
+                            }
+                            return;
+                        }
+                    }
+
+                    Parse(verbose, grammar, input, startSymbol);
                 }
                 else if (command == "span")
                 {
@@ -333,22 +369,11 @@ namespace giza
             }
         }
 
-        static void Parse(List<string> args, bool verbose)
+        static void Parse(bool verbose, string grammar, string input, string startSymbol)
         {
-            if (args.Count < 3)
-            {
-                ShowUsage();
-                return;
-            }
-
-            var grammarFilename = args[0];
-            var startSymbol = args[1];
-            var inputFilename = args[2];
-
-            SupergrammarSpanner spanner = new SupergrammarSpanner();
-            string grammarFile = File.ReadAllText(grammarFilename);
+            var spanner = new SupergrammarSpanner();
             var grammarErrors = new List<Error>();
-            var dis = spanner.GetExpressions(grammarFile, grammarErrors);
+            var dis = spanner.GetExpressions(grammar, grammarErrors);
 
             if (!grammarErrors.ContainsNonWarnings())
             {
@@ -357,7 +382,6 @@ namespace giza
                 grammarErrors.AddRange(errors2);
             }
 
-            Grammar g;
             if (grammarErrors.ContainsNonWarnings())
             {
                 Console.WriteLine("There are errors in the grammar:");
@@ -378,7 +402,7 @@ namespace giza
             }
 
             var tgb = new TokenizedGrammarBuilder();
-            g = tgb.BuildTokenizedGrammar(dis);
+            var g = tgb.BuildTokenizedGrammar(dis);
 
             var startDefinition = g.FindDefinitionByName(startSymbol);
             if (startDefinition == null)
@@ -390,29 +414,6 @@ namespace giza
                     Console.WriteLine("  {0}", def.Name);
                 }
                 return;
-            }
-
-            string input;
-            if (inputFilename == "-")
-            {
-                input = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
-            }
-            else
-            {
-                try
-                {
-                    input = File.ReadAllText(inputFilename);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("There was an error while trying to open the input file:");
-                    Console.WriteLine("  {0}", e.Message);
-                    if (verbose)
-                    {
-                        Console.WriteLine("  {0}", e.ToString());
-                    }
-                    return;
-                }
             }
 
             var parser = new Parser(startDefinition);
