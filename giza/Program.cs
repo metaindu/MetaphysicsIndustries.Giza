@@ -164,7 +164,30 @@ namespace giza
                 }
                 else if (command == "span")
                 {
-                    Span(args2, verbose);
+
+                    if (args2.Count < 3)
+                    {
+                        ShowUsage();
+                        return;
+                    }
+
+                    var grammarFilename = args2[0];
+                    var startSymbol = args2[1];
+                    var inputFilename = args2[2];
+
+                    string grammar = File.ReadAllText(grammarFilename);
+
+                    string input;
+                    if (inputFilename == "-")
+                    {
+                        input = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
+                    }
+                    else
+                    {
+                        input = File.ReadAllText(inputFilename);
+                    }
+
+                    Span(verbose, grammar, input, startSymbol);
                 }
                 else
                 {
@@ -461,22 +484,11 @@ namespace giza
             }
         }
 
-        static void Span(List<string> args, bool verbose)
+        static void Span(bool verbose, string grammar, string input, string startSymbol)
         {
-            if (args.Count < 3)
-            {
-                ShowUsage();
-                return;
-            }
-
-            var grammarFilename = args[0];
-            var startSymbol = args[1];
-            var inputFilename = args[2];
-
-            SupergrammarSpanner spanner = new SupergrammarSpanner();
-            string grammarFile = File.ReadAllText(grammarFilename);
+            var spanner = new SupergrammarSpanner();
             var errors = new List<Error>();
-            var dis = spanner.GetExpressions(grammarFile, errors);
+            var dis = spanner.GetExpressions(grammar, errors);
 
             if (errors != null && errors.Count > 0)
             {
@@ -506,15 +518,6 @@ namespace giza
             DefinitionBuilder db = new DefinitionBuilder();
             var defs = db.BuildDefinitions(dis);
 
-            string input;
-            if (inputFilename == "-")
-            {
-                input = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
-            }
-            else
-            {
-                input = File.ReadAllText(inputFilename);
-            }
 
             Grammar g = new Grammar();
             g.Definitions.AddRange(defs);
