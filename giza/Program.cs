@@ -52,7 +52,7 @@ namespace giza
                     return;
                 }
 
-                if (args.Length < 1)
+                if (args2.Count < 1)
                 {
                     Repl();
                     return;
