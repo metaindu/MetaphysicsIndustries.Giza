@@ -12,15 +12,13 @@ namespace giza
     public class Program
     {
         static OptionSet _options;
-        static OptionSet _options2;
-
-        static bool showHelp = false;
-        static bool showVersion = false;
-        static bool verbose = false;
-        static bool tokenized = false;
 
         public static void Main(string[] args)
         {
+            bool showHelp = false;
+            bool showVersion = false;
+            bool verbose = false;
+
             _options = new OptionSet() {
                 {   "h|?|help",
                     "Print this help text and exit",
@@ -31,9 +29,6 @@ namespace giza
                 {   "verbose",
                     "Print extra information with some subcommands",
                     x => verbose = true },
-            };
-            _options2 = new OptionSet() {
-                { "tokenized", x => tokenized = true },
             };
 
             var args2 = _options.Parse(args);
@@ -63,8 +58,12 @@ namespace giza
 
                 if (command == "super")
                 {
+                    bool tokenized = false;
+                    var options2 = new OptionSet() {
+                        { "tokenized", x => tokenized = true },
+                    };
 
-                    var args3 = _options2.Parse(args2);
+                    var args3 = options2.Parse(args2);
 
                     if (args3.Count < 1)
                     {
@@ -84,7 +83,7 @@ namespace giza
                         grammar = File.ReadAllText(grammarFilename);
                     }
 
-                    Super(grammar);
+                    Super(grammar, tokenized);
                 }
                 else if (command == "render")
                 {
@@ -92,11 +91,11 @@ namespace giza
                 }
                 else if (command == "parse")
                 {
-                    Parse(args2);
+                    Parse(args2, verbose);
                 }
                 else if (command == "span")
                 {
-                    Span(args2);
+                    Span(args2, verbose);
                 }
                 else
                 {
@@ -169,9 +168,9 @@ namespace giza
             _options.WriteOptionDescriptions(Console.Out);
         }
 
-        static void Super(string grammar)
+        static void Super(string grammar, bool tokenized)
         {
-            SupergrammarSpanner sgs = new SupergrammarSpanner();
+            var sgs = new SupergrammarSpanner();
             var errors = new List<Error>();
             var dis = sgs.GetExpressions(grammar, errors);
 
@@ -230,28 +229,29 @@ namespace giza
             }
         }
 
-        static void Render(List<string> args)
+        static void Render(List<string> args2)
         {
             string ns = "MetaphysicsIndustries.Giza";
 
             bool singleton = false;
 
+            bool tokenized = false;
             var options2 = new OptionSet() {
                 { "tokenized", x => tokenized = true },
                 { "ns|namespace=", x => ns = x ?? ns },
                 { "singleton", x => singleton = true },
             };
 
-            args = options2.Parse(args);
+            var args3 = options2.Parse(args2);
 
-            if (args.Count < 2)
+            if (args3.Count < 2)
             {
                 ShowUsage();
                 return;
             }
 
-            var grammarFilename = args[0];
-            string className = args[1];
+            var grammarFilename = args3[0];
+            string className = args3[1];
 
             var sgs = new SupergrammarSpanner();
             string gfile;
@@ -331,7 +331,7 @@ namespace giza
             }
         }
 
-        static void Parse(List<string> args)
+        static void Parse(List<string> args, bool verbose)
         {
             if (args.Count < 3)
             {
@@ -458,7 +458,7 @@ namespace giza
             }
         }
 
-        static void Span(List<string> args)
+        static void Span(List<string> args, bool verbose)
         {
             if (args.Count < 3)
             {
