@@ -11,15 +11,13 @@ namespace giza
 {
     public class Program
     {
-        static OptionSet _options;
-
         public static void Main(string[] args)
         {
             bool showHelp = false;
             bool showVersion = false;
             bool verbose = false;
 
-            _options = new OptionSet() {
+            var options = new OptionSet() {
                 {   "h|?|help",
                     "Print this help text and exit",
                     x => showHelp = true },
@@ -31,13 +29,13 @@ namespace giza
                     x => verbose = true },
             };
 
-            var args2 = _options.Parse(args);
+            var args2 = options.Parse(args);
 
             try
             {
                 if (showHelp)
                 {
-                    ShowUsage();
+                    ShowUsage(options);
                     return;
                 }
 
@@ -67,7 +65,7 @@ namespace giza
 
                     if (args3.Count < 1)
                     {
-                        ShowUsage();
+                        ShowUsage(options);
                         return;
                     }
 
@@ -103,7 +101,7 @@ namespace giza
 
                     if (args3.Count < 2)
                     {
-                        ShowUsage();
+                        ShowUsage(options);
                         return;
                     }
 
@@ -127,7 +125,7 @@ namespace giza
 
                     if (args2.Count < 3)
                     {
-                        ShowUsage();
+                        ShowUsage(options);
                         return;
                     }
 
@@ -167,7 +165,7 @@ namespace giza
 
                     if (args2.Count < 3)
                     {
-                        ShowUsage();
+                        ShowUsage(options);
                         return;
                     }
 
@@ -192,7 +190,7 @@ namespace giza
                 else
                 {
                     Console.WriteLine(string.Format("Unknown command: \"{0}\"", command));
-                    ShowUsage();
+                    ShowUsage(options);
                 }
             }
             catch (Exception ex)
@@ -238,7 +236,7 @@ namespace giza
             Console.WriteLine("giza.exe version x.y.z");
         }
 
-        static void ShowUsage()
+        static void ShowUsage(OptionSet options)
         {
             Console.WriteLine("Usage:");
             Console.WriteLine("    giza [options]");
@@ -257,7 +255,7 @@ namespace giza
             Console.WriteLine("If \"-\" is given for FILE, or for GRAMMAR FILE given to super, then it is read from standard input.");
             Console.WriteLine();
 
-            _options.WriteOptionDescriptions(Console.Out);
+            options.WriteOptionDescriptions(Console.Out);
         }
 
         static void Super(string grammar, bool tokenized)
