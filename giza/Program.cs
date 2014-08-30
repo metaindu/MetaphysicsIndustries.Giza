@@ -612,8 +612,14 @@ namespace giza
                     }
                     defnames.Sort();
                     var defs = defnames.Where(name => env.ContainsKey(name)).Select(name => env[name]);
+                    bool first = true;
                     foreach (var name in defnames.Where(name => !env.ContainsKey(name)))
                     {
+                        if (first)
+                        {
+                            Console.WriteLine();
+                        }
+                        first = false;
                         Console.WriteLine("There is no definition named \"{0}\".", name);
                     }
                     Console.Write(dr.RenderDefinitionExprsAsGrammarText(defs, width));
