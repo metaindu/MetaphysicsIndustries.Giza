@@ -87,7 +87,40 @@ namespace giza
                 }
                 else if (command == "render")
                 {
-                    Render(args2);
+
+                    string ns = "MetaphysicsIndustries.Giza";
+
+                    bool isSingleton = false;
+
+                    bool tokenized = false;
+                    var options2 = new OptionSet() {
+                        { "tokenized", x => tokenized = true },
+                        { "ns|namespace=", x => ns = x ?? ns },
+                        { "singleton", x => isSingleton = true },
+                    };
+
+                    var args3 = options2.Parse(args2);
+
+                    if (args3.Count < 2)
+                    {
+                        ShowUsage();
+                        return;
+                    }
+
+                    var grammarFilename = args3[0];
+                    string className = args3[1];
+
+                    string grammar;
+                    if (grammarFilename == "-")
+                    {
+                        grammar = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
+                    }
+                    else
+                    {
+                        grammar = File.ReadAllText(grammarFilename);
+                    }
+
+                    Render(tokenized, ns, isSingleton, grammar, className);
                 }
                 else if (command == "parse")
                 {
@@ -229,43 +262,12 @@ namespace giza
             }
         }
 
-        static void Render(List<string> args2)
+        static void Render(bool tokenized, string ns, bool isSingleton, string grammar, string className)
         {
-            string ns = "MetaphysicsIndustries.Giza";
-
-            bool singleton = false;
-
-            bool tokenized = false;
-            var options2 = new OptionSet() {
-                { "tokenized", x => tokenized = true },
-                { "ns|namespace=", x => ns = x ?? ns },
-                { "singleton", x => singleton = true },
-            };
-
-            var args3 = options2.Parse(args2);
-
-            if (args3.Count < 2)
-            {
-                ShowUsage();
-                return;
-            }
-
-            var grammarFilename = args3[0];
-            string className = args3[1];
 
             var sgs = new SupergrammarSpanner();
-            string gfile;
-            if (grammarFilename == "-")
-            {
-                gfile = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
-            }
-            else
-            {
-                gfile = File.ReadAllText(grammarFilename);
-            }
-
-            List<Error> errors = new List<Error>();
-            var dis = sgs.GetExpressions(gfile, errors);
+            var errors = new List<Error>();
+            var dis = sgs.GetExpressions(grammar, errors);
 
             if (errors.Count > 0)
             {
@@ -327,7 +329,7 @@ namespace giza
             else
             {
                 var dr = new DefinitionRenderer();
-                Console.Write(dr.RenderDefinitionsAsCSharpClass(className, g.Definitions, ns: ns, singleton: singleton));
+                Console.Write(dr.RenderDefinitionsAsCSharpClass(className, g.Definitions, ns: ns, singleton: isSingleton));
             }
         }
 
