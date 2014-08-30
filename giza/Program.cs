@@ -597,7 +597,10 @@ namespace giza
 
                 buffer.AppendLine(line);
 
-                var command = line.Trim();
+                var _commandLine = line.Trim();
+                var _parts = _commandLine.Split(new []{ ' ' }, 2, StringSplitOptions.RemoveEmptyEntries);
+                var command = _parts[0];
+                var args = (_parts.Length > 1 ? _parts[1] : string.Empty);
 
                 if (command == "exit" || command == "quit")
                 {
@@ -615,9 +618,9 @@ namespace giza
                     continue;
                 }
 
-                if (command == "print" || command.StartsWith("print "))
+                if (command == "print")
                 {
-                    var defnames = command.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Skip(1).ToList();
+                    var defnames = args.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
 
                     var dr = new DefinitionRenderer();
                     int? width = Console.WindowWidth;
@@ -643,9 +646,9 @@ namespace giza
                     continue;
                 }
 
-                if (command.StartsWith("delete "))
+                if (command == "delete")
                 {
-                    var defsToDelete = command.Split(new []{' '}, StringSplitOptions.RemoveEmptyEntries).Skip(1);
+                    var defsToDelete = args.Split(new []{' '}, StringSplitOptions.RemoveEmptyEntries);
                     var someAreMissing = false;
                     foreach (var name in defsToDelete)
                     {
@@ -665,9 +668,9 @@ namespace giza
                     continue;
                 }
 
-                if (command.StartsWith("save "))
+                if (command == "save")
                 {
-                    var parts = command.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Skip(1).ToList();
+                    var parts = args.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
                     var filename = parts[0];
                     parts.RemoveAt(0);
                     var names = parts;
@@ -737,9 +740,9 @@ namespace giza
                     continue;
                 }
 
-                if (command.StartsWith("load "))
+                if (command == "load")
                 {
-                    var parts = command.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Skip(1).ToList();
+                    var parts = args.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
                     var filename = parts[0];
 
                     if (!File.Exists(filename))
@@ -786,10 +789,10 @@ namespace giza
                     continue;
                 }
 
-                if (command == "check" || command.StartsWith("check "))
+                if (command == "check")
                 {
 
-                    var defnames = command.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Skip(1).ToList();
+                    var defnames = args.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
                     if (defnames.Count < 1)
                     {
                         defnames = env.Keys.ToList();
