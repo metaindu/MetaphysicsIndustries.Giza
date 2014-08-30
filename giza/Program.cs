@@ -54,7 +54,7 @@ namespace giza
                 var command = args2[0].ToLower();
                 args2.RemoveAt(0);
 
-                if (command == "super")
+                if (command == "check")
                 {
                     bool tokenized = false;
                     var options2 = new OptionSet() {
@@ -81,7 +81,7 @@ namespace giza
                         grammar = File.ReadAllText(grammarFilename);
                     }
 
-                    Super(grammar, tokenized);
+                    Check(grammar, tokenized);
                 }
                 else if (command == "render")
                 {
@@ -242,23 +242,23 @@ namespace giza
             Console.WriteLine("    giza [options]");
             Console.WriteLine("    giza span [options] [GRAMMAR FILE] [START SYMBOL] [FILE]");
             Console.WriteLine("    giza parse [options] [GRAMMAR FILE] [START SYMBOL] [FILE]");
-            Console.WriteLine("    giza super [GRAMMAR FILE]");
+            Console.WriteLine("    giza check [GRAMMAR FILE]");
             Console.WriteLine("    giza render [GRAMMAR FILE] [CLASS NAME]");
             Console.WriteLine();
             Console.WriteLine("Subcommands:");
             Console.WriteLine();
             Console.WriteLine("    span,           Process the input file with a non-tokenized grammar, starting with a given symbol.");
             Console.WriteLine("    parse,          Parse the input file with a tokenized grammar, starting with a given symbol.");
-            Console.WriteLine("    super,          Process the grammar file only.");
+            Console.WriteLine("    check,          Process the grammar file only.");
             Console.WriteLine("    render,         Process the grammar file and print its definitions as a C# class.");
             Console.WriteLine();
-            Console.WriteLine("If \"-\" is given for FILE, or for GRAMMAR FILE given to super, then it is read from standard input.");
+            Console.WriteLine("If \"-\" is given for FILE, or for GRAMMAR FILE given to check, then it is read from standard input.");
             Console.WriteLine();
 
             options.WriteOptionDescriptions(Console.Out);
         }
 
-        static void Super(string grammar, bool tokenized)
+        static void Check(string grammar, bool tokenized)
         {
             var sgs = new SupergrammarSpanner();
             var errors = new List<Error>();
@@ -799,7 +799,7 @@ namespace giza
 
                     var ec = new ExpressionChecker();
                     var defs = defnames.Select(name => env[name]);
-                    var errors = ec.CheckDefinitionInfosForSpanning(defs);
+                    var errors = ec.CheckDefinitionInfosForSpanning(defs);  //TODO: ForParsing, --tokenized
 
                     if (errors.ContainsNonWarnings())
                     {
