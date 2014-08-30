@@ -52,6 +52,10 @@
       <Project>{98B42ACF-8370-4428-9D41-73FF1CEFB2E4}</Project>
       <Name>MetaphysicsIndustries.Giza</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NCommander\NCommander.csproj">
+      <Project>{A9E25E5D-EB90-4B4A-8793-4E9D97037E42}</Project>
+      <Name>NCommander</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="test.giza" />
