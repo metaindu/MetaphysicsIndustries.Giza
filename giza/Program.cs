@@ -63,7 +63,28 @@ namespace giza
 
                 if (command == "super")
                 {
-                    Super(args2);
+
+                    var args3 = _options2.Parse(args2);
+
+                    if (args3.Count < 1)
+                    {
+                        ShowUsage();
+                        return;
+                    }
+
+                    var grammarFilename = args3[0];
+
+                    string grammar;
+                    if (grammarFilename == "-")
+                    {
+                        grammar = Console.In.ReadToEnd();
+                    }
+                    else
+                    {
+                        grammar = File.ReadAllText(grammarFilename);
+                    }
+
+                    Super(grammar);
                 }
                 else if (command == "render")
                 {
@@ -148,30 +169,11 @@ namespace giza
             _options.WriteOptionDescriptions(Console.Out);
         }
 
-        static void Super(List<string> args)
+        static void Super(string grammar)
         {
-            args = _options2.Parse(args);
-
-            if (args.Count < 1)
-            {
-                ShowUsage();
-                return;
-            }
-
-            var grammarFilename = args[0];
-
             SupergrammarSpanner sgs = new SupergrammarSpanner();
-            string gfile;
-            if (grammarFilename == "-")
-            {
-                gfile = Console.In.ReadToEnd();
-            }
-            else
-            {
-                gfile = File.ReadAllText(grammarFilename);
-            }
             var errors = new List<Error>();
-            var dis = sgs.GetExpressions(gfile, errors);
+            var dis = sgs.GetExpressions(grammar, errors);
 
             if (!errors.ContainsNonWarnings())
             {
