@@ -56,136 +56,19 @@ namespace giza
 
                 if (command == "check")
                 {
-                    bool tokenized = false;
-                    var options2 = new OptionSet() {
-                        { "tokenized", x => tokenized = true },
-                    };
-
-                    var args3 = options2.Parse(args2);
-
-                    if (args3.Count < 1)
-                    {
-                        ShowUsage(options);
-                        return;
-                    }
-
-                    var grammarFilename = args3[0];
-
-                    string grammar;
-                    if (grammarFilename == "-")
-                    {
-                        grammar = Console.In.ReadToEnd();
-                    }
-                    else
-                    {
-                        grammar = File.ReadAllText(grammarFilename);
-                    }
-
-                    Check(grammar, tokenized);
+                    CheckCommand(args2);
                 }
                 else if (command == "render")
                 {
-
-                    string ns = "MetaphysicsIndustries.Giza";
-
-                    bool isSingleton = false;
-
-                    bool tokenized = false;
-                    var options2 = new OptionSet() {
-                        { "tokenized", x => tokenized = true },
-                        { "ns|namespace=", x => ns = x ?? ns },
-                        { "singleton", x => isSingleton = true },
-                    };
-
-                    var args3 = options2.Parse(args2);
-
-                    if (args3.Count < 2)
-                    {
-                        ShowUsage(options);
-                        return;
-                    }
-
-                    var grammarFilename = args3[0];
-                    string className = args3[1];
-
-                    string grammar;
-                    if (grammarFilename == "-")
-                    {
-                        grammar = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
-                    }
-                    else
-                    {
-                        grammar = File.ReadAllText(grammarFilename);
-                    }
-
-                    Render(tokenized, ns, isSingleton, grammar, className);
+                    RenderCommand(args2);
                 }
                 else if (command == "parse")
                 {
-
-                    if (args2.Count < 3)
-                    {
-                        ShowUsage(options);
-                        return;
-                    }
-
-                    var grammarFilename = args2[0];
-                    var startSymbol = args2[1];
-                    var inputFilename = args2[2];
-
-                    string grammar = File.ReadAllText(grammarFilename);
-
-                    string input;
-                    if (inputFilename == "-")
-                    {
-                        input = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
-                    }
-                    else
-                    {
-                        try
-                        {
-                            input = File.ReadAllText(inputFilename);
-                        }
-                        catch (Exception e)
-                        {
-                            Console.WriteLine("There was an error while trying to open the input file:");
-                            Console.WriteLine("  {0}", e.Message);
-                            if (verbose)
-                            {
-                                Console.WriteLine("  {0}", e.ToString());
-                            }
-                            return;
-                        }
-                    }
-
-                    Parse(verbose, grammar, input, startSymbol);
+                    ParseCommand(args2, verbose);
                 }
                 else if (command == "span")
                 {
-
-                    if (args2.Count < 3)
-                    {
-                        ShowUsage(options);
-                        return;
-                    }
-
-                    var grammarFilename = args2[0];
-                    var startSymbol = args2[1];
-                    var inputFilename = args2[2];
-
-                    string grammar = File.ReadAllText(grammarFilename);
-
-                    string input;
-                    if (inputFilename == "-")
-                    {
-                        input = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
-                    }
-                    else
-                    {
-                        input = File.ReadAllText(inputFilename);
-                    }
-
-                    Span(verbose, grammar, input, startSymbol);
+                    SpanCommand(args2, verbose);
                 }
                 else
                 {
@@ -236,7 +119,7 @@ namespace giza
             Console.WriteLine("giza.exe version x.y.z");
         }
 
-        static void ShowUsage(OptionSet options)
+        static void ShowUsage(OptionSet options=null)
         {
             Console.WriteLine("Usage:");
             Console.WriteLine("    giza [options]");
@@ -255,9 +138,41 @@ namespace giza
             Console.WriteLine("If \"-\" is given for FILE, or for GRAMMAR FILE given to check, then it is read from standard input.");
             Console.WriteLine();
 
-            options.WriteOptionDescriptions(Console.Out);
+            if (options != null)
+            {
+                options.WriteOptionDescriptions(Console.Out);
+            }
         }
 
+        static void CheckCommand(List<string> args)
+        {
+            bool tokenized = false;
+            var options = new OptionSet() {
+                { "tokenized", x => tokenized = true },
+            };
+
+            var args3 = options.Parse(args);
+
+            if (args3.Count < 1)
+            {
+                ShowUsage(options);
+                return;
+            }
+
+            var grammarFilename = args3[0];
+
+            string grammar;
+            if (grammarFilename == "-")
+            {
+                grammar = Console.In.ReadToEnd();
+            }
+            else
+            {
+                grammar = File.ReadAllText(grammarFilename);
+            }
+
+            Check(grammar, tokenized);
+        }
         static void Check(string grammar, bool tokenized)
         {
             var sgs = new SupergrammarSpanner();
@@ -319,6 +234,42 @@ namespace giza
             }
         }
 
+        static void RenderCommand(List<string> args)
+        {
+            string ns = "MetaphysicsIndustries.Giza";
+
+            bool isSingleton = false;
+
+            bool tokenized = false;
+            var options2 = new OptionSet() {
+                { "tokenized", x => tokenized = true },
+                { "ns|namespace=", x => ns = x ?? ns },
+                { "singleton", x => isSingleton = true },
+            };
+
+            var args3 = options2.Parse(args);
+
+            if (args3.Count < 2)
+            {
+                ShowUsage();
+                return;
+            }
+
+            var grammarFilename = args3[0];
+            string className = args3[1];
+
+            string grammar;
+            if (grammarFilename == "-")
+            {
+                grammar = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
+            }
+            else
+            {
+                grammar = File.ReadAllText(grammarFilename);
+            }
+
+            Render(tokenized, ns, isSingleton, grammar, className);
+        }
         static void Render(bool tokenized, string ns, bool isSingleton, string grammar, string className)
         {
 
@@ -390,6 +341,45 @@ namespace giza
             }
         }
 
+        static void ParseCommand(List<string> args, bool verbose)
+        {
+            if (args.Count < 3)
+            {
+                ShowUsage();
+                return;
+            }
+
+            var grammarFilename = args[0];
+            var startSymbol = args[1];
+            var inputFilename = args[2];
+
+            string grammar = File.ReadAllText(grammarFilename);
+
+            string input;
+            if (inputFilename == "-")
+            {
+                input = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
+            }
+            else
+            {
+                try
+                {
+                    input = File.ReadAllText(inputFilename);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("There was an error while trying to open the input file:");
+                    Console.WriteLine("  {0}", e.Message);
+                    if (verbose)
+                    {
+                        Console.WriteLine("  {0}", e.ToString());
+                    }
+                    return;
+                }
+            }
+
+            Parse(verbose, grammar, input, startSymbol);
+        }
         static void Parse(bool verbose, string grammar, string input, string startSymbol)
         {
             var spanner = new SupergrammarSpanner();
@@ -482,6 +472,32 @@ namespace giza
             }
         }
 
+        static void SpanCommand(List<string> args, bool verbose)
+        {
+            if (args.Count < 3)
+            {
+                ShowUsage();
+                return;
+            }
+
+            var grammarFilename = args[0];
+            var startSymbol = args[1];
+            var inputFilename = args[2];
+
+            string grammar = File.ReadAllText(grammarFilename);
+
+            string input;
+            if (inputFilename == "-")
+            {
+                input = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
+            }
+            else
+            {
+                input = File.ReadAllText(inputFilename);
+            }
+
+            Span(verbose, grammar, input, startSymbol);
+        }
         static void Span(bool verbose, string grammar, string input, string startSymbol)
         {
             var spanner = new SupergrammarSpanner();
