@@ -582,6 +582,15 @@ namespace giza
             editor.StopEditingOnInterrupt = true;
             editor.EditingInterrupted += onInterrupt;
 
+            var commands = new Dictionary<string, Action<string, Dictionary<string, DefinitionExpression>>> {
+                { "list", ListCommand },
+                { "print", PrintCommand },
+                { "delete", DeleteCommand },
+                { "save", SaveCommand },
+                { "load", LoadCommand },
+                { "check", CheckCommand2 },
+            };
+
             string line;
 
             while (true)
@@ -607,29 +616,9 @@ namespace giza
                     break;
                 }
 
-                if (command == "list")
+                if (commands.ContainsKey(command))
                 {
-                    ListCommand(args, env);
-                }
-                else if (command == "print")
-                {
-                    PrintCommand(args, env);
-                }
-                else if (command == "delete")
-                {
-                    DeleteCommand(args, env);
-                }
-                else if (command == "save")
-                {
-                    SaveCommand(args, env);
-                }
-                else if (command == "load")
-                {
-                    LoadCommand(args, env);
-                }
-                else if (command == "check")
-                {
-                    CheckCommand2(args, env);
+                    commands[command](args, env);
                 }
                 else
                 {
