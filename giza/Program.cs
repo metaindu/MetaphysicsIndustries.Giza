@@ -755,6 +755,12 @@ namespace giza
             parts.RemoveAt(0);
             var names = parts;
 
+            if (names.Count < 1)
+            {
+                Console.WriteLine("No definitions were specified to save.");
+                return;
+            }
+
             var someAreMissing = false;
             foreach (var name in names)
             {
