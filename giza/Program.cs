@@ -751,6 +751,12 @@ namespace giza
         static void SaveCommand(string args, Dictionary<string, DefinitionExpression> env)
         {
             var parts = args.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
+            if (parts.Count < 1)
+            {
+                Console.WriteLine("No filename was specified to save to.");
+                return;
+            }
+
             var filename = parts[0];
             parts.RemoveAt(0);
             var names = parts;
