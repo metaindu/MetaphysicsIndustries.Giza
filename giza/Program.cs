@@ -609,284 +609,305 @@ namespace giza
 
                 if (command == "list")
                 {
-                    var names = env.Keys.ToList();
-                    names.Sort();
-                    foreach (var name in names)
-                    {
-                        Console.WriteLine(name);
-                    }
-                    continue;
+                    ListCommand(args, env);
                 }
-
-                if (command == "print")
+                else if (command == "print")
                 {
-                    var defnames = args.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
-
-                    var dr = new DefinitionRenderer();
-                    int? width = Console.WindowWidth;
-                    if (width < 20)
-                        width = null;
-                    if (defnames.Count < 1)
-                    {
-                        defnames = env.Keys.ToList();
-                    }
-                    defnames.Sort();
-                    var defs = defnames.Where(name => env.ContainsKey(name)).Select(name => env[name]);
-                    bool first = true;
-                    foreach (var name in defnames.Where(name => !env.ContainsKey(name)))
-                    {
-                        if (first)
-                        {
-                            Console.WriteLine();
-                        }
-                        first = false;
-                        Console.WriteLine("There is no definition named \"{0}\".", name);
-                    }
-                    Console.Write(dr.RenderDefinitionExprsAsGrammarText(defs, width));
-                    continue;
+                    PrintCommand(args, env);
                 }
-
-                if (command == "delete")
+                else if (command == "delete")
                 {
-                    var defsToDelete = args.Split(new []{' '}, StringSplitOptions.RemoveEmptyEntries);
-                    var someAreMissing = false;
-                    foreach (var name in defsToDelete)
-                    {
-                        if (!env.ContainsKey(name))
-                        {
-                            Console.WriteLine("There is no definition named \"{0}\".", name);
-                            someAreMissing = true;
-                        }
-                    }
-                    if (!someAreMissing)
-                    {
-                        foreach (var name in defsToDelete)
-                        {
-                            env.Remove(name);
-                        }
-                    }
-                    continue;
+                    DeleteCommand(args, env);
                 }
-
-                if (command == "save")
+                else if (command == "save")
                 {
-                    var parts = args.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
-                    var filename = parts[0];
-                    parts.RemoveAt(0);
-                    var names = parts;
-
-                    var someAreMissing = false;
-                    foreach (var name in names)
-                    {
-                        if (!env.ContainsKey(name))
-                        {
-                            Console.WriteLine("There is no definition named \"{0}\".", name);
-                            someAreMissing = true;
-                        }
-                    }
-
-                    if (someAreMissing) continue;
-
-                    var defs = names.Select(name => env[name]);
-                    var next = new HashSet<DefinitionExpression>();
-                    var prev = new HashSet<DefinitionExpression>(defs);
-                    var alldefs = new HashSet<DefinitionExpression>(defs);
-
-                    while (prev.Count > 0)
-                    {
-                        next.Clear();
-                        foreach (var def in prev)
-                        {
-                            foreach (var defref in def.EnumerateDefRefs())
-                            {
-                                if (env.ContainsKey(defref.DefinitionName))
-                                {
-                                    next.Add(env[defref.DefinitionName]);
-                                }
-                                else
-                                {
-                                    Console.WriteLine("There is no definition named \"{0}\".", defref.DefinitionName);
-                                    someAreMissing = true;
-                                }
-                            }
-                        }
-                        next.ExceptWith(alldefs);
-                        alldefs.UnionWith(next);
-                        prev.Clear();
-                        prev.UnionWith(next);
-                    }
-
-                    if (someAreMissing) continue;
+                    SaveCommand(args, env);
+                }
+                else if (command == "load")
+                {
+                    LoadCommand(args, env);
+                }
+                else if (command == "check")
+                {
+                    CheckCommand2(args, env);
+                }
+                else
+                {
 
                     try
                     {
-                        var dr = new DefinitionRenderer();
-                        var fileContents = dr.RenderDefinitionExprsAsGrammarText(alldefs);
-                        string header = string.Format("// File saved at {0}", DateTime.Now);
-                        Console.WriteLine(header);
-                        using (var f = new StreamWriter(filename))
+                        while (true)
                         {
-                            f.WriteLine(header);
-                            f.WriteLine();
-                            f.Write(fileContents);
+                            var errors = new List<Error>();
+                            var defexprs = spanner.GetExpressions(buffer.ToString(), errors);
+                            if (!errors.ContainsNonWarnings())
+                            {
+                                // good to go
+
+                                // print any errors
+                                foreach (var error in errors)
+                                {
+                                    Console.WriteLine(error.Description);
+                                }
+
+                                // add new definitions to the list
+                                foreach (var defexpr in defexprs)
+                                {
+                                    env[defexpr.Name] = defexpr;
+                                }
+
+                                break;
+                            }
+
+                            if (errors.Any(e => !e.IsWarning && e.ErrorType != ParserError.UnexpectedEndOfInput))
+                            {
+                                // something is wrong with the input
+                                foreach (var error in errors)
+                                {
+                                    Console.WriteLine(error.Description);
+                                }
+                                break;
+                            }
+
+                            gotCtrlC = false;
+                            line = editor.Edit(secondaryPrompt, "");
+                            if (gotCtrlC)
+                                break;
+                            if (line == null)
+                                break; // Ctrl+D
+
+                            buffer.AppendLine(line);
                         }
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("There was an error:");
+                        Console.Write("There was an internal error: ");
                         Console.WriteLine(ex);
                     }
-
-                    continue;
-                }
-
-                if (command == "load")
-                {
-                    var parts = args.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
-                    var filename = parts[0];
-
-                    if (!File.Exists(filename))
-                    {
-                        Console.WriteLine("Can't find the file \"{0}\"", filename);
-                        continue;
-                    }
-
-                    try
-                    {
-                        string contents = File.ReadAllText(filename);
-                        var errors = new List<Error>();
-                        var defs = spanner.GetExpressions(contents, errors);
-                        if (errors.ContainsNonWarnings())
-                        {
-                            Console.WriteLine("There are errors in the loaded file:");
-                            foreach (var error in errors.Where(e => !e.IsWarning))
-                            {
-                                Console.WriteLine(error.Description);
-                            }
-                            continue;
-                        }
-
-                        foreach (var def in defs)
-                        {
-                            if (env.ContainsKey(def.Name))
-                            {
-                                Console.WriteLine("{0} was replaced", def.Name);
-                            }
-                            else
-                            {
-                                Console.WriteLine("{0} was added", def.Name);
-                            }
-
-                            env[def.Name] = def;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("There was an internal error:");
-                        Console.WriteLine(ex);
-                    }
-
-                    continue;
-                }
-
-                if (command == "check")
-                {
-
-                    var defnames = args.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
-                    if (defnames.Count < 1)
-                    {
-                        defnames = env.Keys.ToList();
-                    }
-                    else
-                    {
-                        bool someAreMissing = false;
-                        foreach (var name in defnames)
-                        {
-                            if (!env.ContainsKey(name))
-                            {
-                                Console.WriteLine("There is no definition named \"{0}\".", name);
-                                someAreMissing = true;
-                            }
-                        }
-                        if (someAreMissing) continue;
-                    }
-
-                    var ec = new ExpressionChecker();
-                    var defs = defnames.Select(name => env[name]);
-                    var errors = ec.CheckDefinitionInfosForSpanning(defs);  //TODO: ForParsing, --tokenized
-
-                    if (errors.ContainsNonWarnings())
-                    {
-                        Console.WriteLine("There are errors:");
-                    }
-                    else if (errors.Count > 0)
-                    {
-                        Console.WriteLine("There are warnings:");
-                    }
-                    else
-                    {
-                        Console.WriteLine("There are no errors or warnings.");
-                    }
-
-                    foreach (var error in errors)
-                    {
-                        Console.WriteLine(error.Description);
-                    }
-
-                    continue;
-                }
-
-                try
-                {
-                    while (true)
-                    {
-                        var errors = new List<Error>();
-                        var defexprs = spanner.GetExpressions(buffer.ToString(), errors);
-                        if (!errors.ContainsNonWarnings())
-                        {
-                            // good to go
-
-                            // print any errors
-                            foreach (var error in errors)
-                            {
-                                Console.WriteLine(error.Description);
-                            }
-
-                            // add new definitions to the list
-                            foreach (var defexpr in defexprs)
-                            {
-                                env[defexpr.Name] = defexpr;
-                            }
-
-                            break;
-                        }
-
-                        if (errors.Any(e => !e.IsWarning && e.ErrorType != ParserError.UnexpectedEndOfInput))
-                        {
-                            // something is wrong with the input
-                            foreach (var error in errors)
-                            {
-                                Console.WriteLine(error.Description);
-                            }
-                            break;
-                        }
-
-                        gotCtrlC = false;
-                        line = editor.Edit(secondaryPrompt, "");
-                        if (gotCtrlC) break;
-                        if (line == null) break; // Ctrl+D
-
-                        buffer.AppendLine(line);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.Write("There was an internal error: ");
-                    Console.WriteLine(ex);
                 }
             }
 
 
+        }
+
+        static void ListCommand(string args, Dictionary<string, DefinitionExpression> env)
+        {
+            var names = env.Keys.ToList();
+            names.Sort();
+            foreach (var name in names)
+            {
+                Console.WriteLine(name);
+            }
+        }
+
+        static void PrintCommand(string args, Dictionary<string, DefinitionExpression> env)
+        {
+            var defnames = args.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
+
+            var dr = new DefinitionRenderer();
+            int? width = Console.WindowWidth;
+            if (width < 20)
+                width = null;
+            if (defnames.Count < 1)
+            {
+                defnames = env.Keys.ToList();
+            }
+            defnames.Sort();
+            var defs = defnames.Where(name => env.ContainsKey(name)).Select(name => env[name]);
+            bool first = true;
+            foreach (var name in defnames.Where(name => !env.ContainsKey(name)))
+            {
+                if (first)
+                {
+                    Console.WriteLine();
+                }
+                first = false;
+                Console.WriteLine("There is no definition named \"{0}\".", name);
+            }
+            Console.Write(dr.RenderDefinitionExprsAsGrammarText(defs, width));
+        }
+
+        static void DeleteCommand(string args, Dictionary<string, DefinitionExpression> env)
+        {
+            var defsToDelete = args.Split(new []{' '}, StringSplitOptions.RemoveEmptyEntries);
+            var someAreMissing = false;
+            foreach (var name in defsToDelete)
+            {
+                if (!env.ContainsKey(name))
+                {
+                    Console.WriteLine("There is no definition named \"{0}\".", name);
+                    someAreMissing = true;
+                }
+            }
+            if (!someAreMissing)
+            {
+                foreach (var name in defsToDelete)
+                {
+                    env.Remove(name);
+                }
+            }
+        }
+
+        static void SaveCommand(string args, Dictionary<string, DefinitionExpression> env)
+        {
+            var parts = args.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
+            var filename = parts[0];
+            parts.RemoveAt(0);
+            var names = parts;
+
+            var someAreMissing = false;
+            foreach (var name in names)
+            {
+                if (!env.ContainsKey(name))
+                {
+                    Console.WriteLine("There is no definition named \"{0}\".", name);
+                    someAreMissing = true;
+                }
+            }
+
+            if (someAreMissing) return;
+
+            var defs = names.Select(name => env[name]);
+            var next = new HashSet<DefinitionExpression>();
+            var prev = new HashSet<DefinitionExpression>(defs);
+            var alldefs = new HashSet<DefinitionExpression>(defs);
+
+            while (prev.Count > 0)
+            {
+                next.Clear();
+                foreach (var def in prev)
+                {
+                    foreach (var defref in def.EnumerateDefRefs())
+                    {
+                        if (env.ContainsKey(defref.DefinitionName))
+                        {
+                            next.Add(env[defref.DefinitionName]);
+                        }
+                        else
+                        {
+                            Console.WriteLine("There is no definition named \"{0}\".", defref.DefinitionName);
+                            someAreMissing = true;
+                        }
+                    }
+                }
+                next.ExceptWith(alldefs);
+                alldefs.UnionWith(next);
+                prev.Clear();
+                prev.UnionWith(next);
+            }
+
+            if (someAreMissing) return;
+
+            try
+            {
+                var dr = new DefinitionRenderer();
+                var fileContents = dr.RenderDefinitionExprsAsGrammarText(alldefs);
+                string header = string.Format("// File saved at {0}", DateTime.Now);
+                Console.WriteLine(header);
+                using (var f = new StreamWriter(filename))
+                {
+                    f.WriteLine(header);
+                    f.WriteLine();
+                    f.Write(fileContents);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("There was an error:");
+                Console.WriteLine(ex);
+            }
+        }
+
+        static void LoadCommand(string args, Dictionary<string, DefinitionExpression> env)
+        {
+            var parts = args.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
+            var filename = parts[0];
+
+            if (!File.Exists(filename))
+            {
+                Console.WriteLine("Can't find the file \"{0}\"", filename);
+                return;
+            }
+
+            try
+            {
+                string contents = File.ReadAllText(filename);
+                var errors = new List<Error>();
+                var spanner = new SupergrammarSpanner();
+                var defs = spanner.GetExpressions(contents, errors);
+                if (errors.ContainsNonWarnings())
+                {
+                    Console.WriteLine("There are errors in the loaded file:");
+                    foreach (var error in errors.Where(e => !e.IsWarning))
+                    {
+                        Console.WriteLine(error.Description);
+                    }
+                    return;
+                }
+
+                foreach (var def in defs)
+                {
+                    if (env.ContainsKey(def.Name))
+                    {
+                        Console.WriteLine("{0} was replaced", def.Name);
+                    }
+                    else
+                    {
+                        Console.WriteLine("{0} was added", def.Name);
+                    }
+
+                    env[def.Name] = def;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("There was an internal error:");
+                Console.WriteLine(ex);
+            }
+        }
+
+        static void CheckCommand2(string args, Dictionary<string, DefinitionExpression> env)
+        {
+            var defnames = args.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
+            if (defnames.Count < 1)
+            {
+                defnames = env.Keys.ToList();
+            }
+            else
+            {
+                bool someAreMissing = false;
+                foreach (var name in defnames)
+                {
+                    if (!env.ContainsKey(name))
+                    {
+                        Console.WriteLine("There is no definition named \"{0}\".", name);
+                        someAreMissing = true;
+                    }
+                }
+                if (someAreMissing) return;
+            }
+
+            var ec = new ExpressionChecker();
+            var defs = defnames.Select(name => env[name]);
+            var errors = ec.CheckDefinitionInfosForSpanning(defs);  //TODO: ForParsing, --tokenized
+
+            if (errors.ContainsNonWarnings())
+            {
+                Console.WriteLine("There are errors:");
+            }
+            else if (errors.Count > 0)
+            {
+                Console.WriteLine("There are warnings:");
+            }
+            else
+            {
+                Console.WriteLine("There are no errors or warnings.");
+            }
+
+            foreach (var error in errors)
+            {
+                Console.WriteLine(error.Description);
+            }
         }
     }
 }
