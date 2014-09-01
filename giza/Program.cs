@@ -616,14 +616,13 @@ namespace giza
                     break;
                 }
 
-                if (commands.ContainsKey(command))
+                try
                 {
-                    commands[command](args, env);
-                }
-                else
-                {
-
-                    try
+                    if (commands.ContainsKey(command))
+                    {
+                        commands[command](args, env);
+                    }
+                    else
                     {
                         while (true)
                         {
@@ -668,11 +667,11 @@ namespace giza
                             buffer.AppendLine(line);
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        Console.Write("There was an internal error: ");
-                        Console.WriteLine(ex);
-                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.Write("There was an internal error: ");
+                    Console.WriteLine(ex);
                 }
             }
 
