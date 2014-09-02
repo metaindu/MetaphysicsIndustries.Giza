@@ -6,6 +6,8 @@ using MetaphysicsIndustries.Giza;
 using System.IO;
 using NDesk.Options;
 using Mono.Terminal;
+using NCommander;
+using System.Reflection;
 
 namespace giza
 {
@@ -15,7 +17,6 @@ namespace giza
         {
             bool showHelp = false;
             bool showVersion = false;
-            bool verbose = false;
 
             var options = new OptionSet() {
                 {   "h|?|help",
@@ -24,19 +25,18 @@ namespace giza
                 {   "v|version",
                     "Print version and exit",
                     x => showVersion = true },
-                {   "verbose",
-                    "Print extra information with some subcommands",
-                    x => verbose = true },
             };
 
             var args2 = options.Parse(args);
 
             var commands = new Dictionary<string, Action<List<string>>> {
-                { "check", CheckCommand },
                 { "render", RenderCommand },
-                { "parse", (x) => ParseCommand(x, verbose) },
-                { "span", (x) => SpanCommand(x, verbose) },
             };
+
+            var commander = new Commander("giza", GetVersionStringFromAssembly());
+            commander.Commands.Add("check", new CheckCommand());
+            commander.Commands.Add("parse", new ParseCommand());
+            commander.Commands.Add("span", new SpanCommand());
 
             try
             {
@@ -61,7 +61,12 @@ namespace giza
                 var command = args2[0].ToLower();
                 args2.RemoveAt(0);
 
-                if (commands.ContainsKey(command))
+                if (commander.Commands.ContainsKey(command))
+                {
+                    args2.Insert(0, command);
+                    commander.ProcessArgs(args2);
+                }
+                else if (commands.ContainsKey(command))
                 {
                     commands[command](args2);
                 }
@@ -73,17 +78,15 @@ namespace giza
             }
             catch (Exception ex)
             {
-                Console.Write("There was an internal error");
-                if (verbose)
-                {
-                    Console.WriteLine(":");
-                    Console.WriteLine(ex.ToString());
-                }
-                else
-                {
-                    Console.WriteLine();
-                }
+                Console.Write("There was an internal error:");
+                Console.WriteLine(ex.ToString());
             }
+        }
+
+
+        public static string GetVersionStringFromAssembly()
+        {
+            return Assembly.GetCallingAssembly().GetName().Version.ToString();
         }
 
         private static int CountLines(string input, int length)
@@ -139,34 +142,38 @@ namespace giza
             }
         }
 
-        static void CheckCommand(List<string> args)
+        class CheckCommand : Command
         {
-            bool tokenized = false;
-            var options = new OptionSet() {
-                { "tokenized", x => tokenized = true },
-            };
-
-            var args3 = options.Parse(args);
-
-            if (args3.Count < 1)
+            public CheckCommand()
             {
-                ShowUsage(options);
-                return;
+                Name = "check";
+                Description = "Check a grammar for errors.";
+                this.Options = new NCommander.Option[] {
+                    new NCommander.Option { Name = "tokenized" },
+                };
+                this.Params = new Parameter[] {
+                    new Parameter { Name = "grammarFilename", ParameterType = ParameterType.String },
+                };
             }
 
-            var grammarFilename = args3[0];
-
-            string grammar;
-            if (grammarFilename == "-")
+            protected override void InternalExecute(Dictionary<string, object> args)
             {
-                grammar = Console.In.ReadToEnd();
-            }
-            else
-            {
-                grammar = File.ReadAllText(grammarFilename);
-            }
+                var tokenized = (bool)args["tokenized"];
 
-            Check(grammar, tokenized);
+                var grammarFilename = (string)args["grammarFilename"];
+
+                string grammar;
+                if (grammarFilename == "-")
+                {
+                    grammar = Console.In.ReadToEnd();
+                }
+                else
+                {
+                    grammar = File.ReadAllText(grammarFilename);
+                }
+
+                Check(grammar, tokenized);
+            }
         }
         static void Check(string grammar, bool tokenized)
         {
@@ -336,44 +343,64 @@ namespace giza
             }
         }
 
-        static void ParseCommand(List<string> args, bool verbose)
+        class ParseCommand : Command
         {
-            if (args.Count < 3)
+            public ParseCommand()
             {
-                ShowUsage();
-                return;
+                Name = "parse";
+                Description = "Parse the input file with a tokenized grammar, starting with a given symbol.";
+                Params = new Parameter[] {
+                    new Parameter { Name="grammarFilename", ParameterType=ParameterType.String },
+                    new Parameter { Name="startSymbol", ParameterType=ParameterType.String },
+                    new Parameter { Name="inputFilename", ParameterType=ParameterType.String },
+                };
+                Options = new NCommander.Option[] {
+                    new NCommander.Option { Name="verbose" },
+                };
             }
 
-            var grammarFilename = args[0];
-            var startSymbol = args[1];
-            var inputFilename = args[2];
-
-            string grammar = File.ReadAllText(grammarFilename);
-
-            string input;
-            if (inputFilename == "-")
+            protected override void InternalExecute(Dictionary<string, object> args)
             {
-                input = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
-            }
-            else
-            {
-                try
+                var grammarFilename = (string)args["grammarFilename"];
+                var startSymbol = (string)args["startSymbol"];
+                var inputFilename = (string)args["inputFilename"];
+                var verbose = (bool)args["verbose"];
+
+                string grammar;
+                if (grammarFilename == "-")
                 {
-                    input = File.ReadAllText(inputFilename);
+                    grammar = Console.In.ReadToEnd();
                 }
-                catch (Exception e)
+                else
                 {
-                    Console.WriteLine("There was an error while trying to open the input file:");
-                    Console.WriteLine("  {0}", e.Message);
-                    if (verbose)
+                    grammar = File.ReadAllText(grammarFilename);
+                }
+
+                string input;
+                if (inputFilename == "-")
+                {
+                    input = Console.In.ReadToEnd();
+                }
+                else
+                {
+                    try
                     {
-                        Console.WriteLine("  {0}", e.ToString());
+                        input = File.ReadAllText(inputFilename);
                     }
-                    return;
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("There was an error while trying to open the input file:");
+                        Console.WriteLine("  {0}", e.Message);
+                        if (verbose)
+                        {
+                            Console.WriteLine("  {0}", e.ToString());
+                        }
+                        return;
+                    }
                 }
-            }
 
-            Parse(verbose, grammar, input, startSymbol);
+                Parse(verbose, grammar, input, startSymbol);
+            }
         }
         static void Parse(bool verbose, string grammar, string input, string startSymbol)
         {
@@ -467,31 +494,50 @@ namespace giza
             }
         }
 
-        static void SpanCommand(List<string> args, bool verbose)
+        class SpanCommand : Command
         {
-            if (args.Count < 3)
+            public SpanCommand()
             {
-                ShowUsage();
-                return;
+                Name = "span";
+                Description = "Process the input file with a non-tokenized grammar, starting with a given symbol.";
+                Params = new Parameter[] {
+                    new Parameter { Name="grammarFilename", ParameterType=ParameterType.String },
+                    new Parameter { Name="startSymbol", ParameterType=ParameterType.String },
+                    new Parameter { Name="inputFilename", ParameterType=ParameterType.String },
+                };
+                Options = new NCommander.Option[] {
+                    new NCommander.Option { Name="verbose" },
+                };
             }
-
-            var grammarFilename = args[0];
-            var startSymbol = args[1];
-            var inputFilename = args[2];
-
-            string grammar = File.ReadAllText(grammarFilename);
-
-            string input;
-            if (inputFilename == "-")
+            protected override void InternalExecute(Dictionary<string, object> args)
             {
-                input = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
-            }
-            else
-            {
-                input = File.ReadAllText(inputFilename);
-            }
+                var grammarFilename = (string)args["grammarFilename"];
+                var startSymbol = (string)args["startSymbol"];
+                var inputFilename = (string)args["inputFilename"];
+                var verbose = (bool)args["verbose"];
 
-            Span(verbose, grammar, input, startSymbol);
+                string grammar;
+                if (grammarFilename == "-")
+                {
+                    grammar = Console.In.ReadToEnd();
+                }
+                else
+                {
+                    grammar = File.ReadAllText(grammarFilename);
+                }
+
+                string input;
+                if (inputFilename == "-")
+                {
+                    input = Console.In.ReadToEnd();
+                }
+                else
+                {
+                    input = File.ReadAllText(inputFilename);
+                }
+
+                Span(verbose, grammar, input, startSymbol);
+            }
         }
         static void Span(bool verbose, string grammar, string input, string startSymbol)
         {
