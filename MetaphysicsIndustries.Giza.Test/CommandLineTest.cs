@@ -10,7 +10,7 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestCommandLine()
         {
-            giza.Program.Main(new string[] { "super", "../../../giza/json.giza", "--tokenized" });
+            giza.Program.Main(new string[] { "check", "../../../giza/json.giza", "--tokenized" });
         }
 
         [Test]
@@ -30,7 +30,7 @@ namespace MetaphysicsIndustries.Giza.Test
             System.Console.SetError(newStderr);
 
             // action
-            giza.Program.Main(new string[] { "super", "--tokenized", "-" });
+            giza.Program.Main(new string[] { "check", "--tokenized", "-" });
 
             // assertions
             Assert.AreEqual("", newStderr.ToString());
