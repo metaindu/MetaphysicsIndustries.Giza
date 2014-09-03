@@ -622,7 +622,7 @@ namespace giza
             editor.StopEditingOnInterrupt = true;
             editor.EditingInterrupted += onInterrupt;
 
-            var commands = new Dictionary<string, Action<string, Dictionary<string, DefinitionExpression>>> {
+            var commands = new Dictionary<string, Action<IEnumerable<string>, Dictionary<string, DefinitionExpression>>> {
                 { "list", ListCommand },
                 { "print", PrintCommand },
                 { "delete", DeleteCommand },
@@ -647,9 +647,19 @@ namespace giza
                 buffer.AppendLine(line);
 
                 var _commandLine = line.Trim();
-                var _parts = _commandLine.Split(new []{ ' ' }, 2, StringSplitOptions.RemoveEmptyEntries);
-                var command = _parts[0];
-                var args = (_parts.Length > 1 ? _parts[1] : string.Empty);
+                bool splittingFailed = false;
+                string command = null;
+                List<string> args = null;
+                try
+                {
+                    args = Splitter.SplitArgs(_commandLine).ToList();
+                    command = args[0];
+                    args.RemoveAt(0);
+                }
+                catch(Splitter.UnmatchedQuoteException ex)
+                {
+                    splittingFailed = true;
+                }
 
                 if (command == "exit" || command == "quit")
                 {
@@ -658,7 +668,7 @@ namespace giza
 
                 try
                 {
-                    if (commands.ContainsKey(command))
+                    if (!splittingFailed && commands.ContainsKey(command))
                     {
                         commands[command](args, env);
                     }
@@ -718,7 +728,7 @@ namespace giza
 
         }
 
-        static void ListCommand(string args, Dictionary<string, DefinitionExpression> env)
+        static void ListCommand(IEnumerable<string> args, Dictionary<string, DefinitionExpression> env)
         {
             var names = env.Keys.ToList();
             names.Sort();
@@ -728,9 +738,9 @@ namespace giza
             }
         }
 
-        static void PrintCommand(string args, Dictionary<string, DefinitionExpression> env)
+        static void PrintCommand(IEnumerable<string> args, Dictionary<string, DefinitionExpression> env)
         {
-            var defnames = args.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
+            var defnames = args.ToList();
 
             var dr = new DefinitionRenderer();
             int? width = Console.WindowWidth;
@@ -755,9 +765,9 @@ namespace giza
             Console.Write(dr.RenderDefinitionExprsAsGrammarText(defs, width));
         }
 
-        static void DeleteCommand(string args, Dictionary<string, DefinitionExpression> env)
+        static void DeleteCommand(IEnumerable<string> args, Dictionary<string, DefinitionExpression> env)
         {
-            var defsToDelete = args.Split(new []{' '}, StringSplitOptions.RemoveEmptyEntries);
+            var defsToDelete = args;
             var someAreMissing = false;
             foreach (var name in defsToDelete)
             {
@@ -776,9 +786,9 @@ namespace giza
             }
         }
 
-        static void SaveCommand(string args, Dictionary<string, DefinitionExpression> env)
+        static void SaveCommand(IEnumerable<string> args, Dictionary<string, DefinitionExpression> env)
         {
-            var parts = args.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
+            var parts = args.ToList();
             if (parts.Count < 1)
             {
                 Console.WriteLine("No filename was specified to save to.");
@@ -858,9 +868,9 @@ namespace giza
             }
         }
 
-        static void LoadCommand(string args, Dictionary<string, DefinitionExpression> env)
+        static void LoadCommand(IEnumerable<string> args, Dictionary<string, DefinitionExpression> env)
         {
-            var parts = args.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
+            var parts = args.ToList();
             var filename = parts[0];
 
             if (!File.Exists(filename))
@@ -906,9 +916,9 @@ namespace giza
             }
         }
 
-        static void CheckCommand2(string args, Dictionary<string, DefinitionExpression> env)
+        static void CheckCommand2(IEnumerable<string> args, Dictionary<string, DefinitionExpression> env)
         {
-            var defnames = args.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
+            var defnames = args.ToList();
             if (defnames.Count < 1)
             {
                 defnames = env.Keys.ToList();
