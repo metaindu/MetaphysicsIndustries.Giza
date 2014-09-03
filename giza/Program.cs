@@ -29,14 +29,11 @@ namespace giza
 
             var args2 = options.Parse(args);
 
-            var commands = new Dictionary<string, Action<List<string>>> {
-                { "render", RenderCommand },
-            };
-
             var commander = new Commander("giza", GetVersionStringFromAssembly());
             commander.Commands.Add("check", new CheckCommand());
             commander.Commands.Add("parse", new ParseCommand());
             commander.Commands.Add("span", new SpanCommand());
+            commander.Commands.Add("render", new RenderCommand());
 
             try
             {
@@ -59,16 +56,10 @@ namespace giza
                 }
 
                 var command = args2[0].ToLower();
-                args2.RemoveAt(0);
 
                 if (commander.Commands.ContainsKey(command))
                 {
-                    args2.Insert(0, command);
                     commander.ProcessArgs(args2);
-                }
-                else if (commands.ContainsKey(command))
-                {
-                    commands[command](args2);
                 }
                 else
                 {
@@ -236,41 +227,44 @@ namespace giza
             }
         }
 
-        static void RenderCommand(List<string> args)
+        class RenderCommand : Command
         {
-            string ns = "MetaphysicsIndustries.Giza";
-
-            bool isSingleton = false;
-
-            bool tokenized = false;
-            var options2 = new OptionSet() {
-                { "tokenized", x => tokenized = true },
-                { "ns|namespace=", x => ns = x ?? ns },
-                { "singleton", x => isSingleton = true },
-            };
-
-            var args3 = options2.Parse(args);
-
-            if (args3.Count < 2)
+            public RenderCommand()
             {
-                ShowUsage();
-                return;
+                Name = "render";
+                Description = "Process the grammar file and print its definitions as a C# class.";
+                Params = new Parameter[] {
+                    new Parameter { Name="grammarFilename", ParameterType=ParameterType.String },
+                    new Parameter { Name="className", ParameterType=ParameterType.String },
+                };
+                Options = new NCommander.Option[] {
+                    new NCommander.Option { Name="tokenized" },
+                    new NCommander.Option { Name="singleton" },
+                    new NCommander.Option { Name="namespace", Type=ParameterType.String },
+                };
             }
 
-            var grammarFilename = args3[0];
-            string className = args3[1];
-
-            string grammar;
-            if (grammarFilename == "-")
+            protected override void InternalExecute(Dictionary<string, object> args)
             {
-                grammar = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
-            }
-            else
-            {
-                grammar = File.ReadAllText(grammarFilename);
-            }
+                var tokenized = (bool)args["tokenized"];
+                var ns = (string)args["namespace"] ?? "MetaphysicsIndustries.Giza";
+                var singleton = (bool)args["singleton"];
 
-            Render(tokenized, ns, isSingleton, grammar, className);
+                var grammarFilename = (string)args["grammarFilename"];
+                var className = (string)args["className"];
+
+                string grammar;
+                if (grammarFilename == "-")
+                {
+                    grammar = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
+                }
+                else
+                {
+                    grammar = File.ReadAllText(grammarFilename);
+                }
+
+                Render(tokenized, ns, singleton, grammar, className);
+            }
         }
         static void Render(bool tokenized, string ns, bool isSingleton, string grammar, string className)
         {
