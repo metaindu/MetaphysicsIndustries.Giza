@@ -1004,6 +1004,9 @@ namespace giza
                 Params = new Parameter[] {
                     new Parameter { Name="defnames", ParameterType=ParameterType.StringArray },
                 };
+                Options = new NCommander.Option[] {
+                    new NCommander.Option { Name="tokenized" },
+                };
 
                 Env = env;
             }
@@ -1013,6 +1016,7 @@ namespace giza
             protected override void InternalExecute(Dictionary<string, object> args)
             {
                 var defnames = (string[])args["defnames"];
+                var tokenized = (bool)args["tokenized"];
                 if (defnames.Length < 1)
                 {
                     defnames = Env.Keys.ToArray();
@@ -1033,7 +1037,15 @@ namespace giza
 
                 var ec = new ExpressionChecker();
                 var defs = defnames.Select(name => Env[name]);
-                var errors = ec.CheckDefinitionInfosForSpanning(defs);  //TODO: ForParsing, --tokenized
+                List<Error> errors;
+                if (tokenized)
+                {
+                    errors = ec.CheckDefinitionInfosForParsing(defs);
+                }
+                else
+                {
+                    errors = ec.CheckDefinitionInfosForSpanning(defs);
+                }
 
                 if (errors.ContainsNonWarnings())
                 {
