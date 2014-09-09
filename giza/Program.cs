@@ -630,14 +630,14 @@ namespace giza
             editor.EditingInterrupted += onInterrupt;
 
             var commander = new Commander("giza repl", GetVersionStringFromAssembly());
-            commander.Commands.Add("list", new ListCommand(env));
-            commander.Commands.Add("print", new PrintCommand(env));
-            commander.Commands.Add("delete", new DeleteCommand(env));
-            commander.Commands.Add("save", new SaveCommand(env));
-            commander.Commands.Add("load", new LoadCommand(env));
-            commander.Commands.Add("check", new CheckCommand2(env));
-            commander.Commands.Add("parse", new ParseCommand2(env));
-            commander.Commands.Add("span", new ParseCommand2(env));
+            commander.Commands.Add("list", new ListReplCommand(env));
+            commander.Commands.Add("print", new PrintReplCommand(env));
+            commander.Commands.Add("delete", new DeleteReplCommand(env));
+            commander.Commands.Add("save", new SaveReplCommand(env));
+            commander.Commands.Add("load", new LoadReplCommand(env));
+            commander.Commands.Add("check", new CheckReplCommand(env));
+            commander.Commands.Add("parse", new ParseReplCommand(env));
+            commander.Commands.Add("span", new ParseReplCommand(env));
 
             string line;
 
@@ -735,19 +735,25 @@ namespace giza
 
         }
 
-        class ListCommand : Command
+        abstract class ReplCommand : Command
         {
-            public ListCommand(Dictionary<string, DefinitionExpression> env)
+            protected ReplCommand(Dictionary<string, DefinitionExpression> env)
             {
                 if (env == null) throw new ArgumentNullException("env");
-
-                Name = "list";
-                Description = "List all of the definitions currently defined.";
-
                 Env = env;
             }
 
-            readonly Dictionary<string, DefinitionExpression> Env;
+            protected readonly Dictionary<string, DefinitionExpression> Env;
+        }
+
+        class ListReplCommand : ReplCommand
+        {
+            public ListReplCommand(Dictionary<string, DefinitionExpression> env)
+                : base(env)
+            {
+                Name = "list";
+                Description = "List all of the definitions currently defined.";
+            }
 
             protected override void InternalExecute(Dictionary<string, object> args)
             {
@@ -760,22 +766,17 @@ namespace giza
             }
         }
 
-        class PrintCommand : Command
+        class PrintReplCommand : ReplCommand
         {
-            public PrintCommand(Dictionary<string, DefinitionExpression> env)
+            public PrintReplCommand(Dictionary<string, DefinitionExpression> env)
+                : base(env)
             {
-                if (env == null) throw new ArgumentNullException("env");
-
                 Name = "print";
                 Description = "Print out each of the definitions specified, or all definitions if none are specified.";
                 Params = new Parameter[] {
                     new Parameter { Name="defnames", ParameterType=ParameterType.StringArray },
                 };
-
-                Env = env;
             }
-
-            readonly Dictionary<string, DefinitionExpression> Env;
 
             protected override void InternalExecute(Dictionary<string, object> args)
             {
@@ -805,22 +806,17 @@ namespace giza
             }
         }
 
-        class DeleteCommand : Command
+        class DeleteReplCommand : ReplCommand
         {
-            public DeleteCommand(Dictionary<string, DefinitionExpression> env)
+            public DeleteReplCommand(Dictionary<string, DefinitionExpression> env)
+                : base(env)
             {
-                if (env == null) throw new ArgumentNullException("env");
-
                 Name = "delete";
                 Description = "Delete the specified definitions.";
                 Params = new Parameter[] {
                     new Parameter { Name="defnames", ParameterType=ParameterType.StringArray },
                 };
-
-                Env = env;
             }
-
-            readonly Dictionary<string, DefinitionExpression> Env;
 
             protected override void InternalExecute(Dictionary<string, object> args)
             {
@@ -844,23 +840,18 @@ namespace giza
             }
         }
 
-        class SaveCommand : Command
+        class SaveReplCommand : ReplCommand
         {
-            public SaveCommand(Dictionary<string, DefinitionExpression> env)
+            public SaveReplCommand(Dictionary<string, DefinitionExpression> env)
+                : base(env)
             {
-                if (env == null) throw new ArgumentNullException("env");
-
                 Name = "save";
                 Description = "";
                 Params = new Parameter[] {
                     new Parameter { Name="filename", ParameterType=ParameterType.String },
                     new Parameter { Name="defnames", ParameterType=ParameterType.StringArray },
                 };
-
-                Env = env;
             }
-
-            readonly Dictionary<string, DefinitionExpression> Env;
 
             protected override void InternalExecute(Dictionary<string, object> args)
             {
@@ -937,22 +928,17 @@ namespace giza
             }
         }
 
-        class LoadCommand : Command
+        class LoadReplCommand : ReplCommand
         {
-            public LoadCommand(Dictionary<string, DefinitionExpression> env)
+            public LoadReplCommand(Dictionary<string, DefinitionExpression> env)
+                : base(env)
             {
-                if (env == null) throw new ArgumentNullException("env");
-
                 Name = "load";
                 Description = "";
                 Params = new Parameter[] {
                     new Parameter { Name="filename", ParameterType=ParameterType.String },
                 };
-
-                Env = env;
             }
-
-            readonly Dictionary<string, DefinitionExpression> Env;
 
             protected override void InternalExecute(Dictionary<string, object> args)
             {
@@ -1002,12 +988,11 @@ namespace giza
             }
         }
 
-        class CheckCommand2 : Command
+        class CheckReplCommand : ReplCommand
         {
-            public CheckCommand2(Dictionary<string, DefinitionExpression> env)
+            public CheckReplCommand(Dictionary<string, DefinitionExpression> env)
+                : base(env)
             {
-                if (env == null) throw new ArgumentNullException("env");
-
                 Name = "";
                 Description = "";
                 Params = new Parameter[] {
@@ -1016,11 +1001,7 @@ namespace giza
                 Options = new NCommander.Option[] {
                     new NCommander.Option { Name="tokenized" },
                 };
-
-                Env = env;
             }
-
-            readonly Dictionary<string, DefinitionExpression> Env;
 
             protected override void InternalExecute(Dictionary<string, object> args)
             {
@@ -1076,12 +1057,11 @@ namespace giza
             }
         }
 
-        class ParseCommand2 : Command
+        class ParseReplCommand : ReplCommand
         {
-            public ParseCommand2(Dictionary<string, DefinitionExpression> env)
+            public ParseReplCommand(Dictionary<string, DefinitionExpression> env)
+                : base(env)
             {
-                if (env == null) throw new ArgumentNullException("env");
-
                 Name = "parse";
                 Params = new [] {
                     new Parameter { Name="start-definition", ParameterType=ParameterType.String },
@@ -1091,11 +1071,7 @@ namespace giza
                     new NCommander.Option { Name="from-file", Type=ParameterType.String },
                     new NCommander.Option { Name="verbose" },
                 };
-
-                Env = env;
             }
-
-            readonly Dictionary<string, DefinitionExpression> Env;
 
             protected override void InternalExecute(Dictionary<string, object> args)
             {
@@ -1136,12 +1112,11 @@ namespace giza
             }
         }
 
-        class SpanCommand2 : Command
+        class SpanReplCommand : ReplCommand
         {
-            public SpanCommand2(Dictionary<string, DefinitionExpression> env)
+            public SpanReplCommand(Dictionary<string, DefinitionExpression> env)
+                : base(env)
             {
-                if (env == null) throw new ArgumentNullException("env");
-
                 Name = "span";
                 Params = new [] {
                     new Parameter { Name="start-definition", ParameterType=ParameterType.String },
@@ -1151,11 +1126,7 @@ namespace giza
                     new NCommander.Option { Name="from-file", Type=ParameterType.String },
                     new NCommander.Option { Name="verbose" },
                 };
-
-                Env = env;
             }
-
-            readonly Dictionary<string, DefinitionExpression> Env;
 
             protected override void InternalExecute(Dictionary<string, object> args)
             {
