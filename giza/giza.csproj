@@ -46,6 +46,19 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="NDesk.Options.cs" />
     <Compile Include="getline.cs" />
+    <Compile Include="RenderCommand.cs" />
+    <Compile Include="ParseCommand.cs" />
+    <Compile Include="SpanCommand.cs" />
+    <Compile Include="CheckCommand.cs" />
+    <Compile Include="ReplCommand.cs" />
+    <Compile Include="ListReplCommand.cs" />
+    <Compile Include="PrintReplCommand.cs" />
+    <Compile Include="DeleteReplCommand.cs" />
+    <Compile Include="SaveReplCommand.cs" />
+    <Compile Include="LoadReplCommand.cs" />
+    <Compile Include="CheckReplCommand.cs" />
+    <Compile Include="ParseReplCommand.cs" />
+    <Compile Include="SpanReplCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MetaphysicsIndustries.Giza.csproj">
