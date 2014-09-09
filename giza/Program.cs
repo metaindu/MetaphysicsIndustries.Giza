@@ -15,13 +15,8 @@ namespace giza
     {
         public static void Main(string[] args)
         {
-            bool showHelp = false;
             bool showVersion = false;
-
             var options = new OptionSet() {
-                {   "h|?|help",
-                    "Print this help text and exit",
-                    x => showHelp = true },
                 {   "v|version",
                     "Print version and exit",
                     x => showVersion = true },
@@ -37,34 +32,17 @@ namespace giza
 
             try
             {
-                if (showHelp)
-                {
-                    ShowUsage(options);
-                    return;
-                }
-
                 if (showVersion)
                 {
-                    ShowVersion();
-                    return;
+                    commander.ShowVersion();
                 }
-
-                if (args2.Count < 1)
+                else if (args2.Count < 1)
                 {
                     Repl();
-                    return;
-                }
-
-                var command = args2[0].ToLower();
-
-                if (commander.Commands.ContainsKey(command))
-                {
-                    commander.ProcessArgs(args2);
                 }
                 else
                 {
-                    Console.WriteLine(string.Format("Unknown command: \"{0}\"", command));
-                    ShowUsage(options);
+                    commander.ProcessArgs(args2);
                 }
             }
             catch (Exception ex)
@@ -77,60 +55,8 @@ namespace giza
 
         public static string GetVersionStringFromAssembly()
         {
-            return Assembly.GetCallingAssembly().GetName().Version.ToString();
-        }
-
-        private static int CountLines(string input, int length)
-        {
-            int n = 1;
-            int i;
-            for (i=0;i<length;i++)
-            {
-                if (input[i] == '\n') n++;
-            }
-            return n;
-        }
-        private static int CountCharactersOnLine(string input, int endIndex)
-        {
-            int n = 0;
-            int i = endIndex;
-            do
-            {
-                if (input[i] != '\r') n++;
-                i--;
-            } while (i >= 0 && input[i] != '\n');
-
-            return n;
-        }
-
-        static void ShowVersion()
-        {
-            Console.WriteLine("giza.exe version x.y.z");
-        }
-
-        static void ShowUsage(OptionSet options=null)
-        {
-            Console.WriteLine("Usage:");
-            Console.WriteLine("    giza [options]");
-            Console.WriteLine("    giza span [options] [GRAMMAR FILE] [START SYMBOL] [FILE]");
-            Console.WriteLine("    giza parse [options] [GRAMMAR FILE] [START SYMBOL] [FILE]");
-            Console.WriteLine("    giza check [GRAMMAR FILE]");
-            Console.WriteLine("    giza render [GRAMMAR FILE] [CLASS NAME]");
-            Console.WriteLine();
-            Console.WriteLine("Subcommands:");
-            Console.WriteLine();
-            Console.WriteLine("    span,           Process the input file with a non-tokenized grammar, starting with a given symbol.");
-            Console.WriteLine("    parse,          Parse the input file with a tokenized grammar, starting with a given symbol.");
-            Console.WriteLine("    check,          Process the grammar file only.");
-            Console.WriteLine("    render,         Process the grammar file and print its definitions as a C# class.");
-            Console.WriteLine();
-            Console.WriteLine("If \"-\" is given for FILE, or for GRAMMAR FILE given to check, then it is read from standard input.");
-            Console.WriteLine();
-
-            if (options != null)
-            {
-                options.WriteOptionDescriptions(Console.Out);
-            }
+            var version = Assembly.GetCallingAssembly().GetName().Version;
+            return version.ToString(version.Major == 0 ? 2 : 3);
         }
 
         public static void Check(string grammar, bool tokenized)
