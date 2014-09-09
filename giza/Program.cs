@@ -443,6 +443,11 @@ namespace giza
                 return;
             }
 
+
+            Parse(input, startDefinition, verbose);
+        }
+        static void Parse(string input, Definition startDefinition, bool verbose)
+        {
             var parser = new Parser(startDefinition);
             var inputErrors = new List<Error>();
             Span[] ss = parser.Parse(input.ToCharacterSource(), inputErrors);
@@ -567,11 +572,13 @@ namespace giza
             DefinitionBuilder db = new DefinitionBuilder();
             var defs = db.BuildDefinitions(dis);
 
-
-            Grammar g = new Grammar();
-            g.Definitions.AddRange(defs);
-
-            Spanner gs = new Spanner(g.FindDefinitionByName(startSymbol));
+            var startDefinition = defs.First(d => d.Name == startSymbol);
+            Span(input, startDefinition, verbose);
+        }
+        static void Span(string input, Definition startDefinition, bool verbose)
+        {
+            Spanner gs = new Spanner(startDefinition);
+            var errors = new List<Error>();
             Span[] ss = gs.Process(input.ToCharacterSource(), errors);
             if (errors != null && errors.Count > 0)
             {
@@ -629,6 +636,8 @@ namespace giza
             commander.Commands.Add("save", new SaveCommand(env));
             commander.Commands.Add("load", new LoadCommand(env));
             commander.Commands.Add("check", new CheckCommand2(env));
+            commander.Commands.Add("parse", new ParseCommand2(env));
+            commander.Commands.Add("span", new ParseCommand2(env));
 
             string line;
 
@@ -1065,6 +1074,131 @@ namespace giza
                     Console.WriteLine(error.Description);
                 }
             }
+        }
+
+        class ParseCommand2 : Command
+        {
+            public ParseCommand2(Dictionary<string, DefinitionExpression> env)
+            {
+                if (env == null) throw new ArgumentNullException("env");
+
+                Name = "parse";
+                Params = new [] {
+                    new Parameter { Name="start-definition", ParameterType=ParameterType.String },
+                    new Parameter { Name="input", ParameterType=ParameterType.StringArray, IsOptional=true },
+                };
+                Options = new [] {
+                    new NCommander.Option { Name="from-file", Type=ParameterType.String },
+                    new NCommander.Option { Name="verbose" },
+                };
+
+                Env = env;
+            }
+
+            readonly Dictionary<string, DefinitionExpression> Env;
+
+            protected override void InternalExecute(Dictionary<string, object> args)
+            {
+                var startDef = (string)args["start-definition"];
+                var inputs = (string[])args["input"];
+                var fromFile = (string)args["from-file"];
+                var verbose = (bool)args["verbose"];
+
+                if (!string.IsNullOrEmpty(fromFile))
+                {
+                    var contents = File.ReadAllText(fromFile);
+                    if (inputs == null)
+                    {
+                        inputs = new [] { contents };
+                    }
+                    else
+                    {
+                        var temp = new List<string>();
+                        temp.AddRange(inputs);
+                        temp.Add(contents);
+                        inputs = temp.ToArray();
+                    }
+                }
+
+                if (inputs == null || inputs.Length < 1)
+                {
+                    inputs = new [] { ReadTextFromConsole() };
+                }
+
+                var tgb = new TokenizedGrammarBuilder();
+                var grammar = tgb.BuildTokenizedGrammar(Env.Values.ToArray());
+                var startDefinition = grammar.FindDefinitionByName(startDef);
+
+                foreach (var input in inputs)
+                {
+                    Parse(input, startDefinition, verbose);
+                }
+            }
+        }
+
+        class SpanCommand2 : Command
+        {
+            public SpanCommand2(Dictionary<string, DefinitionExpression> env)
+            {
+                if (env == null) throw new ArgumentNullException("env");
+
+                Name = "span";
+                Params = new [] {
+                    new Parameter { Name="start-definition", ParameterType=ParameterType.String },
+                    new Parameter { Name="input", ParameterType=ParameterType.StringArray, IsOptional=true },
+                };
+                Options = new [] {
+                    new NCommander.Option { Name="from-file", Type=ParameterType.String },
+                    new NCommander.Option { Name="verbose" },
+                };
+
+                Env = env;
+            }
+
+            readonly Dictionary<string, DefinitionExpression> Env;
+
+            protected override void InternalExecute(Dictionary<string, object> args)
+            {
+                var startDef = (string)args["start-definition"];
+                var inputs = (string[])args["input"];
+                var fromFile = (string)args["from-file"];
+                var verbose = (bool)args["verbose"];
+
+                if (!string.IsNullOrEmpty(fromFile))
+                {
+                    var contents = File.ReadAllText(fromFile);
+                    if (inputs == null)
+                    {
+                        inputs = new [] { contents };
+                    }
+                    else
+                    {
+                        var temp = new List<string>();
+                        temp.AddRange(inputs);
+                        temp.Add(contents);
+                        inputs = temp.ToArray();
+                    }
+                }
+
+                if (inputs == null || inputs.Length < 1)
+                {
+                    inputs = new [] { ReadTextFromConsole() };
+                }
+
+                var db = new DefinitionBuilder();
+                var grammar = new Grammar(db.BuildDefinitions(Env.Values.ToArray()));
+                var startDefinition = grammar.FindDefinitionByName(startDef);
+
+                foreach (var input in inputs)
+                {
+                    Span(input, startDefinition, verbose);
+                }
+            }
+        }
+
+        static string ReadTextFromConsole()
+        {
+            return Console.In.ReadToEnd();
         }
     }
 }
