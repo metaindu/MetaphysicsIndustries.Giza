@@ -1,0 +1,3 @@
+﻿repl
+    merge CheckCommand and CheckCommand2
+    repl call non-repl commands

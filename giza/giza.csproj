@@ -65,6 +65,7 @@
     <None Include="json_example1.json" />
     <None Include="json_example2.json" />
     <None Include="rfc4627.txt" />
+    <None Include="todo.txt" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="test.txt" />
