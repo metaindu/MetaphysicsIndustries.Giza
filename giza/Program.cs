@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MetaphysicsIndustries.Giza;
-using System.IO;
-using NDesk.Options;
 using Mono.Terminal;
 using NCommander;
 using System.Reflection;
@@ -15,15 +13,6 @@ namespace giza
     {
         public static void Main(string[] args)
         {
-            bool showVersion = false;
-            var options = new OptionSet() {
-                {   "v|version",
-                    "Print version and exit",
-                    x => showVersion = true },
-            };
-
-            var args2 = options.Parse(args);
-
             var commander = new Commander("giza", GetVersionStringFromAssembly());
             commander.Commands.Add("check", new CheckCommand());
             commander.Commands.Add("parse", new ParseCommand());
@@ -32,17 +21,17 @@ namespace giza
 
             try
             {
-                if (showVersion)
+                if (args.Length > 0 && args[0] == "--version")
                 {
                     commander.ShowVersion();
                 }
-                else if (args2.Count < 1)
+                else if (args.Length < 1)
                 {
                     Repl();
                 }
                 else
                 {
-                    commander.ProcessArgs(args2);
+                    commander.ProcessArgs(args);
                 }
             }
             catch (Exception ex)
