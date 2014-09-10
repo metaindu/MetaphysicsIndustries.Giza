@@ -174,21 +174,8 @@ namespace giza
                 g.Definitions.AddRange(defs);
             }
 
-            if (errors != null && errors.Count > 0)
-            {
-                Console.WriteLine("There are errors in the grammar:");
-                foreach (var err in errors)
-                {
-                    Console.Write("  ");
-                    Console.WriteLine(err.Description);
-                }
-                return;
-            }
-            else
-            {
-                var dr = new DefinitionRenderer();
-                Console.Write(dr.RenderDefinitionsAsCSharpClass(className, g.Definitions, ns: ns, singleton: isSingleton));
-            }
+            var dr = new DefinitionRenderer();
+            Console.Write(dr.RenderDefinitionsAsCSharpClass(className, g.Definitions, ns: ns, singleton: isSingleton));
         }
 
         public static void Parse(bool verbose, string grammar, string input, string startSymbol)
@@ -379,7 +366,7 @@ namespace giza
             editor.StopEditingOnInterrupt = true;
             editor.EditingInterrupted += onInterrupt;
 
-            var commander = new Commander("giza repl", GetVersionStringFromAssembly());
+            var commander = new Commander(">>>", GetVersionStringFromAssembly());
             commander.Commands.Add("list", new ListReplCommand(env));
             commander.Commands.Add("print", new PrintReplCommand(env));
             commander.Commands.Add("delete", new DeleteReplCommand(env));
@@ -388,6 +375,7 @@ namespace giza
             commander.Commands.Add("check", new CheckReplCommand(env));
             commander.Commands.Add("parse", new ParseReplCommand(env));
             commander.Commands.Add("span", new ParseReplCommand(env));
+            commander.Commands.Add("render", new RenderReplCommand(env));
 
             string line;
 

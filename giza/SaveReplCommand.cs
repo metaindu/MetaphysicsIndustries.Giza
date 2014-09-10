@@ -44,33 +44,7 @@ namespace giza
             if (someAreMissing) return;
 
             var defs = names.Select(name => Env[name]);
-            var next = new HashSet<DefinitionExpression>();
-            var prev = new HashSet<DefinitionExpression>(defs);
-            var alldefs = new HashSet<DefinitionExpression>(defs);
-
-            while (prev.Count > 0)
-            {
-                next.Clear();
-                foreach (var def in prev)
-                {
-                    foreach (var defref in def.EnumerateDefRefs())
-                    {
-                        if (Env.ContainsKey(defref.DefinitionName))
-                        {
-                            next.Add(Env[defref.DefinitionName]);
-                        }
-                        else
-                        {
-                            Console.WriteLine("There is no definition named \"{0}\".", defref.DefinitionName);
-                            someAreMissing = true;
-                        }
-                    }
-                }
-                next.ExceptWith(alldefs);
-                alldefs.UnionWith(next);
-                prev.Clear();
-                prev.UnionWith(next);
-            }
+            var alldefs = GetAllReferencedDefinitions(defs, Env, ref someAreMissing);
 
             if (someAreMissing) return;
 
@@ -92,6 +66,39 @@ namespace giza
                 Console.WriteLine("There was an error:");
                 Console.WriteLine(ex);
             }
+        }
+
+        public static DefinitionExpression[] GetAllReferencedDefinitions(IEnumerable<DefinitionExpression> defs, Dictionary<string, DefinitionExpression> env, ref bool someAreMissing)
+        {
+            var next = new HashSet<DefinitionExpression>();
+            var prev = new HashSet<DefinitionExpression>(defs);
+            var alldefs = new HashSet<DefinitionExpression>(defs);
+
+            while (prev.Count > 0)
+            {
+                next.Clear();
+                foreach (var def in prev)
+                {
+                    foreach (var defref in def.EnumerateDefRefs())
+                    {
+                        if (env.ContainsKey(defref.DefinitionName))
+                        {
+                            next.Add(env[defref.DefinitionName]);
+                        }
+                        else
+                        {
+                            Console.WriteLine("There is no definition named \"{0}\".", defref.DefinitionName);
+                            someAreMissing = true;
+                        }
+                    }
+                }
+                next.ExceptWith(alldefs);
+                alldefs.UnionWith(next);
+                prev.Clear();
+                prev.UnionWith(next);
+            }
+
+            return alldefs.ToArray();
         }
     }
 }

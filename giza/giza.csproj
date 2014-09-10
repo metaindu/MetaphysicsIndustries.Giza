@@ -59,6 +59,7 @@
     <Compile Include="CheckReplCommand.cs" />
     <Compile Include="ParseReplCommand.cs" />
     <Compile Include="SpanReplCommand.cs" />
+    <Compile Include="RenderReplCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MetaphysicsIndustries.Giza.csproj">
