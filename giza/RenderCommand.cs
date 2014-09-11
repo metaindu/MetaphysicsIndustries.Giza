@@ -34,7 +34,7 @@ namespace giza
             string grammar;
             if (grammarFilename == "-")
             {
-                grammar = new StreamReader(Console.OpenStandardInput()).ReadToEnd();
+                grammar = Program.ReadTextFromConsole();
             }
             else
             {

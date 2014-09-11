@@ -28,7 +28,7 @@ namespace giza
             string grammar;
             if (grammarFilename == "-")
             {
-                grammar = Console.In.ReadToEnd();
+                grammar = Program.ReadTextFromConsole();
             }
             else
             {

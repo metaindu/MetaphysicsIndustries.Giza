@@ -30,7 +30,7 @@ namespace giza
             string grammar;
             if (grammarFilename == "-")
             {
-                grammar = Console.In.ReadToEnd();
+                grammar = Program.ReadTextFromConsole();
             }
             else
             {
@@ -40,7 +40,7 @@ namespace giza
             string input;
             if (inputFilename == "-")
             {
-                input = Console.In.ReadToEnd();
+                input = Program.ReadTextFromConsole();
             }
             else
             {

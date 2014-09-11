@@ -13,6 +13,9 @@ namespace giza
     {
         public static void Main(string[] args)
         {
+            Editor = new LineEditor("giza");
+            Editor.StopEditingOnInterrupt = true;
+
             var commander = new Commander("giza", GetVersionStringFromAssembly());
             commander.Commands.Add("check", new CheckCommand());
             commander.Commands.Add("parse", new ParseCommand());
@@ -299,6 +302,7 @@ namespace giza
             var defs = db.BuildDefinitions(dis);
 
             var startDefinition = defs.First(d => d.Name == startSymbol);
+            var g = new Grammar(defs);
             Span(input, startDefinition, verbose);
         }
         public static void Span(string input, Definition startDefinition, bool verbose)
@@ -338,6 +342,8 @@ namespace giza
             }
         }
 
+        static LineEditor Editor;
+
         static void Repl()
         {
             var spanner = new SupergrammarSpanner();
@@ -347,13 +353,7 @@ namespace giza
             string primaryPrompt = ">>> ";
             string secondaryPrompt = "... ";
 
-            bool gotCtrlC = false;
-            EventHandler onInterrupt = (sender, a) => {
-                gotCtrlC = true;
-            };
-            var editor = new LineEditor("giza");
-            editor.StopEditingOnInterrupt = true;
-            editor.EditingInterrupted += onInterrupt;
+            var editor = Editor;
 
             var commander = new Commander(">>>", GetVersionStringFromAssembly());
             commander.Commands.Add("list", new ListReplCommand(env));
@@ -372,9 +372,8 @@ namespace giza
             {
                 buffer.Clear();
 
-                gotCtrlC = false;
                 line = editor.Edit(primaryPrompt, "");
-                if (gotCtrlC) continue;
+                if (editor.EditingWasInterrupted) continue; // Ctrl+C
                 if (line == null) break; // Ctrl+D
 
                 if (line == "") continue;
@@ -441,10 +440,9 @@ namespace giza
                                 break;
                             }
 
-                            gotCtrlC = false;
                             line = editor.Edit(secondaryPrompt, "");
-                            if (gotCtrlC)
-                                break;
+                            if (editor.EditingWasInterrupted) 
+                                break; // Ctrl+C
                             if (line == null)
                                 break; // Ctrl+D
 
@@ -462,9 +460,25 @@ namespace giza
 
         }
 
-        public static string ReadTextFromConsole()
+        public static string ReadTextFromConsole(string prompt="", string secondaryPrompt=null)
         {
-            return Console.In.ReadToEnd();
+            if (string.IsNullOrEmpty(secondaryPrompt)) secondaryPrompt = prompt;
+
+            var buffer = new StringBuilder();
+
+            while (true)
+            {
+                var line = Editor.Edit(prompt, "");
+                prompt = secondaryPrompt;
+                if (Editor.EditingWasInterrupted) continue; // Ctrl+C
+                if (line == null) break; // Ctrl+D
+
+                if (line == "") continue;
+
+                buffer.AppendLine(line);
+            }
+
+            return buffer.ToString();
         }
     }
 }

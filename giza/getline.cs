@@ -828,9 +828,12 @@ namespace Mono.Terminal {
 
         public bool StopEditingOnInterrupt = false;
         public event EventHandler EditingInterrupted;
+        public bool EditingWasInterrupted;
 
         public string Edit (string prompt, string initial)
         {
+            EditingWasInterrupted = false;
+
             edit_thread = Thread.CurrentThread;
             searching = 0;
             Console.CancelKeyPress += InterruptEdit;
@@ -860,6 +863,8 @@ namespace Mono.Terminal {
                         SetPrompt (prompt);
                         SetText ("");
                     }
+
+                    EditingWasInterrupted = true;
 
                     if (EditingInterrupted != null)
                     {
