@@ -1,4 +1,10 @@
-﻿repl
-    merge CheckCommand and CheckCommand2
-    repl call non-repl commands
+repl
+    descriptions
+    tests
+    optional string array parameters
+        requires changes to NCommander
+    ignore types
+        requires changes to NCommander
+    cleanup formatting of help text
+        requires changes to NCommander
 
