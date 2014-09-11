@@ -57,7 +57,7 @@ namespace giza
 
             foreach (var input in inputs)
             {
-                Program.Parse(input, startDefinition, verbose);
+                ParseCommand.Parse(input, startDefinition, verbose);
             }
         }
     }

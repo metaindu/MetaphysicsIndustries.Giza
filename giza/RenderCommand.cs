@@ -2,6 +2,7 @@
 using NCommander;
 using System.Collections.Generic;
 using System.IO;
+using MetaphysicsIndustries.Giza;
 
 namespace giza
 {
@@ -41,8 +42,68 @@ namespace giza
                 grammar = File.ReadAllText(grammarFilename);
             }
 
-            Program.Render(tokenized, ns, singleton, grammar, className);
+            Render(tokenized, ns, singleton, grammar, className);
         }
+
+        public static void Render(bool tokenized, string ns, bool isSingleton, string grammar, string className)
+        {
+
+            var sgs = new SupergrammarSpanner();
+            var errors = new List<Error>();
+            var dis = sgs.GetExpressions(grammar, errors);
+
+            if (errors.Count > 0)
+            {
+                Console.WriteLine("There were errors in the grammar:");
+                foreach (var error in errors)
+                {
+                    Console.WriteLine(error.Description);
+                }
+                return;
+            }
+
+            var ec = new ExpressionChecker();
+            if (tokenized)
+            {
+                errors = ec.CheckDefinitionInfosForParsing(dis);
+            }
+            else
+            {
+                errors = ec.CheckDefinitionInfos(dis);
+            }
+
+            if (errors != null && errors.Count > 0)
+            {
+                Console.WriteLine("There are errors in the grammar:");
+                foreach (var err in errors)
+                {
+                    Console.Write("  ");
+                    Console.WriteLine(err.Description);
+                }
+                return;
+            }
+
+            Grammar g;
+
+            if (tokenized)
+            {
+                var tgb = new TokenizedGrammarBuilder();
+                g = tgb.BuildTokenizedGrammar(dis);
+            }
+            else
+            {
+                var db = new DefinitionBuilder();
+                var defs = db.BuildDefinitions(dis);
+
+                g = new Grammar();
+                g.Definitions.AddRange(defs);
+            }
+
+            var dr = new DefinitionRenderer();
+            Console.Write(dr.RenderDefinitionsAsCSharpClass(className, g.Definitions, ns: ns, singleton: isSingleton));
+        }
+
+
     }
 }
 

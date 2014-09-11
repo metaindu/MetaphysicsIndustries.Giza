@@ -57,7 +57,7 @@ namespace giza
 
             foreach (var input in inputs)
             {
-                Program.Span(input, startDefinition, verbose);
+                SpanCommand.Span(input, startDefinition, verbose);
             }
         }
     }
