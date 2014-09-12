@@ -36,8 +36,6 @@ tokenized parsing
                 changes names from "$implicit literal value" to "$implicit ignore case literal value"
                 changes names from "$implicit charclass \dabcdef" to "$implicit ignore case charclass \dabcdef"
 
-key.snk !
-
 resilience
     full analysis and tests for Spanner, Tokenizer, Parser
     full analysis and tests for other classes
@@ -47,6 +45,7 @@ resilience
         more thorough analysis
     SpanChecker - more thorough analysis
 style
+    clarify distinction between a grammar and a collection of definitions
     Rename DefinitionRenderer to GrammarRenderer, rename methods, make it take a Grammar instead of Definition[].
     Convert all lists and arrays to IEnumerable<> ?
     rename DefinitionChecker to GrammarChecker ?
