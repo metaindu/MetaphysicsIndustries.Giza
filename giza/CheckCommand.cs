@@ -13,11 +13,18 @@ namespace giza
         {
             Name = "check";
             Description = "Check a grammar for errors.";
-            this.Options = new NCommander.Option[] {
-                new NCommander.Option { Name = "tokenized" },
+            this.Params = new [] {
+                new Parameter {
+                    Name = "grammar-filename",
+                    ParameterType = ParameterType.String,
+                    Description = "The path to the file containing the grammar to check, or '-' for STDIN"
+                },
             };
-            this.Params = new Parameter[] {
-                new Parameter { Name = "grammarFilename", ParameterType = ParameterType.String },
+            this.Options = new [] {
+                new Option {
+                    Name = "tokenized",
+                    Description="Treat the definitions as tokenized definitions",
+                },
             };
         }
 
@@ -25,7 +32,7 @@ namespace giza
         {
             var tokenized = (bool)args["tokenized"];
 
-            var grammarFilename = (string)args["grammarFilename"];
+            var grammarFilename = (string)args["grammar-filename"];
 
             string grammar;
             if (grammarFilename == "-")

@@ -13,15 +13,23 @@ namespace giza
             : base(env)
         {
             Name = "print";
-            Description = "Print out each of the definitions specified, or all definitions if none are specified.";
-            Params = new Parameter[] {
-                new Parameter { Name="defnames", ParameterType=ParameterType.StringArray },
+            Description = "Print definitions as text in giza grammar format";
+            HelpText = "All definitions specified will be printed. If the " +
+                "command is given without definitions, then all currently " +
+                "defined definitions will be printed.";
+            Params = new [] {
+                new Parameter {
+                    Name="def-names",
+                    ParameterType=ParameterType.StringArray,
+                    Description="The definitions to print",
+                    IsOptional=true,
+                },
             };
         }
 
         protected override void InternalExecute(Dictionary<string, object> args)
         {
-            var defnames = (args["defnames"] as string[]).ToList();
+            var defnames = (args["def-names"] as string[]).ToList();
 
             var dr = new DefinitionRenderer();
             int? width = Console.WindowWidth;

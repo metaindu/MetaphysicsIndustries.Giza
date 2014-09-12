@@ -13,9 +13,13 @@ namespace giza
             : base(env)
         {
             Name = "load";
-            Description = "";
-            Params = new Parameter[] {
-                new Parameter { Name="filename", ParameterType=ParameterType.String },
+            Description = "Load definitions from a file";
+            Params = new [] {
+                new Parameter {
+                    Name="filename",
+                    ParameterType=ParameterType.String,
+                    Description="The path to the file containing the definitions to load.",
+                },
             };
         }
 

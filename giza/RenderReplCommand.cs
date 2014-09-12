@@ -13,16 +13,38 @@ namespace giza
             : base(env)
         {
             Name = "render";
-            Description = "Process the grammar file and print its definitions as a C# class.";
+            Description = "Convert definitions to state machine format and render the state machines to a C# class.";
             Params = new [] {
-                new Parameter { Name="className", ParameterType=ParameterType.String },
-                new Parameter { Name="defNames", ParameterType=ParameterType.StringArray },
+                new Parameter {
+                    Name="class-name",
+                    ParameterType=ParameterType.String,
+                    Description="The name of the C# class to generate",
+                },
+                new Parameter {
+                    Name="def-names",
+                    ParameterType=ParameterType.StringArray,
+                    Description="The definitions to render",
+                },
             };
             Options = new [] {
-                new Option { Name="tokenized" },
-                new Option { Name="singleton" },
-                new Option { Name="namespace", Type=ParameterType.String },
-                new Option { Name="to-file", Type=ParameterType.String },
+                new Option {
+                    Name="tokenized",
+                    Description="The grammar is tokenized",
+                },
+                new Option {
+                    Name="singleton",
+                    Description="Add a single static readonly field to the class, as a default instance",
+                },
+                new Option {
+                    Name="namespace",
+                    Type=ParameterType.String,
+                    Description="The namespace in which the C# class is defined (default is 'MetaphysicsIndustries.Giza')",
+                },
+                new Option {
+                    Name="to-file",
+                    Type=ParameterType.String,
+                    Description="Save the c# class to the specified file, instead of printing it out",
+                },
             };
         }
 
@@ -33,12 +55,12 @@ namespace giza
             var singleton = (bool)args["singleton"];
             var toFile = (string)args["to-file"];
 
-            var className = (string)args["className"];
-            var defnames = (string[])args["defNames"];
+            var className = (string)args["class-name"];
+            var defnames = (string[])args["def-names"];
 
             if (defnames == null || defnames.Length < 1)
             {
-                throw new ArgumentException("No definitions specified", "defNames");
+                throw new ArgumentException("No definitions specified", "def-names");
             }
 
             var someAreMissing = false;

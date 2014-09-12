@@ -12,22 +12,39 @@ namespace giza
         public ParseCommand()
         {
             Name = "parse";
-            Description = "Parse the input file with a tokenized grammar, starting with a given symbol.";
-            Params = new Parameter[] {
-                new Parameter { Name="grammarFilename", ParameterType=ParameterType.String },
-                new Parameter { Name="startSymbol", ParameterType=ParameterType.String },
-                new Parameter { Name="inputFilename", ParameterType=ParameterType.String },
+            Description = "Parse the input file with a tokenized grammar, " +
+                "starting with a given definition, and print how many valid " +
+                "parse trees are found.";
+            Params = new [] {
+                new Parameter {
+                    Name="grammar-filename",
+                    ParameterType=ParameterType.String,
+                    Description="The path to the file containing the grammar to use for parsing, or '-' for STDIN",
+                },
+                new Parameter {
+                    Name="start-def",
+                    ParameterType=ParameterType.String,
+                    Description="The name of the top definition in the parse tree",
+                },
+                new Parameter {
+                    Name="input-filename",
+                    ParameterType=ParameterType.String,
+                    Description="The path to a file to use for input to be parsed, or '-' for STDIN",
+                },
             };
-            Options = new NCommander.Option[] {
-                new NCommander.Option { Name="verbose" },
+            Options = new [] {
+                new Option {
+                    Name="verbose",
+                    Description="Also print out the parse tree, if only one valid parse is found",
+                },
             };
         }
 
         protected override void InternalExecute(Dictionary<string, object> args)
         {
-            var grammarFilename = (string)args["grammarFilename"];
-            var startSymbol = (string)args["startSymbol"];
-            var inputFilename = (string)args["inputFilename"];
+            var grammarFilename = (string)args["grammar-filename"];
+            var startDef = (string)args["start-def"];
+            var inputFilename = (string)args["input-filename"];
             var verbose = (bool)args["verbose"];
 
             string grammar;
@@ -63,10 +80,10 @@ namespace giza
                 }
             }
 
-            Parse(verbose, grammar, input, startSymbol);
+            Parse(verbose, grammar, input, startDef);
         }
 
-        public static void Parse(bool verbose, string grammar, string input, string startSymbol)
+        public static void Parse(bool verbose, string grammar, string input, string startDef)
         {
             var spanner = new SupergrammarSpanner();
             var grammarErrors = new List<Error>();
@@ -101,10 +118,10 @@ namespace giza
             var tgb = new TokenizedGrammarBuilder();
             var g = tgb.BuildTokenizedGrammar(dis);
 
-            var startDefinition = g.FindDefinitionByName(startSymbol);
+            var startDefinition = g.FindDefinitionByName(startDef);
             if (startDefinition == null)
             {
-                Console.WriteLine("There is no defintion named \"{0}\".", startSymbol);
+                Console.WriteLine("There is no defintion named \"{0}\".", startDef);
                 Console.WriteLine("There are {0} definitions in the grammar:", g.Definitions.Count());
                 foreach (var def in g.Definitions)
                 {

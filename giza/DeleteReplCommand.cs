@@ -13,14 +13,18 @@ namespace giza
         {
             Name = "delete";
             Description = "Delete the specified definitions.";
-            Params = new Parameter[] {
-                new Parameter { Name="defnames", ParameterType=ParameterType.StringArray },
+            Params = new [] {
+                new Parameter {
+                    Name="def-names",
+                    ParameterType=ParameterType.StringArray,
+                    Description="The names of the definitions to delete.",
+                },
             };
         }
 
         protected override void InternalExecute(Dictionary<string, object> args)
         {
-            var defsToDelete = (string[])args["defnames"];
+            var defsToDelete = (string[])args["def-names"];
             var someAreMissing = false;
             foreach (var name in defsToDelete)
             {

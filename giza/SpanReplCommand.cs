@@ -13,19 +13,40 @@ namespace giza
             : base(env)
         {
             Name = "span";
+            Description = "";
+            HelpText = "Any arguments after the start-definition are treated " +
+                "as inputs to be spanned. Each input is spanned separately. " +
+                "If no argument is supplied as input and the --from-file " +
+                "option is not specified, then input is taken from STDIN.";
             Params = new [] {
-                new Parameter { Name="start-definition", ParameterType=ParameterType.String },
-                new Parameter { Name="input", ParameterType=ParameterType.StringArray, IsOptional=true },
+                new Parameter {
+                    Name="start-def",
+                    ParameterType=ParameterType.String,
+                    Description="The name of the top definition in the span tree",
+                },
+                new Parameter {
+                    Name="input",
+                    ParameterType=ParameterType.StringArray,
+                    IsOptional=true,
+                    Description="Input strings to span",
+                },
             };
             Options = new [] {
-                new NCommander.Option { Name="from-file", Type=ParameterType.String },
-                new NCommander.Option { Name="verbose" },
+                new Option {
+                    Name="from-file",
+                    Type=ParameterType.String,
+                    Description="Use the given file for input",
+                },
+                new Option {
+                    Name="verbose",
+                    Description="Also print out the span tree, if only one valid parse is found",
+                },
             };
         }
 
         protected override void InternalExecute(Dictionary<string, object> args)
         {
-            var startDef = (string)args["start-definition"];
+            var startDef = (string)args["start-def"];
             var inputs = (string[])args["input"];
             var fromFile = (string)args["from-file"];
             var verbose = (bool)args["verbose"];

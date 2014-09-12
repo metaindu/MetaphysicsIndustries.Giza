@@ -71,7 +71,7 @@ namespace giza
             commander.Commands.Add("load", new LoadReplCommand(env));
             commander.Commands.Add("check", new CheckReplCommand(env));
             commander.Commands.Add("parse", new ParseReplCommand(env));
-            commander.Commands.Add("span", new ParseReplCommand(env));
+            commander.Commands.Add("span", new SpanReplCommand(env));
             commander.Commands.Add("render", new RenderReplCommand(env));
 
             string line;

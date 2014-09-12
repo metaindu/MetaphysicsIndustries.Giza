@@ -12,14 +12,33 @@ namespace giza
         {
             Name = "render";
             Description = "Process the grammar file and print its definitions as a C# class.";
-            Params = new Parameter[] {
-                new Parameter { Name="grammarFilename", ParameterType=ParameterType.String },
-                new Parameter { Name="className", ParameterType=ParameterType.String },
+//            HelpText = "";
+            Params = new [] {
+                new Parameter {
+                    Name="class-name",
+                    ParameterType=ParameterType.String,
+                    Description="The name of the C# class to generate",
+                },
+                new Parameter {
+                    Name="grammar-filename",
+                    ParameterType=ParameterType.String,
+                    Description="The path to the file containing the grammar to render, or '-' for STDIN",
+                },
             };
-            Options = new NCommander.Option[] {
-                new NCommander.Option { Name="tokenized" },
-                new NCommander.Option { Name="singleton" },
-                new NCommander.Option { Name="namespace", Type=ParameterType.String },
+            Options = new [] {
+                new Option {
+                    Name="tokenized",
+                    Description="The grammar is tokenized",
+                },
+                new Option {
+                    Name="singleton",
+                    Description="Add a single static readonly field to the class, as a default instance",
+                },
+                new Option {
+                    Name="namespace",
+                    Type=ParameterType.String,
+                    Description="The namespace in which the C# class is defined (default is 'MetaphysicsIndustries.Giza')",
+                },
             };
         }
 
@@ -29,8 +48,8 @@ namespace giza
             var ns = (string)args["namespace"] ?? "MetaphysicsIndustries.Giza";
             var singleton = (bool)args["singleton"];
 
-            var grammarFilename = (string)args["grammarFilename"];
-            var className = (string)args["className"];
+            var grammarFilename = (string)args["grammar-filename"];
+            var className = (string)args["class-name"];
 
             string grammar;
             if (grammarFilename == "-")

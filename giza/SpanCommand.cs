@@ -12,21 +12,36 @@ namespace giza
         public SpanCommand()
         {
             Name = "span";
-            Description = "Process the input file with a non-tokenized grammar, starting with a given symbol.";
-            Params = new Parameter[] {
-                new Parameter { Name="grammarFilename", ParameterType=ParameterType.String },
-                new Parameter { Name="startSymbol", ParameterType=ParameterType.String },
-                new Parameter { Name="inputFilename", ParameterType=ParameterType.String },
+            Description = "Process the input file with a non-tokenized grammar, starting with a given definition, and print how many valid matches are found";
+            Params = new [] {
+                new Parameter {
+                    Name="grammar-filename",
+                    ParameterType=ParameterType.String,
+                    Description="The path to the file containing the grammar to use for spanning, or '-' for STDIN",
+                },
+                new Parameter {
+                    Name="start-def",
+                    ParameterType=ParameterType.String,
+                    Description="The name of the top definition in the span tree",
+                },
+                new Parameter {
+                    Name="input-filename",
+                    ParameterType=ParameterType.String,
+                    Description="The path to a file to use for input to be spanned, or '-' for STDIN",
+                },
             };
-            Options = new NCommander.Option[] {
-                new NCommander.Option { Name="verbose" },
+            Options = new [] {
+                new Option { 
+                    Name="verbose",
+                    Description="Also print out the span tree, if only one valid parse is found",
+                },
             };
         }
         protected override void InternalExecute(Dictionary<string, object> args)
         {
-            var grammarFilename = (string)args["grammarFilename"];
-            var startSymbol = (string)args["startSymbol"];
-            var inputFilename = (string)args["inputFilename"];
+            var grammarFilename = (string)args["grammar-filename"];
+            var startDef = (string)args["start-def"];
+            var inputFilename = (string)args["input-filename"];
             var verbose = (bool)args["verbose"];
 
             string grammar;
@@ -49,10 +64,10 @@ namespace giza
                 input = File.ReadAllText(inputFilename);
             }
 
-            Span(verbose, grammar, input, startSymbol);
+            Span(verbose, grammar, input, startDef);
         }
 
-        public static void Span(bool verbose, string grammar, string input, string startSymbol)
+        public static void Span(bool verbose, string grammar, string input, string startDef)
         {
             var spanner = new SupergrammarSpanner();
             var errors = new List<Error>();
@@ -86,7 +101,7 @@ namespace giza
             DefinitionBuilder db = new DefinitionBuilder();
             var defs = db.BuildDefinitions(dis);
 
-            var startDefinition = defs.First(d => d.Name == startSymbol);
+            var startDefinition = defs.First(d => d.Name == startDef);
             var g = new Grammar(defs);
             Span(input, startDefinition, verbose);
         }

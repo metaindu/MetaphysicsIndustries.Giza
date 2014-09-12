@@ -13,17 +13,25 @@ namespace giza
             : base(env)
         {
             Name = "save";
-            Description = "";
-            Params = new Parameter[] {
-                new Parameter { Name="filename", ParameterType=ParameterType.String },
-                new Parameter { Name="defnames", ParameterType=ParameterType.StringArray },
+            Description = "Save definitions to a file as text in giza grammar format";
+            Params = new [] {
+                new Parameter {
+                    Name="filename",
+                    ParameterType=ParameterType.String,
+                    Description="The file to save the definitions to",
+                },
+                new Parameter {
+                    Name="def-names",
+                    ParameterType=ParameterType.StringArray,
+                    Description="The definitions to save",
+                },
             };
         }
 
         protected override void InternalExecute(Dictionary<string, object> args)
         {
             var filename = (string)args["filename"];
-            var names = (string[])args["defnames"];
+            var names = (string[])args["def-names"];
 
             if (names.Length < 1)
             {

@@ -12,19 +12,27 @@ namespace giza
         public CheckReplCommand(Dictionary<string, DefinitionExpression> env)
             : base(env)
         {
-            Name = "";
-            Description = "";
-            Params = new Parameter[] {
-                new Parameter { Name="defnames", ParameterType=ParameterType.StringArray },
+            Name = "check";
+            Description = "Check";
+            Params = new [] {
+                new Parameter {
+                    Name="def-names",
+                    ParameterType=ParameterType.StringArray,
+                    Description="Names of definitions to check; if no definitions are specified, then all definitions will be checked",
+                    IsOptional=true,
+                },
             };
-            Options = new NCommander.Option[] {
-                new NCommander.Option { Name="tokenized" },
+            Options = new [] {
+                new Option {
+                    Name="tokenized",
+                    Description="Treat the definitions as tokenized definitions",
+                },
             };
         }
 
         protected override void InternalExecute(Dictionary<string, object> args)
         {
-            var defnames = (string[])args["defnames"];
+            var defnames = (string[])args["def-names"];
             var tokenized = (bool)args["tokenized"];
             if (defnames.Length < 1)
             {

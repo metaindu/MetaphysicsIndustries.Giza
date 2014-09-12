@@ -1,5 +1,4 @@
 repl
-    descriptions
     tests
     optional string array parameters
         requires changes to NCommander
