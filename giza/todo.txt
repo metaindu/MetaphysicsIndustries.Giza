@@ -1,4 +1,5 @@
 repl
+    don't throw exceptions on arg errors
     tests
     optional string array parameters
         requires changes to NCommander
