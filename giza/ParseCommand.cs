@@ -108,7 +108,7 @@ namespace giza
             var startDefinition = g.FindDefinitionByName(startDef);
             if (startDefinition == null)
             {
-                Console.WriteLine("There is no defintion named \"{0}\".", startDef);
+                Console.WriteLine("Error: There is no defintion named \"{0}\".", startDef);
                 return;
             }
 
