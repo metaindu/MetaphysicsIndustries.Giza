@@ -1,5 +1,4 @@
 repl
-    file not found, permission denied, etc
     tests
     optional string array parameters
         requires changes to NCommander

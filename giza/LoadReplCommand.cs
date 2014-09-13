@@ -27,46 +27,33 @@ namespace giza
         {
             var filename = (string)args["filename"];
 
-            if (!File.Exists(filename))
+            string contents = File.ReadAllText(filename);
+
+            var errors = new List<Error>();
+            var spanner = new SupergrammarSpanner();
+            var defs = spanner.GetExpressions(contents, errors);
+            if (errors.ContainsNonWarnings())
             {
-                Console.WriteLine("Error: Can't find the file \"{0}\"", filename);
+                Console.WriteLine("There are errors in the loaded file:");
+                foreach (var error in errors.Where(e => !e.IsWarning))
+                {
+                    Console.WriteLine(error.Description);
+                }
                 return;
             }
 
-            try
+            foreach (var def in defs)
             {
-                string contents = File.ReadAllText(filename);
-                var errors = new List<Error>();
-                var spanner = new SupergrammarSpanner();
-                var defs = spanner.GetExpressions(contents, errors);
-                if (errors.ContainsNonWarnings())
+                if (Env.ContainsKey(def.Name))
                 {
-                    Console.WriteLine("There are errors in the loaded file:");
-                    foreach (var error in errors.Where(e => !e.IsWarning))
-                    {
-                        Console.WriteLine(error.Description);
-                    }
-                    return;
+                    Console.WriteLine("{0} was replaced", def.Name);
+                }
+                else
+                {
+                    Console.WriteLine("{0} was added", def.Name);
                 }
 
-                foreach (var def in defs)
-                {
-                    if (Env.ContainsKey(def.Name))
-                    {
-                        Console.WriteLine("{0} was replaced", def.Name);
-                    }
-                    else
-                    {
-                        Console.WriteLine("{0} was added", def.Name);
-                    }
-
-                    Env[def.Name] = def;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("There was an internal error:");
-                Console.WriteLine(ex);
+                Env[def.Name] = def;
             }
         }
     }

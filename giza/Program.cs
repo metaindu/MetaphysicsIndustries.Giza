@@ -42,6 +42,14 @@ namespace giza
                     {
                         Console.WriteLine("Error: {0}", ex.Message);
                     }
+                    catch(System.UnauthorizedAccessException ex)
+                    {
+                        Console.WriteLine("Error: {0}", ex.Message);
+                    }
+                    catch (System.IO.IOException ex)
+                    {
+                        Console.WriteLine("Error: {0}", ex.Message);
+                    }
                 }
             }
             catch (Exception ex)
@@ -123,6 +131,14 @@ namespace giza
                             commander.ProcessArgs(args);
                         }
                         catch(NCommanderException ex)
+                        {
+                            Console.WriteLine("Error: {0}", ex.Message);
+                        }
+                        catch(System.UnauthorizedAccessException ex)
+                        {
+                            Console.WriteLine("Error: {0}", ex.Message);
+                        }
+                        catch (System.IO.IOException ex)
                         {
                             Console.WriteLine("Error: {0}", ex.Message);
                         }

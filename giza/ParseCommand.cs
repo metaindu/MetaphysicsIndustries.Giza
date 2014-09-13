@@ -64,20 +64,7 @@ namespace giza
             }
             else
             {
-                try
-                {
-                    input = File.ReadAllText(inputFilename);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("There was an error while trying to open the input file:");
-                    Console.WriteLine("  {0}", e.Message);
-                    if (verbose)
-                    {
-                        Console.WriteLine("  {0}", e.ToString());
-                    }
-                    return;
-                }
+                input = File.ReadAllText(inputFilename);
             }
 
             Parse(verbose, grammar, input, startDef);
@@ -122,14 +109,12 @@ namespace giza
             if (startDefinition == null)
             {
                 Console.WriteLine("There is no defintion named \"{0}\".", startDef);
-                Console.WriteLine("There are {0} definitions in the grammar:", g.Definitions.Count());
                 foreach (var def in g.Definitions)
                 {
                     Console.WriteLine("  {0}", def.Name);
                 }
                 return;
             }
-
 
             Parse(input, startDefinition, verbose);
         }

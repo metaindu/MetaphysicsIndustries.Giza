@@ -56,24 +56,16 @@ namespace giza
 
             if (someAreMissing) return;
 
-            try
+            var dr = new DefinitionRenderer();
+            var fileContents = dr.RenderDefinitionExprsAsGrammarText(alldefs);
+            string header = string.Format("// File saved at {0}", DateTime.Now);
+            using (var f = new StreamWriter(filename))
             {
-                var dr = new DefinitionRenderer();
-                var fileContents = dr.RenderDefinitionExprsAsGrammarText(alldefs);
-                string header = string.Format("// File saved at {0}", DateTime.Now);
-                Console.WriteLine(header);
-                using (var f = new StreamWriter(filename))
-                {
-                    f.WriteLine(header);
-                    f.WriteLine();
-                    f.Write(fileContents);
-                }
+                f.WriteLine(header);
+                f.WriteLine();
+                f.Write(fileContents);
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine("There was an error:");
-                Console.WriteLine(ex);
-            }
+            Console.WriteLine(header);
         }
 
         public static DefinitionExpression[] GetAllReferencedDefinitions(IEnumerable<DefinitionExpression> defs, Dictionary<string, DefinitionExpression> env, ref bool someAreMissing)
