@@ -13,7 +13,9 @@ namespace giza
             : base(env)
         {
             Name = "span";
-            Description = "";
+            Description = "Span one or more inputs with a non-tokenized grammar, " +
+                "starting with a given definition, and print how many valid " +
+                "span trees are found";
             HelpText = "Any arguments after the start-definition are treated " +
                 "as inputs to be spanned. Each input is spanned separately. " +
                 "If no argument is supplied as input and the --from-file " +
@@ -50,6 +52,12 @@ namespace giza
             var inputs = (string[])args["input"];
             var fromFile = (string)args["from-file"];
             var verbose = (bool)args["verbose"];
+
+            if (!Env.ContainsKey(startDef))
+            {
+                Console.WriteLine("Error: There is no definition named \"{0}\".", startDef);
+                return;
+            }
 
             if (!string.IsNullOrEmpty(fromFile))
             {

@@ -29,7 +29,7 @@ namespace giza
 
             if (!File.Exists(filename))
             {
-                Console.WriteLine("Can't find the file \"{0}\"", filename);
+                Console.WriteLine("Error: Can't find the file \"{0}\"", filename);
                 return;
             }
 

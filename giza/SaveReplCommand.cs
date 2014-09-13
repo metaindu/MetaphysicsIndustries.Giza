@@ -35,7 +35,7 @@ namespace giza
 
             if (names.Length < 1)
             {
-                Console.WriteLine("No definitions were specified to save.");
+                Console.WriteLine("Error: No definitions were specified to save.");
                 return;
             }
 
@@ -44,7 +44,7 @@ namespace giza
             {
                 if (!Env.ContainsKey(name))
                 {
-                    Console.WriteLine("There is no definition named \"{0}\".", name);
+                    Console.WriteLine("Error: There is no definition named \"{0}\".", name);
                     someAreMissing = true;
                 }
             }
@@ -95,7 +95,7 @@ namespace giza
                         }
                         else
                         {
-                            Console.WriteLine("There is no definition named \"{0}\".", defref.DefinitionName);
+                            Console.WriteLine("Error: There is no definition named \"{0}\".", defref.DefinitionName);
                             someAreMissing = true;
                         }
                     }

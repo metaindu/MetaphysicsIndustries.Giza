@@ -13,7 +13,7 @@ namespace giza
             : base(env)
         {
             Name = "check";
-            Description = "Check";
+            Description = "Check definitions for errors";
             Params = new [] {
                 new Parameter {
                     Name="def-names",
@@ -45,7 +45,7 @@ namespace giza
                 {
                     if (!Env.ContainsKey(name))
                     {
-                        Console.WriteLine("There is no definition named \"{0}\".", name);
+                        Console.WriteLine("Error: There is no definition named \"{0}\".", name);
                         someAreMissing = true;
                     }
                 }

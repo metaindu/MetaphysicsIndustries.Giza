@@ -34,7 +34,14 @@ namespace giza
                 }
                 else
                 {
-                    commander.ProcessArgs(args);
+                    try
+                    {
+                        commander.ProcessArgs(args);
+                    }
+                    catch (NCommanderException ex)
+                    {
+                        Console.WriteLine("Error: {0}", ex.Message);
+                    }
                 }
             }
             catch (Exception ex)
@@ -97,7 +104,7 @@ namespace giza
                     args = Splitter.SplitArgs(_commandLine).ToList();
                     command = args[0];
                 }
-                catch(Splitter.UnmatchedQuoteException ex)
+                catch(UnmatchedQuoteException ex)
                 {
                     splittingFailed = true;
                 }
@@ -111,7 +118,14 @@ namespace giza
                 {
                     if (!splittingFailed && commander.Commands.ContainsKey(command))
                     {
-                        commander.ProcessArgs(args);
+                        try
+                        {
+                            commander.ProcessArgs(args);
+                        }
+                        catch(NCommanderException ex)
+                        {
+                            Console.WriteLine("Error: {0}", ex.Message);
+                        }
                     }
                     else
                     {

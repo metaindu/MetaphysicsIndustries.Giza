@@ -60,7 +60,8 @@ namespace giza
 
             if (defnames == null || defnames.Length < 1)
             {
-                throw new ArgumentException("No definitions specified", "def-names");
+                Console.WriteLine("Error: No definitions specified");
+                return;
             }
 
             var someAreMissing = false;
@@ -68,7 +69,7 @@ namespace giza
             {
                 if (!Env.ContainsKey(name))
                 {
-                    Console.WriteLine("There is no definition named \"{0}\".", name);
+                    Console.WriteLine("Error: There is no definition named \"{0}\".", name);
                     someAreMissing = true;
                 }
             }
@@ -77,6 +78,8 @@ namespace giza
 
             var defs = defnames.Select(name => Env[name]).ToArray();
             var alldefs = SaveReplCommand.GetAllReferencedDefinitions(defs, Env, ref someAreMissing);
+
+            if (someAreMissing) return;
 
             Grammar g;
             if (tokenized)

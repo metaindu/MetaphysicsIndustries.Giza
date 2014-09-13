@@ -1,5 +1,5 @@
 repl
-    don't throw exceptions on arg errors
+    file not found, permission denied, etc
     tests
     optional string array parameters
         requires changes to NCommander

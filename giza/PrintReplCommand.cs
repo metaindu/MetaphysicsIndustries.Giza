@@ -49,7 +49,7 @@ namespace giza
                     Console.WriteLine();
                 }
                 first = false;
-                Console.WriteLine("There is no definition named \"{0}\".", name);
+                Console.WriteLine("Error: There is no definition named \"{0}\".", name);
             }
             Console.Write(dr.RenderDefinitionExprsAsGrammarText(defs, width));
         }
