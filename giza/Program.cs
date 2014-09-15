@@ -11,6 +11,8 @@ namespace giza
 {
     public class Program
     {
+        public static bool UseLineEditor = true;
+
         public static void Main(string[] args)
         {
             Editor = new LineEditor("giza");
@@ -206,7 +208,7 @@ namespace giza
 
             while (true)
             {
-                var line = Editor.Edit(prompt, "");
+                var line = ReadLineFromConsole(prompt);
                 prompt = secondaryPrompt;
                 if (Editor.EditingWasInterrupted) continue; // Ctrl+C
                 if (line == null) break; // Ctrl+D
@@ -217,6 +219,18 @@ namespace giza
             }
 
             return buffer.ToString();
+        }
+
+        public static string ReadLineFromConsole(string prompt="")
+        {
+            if (UseLineEditor)
+            {
+                return Editor.Edit(prompt, "");
+            }
+            else
+            {
+                return Console.ReadLine();
+            }
         }
     }
 }
