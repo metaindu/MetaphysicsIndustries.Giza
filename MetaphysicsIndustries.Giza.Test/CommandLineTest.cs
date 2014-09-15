@@ -8,6 +8,11 @@ namespace MetaphysicsIndustries.Giza.Test
     [TestFixture]
     public class CommandLineTest
     {
+        public CommandLineTest()
+        {
+            giza.Program.UseLineEditor = false;
+        }
+
         [Test]
         public void TestCommandLine()
         {
@@ -47,14 +52,75 @@ namespace MetaphysicsIndustries.Giza.Test
 
         class MultipleStdIn : TextReader
         {
-            public readonly List<string> InputStreams = new List<string>();
+            public readonly List<TextReader> Inputs = new List<TextReader>();
             public int Index = 0;
+
+            bool atEnd = false;
+            protected TextReader GetNextAvailableReader()
+            {
+                if (Inputs[Index].Peek() < 0)
+                {
+                    if (atEnd)
+                    {
+                        Index++;
+                        atEnd = false;
+                    }
+                    else
+                    {
+                        atEnd = true;
+                    }
+                }
+
+                return Inputs[Index];
+            }
+
+            public void AddInput(TextReader input)
+            {
+                Inputs.Add(input);
+            }
+            public void AddInput(string input)
+            {
+                Inputs.Add(new StringReader(input));
+            }
 
             public override string ReadToEnd()
             {
-                var stream = InputStreams[Index];
-                Index++;
-                return stream;
+                return GetNextAvailableReader().ReadToEnd();
+            }
+
+            public override string ReadLine()
+            {
+                return GetNextAvailableReader().ReadLine();
+            }
+
+            public override void Close()
+            {
+                foreach (var input in Inputs)
+                {
+                    input.Close();
+                }
+
+                base.Close();
+            }
+
+            public override int Peek()
+            {
+                return GetNextAvailableReader().Peek();
+            }
+
+            public override int Read()
+            {
+                return GetNextAvailableReader().Read();
+            }
+
+            public override int Read(char[] buffer, int index, int count)
+            {
+                return GetNextAvailableReader().Read(buffer, index, count);
+            }
+
+            public override int ReadBlock(char[] buffer, int index, int count)
+            {
+                return GetNextAvailableReader().ReadBlock(buffer, index, count);
             }
         }
 
@@ -69,8 +135,8 @@ namespace MetaphysicsIndustries.Giza.Test
                 "<token> varref = [\\l]+; ";
             string inputText = "1234.6 + abc - 123. * zxcv";
             var stdin = new MultipleStdIn();
-            stdin.InputStreams.Add(testGrammarText);
-            stdin.InputStreams.Add(inputText);
+            stdin.AddInput(testGrammarText);
+            stdin.AddInput(inputText);
 
             StringWriter newStdout = new StringWriter();
             StringWriter newStderr = new StringWriter();
@@ -99,8 +165,8 @@ namespace MetaphysicsIndustries.Giza.Test
                 "<mind whitespace> varref = [\\l]+; ";
             string inputText = "1234.6 + abc - 123. * zxcv";
             var stdin = new MultipleStdIn();
-            stdin.InputStreams.Add(testGrammarText);
-            stdin.InputStreams.Add(inputText);
+            stdin.AddInput(testGrammarText);
+            stdin.AddInput(inputText);
 
             StringWriter newStdout = new StringWriter();
             StringWriter newStderr = new StringWriter();
