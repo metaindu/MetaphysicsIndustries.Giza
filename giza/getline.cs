@@ -225,7 +225,8 @@ namespace Mono.Terminal {
 
         void UpdateHomeRow (int screenpos)
         {
-            int lines = 1 + (screenpos / Console.WindowWidth);
+            int width = (Console.WindowWidth != 0 ? Console.WindowWidth : 1);
+            int lines = 1 + (screenpos / width);
 
             home_row = Console.CursorTop - (lines - 1);
             if (home_row < 0)
@@ -301,7 +302,8 @@ namespace Mono.Terminal {
 
         int LineCount {
             get {
-                return (shown_prompt.Length + rendered_text.Length)/Console.WindowWidth;
+                int width = (Console.WindowWidth != 0 ? Console.WindowWidth : 1);
+                return (shown_prompt.Length + rendered_text.Length)/width;
             }
         }
 
@@ -310,8 +312,9 @@ namespace Mono.Terminal {
             cursor = newpos;
 
             int actual_pos = shown_prompt.Length + TextToRenderPos (cursor);
-            int row = home_row + (actual_pos/Console.WindowWidth);
-            int col = actual_pos % Console.WindowWidth;
+            int width = (Console.WindowWidth != 0 ? Console.WindowWidth : 1);
+            int row = home_row + (actual_pos/width);
+            int col = actual_pos % width;
 
             if (row >= Console.BufferHeight)
                 row = Console.BufferHeight-1;
