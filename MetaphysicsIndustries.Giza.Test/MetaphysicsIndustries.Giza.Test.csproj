@@ -66,10 +66,6 @@
       <Project>{3CB3C1B6-0838-4E0A-94BA-254B974D8D6E}</Project>
       <Name>giza</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NCommander\NCommander.csproj">
-      <Project>{A9E25E5D-EB90-4B4A-8793-4E9D97037E42}</Project>
-      <Name>NCommander</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

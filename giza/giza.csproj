@@ -40,6 +40,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="NCommander">
+      <HintPath>..\packages\NCommander.0.9\lib\NCommander.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -65,10 +68,6 @@
       <Project>{98B42ACF-8370-4428-9D41-73FF1CEFB2E4}</Project>
       <Name>MetaphysicsIndustries.Giza</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NCommander\NCommander.csproj">
-      <Project>{A9E25E5D-EB90-4B4A-8793-4E9D97037E42}</Project>
-      <Name>NCommander</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="test.giza" />
@@ -79,6 +78,7 @@
     <None Include="json_example2.json" />
     <None Include="rfc4627.txt" />
     <None Include="todo.txt" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="test.txt" />
