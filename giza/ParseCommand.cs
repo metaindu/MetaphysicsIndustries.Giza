@@ -156,12 +156,56 @@ namespace giza
                 Console.WriteLine("There is 1 valid parse of the input.");
                 if (verbose)
                 {
-                    Console.WriteLine(ss[0].RenderSpanHierarchy());
+                    PrintSpanHierarchy(ss[0]);
                 }
             }
         }
 
+        static void PrintSpanHierarchy(Span s)
+        {
+            const string indent = "  ";
 
+            var items = new List<Tuple<string, string>>();
+            GatherSpanHierarchy(s, items);
+
+            var width = items.Max(i => i.Item1.Length);
+
+            var format = "{0," + (-width - 4) + "} {1}";
+            foreach (var i in items)
+            {
+                Console.WriteLine(format, i.Item1, i.Item2);
+            }
+        }
+
+        static void GatherSpanHierarchy(Span s, List<Tuple<string,string>> items, string indent="")
+        {
+            string label;
+            if (s.Node is CharNode)
+            {
+                label = (s.Node as CharNode).CharClass.ToString();
+            }
+            else
+            {
+                label = (s.Node as DefRefNode).DefRef.Name;
+            }
+
+            string value;
+            if (s.Subspans.Any())
+            {
+                value = "";
+            }
+            else
+            {
+                value = s.Value ?? "";
+            }
+
+            items.Add(new Tuple<string, string>(indent + label, value));
+
+            foreach (var sub in s.Subspans)
+            {
+                GatherSpanHierarchy(sub, items, indent + "  ");
+            }
+        }
     }
 
 }
