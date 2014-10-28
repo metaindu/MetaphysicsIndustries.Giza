@@ -168,12 +168,12 @@ namespace giza
             var items = new List<Tuple<string, string>>();
             GatherSpanHierarchy(s, items);
 
-            var width = items.Max(i => i.Item1.Length);
+            var width = items.Max(i => i.Item2.Length);
 
             var format = "{0," + (-width - 4) + "} {1}";
             foreach (var i in items)
             {
-                Console.WriteLine(format, i.Item1, i.Item2);
+                Console.WriteLine(format, i.Item2, i.Item1);
             }
         }
 
