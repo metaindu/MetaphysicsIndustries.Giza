@@ -127,18 +127,11 @@ namespace giza
             else if (ss.Length > 1)
             {
                 Console.WriteLine("{0} valid spans.", ss.Length);
-                //                foreach (Span s in ss)
-                //                {
-                //                    Console.WriteLine(s.RenderSpanHierarchy());
-                //                }
             }
             else
             {
                 Console.WriteLine("1 valid span.");
-                if (verbose)
-                {
-                    Console.WriteLine(ss[0].RenderSpanHierarchy());
-                }
+                ParseCommand.PrintSpanHierarchy(ss[0]);
             }
         }
 

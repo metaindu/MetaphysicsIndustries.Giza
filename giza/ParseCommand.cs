@@ -161,7 +161,7 @@ namespace giza
             }
         }
 
-        static void PrintSpanHierarchy(Span s)
+        public static void PrintSpanHierarchy(Span s)
         {
             const string indent = "  ";
 
