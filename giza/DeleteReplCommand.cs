@@ -25,6 +25,13 @@ namespace giza
         protected override void InternalExecute(Dictionary<string, object> args)
         {
             var defsToDelete = (string[])args["def-names"];
+
+            if (defsToDelete == null ||
+                defsToDelete.Length < 1)
+            {
+                Console.WriteLine("Error: no definitions were specified.");
+            }
+
             var someAreMissing = false;
             foreach (var name in defsToDelete)
             {
