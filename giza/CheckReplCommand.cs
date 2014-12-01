@@ -64,6 +64,26 @@ namespace giza
                 errors = ec.CheckDefinitionInfosForSpanning(defs);
             }
 
+            if (!errors.ContainsNonWarnings())
+            {
+                if (tokenized)
+                {
+                    var tgb = new TokenizedGrammarBuilder();
+                    var g = tgb.BuildTokenizedGrammar(defs.ToArray());
+                    var dc = new DefinitionChecker();
+                    var errors2 = dc.CheckDefinitions(g.Definitions);
+                    errors.AddRange(errors2);
+                }
+                else
+                {
+                    var db = new DefinitionBuilder();
+                    var defs2 = db.BuildDefinitions(defs.ToArray());
+                    var dc = new DefinitionChecker();
+                    var errors2 = dc.CheckDefinitions(defs2);
+                    errors.AddRange(errors2);
+                }
+            }
+
             if (errors.ContainsNonWarnings())
             {
                 Console.WriteLine("There are errors:");
