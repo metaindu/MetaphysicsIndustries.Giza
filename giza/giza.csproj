@@ -63,6 +63,7 @@
     <Compile Include="SpanReplCommand.cs" />
     <Compile Include="RenderReplCommand.cs" />
     <Compile Include="SpanPrintingOptions.cs" />
+    <Compile Include="ErrorHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MetaphysicsIndustries.Giza.csproj">

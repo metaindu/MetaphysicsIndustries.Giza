@@ -114,33 +114,40 @@ namespace giza
         }
         public static void Span(string input, Definition startDefinition, SpanPrintingOptions printingOptions)
         {
-            Spanner gs = new Spanner(startDefinition);
+            var dc = new DefinitionChecker();
             var errors = new List<Error>();
-            Span[] ss = gs.Process(input.ToCharacterSource(), errors);
-            if (errors != null && errors.Count > 0)
+            dc.CheckDefinitions(startDefinition.ParentGrammar.Definitions, errors);
+
+            Span[] ss = null;
+            if (!errors.ContainsNonWarnings())
             {
-                Console.WriteLine("There are errors in the input:");
-                foreach (var err in errors)
-                {
-                    Console.Write("  ");
-                    Console.WriteLine(err.Description);
-                }
+                var gs = new Spanner(startDefinition);
+                var errors2 = new List<Error>();
+                ss = gs.Process(input.ToCharacterSource(), errors2);
+                errors.AddRange(errors2);
+            }
+
+            errors.PrintErrors();
+
+            if (errors.ContainsNonWarnings())
+            {
                 return;
             }
-            else if (ss.Length < 1)
+
+            if (ss.Length < 1)
             {
-                Console.WriteLine("No valid spans.");
+                Console.WriteLine("There are no valid spans.");
             }
             else if (ss.Length > 1)
             {
-                Console.WriteLine("{0} valid spans.", ss.Length);
+                Console.WriteLine("There are {0} valid spans.", ss.Length);
                 if (printingOptions == SpanPrintingOptions.All)
                 {
                     int k = 0;
                     foreach (var s in ss)
                     {
                         k++;
-                        Console.WriteLine("=== Parse {0} ===========", k);
+                        Console.WriteLine("=== Span {0} ===========", k);
                         ParseCommand.PrintSpanHierarchy(s);
                         Console.WriteLine();
                         Console.WriteLine();
@@ -157,8 +164,6 @@ namespace giza
                 }
             }
         }
-
-
     }
 }
 

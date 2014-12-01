@@ -90,27 +90,23 @@ namespace giza
                 grammarErrors.AddRange(errors2);
             }
 
-            if (grammarErrors.ContainsNonWarnings())
+            Grammar g = null;
+            if (!grammarErrors.ContainsNonWarnings())
             {
-                Console.WriteLine("There are errors in the grammar:");
-            }
-            else if (grammarErrors.ContainsWarnings())
-            {
-                Console.WriteLine("There are warnings in the grammar:");
+                var tgb = new TokenizedGrammarBuilder();
+                g = tgb.BuildTokenizedGrammar(dis);
+
+                var dc = new DefinitionChecker();
+                var errors2 = dc.CheckDefinitions(g.Definitions);
+                grammarErrors.AddRange(errors2);
             }
 
-            foreach (var err in grammarErrors)
-            {
-                Console.WriteLine("  {0}", err.Description);
-            }
+            grammarErrors.PrintErrors();
 
             if (grammarErrors.ContainsNonWarnings())
             {
                 return;
             }
-
-            var tgb = new TokenizedGrammarBuilder();
-            var g = tgb.BuildTokenizedGrammar(dis);
 
             var startDefinition = g.FindDefinitionByName(startDef);
             if (startDefinition == null)
@@ -127,19 +123,7 @@ namespace giza
             var inputErrors = new List<Error>();
             Span[] ss = parser.Parse(input.ToCharacterSource(), inputErrors);
 
-            if (inputErrors.ContainsNonWarnings())
-            {
-                Console.WriteLine("There are errors in the input:");
-            }
-            else if (inputErrors.ContainsWarnings())
-            {
-                Console.WriteLine("There are warnings in the input:");
-            }
-
-            foreach (var err in inputErrors)
-            {
-                Console.WriteLine("  {0}", err.Description);
-            }
+            inputErrors.PrintErrors();
 
             if (inputErrors.ContainsNonWarnings())
             {

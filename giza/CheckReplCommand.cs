@@ -84,23 +84,7 @@ namespace giza
                 }
             }
 
-            if (errors.ContainsNonWarnings())
-            {
-                Console.WriteLine("There are errors:");
-            }
-            else if (errors.Count > 0)
-            {
-                Console.WriteLine("There are warnings:");
-            }
-            else
-            {
-                Console.WriteLine("There are no errors or warnings.");
-            }
-
-            foreach (var error in errors)
-            {
-                Console.WriteLine(error.Description);
-            }
+            errors.PrintErrors(true);
         }
     }
 }

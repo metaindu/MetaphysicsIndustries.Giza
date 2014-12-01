@@ -82,13 +82,31 @@ namespace giza
                 }
             }
 
+            var ec = new ExpressionChecker();
+            var errors = ec.CheckDefinitionInfosForParsing(Env.Values);
+
+            Grammar grammar = null;
+            if (!errors.ContainsNonWarnings())
+            {
+                var tgb = new TokenizedGrammarBuilder();
+                grammar = tgb.BuildTokenizedGrammar(Env.Values.ToArray());
+                var dc = new DefinitionChecker();
+                var errors2 = dc.CheckDefinitions(grammar.Definitions);
+                errors.AddRange(errors2);
+            }
+
+            errors.PrintErrors();
+
+            if (errors.ContainsNonWarnings())
+            {
+                return;
+            }
+
             if (inputs == null || inputs.Length < 1)
             {
                 inputs = new [] { Program.ReadTextFromConsole() };
             }
 
-            var tgb = new TokenizedGrammarBuilder();
-            var grammar = tgb.BuildTokenizedGrammar(Env.Values.ToArray());
             var startDefinition = grammar.FindDefinitionByName(startDef);
 
             foreach (var input in inputs)

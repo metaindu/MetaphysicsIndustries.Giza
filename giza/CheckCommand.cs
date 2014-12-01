@@ -90,20 +90,7 @@ namespace giza
                 }
             }
 
-            if (errors.ContainsNonWarnings())
-            {
-                Console.WriteLine("There are errors in the grammar:");
-            }
-            else if (errors.ContainsWarnings())
-            {
-                Console.WriteLine("There are warnings in the grammar:");
-            }
-
-            foreach (var error in errors)
-            {
-                Console.Write("  ");
-                Console.WriteLine(error.Description);
-            }
+            errors.PrintErrors();
 
             if (!errors.ContainsNonWarnings())
             {
