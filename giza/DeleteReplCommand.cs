@@ -17,7 +17,7 @@ namespace giza
                 new Parameter {
                     Name="def-names",
                     ParameterType=ParameterType.StringArray,
-                    Description="The names of the definitions to delete.",
+                    Description="The names of the definitions to delete. If '*' is given, then all definitions are deleted.",
                 },
             };
         }
@@ -30,6 +30,15 @@ namespace giza
                 defsToDelete.Length < 1)
             {
                 Console.WriteLine("Error: no definitions were specified.");
+                return;
+            }
+
+            if (defsToDelete.Length == 1 &&
+                defsToDelete[0] == "*")
+            {
+                Env.Clear();
+                Console.WriteLine("All definitions were deleted.");
+                return;
             }
 
             var someAreMissing = false;
