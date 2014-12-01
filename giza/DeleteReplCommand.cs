@@ -41,7 +41,12 @@ namespace giza
                     someAreMissing = true;
                 }
             }
-            if (!someAreMissing)
+
+            if (someAreMissing)
+            {
+                Console.WriteLine("No definitions were deleted.");
+            }
+            else
             {
                 foreach (var name in defsToDelete)
                 {
