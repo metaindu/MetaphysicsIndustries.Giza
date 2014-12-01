@@ -43,6 +43,10 @@ namespace giza
                     Name="verbose",
                     Description="Also print out the parse tree, if only one valid parse is found",
                 },
+                new Option {
+                    Name="show-all",
+                    Description="Print out all parse trees, even if more than one valid parse is found",
+                },
             };
         }
 
@@ -52,6 +56,9 @@ namespace giza
             var inputs = (string[])args["input"];
             var fromFile = (string)args["from-file"];
             var verbose = (bool)args["verbose"];
+            var showAll = (bool)args["show-all"];
+
+            var printingOptions = SpanPrintingOptionsHelper.FromBools(verbose, showAll);
 
             if (!Env.ContainsKey(startDef))
             {
@@ -86,7 +93,7 @@ namespace giza
 
             foreach (var input in inputs)
             {
-                ParseCommand.Parse(input, startDefinition, verbose);
+                ParseCommand.Parse(input, startDefinition, printingOptions);
             }
         }
     }

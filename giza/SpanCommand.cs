@@ -35,6 +35,10 @@ namespace giza
                     Name="verbose",
                     Description="Also print out the span tree, if only one valid parse is found",
                 },
+                new Option {
+                    Name="show-all",
+                    Description="Print out all parse trees, even if more than one valid parse is found",
+                },
             };
         }
         protected override void InternalExecute(Dictionary<string, object> args)
@@ -43,6 +47,9 @@ namespace giza
             var startDef = (string)args["start-def"];
             var inputFilename = (string)args["input-filename"];
             var verbose = (bool)args["verbose"];
+            var showAll = (bool)args["show-all"];
+
+            var printingOptions = SpanPrintingOptionsHelper.FromBools(verbose, showAll);
 
             string grammar;
             if (grammarFilename == "-")
@@ -64,10 +71,10 @@ namespace giza
                 input = File.ReadAllText(inputFilename);
             }
 
-            Span(verbose, grammar, input, startDef);
+            Span(grammar, input, startDef, printingOptions);
         }
 
-        public static void Span(bool verbose, string grammar, string input, string startDef)
+        public static void Span(string grammar, string input, string startDef, SpanPrintingOptions printingOptions)
         {
             var spanner = new SupergrammarSpanner();
             var errors = new List<Error>();
@@ -102,10 +109,10 @@ namespace giza
             var defs = db.BuildDefinitions(dis);
 
             var startDefinition = defs.First(d => d.Name == startDef);
-            var g = new Grammar(defs);
-            Span(input, startDefinition, verbose);
+            var g = new Grammar(defs); // the definitions will be linked to the grammar. so we're not _really_ throwing g away after creating it, even though that's what it looks like.
+            Span(input, startDefinition, printingOptions);
         }
-        public static void Span(string input, Definition startDefinition, bool verbose)
+        public static void Span(string input, Definition startDefinition, SpanPrintingOptions printingOptions)
         {
             Spanner gs = new Spanner(startDefinition);
             var errors = new List<Error>();
@@ -127,11 +134,27 @@ namespace giza
             else if (ss.Length > 1)
             {
                 Console.WriteLine("{0} valid spans.", ss.Length);
+                if (printingOptions == SpanPrintingOptions.All)
+                {
+                    int k = 0;
+                    foreach (var s in ss)
+                    {
+                        k++;
+                        Console.WriteLine("=== Parse {0} ===========", k);
+                        ParseCommand.PrintSpanHierarchy(s);
+                        Console.WriteLine();
+                        Console.WriteLine();
+                    }
+                }
             }
             else
             {
-                Console.WriteLine("1 valid span.");
-                ParseCommand.PrintSpanHierarchy(ss[0]);
+                Console.WriteLine("There is 1 valid span of the input.");
+                if (printingOptions == SpanPrintingOptions.All ||
+                    printingOptions == SpanPrintingOptions.One)
+                {
+                    ParseCommand.PrintSpanHierarchy(ss[0]);
+                }
             }
         }
 

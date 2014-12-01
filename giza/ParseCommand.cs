@@ -37,6 +37,10 @@ namespace giza
                     Name="verbose",
                     Description="Also print out the parse tree, if only one valid parse is found",
                 },
+                new Option {
+                    Name="show-all",
+                    Description="Print out all parse trees, even if more than one valid parse is found",
+                },
             };
         }
 
@@ -46,6 +50,9 @@ namespace giza
             var startDef = (string)args["start-def"];
             var inputFilename = (string)args["input-filename"];
             var verbose = (bool)args["verbose"];
+            var showAll = (bool)args["show-all"];
+
+            var printingOptions = SpanPrintingOptionsHelper.FromBools(verbose, showAll);
 
             string grammar;
             if (grammarFilename == "-")
@@ -67,10 +74,10 @@ namespace giza
                 input = File.ReadAllText(inputFilename);
             }
 
-            Parse(verbose, grammar, input, startDef);
+            Parse(grammar, input, startDef, printingOptions);
         }
 
-        public static void Parse(bool verbose, string grammar, string input, string startDef)
+        public static void Parse(string grammar, string input, string startDef, SpanPrintingOptions printingOptions)
         {
             var spanner = new SupergrammarSpanner();
             var grammarErrors = new List<Error>();
@@ -112,9 +119,9 @@ namespace giza
                 return;
             }
 
-            Parse(input, startDefinition, verbose);
+            Parse(input, startDefinition, printingOptions);
         }
-        public static void Parse(string input, Definition startDefinition, bool verbose)
+        public static void Parse(string input, Definition startDefinition, SpanPrintingOptions spanPrintingOption=SpanPrintingOptions.None)
         {
             var parser = new Parser(startDefinition);
             var inputErrors = new List<Error>();
@@ -146,15 +153,24 @@ namespace giza
             else if (ss.Length > 1)
             {
                 Console.WriteLine("There are {0} valid parses of the input.", ss.Length);
-                //foreach (Span s in ss)
-                //{
-                //    Console.WriteLine(s.RenderSpanHierarchy());
-                //}
+                if (spanPrintingOption == SpanPrintingOptions.All)
+                {
+                    int k = 0;
+                    foreach (var s in ss)
+                    {
+                        k++;
+                        Console.WriteLine("=== Parse {0} ===========", k);
+                        PrintSpanHierarchy(s);
+                        Console.WriteLine();
+                        Console.WriteLine();
+                    }
+                }
             }
             else
             {
                 Console.WriteLine("There is 1 valid parse of the input.");
-                if (verbose)
+                if (spanPrintingOption == SpanPrintingOptions.All ||
+                    spanPrintingOption == SpanPrintingOptions.One)
                 {
                     PrintSpanHierarchy(ss[0]);
                 }
