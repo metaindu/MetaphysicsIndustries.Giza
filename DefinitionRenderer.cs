@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace MetaphysicsIndustries.Giza
 {
@@ -221,6 +222,202 @@ namespace MetaphysicsIndustries.Giza
             s2 = s2.Replace("\t", "\\t");
 
             return "\"" + s2 + "\"";
+        }
+
+        public string RenderDefinitionExprsAsGrammarText(IEnumerable<DefinitionExpression> defs, int? maxLineWidth=null)
+        {
+            var sb = new StringBuilder();
+            var noSpaceTokens = new string[] { ";", ":", "*", "?", "+", ">", "," };
+
+            foreach (var def in defs)
+            {
+                int p = 0;
+                string prevtoken = string.Empty;
+
+                foreach (var token in ProcessDefinitionExpression(def))
+                {
+                    if (maxLineWidth.HasValue &&
+                        p + 1 + token.Length > maxLineWidth.Value)
+                    {
+                        sb.AppendLine();
+                        p = 0;
+                    }
+                    else if (p != 0 && 
+                        !noSpaceTokens.Contains(token) && 
+                        prevtoken != ":" &&
+                        prevtoken != "<")
+                    {
+                        sb.Append(" ");
+                        p++;
+                    }
+
+                    sb.Append(token);
+                    p += token.Length;
+
+                    prevtoken = token;
+                }
+
+                sb.AppendLine();
+                sb.AppendLine();
+            }
+
+            return sb.ToString();
+        }
+
+        public IEnumerable<string> ProcessDefinitionExpression(DefinitionExpression defexpr)
+        {
+            if (defexpr.Directives.Count > 0)
+            {
+                yield return "<";
+
+                bool first = true;
+                foreach (var dir in defexpr.Directives)
+                {
+                    if (!first)
+                    {
+                        yield return ",";
+                    }
+                    first = false;
+
+                    switch (dir)
+                    {
+                    case DefinitionDirective.MindWhitespace:
+                        yield return "mind";
+                        yield return "whitespace";
+                        break;
+                    case DefinitionDirective.IgnoreCase:
+                        yield return "ignore";
+                        yield return "case";
+                        break;
+                    case DefinitionDirective.Atomic:
+                        yield return "atomic";
+                        break;
+                    case DefinitionDirective.Token:
+                        yield return "token";
+                        break;
+                    case DefinitionDirective.Subtoken:
+                        yield return "subtoken";
+                        break;
+                    case DefinitionDirective.Comment:
+                        yield return "comment";
+                        break;
+                    }
+                }
+
+                yield return ">";
+            }
+
+            yield return defexpr.Name;
+            yield return "=";
+            foreach (var token in ProcessExpression(defexpr))
+            {
+                yield return token;
+            }
+            yield return ";";
+        }
+        public IEnumerable<string> ProcessExpression(Expression expr)
+        {
+            return expr.Items.SelectMany(item => ProcessExpressionItem(item));
+        }
+        public IEnumerable<string> ProcessExpressionItem(ExpressionItem item)
+        {
+            var subexpr = item as SubExpression;
+            if (subexpr != null)
+            {
+                return ProcessSubExpression(subexpr);
+            }
+
+            var orexpr = item as OrExpression;
+            if (orexpr != null)
+            {
+                return ProcessOrExpression(orexpr);
+            }
+
+            throw new InvalidOperationException(string.Format("Unknown type: {0}", item.GetType().ToString()));
+        }
+        public IEnumerable<string> ProcessSubExpression(SubExpression subexpr)
+        {
+            string token = null;
+            string defaultTag = null;
+            var defref = subexpr as DefRefSubExpression;
+            var literal = subexpr as LiteralSubExpression;
+            var cc = subexpr as CharClassSubExpression;
+            if (defref != null)
+            {
+                token = defref.DefinitionName;
+                defaultTag = token;
+            }
+            else if (literal != null)
+            {
+                token = literal.ToDelimitedString();
+                defaultTag = literal.Value;
+            }
+            else if (cc != null)
+            {
+                token = cc.CharClass.ToString();
+                defaultTag = cc.CharClass.ToUndelimitedString();
+            }
+            else
+            {
+                throw new InvalidOperationException(string.Format("Unknown type: {0}", subexpr.GetType().ToString()));
+            }
+
+            yield return token;
+
+            if (subexpr.IsSkippable && subexpr.IsRepeatable)
+            {
+                yield return "*";
+            }
+            else if (subexpr.IsSkippable)
+            {
+                yield return "?";
+            }
+            else if (subexpr.IsRepeatable)
+            {
+                yield return "+";
+            }
+
+            if (!string.IsNullOrEmpty(subexpr.Tag) && subexpr.Tag != defaultTag)
+            {
+                yield return ":";
+                yield return subexpr.Tag;
+            }
+        }
+        public IEnumerable<string> ProcessOrExpression(OrExpression orexpr)
+        {
+            bool first = true;
+            foreach (var expr in orexpr.Expressions)
+            {
+                if (first)
+                {
+                    yield return "(";
+                    first = false;
+                }
+                else
+                {
+                    yield return "|";
+                }
+
+                foreach (var token in ProcessExpression(expr))
+                {
+                    yield return token;
+                }
+            }
+
+            yield return ")";
+
+            if (orexpr.IsSkippable && orexpr.IsRepeatable)
+            {
+                yield return "*";
+            }
+            else if (orexpr.IsSkippable)
+            {
+                yield return "?";
+            }
+            else if (orexpr.IsRepeatable)
+            {
+                yield return "+";
+            }
         }
     }
 }
