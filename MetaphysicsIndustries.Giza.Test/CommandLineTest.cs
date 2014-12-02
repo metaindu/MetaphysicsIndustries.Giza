@@ -181,7 +181,7 @@ namespace MetaphysicsIndustries.Giza.Test
             // assertions
             Assert.AreEqual("", newStderr.ToString());
             Assert.AreEqual(
-                "1 valid span.\n",
+                "There is 1 valid span of the input.\n",
                 newStdout.ToString());
         }
     }
