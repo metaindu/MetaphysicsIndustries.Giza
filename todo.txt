@@ -63,12 +63,11 @@ operate on streams
         InputElement
         InputSource<T> --> Tokenizer, Charizer
 
-repl
-
 user-defined reductions
 
 whitspace as tokenized def
     remove 'mind whitespace'
+    what once was implemented as 'mind whitespace' can instead be a separate processing stage that ignores whitespace, e.g. for Fortran
 
 
 
