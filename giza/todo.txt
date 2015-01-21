@@ -1,0 +1,13 @@
+tests
+optional string array parameters
+    requires changes to NCommander
+ignore types in help
+    requires changes to NCommander
+cleanup formatting of help text
+    requires changes to NCommander
+rename 'singleton' to something else, like 'default-instance'
+fix cursor position when clearing the terminal
+... on string array args
+    requires changes to NCommander
+"print def def" prints def twice
+replace --verbose in span and parse with --no-tree, with inverse semantics

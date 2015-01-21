@@ -30,7 +30,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="nunit.framework">
-      <HintPath>..\..\Ligra\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -54,6 +54,7 @@
     <Compile Include="SpannerTests\MindWhitespaceOff.cs" />
     <Compile Include="SpannerTests\MindWhitespaceOn.cs" />
     <Compile Include="SpannerTests\AtomicTest.cs" />
+    <Compile Include="DefinitionRendererTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

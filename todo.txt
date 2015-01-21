@@ -55,8 +55,6 @@ Create a SolusSpanner class around SolusGrammar. Put both classes into Metaphysi
 
 re-org and add docs
 
-DefinitionRenderer - render to grammar text
-
 Move rendering classes to a separate 'Rendering' assembly, and/or move classes for parsing into a 'Light' assembly.
 
 operate on streams
@@ -64,12 +62,11 @@ operate on streams
         InputElement
         InputSource<T> --> Tokenizer, Charizer
 
-repl
-
 user-defined reductions
 
 whitspace as tokenized def
     remove 'mind whitespace'
+    what once was implemented as 'mind whitespace' can instead be a separate processing stage that ignores whitespace, e.g. for Fortran
 
 
 

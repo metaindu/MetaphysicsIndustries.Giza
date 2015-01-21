@@ -113,6 +113,8 @@
     <None Include="todo.txt" />
     <None Include="docs\Directives.txt" />
     <None Include="StringFormatterGrammar.giza" />
+    <None Include="LICENSE" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="CppCliGrammar.txt" />
