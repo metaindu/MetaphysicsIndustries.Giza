@@ -95,7 +95,7 @@ namespace giza
                 errors.AddRange(errors2);
             }
 
-            errors.PrintErrors();
+            errors.PrintErrors(context: " in the grammar");
 
             if (errors.ContainsNonWarnings())
             {

@@ -101,7 +101,7 @@ namespace giza
                 grammarErrors.AddRange(errors2);
             }
 
-            grammarErrors.PrintErrors();
+            grammarErrors.PrintErrors(context: " in the grammar");
 
             if (grammarErrors.ContainsNonWarnings())
             {
@@ -123,7 +123,7 @@ namespace giza
             var inputErrors = new List<Error>();
             Span[] ss = parser.Parse(input.ToCharacterSource(), inputErrors);
 
-            inputErrors.PrintErrors();
+            inputErrors.PrintErrors(context: " in the input");
 
             if (inputErrors.ContainsNonWarnings())
             {
