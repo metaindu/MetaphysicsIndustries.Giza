@@ -58,9 +58,9 @@ Global
 		StartupItem = giza\giza.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
-		$1.inheritsSet = VisualStudio
-		$1.inheritsScope = text/plain
 		$1.scope = text/plain
+		$1.FileWidth = 80
+		$1.TabsToSpaces = True
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
