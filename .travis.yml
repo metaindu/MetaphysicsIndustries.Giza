@@ -10,4 +10,4 @@ addons:
       - nunit-console
 
 script:
-  - ./build.sh
+  - bash ./build.sh
