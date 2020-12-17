@@ -115,6 +115,8 @@
     <None Include="StringFormatterGrammar.giza" />
     <None Include="LICENSE" />
     <None Include="README.md" />
+    <None Include=".travis.yml" />
+    <None Include="build.sh" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="CppCliGrammar.txt" />
