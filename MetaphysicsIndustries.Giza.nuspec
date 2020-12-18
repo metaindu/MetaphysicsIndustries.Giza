@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>MetaphysicsIndustries.Giza</id>
+    <version>$version$</version>
+    <title>MetaphysicsIndustries.Giza</title>
+    <authors>izrik,metaindu</authors>
+    <owners>izrik,metaindu</owners>
+    <license type="expression">LGPL-3.0-or-later</license>
+    <projectUrl>https://github.com/metaindu/MetaphysicsIndustries.Giza</projectUrl>
+    <icon>images/logo.png</icon>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A parser system</description>
+    <releaseNotes>Initial release</releaseNotes>
+    <copyright>Copyright 2020 izrik and Metaphysics Industries, Inc.</copyright>
+    <tags>parser lexer grammar</tags>
+    <dependencies>
+      <group targetFramework=".NETFramework4.0" />
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System" targetFramework="" />
+    </frameworkAssemblies>
+  </metadata>
+  <files>
+    <file src="bin/Debug/MetaphysicsIndustries.Giza.dll" target="lib/net40" />
+    <file src="docs/logo.png" target="images/" />
+  </files>
+</package>
