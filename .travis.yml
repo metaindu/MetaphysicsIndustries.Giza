@@ -11,3 +11,10 @@ addons:
 
 script:
   - bash ./build.sh
+
+deploy:
+  skip_cleanup: true
+  provider: script
+  script: ./release.sh
+  on:
+    tags: true
