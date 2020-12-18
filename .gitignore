@@ -118,3 +118,6 @@ UpgradeLog*.XML
 
 .vs/
 
+# Auto-generated files
+AssemblyInfo.Git.cs
+
