@@ -121,3 +121,4 @@ UpgradeLog*.XML
 # Auto-generated files
 AssemblyInfo.Git.cs
 
+.idea/
