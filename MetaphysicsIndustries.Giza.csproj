@@ -91,7 +91,6 @@
     <Compile Include="CharClassSubExpression.cs" />
     <Compile Include="ExpressionItem.cs" />
     <Compile Include="GrammarComparer.cs" />
-    <Compile Include="ExpressionBuilder.cs" />
     <Compile Include="GrammarDefinitionOrderedParentChildrenCollection.cs" />
     <Compile Include="TokenizedGrammarBuilder.cs" />
     <Compile Include="ExpressionChecker.cs" />
