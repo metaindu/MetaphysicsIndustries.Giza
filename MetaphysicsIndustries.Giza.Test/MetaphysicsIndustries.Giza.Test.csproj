@@ -35,6 +35,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ImportTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DefinitionCheckerTest.cs" />
     <Compile Include="TokenizerTest.cs" />
