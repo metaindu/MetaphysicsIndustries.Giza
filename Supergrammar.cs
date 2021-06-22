@@ -45,9 +45,12 @@ namespace MetaphysicsIndustries.Giza
         public Definition def_charclass = new Definition("charclass");
         public Definition def_unicodechar = new Definition("unicodechar");
         public Definition def_comment = new Definition("comment");
+        public Definition def_import_002D_stmt = new Definition("import-stmt");
+        public Definition def_module = new Definition("module");
 
         public DefRefNode node_grammar_0_definition;
         public DefRefNode node_grammar_1_comment;
+        public DefRefNode node_grammar_2_import_002D_stmt;
         public DefRefNode node_definition_0_directive;
         public DefRefNode node_definition_1_identifier;
         public CharNode node_definition_2__003D_;
@@ -164,6 +167,29 @@ namespace MetaphysicsIndustries.Giza
         public CharNode node_comment_8__002F__002F_;
         public CharNode node_comment_9__005E__005C_n;
         public CharNode node_comment_10__000A_;
+        public CharNode node_import_002D_stmt_0_import;
+        public CharNode node_import_002D_stmt_1_import;
+        public CharNode node_import_002D_stmt_2_import;
+        public CharNode node_import_002D_stmt_3_import;
+        public CharNode node_import_002D_stmt_4_import;
+        public CharNode node_import_002D_stmt_5_import;
+        public DefRefNode node_import_002D_stmt_6_module;
+        public CharNode node_import_002D_stmt_7_from;
+        public CharNode node_import_002D_stmt_8_from;
+        public CharNode node_import_002D_stmt_9_from;
+        public CharNode node_import_002D_stmt_10_from;
+        public DefRefNode node_import_002D_stmt_11_module;
+        public DefRefNode node_import_002D_stmt_12_module;
+        public CharNode node_import_002D_stmt_13_import;
+        public CharNode node_import_002D_stmt_14_import;
+        public CharNode node_import_002D_stmt_15_import;
+        public CharNode node_import_002D_stmt_16_import;
+        public CharNode node_import_002D_stmt_17_import;
+        public CharNode node_import_002D_stmt_18_import;
+        public DefRefNode node_import_002D_stmt_19_name;
+        public DefRefNode node_module_0_identifier;
+        public CharNode node_module_1__002E_;
+        public DefRefNode node_module_2_identifier;
 
         public Supergrammar()
         {
@@ -189,19 +215,30 @@ namespace MetaphysicsIndustries.Giza
             Definitions.Add(def_charclass);
             Definitions.Add(def_unicodechar);
             Definitions.Add(def_comment);
+            Definitions.Add(def_import_002D_stmt);
+            Definitions.Add(def_module);
 
             node_grammar_0_definition = new DefRefNode(def_definition, "definition");
             node_grammar_1_comment = new DefRefNode(def_comment, "comment");
+            node_grammar_2_import_002D_stmt = new DefRefNode(def_import_002D_stmt, "import-stmt");
             def_grammar.Nodes.Add(node_grammar_0_definition);
             def_grammar.Nodes.Add(node_grammar_1_comment);
+            def_grammar.Nodes.Add(node_grammar_2_import_002D_stmt);
             def_grammar.StartNodes.Add(node_grammar_0_definition);
             def_grammar.StartNodes.Add(node_grammar_1_comment);
+            def_grammar.StartNodes.Add(node_grammar_2_import_002D_stmt);
             def_grammar.EndNodes.Add(node_grammar_0_definition);
             def_grammar.EndNodes.Add(node_grammar_1_comment);
+            def_grammar.EndNodes.Add(node_grammar_2_import_002D_stmt);
             node_grammar_0_definition.NextNodes.Add(node_grammar_0_definition);
             node_grammar_0_definition.NextNodes.Add(node_grammar_1_comment);
+            node_grammar_0_definition.NextNodes.Add(node_grammar_2_import_002D_stmt);
             node_grammar_1_comment.NextNodes.Add(node_grammar_0_definition);
             node_grammar_1_comment.NextNodes.Add(node_grammar_1_comment);
+            node_grammar_1_comment.NextNodes.Add(node_grammar_2_import_002D_stmt);
+            node_grammar_2_import_002D_stmt.NextNodes.Add(node_grammar_0_definition);
+            node_grammar_2_import_002D_stmt.NextNodes.Add(node_grammar_1_comment);
+            node_grammar_2_import_002D_stmt.NextNodes.Add(node_grammar_2_import_002D_stmt);
 
             node_definition_0_directive = new DefRefNode(def_directive, "directive");
             node_definition_1_identifier = new DefRefNode(def_identifier, "identifier");
@@ -685,6 +722,83 @@ namespace MetaphysicsIndustries.Giza
             node_comment_8__002F__002F_.NextNodes.Add(node_comment_10__000A_);
             node_comment_9__005E__005C_n.NextNodes.Add(node_comment_9__005E__005C_n);
             node_comment_9__005E__005C_n.NextNodes.Add(node_comment_10__000A_);
+
+            node_import_002D_stmt_0_import = new CharNode(CharClass.FromUndelimitedCharClassText("i"), "import");
+            node_import_002D_stmt_1_import = new CharNode(CharClass.FromUndelimitedCharClassText("m"), "import");
+            node_import_002D_stmt_2_import = new CharNode(CharClass.FromUndelimitedCharClassText("p"), "import");
+            node_import_002D_stmt_3_import = new CharNode(CharClass.FromUndelimitedCharClassText("o"), "import");
+            node_import_002D_stmt_4_import = new CharNode(CharClass.FromUndelimitedCharClassText("r"), "import");
+            node_import_002D_stmt_5_import = new CharNode(CharClass.FromUndelimitedCharClassText("t"), "import");
+            node_import_002D_stmt_6_module = new DefRefNode(def_literal, "module");
+            node_import_002D_stmt_7_from = new CharNode(CharClass.FromUndelimitedCharClassText("f"), "from");
+            node_import_002D_stmt_8_from = new CharNode(CharClass.FromUndelimitedCharClassText("r"), "from");
+            node_import_002D_stmt_9_from = new CharNode(CharClass.FromUndelimitedCharClassText("o"), "from");
+            node_import_002D_stmt_10_from = new CharNode(CharClass.FromUndelimitedCharClassText("m"), "from");
+            node_import_002D_stmt_11_module = new DefRefNode(def_literal, "module");
+            node_import_002D_stmt_12_module = new DefRefNode(def_module, "module");
+            node_import_002D_stmt_13_import = new CharNode(CharClass.FromUndelimitedCharClassText("i"), "import");
+            node_import_002D_stmt_14_import = new CharNode(CharClass.FromUndelimitedCharClassText("m"), "import");
+            node_import_002D_stmt_15_import = new CharNode(CharClass.FromUndelimitedCharClassText("p"), "import");
+            node_import_002D_stmt_16_import = new CharNode(CharClass.FromUndelimitedCharClassText("o"), "import");
+            node_import_002D_stmt_17_import = new CharNode(CharClass.FromUndelimitedCharClassText("r"), "import");
+            node_import_002D_stmt_18_import = new CharNode(CharClass.FromUndelimitedCharClassText("t"), "import");
+            node_import_002D_stmt_19_name = new DefRefNode(def_identifier, "name");
+            def_import_002D_stmt.Nodes.Add(node_import_002D_stmt_0_import);
+            def_import_002D_stmt.Nodes.Add(node_import_002D_stmt_1_import);
+            def_import_002D_stmt.Nodes.Add(node_import_002D_stmt_2_import);
+            def_import_002D_stmt.Nodes.Add(node_import_002D_stmt_3_import);
+            def_import_002D_stmt.Nodes.Add(node_import_002D_stmt_4_import);
+            def_import_002D_stmt.Nodes.Add(node_import_002D_stmt_5_import);
+            def_import_002D_stmt.Nodes.Add(node_import_002D_stmt_6_module);
+            def_import_002D_stmt.Nodes.Add(node_import_002D_stmt_7_from);
+            def_import_002D_stmt.Nodes.Add(node_import_002D_stmt_8_from);
+            def_import_002D_stmt.Nodes.Add(node_import_002D_stmt_9_from);
+            def_import_002D_stmt.Nodes.Add(node_import_002D_stmt_10_from);
+            def_import_002D_stmt.Nodes.Add(node_import_002D_stmt_11_module);
+            def_import_002D_stmt.Nodes.Add(node_import_002D_stmt_12_module);
+            def_import_002D_stmt.Nodes.Add(node_import_002D_stmt_13_import);
+            def_import_002D_stmt.Nodes.Add(node_import_002D_stmt_14_import);
+            def_import_002D_stmt.Nodes.Add(node_import_002D_stmt_15_import);
+            def_import_002D_stmt.Nodes.Add(node_import_002D_stmt_16_import);
+            def_import_002D_stmt.Nodes.Add(node_import_002D_stmt_17_import);
+            def_import_002D_stmt.Nodes.Add(node_import_002D_stmt_18_import);
+            def_import_002D_stmt.Nodes.Add(node_import_002D_stmt_19_name);
+            def_import_002D_stmt.StartNodes.Add(node_import_002D_stmt_0_import);
+            def_import_002D_stmt.StartNodes.Add(node_import_002D_stmt_7_from);
+            def_import_002D_stmt.EndNodes.Add(node_import_002D_stmt_6_module);
+            def_import_002D_stmt.EndNodes.Add(node_import_002D_stmt_19_name);
+            node_import_002D_stmt_0_import.NextNodes.Add(node_import_002D_stmt_1_import);
+            node_import_002D_stmt_1_import.NextNodes.Add(node_import_002D_stmt_2_import);
+            node_import_002D_stmt_2_import.NextNodes.Add(node_import_002D_stmt_3_import);
+            node_import_002D_stmt_3_import.NextNodes.Add(node_import_002D_stmt_4_import);
+            node_import_002D_stmt_4_import.NextNodes.Add(node_import_002D_stmt_5_import);
+            node_import_002D_stmt_5_import.NextNodes.Add(node_import_002D_stmt_6_module);
+            node_import_002D_stmt_7_from.NextNodes.Add(node_import_002D_stmt_8_from);
+            node_import_002D_stmt_8_from.NextNodes.Add(node_import_002D_stmt_9_from);
+            node_import_002D_stmt_9_from.NextNodes.Add(node_import_002D_stmt_10_from);
+            node_import_002D_stmt_10_from.NextNodes.Add(node_import_002D_stmt_11_module);
+            node_import_002D_stmt_10_from.NextNodes.Add(node_import_002D_stmt_12_module);
+            node_import_002D_stmt_11_module.NextNodes.Add(node_import_002D_stmt_13_import);
+            node_import_002D_stmt_12_module.NextNodes.Add(node_import_002D_stmt_13_import);
+            node_import_002D_stmt_13_import.NextNodes.Add(node_import_002D_stmt_14_import);
+            node_import_002D_stmt_14_import.NextNodes.Add(node_import_002D_stmt_15_import);
+            node_import_002D_stmt_15_import.NextNodes.Add(node_import_002D_stmt_16_import);
+            node_import_002D_stmt_16_import.NextNodes.Add(node_import_002D_stmt_17_import);
+            node_import_002D_stmt_17_import.NextNodes.Add(node_import_002D_stmt_18_import);
+            node_import_002D_stmt_18_import.NextNodes.Add(node_import_002D_stmt_19_name);
+
+            node_module_0_identifier = new DefRefNode(def_identifier, "identifier");
+            node_module_1__002E_ = new CharNode(CharClass.FromUndelimitedCharClassText("."), ".");
+            node_module_2_identifier = new DefRefNode(def_identifier, "identifier");
+            def_module.Nodes.Add(node_module_0_identifier);
+            def_module.Nodes.Add(node_module_1__002E_);
+            def_module.Nodes.Add(node_module_2_identifier);
+            def_module.StartNodes.Add(node_module_0_identifier);
+            def_module.EndNodes.Add(node_module_2_identifier);
+            def_module.EndNodes.Add(node_module_0_identifier);
+            node_module_0_identifier.NextNodes.Add(node_module_1__002E_);
+            node_module_1__002E_.NextNodes.Add(node_module_2_identifier);
+            node_module_2_identifier.NextNodes.Add(node_module_1__002E_);
 
         }
     }
