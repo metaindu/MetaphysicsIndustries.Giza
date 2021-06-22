@@ -34,7 +34,7 @@ grammar = ( definition | comment | import-stmt )+;
 
 import-stmt = (
     'import' literal:module |
-    'from' ( literal:module | module:module ) 'import' identifier:name );
+    'from' ( literal:module | module:module ) 'import' identifier:name ) ';' ;
 
 module = identifier ( '.' identifier )* ;
 
