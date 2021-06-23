@@ -63,6 +63,8 @@
   <ItemGroup>
     <Compile Include="BinarySpanner.cs" />
     <Compile Include="CharClass.cs" />
+    <Compile Include="FileSource.cs" />
+    <Compile Include="IFileSource.cs" />
     <Compile Include="Span.cs" />
     <Compile Include="SupergrammarSpanner.cs" />
     <Content Include="BinarySpanner example grammar.txt" />
