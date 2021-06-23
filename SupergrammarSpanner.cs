@@ -31,6 +31,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 
 
 namespace MetaphysicsIndustries.Giza
@@ -163,20 +164,69 @@ namespace MetaphysicsIndustries.Giza
             return defs.ToArray();
         }
 
-        DefinitionExpression[] ImportDefinitionsFromFile(Supergrammar importingGrammar, Span defspan, List<Error> errors)
+        DefinitionExpression[] ImportDefinitionsFromFile(Supergrammar importingGrammar, Span defspan,
+            List<Error> errors)
         {
-            var sub = defspan.Subspans[6];
-            var fileToImport = GetLiteralSubExpressionFromSpan(importingGrammar, sub).Value;
-            var content = _fileSource.GetFileContents(fileToImport);
-            var errors2 = new List<Error>();
-            var importedDefs = GetExpressions(content, errors2);
-            if (errors2.Count > 0)
+            if (defspan.Node != importingGrammar.node_grammar_2_import_002D_stmt)
+                throw new ArgumentException("The span must describe an import-stmt.");
+            var stmtType = defspan.Subspans[0];
+            if (stmtType.Node == importingGrammar.node_import_002D_stmt_0_import)
             {
-                errors.AddRange(errors2);
-                return null;
+                var source = defspan.Subspans[6];
+                var fileToImport = GetLiteralSubExpressionFromSpan(importingGrammar, source).Value;
+                var content = _fileSource.GetFileContents(fileToImport);
+                var errors2 = new List<Error>();
+                var importedDefs = GetExpressions(content, errors2);
+                if (errors2.Count > 0)
+                {
+                    errors.AddRange(errors2);
+                    return null;
+                }
+
+                return importedDefs;
             }
 
-            return importedDefs;
+            if (stmtType.Node == importingGrammar.node_import_002D_stmt_7_from)
+            {
+                var source = defspan.Subspans[4];
+                int i;
+                var defNamesToImport = new List<string>();
+                for (i = 11; i < defspan.Subspans.Count - 1; i++)
+                    defNamesToImport.Add(defspan.Subspans[i].CollectValue());
+                var fileToImport = GetLiteralSubExpressionFromSpan(importingGrammar, source).Value;
+                var content = _fileSource.GetFileContents(fileToImport);
+                var errors2 = new List<Error>();
+                var importedDefs = GetExpressions(content, errors2);
+                if (errors2.Count > 0)
+                {
+                    errors.AddRange(errors2);
+                    return null;
+                }
+
+                var importedDefsByName =
+                    importedDefs.ToDictionary(
+                        d => d.Name,
+                        d => d);
+                var defsToImport = new List<DefinitionExpression>();
+                foreach (var name in defNamesToImport)
+                {
+                    if (!importedDefsByName.ContainsKey(name))
+                        errors.Add(new ImportError
+                        {
+                            ErrorType = ImportError.DefinitionNotFound,
+                            DefinitionName = name
+                        });
+                    else
+                        defsToImport.Add(importedDefsByName[name]);
+                }
+
+                return defsToImport.ToArray();
+            }
+
+            throw new ArgumentException(
+                string.Format(
+                    "Unknown import type, node={0}",
+                    stmtType.Node));
         }
 
         Expression GetExpressionFromSpan(Supergrammar grammar, Span exprSpan)
