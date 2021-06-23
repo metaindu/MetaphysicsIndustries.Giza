@@ -30,12 +30,25 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 
 
 namespace MetaphysicsIndustries.Giza
 {
     public class SupergrammarSpanner
     {
+        public SupergrammarSpanner()
+            : this(new FileSource())
+        {
+        }
+
+        public SupergrammarSpanner(IFileSource fileSource)
+        {
+            _fileSource = fileSource;
+        }
+
+        private readonly IFileSource _fileSource;
+
         public DefinitionExpression[] GetExpressions(string input, List<Error> errors)
         {
             Supergrammar supergrammar = new Supergrammar();
