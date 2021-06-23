@@ -77,7 +77,7 @@ namespace MetaphysicsIndustries.Giza
                 return null;
             }
 
-            DefinitionExpression[] dis = BuildExpressions(supergrammar, s2[0]);
+            DefinitionExpression[] dis = BuildExpressions(supergrammar, s2[0], errors);
             return dis;
         }
 
@@ -99,7 +99,7 @@ namespace MetaphysicsIndustries.Giza
             return grammar;
         }
         
-        public DefinitionExpression[] BuildExpressions(Supergrammar grammar, Span span)
+        public DefinitionExpression[] BuildExpressions(Supergrammar grammar, Span span, List<Error> errors)
         {
             if (!(span.Node is DefRefNode) ||
                 (span.Node as DefRefNode).DefRef != grammar.def_grammar)
@@ -108,17 +108,31 @@ namespace MetaphysicsIndustries.Giza
             }
 
             SpanChecker sc = new SpanChecker();
-            List<Error> errors = sc.CheckSpan(span, grammar);
-            if (errors.Count > 0)
+            List<Error> errors2 = sc.CheckSpan(span, grammar);
+            if (errors2.Count > 0)
             {
-                throw new InvalidOperationException();
+                errors.AddRange(errors2);
+                throw new InvalidOperationException("There were errors while checking the spans.");
             }
 
             List<DefinitionExpression> defs = new List<DefinitionExpression>();
 
             foreach (Span defspan in span.Subspans)
             {
+                if (defspan.Node == grammar.node_grammar_1_comment)
+                {
+                    continue;
+                }
+                if (defspan.Node == grammar.node_grammar_2_import_002D_stmt)
+                {
+                    var importedDefs = ImportDefinitionsFromFile(grammar, defspan, errors);
+                    // TODO: check for name collisions
+                    defs.AddRange(importedDefs);
+                    continue;
+                }
+
                 if (defspan.Node != grammar.node_grammar_0_definition)
+                    // TODO: add an error? throw an exception?
                     continue;
 
                 DefinitionExpression def = new DefinitionExpression();
@@ -147,6 +161,22 @@ namespace MetaphysicsIndustries.Giza
             }
 
             return defs.ToArray();
+        }
+
+        DefinitionExpression[] ImportDefinitionsFromFile(Supergrammar importingGrammar, Span defspan, List<Error> errors)
+        {
+            var sub = defspan.Subspans[6];
+            var fileToImport = GetLiteralSubExpressionFromSpan(importingGrammar, sub).Value;
+            var content = _fileSource.GetFileContents(fileToImport);
+            var errors2 = new List<Error>();
+            var importedDefs = GetExpressions(content, errors2);
+            if (errors2.Count > 0)
+            {
+                errors.AddRange(errors2);
+                return null;
+            }
+
+            return importedDefs;
         }
 
         Expression GetExpressionFromSpan(Supergrammar grammar, Span exprSpan)
