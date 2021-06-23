@@ -12,8 +12,9 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             // given
             var file1 = @"def1 = 'a'; def2 = 'b';";
+            var mfs = new MockFileSource((s) => file1);
             var file2 = @"import 'file1.txt';";
-            var sgs = new SupergrammarSpanner();
+            var sgs = new SupergrammarSpanner(mfs);
             var errors = new List<Error>();
             // when
             var result = sgs.GetGrammar(file2, errors);
