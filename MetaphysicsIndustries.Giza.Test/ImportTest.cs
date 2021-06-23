@@ -66,5 +66,36 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.That(result.Definitions[0].Name == "def3" ||
                         result.Definitions[1].Name == "def3");
         }
+
+        [Test]
+        public void ImportingSingleDefinitionMultipleTimesOnlyReadsFileOnce()
+        {
+            // given
+            int callCount = 0;
+            var mfs = new MockFileSource((s) =>
+            {
+                callCount++;
+                return "def1 = 'a';";
+            });
+            var file2 = @"import 'file1.txt';";
+            var sgs = new SupergrammarSpanner(mfs);
+            var errors1 = new List<Error>();
+            var errors2 = new List<Error>();
+            // when
+            var result1 = sgs.GetGrammar(file2, errors1);
+            var result2 = sgs.GetGrammar(file2, errors2);
+            // then
+            Assert.AreEqual(0, errors1.Count);
+            Assert.IsNotNull(result1);
+            Assert.AreEqual(1, result1.Definitions.Count);
+            Assert.That(result1.Definitions[0].Name == "def1");
+            // and
+            Assert.AreEqual(0, errors2.Count);
+            Assert.IsNotNull(result2);
+            Assert.AreEqual(1, result2.Definitions.Count);
+            Assert.That(result2.Definitions[0].Name == "def1");
+            // and
+            Assert.AreEqual(1, callCount);
+        }
     }
 }
