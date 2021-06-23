@@ -191,7 +191,7 @@ namespace MetaphysicsIndustries.Giza
                 var source = defspan.Subspans[4];
                 int i;
                 var defNamesToImport = new List<string>();
-                for (i = 11; i < defspan.Subspans.Count - 1; i++)
+                for (i = 11; i < defspan.Subspans.Count - 1; i += 2)
                     defNamesToImport.Add(defspan.Subspans[i].CollectValue());
                 var fileToImport = GetLiteralSubExpressionFromSpan(importingGrammar, source).Value;
                 var content = _fileSource.GetFileContents(fileToImport);
