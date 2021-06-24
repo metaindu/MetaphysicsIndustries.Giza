@@ -127,7 +127,13 @@ namespace MetaphysicsIndustries.Giza
                 if (defspan.Node == grammar.node_grammar_2_import_002D_stmt)
                 {
                     var importedDefs = ImportDefinitionsFromFile(grammar, defspan, errors);
-                    // TODO: check for name collisions
+                    var importedDefNames = new HashSet<string>(
+                        importedDefs.Select(d => d.Name));
+                    foreach (var def1 in defs.ToArray())
+                    {
+                        if (importedDefNames.Contains(def1.Name))
+                            defs.Remove(def1);
+                    }
                     defs.AddRange(importedDefs);
                     continue;
                 }
