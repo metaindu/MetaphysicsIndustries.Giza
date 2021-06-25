@@ -36,6 +36,8 @@ using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Giza
 {
+    // TODO: remove the base class. A definition *has* an expression, not *is*
+    //       an expression.
     public class DefinitionExpression : Expression
     {
         public DefinitionExpression(string name="",
