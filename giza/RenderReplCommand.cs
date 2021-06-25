@@ -64,6 +64,11 @@ namespace giza
                     Type=ParameterType.String,
                     Description="Save the c# class to the specified file, instead of printing it out",
                 },
+
+                // TODO: specify base class to inherit
+                // TODO: exclude imported
+                // TODO: get imported defs from base class
+                // TODO: "using namespace"s
             };
         }
 

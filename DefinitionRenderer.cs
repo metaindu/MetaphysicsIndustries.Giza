@@ -66,6 +66,7 @@ namespace MetaphysicsIndustries.Giza
                 sb.AppendLine();
             }
 
+            // TODO: sort the list of definitions
             foreach (Definition def in defs)
             {
                 string name = string.Format("def_{0}", RenderIdentifier(def.Name));
