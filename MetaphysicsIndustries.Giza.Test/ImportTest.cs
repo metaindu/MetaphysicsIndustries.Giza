@@ -146,7 +146,6 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void ImportedDefinitionReplacesExistingWithSameName()
         {
-
             // given
             int callCount = 0;
             const string file1 = "def1 = 'a';";
@@ -172,6 +171,54 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(1, result.Definitions[0].Nodes.Count);
             Assert.IsInstanceOf<CharNode>(result.Definitions[0].Nodes[0]);
             var node = (CharNode) (result.Definitions[0].Nodes[0]);
+            Assert.That(node.CharClass.Matches('b'));
+            Assert.That(!node.CharClass.Matches('a'));
+        }
+
+        [Test]
+        public void AliasRenamesImportedDefinition()
+        {
+            // given
+            int callCount = 0;
+            const string file1 = "def1 = 'a';";
+            const string file2 = "def1 = 'b';";
+            const string file3 = "from 'file1.txt' import def1;" +
+                                 "from 'file2.txt' import def1 as def2;";
+            var mfs = new MockFileSource((s) =>
+            {
+                if (s == "file1.txt") return file1;
+                if (s == "file2.txt") return file2;
+                if (s == "file3.txt") return file3;
+
+                throw new FileNotFoundException(s);
+            });
+            var sgs = new SupergrammarSpanner(mfs);
+            var errors = new List<Error>();
+            // when
+            var result = sgs.GetGrammar(file3, errors);
+            // then
+            Assert.AreEqual(0, errors.Count);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(2, result.Definitions.Count);
+
+            Assert.That(result.Definitions[0].Name == "def1" ||
+                        result.Definitions[0].Name == "def2");
+            Assert.That(result.Definitions[1].Name == "def1" ||
+                        result.Definitions[1].Name == "def2");
+            var def1 = (result.Definitions[0].Name == "def1" ?
+                result.Definitions[0] : result.Definitions[1]);
+            var def2 = (result.Definitions[0].Name == "def2" ?
+                result.Definitions[0] : result.Definitions[1]);
+
+            Assert.AreEqual(1, def1.Nodes.Count);
+            Assert.IsInstanceOf<CharNode>(def1.Nodes[0]);
+            var node = (CharNode) (def1.Nodes[0]);
+            Assert.That(node.CharClass.Matches('a'));
+            Assert.That(!node.CharClass.Matches('b'));
+
+            Assert.AreEqual(1, def2.Nodes.Count);
+            Assert.IsInstanceOf<CharNode>(def2.Nodes[0]);
+            node = (CharNode) (def2.Nodes[0]);
             Assert.That(node.CharClass.Matches('b'));
             Assert.That(!node.CharClass.Matches('a'));
         }

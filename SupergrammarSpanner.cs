@@ -172,14 +172,14 @@ namespace MetaphysicsIndustries.Giza
 
         private Dictionary<string, Dictionary<string, DefinitionExpression>> _importCache =
             new Dictionary<string, Dictionary<string, DefinitionExpression>>();
-        DefinitionExpression[] ImportDefinitionsFromFile(Supergrammar importingGrammar, Span defspan,
-            List<Error> errors)
+        DefinitionExpression[] ImportDefinitionsFromFile(
+            Supergrammar importingGrammar, Span defspan, List<Error> errors)
         {
             if (defspan.Node != importingGrammar.node_grammar_2_import_002D_stmt)
                 throw new ArgumentException("The span must describe an import-stmt.");
             var stmtType = defspan.Subspans[0];
             Span source;
-            List<string> defNamesToImport = null;
+            List<Tuple<string, string>> defNamesToImport = null;
             IEnumerable<DefinitionExpression> defsToImport;
             if (stmtType.Node == importingGrammar.node_import_002D_stmt_0_import)
             {
@@ -189,9 +189,16 @@ namespace MetaphysicsIndustries.Giza
             {
                 source = defspan.Subspans[4];
                 int i;
-                defNamesToImport = new List<string>();
+                defNamesToImport = new List<Tuple<string, string>>();
                 for (i = 11; i < defspan.Subspans.Count - 1; i += 2)
-                    defNamesToImport.Add(defspan.Subspans[i].CollectValue());
+                {
+                    var importRef = defspan.Subspans[i];
+                    var sourceName = importRef.Subspans[0].CollectValue();
+                    string destName = sourceName;
+                    if (importRef.Subspans.Count > 1)
+                        destName = importRef.Subspans[3].CollectValue();
+                    defNamesToImport.Add(new Tuple<string, string>(sourceName, destName));
+                }
             }
             else
             {
@@ -213,6 +220,13 @@ namespace MetaphysicsIndustries.Giza
                     return null;
                 }
 
+                var importedGrammar = GetGrammar(content, errors2);
+                if (errors2.Count > 0)
+                {
+                    errors.AddRange(errors2);
+                    return null;
+                }
+
                 var importedDefsByName1 =
                     importedDefs.ToDictionary(
                         d => d.Name,
@@ -226,16 +240,23 @@ namespace MetaphysicsIndustries.Giza
             {
                 var defsToImport1 = new List<DefinitionExpression>();
                 defsToImport = defsToImport1;
-                foreach (var name in defNamesToImport)
+                foreach (var namePair in defNamesToImport)
                 {
-                    if (!importedDefsByName.ContainsKey(name))
+                    var sourceName = namePair.Item1;
+                    var destName = namePair.Item2;
+                    if (!importedDefsByName.ContainsKey(sourceName))
                         errors.Add(new ImportError
                         {
                             ErrorType = ImportError.DefinitionNotFound,
-                            DefinitionName = name
+                            DefinitionName = sourceName
                         });
                     else
-                        defsToImport1.Add(importedDefsByName[name]);
+                    {
+                        var sourceDef = importedDefsByName[sourceName];
+                        var destDef = new DefinitionExpression(destName,
+                            sourceDef.Directives, sourceDef.Items);
+                        defsToImport1.Add(destDef);
+                    }
                 }
             }
             else
