@@ -17,6 +17,19 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 // USA
 
+/*
+ * DefinitionExpression and related classes form the set of domain objects for
+ * the supergrammar. That is, instances of the classes represent element of a
+ * grammar. There are no nodes.
+ *
+ * In contrast, the Definition class represents a defintion within a grammar
+ * that is ready to be used by Parser. It is equivalent to a kind of DFA, or
+ * state machine, with all of the states represented by nodes. It does not use
+ * hierarchical trees of Expression and ExpressionItem.
+ *
+ * TODO: rename these and related classes to make the distinction more apparent.
+ */
+
 using System;
 
 using System.Collections.Generic;
