@@ -64,8 +64,14 @@ namespace giza
                     Type=ParameterType.String,
                     Description="Save the c# class to the specified file, instead of printing it out",
                 },
+                new Option {
+                    Name="base",
+                    Type = ParameterType.String,
+                    Description = "The base class for the class to be " +
+                                  "rendered (default is " +
+                                  "'MetaphysicsIndustries.Giza.Grammar')",
+                },
 
-                // TODO: specify base class to inherit
                 // TODO: exclude imported
                 // TODO: get imported defs from base class
                 // TODO: "using namespace"s
@@ -78,6 +84,7 @@ namespace giza
             var ns = (string)args["namespace"] ?? "MetaphysicsIndustries.Giza";
             var singleton = (bool)args["singleton"];
             var toFile = (string)args["to-file"];
+            var baseClassName = (string) args["base"] ?? "Grammar";
 
             var className = (string)args["class-name"];
             var defnames = (string[])args["def-names"];
@@ -118,7 +125,8 @@ namespace giza
             }
 
             var dr = new DefinitionRenderer();
-            var cs = dr.RenderDefinitionsAsCSharpClass(className, g.Definitions, ns, singleton);
+            var cs = dr.RenderDefinitionsAsCSharpClass(className,
+                g.Definitions, ns, singleton, baseClassName);
 
             if (!string.IsNullOrEmpty(toFile))
             {

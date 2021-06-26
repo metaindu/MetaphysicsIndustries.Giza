@@ -27,7 +27,9 @@ namespace MetaphysicsIndustries.Giza
 {
     public class DefinitionRenderer
     {
-        public string RenderDefinitionsAsCSharpClass(string className, IEnumerable<Definition> defs, string ns=null, bool singleton=false)
+        public string RenderDefinitionsAsCSharpClass(
+            string className, IEnumerable<Definition> defs, string ns=null,
+            bool singleton=false, string baseClassName="Grammar")
         {
             Dictionary<Definition, string> defnames = new Dictionary<Definition, string>();
 
@@ -53,7 +55,8 @@ namespace MetaphysicsIndustries.Giza
             }
 
             sb.Append(indent);
-            sb.AppendFormat("public class {0} : Grammar", RenderIdentifier(className));
+            sb.AppendFormat("public class {0} : {1}",
+                RenderIdentifier(className), baseClassName);
             sb.AppendLine();
             sb.Append(indent);
             sb.AppendLine("{");
