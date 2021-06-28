@@ -29,16 +29,23 @@ namespace MetaphysicsIndustries.Giza
     {
         public string RenderDefinitionsAsCSharpClass(
             string className, IEnumerable<Definition> defs, string ns=null,
-            bool singleton=false, string baseClassName="Grammar")
+            bool singleton=false, string baseClassName="Grammar",
+            IEnumerable<string> usings=null)
         {
             Dictionary<Definition, string> defnames = new Dictionary<Definition, string>();
 
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("using System;");
+
+            HashSet<string> usings2 = new HashSet<string>();
+            if (usings != null)
+                usings2.AddRange(usings);
             if (ns != "MetaphysicsIndustries.Giza")
-            {
-                sb.AppendLine("using MetaphysicsIndustries.Giza;");
-            }
+                usings2.Add("MetaphysicsIndustries.Giza");
+            var usings3 = usings2.ToList();
+            usings3.Sort();
+            foreach (var u in usings3)
+                sb.AppendLine($"using {u};");
             sb.AppendLine();
 
             string indent;

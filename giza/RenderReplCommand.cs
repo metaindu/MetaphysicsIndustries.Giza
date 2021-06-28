@@ -71,10 +71,17 @@ namespace giza
                                   "rendered (default is " +
                                   "'MetaphysicsIndustries.Giza.Grammar')",
                 },
+                new Option
+                {
+                    Name="using",
+                    Type=ParameterType.StringArray,
+                    Description="A namespace to reference in a using " +
+                                "statement at the top of the file. Can be " +
+                                "specified multiple times.",
+                }
 
                 // TODO: exclude imported
                 // TODO: get imported defs from base class
-                // TODO: "using namespace"s
             };
         }
 
@@ -85,6 +92,7 @@ namespace giza
             var singleton = (bool)args["singleton"];
             var toFile = (string)args["to-file"];
             var baseClassName = (string) args["base"] ?? "Grammar";
+            var usings = (string[]) args["using"];
 
             var className = (string)args["class-name"];
             var defnames = (string[])args["def-names"];
@@ -126,7 +134,7 @@ namespace giza
 
             var dr = new DefinitionRenderer();
             var cs = dr.RenderDefinitionsAsCSharpClass(className,
-                g.Definitions, ns, singleton, baseClassName);
+                g.Definitions, ns, singleton, baseClassName, usings);
 
             if (!string.IsNullOrEmpty(toFile))
             {
