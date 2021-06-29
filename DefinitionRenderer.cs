@@ -32,6 +32,10 @@ namespace MetaphysicsIndustries.Giza
             bool singleton=false, string baseClassName="Grammar",
             IEnumerable<string> usings=null)
         {
+            var defs2 = defs.ToList();
+            defs2.Sort((a, b) =>
+                string.Compare(a.Name, b.Name, StringComparison.Ordinal));
+
             Dictionary<Definition, string> defnames = new Dictionary<Definition, string>();
 
             StringBuilder sb = new StringBuilder();
@@ -76,8 +80,7 @@ namespace MetaphysicsIndustries.Giza
                 sb.AppendLine();
             }
 
-            // TODO: sort the list of definitions
-            foreach (Definition def in defs)
+            foreach (var def in defs2)
             {
                 string name = string.Format("def_{0}", RenderIdentifier(def.Name));
 
@@ -95,7 +98,7 @@ namespace MetaphysicsIndustries.Giza
 
             Dictionary<Node, string> nodenames = new Dictionary<Node, string>();
 
-            foreach (Definition def in defs)
+            foreach (var def in defs2)
             {
                 foreach (Node node in def.Nodes)
                 {
@@ -132,7 +135,7 @@ namespace MetaphysicsIndustries.Giza
             sb.AppendLine("    {");
 
             string indent2 = indent + "        ";
-            foreach (Definition def in defs)
+            foreach (var def in defs2)
             {
                 sb.Append(indent2);
                 sb.AppendFormat("Definitions.Add({0});", defnames[def]);
@@ -141,7 +144,7 @@ namespace MetaphysicsIndustries.Giza
 
             sb.AppendLine();
 
-            foreach (Definition def in defs)
+            foreach (var def in defs2)
             {
                 foreach (DefinitionDirective dd in def.Directives)
                 {
