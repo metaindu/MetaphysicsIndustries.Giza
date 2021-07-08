@@ -30,11 +30,16 @@ namespace MetaphysicsIndustries.Giza
         public string RenderDefinitionsAsCSharpClass(
             string className, IEnumerable<Definition> defs, string ns=null,
             bool singleton=false, string baseClassName="Grammar",
-            IEnumerable<string> usings=null)
+            IEnumerable<string> usings=null, bool skipImported=false)
         {
-            var defs2 = defs.ToList();
-            defs2.Sort((a, b) =>
+            var defsSorted = defs.ToList();
+            defsSorted.Sort((a, b) =>
                 string.Compare(a.Name, b.Name, StringComparison.Ordinal));
+            IEnumerable<Definition> defsToRender;
+            if (skipImported)
+                defsToRender = defsSorted.Where(d => !d.IsImported).ToList();
+            else
+                defsToRender = defsSorted;
 
             Dictionary<Definition, string> defnames = new Dictionary<Definition, string>();
 
@@ -80,11 +85,14 @@ namespace MetaphysicsIndustries.Giza
                 sb.AppendLine();
             }
 
-            foreach (var def in defs2)
+            foreach (var def in defsSorted)
             {
                 string name = string.Format("def_{0}", RenderIdentifier(def.Name));
-
                 defnames[def] = name;
+            }
+            foreach (var def in defsToRender)
+            {
+                var name = defnames[def];
 
                 sb.Append(indent);
                 sb.AppendFormat(
@@ -98,7 +106,7 @@ namespace MetaphysicsIndustries.Giza
 
             Dictionary<Node, string> nodenames = new Dictionary<Node, string>();
 
-            foreach (var def in defs2)
+            foreach (var def in defsToRender)
             {
                 foreach (Node node in def.Nodes)
                 {
@@ -135,7 +143,7 @@ namespace MetaphysicsIndustries.Giza
             sb.AppendLine("    {");
 
             string indent2 = indent + "        ";
-            foreach (var def in defs2)
+            foreach (var def in defsToRender)
             {
                 sb.Append(indent2);
                 sb.AppendFormat("Definitions.Add({0});", defnames[def]);
@@ -144,7 +152,7 @@ namespace MetaphysicsIndustries.Giza
 
             sb.AppendLine();
 
-            foreach (var def in defs2)
+            foreach (var def in defsToRender)
             {
                 foreach (DefinitionDirective dd in def.Directives)
                 {

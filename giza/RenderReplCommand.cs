@@ -78,10 +78,14 @@ namespace giza
                     Description="A namespace to reference in a using " +
                                 "statement at the top of the file. Can be " +
                                 "specified multiple times.",
-                }
-
-                // TODO: exclude imported
-                // TODO: get imported defs from base class
+                },
+                new Option()
+                {
+                    Name="skip-imported",
+                    Type=ParameterType.Flag,
+                    Description="Don't render definitions that were " +
+                                "imported from other files.",
+                },
             };
         }
 
@@ -93,6 +97,7 @@ namespace giza
             var toFile = (string)args["to-file"];
             var baseClassName = (string) args["base"] ?? "Grammar";
             var usings = (string[]) args["using"];
+            var skipImported = (bool) args["skip-imported"];
 
             var className = (string)args["class-name"];
             var defnames = (string[])args["def-names"];
@@ -132,9 +137,11 @@ namespace giza
                 g = new Grammar(db.BuildDefinitions(alldefs));
             }
 
+            IEnumerable<Definition> defs2 = g.Definitions;
+
             var dr = new DefinitionRenderer();
             var cs = dr.RenderDefinitionsAsCSharpClass(className,
-                g.Definitions, ns, singleton, baseClassName, usings);
+                defs2, ns, singleton, baseClassName, usings, skipImported);
 
             if (!string.IsNullOrEmpty(toFile))
             {
