@@ -52,6 +52,8 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
+        public override string ToString() => $"DefinitionExpression {Name}";
+
         public string Name = string.Empty;
         public readonly HashSet<DefinitionDirective> Directives = new HashSet<DefinitionDirective>();
     }
