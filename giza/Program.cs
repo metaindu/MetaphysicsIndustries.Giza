@@ -109,6 +109,8 @@ namespace giza
             commander.Commands.Add("parse", new ParseReplCommand(env));
             commander.Commands.Add("span", new SpanReplCommand(env));
             commander.Commands.Add("render", new RenderReplCommand(env));
+            commander.Commands.Add("cd", new CdReplCommand(env));
+            commander.Commands.Add("pwd", new PwdReplCommand(env));
 
             string line;
 

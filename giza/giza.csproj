@@ -46,9 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CdReplCommand.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="getline.cs" />
+    <Compile Include="PwdReplCommand.cs" />
     <Compile Include="RenderCommand.cs" />
     <Compile Include="ParseCommand.cs" />
     <Compile Include="SpanCommand.cs" />
