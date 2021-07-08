@@ -56,6 +56,7 @@ namespace MetaphysicsIndustries.Giza
 
         public string Name = string.Empty;
         public readonly HashSet<DefinitionDirective> Directives = new HashSet<DefinitionDirective>();
+        public bool IsImported { get; set; } = false;
     }
 }
 

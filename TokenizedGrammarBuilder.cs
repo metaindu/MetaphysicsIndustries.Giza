@@ -68,6 +68,7 @@ namespace MetaphysicsIndustries.Giza
                         {
                             DefinitionExpression di = new DefinitionExpression {
                                 Name = defname,
+                                IsImported = def.IsImported,
                             };
                             di.Items.Add(new LiteralSubExpression{Value=literal.Value});
                             di.Directives.Add(DefinitionDirective.Token);
@@ -86,6 +87,7 @@ namespace MetaphysicsIndustries.Giza
                         {
                             DefinitionExpression di = new DefinitionExpression {
                                 Name = defname,
+                                IsImported = def.IsImported,
                             };
                             di.Items.Add(new CharClassSubExpression() { CharClass = cc.CharClass });
                             di.Directives.Add(DefinitionDirective.Token);
@@ -107,6 +109,7 @@ namespace MetaphysicsIndustries.Giza
             {
                 var def2 = new DefinitionExpression {
                     Name = def.Name,
+                    IsImported = def.IsImported,
                 };
                 def2.Items.AddRange(def.Items);
                 def2.Directives.UnionWith(def.Directives);
@@ -125,6 +128,7 @@ namespace MetaphysicsIndustries.Giza
             foreach (DefinitionExpression di in nonTokenizedDefs)
             {
                 Definition def = new Definition(di.Name);
+                def.IsImported = di.IsImported;
                 defs2.Add(def);
                 defsByName[di.Name] = def;
                 def.Directives.UnionWith(di.Directives);

@@ -253,16 +253,29 @@ namespace MetaphysicsIndustries.Giza
                         });
                     else
                     {
+                        // TODO: refactor to de-duplicate
                         var sourceDef = importedDefsByName[sourceName];
                         var destDef = new DefinitionExpression(destName,
                             sourceDef.Directives, sourceDef.Items);
+                        destDef.IsImported = true;
                         defsToImport1.Add(destDef);
                     }
                 }
             }
             else
             {
-                defsToImport = importedDefsByName.Values;
+                var defsToImport1 = new List<DefinitionExpression>();
+                defsToImport = defsToImport1;
+                foreach (var defToImport in importedDefsByName.Values)
+                {
+                    // TODO: refactor to de-duplicate
+                    var sourceDef = defToImport;
+                    var destName = defToImport.Name;
+                    var destDef = new DefinitionExpression(destName,
+                        sourceDef.Directives, sourceDef.Items);
+                    destDef.IsImported = true;
+                    defsToImport1.Add(destDef);
+                }
             }
 
             return defsToImport.ToArray();

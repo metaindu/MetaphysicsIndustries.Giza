@@ -41,6 +41,7 @@ namespace MetaphysicsIndustries.Giza
             foreach (DefinitionExpression di in defs)
             {
                 var def = new Definition(di.Name);
+                def.IsImported = di.IsImported;
                 defs2.Add(def);
                 defsByName[di.Name] = def;
                 def.Directives.UnionWith(di.Directives);

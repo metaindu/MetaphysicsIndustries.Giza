@@ -27,6 +27,8 @@ namespace MetaphysicsIndustries.Giza.Test
                         result.Definitions[1].Name == "def1");
             Assert.That(result.Definitions[0].Name == "def2" ||
                         result.Definitions[1].Name == "def2");
+            Assert.IsTrue(result.Definitions[0].IsImported);
+            Assert.IsTrue(result.Definitions[1].IsImported);
         }
 
         [Test]
@@ -45,6 +47,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsNotNull(result);
             Assert.AreEqual(1, result.Definitions.Count);
             Assert.That(result.Definitions[0].Name == "def1");
+            Assert.IsTrue(result.Definitions[0].IsImported);
         }
 
         [Test]
@@ -66,6 +69,8 @@ namespace MetaphysicsIndustries.Giza.Test
                         result.Definitions[1].Name == "def1");
             Assert.That(result.Definitions[0].Name == "def3" ||
                         result.Definitions[1].Name == "def3");
+            Assert.IsTrue(result.Definitions[0].IsImported);
+            Assert.IsTrue(result.Definitions[1].IsImported);
         }
 
         [Test]
@@ -103,7 +108,6 @@ namespace MetaphysicsIndustries.Giza.Test
         public void DiamondPatternAllDefinitionsImported()
         {
             // given
-            int callCount = 0;
             const string file1 = "def1 = 'a';";
             const string file2 = @"import 'file1.txt'; def2 = 'b';";
             const string file3 = @"import 'file1.txt'; def3 = 'c';";
@@ -147,7 +151,6 @@ namespace MetaphysicsIndustries.Giza.Test
         public void ImportedDefinitionReplacesExistingWithSameName()
         {
             // given
-            int callCount = 0;
             const string file1 = "def1 = 'a';";
             const string file2 = "def1 = 'b';";
             const string file3 = "import 'file1.txt'; import 'file2.txt';";
@@ -179,7 +182,6 @@ namespace MetaphysicsIndustries.Giza.Test
         public void AliasRenamesImportedDefinition()
         {
             // given
-            int callCount = 0;
             const string file1 = "def1 = 'a';";
             const string file2 = "def1 = 'b';";
             const string file3 = "from 'file1.txt' import def1;" +
