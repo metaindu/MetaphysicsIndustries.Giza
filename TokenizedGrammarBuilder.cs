@@ -120,6 +120,11 @@ namespace MetaphysicsIndustries.Giza
                 def2.Directives.Add(DefinitionDirective.MindWhitespace);
                 tokenizedDefsDetokenized.Add(def2);
             }
+
+            // TODO: somehow remove the call to db.BuildDefinitions.
+            // TODO: change this class into TokenizeTransform, which implements
+            //       ITransform. return a collection of DefinitionExpression,
+            //       instead of Definition
             Definition[] tokenizedDefs2 = db.BuildDefinitions(tokenizedDefsDetokenized.ToArray());
 
             List<Definition> defs2 = new List<Definition>();
