@@ -4,6 +4,6 @@ namespace MetaphysicsIndustries.Giza
 {
     public class PreGrammar
     {
-        public List<DefinitionExpression> Defintions;
+        public List<DefinitionExpression> Definitions;
     }
 }

@@ -111,7 +111,7 @@ namespace giza
             }
 
             var ec = new ExpressionChecker();
-            errors = ec.CheckDefinitions(pg.Defintions);
+            errors = ec.CheckDefinitions(pg.Definitions);
 
             if (errors != null && errors.Count > 0)
             {
@@ -125,7 +125,7 @@ namespace giza
             }
 
             DefinitionBuilder db = new DefinitionBuilder();
-            var defs = db.BuildDefinitions(pg.Defintions);
+            var defs = db.BuildDefinitions(pg.Definitions);
 
             var startDefinition = defs.First(d => d.Name == startDef);
             var g = new Grammar(defs); // the definitions will be linked to the grammar. so we're not _really_ throwing g away after creating it, even though that's what it looks like.

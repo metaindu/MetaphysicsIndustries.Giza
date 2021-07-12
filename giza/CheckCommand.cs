@@ -79,11 +79,11 @@ namespace giza
                 var ec = new ExpressionChecker();
                 if (tokenized)
                 {
-                    errors2 = ec.CheckDefinitionForParsing(pg.Defintions);
+                    errors2 = ec.CheckDefinitionForParsing(pg.Definitions);
                 }
                 else
                 {
-                    errors2 = ec.CheckDefinitions(pg.Defintions);
+                    errors2 = ec.CheckDefinitions(pg.Definitions);
                 }
 
                 errors.AddRange(errors2);
@@ -102,7 +102,7 @@ namespace giza
                 else
                 {
                     var db = new DefinitionBuilder();
-                    var defs2 = db.BuildDefinitions(pg.Defintions);
+                    var defs2 = db.BuildDefinitions(pg.Definitions);
                     var dc = new DefinitionChecker();
                     var errors2 = dc.CheckDefinitions(defs2);
                     errors.AddRange(errors2);
@@ -123,7 +123,7 @@ namespace giza
                 else
                 {
                     DefinitionBuilder db = new DefinitionBuilder();
-                    defs = db.BuildDefinitions(pg.Defintions);
+                    defs = db.BuildDefinitions(pg.Definitions);
                 }
 
                 Console.WriteLine("There are {0} definitions in the grammar:", defs.Count());

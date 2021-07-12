@@ -85,7 +85,7 @@ namespace MetaphysicsIndustries.Giza
         public Grammar GetGrammar(string input, List<Error> errors)
         {
             var pg = GetPreGrammar(input, errors);
-            var dis = pg.Defintions;
+            var dis = pg.Definitions;
 
             if (errors.Count > 0 || dis == null)
             {
@@ -170,7 +170,7 @@ namespace MetaphysicsIndustries.Giza
 
             return new PreGrammar()
             {
-                Defintions = defs,
+                Definitions = defs,
             };
         }
 
@@ -219,7 +219,7 @@ namespace MetaphysicsIndustries.Giza
                 var content = _fileSource.GetFileContents(fileToImport);
                 var errors2 = new List<Error>();
                 var ipg = GetPreGrammar(content, errors2);
-                var importedDefs = ipg.Defintions;
+                var importedDefs = ipg.Definitions;
                 if (errors2.Count > 0)
                 {
                     errors.AddRange(errors2);

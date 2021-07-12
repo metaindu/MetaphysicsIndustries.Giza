@@ -43,7 +43,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
 
             var dr = new DefinitionRenderer();
-            var result = dr.RenderDefinitionExprsAsGrammarText(pg.Defintions);
+            var result = dr.RenderDefinitionExprsAsGrammarText(pg.Definitions);
 
             Assert.AreEqual(input, result);
         }
@@ -61,7 +61,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
 
             var dr = new DefinitionRenderer();
-            var result = dr.RenderDefinitionExprsAsGrammarText(pg.Defintions);
+            var result = dr.RenderDefinitionExprsAsGrammarText(pg.Definitions);
 
             Assert.AreEqual(input, result);
         }
@@ -80,7 +80,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
 
             var dr = new DefinitionRenderer();
-            var result = dr.RenderDefinitionExprsAsGrammarText(pg.Defintions);
+            var result = dr.RenderDefinitionExprsAsGrammarText(pg.Definitions);
 
             Assert.AreEqual(input, result);
         }
@@ -103,7 +103,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
 
             var dr = new DefinitionRenderer();
-            var result = dr.RenderDefinitionExprsAsGrammarText(pg.Defintions);
+            var result = dr.RenderDefinitionExprsAsGrammarText(pg.Definitions);
 
             Assert.AreEqual(input, result);
         }

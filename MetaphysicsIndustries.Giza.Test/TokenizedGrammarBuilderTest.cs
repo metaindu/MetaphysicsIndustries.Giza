@@ -40,7 +40,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 )
             };
-            var pg = new PreGrammar() {Defintions = dis.ToList()};
+            var pg = new PreGrammar() {Definitions = dis.ToList()};
             var tgb = new TokenizedGrammarBuilder();
 
 
@@ -99,7 +99,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 )
             };
-            var pg = new PreGrammar() {Defintions = dis.ToList()};
+            var pg = new PreGrammar() {Definitions = dis.ToList()};
             var tgb = new TokenizedGrammarBuilder();
 
 
@@ -161,7 +161,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 )
             };
-            var pg = new PreGrammar() {Defintions = dis.ToList()};
+            var pg = new PreGrammar() {Definitions = dis.ToList()};
             var tgb = new TokenizedGrammarBuilder();
 
 
@@ -225,7 +225,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 )
             };
-            var pg = new PreGrammar() {Defintions = dis.ToList()};
+            var pg = new PreGrammar() {Definitions = dis.ToList()};
             var tgb = new TokenizedGrammarBuilder();
 
 
@@ -295,7 +295,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 )
             };
-            var pg = new PreGrammar() {Defintions = dis.ToList()};
+            var pg = new PreGrammar() {Definitions = dis.ToList()};
             var tgb = new TokenizedGrammarBuilder();
 
 
@@ -339,7 +339,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 )
             };
-            var pg = new PreGrammar() {Defintions = dis.ToList()};
+            var pg = new PreGrammar() {Definitions = dis.ToList()};
             var tgb = new TokenizedGrammarBuilder();
 
 
@@ -386,7 +386,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 )
             };
-            var pg = new PreGrammar() {Defintions = dis.ToList()};
+            var pg = new PreGrammar() {Definitions = dis.ToList()};
             var tgb = new TokenizedGrammarBuilder();
 
 
@@ -432,7 +432,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 )
             };
-            var pg = new PreGrammar() {Defintions = dis.ToList()};
+            var pg = new PreGrammar() {Definitions = dis.ToList()};
             var tgb = new TokenizedGrammarBuilder();
 
 
@@ -489,7 +489,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 )
             };
-            var pg = new PreGrammar() {Defintions = dis.ToList()};
+            var pg = new PreGrammar() {Definitions = dis.ToList()};
             var tgb = new TokenizedGrammarBuilder();
 
 
@@ -534,7 +534,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 )
             };
-            var pg = new PreGrammar() {Defintions = dis.ToList()};
+            var pg = new PreGrammar() {Definitions = dis.ToList()};
             var tgb = new TokenizedGrammarBuilder();
 
 
@@ -582,7 +582,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 )
             };
-            var pg = new PreGrammar() {Defintions = dis.ToList()};
+            var pg = new PreGrammar() {Definitions = dis.ToList()};
             var tgb = new TokenizedGrammarBuilder();
 
 
@@ -630,7 +630,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 )
             };
-            var pg = new PreGrammar() {Defintions = dis.ToList()};
+            var pg = new PreGrammar() {Definitions = dis.ToList()};
             var tgb = new TokenizedGrammarBuilder();
 
 

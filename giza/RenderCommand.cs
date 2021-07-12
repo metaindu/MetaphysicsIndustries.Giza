@@ -103,11 +103,11 @@ namespace giza
             var ec = new ExpressionChecker();
             if (tokenized)
             {
-                errors = ec.CheckDefinitionForParsing(pg.Defintions);
+                errors = ec.CheckDefinitionForParsing(pg.Definitions);
             }
             else
             {
-                errors = ec.CheckDefinitions(pg.Defintions);
+                errors = ec.CheckDefinitions(pg.Definitions);
             }
 
             if (errors != null && errors.Count > 0)
@@ -131,7 +131,7 @@ namespace giza
             else
             {
                 var db = new DefinitionBuilder();
-                var defs = db.BuildDefinitions(pg.Defintions);
+                var defs = db.BuildDefinitions(pg.Definitions);
 
                 g = new Grammar();
                 g.Definitions.AddRange(defs);

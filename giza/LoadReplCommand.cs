@@ -51,7 +51,7 @@ namespace giza
             var errors = new List<Error>();
             var spanner = new SupergrammarSpanner();
             var pg = spanner.GetPreGrammar(contents, errors);
-            var defs = pg.Defintions;
+            var defs = pg.Definitions;
             if (errors.ContainsNonWarnings())
             {
                 Console.WriteLine("There are errors in the loaded file:");

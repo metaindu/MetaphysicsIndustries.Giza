@@ -172,7 +172,7 @@ namespace giza
                         {
                             var errors = new List<Error>();
                             var pg = spanner.GetPreGrammar(buffer.ToString(), errors);
-                            var defs = pg.Defintions;
+                            var defs = pg.Definitions;
                             if (!errors.ContainsNonWarnings())
                             {
                                 // good to go

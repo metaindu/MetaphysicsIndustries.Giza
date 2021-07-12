@@ -36,7 +36,7 @@ namespace MetaphysicsIndustries.Giza
 
         public Grammar BuildTokenizedGrammar(PreGrammar pg)
         {
-            var defs = pg.Defintions;
+            var defs = pg.Definitions;
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
             if (errors.GetNonWarningsCount() > 0)
