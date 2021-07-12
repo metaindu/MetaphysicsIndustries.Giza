@@ -70,7 +70,7 @@ namespace giza
         {
             var sgs = new SupergrammarSpanner();
             var errors = new List<Error>();
-            var dis = sgs.GetExpressions(grammar, errors);
+            var pg = sgs.GetPreGrammar(grammar, errors);
 
             if (!errors.ContainsNonWarnings())
             {
@@ -79,11 +79,11 @@ namespace giza
                 var ec = new ExpressionChecker();
                 if (tokenized)
                 {
-                    errors2 = ec.CheckDefinitionInfosForParsing(dis);
+                    errors2 = ec.CheckDefinitionInfosForParsing(pg.Defintions);
                 }
                 else
                 {
-                    errors2 = ec.CheckDefinitionInfos(dis);
+                    errors2 = ec.CheckDefinitionInfos(pg.Defintions);
                 }
 
                 errors.AddRange(errors2);
@@ -94,7 +94,7 @@ namespace giza
                 if (tokenized)
                 {
                     var tgb = new TokenizedGrammarBuilder();
-                    var g = tgb.BuildTokenizedGrammar(dis.ToArray());
+                    var g = tgb.BuildTokenizedGrammar(pg.Defintions);
                     var dc = new DefinitionChecker();
                     var errors2 = dc.CheckDefinitions(g.Definitions);
                     errors.AddRange(errors2);
@@ -102,7 +102,7 @@ namespace giza
                 else
                 {
                     var db = new DefinitionBuilder();
-                    var defs2 = db.BuildDefinitions(dis.ToArray());
+                    var defs2 = db.BuildDefinitions(pg.Defintions);
                     var dc = new DefinitionChecker();
                     var errors2 = dc.CheckDefinitions(defs2);
                     errors.AddRange(errors2);
@@ -117,13 +117,13 @@ namespace giza
                 if (tokenized)
                 {
                     TokenizedGrammarBuilder tgb = new TokenizedGrammarBuilder();
-                    var g = tgb.BuildTokenizedGrammar(dis);
+                    var g = tgb.BuildTokenizedGrammar(pg.Defintions);
                     defs = g.Definitions;
                 }
                 else
                 {
                     DefinitionBuilder db = new DefinitionBuilder();
-                    defs = db.BuildDefinitions(dis);
+                    defs = db.BuildDefinitions(pg.Defintions);
                 }
 
                 Console.WriteLine("There are {0} definitions in the grammar:", defs.Count());

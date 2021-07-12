@@ -100,12 +100,12 @@ namespace giza
         {
             var spanner = new SupergrammarSpanner();
             var grammarErrors = new List<Error>();
-            var dis = spanner.GetExpressions(grammar, grammarErrors);
+            var pg = spanner.GetPreGrammar(grammar, grammarErrors);
 
             if (!grammarErrors.ContainsNonWarnings())
             {
                 var ec = new ExpressionChecker();
-                var errors2 = ec.CheckDefinitionInfosForParsing(dis);
+                var errors2 = ec.CheckDefinitionInfosForParsing(pg.Defintions);
                 grammarErrors.AddRange(errors2);
             }
 
@@ -113,7 +113,7 @@ namespace giza
             if (!grammarErrors.ContainsNonWarnings())
             {
                 var tgb = new TokenizedGrammarBuilder();
-                g = tgb.BuildTokenizedGrammar(dis);
+                g = tgb.BuildTokenizedGrammar(pg.Defintions);
 
                 var dc = new DefinitionChecker();
                 var errors2 = dc.CheckDefinitions(g.Definitions);

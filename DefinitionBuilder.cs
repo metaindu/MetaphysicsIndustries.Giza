@@ -26,7 +26,7 @@ namespace MetaphysicsIndustries.Giza
 {
     public class DefinitionBuilder
     {
-        public Definition[] BuildDefinitions(DefinitionExpression[] defs)
+        public Definition[] BuildDefinitions(IEnumerable<DefinitionExpression> defs)
         {
             var ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionInfosForSpanning(defs);

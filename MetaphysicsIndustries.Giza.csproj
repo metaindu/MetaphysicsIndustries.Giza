@@ -66,6 +66,7 @@
     <Compile Include="FileSource.cs" />
     <Compile Include="IFileSource.cs" />
     <Compile Include="ImportError.cs" />
+    <Compile Include="PreGrammar.cs" />
     <Compile Include="Span.cs" />
     <Compile Include="SupergrammarSpanner.cs" />
     <Content Include="BinarySpanner example grammar.txt" />

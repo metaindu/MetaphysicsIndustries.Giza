@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 
 namespace MetaphysicsIndustries.Giza
@@ -33,8 +34,9 @@ namespace MetaphysicsIndustries.Giza
         // place of that subexpr. In this way, non-tokenized definitions
         // are composed entirely of defrefs.
 
-        public Grammar BuildTokenizedGrammar(DefinitionExpression[] defs)
+        public Grammar BuildTokenizedGrammar(IEnumerable<DefinitionExpression> defs)
         {
+            defs = defs.ToList();
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionInfosForParsing(defs);
             if (errors.GetNonWarningsCount() > 0)

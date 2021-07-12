@@ -50,7 +50,7 @@ namespace MetaphysicsIndustries.Giza
 
         private readonly IFileSource _fileSource;
 
-        public DefinitionExpression[] GetExpressions(string input, List<Error> errors)
+        public PreGrammar GetPreGrammar(string input, List<Error> errors)
         {
             Supergrammar supergrammar = new Supergrammar();
             Spanner spanner = new Spanner(supergrammar.def_grammar);
@@ -78,13 +78,14 @@ namespace MetaphysicsIndustries.Giza
                 return null;
             }
 
-            DefinitionExpression[] dis = BuildExpressions(supergrammar, s2[0], errors);
-            return dis;
+            var pg = BuildExpressions(supergrammar, s2[0], errors);
+            return pg;
         }
 
         public Grammar GetGrammar(string input, List<Error> errors)
         {
-            DefinitionExpression[] dis = GetExpressions(input, errors);
+            var pg = GetPreGrammar(input, errors);
+            var dis = pg.Defintions;
 
             if (errors.Count > 0 || dis == null)
             {
@@ -100,7 +101,7 @@ namespace MetaphysicsIndustries.Giza
             return grammar;
         }
         
-        public DefinitionExpression[] BuildExpressions(Supergrammar grammar, Span span, List<Error> errors)
+        public PreGrammar BuildExpressions(Supergrammar grammar, Span span, List<Error> errors)
         {
             if (!(span.Node is DefRefNode) ||
                 (span.Node as DefRefNode).DefRef != grammar.def_grammar)
@@ -167,7 +168,10 @@ namespace MetaphysicsIndustries.Giza
                 def.Directives.UnionWith(directives);
             }
 
-            return defs.ToArray();
+            return new PreGrammar()
+            {
+                Defintions = defs,
+            };
         }
 
         private Dictionary<string, Dictionary<string, DefinitionExpression>> _importCache =
@@ -214,7 +218,8 @@ namespace MetaphysicsIndustries.Giza
             {
                 var content = _fileSource.GetFileContents(fileToImport);
                 var errors2 = new List<Error>();
-                var importedDefs = GetExpressions(content, errors2);
+                var ipg = GetPreGrammar(content, errors2);
+                var importedDefs = ipg.Defintions;
                 if (errors2.Count > 0)
                 {
                     errors.AddRange(errors2);

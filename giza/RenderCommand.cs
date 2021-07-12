@@ -88,7 +88,7 @@ namespace giza
 
             var sgs = new SupergrammarSpanner();
             var errors = new List<Error>();
-            var dis = sgs.GetExpressions(grammar, errors);
+            var pg = sgs.GetPreGrammar(grammar, errors);
 
             if (errors.Count > 0)
             {
@@ -103,11 +103,11 @@ namespace giza
             var ec = new ExpressionChecker();
             if (tokenized)
             {
-                errors = ec.CheckDefinitionInfosForParsing(dis);
+                errors = ec.CheckDefinitionInfosForParsing(pg.Defintions);
             }
             else
             {
-                errors = ec.CheckDefinitionInfos(dis);
+                errors = ec.CheckDefinitionInfos(pg.Defintions);
             }
 
             if (errors != null && errors.Count > 0)
@@ -126,12 +126,12 @@ namespace giza
             if (tokenized)
             {
                 var tgb = new TokenizedGrammarBuilder();
-                g = tgb.BuildTokenizedGrammar(dis);
+                g = tgb.BuildTokenizedGrammar(pg.Defintions);
             }
             else
             {
                 var db = new DefinitionBuilder();
-                var defs = db.BuildDefinitions(dis);
+                var defs = db.BuildDefinitions(pg.Defintions);
 
                 g = new Grammar();
                 g.Definitions.AddRange(defs);
