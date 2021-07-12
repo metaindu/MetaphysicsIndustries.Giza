@@ -79,11 +79,11 @@ namespace giza
                 var ec = new ExpressionChecker();
                 if (tokenized)
                 {
-                    errors2 = ec.CheckDefinitionInfosForParsing(pg.Defintions);
+                    errors2 = ec.CheckDefinitionForParsing(pg.Defintions);
                 }
                 else
                 {
-                    errors2 = ec.CheckDefinitionInfos(pg.Defintions);
+                    errors2 = ec.CheckDefinitions(pg.Defintions);
                 }
 
                 errors.AddRange(errors2);

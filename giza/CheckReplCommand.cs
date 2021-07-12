@@ -76,11 +76,11 @@ namespace giza
             List<Error> errors;
             if (tokenized)
             {
-                errors = ec.CheckDefinitionInfosForParsing(defs);
+                errors = ec.CheckDefinitionForParsing(defs);
             }
             else
             {
-                errors = ec.CheckDefinitionInfosForSpanning(defs);
+                errors = ec.CheckDefinitionsForSpanning(defs);
             }
 
             if (!errors.ContainsNonWarnings())

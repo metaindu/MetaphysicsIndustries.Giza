@@ -27,11 +27,11 @@ namespace MetaphysicsIndustries.Giza.Test
     public partial class ExpressionCheckerTest
     {
         [Test()]
-        public void TestNullDefinitionInfoArray()
+        public void TestNullDefinitionArray()
         {
             ExpressionChecker ec = new ExpressionChecker();
 
-            Assert.Throws<ArgumentNullException>(() => ec.CheckDefinitionInfos(null));
+            Assert.Throws<ArgumentNullException>(() => ec.CheckDefinitions(null));
         }
 
         [Test()]
@@ -58,7 +58,7 @@ namespace MetaphysicsIndustries.Giza.Test
             ExpressionChecker ec = new ExpressionChecker();
 
 
-            var errors = ec.CheckDefinitionInfos(defs);
+            var errors = ec.CheckDefinitions(defs);
 
 
             Assert.IsNotNull(errors);
@@ -67,7 +67,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var e = (ExpressionError)errors[0];
             Assert.AreEqual(ExpressionError.ReusedExpression, e.ErrorType);
             Assert.AreSame(expr, e.Expression);
-            Assert.AreSame(defs[1], e.DefinitionInfo);
+            Assert.AreSame(defs[1], e.Definition);
         }
 
         [Test()]
@@ -89,7 +89,7 @@ namespace MetaphysicsIndustries.Giza.Test
             ExpressionChecker ec = new ExpressionChecker();
 
 
-            var errors = ec.CheckDefinitionInfos(defs);
+            var errors = ec.CheckDefinitions(defs);
 
 
             Assert.IsNotNull(errors);
@@ -98,7 +98,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var e = (ExpressionError)errors[0];
             Assert.AreEqual(ExpressionError.ReusedExpressionItem, e.ErrorType);
             Assert.AreSame(literal, e.ExpressionItem);
-            Assert.AreSame(defs[1], e.DefinitionInfo);
+            Assert.AreSame(defs[1], e.Definition);
         }
 
         [Test()]
@@ -117,7 +117,7 @@ namespace MetaphysicsIndustries.Giza.Test
             ExpressionChecker ec = new ExpressionChecker();
 
 
-            var errors = ec.CheckDefinitionInfos(defs);
+            var errors = ec.CheckDefinitions(defs);
 
 
             Assert.IsNotNull(errors);
@@ -126,7 +126,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var e = (ExpressionError)errors[0];
             Assert.AreEqual(ExpressionError.ReusedExpressionItem, e.ErrorType);
             Assert.AreSame(literal, e.ExpressionItem);
-            Assert.AreSame(defs[0], e.DefinitionInfo);
+            Assert.AreSame(defs[0], e.Definition);
         }
 
         [Test()]
@@ -150,7 +150,7 @@ namespace MetaphysicsIndustries.Giza.Test
             ExpressionChecker ec = new ExpressionChecker();
 
 
-            var errors = ec.CheckDefinitionInfos(defs);
+            var errors = ec.CheckDefinitions(defs);
 
 
             Assert.IsNotNull(errors);
@@ -159,7 +159,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var e = (ExpressionError)errors[0];
             Assert.AreEqual(ExpressionError.ReusedExpression, e.ErrorType);
             Assert.AreSame(expr, e.Expression);
-            Assert.AreSame(defs[0], e.DefinitionInfo);
+            Assert.AreSame(defs[0], e.Definition);
         }
 
         [Test()]
@@ -181,7 +181,7 @@ namespace MetaphysicsIndustries.Giza.Test
             ExpressionChecker ec = new ExpressionChecker();
 
 
-            var errors = ec.CheckDefinitionInfos(defs);
+            var errors = ec.CheckDefinitions(defs);
 
 
             Assert.IsNotNull(errors);
@@ -191,7 +191,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(ExpressionError.ReusedExpressionItem, e.ErrorType);
             Assert.AreSame(null, e.Expression);
             Assert.AreSame(orexpr, e.ExpressionItem);
-            Assert.AreSame(defs[0], e.DefinitionInfo);
+            Assert.AreSame(defs[0], e.Definition);
         }
 
         [Test()]
@@ -209,7 +209,7 @@ namespace MetaphysicsIndustries.Giza.Test
             ExpressionChecker ec = new ExpressionChecker();
 
 
-            var errors = ec.CheckDefinitionInfos(defs);
+            var errors = ec.CheckDefinitions(defs);
 
 
             Assert.IsNotNull(errors);
@@ -217,7 +217,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var e = (ExpressionError)errors[0];
             Assert.AreEqual(ExpressionError.NullOrEmptyDefinitionName, e.ErrorType);
-            Assert.AreSame(defs[0], e.DefinitionInfo);
+            Assert.AreSame(defs[0], e.Definition);
         }
 
         [Test()]
@@ -235,7 +235,7 @@ namespace MetaphysicsIndustries.Giza.Test
             ExpressionChecker ec = new ExpressionChecker();
 
 
-            var errors = ec.CheckDefinitionInfos(defs);
+            var errors = ec.CheckDefinitions(defs);
 
 
             Assert.IsNotNull(errors);
@@ -243,7 +243,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var e = (ExpressionError)errors[0];
             Assert.AreEqual(ExpressionError.NullOrEmptyDefinitionName, e.ErrorType);
-            Assert.AreSame(defs[0], e.DefinitionInfo);
+            Assert.AreSame(defs[0], e.Definition);
         }
 
         [Test()]
@@ -256,7 +256,7 @@ namespace MetaphysicsIndustries.Giza.Test
             };
 
             ExpressionChecker ec = new ExpressionChecker();
-            List<Error> errors = ec.CheckDefinitionInfos(defs);
+            List<Error> errors = ec.CheckDefinitions(defs);
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
@@ -265,7 +265,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var err = (errors[0] as ExpressionError);
             Assert.AreSame(defs[0], err.Expression);
             Assert.AreSame(null, err.ExpressionItem);
-            Assert.AreSame(defs[0], err.DefinitionInfo);
+            Assert.AreSame(defs[0], err.Definition);
         }
 
         [Test()]
@@ -284,7 +284,7 @@ namespace MetaphysicsIndustries.Giza.Test
             orexpr.Expressions.Add(expr);
 
             ExpressionChecker ec = new ExpressionChecker();
-            List<Error> errors = ec.CheckDefinitionInfos(defs);
+            List<Error> errors = ec.CheckDefinitions(defs);
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
@@ -293,7 +293,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var err = (errors[0] as ExpressionError);
             Assert.AreSame(expr, err.Expression);
             Assert.AreSame(null, err.ExpressionItem);
-            Assert.AreSame(defs[0], err.DefinitionInfo);
+            Assert.AreSame(defs[0], err.Definition);
         }
 
         [Test()]
@@ -309,7 +309,7 @@ namespace MetaphysicsIndustries.Giza.Test
             defs[0].Items.Add(orexpr);
 
             ExpressionChecker ec = new ExpressionChecker();
-            List<Error> errors = ec.CheckDefinitionInfos(defs);
+            List<Error> errors = ec.CheckDefinitions(defs);
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
@@ -317,7 +317,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
             Assert.AreSame(orexpr, err.ExpressionItem);
-            Assert.AreSame(defs[0], err.DefinitionInfo);
+            Assert.AreSame(defs[0], err.Definition);
         }
 
         [Test()]
@@ -336,7 +336,7 @@ namespace MetaphysicsIndustries.Giza.Test
             defs[0].Items.Add(literal);
 
             ExpressionChecker ec = new ExpressionChecker();
-            List<Error> errors = ec.CheckDefinitionInfos(defs);
+            List<Error> errors = ec.CheckDefinitions(defs);
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
@@ -345,7 +345,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var err = (errors[0] as ExpressionError);
             Assert.AreSame(null, err.Expression);
             Assert.AreSame(literal, err.ExpressionItem);
-            Assert.AreSame(defs[0], err.DefinitionInfo);
+            Assert.AreSame(defs[0], err.Definition);
         }
 
         [Test()]
@@ -361,7 +361,7 @@ namespace MetaphysicsIndustries.Giza.Test
             defs[0].Items.Add(defref);
 
             ExpressionChecker ec = new ExpressionChecker();
-            List<Error> errors = ec.CheckDefinitionInfos(defs);
+            List<Error> errors = ec.CheckDefinitions(defs);
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
@@ -370,7 +370,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var err = (errors[0] as ExpressionError);
             Assert.AreSame(null, err.Expression);
             Assert.AreSame(defref, err.ExpressionItem);
-            Assert.AreSame(defs[0], err.DefinitionInfo);
+            Assert.AreSame(defs[0], err.Definition);
         }
 
         [Test()]
@@ -386,7 +386,7 @@ namespace MetaphysicsIndustries.Giza.Test
             defs[0].Items.Add(defref);
 
             ExpressionChecker ec = new ExpressionChecker();
-            List<Error> errors = ec.CheckDefinitionInfos(defs);
+            List<Error> errors = ec.CheckDefinitions(defs);
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
@@ -395,7 +395,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var err = (errors[0] as ExpressionError);
             Assert.AreSame(null, err.Expression);
             Assert.AreSame(defref, err.ExpressionItem);
-            Assert.AreSame(defs[0], err.DefinitionInfo);
+            Assert.AreSame(defs[0], err.Definition);
         }
 
         [Test()]
@@ -411,7 +411,7 @@ namespace MetaphysicsIndustries.Giza.Test
             defs[0].Items.Add(literal);
 
             ExpressionChecker ec = new ExpressionChecker();
-            List<Error> errors = ec.CheckDefinitionInfos(defs);
+            List<Error> errors = ec.CheckDefinitions(defs);
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
@@ -420,7 +420,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var err = (errors[0] as ExpressionError);
             Assert.AreSame(null, err.Expression);
             Assert.AreSame(literal, err.ExpressionItem);
-            Assert.AreSame(defs[0], err.DefinitionInfo);
+            Assert.AreSame(defs[0], err.Definition);
         }
 
         [Test()]
@@ -436,7 +436,7 @@ namespace MetaphysicsIndustries.Giza.Test
             defs[0].Items.Add(literal);
 
             ExpressionChecker ec = new ExpressionChecker();
-            List<Error> errors = ec.CheckDefinitionInfos(defs);
+            List<Error> errors = ec.CheckDefinitions(defs);
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
@@ -445,7 +445,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var err = (errors[0] as ExpressionError);
             Assert.AreSame(null, err.Expression);
             Assert.AreSame(literal, err.ExpressionItem);
-            Assert.AreSame(defs[0], err.DefinitionInfo);
+            Assert.AreSame(defs[0], err.Definition);
         }
 
         [Test()]
@@ -461,7 +461,7 @@ namespace MetaphysicsIndustries.Giza.Test
             defs[0].Items.Add(cc);
 
             ExpressionChecker ec = new ExpressionChecker();
-            List<Error> errors = ec.CheckDefinitionInfos(defs);
+            List<Error> errors = ec.CheckDefinitions(defs);
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
@@ -470,7 +470,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var err = (errors[0] as ExpressionError);
             Assert.AreSame(null, err.Expression);
             Assert.AreSame(cc, err.ExpressionItem);
-            Assert.AreSame(defs[0], err.DefinitionInfo);
+            Assert.AreSame(defs[0], err.Definition);
         }
 
         [Test()]
@@ -486,7 +486,7 @@ namespace MetaphysicsIndustries.Giza.Test
             defs[0].Items.Add(cc);
 
             ExpressionChecker ec = new ExpressionChecker();
-            List<Error> errors = ec.CheckDefinitionInfos(defs);
+            List<Error> errors = ec.CheckDefinitions(defs);
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
@@ -495,7 +495,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var err = (errors[0] as ExpressionError);
             Assert.AreSame(null, err.Expression);
             Assert.AreSame(cc, err.ExpressionItem);
-            Assert.AreSame(defs[0], err.DefinitionInfo);
+            Assert.AreSame(defs[0], err.Definition);
         }
 
         [Test()]
@@ -513,7 +513,7 @@ namespace MetaphysicsIndustries.Giza.Test
             defs[1].Items.Add(new LiteralSubExpression { Value = "literal" });
 
             ExpressionChecker ec = new ExpressionChecker();
-            List<Error> errors = ec.CheckDefinitionInfos(defs);
+            List<Error> errors = ec.CheckDefinitions(defs);
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
@@ -522,7 +522,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var err = (errors[0] as ExpressionError);
             Assert.AreSame(null, err.Expression);
             Assert.AreSame(null, err.ExpressionItem);
-            Assert.AreSame(defs[1], err.DefinitionInfo);
+            Assert.AreSame(defs[1], err.Definition);
             Assert.AreEqual(1, err.Index);
         }
 
@@ -549,7 +549,7 @@ namespace MetaphysicsIndustries.Giza.Test
             defs[0].Items.Add(orexpr);
 
             ExpressionChecker ec = new ExpressionChecker();
-            List<Error> errors = ec.CheckDefinitionInfos(defs);
+            List<Error> errors = ec.CheckDefinitions(defs);
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
@@ -558,7 +558,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var err = (errors[0] as ExpressionError);
             Assert.AreSame(expr, err.Expression);
             Assert.AreSame(null, err.ExpressionItem);
-            Assert.AreSame(defs[0], err.DefinitionInfo);
+            Assert.AreSame(defs[0], err.Definition);
         }
 
 
@@ -609,7 +609,7 @@ namespace MetaphysicsIndustries.Giza.Test
             defs[0].Items.Add(defref);
 
             ExpressionChecker ec = new ExpressionChecker();
-            List<Error> errors = ec.CheckDefinitionInfos(defs);
+            List<Error> errors = ec.CheckDefinitions(defs);
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
@@ -618,7 +618,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var err = (errors[0] as ExpressionError);
             Assert.AreSame(null, err.Expression);
             Assert.AreSame(defref, err.ExpressionItem);
-            Assert.AreSame(defs[0], err.DefinitionInfo);
+            Assert.AreSame(defs[0], err.Definition);
         }
 
         [Test()]
@@ -637,7 +637,7 @@ namespace MetaphysicsIndustries.Giza.Test
             ExpressionChecker ec = new ExpressionChecker();
 
 
-            var errors = ec.CheckDefinitionInfos(defs);
+            var errors = ec.CheckDefinitions(defs);
 
 
             Assert.IsNotNull(errors);
@@ -645,7 +645,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             ExpressionError e = (ExpressionError)errors[0];
             Assert.AreEqual(ExpressionError.ReusedDefintion, e.ErrorType);
-            Assert.AreSame(def, e.DefinitionInfo);
+            Assert.AreSame(def, e.Definition);
             Assert.AreEqual(1, e.Index);
         }
 
@@ -663,7 +663,7 @@ namespace MetaphysicsIndustries.Giza.Test
             ExpressionChecker ec = new ExpressionChecker();
 
 
-            var errors = ec.CheckDefinitionInfos(defs);
+            var errors = ec.CheckDefinitions(defs);
 
 
             Assert.IsNotNull(errors);
@@ -671,7 +671,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var e = (ExpressionError)errors[0];
             Assert.AreEqual(ExpressionError.NullDefinition, e.ErrorType);
-            Assert.AreSame(null, e.DefinitionInfo);
+            Assert.AreSame(null, e.Definition);
             Assert.AreEqual(1, e.Index);
         }
 

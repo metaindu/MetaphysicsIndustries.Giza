@@ -102,7 +102,7 @@ namespace giza
             }
 
             var ec = new ExpressionChecker();
-            var errors = ec.CheckDefinitionInfosForParsing(Env.Values);
+            var errors = ec.CheckDefinitionForParsing(Env.Values);
 
             Grammar grammar = null;
             if (!errors.ContainsNonWarnings())

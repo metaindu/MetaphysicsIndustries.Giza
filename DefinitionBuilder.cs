@@ -29,7 +29,7 @@ namespace MetaphysicsIndustries.Giza
         public Definition[] BuildDefinitions(IEnumerable<DefinitionExpression> defs)
         {
             var ec = new ExpressionChecker();
-            List<Error> errors = ec.CheckDefinitionInfosForSpanning(defs);
+            List<Error> errors = ec.CheckDefinitionsForSpanning(defs);
             if (errors.ContainsNonWarnings())
             {
                 throw new InvalidOperationException("Errors in expressions.");

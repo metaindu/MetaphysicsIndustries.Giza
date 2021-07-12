@@ -111,7 +111,7 @@ namespace giza
             }
 
             var ec = new ExpressionChecker();
-            errors = ec.CheckDefinitionInfos(pg.Defintions);
+            errors = ec.CheckDefinitions(pg.Defintions);
 
             if (errors != null && errors.Count > 0)
             {

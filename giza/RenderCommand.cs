@@ -103,11 +103,11 @@ namespace giza
             var ec = new ExpressionChecker();
             if (tokenized)
             {
-                errors = ec.CheckDefinitionInfosForParsing(pg.Defintions);
+                errors = ec.CheckDefinitionForParsing(pg.Defintions);
             }
             else
             {
-                errors = ec.CheckDefinitionInfos(pg.Defintions);
+                errors = ec.CheckDefinitions(pg.Defintions);
             }
 
             if (errors != null && errors.Count > 0)

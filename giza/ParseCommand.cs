@@ -105,7 +105,7 @@ namespace giza
             if (!grammarErrors.ContainsNonWarnings())
             {
                 var ec = new ExpressionChecker();
-                var errors2 = ec.CheckDefinitionInfosForParsing(pg.Defintions);
+                var errors2 = ec.CheckDefinitionForParsing(pg.Defintions);
                 grammarErrors.AddRange(errors2);
             }
 

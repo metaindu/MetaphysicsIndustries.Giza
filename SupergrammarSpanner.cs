@@ -78,7 +78,7 @@ namespace MetaphysicsIndustries.Giza
                 return null;
             }
 
-            var pg = BuildExpressions(supergrammar, s2[0], errors);
+            var pg = BuildPreGrammar(supergrammar, s2[0], errors);
             return pg;
         }
 
@@ -101,7 +101,7 @@ namespace MetaphysicsIndustries.Giza
             return grammar;
         }
         
-        public PreGrammar BuildExpressions(Supergrammar grammar, Span span, List<Error> errors)
+        public PreGrammar BuildPreGrammar(Supergrammar grammar, Span span, List<Error> errors)
         {
             if (!(span.Node is DefRefNode) ||
                 (span.Node as DefRefNode).DefRef != grammar.def_grammar)
