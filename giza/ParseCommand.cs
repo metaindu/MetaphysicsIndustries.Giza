@@ -113,7 +113,7 @@ namespace giza
             if (!grammarErrors.ContainsNonWarnings())
             {
                 var tgb = new TokenizedGrammarBuilder();
-                g = tgb.BuildTokenizedGrammar(pg.Defintions);
+                g = tgb.BuildTokenizedGrammar(pg);
 
                 var dc = new DefinitionChecker();
                 var errors2 = dc.CheckDefinitions(g.Definitions);

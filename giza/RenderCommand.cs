@@ -126,7 +126,7 @@ namespace giza
             if (tokenized)
             {
                 var tgb = new TokenizedGrammarBuilder();
-                g = tgb.BuildTokenizedGrammar(pg.Defintions);
+                g = tgb.BuildTokenizedGrammar(pg);
             }
             else
             {

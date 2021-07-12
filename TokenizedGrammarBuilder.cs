@@ -34,9 +34,9 @@ namespace MetaphysicsIndustries.Giza
         // place of that subexpr. In this way, non-tokenized definitions
         // are composed entirely of defrefs.
 
-        public Grammar BuildTokenizedGrammar(IEnumerable<DefinitionExpression> defs)
+        public Grammar BuildTokenizedGrammar(PreGrammar pg)
         {
-            defs = defs.ToList();
+            var defs = pg.Defintions;
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
             if (errors.GetNonWarningsCount() > 0)
@@ -167,6 +167,11 @@ namespace MetaphysicsIndustries.Giza
             grammar.Definitions.AddRange(defs2);
 
             return grammar;
+        }
+
+        public PreGrammar Tokenize(PreGrammar pg)
+        {
+            throw new NotImplementedException();
         }
 
         string GetImplicitDefinitionName(LiteralSubExpression literal, bool ignoreCase)

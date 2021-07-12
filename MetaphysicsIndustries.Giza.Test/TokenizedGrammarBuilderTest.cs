@@ -40,11 +40,12 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 )
             };
+            var pg = new PreGrammar() {Defintions = dis.ToList()};
             var tgb = new TokenizedGrammarBuilder();
 
 
             // action
-            var grammar = tgb.BuildTokenizedGrammar(dis);
+            var grammar = tgb.BuildTokenizedGrammar(pg);
             var explicitDef = grammar.FindDefinitionByName("def");
             var implicitDef = grammar.FindDefinitionByName("$implicit literal value");
 
@@ -98,11 +99,12 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 )
             };
+            var pg = new PreGrammar() {Defintions = dis.ToList()};
             var tgb = new TokenizedGrammarBuilder();
 
 
             // action
-            var grammar = tgb.BuildTokenizedGrammar(dis);
+            var grammar = tgb.BuildTokenizedGrammar(pg);
             var explicitDef = grammar.FindDefinitionByName("def");
             var implicitDef = grammar.FindDefinitionByName("$implicit char class \\d");
 
@@ -159,11 +161,12 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 )
             };
+            var pg = new PreGrammar() {Defintions = dis.ToList()};
             var tgb = new TokenizedGrammarBuilder();
 
 
             // action
-            var grammar = tgb.BuildTokenizedGrammar(dis);
+            var grammar = tgb.BuildTokenizedGrammar(pg);
             var explicitDef = grammar.FindDefinitionByName("def");
             var implicitDef = grammar.FindDefinitionByName("$implicit ignore case literal value");
 
@@ -222,11 +225,12 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 )
             };
+            var pg = new PreGrammar() {Defintions = dis.ToList()};
             var tgb = new TokenizedGrammarBuilder();
 
 
             // action
-            var grammar = tgb.BuildTokenizedGrammar(dis);
+            var grammar = tgb.BuildTokenizedGrammar(pg);
             var explicitDef = grammar.FindDefinitionByName("def");
             var implicitDef = grammar.FindDefinitionByName("$implicit ignore case char class \\d");
 
@@ -291,11 +295,12 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 )
             };
+            var pg = new PreGrammar() {Defintions = dis.ToList()};
             var tgb = new TokenizedGrammarBuilder();
 
 
             // action
-            var grammar = tgb.BuildTokenizedGrammar(dis);
+            var grammar = tgb.BuildTokenizedGrammar(pg);
             var def = grammar.FindDefinitionByName("def");
 
 
@@ -334,11 +339,12 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 )
             };
+            var pg = new PreGrammar() {Defintions = dis.ToList()};
             var tgb = new TokenizedGrammarBuilder();
 
 
             // action
-            var grammar = tgb.BuildTokenizedGrammar(dis);
+            var grammar = tgb.BuildTokenizedGrammar(pg);
             var def = grammar.FindDefinitionByName("something");
 
 
@@ -380,11 +386,12 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 )
             };
+            var pg = new PreGrammar() {Defintions = dis.ToList()};
             var tgb = new TokenizedGrammarBuilder();
 
 
             // action
-            var grammar = tgb.BuildTokenizedGrammar(dis);
+            var grammar = tgb.BuildTokenizedGrammar(pg);
             var def = grammar.FindDefinitionByName("something");
 
 
@@ -425,11 +432,12 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 )
             };
+            var pg = new PreGrammar() {Defintions = dis.ToList()};
             var tgb = new TokenizedGrammarBuilder();
 
 
             // action
-            var grammar = tgb.BuildTokenizedGrammar(dis);
+            var grammar = tgb.BuildTokenizedGrammar(pg);
             var def = grammar.FindDefinitionByName("something");
 
 
@@ -481,11 +489,12 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 )
             };
+            var pg = new PreGrammar() {Defintions = dis.ToList()};
             var tgb = new TokenizedGrammarBuilder();
 
 
             // action
-            var grammar = tgb.BuildTokenizedGrammar(dis);
+            var grammar = tgb.BuildTokenizedGrammar(pg);
             var def = grammar.FindDefinitionByName("def");
 
 
@@ -525,11 +534,12 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 )
             };
+            var pg = new PreGrammar() {Defintions = dis.ToList()};
             var tgb = new TokenizedGrammarBuilder();
 
 
             // action
-            var grammar = tgb.BuildTokenizedGrammar(dis);
+            var grammar = tgb.BuildTokenizedGrammar(pg);
             var def = grammar.FindDefinitionByName("something");
 
 
@@ -572,11 +582,12 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 )
             };
+            var pg = new PreGrammar() {Defintions = dis.ToList()};
             var tgb = new TokenizedGrammarBuilder();
 
 
             // action
-            var grammar = tgb.BuildTokenizedGrammar(dis);
+            var grammar = tgb.BuildTokenizedGrammar(pg);
             var def = grammar.FindDefinitionByName("something");
 
 
@@ -619,11 +630,12 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 )
             };
+            var pg = new PreGrammar() {Defintions = dis.ToList()};
             var tgb = new TokenizedGrammarBuilder();
 
 
             // action
-            var grammar = tgb.BuildTokenizedGrammar(dis);
+            var grammar = tgb.BuildTokenizedGrammar(pg);
             var def = grammar.FindDefinitionByName("something");
 
 

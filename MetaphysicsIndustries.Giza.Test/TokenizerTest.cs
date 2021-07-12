@@ -898,7 +898,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var errors = new List<Error>();
             var pg = (new SupergrammarSpanner()).GetPreGrammar(grammarText, errors);
             Assert.IsEmpty(errors);
-            var grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(pg.Defintions);
+            var grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(pg);
             var implicitA = grammar.FindDefinitionByName("$implicit literal a");
             var implicitAb = grammar.FindDefinitionByName("$implicit literal ab");
             var implicitAbc = grammar.FindDefinitionByName("$implicit literal abc");

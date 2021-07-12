@@ -108,7 +108,8 @@ namespace giza
             if (!errors.ContainsNonWarnings())
             {
                 var tgb = new TokenizedGrammarBuilder();
-                grammar = tgb.BuildTokenizedGrammar(Env.Values.ToArray());
+                var pg = new PreGrammar() {Defintions = Env.Values.ToList()};
+                grammar = tgb.BuildTokenizedGrammar(pg);
                 var dc = new DefinitionChecker();
                 var errors2 = dc.CheckDefinitions(grammar.Definitions);
                 errors.AddRange(errors2);
