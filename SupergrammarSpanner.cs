@@ -100,7 +100,7 @@ namespace MetaphysicsIndustries.Giza
 
             return grammar;
         }
-        
+
         public PreGrammar BuildPreGrammar(Supergrammar grammar, Span span, List<Error> errors)
         {
             if (!(span.Node is DefRefNode) ||
@@ -127,7 +127,10 @@ namespace MetaphysicsIndustries.Giza
                 }
                 if (defspan.Node == grammar.node_grammar_2_import_002D_stmt)
                 {
-                    var importedDefs = ImportDefinitionsFromFile(grammar, defspan, errors);
+                    var importStmt =
+                        GetImportStatementFromSpan(grammar, defspan, errors);
+                    var importedDefs =
+                        ImportDefinitions(importStmt, errors);
                     var importedDefNames = new HashSet<string>(
                         importedDefs.Select(d => d.Name));
                     foreach (var def1 in defs.ToArray())
@@ -174,35 +177,40 @@ namespace MetaphysicsIndustries.Giza
             };
         }
 
-        private Dictionary<string, Dictionary<string, DefinitionExpression>> _importCache =
-            new Dictionary<string, Dictionary<string, DefinitionExpression>>();
-        DefinitionExpression[] ImportDefinitionsFromFile(
-            Supergrammar importingGrammar, Span defspan, List<Error> errors)
+        ImportStatement GetImportStatementFromSpan(
+            Supergrammar importingGrammar, Span importSpan,
+            List<Error> errors)
         {
-            if (defspan.Node != importingGrammar.node_grammar_2_import_002D_stmt)
+            if (importSpan.Node != importingGrammar.node_grammar_2_import_002D_stmt)
                 throw new ArgumentException("The span must describe an import-stmt.");
-            var stmtType = defspan.Subspans[0];
+            var stmtType = importSpan.Subspans[0];
             Span source;
             // TODO: relative imports should be relative to the importing file.
-            List<Tuple<string, string>> defNamesToImport = null;
-            IEnumerable<DefinitionExpression> defsToImport;
+            List<ImportRef> defNamesToImport = null;
+            bool importAll = false;
             if (stmtType.Node == importingGrammar.node_import_002D_stmt_0_import)
             {
-                source = defspan.Subspans[6];
+                source = importSpan.Subspans[6];
+                importAll = true;
             }
             else if (stmtType.Node == importingGrammar.node_import_002D_stmt_7_from)
             {
-                source = defspan.Subspans[4];
+                source = importSpan.Subspans[4];
                 int i;
-                defNamesToImport = new List<Tuple<string, string>>();
-                for (i = 11; i < defspan.Subspans.Count - 1; i += 2)
+                defNamesToImport = new List<ImportRef>();
+                for (i = 11; i < importSpan.Subspans.Count - 1; i += 2)
                 {
-                    var importRef = defspan.Subspans[i];
-                    var sourceName = importRef.Subspans[0].CollectValue();
+                    var importRefSpan = importSpan.Subspans[i];
+                    var sourceName = importRefSpan.Subspans[0].CollectValue();
                     string destName = sourceName;
-                    if (importRef.Subspans.Count > 1)
-                        destName = importRef.Subspans[3].CollectValue();
-                    defNamesToImport.Add(new Tuple<string, string>(sourceName, destName));
+                    if (importRefSpan.Subspans.Count > 1)
+                        destName = importRefSpan.Subspans[3].CollectValue();
+                    var importRef = new ImportRef()
+                    {
+                        SourceName = sourceName,
+                        DestName = destName
+                    };
+                    defNamesToImport.Add(importRef);
                 }
             }
             else
@@ -214,6 +222,27 @@ namespace MetaphysicsIndustries.Giza
             }
 
             var fileToImport = GetLiteralSubExpressionFromSpan(importingGrammar, source).Value;
+
+            var importStmt = new ImportStatement
+            {
+                IsModuleImport = false,
+                ModuleOrFile = fileToImport,
+                ImportRefs = defNamesToImport?.ToArray(),
+                ImportAll = importAll,
+            };
+
+            return importStmt;
+        }
+
+        private Dictionary<string, Dictionary<string, DefinitionExpression>> _importCache =
+            new Dictionary<string, Dictionary<string, DefinitionExpression>>();
+
+        DefinitionExpression[] ImportDefinitions(ImportStatement importStmt,
+            List<Error> errors)
+        {
+            var fileToImport = importStmt.ModuleOrFile;
+            var importRefs = importStmt.ImportRefs;
+
             if (!_importCache.ContainsKey(fileToImport))
             {
                 var content = _fileSource.GetFileContents(fileToImport);
@@ -242,14 +271,15 @@ namespace MetaphysicsIndustries.Giza
 
             var importedDefsByName = _importCache[fileToImport];
 
-            if (defNamesToImport != null)
+            IEnumerable<DefinitionExpression> defsToImport;
+            if (importRefs != null)
             {
                 var defsToImport1 = new List<DefinitionExpression>();
                 defsToImport = defsToImport1;
-                foreach (var namePair in defNamesToImport)
+                foreach (var importRef in importRefs)
                 {
-                    var sourceName = namePair.Item1;
-                    var destName = namePair.Item2;
+                    var sourceName = importRef.SourceName;
+                    var destName = importRef.DestName;
                     if (!importedDefsByName.ContainsKey(sourceName))
                         errors.Add(new ImportError
                         {
