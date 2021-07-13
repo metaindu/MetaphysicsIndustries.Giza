@@ -38,17 +38,20 @@ namespace MetaphysicsIndustries.Giza
 {
     public class SupergrammarSpanner
     {
-        public SupergrammarSpanner()
-            : this(new FileSource())
+        public SupergrammarSpanner(IFileSource fileSource=null,
+            ImportTransform importer=null)
         {
-        }
-
-        public SupergrammarSpanner(IFileSource fileSource)
-        {
+            if (fileSource == null)
+                fileSource = new FileSource();
             _fileSource = fileSource;
+
+            if (importer == null)
+                importer = new ImportTransform(this, _fileSource);
+            _importer = importer;
         }
 
         private readonly IFileSource _fileSource;
+        private readonly ImportTransform _importer;
 
         public PreGrammar GetPreGrammar(string input, List<Error> errors)
         {
@@ -85,6 +88,7 @@ namespace MetaphysicsIndustries.Giza
         public Grammar GetGrammar(string input, List<Error> errors)
         {
             var pg = GetPreGrammar(input, errors);
+            pg = _importer.Transform(pg);
             var dis = pg.Definitions;
 
             if (errors.Count > 0 || dis == null)
@@ -131,16 +135,6 @@ namespace MetaphysicsIndustries.Giza
                     var importStmt =
                         GetImportStatementFromSpan(grammar, defspan, errors);
                     importStmts.Add(importStmt);
-                    var importedDefs =
-                        ImportDefinitions(importStmt, errors);
-                    var importedDefNames = new HashSet<string>(
-                        importedDefs.Select(d => d.Name));
-                    foreach (var def1 in defs.ToArray())
-                    {
-                        if (importedDefNames.Contains(def1.Name))
-                            defs.Remove(def1);
-                    }
-                    defs.AddRange(importedDefs);
                     continue;
                 }
 
@@ -235,88 +229,6 @@ namespace MetaphysicsIndustries.Giza
             };
 
             return importStmt;
-        }
-
-        private Dictionary<string, Dictionary<string, DefinitionExpression>> _importCache =
-            new Dictionary<string, Dictionary<string, DefinitionExpression>>();
-
-        DefinitionExpression[] ImportDefinitions(ImportStatement importStmt,
-            List<Error> errors)
-        {
-            var fileToImport = importStmt.ModuleOrFile;
-            var importRefs = importStmt.ImportRefs;
-
-            if (!_importCache.ContainsKey(fileToImport))
-            {
-                var content = _fileSource.GetFileContents(fileToImport);
-                var errors2 = new List<Error>();
-                var ipg = GetPreGrammar(content, errors2);
-                var importedDefs = ipg.Definitions;
-                if (errors2.Count > 0)
-                {
-                    errors.AddRange(errors2);
-                    return null;
-                }
-
-                var importedGrammar = GetGrammar(content, errors2);
-                if (errors2.Count > 0)
-                {
-                    errors.AddRange(errors2);
-                    return null;
-                }
-
-                var importedDefsByName1 =
-                    importedDefs.ToDictionary(
-                        d => d.Name,
-                        d => d);
-                _importCache[fileToImport] = importedDefsByName1;
-            }
-
-            var importedDefsByName = _importCache[fileToImport];
-
-            IEnumerable<DefinitionExpression> defsToImport;
-            if (importRefs != null)
-            {
-                var defsToImport1 = new List<DefinitionExpression>();
-                defsToImport = defsToImport1;
-                foreach (var importRef in importRefs)
-                {
-                    var sourceName = importRef.SourceName;
-                    var destName = importRef.DestName;
-                    if (!importedDefsByName.ContainsKey(sourceName))
-                        errors.Add(new ImportError
-                        {
-                            ErrorType = ImportError.DefinitionNotFound,
-                            DefinitionName = sourceName
-                        });
-                    else
-                    {
-                        // TODO: refactor to de-duplicate
-                        var sourceDef = importedDefsByName[sourceName];
-                        var destDef = new DefinitionExpression(destName,
-                            sourceDef.Directives, sourceDef.Items);
-                        destDef.IsImported = true;
-                        defsToImport1.Add(destDef);
-                    }
-                }
-            }
-            else
-            {
-                var defsToImport1 = new List<DefinitionExpression>();
-                defsToImport = defsToImport1;
-                foreach (var defToImport in importedDefsByName.Values)
-                {
-                    // TODO: refactor to de-duplicate
-                    var sourceDef = defToImport;
-                    var destName = defToImport.Name;
-                    var destDef = new DefinitionExpression(destName,
-                        sourceDef.Directives, sourceDef.Items);
-                    destDef.IsImported = true;
-                    defsToImport1.Add(destDef);
-                }
-            }
-
-            return defsToImport.ToArray();
         }
 
         Expression GetExpressionFromSpan(Supergrammar grammar, Span exprSpan)
