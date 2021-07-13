@@ -115,7 +115,9 @@ namespace MetaphysicsIndustries.Giza.Test
             var pg = (new SupergrammarSpanner()).GetPreGrammar(grammarText, errors);
             Assert.IsEmpty(errors);
 
-            var grammar = (new TokenizedGrammarBuilder()).BuildTokenizedGrammar(pg);
+            var pg2 = (new TokenizedGrammarBuilder()).Tokenize(pg);
+            var db = new DefinitionBuilder();
+            var grammar = db.BuildGrammar(pg2);
 
             var exprDef = grammar.FindDefinitionByName("expr");
             var subexprDef = grammar.FindDefinitionByName("subexpr");
@@ -867,7 +869,9 @@ namespace MetaphysicsIndustries.Giza.Test
             var pg = sgs.GetPreGrammar(testGrammarText, errors);
             Assert.IsEmpty(errors);
             var tgb = new TokenizedGrammarBuilder();
-            Grammar testGrammar = tgb.BuildTokenizedGrammar(pg);
+            var pg2 = tgb.Tokenize(pg);
+            var db = new DefinitionBuilder();
+            var testGrammar = db.BuildGrammar(pg2);
             var itemDef = testGrammar.FindDefinitionByName("item");
             var sequenceDef = testGrammar.FindDefinitionByName("sequence");
             var implicitDef = testGrammar.FindDefinitionByName("$implicit ignore case literal item");
@@ -923,7 +927,9 @@ namespace MetaphysicsIndustries.Giza.Test
             var pg = sgs.GetPreGrammar(testGrammarText, errors);
             Assert.IsEmpty(errors);
             var tgb = new TokenizedGrammarBuilder();
-            Grammar testGrammar = tgb.BuildTokenizedGrammar(pg);
+            var pg2 = tgb.Tokenize(pg);
+            var db = new DefinitionBuilder();
+            var testGrammar = db.BuildGrammar(pg2);
             var itemDef = testGrammar.FindDefinitionByName("item");
             var sequenceDef = testGrammar.FindDefinitionByName("sequence");
             var implicitDef = testGrammar.FindDefinitionByName("$implicit ignore case char class \\dabcdef");
@@ -1617,7 +1623,9 @@ namespace MetaphysicsIndustries.Giza.Test
             var pg = sgs.GetPreGrammar(testGrammarText, errors);
             Assert.IsEmpty(errors);
             var tgb = new TokenizedGrammarBuilder();
-            var testGrammar = tgb.BuildTokenizedGrammar(pg);
+            var pg2 = tgb.Tokenize(pg);
+            var db = new DefinitionBuilder();
+            var testGrammar = db.BuildGrammar(pg2);
             var sequenceDef = testGrammar.FindDefinitionByName("sequence");
             var parser = new Parser(sequenceDef);
 

@@ -45,7 +45,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             // action
-            var grammar = tgb.BuildTokenizedGrammar(pg);
+            var grammar = tgb.Tokenize(pg);
             var explicitDef = grammar.FindDefinitionByName("def");
             var implicitDef = grammar.FindDefinitionByName("$implicit literal value");
 
@@ -61,12 +61,12 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsFalse(explicitDef.IsComment);
             Assert.IsFalse(explicitDef.IsTokenized);
             Assert.IsFalse(explicitDef.MindWhitespace);
-            Assert.IsNotNull(explicitDef.Nodes);
-            Assert.AreEqual(1, explicitDef.Nodes.Count);
-            Assert.IsNotNull(explicitDef.StartNodes);
-            Assert.AreEqual(1, explicitDef.StartNodes.Count);
-            Assert.IsNotNull(explicitDef.EndNodes);
-            Assert.AreEqual(1, explicitDef.EndNodes.Count);
+            Assert.IsNotNull(explicitDef.Items);
+            Assert.AreEqual(1, explicitDef.Items.Count);
+            Assert.IsNotNull(explicitDef.Items[0]);
+            Assert.IsInstanceOf<DefRefSubExpression>(explicitDef.Items[0]);
+            var defref = (DefRefSubExpression) explicitDef.Items[0];
+            Assert.AreEqual(implicitDef.Name, defref.DefinitionName);
 
             Assert.IsNotNull(implicitDef);
             Assert.AreEqual(3, implicitDef.Directives.Count);
@@ -78,12 +78,15 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsFalse(implicitDef.IsComment);
             Assert.IsTrue(implicitDef.IsTokenized);
             Assert.IsTrue(implicitDef.MindWhitespace);
-            Assert.IsNotNull(implicitDef.Nodes);
-            Assert.AreEqual(5, implicitDef.Nodes.Count);
-            Assert.IsNotNull(implicitDef.StartNodes);
-            Assert.AreEqual(1, implicitDef.StartNodes.Count);
-            Assert.IsNotNull(implicitDef.EndNodes);
-            Assert.AreEqual(1, implicitDef.EndNodes.Count);
+            Assert.IsNotNull(implicitDef.Items);
+            Assert.AreEqual(1, implicitDef.Items.Count);
+            Assert.IsNotNull(implicitDef.Items[0]);
+            Assert.IsInstanceOf<LiteralSubExpression>(implicitDef.Items[0]);
+            var literal = (LiteralSubExpression) implicitDef.Items[0];
+            Assert.AreEqual("value", literal.Value);
+            Assert.AreEqual("",literal.Tag);
+            Assert.IsFalse(literal.IsSkippable);
+            Assert.IsFalse(literal.IsRepeatable);
         }
 
         [Test]
@@ -104,7 +107,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             // action
-            var grammar = tgb.BuildTokenizedGrammar(pg);
+            var grammar = tgb.Tokenize(pg);
             var explicitDef = grammar.FindDefinitionByName("def");
             var implicitDef = grammar.FindDefinitionByName("$implicit char class \\d");
 
@@ -120,12 +123,12 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsFalse(explicitDef.IsComment);
             Assert.IsFalse(explicitDef.IsTokenized);
             Assert.IsFalse(explicitDef.MindWhitespace);
-            Assert.IsNotNull(explicitDef.Nodes);
-            Assert.AreEqual(1, explicitDef.Nodes.Count);
-            Assert.IsNotNull(explicitDef.StartNodes);
-            Assert.AreEqual(1, explicitDef.StartNodes.Count);
-            Assert.IsNotNull(explicitDef.EndNodes);
-            Assert.AreEqual(1, explicitDef.EndNodes.Count);
+            Assert.IsNotNull(explicitDef.Items);
+            Assert.AreEqual(1, explicitDef.Items.Count);
+            Assert.IsNotNull(explicitDef.Items[0]);
+            Assert.IsInstanceOf<DefRefSubExpression>(explicitDef.Items[0]);
+            var defref = (DefRefSubExpression) explicitDef.Items[0];
+            Assert.AreEqual(implicitDef.Name, defref.DefinitionName);
 
             Assert.IsNotNull(implicitDef);
             Assert.AreEqual(3, implicitDef.Directives.Count);
@@ -137,12 +140,15 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsFalse(implicitDef.IsComment);
             Assert.IsTrue(implicitDef.IsTokenized);
             Assert.IsTrue(implicitDef.MindWhitespace);
-            Assert.IsNotNull(implicitDef.Nodes);
-            Assert.AreEqual(1, implicitDef.Nodes.Count);
-            Assert.IsNotNull(implicitDef.StartNodes);
-            Assert.AreEqual(1, implicitDef.StartNodes.Count);
-            Assert.IsNotNull(implicitDef.EndNodes);
-            Assert.AreEqual(1, implicitDef.EndNodes.Count);
+            Assert.IsNotNull(implicitDef.Items);
+            Assert.AreEqual(1, implicitDef.Items.Count);
+            Assert.IsNotNull(implicitDef.Items[0]);
+            Assert.IsInstanceOf<CharClassSubExpression>(implicitDef.Items[0]);
+            var cc = (CharClassSubExpression) implicitDef.Items[0];
+            Assert.AreEqual("\\d", cc.CharClass.ToUndelimitedString());
+            Assert.AreEqual("",cc.Tag);
+            Assert.IsFalse(cc.IsSkippable);
+            Assert.IsFalse(cc.IsRepeatable);
         }
 
         [Test]
@@ -166,7 +172,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             // action
-            var grammar = tgb.BuildTokenizedGrammar(pg);
+            var grammar = tgb.Tokenize(pg);
             var explicitDef = grammar.FindDefinitionByName("def");
             var implicitDef = grammar.FindDefinitionByName("$implicit ignore case literal value");
 
@@ -182,12 +188,12 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsFalse(explicitDef.IsComment);
             Assert.IsFalse(explicitDef.IsTokenized);
             Assert.IsFalse(explicitDef.MindWhitespace);
-            Assert.IsNotNull(explicitDef.Nodes);
-            Assert.AreEqual(1, explicitDef.Nodes.Count);
-            Assert.IsNotNull(explicitDef.StartNodes);
-            Assert.AreEqual(1, explicitDef.StartNodes.Count);
-            Assert.IsNotNull(explicitDef.EndNodes);
-            Assert.AreEqual(1, explicitDef.EndNodes.Count);
+            Assert.IsNotNull(explicitDef.Items);
+            Assert.AreEqual(1, explicitDef.Items.Count);
+            Assert.IsNotNull(explicitDef.Items[0]);
+            Assert.IsInstanceOf<DefRefSubExpression>(explicitDef.Items[0]);
+            var defref = (DefRefSubExpression) explicitDef.Items[0];
+            Assert.AreEqual(implicitDef.Name, defref.DefinitionName);
 
             Assert.IsNotNull(implicitDef);
             Assert.AreEqual(4, implicitDef.Directives.Count);
@@ -200,12 +206,15 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsFalse(implicitDef.IsComment);
             Assert.IsTrue(implicitDef.IsTokenized);
             Assert.IsTrue(implicitDef.MindWhitespace);
-            Assert.IsNotNull(implicitDef.Nodes);
-            Assert.AreEqual(5, implicitDef.Nodes.Count);
-            Assert.IsNotNull(implicitDef.StartNodes);
-            Assert.AreEqual(1, implicitDef.StartNodes.Count);
-            Assert.IsNotNull(implicitDef.EndNodes);
-            Assert.AreEqual(1, implicitDef.EndNodes.Count);
+            Assert.IsNotNull(implicitDef.Items);
+            Assert.AreEqual(1, implicitDef.Items.Count);
+            Assert.IsNotNull(implicitDef.Items[0]);
+            Assert.IsInstanceOf<LiteralSubExpression>(implicitDef.Items[0]);
+            var literal = (LiteralSubExpression) implicitDef.Items[0];
+            Assert.AreEqual("value", literal.Value);
+            Assert.AreEqual("",literal.Tag);
+            Assert.IsFalse(literal.IsSkippable);
+            Assert.IsFalse(literal.IsRepeatable);
         }
 
         [Test]
@@ -230,7 +239,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             // action
-            var grammar = tgb.BuildTokenizedGrammar(pg);
+            var grammar = tgb.Tokenize(pg);
             var explicitDef = grammar.FindDefinitionByName("def");
             var implicitDef = grammar.FindDefinitionByName("$implicit ignore case char class \\d");
 
@@ -246,12 +255,6 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsFalse(explicitDef.IsComment);
             Assert.IsFalse(explicitDef.IsTokenized);
             Assert.IsFalse(explicitDef.MindWhitespace);
-            Assert.IsNotNull(explicitDef.Nodes);
-            Assert.AreEqual(1, explicitDef.Nodes.Count);
-            Assert.IsNotNull(explicitDef.StartNodes);
-            Assert.AreEqual(1, explicitDef.StartNodes.Count);
-            Assert.IsNotNull(explicitDef.EndNodes);
-            Assert.AreEqual(1, explicitDef.EndNodes.Count);
 
             Assert.IsNotNull(implicitDef);
             Assert.AreEqual(4, implicitDef.Directives.Count);
@@ -264,12 +267,15 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsFalse(implicitDef.IsComment);
             Assert.IsTrue(implicitDef.IsTokenized);
             Assert.IsTrue(implicitDef.MindWhitespace);
-            Assert.IsNotNull(implicitDef.Nodes);
-            Assert.AreEqual(1, implicitDef.Nodes.Count);
-            Assert.IsNotNull(implicitDef.StartNodes);
-            Assert.AreEqual(1, implicitDef.StartNodes.Count);
-            Assert.IsNotNull(implicitDef.EndNodes);
-            Assert.AreEqual(1, implicitDef.EndNodes.Count);
+            Assert.IsNotNull(implicitDef.Items);
+            Assert.AreEqual(1, implicitDef.Items.Count);
+            Assert.IsNotNull(implicitDef.Items[0]);
+            Assert.IsInstanceOf<CharClassSubExpression>(implicitDef.Items[0]);
+            var cc = (CharClassSubExpression) implicitDef.Items[0];
+            Assert.AreEqual("\\d", cc.CharClass.ToUndelimitedString());
+            Assert.AreEqual("",cc.Tag);
+            Assert.IsFalse(cc.IsSkippable);
+            Assert.IsFalse(cc.IsRepeatable);
         }
 
         [Test]
@@ -300,7 +306,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             // action
-            var grammar = tgb.BuildTokenizedGrammar(pg);
+            var grammar = tgb.Tokenize(pg);
             var def = grammar.FindDefinitionByName("def");
 
 
@@ -315,12 +321,12 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsFalse(def.IsComment);
             Assert.IsFalse(def.IsTokenized);
             Assert.IsFalse(def.MindWhitespace);
-            Assert.IsNotNull(def.Nodes);
-            Assert.AreEqual(1, def.Nodes.Count);
-            Assert.IsNotNull(def.StartNodes);
-            Assert.AreEqual(1, def.StartNodes.Count);
-            Assert.IsNotNull(def.EndNodes);
-            Assert.AreEqual(1, def.EndNodes.Count);
+            Assert.IsNotNull(def.Items);
+            Assert.AreEqual(1, def.Items.Count);
+            Assert.IsNotNull(def.Items[0]);
+            Assert.IsInstanceOf<DefRefSubExpression>(def.Items[0]);
+            var defref = (DefRefSubExpression) def.Items[0];
+            Assert.AreEqual("token", defref.DefinitionName);
         }
 
         [Test]
@@ -344,7 +350,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             // action
-            var grammar = tgb.BuildTokenizedGrammar(pg);
+            var grammar = tgb.Tokenize(pg);
             var def = grammar.FindDefinitionByName("something");
 
 
@@ -362,12 +368,15 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsFalse(def.IsComment);
             Assert.IsTrue(def.IsTokenized);
             Assert.IsTrue(def.MindWhitespace);
-            Assert.IsNotNull(def.Nodes);
-            Assert.AreEqual(5, def.Nodes.Count);
-            Assert.IsNotNull(def.StartNodes);
-            Assert.AreEqual(1, def.StartNodes.Count);
-            Assert.IsNotNull(def.EndNodes);
-            Assert.AreEqual(1, def.EndNodes.Count);
+            Assert.IsNotNull(def.Items);
+            Assert.AreEqual(1, def.Items.Count);
+            Assert.IsNotNull(def.Items[0]);
+            Assert.IsInstanceOf<LiteralSubExpression>(def.Items[0]);
+            var literal = (LiteralSubExpression) def.Items[0];
+            Assert.AreEqual("value", literal.Value);
+            Assert.AreEqual("",literal.Tag);
+            Assert.IsFalse(literal.IsSkippable);
+            Assert.IsFalse(literal.IsRepeatable);
         }
 
         [Test]
@@ -391,7 +400,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             // action
-            var grammar = tgb.BuildTokenizedGrammar(pg);
+            var grammar = tgb.Tokenize(pg);
             var def = grammar.FindDefinitionByName("something");
 
 
@@ -408,12 +417,15 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsFalse(def.IsComment);
             Assert.IsTrue(def.IsTokenized);
             Assert.IsTrue(def.MindWhitespace);
-            Assert.IsNotNull(def.Nodes);
-            Assert.AreEqual(5, def.Nodes.Count);
-            Assert.IsNotNull(def.StartNodes);
-            Assert.AreEqual(1, def.StartNodes.Count);
-            Assert.IsNotNull(def.EndNodes);
-            Assert.AreEqual(1, def.EndNodes.Count);
+            Assert.IsNotNull(def.Items);
+            Assert.AreEqual(1, def.Items.Count);
+            Assert.IsNotNull(def.Items[0]);
+            Assert.IsInstanceOf<LiteralSubExpression>(def.Items[0]);
+            var literal = (LiteralSubExpression) def.Items[0];
+            Assert.AreEqual("value", literal.Value);
+            Assert.AreEqual("",literal.Tag);
+            Assert.IsFalse(literal.IsSkippable);
+            Assert.IsFalse(literal.IsRepeatable);
         }
 
         [Test]
@@ -437,7 +449,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             // action
-            var grammar = tgb.BuildTokenizedGrammar(pg);
+            var grammar = tgb.Tokenize(pg);
             var def = grammar.FindDefinitionByName("something");
 
 
@@ -455,12 +467,15 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsTrue(def.IsComment);
             Assert.IsTrue(def.IsTokenized);
             Assert.IsTrue(def.MindWhitespace);
-            Assert.IsNotNull(def.Nodes);
-            Assert.AreEqual(5, def.Nodes.Count);
-            Assert.IsNotNull(def.StartNodes);
-            Assert.AreEqual(1, def.StartNodes.Count);
-            Assert.IsNotNull(def.EndNodes);
-            Assert.AreEqual(1, def.EndNodes.Count);
+            Assert.IsNotNull(def.Items);
+            Assert.AreEqual(1, def.Items.Count);
+            Assert.IsNotNull(def.Items[0]);
+            Assert.IsInstanceOf<LiteralSubExpression>(def.Items[0]);
+            var literal = (LiteralSubExpression) def.Items[0];
+            Assert.AreEqual("value", literal.Value);
+            Assert.AreEqual("",literal.Tag);
+            Assert.IsFalse(literal.IsSkippable);
+            Assert.IsFalse(literal.IsRepeatable);
         }
 
         [Test]
@@ -494,7 +509,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             // action
-            var grammar = tgb.BuildTokenizedGrammar(pg);
+            var grammar = tgb.Tokenize(pg);
             var def = grammar.FindDefinitionByName("def");
 
 
@@ -509,12 +524,15 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsFalse(def.IsComment);
             Assert.IsFalse(def.IsTokenized);
             Assert.IsFalse(def.MindWhitespace);
-            Assert.IsNotNull(def.Nodes);
-            Assert.AreEqual(1, def.Nodes.Count);
-            Assert.IsNotNull(def.StartNodes);
-            Assert.AreEqual(1, def.StartNodes.Count);
-            Assert.IsNotNull(def.EndNodes);
-            Assert.AreEqual(1, def.EndNodes.Count);
+            Assert.IsNotNull(def.Items);
+            Assert.AreEqual(1, def.Items.Count);
+            Assert.IsNotNull(def.Items[0]);
+            Assert.IsInstanceOf<DefRefSubExpression>(def.Items[0]);
+            var defref = (DefRefSubExpression) def.Items[0];
+            Assert.AreEqual("token", defref.DefinitionName);
+            Assert.AreEqual("",defref.Tag);
+            Assert.IsFalse(defref.IsSkippable);
+            Assert.IsFalse(defref.IsRepeatable);
         }
 
         [Test]
@@ -539,7 +557,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             // action
-            var grammar = tgb.BuildTokenizedGrammar(pg);
+            var grammar = tgb.Tokenize(pg);
             var def = grammar.FindDefinitionByName("something");
 
 
@@ -557,12 +575,15 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsFalse(def.IsComment);
             Assert.IsTrue(def.IsTokenized);
             Assert.IsTrue(def.MindWhitespace);
-            Assert.IsNotNull(def.Nodes);
-            Assert.AreEqual(5, def.Nodes.Count);
-            Assert.IsNotNull(def.StartNodes);
-            Assert.AreEqual(1, def.StartNodes.Count);
-            Assert.IsNotNull(def.EndNodes);
-            Assert.AreEqual(1, def.EndNodes.Count);
+            Assert.IsNotNull(def.Items);
+            Assert.AreEqual(1, def.Items.Count);
+            Assert.IsNotNull(def.Items[0]);
+            Assert.IsInstanceOf<LiteralSubExpression>(def.Items[0]);
+            var literal = (LiteralSubExpression) def.Items[0];
+            Assert.AreEqual("value", literal.Value);
+            Assert.AreEqual("",literal.Tag);
+            Assert.IsFalse(literal.IsSkippable);
+            Assert.IsFalse(literal.IsRepeatable);
         }
 
         [Test]
@@ -587,7 +608,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             // action
-            var grammar = tgb.BuildTokenizedGrammar(pg);
+            var grammar = tgb.Tokenize(pg);
             var def = grammar.FindDefinitionByName("something");
 
 
@@ -605,12 +626,15 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsFalse(def.IsComment);
             Assert.IsTrue(def.IsTokenized);
             Assert.IsTrue(def.MindWhitespace);
-            Assert.IsNotNull(def.Nodes);
-            Assert.AreEqual(5, def.Nodes.Count);
-            Assert.IsNotNull(def.StartNodes);
-            Assert.AreEqual(1, def.StartNodes.Count);
-            Assert.IsNotNull(def.EndNodes);
-            Assert.AreEqual(1, def.EndNodes.Count);
+            Assert.IsNotNull(def.Items);
+            Assert.AreEqual(1, def.Items.Count);
+            Assert.IsNotNull(def.Items[0]);
+            Assert.IsInstanceOf<LiteralSubExpression>(def.Items[0]);
+            var literal = (LiteralSubExpression) def.Items[0];
+            Assert.AreEqual("value", literal.Value);
+            Assert.AreEqual("",literal.Tag);
+            Assert.IsFalse(literal.IsSkippable);
+            Assert.IsFalse(literal.IsRepeatable);
         }
 
         [Test]
@@ -635,7 +659,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             // action
-            var grammar = tgb.BuildTokenizedGrammar(pg);
+            var grammar = tgb.Tokenize(pg);
             var def = grammar.FindDefinitionByName("something");
 
 
@@ -653,12 +677,15 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsTrue(def.IsComment);
             Assert.IsTrue(def.IsTokenized);
             Assert.IsTrue(def.MindWhitespace);
-            Assert.IsNotNull(def.Nodes);
-            Assert.AreEqual(5, def.Nodes.Count);
-            Assert.IsNotNull(def.StartNodes);
-            Assert.AreEqual(1, def.StartNodes.Count);
-            Assert.IsNotNull(def.EndNodes);
-            Assert.AreEqual(1, def.EndNodes.Count);
+            Assert.IsNotNull(def.Items);
+            Assert.AreEqual(1, def.Items.Count);
+            Assert.IsNotNull(def.Items[0]);
+            Assert.IsInstanceOf<LiteralSubExpression>(def.Items[0]);
+            var literal = (LiteralSubExpression) def.Items[0];
+            Assert.AreEqual("value", literal.Value);
+            Assert.AreEqual("",literal.Tag);
+            Assert.IsFalse(literal.IsSkippable);
+            Assert.IsFalse(literal.IsRepeatable);
         }
     }
 }

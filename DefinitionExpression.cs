@@ -40,9 +40,9 @@ namespace MetaphysicsIndustries.Giza
     //       an expression.
     public class DefinitionExpression : Expression
     {
-        public DefinitionExpression(string name="",
-                                    IEnumerable<DefinitionDirective> directives=null,
-                                    IEnumerable<ExpressionItem> items=null)
+        public DefinitionExpression(string name = "",
+            IEnumerable<DefinitionDirective> directives = null,
+            IEnumerable<ExpressionItem> items = null)
             : base(items: items)
         {
             Name = name;
@@ -56,6 +56,16 @@ namespace MetaphysicsIndustries.Giza
 
         public string Name = string.Empty;
         public readonly HashSet<DefinitionDirective> Directives = new HashSet<DefinitionDirective>();
+        public bool MindWhitespace => Directives.Contains(DefinitionDirective.MindWhitespace);
+        public bool IgnoreCase => Directives.Contains(DefinitionDirective.IgnoreCase);
+        public bool Atomic => Directives.Contains(DefinitionDirective.Atomic);
+
+        public bool IsTokenized =>
+            Directives.Contains(DefinitionDirective.Token) ||
+            Directives.Contains(DefinitionDirective.Subtoken) ||
+            Directives.Contains(DefinitionDirective.Comment);
+
+        public bool IsComment => Directives.Contains(DefinitionDirective.Comment);
         public bool IsImported { get; set; } = false;
     }
 }

@@ -130,7 +130,9 @@ namespace giza
             {
                 var tgb = new TokenizedGrammarBuilder();
                 var pg = new PreGrammar() {Definitions = alldefs.ToList()};
-                g = tgb.BuildTokenizedGrammar(pg);
+                var pg2 = tgb.Tokenize(pg);
+                var db = new DefinitionBuilder();
+                g = db.BuildGrammar(pg2);
             }
             else
             {

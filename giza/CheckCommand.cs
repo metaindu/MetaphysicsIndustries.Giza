@@ -94,7 +94,9 @@ namespace giza
                 if (tokenized)
                 {
                     var tgb = new TokenizedGrammarBuilder();
-                    var g = tgb.BuildTokenizedGrammar(pg);
+                    var pg2 = tgb.Tokenize(pg);
+                    var db = new DefinitionBuilder();
+                    var g = db.BuildGrammar(pg2);
                     var dc = new DefinitionChecker();
                     var errors2 = dc.CheckDefinitions(g.Definitions);
                     errors.AddRange(errors2);
@@ -117,7 +119,9 @@ namespace giza
                 if (tokenized)
                 {
                     TokenizedGrammarBuilder tgb = new TokenizedGrammarBuilder();
-                    var g = tgb.BuildTokenizedGrammar(pg);
+                    var pg2 = tgb.Tokenize(pg);
+                    var db = new DefinitionBuilder();
+                    var g = db.BuildGrammar(pg2);
                     defs = g.Definitions;
                 }
                 else

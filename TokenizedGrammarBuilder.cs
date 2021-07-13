@@ -34,17 +34,6 @@ namespace MetaphysicsIndustries.Giza
         // place of that subexpr. In this way, non-tokenized definitions
         // are composed entirely of defrefs.
 
-        public Grammar BuildTokenizedGrammar(PreGrammar pg)
-        {
-            var pg2 = Tokenize(pg);
-            var db = new DefinitionBuilder();
-            var defs2 = db.BuildDefinitions(pg2.Definitions);
-            var grammar = new Grammar();
-            grammar.Definitions.AddRange(defs2);
-
-            return grammar;
-        }
-
         public PreGrammar Transform(PreGrammar pg) => Tokenize(pg);
 
         public PreGrammar Tokenize(PreGrammar pg)

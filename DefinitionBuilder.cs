@@ -26,6 +26,18 @@ namespace MetaphysicsIndustries.Giza
 {
     public class DefinitionBuilder
     {
+        public Grammar BuildGrammar(PreGrammar pg)
+        {
+            return BuildGrammar(pg.Definitions);
+        }
+        public Grammar BuildGrammar(IEnumerable<DefinitionExpression> defs)
+        {
+            return new Grammar(BuildDefinitions(defs));
+        }
+        public Definition[] BuildDefinitions(PreGrammar pg)
+        {
+            return BuildDefinitions(pg.Definitions);
+        }
         public Definition[] BuildDefinitions(IEnumerable<DefinitionExpression> defs)
         {
             var ec = new ExpressionChecker();
