@@ -99,7 +99,7 @@
     <Compile Include="ExpressionItem.cs" />
     <Compile Include="GrammarComparer.cs" />
     <Compile Include="GrammarDefinitionOrderedParentChildrenCollection.cs" />
-    <Compile Include="TokenizedGrammarBuilder.cs" />
+    <Compile Include="TokenizeTransform.cs" />
     <Compile Include="ExpressionChecker.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="NodeMatch.cs" />

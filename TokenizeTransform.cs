@@ -24,7 +24,7 @@ using System.Linq;
 
 namespace MetaphysicsIndustries.Giza
 {
-    public class TokenizedGrammarBuilder : IPreGrammarTransform
+    public class TokenizeTransform : IPreGrammarTransform
     {
         // tokenized grammars differ from non-tokenized by virtue of
         // 'implicit token' definitions. That is, any occurence of

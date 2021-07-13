@@ -115,7 +115,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var pg = (new SupergrammarSpanner()).GetPreGrammar(grammarText, errors);
             Assert.IsEmpty(errors);
 
-            var pg2 = (new TokenizedGrammarBuilder()).Tokenize(pg);
+            var pg2 = (new TokenizeTransform()).Tokenize(pg);
             var db = new DefinitionBuilder();
             var grammar = db.BuildGrammar(pg2);
 
@@ -868,7 +868,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var errors = new List<Error>();
             var pg = sgs.GetPreGrammar(testGrammarText, errors);
             Assert.IsEmpty(errors);
-            var tgb = new TokenizedGrammarBuilder();
+            var tgb = new TokenizeTransform();
             var pg2 = tgb.Tokenize(pg);
             var db = new DefinitionBuilder();
             var testGrammar = db.BuildGrammar(pg2);
@@ -926,7 +926,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var errors = new List<Error>();
             var pg = sgs.GetPreGrammar(testGrammarText, errors);
             Assert.IsEmpty(errors);
-            var tgb = new TokenizedGrammarBuilder();
+            var tgb = new TokenizeTransform();
             var pg2 = tgb.Tokenize(pg);
             var db = new DefinitionBuilder();
             var testGrammar = db.BuildGrammar(pg2);
@@ -1622,7 +1622,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var errors = new List<Error>();
             var pg = sgs.GetPreGrammar(testGrammarText, errors);
             Assert.IsEmpty(errors);
-            var tgb = new TokenizedGrammarBuilder();
+            var tgb = new TokenizeTransform();
             var pg2 = tgb.Tokenize(pg);
             var db = new DefinitionBuilder();
             var testGrammar = db.BuildGrammar(pg2);

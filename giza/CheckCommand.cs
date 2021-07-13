@@ -93,7 +93,7 @@ namespace giza
             {
                 if (tokenized)
                 {
-                    var tgb = new TokenizedGrammarBuilder();
+                    var tgb = new TokenizeTransform();
                     var pg2 = tgb.Tokenize(pg);
                     var db = new DefinitionBuilder();
                     var g = db.BuildGrammar(pg2);
@@ -118,7 +118,7 @@ namespace giza
                 IEnumerable<Definition> defs;
                 if (tokenized)
                 {
-                    TokenizedGrammarBuilder tgb = new TokenizedGrammarBuilder();
+                    TokenizeTransform tgb = new TokenizeTransform();
                     var pg2 = tgb.Tokenize(pg);
                     var db = new DefinitionBuilder();
                     var g = db.BuildGrammar(pg2);
