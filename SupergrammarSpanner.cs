@@ -118,6 +118,7 @@ namespace MetaphysicsIndustries.Giza
             }
 
             List<DefinitionExpression> defs = new List<DefinitionExpression>();
+            var importStmts = new List<ImportStatement>();
 
             foreach (Span defspan in span.Subspans)
             {
@@ -129,6 +130,7 @@ namespace MetaphysicsIndustries.Giza
                 {
                     var importStmt =
                         GetImportStatementFromSpan(grammar, defspan, errors);
+                    importStmts.Add(importStmt);
                     var importedDefs =
                         ImportDefinitions(importStmt, errors);
                     var importedDefNames = new HashSet<string>(
@@ -174,6 +176,7 @@ namespace MetaphysicsIndustries.Giza
             return new PreGrammar()
             {
                 Definitions = defs,
+                ImportStatements = importStmts,
             };
         }
 
