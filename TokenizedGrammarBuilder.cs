@@ -26,30 +26,42 @@ namespace MetaphysicsIndustries.Giza
 {
     public class TokenizedGrammarBuilder
     {
-        // tokenized grammars differ from non-tokenized by virtue of 
-        // 'implicit token' definitions. That is, any occurence of 
-        // LiteralSubExpression or CharClassSubExpression within a 
-        // non-tokenized definition will be converted into a defref 
-        // pointing to a new tokenized definition created to take the 
+        // tokenized grammars differ from non-tokenized by virtue of
+        // 'implicit token' definitions. That is, any occurence of
+        // LiteralSubExpression or CharClassSubExpression within a
+        // non-tokenized definition will be converted into a defref
+        // pointing to a new tokenized definition created to take the
         // place of that subexpr. In this way, non-tokenized definitions
         // are composed entirely of defrefs.
 
         public Grammar BuildTokenizedGrammar(PreGrammar pg)
         {
+            var pg2 = Tokenize(pg);
+            var db = new DefinitionBuilder();
+            var defs2 = db.BuildDefinitions(pg2.Definitions);
+            var grammar = new Grammar();
+            grammar.Definitions.AddRange(defs2);
+
+            return grammar;
+        }
+
+        public PreGrammar Tokenize(PreGrammar pg)
+        {
             var defs = pg.Definitions;
-            ExpressionChecker ec = new ExpressionChecker();
-            List<Error> errors = ec.CheckDefinitionForParsing(defs);
+            var ec = new ExpressionChecker();
+            var errors = ec.CheckDefinitionForParsing(defs);
             if (errors.GetNonWarningsCount() > 0)
             {
                 throw new InvalidOperationException("Errors in expressions.");
             }
 
             // get the implicit tokens
-            Dictionary<string, DefinitionExpression> implicitTokenDefs = new Dictionary<string, DefinitionExpression>();
-            List<DefinitionExpression> tokenizedDefs = new List<DefinitionExpression>();
-            List<DefinitionExpression> nonTokenizedDefs = new List<DefinitionExpression>();
+            var implicitTokenDefs =
+                new Dictionary<string, DefinitionExpression>();
+            var tokenizedDefs = new List<DefinitionExpression>();
+            var nonTokenizedDefs = new List<DefinitionExpression>();
 
-            foreach (DefinitionExpression def in defs)
+            foreach (var def in defs)
             {
                 if (def.Directives.Contains(DefinitionDirective.Token) ||
                     def.Directives.Contains(DefinitionDirective.Subtoken) ||
@@ -59,129 +71,92 @@ namespace MetaphysicsIndustries.Giza
                 }
                 else
                 {
-                    nonTokenizedDefs.Add(def);
-
-                    bool ignoreCase = def.Directives.Contains(DefinitionDirective.IgnoreCase);
+                    var ignoreCase = def.Directives.Contains(
+                        DefinitionDirective.IgnoreCase);
+                    var defsByLiteral =
+                        new Dictionary<LiteralSubExpression,
+                            DefinitionExpression>();
+                    var defsByCharClass =
+                        new Dictionary<CharClassSubExpression,
+                            DefinitionExpression>();
 
                     foreach (var literal in def.EnumerateLiterals())
                     {
-                        string defname = GetImplicitDefinitionName(literal, ignoreCase);
+                        var defname = GetImplicitDefinitionName(literal, ignoreCase);
                         if (!implicitTokenDefs.ContainsKey(defname))
                         {
-                            DefinitionExpression di = new DefinitionExpression {
+                            var di = new DefinitionExpression
+                            {
                                 Name = defname,
                                 IsImported = def.IsImported,
                             };
-                            di.Items.Add(new LiteralSubExpression{Value=literal.Value});
+                            di.Items.Add(new LiteralSubExpression {Value = literal.Value});
                             di.Directives.Add(DefinitionDirective.Token);
                             if (ignoreCase)
                             {
                                 di.Directives.Add(DefinitionDirective.IgnoreCase);
                             }
+
                             implicitTokenDefs[defname] = di;
                         }
+                        defsByLiteral[literal] = implicitTokenDefs[defname];
                     }
 
                     foreach (var cc in def.EnumerateCharClasses())
                     {
-                        string defname = GetImplicitDefinitionName(cc, ignoreCase);
+                        var defname = GetImplicitDefinitionName(cc, ignoreCase);
                         if (!implicitTokenDefs.ContainsKey(defname))
                         {
-                            DefinitionExpression di = new DefinitionExpression {
+                            var di = new DefinitionExpression
+                            {
                                 Name = defname,
                                 IsImported = def.IsImported,
                             };
-                            di.Items.Add(new CharClassSubExpression() { CharClass = cc.CharClass });
+                            di.Items.Add(new CharClassSubExpression() {CharClass = cc.CharClass});
                             di.Directives.Add(DefinitionDirective.Token);
                             if (ignoreCase)
                             {
                                 di.Directives.Add(DefinitionDirective.IgnoreCase);
                             }
+
                             implicitTokenDefs[defname] = di;
                         }
+                        defsByCharClass[cc] = implicitTokenDefs[defname];
                     }
+
+                    nonTokenizedDefs.Add(
+                        ReplaceInDefintionExpression(def, defsByLiteral,
+                            defsByCharClass));
                 }
             }
 
             tokenizedDefs.AddRange(implicitTokenDefs.Values);
 
-            DefinitionBuilder db = new DefinitionBuilder();
-            List<DefinitionExpression> tokenizedDefsDetokenized = new List<DefinitionExpression>();
             foreach (var def in tokenizedDefs)
             {
-                var def2 = new DefinitionExpression {
-                    Name = def.Name,
-                    IsImported = def.IsImported,
-                };
-                def2.Items.AddRange(def.Items);
-                def2.Directives.UnionWith(def.Directives);
                 if (!def.Directives.Contains(DefinitionDirective.Subtoken))
-                {
-                    def2.Directives.Add(DefinitionDirective.Atomic);
-                }
-                def2.Directives.Add(DefinitionDirective.MindWhitespace);
-                tokenizedDefsDetokenized.Add(def2);
+                    def.Directives.Add(DefinitionDirective.Atomic);
+                def.Directives.Add(DefinitionDirective.MindWhitespace);
             }
 
-            // TODO: somehow remove the call to db.BuildDefinitions.
-            // TODO: change this class into TokenizeTransform, which implements
-            //       ITransform. return a collection of DefinitionExpression,
-            //       instead of Definition
-            Definition[] tokenizedDefs2 = db.BuildDefinitions(tokenizedDefsDetokenized.ToArray());
-
-            List<Definition> defs2 = new List<Definition>();
-            Dictionary<string, Definition> defsByName = new Dictionary<string, Definition>();
-            Dictionary<Definition, DefinitionExpression> exprsByDef = new Dictionary<Definition, DefinitionExpression>();
-            foreach (DefinitionExpression di in nonTokenizedDefs)
+            foreach (var def in nonTokenizedDefs)
             {
-                Definition def = new Definition(di.Name);
-                def.IsImported = di.IsImported;
-                defs2.Add(def);
-                defsByName[di.Name] = def;
-                def.Directives.UnionWith(di.Directives);
                 def.Directives.Remove(DefinitionDirective.Atomic);
                 def.Directives.Remove(DefinitionDirective.IgnoreCase);
-                exprsByDef[def] = di;
-            }
-            foreach (Definition def in tokenizedDefs2)
-            {
-                defsByName[def.Name] = def;
             }
 
-            foreach (Definition def in defs2)
-            {
-                NodeBundle bundle = GetNodesFromExpression(exprsByDef[def], defsByName, exprsByDef[def]);
-
-                if (bundle.IsSkippable) throw new InvalidOperationException();
-
-                def.StartNodes.UnionWith(bundle.StartNodes);
-
-                def.Nodes.AddRange(bundle.Nodes);
-
-                def.EndNodes.UnionWith(bundle.EndNodes);
-            }
-
-            defs2.AddRange(tokenizedDefs2);
-
-            Grammar grammar = new Grammar();
-            grammar.Definitions.AddRange(defs2);
-
-            return grammar;
-        }
-
-        public PreGrammar Tokenize(PreGrammar pg)
-        {
-            throw new NotImplementedException();
+            var outdefs = new List<DefinitionExpression>();
+            outdefs.AddRange(nonTokenizedDefs);
+            outdefs.AddRange(tokenizedDefs);
+            return new PreGrammar() {Definitions = outdefs};
         }
 
         string GetImplicitDefinitionName(LiteralSubExpression literal, bool ignoreCase)
         {
-
-            return
-                string.Format(
-                    "$implicit {0}literal {1}",
-                    ignoreCase ? "ignore case " : "",
-                    ignoreCase ? literal.Value.ToLower() : literal.Value);
+            return string.Format(
+                "$implicit {0}literal {1}",
+                ignoreCase ? "ignore case " : "",
+                ignoreCase ? literal.Value.ToLower() : literal.Value);
         }
         string GetImplicitDefinitionName(CharClassSubExpression cc, bool ignoreCase)
         {
@@ -192,216 +167,53 @@ namespace MetaphysicsIndustries.Giza
                     ignoreCase ? cc.CharClass.ToUndelimitedString().ToLower() : cc.CharClass.ToUndelimitedString());
         }
 
-        NodeBundle GetNodesFromExpression(Expression expr, Dictionary<string, Definition> defsByName, DefinitionExpression parentDefinition)
+        public DefinitionExpression ReplaceInDefintionExpression(
+            DefinitionExpression def,
+            Dictionary<LiteralSubExpression, DefinitionExpression> defsByLiteral,
+            Dictionary<CharClassSubExpression, DefinitionExpression> defsByCharClass)
         {
-            NodeBundle first = null;
-            NodeBundle last = null;
-            List<NodeBundle> bundles = new List<NodeBundle>();
-            foreach (ExpressionItem item in expr.Items)
-            {
-                NodeBundle bundle = null;
-                if (item is SubExpression)
-                {
-                    bundle = GetNodesFromSubExpression((SubExpression)item, defsByName, parentDefinition);
-                }
-                else // (item is OrExpression)
-                {
-                    bundle = GetNodesFromOrExpression((OrExpression)item, defsByName, parentDefinition);
-                }
-
-                if (bundle != null)
-                {
-                    if (first == null)
-                    {
-                        first = bundle;
-                    }
-
-                    last = bundle;
-
-                    bundles.Add(bundle);
-                }
-            }
-
-            HashSet<Node> starts = new HashSet<Node>();
-            HashSet<Node> ends = new HashSet<Node>();
-            List<Node> nodes = new List<Node>();
-
-            foreach (NodeBundle bundle in bundles)
-            {
-                nodes.AddRange(bundle.Nodes);
-            }
-            starts.UnionWith(first.StartNodes);
-            ends.UnionWith(last.EndNodes);
-
-            // connect the nodes
-            int i;
-            // inter-bundle connections
-            for (i = 1; i < bundles.Count; i++)
-            {
-                foreach (Node prev in bundles[i-1].EndNodes)
-                {
-                    prev.NextNodes.UnionWith(bundles[i].StartNodes);
-                }
-            }
-
-            // inter-bundle skips
-            for (i = 2; i < bundles.Count; i++)
-            {
-                if (bundles[i - 1].IsSkippable)
-                {
-                    foreach (Node prev in bundles[i-2].EndNodes)
-                    {
-                        prev.NextNodes.UnionWith(bundles[i].StartNodes);
-                    }
-                }
-            }
-
-            // skip from start to inner bundle
-            bool skippable = true;
-            for (i = 1; i < bundles.Count; i++)
-            {
-                if (bundles[i - 1].IsSkippable)
-                {
-                    starts.UnionWith(bundles[i].StartNodes);
-                }
-                else
-                {
-                    skippable = false;
-                    break;
-                }
-            }
-            if (skippable)
-            {
-                if (bundles[bundles.Count - 1].IsSkippable)
-                {
-                }
-                else
-                {
-                    skippable = false;
-                }
-            }
-
-            // skip from inner bundle to end
-            for (i = bundles.Count - 1; i > 0; i--)
-            {
-                if (bundles[i].IsSkippable)
-                {
-                    ends.UnionWith(bundles[i - 1].EndNodes);
-                }
-                else
-                {
-                    break;
-                }
-            }
-
-            return new NodeBundle{StartNodes = starts,
-                EndNodes = ends,
-                Nodes = nodes,
-                IsSkippable = skippable};
+            return new DefinitionExpression(def.Name, def.Directives,
+                def.Items.Select(item => ReplaceInExpressionItem(
+                    item, defsByLiteral, defsByCharClass)));
+        }
+        public Expression ReplaceInExpression(Expression expr,
+            Dictionary<LiteralSubExpression, DefinitionExpression> defsByLiteral,
+            Dictionary<CharClassSubExpression, DefinitionExpression> defsByCharClass)
+        {
+            return new Expression(
+                expr.Items.Select(item => ReplaceInExpressionItem(
+                    item, defsByLiteral, defsByCharClass)));
         }
 
-        NodeBundle GetNodesFromSubExpression(SubExpression subexpr, Dictionary<string, Definition> defsByName, DefinitionExpression parentDefinition)
+        public ExpressionItem ReplaceInExpressionItem(ExpressionItem item,
+            Dictionary<LiteralSubExpression, DefinitionExpression> defsByLiteral,
+            Dictionary<CharClassSubExpression, DefinitionExpression> defsByCharClass)
         {
-            if (subexpr is DefRefSubExpression)
+            if (item is OrExpression orexpr)
+                return new OrExpression(
+                    orexpr.Expressions.Select(
+                        expr => ReplaceInExpression(expr, defsByLiteral,
+                            defsByCharClass)),
+                    orexpr.IsSkippable, orexpr.IsRepeatable);
+            if (item is DefRefSubExpression defref)
+                return new DefRefSubExpression(defref.DefinitionName,
+                    defref.Tag, defref.IsSkippable, defref.IsRepeatable);
+            if (item is LiteralSubExpression literal)
             {
-                return GetNodesFromDefRefSubExpression((DefRefSubExpression)subexpr, defsByName);
-            }
-            else if (subexpr is LiteralSubExpression)
-            {
-                return GetNodesFromLiteralSubExpression((LiteralSubExpression)subexpr, defsByName, parentDefinition);
-            }
-            else // (subexpr is CharClassSubExpression)
-            {
-                return GetNodesFromCharClassSubExpression((CharClassSubExpression)subexpr, defsByName, parentDefinition);
-            }
-        }
-
-        NodeBundle GetNodesFromDefRefSubExpression(DefRefSubExpression defref, Dictionary<string, Definition> defsByName)
-        {
-            DefRefNode node = new DefRefNode(defsByName[defref.DefinitionName], defref.Tag);
-            if (defref.IsRepeatable)
-            {
-                node.NextNodes.Add(node);
+                var def = defsByLiteral[literal];
+                return new DefRefSubExpression(def.Name, literal.Tag,
+                    literal.IsSkippable, literal.IsRepeatable);
             }
 
-            NodeBundle bundle = new NodeBundle();
-            bundle.Nodes = new List<Node> { node };
-            bundle.StartNodes = new HashSet<Node> { node };
-            bundle.EndNodes = new HashSet<Node> { node };
-            bundle.IsSkippable = defref.IsSkippable;
-
-            return bundle;
-        }
-
-        NodeBundle GetNodesFromLiteralSubExpression(LiteralSubExpression literal, Dictionary<string, Definition> defsByName, DefinitionExpression parentDefinition)
-        {
-            var defname = GetImplicitDefinitionName(literal, parentDefinition.Directives.Contains(DefinitionDirective.IgnoreCase));
-            DefRefNode node = new DefRefNode(defsByName[defname], literal.Tag);
-            if (literal.IsRepeatable)
+            if (item is CharClassSubExpression cc)
             {
-                node.NextNodes.Add(node);
+                var def = defsByCharClass[cc];
+                return new DefRefSubExpression(def.Name, cc.Tag,
+                    cc.IsSkippable, cc.IsRepeatable);
             }
 
-            NodeBundle bundle = new NodeBundle();
-            bundle.Nodes = new List<Node> { node };
-            bundle.StartNodes = new HashSet<Node> { node };
-            bundle.EndNodes = new HashSet<Node> { node };
-            bundle.IsSkippable = literal.IsSkippable;
-
-            return bundle;
-        }
-
-        NodeBundle GetNodesFromCharClassSubExpression(CharClassSubExpression cc, Dictionary<string, Definition> defsByName, DefinitionExpression parentDefinition)
-        {
-            var defname = GetImplicitDefinitionName(cc, parentDefinition.Directives.Contains(DefinitionDirective.IgnoreCase));
-            DefRefNode node = new DefRefNode(defsByName[defname], cc.Tag);
-            if (cc.IsRepeatable)
-            {
-                node.NextNodes.Add(node);
-            }
-
-            NodeBundle bundle = new NodeBundle();
-            bundle.Nodes = new List<Node> { node };
-            bundle.StartNodes = new HashSet<Node> { node };
-            bundle.EndNodes = new HashSet<Node> { node };
-            bundle.IsSkippable = cc.IsSkippable;
-
-            return bundle;
-        }
-
-        NodeBundle GetNodesFromOrExpression(OrExpression orexpr, Dictionary<string, Definition> defsByName, DefinitionExpression parentDefinition)
-        {
-            List<NodeBundle> bundles = new List<NodeBundle>();
-
-            foreach (Expression expr in orexpr.Expressions)
-            {
-                bundles.Add(GetNodesFromExpression(expr, defsByName, parentDefinition));
-            }
-
-            HashSet<Node> starts = new HashSet<Node>();
-            HashSet<Node> ends = new HashSet<Node>();
-            List<Node> nodes = new List<Node>();
-            foreach (NodeBundle bundle in bundles)
-            {
-                nodes.AddRange(bundle.Nodes);
-                starts.UnionWith(bundle.StartNodes);
-                ends.UnionWith(bundle.EndNodes);
-            }
-
-            if (orexpr.IsRepeatable)
-            {
-                foreach (Node end in ends)
-                {
-                    end.NextNodes.UnionWith(starts);
-                }
-            }
-
-            return new NodeBundle{
-                StartNodes=starts,
-                EndNodes=ends,
-                Nodes=nodes,
-                IsSkippable=orexpr.IsSkippable
-            };
+            throw new ArgumentOutOfRangeException(
+                $"Unknown type of 'item': {item.GetType().FullName}");
         }
     }
 }
