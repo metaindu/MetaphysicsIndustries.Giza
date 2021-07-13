@@ -24,7 +24,7 @@ using System.Linq;
 
 namespace MetaphysicsIndustries.Giza
 {
-    public class TokenizedGrammarBuilder
+    public class TokenizedGrammarBuilder : IPreGrammarTransform
     {
         // tokenized grammars differ from non-tokenized by virtue of
         // 'implicit token' definitions. That is, any occurence of
@@ -44,6 +44,8 @@ namespace MetaphysicsIndustries.Giza
 
             return grammar;
         }
+
+        public PreGrammar Transform(PreGrammar pg) => Tokenize(pg);
 
         public PreGrammar Tokenize(PreGrammar pg)
         {
