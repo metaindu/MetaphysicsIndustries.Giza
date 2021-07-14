@@ -27,7 +27,6 @@
  * state machine, with all of the states represented by nodes. It does not use
  * hierarchical trees of Expression and ExpressionItem.
  *
- * TODO: rename these and related classes to make the distinction more apparent.
  */
 
 using System.Collections.Generic;
