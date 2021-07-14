@@ -350,7 +350,7 @@ namespace MetaphysicsIndustries.Giza
 
             yield return defexpr.Name;
             yield return "=";
-            foreach (var token in ProcessExpression(defexpr))
+            foreach (var token in ProcessExpression(defexpr.Expr))
             {
                 yield return token;
             }

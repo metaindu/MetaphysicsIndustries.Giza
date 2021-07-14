@@ -115,7 +115,7 @@ namespace MetaphysicsIndustries.Giza
                         // TODO: refactor to de-duplicate
                         var sourceDef = importedDefsByName[sourceName];
                         var destDef = new DefinitionExpression(destName,
-                            sourceDef.Directives, sourceDef.Items);
+                            sourceDef.Directives, sourceDef.Expr);
                         destDef.IsImported = true;
                         defsToImport1.Add(destDef);
                     }
@@ -131,7 +131,7 @@ namespace MetaphysicsIndustries.Giza
                     var sourceDef = defToImport;
                     var destName = defToImport.Name;
                     var destDef = new DefinitionExpression(destName,
-                        sourceDef.Directives, sourceDef.Items);
+                        sourceDef.Directives, sourceDef.Expr);
                     destDef.IsImported = true;
                     defsToImport1.Add(destDef);
                 }

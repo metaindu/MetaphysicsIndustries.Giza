@@ -54,7 +54,7 @@ namespace MetaphysicsIndustries.Giza
                 defs2.Add(def);
                 defsByName[di.Name] = def;
                 def.Directives.UnionWith(di.Directives);
-                exprsByDef[def] = di;
+                exprsByDef[def] = di.Expr;
             }
 
             foreach (var def in defs2)

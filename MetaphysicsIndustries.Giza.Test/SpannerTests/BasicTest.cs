@@ -861,9 +861,8 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             var item =
                 new DefinitionExpression(
                     name: "item",
-                    directives: new [] { DefinitionDirective.IgnoreCase },
-                    items: new [] { new LiteralSubExpression("item") }
-                );
+                    directives: new[] {DefinitionDirective.IgnoreCase},
+                    expr: new Expression(new LiteralSubExpression("item")));
             var grammar = (new GrammarCompiler()).BuildGrammar(new [] { item });
             var itemDef = grammar.FindDefinitionByName("item");
             var spanner = new Spanner(itemDef);
@@ -901,8 +900,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             var item =
                 new DefinitionExpression(
                     name: "item",
-                    items: new [] { new LiteralSubExpression("item") }
-                );
+                    expr: new Expression(new LiteralSubExpression("item")));
             var grammar = (new GrammarCompiler()).BuildGrammar(new [] { item });
             var itemDef = grammar.FindDefinitionByName("item");
             var spanner = new Spanner(itemDef);

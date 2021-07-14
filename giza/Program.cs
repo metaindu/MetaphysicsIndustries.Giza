@@ -184,9 +184,9 @@ namespace giza
                                 }
 
                                 // add new definitions to the list
-                                foreach (var defexpr in defs)
+                                foreach (var def in defs)
                                 {
-                                    env[defexpr.Name] = defexpr;
+                                    env[def.Name] = def;
                                 }
 
                                 break;

@@ -36,26 +36,29 @@ using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Giza
 {
-    // TODO: remove the base class. A definition *has* an expression, not *is*
-    //       an expression.
-    public class DefinitionExpression : Expression
+    public class DefinitionExpression
     {
         public DefinitionExpression(string name = "",
             IEnumerable<DefinitionDirective> directives = null,
-            IEnumerable<ExpressionItem> items = null)
-            : base(items: items)
+            Expression expr = null)
         {
             Name = name;
             if (directives != null)
             {
                 Directives.UnionWith(directives);
             }
+
+            if (expr == null)
+                expr = new Expression();
+            Expr = expr;
         }
 
         public override string ToString() => $"DefinitionExpression {Name}";
 
         public string Name = string.Empty;
         public readonly HashSet<DefinitionDirective> Directives = new HashSet<DefinitionDirective>();
+        public Expression Expr;
+
         public bool MindWhitespace => Directives.Contains(DefinitionDirective.MindWhitespace);
         public bool IgnoreCase => Directives.Contains(DefinitionDirective.IgnoreCase);
         public bool Atomic => Directives.Contains(DefinitionDirective.Atomic);
@@ -67,6 +70,15 @@ namespace MetaphysicsIndustries.Giza
 
         public bool IsComment => Directives.Contains(DefinitionDirective.Comment);
         public bool IsImported { get; set; } = false;
+        
+        public IEnumerable<DefRefSubExpression> EnumerateDefRefs() => 
+            Expr.EnumerateDefRefs();
+
+        public IEnumerable<LiteralSubExpression> EnumerateLiterals() => 
+            Expr.EnumerateLiterals();
+
+        public IEnumerable<CharClassSubExpression> EnumerateCharClasses() => 
+            Expr.EnumerateCharClasses();
     }
 }
 

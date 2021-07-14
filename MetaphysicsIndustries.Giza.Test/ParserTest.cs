@@ -1244,15 +1244,6 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestInvalidToken2()
         {
-            string testGrammarText =
-                " // test grammar \r\n" +
-                    "sequence = item+; \r\n" +
-                    "item = ( id-item1 | id-item2 | paren | one-two ); \r\n" +
-                    "<token> id-item1 = 'item1'; \r\n" +
-                    "<token> id-item2 = 'item2'; \r\n" +
-                    "one-two = 'one' 'two'; \r\n" +
-                    "paren = '(' sequence ')'; \r\n";
-
             //sequence = item+;
             //item = ( id-item1 | id-item2 | paren | one-two );
             //<token> id-item1 = 'item1';

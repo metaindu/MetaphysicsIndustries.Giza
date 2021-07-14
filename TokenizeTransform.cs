@@ -81,7 +81,11 @@ namespace MetaphysicsIndustries.Giza
                                 Name = defname,
                                 IsImported = def.IsImported,
                             };
-                            di.Items.Add(new LiteralSubExpression {Value = literal.Value});
+                            di.Expr = new Expression(
+                                new LiteralSubExpression
+                                {
+                                    Value = literal.Value
+                                });
                             di.Directives.Add(DefinitionDirective.Token);
                             if (ignoreCase)
                             {
@@ -103,7 +107,11 @@ namespace MetaphysicsIndustries.Giza
                                 Name = defname,
                                 IsImported = def.IsImported,
                             };
-                            di.Items.Add(new CharClassSubExpression() {CharClass = cc.CharClass});
+                            di.Expr = new Expression(
+                                new CharClassSubExpression()
+                                {
+                                    CharClass = cc.CharClass
+                                });
                             di.Directives.Add(DefinitionDirective.Token);
                             if (ignoreCase)
                             {
@@ -164,9 +172,10 @@ namespace MetaphysicsIndustries.Giza
             Dictionary<CharClassSubExpression, DefinitionExpression> defsByCharClass)
         {
             return new DefinitionExpression(def.Name, def.Directives,
-                def.Items.Select(item => ReplaceInExpressionItem(
-                    item, defsByLiteral, defsByCharClass)));
+                ReplaceInExpression(def.Expr, defsByLiteral, 
+                    defsByCharClass));
         }
+
         public Expression ReplaceInExpression(Expression expr,
             Dictionary<LiteralSubExpression, DefinitionExpression> defsByLiteral,
             Dictionary<CharClassSubExpression, DefinitionExpression> defsByCharClass)

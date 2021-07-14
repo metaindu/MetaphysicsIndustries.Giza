@@ -34,7 +34,7 @@ namespace MetaphysicsIndustries.Giza.Test
                 },
             };
             defs[0].Directives.Add(DefinitionDirective.Token);
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[0].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionsForSpanning(defs);
@@ -55,7 +55,7 @@ namespace MetaphysicsIndustries.Giza.Test
                 },
             };
             defs[0].Directives.Add(DefinitionDirective.Subtoken);
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[0].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionsForSpanning(defs);
@@ -76,7 +76,7 @@ namespace MetaphysicsIndustries.Giza.Test
                 },
             };
             defs[0].Directives.Add(DefinitionDirective.Comment);
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[0].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionsForSpanning(defs);
@@ -99,7 +99,7 @@ namespace MetaphysicsIndustries.Giza.Test
             };
             defs[0].Directives.Add(DefinitionDirective.Token);
             defs[0].Directives.Add(DefinitionDirective.Subtoken);
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[0].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
@@ -122,7 +122,7 @@ namespace MetaphysicsIndustries.Giza.Test
             };
             defs[0].Directives.Add(DefinitionDirective.Comment);
             defs[0].Directives.Add(DefinitionDirective.Subtoken);
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[0].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
@@ -145,7 +145,7 @@ namespace MetaphysicsIndustries.Giza.Test
             };
             defs[0].Directives.Add(DefinitionDirective.Comment);
             defs[0].Directives.Add(DefinitionDirective.Token);
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[0].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
@@ -167,7 +167,7 @@ namespace MetaphysicsIndustries.Giza.Test
                 },
             };
             defs[0].Directives.Add(DefinitionDirective.Atomic);
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[0].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
@@ -189,7 +189,7 @@ namespace MetaphysicsIndustries.Giza.Test
                 },
             };
             defs[0].Directives.Add(DefinitionDirective.MindWhitespace);
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[0].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
@@ -212,7 +212,7 @@ namespace MetaphysicsIndustries.Giza.Test
             };
             defs[0].Directives.Add(DefinitionDirective.Atomic);
             defs[0].Directives.Add(DefinitionDirective.Token);
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[0].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
@@ -235,7 +235,8 @@ namespace MetaphysicsIndustries.Giza.Test
             };
             defs[0].Directives.Add(DefinitionDirective.Atomic);
             defs[0].Directives.Add(DefinitionDirective.Subtoken);
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[0].Expr.Items.Add(
+                new LiteralSubExpression {Value = "literal"});
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
@@ -254,7 +255,7 @@ namespace MetaphysicsIndustries.Giza.Test
             };
             defs[0].Directives.Add(DefinitionDirective.Atomic);
             defs[0].Directives.Add(DefinitionDirective.Comment);
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[0].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
@@ -277,7 +278,7 @@ namespace MetaphysicsIndustries.Giza.Test
             };
             defs[0].Directives.Add(DefinitionDirective.MindWhitespace);
             defs[0].Directives.Add(DefinitionDirective.Token);
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[0].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
@@ -300,7 +301,7 @@ namespace MetaphysicsIndustries.Giza.Test
             };
             defs[0].Directives.Add(DefinitionDirective.MindWhitespace);
             defs[0].Directives.Add(DefinitionDirective.Subtoken);
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[0].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
@@ -323,7 +324,7 @@ namespace MetaphysicsIndustries.Giza.Test
             };
             defs[0].Directives.Add(DefinitionDirective.MindWhitespace);
             defs[0].Directives.Add(DefinitionDirective.Comment);
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[0].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionForParsing(defs);

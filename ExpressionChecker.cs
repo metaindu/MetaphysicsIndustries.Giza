@@ -256,7 +256,8 @@ namespace MetaphysicsIndustries.Giza
                     defnames2.Add(def.Name);
                 }
 
-                CheckExpression(def, def, defNames, visitedExprs, visitedItems, errors);
+                CheckExpression(def, def.Expr, defNames, visitedExprs, 
+                    visitedItems, errors);
             }
 
             return errors;

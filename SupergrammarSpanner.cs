@@ -121,9 +121,7 @@ namespace MetaphysicsIndustries.Giza
                     }
                     else if (sub.Node == grammar.node_definition_3_expr)
                     {
-                        var expr = GetExpressionFromSpan(grammar, sub);
-                        def.Items.AddRange(expr.Items);
-                        expr.Items.Clear();
+                        def.Expr = GetExpressionFromSpan(grammar, sub);
                     }
                 }
 

@@ -189,10 +189,7 @@ namespace MetaphysicsIndustries.Giza.Test
                 Definitions = new List<DefinitionExpression>
                 {
                     new DefinitionExpression("def4",
-                        items: new ExpressionItem[]
-                        {
-                            new LiteralSubExpression("d")
-                        })
+                        expr: new Expression(new LiteralSubExpression("d"))),
                 },
                 ImportStatements = new List<ImportStatement>
                 {
@@ -285,9 +282,9 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsNotNull(result);
             Assert.AreEqual(1, result.Definitions.Count);
             Assert.AreEqual("def1", result.Definitions[0].Name);
-            Assert.AreEqual(1, result.Definitions[0].Items.Count);
-            Assert.IsInstanceOf<LiteralSubExpression>(result.Definitions[0].Items[0]);
-            var literal = (LiteralSubExpression) result.Definitions[0].Items[0];
+            Assert.AreEqual(1, result.Definitions[0].Expr.Items.Count);
+            Assert.IsInstanceOf<LiteralSubExpression>(result.Definitions[0].Expr.Items[0]);
+            var literal = (LiteralSubExpression) result.Definitions[0].Expr.Items[0];
             Assert.AreEqual("b", literal.Value);
         }
 
@@ -355,14 +352,14 @@ namespace MetaphysicsIndustries.Giza.Test
             var def2 = (result.Definitions[0].Name == "def2" ?
                 result.Definitions[0] : result.Definitions[1]);
 
-            Assert.AreEqual(1, def1.Items.Count);
-            Assert.IsInstanceOf<LiteralSubExpression>(def1.Items[0]);
-            var literal1 = (LiteralSubExpression) def1.Items[0];
+            Assert.AreEqual(1, def1.Expr.Items.Count);
+            Assert.IsInstanceOf<LiteralSubExpression>(def1.Expr.Items[0]);
+            var literal1 = (LiteralSubExpression) def1.Expr.Items[0];
             Assert.AreEqual("a", literal1.Value);
 
-            Assert.AreEqual(1, def2.Items.Count);
-            Assert.IsInstanceOf<LiteralSubExpression>(def2.Items[0]);
-            var literal2 = (LiteralSubExpression) def2.Items[0];
+            Assert.AreEqual(1, def2.Expr.Items.Count);
+            Assert.IsInstanceOf<LiteralSubExpression>(def2.Expr.Items[0]);
+            var literal2 = (LiteralSubExpression) def2.Expr.Items[0];
             Assert.AreEqual("b", literal2.Value);
         }
     }

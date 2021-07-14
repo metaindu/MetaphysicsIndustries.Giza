@@ -33,21 +33,17 @@ namespace MetaphysicsIndustries.Giza.Test
             var sequence =
                 new DefinitionExpression(
                     name: "sequence",
-                    items: new [] {
-                        new DefRefSubExpression("letters", isRepeatable: true)
-                    }
-                );
+                    expr: new Expression(
+                        new DefRefSubExpression("letters",
+                            isRepeatable: true)));
             var letters =
                 new DefinitionExpression(
                     name: "letters",
-                    directives: new [] { DefinitionDirective.Atomic },
-                    items: new [] {
+                    directives: new[] {DefinitionDirective.Atomic},
+                    expr: new Expression(
                         new CharClassSubExpression(
-                            charClass: CharClass.FromUndelimitedCharClassText("\\l"),
-                            isRepeatable: true
-                        )
-                    }
-                );
+                            CharClass.FromUndelimitedCharClassText("\\l"),
+                            isRepeatable: true)));
             var grammar = (new GrammarCompiler()).BuildGrammar(new [] { letters, sequence });
             var sequenceDef = grammar.FindDefinitionByName("sequence");
             var lettersDef = grammar.FindDefinitionByName("letters");
@@ -87,20 +83,16 @@ namespace MetaphysicsIndustries.Giza.Test
             var sequence =
                 new DefinitionExpression(
                     name: "sequence",
-                    items: new [] {
-                        new DefRefSubExpression("letters", isRepeatable: true)
-                    }
-                );
+                    expr: new Expression(
+                        new DefRefSubExpression("letters",
+                            isRepeatable: true)));
             var letters =
                 new DefinitionExpression(
                     name: "letters",
-                    items: new [] {
+                    expr: new Expression(
                         new CharClassSubExpression(
-                            charClass: CharClass.FromUndelimitedCharClassText("\\l"),
-                            isRepeatable: true
-                        )
-                    }
-                );
+                            CharClass.FromUndelimitedCharClassText("\\l"),
+                            isRepeatable: true)));
             var grammar = (new GrammarCompiler()).BuildGrammar(new [] { letters, sequence });
             var sequenceDef = grammar.FindDefinitionByName("sequence");
             var lettersDef = grammar.FindDefinitionByName("letters");

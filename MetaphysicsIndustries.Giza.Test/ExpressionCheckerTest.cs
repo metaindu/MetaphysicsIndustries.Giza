@@ -52,8 +52,8 @@ namespace MetaphysicsIndustries.Giza.Test
                     Name = "B",
                 },
             };
-            defs[0].Items.Add(orexprA);
-            defs[1].Items.Add(orexprB);
+            defs[0].Expr.Items.Add(orexprA);
+            defs[1].Expr.Items.Add(orexprB);
 
             ExpressionChecker ec = new ExpressionChecker();
 
@@ -83,8 +83,8 @@ namespace MetaphysicsIndustries.Giza.Test
                     Name = "B",
                 },
             };
-            defs[0].Items.Add(literal);
-            defs[1].Items.Add(literal);
+            defs[0].Expr.Items.Add(literal);
+            defs[1].Expr.Items.Add(literal);
 
             ExpressionChecker ec = new ExpressionChecker();
 
@@ -111,8 +111,8 @@ namespace MetaphysicsIndustries.Giza.Test
                     Name = "A",
                 },
             };
-            defs[0].Items.Add(literal);
-            defs[0].Items.Add(literal);
+            defs[0].Expr.Items.Add(literal);
+            defs[0].Expr.Items.Add(literal);
 
             ExpressionChecker ec = new ExpressionChecker();
 
@@ -145,7 +145,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     Name = "A",
                 },
             };
-            defs[0].Items.Add(orexpr2);
+            defs[0].Expr.Items.Add(orexpr2);
 
             ExpressionChecker ec = new ExpressionChecker();
 
@@ -176,7 +176,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     Name = "A",
                 },
             };
-            defs[0].Items.Add(orexpr);
+            defs[0].Expr.Items.Add(orexpr);
 
             ExpressionChecker ec = new ExpressionChecker();
 
@@ -204,7 +204,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     Name = null,
                 },
             };
-            defs[0].Items.Add(literal);
+            defs[0].Expr.Items.Add(literal);
 
             ExpressionChecker ec = new ExpressionChecker();
 
@@ -230,7 +230,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     Name = "",
                 },
             };
-            defs[0].Items.Add(literal);
+            defs[0].Expr.Items.Add(literal);
 
             ExpressionChecker ec = new ExpressionChecker();
 
@@ -263,7 +263,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(ExpressionError.EmptyExpressionItems, errors[0].ErrorType);
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
-            Assert.AreSame(defs[0], err.Expression);
+            Assert.AreSame(defs[0].Expr, err.Expression);
             Assert.AreSame(null, err.ExpressionItem);
             Assert.AreSame(defs[0], err.Definition);
         }
@@ -280,7 +280,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     Name = "A",
                 },
             };
-            defs[0].Items.Add(orexpr);
+            defs[0].Expr.Items.Add(orexpr);
             orexpr.Expressions.Add(expr);
 
             ExpressionChecker ec = new ExpressionChecker();
@@ -306,7 +306,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     Name = "A",
                 },
             };
-            defs[0].Items.Add(orexpr);
+            defs[0].Expr.Items.Add(orexpr);
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitions(defs);
@@ -333,7 +333,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     Name = "A",
                 },
             };
-            defs[0].Items.Add(literal);
+            defs[0].Expr.Items.Add(literal);
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitions(defs);
@@ -358,7 +358,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     Name = "A",
                 },
             };
-            defs[0].Items.Add(defref);
+            defs[0].Expr.Items.Add(defref);
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitions(defs);
@@ -383,7 +383,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     Name = "A",
                 },
             };
-            defs[0].Items.Add(defref);
+            defs[0].Expr.Items.Add(defref);
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitions(defs);
@@ -408,7 +408,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     Name = "A",
                 },
             };
-            defs[0].Items.Add(literal);
+            defs[0].Expr.Items.Add(literal);
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitions(defs);
@@ -433,7 +433,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     Name = "A",
                 },
             };
-            defs[0].Items.Add(literal);
+            defs[0].Expr.Items.Add(literal);
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitions(defs);
@@ -458,7 +458,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     Name = "A",
                 },
             };
-            defs[0].Items.Add(cc);
+            defs[0].Expr.Items.Add(cc);
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitions(defs);
@@ -483,7 +483,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     Name = "A",
                 },
             };
-            defs[0].Items.Add(cc);
+            defs[0].Expr.Items.Add(cc);
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitions(defs);
@@ -509,8 +509,8 @@ namespace MetaphysicsIndustries.Giza.Test
                     Name = "A",
                 }
             };
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
-            defs[1].Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[0].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[1].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitions(defs);
@@ -546,7 +546,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     Name = "A",
                 },
             };
-            defs[0].Items.Add(orexpr);
+            defs[0].Expr.Items.Add(orexpr);
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitions(defs);
@@ -606,7 +606,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     Name = "A",
                 },
             };
-            defs[0].Items.Add(defref);
+            defs[0].Expr.Items.Add(defref);
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitions(defs);
@@ -627,7 +627,7 @@ namespace MetaphysicsIndustries.Giza.Test
             DefinitionExpression def = new DefinitionExpression {
                 Name = "A",
             };
-            def.Items.Add(new LiteralSubExpression { Value = "literal" });
+            def.Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
 
             DefinitionExpression[] defs = {
                 def,
@@ -658,7 +658,7 @@ namespace MetaphysicsIndustries.Giza.Test
                 },
                 null,
             };
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[0].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
 
             ExpressionChecker ec = new ExpressionChecker();
 

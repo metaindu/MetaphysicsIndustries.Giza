@@ -32,13 +32,12 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             // setup
             //def = 'value';
-            var dis = new [] {
+            var dis = new[]
+            {
                 new DefinitionExpression(
                     name: "def",
-                    items: new [] {
-                        new LiteralSubExpression(value: "value")
-                    }
-                )
+                    expr: new Expression(
+                        new LiteralSubExpression(value: "value")))
             };
             var pg = new PreGrammar() {Definitions = dis.ToList()};
             var tgb = new TokenizeTransform();
@@ -61,11 +60,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsFalse(explicitDef.IsComment);
             Assert.IsFalse(explicitDef.IsTokenized);
             Assert.IsFalse(explicitDef.MindWhitespace);
-            Assert.IsNotNull(explicitDef.Items);
-            Assert.AreEqual(1, explicitDef.Items.Count);
-            Assert.IsNotNull(explicitDef.Items[0]);
-            Assert.IsInstanceOf<DefRefSubExpression>(explicitDef.Items[0]);
-            var defref = (DefRefSubExpression) explicitDef.Items[0];
+            Assert.IsNotNull(explicitDef.Expr.Items);
+            Assert.AreEqual(1, explicitDef.Expr.Items.Count);
+            Assert.IsNotNull(explicitDef.Expr.Items[0]);
+            Assert.IsInstanceOf<DefRefSubExpression>(explicitDef.Expr.Items[0]);
+            var defref = (DefRefSubExpression) explicitDef.Expr.Items[0];
             Assert.AreEqual(implicitDef.Name, defref.DefinitionName);
 
             Assert.IsNotNull(implicitDef);
@@ -78,11 +77,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsFalse(implicitDef.IsComment);
             Assert.IsTrue(implicitDef.IsTokenized);
             Assert.IsTrue(implicitDef.MindWhitespace);
-            Assert.IsNotNull(implicitDef.Items);
-            Assert.AreEqual(1, implicitDef.Items.Count);
-            Assert.IsNotNull(implicitDef.Items[0]);
-            Assert.IsInstanceOf<LiteralSubExpression>(implicitDef.Items[0]);
-            var literal = (LiteralSubExpression) implicitDef.Items[0];
+            Assert.IsNotNull(implicitDef.Expr.Items);
+            Assert.AreEqual(1, implicitDef.Expr.Items.Count);
+            Assert.IsNotNull(implicitDef.Expr.Items[0]);
+            Assert.IsInstanceOf<LiteralSubExpression>(implicitDef.Expr.Items[0]);
+            var literal = (LiteralSubExpression) implicitDef.Expr.Items[0];
             Assert.AreEqual("value", literal.Value);
             Assert.AreEqual("",literal.Tag);
             Assert.IsFalse(literal.IsSkippable);
@@ -97,10 +96,9 @@ namespace MetaphysicsIndustries.Giza.Test
             var dis = new [] {
                 new DefinitionExpression(
                     name: "def",
-                    items: new [] {
-                        new CharClassSubExpression(charClass: CharClass.FromUndelimitedCharClassText("\\d"))
-                    }
-                )
+                    expr: new Expression(
+                        new CharClassSubExpression(
+                            CharClass.FromUndelimitedCharClassText("\\d"))))
             };
             var pg = new PreGrammar() {Definitions = dis.ToList()};
             var tgb = new TokenizeTransform();
@@ -123,11 +121,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsFalse(explicitDef.IsComment);
             Assert.IsFalse(explicitDef.IsTokenized);
             Assert.IsFalse(explicitDef.MindWhitespace);
-            Assert.IsNotNull(explicitDef.Items);
-            Assert.AreEqual(1, explicitDef.Items.Count);
-            Assert.IsNotNull(explicitDef.Items[0]);
-            Assert.IsInstanceOf<DefRefSubExpression>(explicitDef.Items[0]);
-            var defref = (DefRefSubExpression) explicitDef.Items[0];
+            Assert.IsNotNull(explicitDef.Expr.Items);
+            Assert.AreEqual(1, explicitDef.Expr.Items.Count);
+            Assert.IsNotNull(explicitDef.Expr.Items[0]);
+            Assert.IsInstanceOf<DefRefSubExpression>(explicitDef.Expr.Items[0]);
+            var defref = (DefRefSubExpression) explicitDef.Expr.Items[0];
             Assert.AreEqual(implicitDef.Name, defref.DefinitionName);
 
             Assert.IsNotNull(implicitDef);
@@ -140,11 +138,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsFalse(implicitDef.IsComment);
             Assert.IsTrue(implicitDef.IsTokenized);
             Assert.IsTrue(implicitDef.MindWhitespace);
-            Assert.IsNotNull(implicitDef.Items);
-            Assert.AreEqual(1, implicitDef.Items.Count);
-            Assert.IsNotNull(implicitDef.Items[0]);
-            Assert.IsInstanceOf<CharClassSubExpression>(implicitDef.Items[0]);
-            var cc = (CharClassSubExpression) implicitDef.Items[0];
+            Assert.IsNotNull(implicitDef.Expr.Items);
+            Assert.AreEqual(1, implicitDef.Expr.Items.Count);
+            Assert.IsNotNull(implicitDef.Expr.Items[0]);
+            Assert.IsInstanceOf<CharClassSubExpression>(implicitDef.Expr.Items[0]);
+            var cc = (CharClassSubExpression) implicitDef.Expr.Items[0];
             Assert.AreEqual("\\d", cc.CharClass.ToUndelimitedString());
             Assert.AreEqual("",cc.Tag);
             Assert.IsFalse(cc.IsSkippable);
@@ -159,9 +157,8 @@ namespace MetaphysicsIndustries.Giza.Test
             var dis = new [] {
                 new DefinitionExpression(
                     name: "def",
-                    items: new [] {
-                        new LiteralSubExpression(value: "value")
-                    },
+                    expr: new Expression(
+                        new LiteralSubExpression(value: "value")),
                     directives: new [] {
                         DefinitionDirective.IgnoreCase
                     }
@@ -188,11 +185,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsFalse(explicitDef.IsComment);
             Assert.IsFalse(explicitDef.IsTokenized);
             Assert.IsFalse(explicitDef.MindWhitespace);
-            Assert.IsNotNull(explicitDef.Items);
-            Assert.AreEqual(1, explicitDef.Items.Count);
-            Assert.IsNotNull(explicitDef.Items[0]);
-            Assert.IsInstanceOf<DefRefSubExpression>(explicitDef.Items[0]);
-            var defref = (DefRefSubExpression) explicitDef.Items[0];
+            Assert.IsNotNull(explicitDef.Expr.Items);
+            Assert.AreEqual(1, explicitDef.Expr.Items.Count);
+            Assert.IsNotNull(explicitDef.Expr.Items[0]);
+            Assert.IsInstanceOf<DefRefSubExpression>(explicitDef.Expr.Items[0]);
+            var defref = (DefRefSubExpression) explicitDef.Expr.Items[0];
             Assert.AreEqual(implicitDef.Name, defref.DefinitionName);
 
             Assert.IsNotNull(implicitDef);
@@ -206,11 +203,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsFalse(implicitDef.IsComment);
             Assert.IsTrue(implicitDef.IsTokenized);
             Assert.IsTrue(implicitDef.MindWhitespace);
-            Assert.IsNotNull(implicitDef.Items);
-            Assert.AreEqual(1, implicitDef.Items.Count);
-            Assert.IsNotNull(implicitDef.Items[0]);
-            Assert.IsInstanceOf<LiteralSubExpression>(implicitDef.Items[0]);
-            var literal = (LiteralSubExpression) implicitDef.Items[0];
+            Assert.IsNotNull(implicitDef.Expr.Items);
+            Assert.AreEqual(1, implicitDef.Expr.Items.Count);
+            Assert.IsNotNull(implicitDef.Expr.Items[0]);
+            Assert.IsInstanceOf<LiteralSubExpression>(implicitDef.Expr.Items[0]);
+            var literal = (LiteralSubExpression) implicitDef.Expr.Items[0];
             Assert.AreEqual("value", literal.Value);
             Assert.AreEqual("",literal.Tag);
             Assert.IsFalse(literal.IsSkippable);
@@ -226,9 +223,9 @@ namespace MetaphysicsIndustries.Giza.Test
             var dis = new [] {
                 new DefinitionExpression(
                     name: "def",
-                    items: new [] {
-                        new CharClassSubExpression(charClass: CharClass.FromUndelimitedCharClassText("\\d"))
-                    },
+                    expr: new Expression(
+                        new CharClassSubExpression(
+                            CharClass.FromUndelimitedCharClassText("\\d"))),
                     directives: new [] {
                         DefinitionDirective.IgnoreCase
                     }
@@ -267,11 +264,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsFalse(implicitDef.IsComment);
             Assert.IsTrue(implicitDef.IsTokenized);
             Assert.IsTrue(implicitDef.MindWhitespace);
-            Assert.IsNotNull(implicitDef.Items);
-            Assert.AreEqual(1, implicitDef.Items.Count);
-            Assert.IsNotNull(implicitDef.Items[0]);
-            Assert.IsInstanceOf<CharClassSubExpression>(implicitDef.Items[0]);
-            var cc = (CharClassSubExpression) implicitDef.Items[0];
+            Assert.IsNotNull(implicitDef.Expr.Items);
+            Assert.AreEqual(1, implicitDef.Expr.Items.Count);
+            Assert.IsNotNull(implicitDef.Expr.Items[0]);
+            Assert.IsInstanceOf<CharClassSubExpression>(implicitDef.Expr.Items[0]);
+            var cc = (CharClassSubExpression) implicitDef.Expr.Items[0];
             Assert.AreEqual("\\d", cc.CharClass.ToUndelimitedString());
             Assert.AreEqual("",cc.Tag);
             Assert.IsFalse(cc.IsSkippable);
@@ -287,15 +284,12 @@ namespace MetaphysicsIndustries.Giza.Test
             var dis = new [] {
                 new DefinitionExpression(
                     name: "def",
-                    items: new [] {
-                        new DefRefSubExpression("token")
-                    }
-                ),
+                    expr: new Expression(
+                        new DefRefSubExpression("token"))),
                 new DefinitionExpression(
                     name: "token",
-                    items: new [] {
-                        new LiteralSubExpression("token")
-                    },
+                    expr: new Expression(
+                        new LiteralSubExpression("token")),
                     directives: new [] {
                         DefinitionDirective.Token
                     }
@@ -321,11 +315,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsFalse(def.IsComment);
             Assert.IsFalse(def.IsTokenized);
             Assert.IsFalse(def.MindWhitespace);
-            Assert.IsNotNull(def.Items);
-            Assert.AreEqual(1, def.Items.Count);
-            Assert.IsNotNull(def.Items[0]);
-            Assert.IsInstanceOf<DefRefSubExpression>(def.Items[0]);
-            var defref = (DefRefSubExpression) def.Items[0];
+            Assert.IsNotNull(def.Expr.Items);
+            Assert.AreEqual(1, def.Expr.Items.Count);
+            Assert.IsNotNull(def.Expr.Items[0]);
+            Assert.IsInstanceOf<DefRefSubExpression>(def.Expr.Items[0]);
+            var defref = (DefRefSubExpression) def.Expr.Items[0];
             Assert.AreEqual("token", defref.DefinitionName);
         }
 
@@ -340,10 +334,8 @@ namespace MetaphysicsIndustries.Giza.Test
                     directives: new [] {
                         DefinitionDirective.Token
                     },
-                    items: new [] {
-                        new LiteralSubExpression("value")
-                    }
-                )
+                    expr: new Expression(
+                        new LiteralSubExpression("value")))
             };
             var pg = new PreGrammar() {Definitions = dis.ToList()};
             var tgb = new TokenizeTransform();
@@ -368,11 +360,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsFalse(def.IsComment);
             Assert.IsTrue(def.IsTokenized);
             Assert.IsTrue(def.MindWhitespace);
-            Assert.IsNotNull(def.Items);
-            Assert.AreEqual(1, def.Items.Count);
-            Assert.IsNotNull(def.Items[0]);
-            Assert.IsInstanceOf<LiteralSubExpression>(def.Items[0]);
-            var literal = (LiteralSubExpression) def.Items[0];
+            Assert.IsNotNull(def.Expr.Items);
+            Assert.AreEqual(1, def.Expr.Items.Count);
+            Assert.IsNotNull(def.Expr.Items[0]);
+            Assert.IsInstanceOf<LiteralSubExpression>(def.Expr.Items[0]);
+            var literal = (LiteralSubExpression) def.Expr.Items[0];
             Assert.AreEqual("value", literal.Value);
             Assert.AreEqual("",literal.Tag);
             Assert.IsFalse(literal.IsSkippable);
@@ -384,16 +376,16 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             // setup
             //<subtoken> something = 'value';
-            var dis = new [] {
+            var dis = new[]
+            {
                 new DefinitionExpression(
                     name: "something",
-                    directives: new [] {
+                    directives: new[]
+                    {
                         DefinitionDirective.Subtoken
                     },
-                    items: new [] {
-                        new LiteralSubExpression("value")
-                    }
-                )
+                    expr: new Expression(
+                        new LiteralSubExpression("value")))
             };
             var pg = new PreGrammar() {Definitions = dis.ToList()};
             var tgb = new TokenizeTransform();
@@ -417,11 +409,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsFalse(def.IsComment);
             Assert.IsTrue(def.IsTokenized);
             Assert.IsTrue(def.MindWhitespace);
-            Assert.IsNotNull(def.Items);
-            Assert.AreEqual(1, def.Items.Count);
-            Assert.IsNotNull(def.Items[0]);
-            Assert.IsInstanceOf<LiteralSubExpression>(def.Items[0]);
-            var literal = (LiteralSubExpression) def.Items[0];
+            Assert.IsNotNull(def.Expr.Items);
+            Assert.AreEqual(1, def.Expr.Items.Count);
+            Assert.IsNotNull(def.Expr.Items[0]);
+            Assert.IsInstanceOf<LiteralSubExpression>(def.Expr.Items[0]);
+            var literal = (LiteralSubExpression) def.Expr.Items[0];
             Assert.AreEqual("value", literal.Value);
             Assert.AreEqual("",literal.Tag);
             Assert.IsFalse(literal.IsSkippable);
@@ -439,9 +431,8 @@ namespace MetaphysicsIndustries.Giza.Test
                     directives: new [] {
                         DefinitionDirective.Comment
                     },
-                    items: new [] {
-                        new LiteralSubExpression("value")
-                    }
+                    expr: new Expression(
+                        new LiteralSubExpression("value"))
                 )
             };
             var pg = new PreGrammar() {Definitions = dis.ToList()};
@@ -467,11 +458,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsTrue(def.IsComment);
             Assert.IsTrue(def.IsTokenized);
             Assert.IsTrue(def.MindWhitespace);
-            Assert.IsNotNull(def.Items);
-            Assert.AreEqual(1, def.Items.Count);
-            Assert.IsNotNull(def.Items[0]);
-            Assert.IsInstanceOf<LiteralSubExpression>(def.Items[0]);
-            var literal = (LiteralSubExpression) def.Items[0];
+            Assert.IsNotNull(def.Expr.Items);
+            Assert.AreEqual(1, def.Expr.Items.Count);
+            Assert.IsNotNull(def.Expr.Items[0]);
+            Assert.IsInstanceOf<LiteralSubExpression>(def.Expr.Items[0]);
+            var literal = (LiteralSubExpression) def.Expr.Items[0];
             Assert.AreEqual("value", literal.Value);
             Assert.AreEqual("",literal.Tag);
             Assert.IsFalse(literal.IsSkippable);
@@ -490,19 +481,16 @@ namespace MetaphysicsIndustries.Giza.Test
                     directives: new [] {
                         DefinitionDirective.Atomic,
                     },
-                    items: new [] {
-                        new DefRefSubExpression("token")
-                    }
+                    expr: new Expression(
+                        new DefRefSubExpression("token"))
                 ),
                 new DefinitionExpression(
                     name: "token",
                     directives: new [] {
                         DefinitionDirective.Token,
                     },
-                    items: new [] {
-                        new LiteralSubExpression("token")
-                    }
-                )
+                    expr: new Expression(
+                        new LiteralSubExpression("token")))
             };
             var pg = new PreGrammar() {Definitions = dis.ToList()};
             var tgb = new TokenizeTransform();
@@ -524,11 +512,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsFalse(def.IsComment);
             Assert.IsFalse(def.IsTokenized);
             Assert.IsFalse(def.MindWhitespace);
-            Assert.IsNotNull(def.Items);
-            Assert.AreEqual(1, def.Items.Count);
-            Assert.IsNotNull(def.Items[0]);
-            Assert.IsInstanceOf<DefRefSubExpression>(def.Items[0]);
-            var defref = (DefRefSubExpression) def.Items[0];
+            Assert.IsNotNull(def.Expr.Items);
+            Assert.AreEqual(1, def.Expr.Items.Count);
+            Assert.IsNotNull(def.Expr.Items[0]);
+            Assert.IsInstanceOf<DefRefSubExpression>(def.Expr.Items[0]);
+            var defref = (DefRefSubExpression) def.Expr.Items[0];
             Assert.AreEqual("token", defref.DefinitionName);
             Assert.AreEqual("",defref.Tag);
             Assert.IsFalse(defref.IsSkippable);
@@ -540,17 +528,17 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             // setup
             //<token, atomic> something = 'value';
-            var dis = new [] {
+            var dis = new[]
+            {
                 new DefinitionExpression(
                     name: "something",
-                    directives: new [] {
+                    directives: new[]
+                    {
                         DefinitionDirective.Token,
                         DefinitionDirective.Atomic
                     },
-                    items: new [] {
-                        new LiteralSubExpression("value")
-                    }
-                )
+                    expr: new Expression(
+                        new LiteralSubExpression("value")))
             };
             var pg = new PreGrammar() {Definitions = dis.ToList()};
             var tgb = new TokenizeTransform();
@@ -575,11 +563,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsFalse(def.IsComment);
             Assert.IsTrue(def.IsTokenized);
             Assert.IsTrue(def.MindWhitespace);
-            Assert.IsNotNull(def.Items);
-            Assert.AreEqual(1, def.Items.Count);
-            Assert.IsNotNull(def.Items[0]);
-            Assert.IsInstanceOf<LiteralSubExpression>(def.Items[0]);
-            var literal = (LiteralSubExpression) def.Items[0];
+            Assert.IsNotNull(def.Expr.Items);
+            Assert.AreEqual(1, def.Expr.Items.Count);
+            Assert.IsNotNull(def.Expr.Items[0]);
+            Assert.IsInstanceOf<LiteralSubExpression>(def.Expr.Items[0]);
+            var literal = (LiteralSubExpression) def.Expr.Items[0];
             Assert.AreEqual("value", literal.Value);
             Assert.AreEqual("",literal.Tag);
             Assert.IsFalse(literal.IsSkippable);
@@ -591,17 +579,17 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             // setup
             //<subtoken, atomic> something = 'value';
-            var dis = new [] {
+            var dis = new[]
+            {
                 new DefinitionExpression(
                     name: "something",
-                    directives: new [] {
+                    directives: new[]
+                    {
                         DefinitionDirective.Subtoken,
                         DefinitionDirective.Atomic
                     },
-                    items: new [] {
-                        new LiteralSubExpression("value")
-                    }
-                )
+                    expr: new Expression(
+                        new LiteralSubExpression("value")))
             };
             var pg = new PreGrammar() {Definitions = dis.ToList()};
             var tgb = new TokenizeTransform();
@@ -626,11 +614,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsFalse(def.IsComment);
             Assert.IsTrue(def.IsTokenized);
             Assert.IsTrue(def.MindWhitespace);
-            Assert.IsNotNull(def.Items);
-            Assert.AreEqual(1, def.Items.Count);
-            Assert.IsNotNull(def.Items[0]);
-            Assert.IsInstanceOf<LiteralSubExpression>(def.Items[0]);
-            var literal = (LiteralSubExpression) def.Items[0];
+            Assert.IsNotNull(def.Expr.Items);
+            Assert.AreEqual(1, def.Expr.Items.Count);
+            Assert.IsNotNull(def.Expr.Items[0]);
+            Assert.IsInstanceOf<LiteralSubExpression>(def.Expr.Items[0]);
+            var literal = (LiteralSubExpression) def.Expr.Items[0];
             Assert.AreEqual("value", literal.Value);
             Assert.AreEqual("",literal.Tag);
             Assert.IsFalse(literal.IsSkippable);
@@ -642,17 +630,17 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             // setup
             //<comment, atomic> something = 'value';
-            var dis = new [] {
+            var dis = new[]
+            {
                 new DefinitionExpression(
                     name: "something",
-                    directives: new [] {
+                    directives: new[]
+                    {
                         DefinitionDirective.Comment,
                         DefinitionDirective.Atomic
                     },
-                    items: new [] {
-                        new LiteralSubExpression("value")
-                    }
-                )
+                    expr: new Expression(
+                        new LiteralSubExpression("value")))
             };
             var pg = new PreGrammar() {Definitions = dis.ToList()};
             var tgb = new TokenizeTransform();
@@ -677,11 +665,11 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsTrue(def.IsComment);
             Assert.IsTrue(def.IsTokenized);
             Assert.IsTrue(def.MindWhitespace);
-            Assert.IsNotNull(def.Items);
-            Assert.AreEqual(1, def.Items.Count);
-            Assert.IsNotNull(def.Items[0]);
-            Assert.IsInstanceOf<LiteralSubExpression>(def.Items[0]);
-            var literal = (LiteralSubExpression) def.Items[0];
+            Assert.IsNotNull(def.Expr.Items);
+            Assert.AreEqual(1, def.Expr.Items.Count);
+            Assert.IsNotNull(def.Expr.Items[0]);
+            Assert.IsInstanceOf<LiteralSubExpression>(def.Expr.Items[0]);
+            var literal = (LiteralSubExpression) def.Expr.Items[0];
             Assert.AreEqual("value", literal.Value);
             Assert.AreEqual("",literal.Tag);
             Assert.IsFalse(literal.IsSkippable);
