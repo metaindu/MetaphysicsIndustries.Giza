@@ -30,7 +30,16 @@
  *                                                                           *
  *****************************************************************************/
 
-grammar = ( definition | comment )+;
+grammar = ( definition | comment | import-stmt )+;
+
+import-stmt = (
+    'import' literal:module |
+    'from' ( literal:module | module:module ) 'import' import-ref
+        ( ',' import-ref )* ) ';' ;
+
+import-ref = identifier:name ( 'as' identifier:alias )?;
+
+module = identifier ( '.' identifier )* ;
 
 definition = directive* identifier '=' expr ';';
 

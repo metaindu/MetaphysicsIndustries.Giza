@@ -22,7 +22,7 @@ using System;
     using NUnit.Framework;
 /**/
 using System.Collections.Generic;
-using System.Collections;
+using System.Linq;
 
 
 namespace MetaphysicsIndustries.Giza.Test
@@ -33,6 +33,7 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test()]
         public void TestNormal()
         {
+            // given
             SupergrammarSpanner ss = new SupergrammarSpanner();
             string input =
                 "expr = ( binop | subexpr ); \r\n" +
@@ -43,13 +44,18 @@ namespace MetaphysicsIndustries.Giza.Test
                 "unop = [+-] subexpr; \r\n" +
                 "paren = '(' expr ')'; \r\n";
             var errors = new List<Error>();
-            Grammar grammar = ss.GetGrammar(input, errors);
+            var pg = ss.GetPreGrammar(input, errors);
+            var db = new DefinitionBuilder();
+            var grammar = db.BuildGrammar(pg);
+            DefinitionChecker dc = new DefinitionChecker();
 
+            // precondition
             Assert.IsEmpty(errors);
 
-            DefinitionChecker dc = new DefinitionChecker();
+            // when
             errors = new List<Error>(dc.CheckDefinitions(grammar.Definitions));
 
+            // then
             Assert.IsEmpty(errors);
         }
 
@@ -66,7 +72,7 @@ namespace MetaphysicsIndustries.Giza.Test
             List<Definition> defs = new List<Definition> { a };
 
             DefinitionChecker dc = new DefinitionChecker();
-            var errors = dc.CheckDefinitions(defs);
+            var errors = dc.CheckDefinitions(defs).ToList();
 
             Assert.IsNotEmpty(errors);
 
@@ -115,7 +121,7 @@ namespace MetaphysicsIndustries.Giza.Test
             List<Definition> defs = new List<Definition> { a, b, c };
 
             DefinitionChecker dc = new DefinitionChecker();
-            var errors = dc.CheckDefinitions(defs);
+            var errors = dc.CheckDefinitions(defs).ToList();
 
             Assert.IsNotEmpty(errors);
 

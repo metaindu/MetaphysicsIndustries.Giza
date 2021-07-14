@@ -104,6 +104,8 @@ namespace MetaphysicsIndustries.Giza
         public HashSet<Node> StartNodes = new HashSet<Node>();
         public HashSet<Node> EndNodes = new HashSet<Node>();
 
+        public bool IsImported { get; set; } = false;
+
         public readonly HashSet<DefinitionDirective> Directives = new HashSet<DefinitionDirective>();
         public bool MindWhitespace { get { return Directives.Contains(DefinitionDirective.MindWhitespace); } }
         public bool IgnoreCase { get { return Directives.Contains(DefinitionDirective.IgnoreCase); } }

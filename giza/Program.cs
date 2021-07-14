@@ -109,6 +109,8 @@ namespace giza
             commander.Commands.Add("parse", new ParseReplCommand(env));
             commander.Commands.Add("span", new SpanReplCommand(env));
             commander.Commands.Add("render", new RenderReplCommand(env));
+            commander.Commands.Add("cd", new CdReplCommand(env));
+            commander.Commands.Add("pwd", new PwdReplCommand(env));
 
             string line;
 
@@ -169,7 +171,8 @@ namespace giza
                         while (true)
                         {
                             var errors = new List<Error>();
-                            var defexprs = spanner.GetExpressions(buffer.ToString(), errors);
+                            var pg = spanner.GetPreGrammar(buffer.ToString(), errors);
+                            var defs = pg.Definitions;
                             if (!errors.ContainsNonWarnings())
                             {
                                 // good to go
@@ -181,7 +184,7 @@ namespace giza
                                 }
 
                                 // add new definitions to the list
-                                foreach (var defexpr in defexprs)
+                                foreach (var defexpr in defs)
                                 {
                                     env[defexpr.Name] = defexpr;
                                 }

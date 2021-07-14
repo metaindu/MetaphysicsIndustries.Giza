@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NCommander, Version=0.12.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\NCommander.0.13.0\lib\net40\NCommander.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,14 +44,13 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="NCommander">
-      <HintPath>..\packages\NCommander.0.9\lib\NCommander.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CdReplCommand.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="getline.cs" />
+    <Compile Include="PwdReplCommand.cs" />
     <Compile Include="RenderCommand.cs" />
     <Compile Include="ParseCommand.cs" />
     <Compile Include="SpanCommand.cs" />
@@ -72,6 +75,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="test.giza" />
     <None Include="invalid.json" />
     <None Include="json.giza" />
@@ -80,7 +84,6 @@
     <None Include="json_example2.json" />
     <None Include="rfc4627.txt" />
     <None Include="todo.txt" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="test.txt" />

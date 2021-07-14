@@ -39,11 +39,11 @@ namespace MetaphysicsIndustries.Giza.Test
                 "unop = [+-] subexpr;\n\n" +
                 "paren = '(' expr ')';\n\n";
             var errors = new List<Error>();
-            var defs = ss.GetExpressions(input, errors);
+            var pg = ss.GetPreGrammar(input, errors);
             Assert.IsEmpty(errors);
 
             var dr = new DefinitionRenderer();
-            var result = dr.RenderDefinitionExprsAsGrammarText(defs);
+            var result = dr.RenderDefinitionExprsAsGrammarText(pg.Definitions);
 
             Assert.AreEqual(input, result);
         }
@@ -57,11 +57,11 @@ namespace MetaphysicsIndustries.Giza.Test
                 "plus = 'item'+;\n\n" +
                 "star = 'item'*;\n\n";
             var errors = new List<Error>();
-            var defs = ss.GetExpressions(input, errors);
+            var pg = ss.GetPreGrammar(input, errors);
             Assert.IsEmpty(errors);
 
             var dr = new DefinitionRenderer();
-            var result = dr.RenderDefinitionExprsAsGrammarText(defs);
+            var result = dr.RenderDefinitionExprsAsGrammarText(pg.Definitions);
 
             Assert.AreEqual(input, result);
         }
@@ -76,11 +76,11 @@ namespace MetaphysicsIndustries.Giza.Test
                 "defref = literal:stillmore;\n\n" +
                 "tag-and-modifiers = 'item'+:thetag;\n\n";
             var errors = new List<Error>();
-            var defs = ss.GetExpressions(input, errors);
+            var pg = ss.GetPreGrammar(input, errors);
             Assert.IsEmpty(errors);
 
             var dr = new DefinitionRenderer();
-            var result = dr.RenderDefinitionExprsAsGrammarText(defs);
+            var result = dr.RenderDefinitionExprsAsGrammarText(pg.Definitions);
 
             Assert.AreEqual(input, result);
         }
@@ -99,11 +99,11 @@ namespace MetaphysicsIndustries.Giza.Test
                 "<comment> comment = 'item';\n\n" +
                 "<atomic, ignore case> multiple = 'item';\n\n";
             var errors = new List<Error>();
-            var defs = ss.GetExpressions(input, errors);
+            var pg = ss.GetPreGrammar(input, errors);
             Assert.IsEmpty(errors);
 
             var dr = new DefinitionRenderer();
-            var result = dr.RenderDefinitionExprsAsGrammarText(defs);
+            var result = dr.RenderDefinitionExprsAsGrammarText(pg.Definitions);
 
             Assert.AreEqual(input, result);
         }

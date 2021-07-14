@@ -35,9 +35,9 @@ namespace MetaphysicsIndustries.Giza
                 def.Directives.Contains(DefinitionDirective.Comment);
         }
 
-        public List<Error> CheckDefinitionInfosForParsing(IEnumerable<DefinitionExpression> defs)
+        public List<Error> CheckDefinitionForParsing(IEnumerable<DefinitionExpression> defs)
         {
-            List<Error> errors = CheckDefinitionInfos(defs);
+            List<Error> errors = CheckDefinitions(defs);
 
             Dictionary<string, DefinitionExpression> defsByName = new Dictionary<string, DefinitionExpression>();
             foreach (var def in defs)
@@ -56,7 +56,7 @@ namespace MetaphysicsIndustries.Giza
                 {
                     errors.Add(new ExpressionError {
                         ErrorType = ExpressionError.MixedTokenizedDirectives,
-                        DefinitionInfo = def,
+                        Definition = def,
                     });
                 }
 
@@ -65,7 +65,7 @@ namespace MetaphysicsIndustries.Giza
                 {
                     errors.Add(new ExpressionError {
                         ErrorType = ExpressionError.AtomicInNonTokenDefinition,
-                        DefinitionInfo = def,
+                        Definition = def,
                     });
                 }
 
@@ -74,7 +74,7 @@ namespace MetaphysicsIndustries.Giza
                 {
                     errors.Add(new ExpressionError {
                         ErrorType = ExpressionError.AtomicInTokenDefinition,
-                        DefinitionInfo = def,
+                        Definition = def,
                     });
                 }
 
@@ -83,7 +83,7 @@ namespace MetaphysicsIndustries.Giza
                 {
                     errors.Add(new ExpressionError {
                         ErrorType = ExpressionError.AtomicInCommentDefinition,
-                        DefinitionInfo = def,
+                        Definition = def,
                     });
                 }
 
@@ -92,7 +92,7 @@ namespace MetaphysicsIndustries.Giza
                 {
                     errors.Add(new ExpressionError {
                         ErrorType = ExpressionError.MindWhitespaceInNonTokenDefinition,
-                        DefinitionInfo = def,
+                        Definition = def,
                     });
                 }
 
@@ -101,7 +101,7 @@ namespace MetaphysicsIndustries.Giza
                 {
                     errors.Add(new ExpressionError {
                         ErrorType = ExpressionError.MindWhitespaceInTokenizedDefinition,
-                        DefinitionInfo = def,
+                        Definition = def,
                     });
                 }
 
@@ -117,7 +117,7 @@ namespace MetaphysicsIndustries.Giza
                         errors.Add(new ExpressionError {
                             ErrorType = ExpressionError.NonTokenReferencesSubtoken,
                             ExpressionItem = defref,
-                            DefinitionInfo = def,
+                            Definition = def,
                         });
                     }
 
@@ -127,7 +127,7 @@ namespace MetaphysicsIndustries.Giza
                         errors.Add(new ExpressionError {
                             ErrorType = ExpressionError.NonTokenReferencesComment,
                             ExpressionItem = defref,
-                            DefinitionInfo = def,
+                            Definition = def,
                         });
                     }
 
@@ -137,7 +137,7 @@ namespace MetaphysicsIndustries.Giza
                         errors.Add(new ExpressionError {
                             ErrorType = ExpressionError.TokenizedReferencesToken,
                             ExpressionItem = defref,
-                            DefinitionInfo = def,
+                            Definition = def,
                         });
                     }
 
@@ -147,7 +147,7 @@ namespace MetaphysicsIndustries.Giza
                         errors.Add(new ExpressionError {
                             ErrorType = ExpressionError.TokenizedReferencesComment,
                             ExpressionItem = defref,
-                            DefinitionInfo = def,
+                            Definition = def,
                         });
                     }
 
@@ -157,7 +157,7 @@ namespace MetaphysicsIndustries.Giza
                         errors.Add(new ExpressionError {
                             ErrorType = ExpressionError.TokenizedReferencesNonToken,
                             ExpressionItem = defref,
-                            DefinitionInfo = def,
+                            Definition = def,
                         });
                     }
                 }
@@ -166,9 +166,9 @@ namespace MetaphysicsIndustries.Giza
             return errors;
         }
 
-        public List<Error> CheckDefinitionInfosForSpanning(IEnumerable<DefinitionExpression> defs)
+        public List<Error> CheckDefinitionsForSpanning(IEnumerable<DefinitionExpression> defs)
         {
-            List<Error> errors = CheckDefinitionInfos(defs);
+            List<Error> errors = CheckDefinitions(defs);
 
             foreach (var def in defs)
             {
@@ -178,7 +178,7 @@ namespace MetaphysicsIndustries.Giza
                 {
                     errors.Add(new ExpressionError {
                         ErrorType = ExpressionError.TokenizedDirectiveInNonTokenizedGrammar,
-                        DefinitionInfo = def,
+                        Definition = def,
                     });
                 }
             }
@@ -186,7 +186,7 @@ namespace MetaphysicsIndustries.Giza
             return errors;
         }
 
-        public virtual List<Error> CheckDefinitionInfos(IEnumerable<DefinitionExpression> defs)
+        public virtual List<Error> CheckDefinitions(IEnumerable<DefinitionExpression> defs)
         {
             if (defs == null) throw new ArgumentNullException("defs");
 
@@ -228,7 +228,7 @@ namespace MetaphysicsIndustries.Giza
                 {
                     errors.Add(new ExpressionError {
                         ErrorType=ExpressionError.ReusedDefintion,
-                        DefinitionInfo=def,
+                        Definition=def,
                         Index=index,
                     });
                     continue;
@@ -239,7 +239,7 @@ namespace MetaphysicsIndustries.Giza
                 {
                     errors.Add(new ExpressionError {
                         ErrorType=ExpressionError.NullOrEmptyDefinitionName,
-                        DefinitionInfo=def,
+                        Definition=def,
                         Index=index,
                     });
                 }
@@ -248,7 +248,7 @@ namespace MetaphysicsIndustries.Giza
                     errors.Add(new ExpressionError {
                         ErrorType=ExpressionError.DuplicateDefinitionName,
                         Index=index,
-                        DefinitionInfo=def,
+                        Definition=def,
                     });
                 }
                 else
@@ -274,7 +274,7 @@ namespace MetaphysicsIndustries.Giza
                 errors.Add(new ExpressionError {
                     ErrorType=ExpressionError.ReusedExpression,
                     Expression=expr,
-                    DefinitionInfo=def,
+                    Definition=def,
                 });
                 return;
             }
@@ -285,7 +285,7 @@ namespace MetaphysicsIndustries.Giza
                 errors.Add(new ExpressionError {
                     ErrorType = ExpressionError.EmptyExpressionItems,
                     Expression = expr,
-                    DefinitionInfo = def,
+                    Definition = def,
                 });
             }
             else
@@ -301,7 +301,7 @@ namespace MetaphysicsIndustries.Giza
                             ErrorType = ExpressionError.NullExpressionItem,
                             Expression = expr,
                             Index = index,
-                            DefinitionInfo = def
+                            Definition = def
                         });
                     }
                     else
@@ -318,7 +318,7 @@ namespace MetaphysicsIndustries.Giza
                     errors.Add(new ExpressionError {
                         ErrorType = ExpressionError.AllItemsSkippable,
                         Expression = expr,
-                        DefinitionInfo = def,
+                        Definition = def,
                     });
                 }
             }
@@ -338,7 +338,7 @@ namespace MetaphysicsIndustries.Giza
                 errors.Add(new ExpressionError {
                     ErrorType=ExpressionError.ReusedExpressionItem,
                     ExpressionItem=item,
-                    DefinitionInfo=def,
+                    Definition=def,
                 });
                 return;
             }
@@ -351,7 +351,7 @@ namespace MetaphysicsIndustries.Giza
                 {
                     errors.Add(new ExpressionError {
                         ErrorType = ExpressionError.EmptyOrexprExpressionList,
-                        DefinitionInfo = def,
+                        Definition = def,
                         ExpressionItem = item
                     });
                 }
@@ -366,7 +366,7 @@ namespace MetaphysicsIndustries.Giza
                                 ErrorType = ExpressionError.NullOrexprExpression,
                                 ExpressionItem = item,
                                 Index = index,
-                                DefinitionInfo = def,
+                                Definition = def,
                             });
                         }
                         else
@@ -384,7 +384,7 @@ namespace MetaphysicsIndustries.Giza
                     errors.Add(new ExpressionError {
                         ErrorType = ExpressionError.NullSubexprTag,
                         ExpressionItem = item,
-                        DefinitionInfo = def,
+                        Definition = def,
                     });
                 }
 
@@ -395,7 +395,7 @@ namespace MetaphysicsIndustries.Giza
                         errors.Add(new ExpressionError {
                             ErrorType = ExpressionError.NullOrEmptyLiteralValue,
                             ExpressionItem = item,
-                            DefinitionInfo = def,
+                            Definition = def,
                         });
                     }
                 }
@@ -408,7 +408,7 @@ namespace MetaphysicsIndustries.Giza
                         errors.Add(new ExpressionError {
                             ErrorType = ExpressionError.NullOrEmptyCharClass,
                             ExpressionItem = item,
-                            DefinitionInfo = def
+                            Definition = def
                         });
                     }
                 }
@@ -420,7 +420,7 @@ namespace MetaphysicsIndustries.Giza
                         errors.Add(new ExpressionError {
                             ErrorType = ExpressionError.NullOrEmptyDefrefName,
                             ExpressionItem = item,
-                            DefinitionInfo = def,
+                            Definition = def,
                         });
                     }
                     else if (!defNames.Contains(name))
@@ -428,7 +428,7 @@ namespace MetaphysicsIndustries.Giza
                         errors.Add(new ExpressionError {
                             ErrorType = ExpressionError.DefRefNameNotFound,
                             ExpressionItem = item,
-                            DefinitionInfo = def,
+                            Definition = def,
                         });
                     }
                 }

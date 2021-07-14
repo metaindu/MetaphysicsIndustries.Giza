@@ -63,6 +63,15 @@
   <ItemGroup>
     <Compile Include="BinarySpanner.cs" />
     <Compile Include="CharClass.cs" />
+    <Compile Include="FileSource.cs" />
+    <Compile Include="IFileSource.cs" />
+    <Compile Include="ImportCache.cs" />
+    <Compile Include="ImportError.cs" />
+    <Compile Include="ImportRef.cs" />
+    <Compile Include="ImportStatement.cs" />
+    <Compile Include="ImportTransform.cs" />
+    <Compile Include="IPreGrammarTransform.cs" />
+    <Compile Include="PreGrammar.cs" />
     <Compile Include="Span.cs" />
     <Compile Include="SupergrammarSpanner.cs" />
     <Content Include="BinarySpanner example grammar.txt" />
@@ -91,9 +100,8 @@
     <Compile Include="CharClassSubExpression.cs" />
     <Compile Include="ExpressionItem.cs" />
     <Compile Include="GrammarComparer.cs" />
-    <Compile Include="ExpressionBuilder.cs" />
     <Compile Include="GrammarDefinitionOrderedParentChildrenCollection.cs" />
-    <Compile Include="TokenizedGrammarBuilder.cs" />
+    <Compile Include="TokenizeTransform.cs" />
     <Compile Include="ExpressionChecker.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="NodeMatch.cs" />

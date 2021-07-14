@@ -102,13 +102,16 @@ namespace giza
             }
 
             var ec = new ExpressionChecker();
-            var errors = ec.CheckDefinitionInfosForParsing(Env.Values);
+            var errors = ec.CheckDefinitionForParsing(Env.Values);
 
             Grammar grammar = null;
             if (!errors.ContainsNonWarnings())
             {
-                var tgb = new TokenizedGrammarBuilder();
-                grammar = tgb.BuildTokenizedGrammar(Env.Values.ToArray());
+                var tgb = new TokenizeTransform();
+                var pg = new PreGrammar() {Definitions = Env.Values.ToList()};
+                var pg2 = tgb.Tokenize(pg);
+                var db = new DefinitionBuilder();
+                grammar = db.BuildGrammar(pg2);
                 var dc = new DefinitionChecker();
                 var errors2 = dc.CheckDefinitions(grammar.Definitions);
                 errors.AddRange(errors2);

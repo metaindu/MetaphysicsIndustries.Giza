@@ -19,7 +19,6 @@
 
 using System;
 using NCommander;
-using System.IO;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Giza;
 using System.Linq;
@@ -76,19 +75,25 @@ namespace giza
             List<Error> errors;
             if (tokenized)
             {
-                errors = ec.CheckDefinitionInfosForParsing(defs);
+                errors = ec.CheckDefinitionForParsing(defs);
             }
             else
             {
-                errors = ec.CheckDefinitionInfosForSpanning(defs);
+                errors = ec.CheckDefinitionsForSpanning(defs);
             }
 
             if (!errors.ContainsNonWarnings())
             {
                 if (tokenized)
                 {
-                    var tgb = new TokenizedGrammarBuilder();
-                    var g = tgb.BuildTokenizedGrammar(defs.ToArray());
+                    var tgb = new TokenizeTransform();
+                    var pg = new PreGrammar()
+                    {
+                        Definitions = defs.ToList()
+                    };
+                    var pg2 = tgb.Tokenize(pg);
+                    var db = new DefinitionBuilder();
+                    var g = db.BuildGrammar(pg2);
                     var dc = new DefinitionChecker();
                     var errors2 = dc.CheckDefinitions(g.Definitions);
                     errors.AddRange(errors2);
@@ -96,9 +101,9 @@ namespace giza
                 else
                 {
                     var db = new DefinitionBuilder();
-                    var defs2 = db.BuildDefinitions(defs.ToArray());
+                    var g = db.BuildGrammar(defs.ToArray());
                     var dc = new DefinitionChecker();
-                    var errors2 = dc.CheckDefinitions(defs2);
+                    var errors2 = dc.CheckDefinitions(g.Definitions);
                     errors.AddRange(errors2);
                 }
             }

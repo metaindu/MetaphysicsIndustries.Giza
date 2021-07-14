@@ -107,7 +107,7 @@ namespace giza
             }
 
             var db = new DefinitionBuilder();
-            var grammar = new Grammar(db.BuildDefinitions(Env.Values.ToArray()));
+            var grammar = db.BuildGrammar(Env.Values.ToArray());
             var startDefinition = grammar.FindDefinitionByName(startDef);
 
             foreach (var input in inputs)

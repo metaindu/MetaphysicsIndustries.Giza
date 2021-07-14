@@ -37,13 +37,13 @@ namespace MetaphysicsIndustries.Giza.Test
             defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
 
             ExpressionChecker ec = new ExpressionChecker();
-            List<Error> errors = ec.CheckDefinitionInfosForSpanning(defs);
+            List<Error> errors = ec.CheckDefinitionsForSpanning(defs);
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
             Assert.AreEqual(ExpressionError.TokenizedDirectiveInNonTokenizedGrammar, errors[0].ErrorType);
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
-            Assert.AreSame(defs[0], (errors[0] as ExpressionError).DefinitionInfo);
+            Assert.AreSame(defs[0], (errors[0] as ExpressionError).Definition);
         }
 
         [Test()]
@@ -58,13 +58,13 @@ namespace MetaphysicsIndustries.Giza.Test
             defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
 
             ExpressionChecker ec = new ExpressionChecker();
-            List<Error> errors = ec.CheckDefinitionInfosForSpanning(defs);
+            List<Error> errors = ec.CheckDefinitionsForSpanning(defs);
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
             Assert.AreEqual(ExpressionError.TokenizedDirectiveInNonTokenizedGrammar, errors[0].ErrorType);
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
-            Assert.AreSame(defs[0], (errors[0] as ExpressionError).DefinitionInfo);
+            Assert.AreSame(defs[0], (errors[0] as ExpressionError).Definition);
         }
 
         [Test()]
@@ -79,13 +79,13 @@ namespace MetaphysicsIndustries.Giza.Test
             defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
 
             ExpressionChecker ec = new ExpressionChecker();
-            List<Error> errors = ec.CheckDefinitionInfosForSpanning(defs);
+            List<Error> errors = ec.CheckDefinitionsForSpanning(defs);
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
             Assert.AreEqual(ExpressionError.TokenizedDirectiveInNonTokenizedGrammar, errors[0].ErrorType);
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
-            Assert.AreSame(defs[0], (errors[0] as ExpressionError).DefinitionInfo);
+            Assert.AreSame(defs[0], (errors[0] as ExpressionError).Definition);
         }
 
 
@@ -102,14 +102,14 @@ namespace MetaphysicsIndustries.Giza.Test
             defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
 
             ExpressionChecker ec = new ExpressionChecker();
-            List<Error> errors = ec.CheckDefinitionInfosForParsing(defs);
+            List<Error> errors = ec.CheckDefinitionForParsing(defs);
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
             Assert.AreEqual(ExpressionError.MixedTokenizedDirectives, errors[0].ErrorType);
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
-            Assert.AreSame(defs[0], err.DefinitionInfo);
+            Assert.AreSame(defs[0], err.Definition);
         }
 
         [Test()]
@@ -125,14 +125,14 @@ namespace MetaphysicsIndustries.Giza.Test
             defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
 
             ExpressionChecker ec = new ExpressionChecker();
-            List<Error> errors = ec.CheckDefinitionInfosForParsing(defs);
+            List<Error> errors = ec.CheckDefinitionForParsing(defs);
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
             Assert.AreEqual(ExpressionError.MixedTokenizedDirectives, errors[0].ErrorType);
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
-            Assert.AreSame(defs[0], err.DefinitionInfo);
+            Assert.AreSame(defs[0], err.Definition);
         }
 
         [Test()]
@@ -148,14 +148,14 @@ namespace MetaphysicsIndustries.Giza.Test
             defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
 
             ExpressionChecker ec = new ExpressionChecker();
-            List<Error> errors = ec.CheckDefinitionInfosForParsing(defs);
+            List<Error> errors = ec.CheckDefinitionForParsing(defs);
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
             Assert.AreEqual(ExpressionError.MixedTokenizedDirectives, errors[0].ErrorType);
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
-            Assert.AreSame(defs[0], err.DefinitionInfo);
+            Assert.AreSame(defs[0], err.Definition);
         }
 
         [Test]
@@ -170,14 +170,14 @@ namespace MetaphysicsIndustries.Giza.Test
             defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
 
             ExpressionChecker ec = new ExpressionChecker();
-            List<Error> errors = ec.CheckDefinitionInfosForParsing(defs);
+            List<Error> errors = ec.CheckDefinitionForParsing(defs);
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
             Assert.AreEqual(ExpressionError.AtomicInNonTokenDefinition, errors[0].ErrorType);
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
-            Assert.AreSame(defs[0], err.DefinitionInfo);
+            Assert.AreSame(defs[0], err.Definition);
         }
 
         [Test]
@@ -192,14 +192,14 @@ namespace MetaphysicsIndustries.Giza.Test
             defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
 
             ExpressionChecker ec = new ExpressionChecker();
-            List<Error> errors = ec.CheckDefinitionInfosForParsing(defs);
+            List<Error> errors = ec.CheckDefinitionForParsing(defs);
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
             Assert.AreEqual(ExpressionError.MindWhitespaceInNonTokenDefinition, errors[0].ErrorType);
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
-            Assert.AreSame(defs[0], err.DefinitionInfo);
+            Assert.AreSame(defs[0], err.Definition);
         }
 
         [Test]
@@ -215,14 +215,14 @@ namespace MetaphysicsIndustries.Giza.Test
             defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
 
             ExpressionChecker ec = new ExpressionChecker();
-            List<Error> errors = ec.CheckDefinitionInfosForParsing(defs);
+            List<Error> errors = ec.CheckDefinitionForParsing(defs);
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
             Assert.AreEqual(ExpressionError.AtomicInTokenDefinition, errors[0].ErrorType);
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
-            Assert.AreSame(defs[0], err.DefinitionInfo);
+            Assert.AreSame(defs[0], err.Definition);
         }
 
         [Test]
@@ -238,7 +238,7 @@ namespace MetaphysicsIndustries.Giza.Test
             defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
 
             ExpressionChecker ec = new ExpressionChecker();
-            List<Error> errors = ec.CheckDefinitionInfosForParsing(defs);
+            List<Error> errors = ec.CheckDefinitionForParsing(defs);
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(0, errors.Count);
@@ -257,14 +257,14 @@ namespace MetaphysicsIndustries.Giza.Test
             defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
 
             ExpressionChecker ec = new ExpressionChecker();
-            List<Error> errors = ec.CheckDefinitionInfosForParsing(defs);
+            List<Error> errors = ec.CheckDefinitionForParsing(defs);
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
             Assert.AreEqual(ExpressionError.AtomicInCommentDefinition, errors[0].ErrorType);
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
-            Assert.AreSame(defs[0], err.DefinitionInfo);
+            Assert.AreSame(defs[0], err.Definition);
         }
 
         [Test]
@@ -280,14 +280,14 @@ namespace MetaphysicsIndustries.Giza.Test
             defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
 
             ExpressionChecker ec = new ExpressionChecker();
-            List<Error> errors = ec.CheckDefinitionInfosForParsing(defs);
+            List<Error> errors = ec.CheckDefinitionForParsing(defs);
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
             Assert.AreEqual(ExpressionError.MindWhitespaceInTokenizedDefinition, errors[0].ErrorType);
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
-            Assert.AreSame(defs[0], err.DefinitionInfo);
+            Assert.AreSame(defs[0], err.Definition);
         }
 
         [Test]
@@ -303,14 +303,14 @@ namespace MetaphysicsIndustries.Giza.Test
             defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
 
             ExpressionChecker ec = new ExpressionChecker();
-            List<Error> errors = ec.CheckDefinitionInfosForParsing(defs);
+            List<Error> errors = ec.CheckDefinitionForParsing(defs);
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
             Assert.AreEqual(ExpressionError.MindWhitespaceInTokenizedDefinition, errors[0].ErrorType);
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
-            Assert.AreSame(defs[0], err.DefinitionInfo);
+            Assert.AreSame(defs[0], err.Definition);
         }
 
         [Test]
@@ -326,14 +326,14 @@ namespace MetaphysicsIndustries.Giza.Test
             defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
 
             ExpressionChecker ec = new ExpressionChecker();
-            List<Error> errors = ec.CheckDefinitionInfosForParsing(defs);
+            List<Error> errors = ec.CheckDefinitionForParsing(defs);
 
             Assert.IsNotNull(errors);
             Assert.AreEqual(1, errors.Count);
             Assert.AreEqual(ExpressionError.MindWhitespaceInTokenizedDefinition, errors[0].ErrorType);
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
-            Assert.AreSame(defs[0], err.DefinitionInfo);
+            Assert.AreSame(defs[0], err.Definition);
         }
     }
 }

@@ -58,6 +58,7 @@ namespace giza
                     Type=ParameterType.String,
                     Description="The namespace in which the C# class is defined (default is 'MetaphysicsIndustries.Giza')",
                 },
+                // TODO: add the new options from RenderReplCommand
             };
         }
 
@@ -88,7 +89,7 @@ namespace giza
 
             var sgs = new SupergrammarSpanner();
             var errors = new List<Error>();
-            var dis = sgs.GetExpressions(grammar, errors);
+            var pg = sgs.GetPreGrammar(grammar, errors);
 
             if (errors.Count > 0)
             {
@@ -103,11 +104,11 @@ namespace giza
             var ec = new ExpressionChecker();
             if (tokenized)
             {
-                errors = ec.CheckDefinitionInfosForParsing(dis);
+                errors = ec.CheckDefinitionForParsing(pg.Definitions);
             }
             else
             {
-                errors = ec.CheckDefinitionInfos(dis);
+                errors = ec.CheckDefinitions(pg.Definitions);
             }
 
             if (errors != null && errors.Count > 0)
@@ -125,23 +126,20 @@ namespace giza
 
             if (tokenized)
             {
-                var tgb = new TokenizedGrammarBuilder();
-                g = tgb.BuildTokenizedGrammar(dis);
+                var tgb = new TokenizeTransform();
+                var pg2 = tgb.Tokenize(pg);
+                var db = new DefinitionBuilder();
+                g = db.BuildGrammar(pg2);
             }
             else
             {
                 var db = new DefinitionBuilder();
-                var defs = db.BuildDefinitions(dis);
-
-                g = new Grammar();
-                g.Definitions.AddRange(defs);
+                g = db.BuildGrammar(pg.Definitions);
             }
 
             var dr = new DefinitionRenderer();
             Console.Write(dr.RenderDefinitionsAsCSharpClass(className, g.Definitions, ns: ns, singleton: isSingleton));
         }
-
-
     }
 }
 

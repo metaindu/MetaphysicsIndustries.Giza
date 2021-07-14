@@ -17,17 +17,32 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 // USA
 
+/*
+ * DefinitionExpression and related classes form the set of domain objects for
+ * the supergrammar. That is, instances of the classes represent element of a
+ * grammar. There are no nodes.
+ *
+ * In contrast, the Definition class represents a defintion within a grammar
+ * that is ready to be used by Parser. It is equivalent to a kind of DFA, or
+ * state machine, with all of the states represented by nodes. It does not use
+ * hierarchical trees of Expression and ExpressionItem.
+ *
+ * TODO: rename these and related classes to make the distinction more apparent.
+ */
+
 using System;
 
 using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Giza
 {
+    // TODO: remove the base class. A definition *has* an expression, not *is*
+    //       an expression.
     public class DefinitionExpression : Expression
     {
-        public DefinitionExpression(string name="",
-                                    IEnumerable<DefinitionDirective> directives=null,
-                                    IEnumerable<ExpressionItem> items=null)
+        public DefinitionExpression(string name = "",
+            IEnumerable<DefinitionDirective> directives = null,
+            IEnumerable<ExpressionItem> items = null)
             : base(items: items)
         {
             Name = name;
@@ -37,8 +52,21 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
+        public override string ToString() => $"DefinitionExpression {Name}";
+
         public string Name = string.Empty;
         public readonly HashSet<DefinitionDirective> Directives = new HashSet<DefinitionDirective>();
+        public bool MindWhitespace => Directives.Contains(DefinitionDirective.MindWhitespace);
+        public bool IgnoreCase => Directives.Contains(DefinitionDirective.IgnoreCase);
+        public bool Atomic => Directives.Contains(DefinitionDirective.Atomic);
+
+        public bool IsTokenized =>
+            Directives.Contains(DefinitionDirective.Token) ||
+            Directives.Contains(DefinitionDirective.Subtoken) ||
+            Directives.Contains(DefinitionDirective.Comment);
+
+        public bool IsComment => Directives.Contains(DefinitionDirective.Comment);
+        public bool IsImported { get; set; } = false;
     }
 }
 

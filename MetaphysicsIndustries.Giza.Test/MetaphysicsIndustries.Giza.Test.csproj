@@ -35,6 +35,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ImportTest.cs" />
+    <Compile Include="ImportTransformTest.cs" />
+    <Compile Include="MockFileSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DefinitionCheckerTest.cs" />
     <Compile Include="TokenizerTest.cs" />
