@@ -25,7 +25,7 @@ using System.Linq;
 namespace MetaphysicsIndustries.Giza.Test
 {
     [TestFixture]
-    public class TokenizedGrammarBuilderTest
+    public class TokenizeTransformTest
     {
         [Test]
         public void TestImplicitLiteral()
