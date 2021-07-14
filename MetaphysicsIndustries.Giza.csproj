@@ -149,6 +149,7 @@
   <ItemGroup>
     <Content Include="CppCliGrammar.txt" />
     <Content Include="ExeBinaryGrammar.txt" />
+    <Content Include="render_grammars.sh" />
     <Content Include="Supergrammar.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
