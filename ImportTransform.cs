@@ -96,45 +96,43 @@ namespace MetaphysicsIndustries.Giza
             var importedDefsByName = importCache[fileToImport];
 
             IEnumerable<Definition> defsToImport;
-            if (importRefs != null)
+            if (importRefs == null)
             {
-                var defsToImport1 = new List<Definition>();
-                defsToImport = defsToImport1;
-                foreach (var importRef in importRefs)
-                {
-                    var sourceName = importRef.SourceName;
-                    var destName = importRef.DestName;
-                    if (!importedDefsByName.ContainsKey(sourceName))
-                        errors.Add(new ImportError
-                        {
-                            ErrorType = ImportError.DefinitionNotFound,
-                            DefinitionName = sourceName
-                        });
-                    else
+                importRefs = importedDefsByName.Values.Select(
+                    defToImport => new ImportRef
                     {
-                        // TODO: refactor to de-duplicate
-                        var sourceDef = importedDefsByName[sourceName];
-                        var destDef = new Definition(destName,
-                            sourceDef.Directives, sourceDef.Expr);
-                        destDef.IsImported = true;
-                        defsToImport1.Add(destDef);
-                    }
-                }
+                        SourceName = defToImport.Name, DestName = defToImport.Name
+                    }).ToArray();
             }
-            else
+
+            var defsToImport1 = new List<Definition>();
+            defsToImport = defsToImport1;
+            var hasErrors = false;
+            foreach (var importRef in importRefs)
             {
-                var defsToImport1 = new List<Definition>();
-                defsToImport = defsToImport1;
-                foreach (var defToImport in importedDefsByName.Values)
+                if (importedDefsByName.ContainsKey(importRef.SourceName))
+                    continue;
+
+                errors.Add(new ImportError
                 {
-                    // TODO: refactor to de-duplicate
-                    var sourceDef = defToImport;
-                    var destName = defToImport.Name;
-                    var destDef = new Definition(destName,
-                        sourceDef.Directives, sourceDef.Expr);
-                    destDef.IsImported = true;
-                    defsToImport1.Add(destDef);
-                }
+                    ErrorType = ImportError.DefinitionNotFound,
+                    DefinitionName = importRef.SourceName
+                });
+
+                hasErrors = true;
+            }
+
+            if (hasErrors) return null;
+
+            foreach (var importRef in importRefs)
+            {
+                var sourceName = importRef.SourceName;
+                var sourceDef = importedDefsByName[sourceName];
+                var destName = importRef.DestName;
+                var destDef = new Definition(destName,
+                    sourceDef.Directives, sourceDef.Expr);
+                destDef.IsImported = true;
+                defsToImport1.Add(destDef);
             }
 
             return defsToImport.ToArray();
