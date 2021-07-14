@@ -45,11 +45,11 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestTokenReferencesToken()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
@@ -74,11 +74,11 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestTokenReferencesSubtoken()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
@@ -97,11 +97,11 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestTokenReferencesComment()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
@@ -126,11 +126,11 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestTokenReferencesNonToken()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
@@ -154,11 +154,11 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestSubtokenReferencesToken()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
@@ -183,11 +183,11 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestSubtokenReferencesSubtoken()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
@@ -206,11 +206,11 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestSubtokenReferencesComment()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
@@ -235,11 +235,11 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test()]
         public void TestSubtokenReferencesNonToken()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
@@ -263,11 +263,11 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestCommentReferencesToken()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
@@ -292,11 +292,11 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestCommentReferencesSubtoken()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
@@ -315,11 +315,11 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestCommentReferencesComment()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
@@ -344,11 +344,11 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestCommentReferencesNonToken()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
@@ -372,11 +372,11 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestNonTokenReferencesToken()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
@@ -394,11 +394,11 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestNonTokenReferencesSubtoken()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
@@ -422,11 +422,11 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test()]
         public void TestNonTokenReferencesComment()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
@@ -450,11 +450,11 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestNonTokenReferencesNonToken()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };

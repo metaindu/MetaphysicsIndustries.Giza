@@ -28,7 +28,7 @@ namespace giza
 {
     public class ListReplCommand : ReplCommand
     {
-        public ListReplCommand(Dictionary<string, DefinitionExpression> env)
+        public ListReplCommand(Dictionary<string, Definition> env)
             : base(env)
         {
             Name = "list";

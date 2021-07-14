@@ -28,7 +28,7 @@ namespace giza
 {
     public class SpanReplCommand : ReplCommand
     {
-        public SpanReplCommand(Dictionary<string, DefinitionExpression> env)
+        public SpanReplCommand(Dictionary<string, Definition> env)
             : base(env)
         {
             Name = "span";

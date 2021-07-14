@@ -18,8 +18,8 @@
 // USA
 
 /*
- * DefinitionExpression and related classes form the set of domain objects for
- * the supergrammar. That is, instances of the classes represent element of a
+ * Definition and related classes form the set of domain objects for the
+ * supergrammar. That is, instances of the classes represent element of a
  * grammar. There are no nodes.
  *
  * In contrast, the NDefinition class represents a definition within a grammar
@@ -30,15 +30,13 @@
  * TODO: rename these and related classes to make the distinction more apparent.
  */
 
-using System;
-
 using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Giza
 {
-    public class DefinitionExpression
+    public class Definition
     {
-        public DefinitionExpression(string name = "",
+        public Definition(string name = "",
             IEnumerable<DefinitionDirective> directives = null,
             Expression expr = null)
         {
@@ -53,7 +51,7 @@ namespace MetaphysicsIndustries.Giza
             Expr = expr;
         }
 
-        public override string ToString() => $"DefinitionExpression {Name}";
+        public override string ToString() => $"Definition {Name}";
 
         public string Name = string.Empty;
         public readonly HashSet<DefinitionDirective> Directives = new HashSet<DefinitionDirective>();

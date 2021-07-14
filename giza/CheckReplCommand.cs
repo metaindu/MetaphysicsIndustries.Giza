@@ -27,7 +27,7 @@ namespace giza
 {
     public class CheckReplCommand : ReplCommand
     {
-        public CheckReplCommand(Dictionary<string, DefinitionExpression> env)
+        public CheckReplCommand(Dictionary<string, Definition> env)
             : base(env)
         {
             Name = "check";

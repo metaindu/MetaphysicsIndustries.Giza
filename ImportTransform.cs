@@ -58,7 +58,7 @@ namespace MetaphysicsIndustries.Giza
             };
         }
 
-        static DefinitionExpression[] ImportDefinitions(
+        static Definition[] ImportDefinitions(
             ImportStatement importStmt, List<Error> errors,
             IFileSource fileSource, ImportCache importCache)
         {
@@ -95,10 +95,10 @@ namespace MetaphysicsIndustries.Giza
 
             var importedDefsByName = importCache[fileToImport];
 
-            IEnumerable<DefinitionExpression> defsToImport;
+            IEnumerable<Definition> defsToImport;
             if (importRefs != null)
             {
-                var defsToImport1 = new List<DefinitionExpression>();
+                var defsToImport1 = new List<Definition>();
                 defsToImport = defsToImport1;
                 foreach (var importRef in importRefs)
                 {
@@ -114,7 +114,7 @@ namespace MetaphysicsIndustries.Giza
                     {
                         // TODO: refactor to de-duplicate
                         var sourceDef = importedDefsByName[sourceName];
-                        var destDef = new DefinitionExpression(destName,
+                        var destDef = new Definition(destName,
                             sourceDef.Directives, sourceDef.Expr);
                         destDef.IsImported = true;
                         defsToImport1.Add(destDef);
@@ -123,14 +123,14 @@ namespace MetaphysicsIndustries.Giza
             }
             else
             {
-                var defsToImport1 = new List<DefinitionExpression>();
+                var defsToImport1 = new List<Definition>();
                 defsToImport = defsToImport1;
                 foreach (var defToImport in importedDefsByName.Values)
                 {
                     // TODO: refactor to de-duplicate
                     var sourceDef = defToImport;
                     var destName = defToImport.Name;
-                    var destDef = new DefinitionExpression(destName,
+                    var destDef = new Definition(destName,
                         sourceDef.Directives, sourceDef.Expr);
                     destDef.IsImported = true;
                     defsToImport1.Add(destDef);

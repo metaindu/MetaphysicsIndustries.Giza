@@ -34,7 +34,7 @@ namespace MetaphysicsIndustries.Giza.Test
             //def = 'value';
             var dis = new[]
             {
-                new DefinitionExpression(
+                new Definition(
                     name: "def",
                     expr: new Expression(
                         new LiteralSubExpression(value: "value")))
@@ -94,7 +94,7 @@ namespace MetaphysicsIndustries.Giza.Test
             // setup
             //"def = [\\d];
             var dis = new [] {
-                new DefinitionExpression(
+                new Definition(
                     name: "def",
                     expr: new Expression(
                         new CharClassSubExpression(
@@ -155,7 +155,7 @@ namespace MetaphysicsIndustries.Giza.Test
             // setup
             //<ignore case> def = 'value';
             var dis = new [] {
-                new DefinitionExpression(
+                new Definition(
                     name: "def",
                     expr: new Expression(
                         new LiteralSubExpression(value: "value")),
@@ -221,7 +221,7 @@ namespace MetaphysicsIndustries.Giza.Test
             //<ignore case> def = [\\d];
 
             var dis = new [] {
-                new DefinitionExpression(
+                new Definition(
                     name: "def",
                     expr: new Expression(
                         new CharClassSubExpression(
@@ -282,11 +282,11 @@ namespace MetaphysicsIndustries.Giza.Test
             //def = token;
             //<token> token = 'token';
             var dis = new [] {
-                new DefinitionExpression(
+                new Definition(
                     name: "def",
                     expr: new Expression(
                         new DefRefSubExpression("token"))),
-                new DefinitionExpression(
+                new Definition(
                     name: "token",
                     expr: new Expression(
                         new LiteralSubExpression("token")),
@@ -329,7 +329,7 @@ namespace MetaphysicsIndustries.Giza.Test
             // setup
             //<token> something = 'value';
             var dis = new [] {
-                new DefinitionExpression(
+                new Definition(
                     name: "something",
                     directives: new [] {
                         DefinitionDirective.Token
@@ -378,7 +378,7 @@ namespace MetaphysicsIndustries.Giza.Test
             //<subtoken> something = 'value';
             var dis = new[]
             {
-                new DefinitionExpression(
+                new Definition(
                     name: "something",
                     directives: new[]
                     {
@@ -426,7 +426,7 @@ namespace MetaphysicsIndustries.Giza.Test
             // setup
             //<comment> something = 'value';
             var dis = new [] {
-                new DefinitionExpression(
+                new Definition(
                     name: "something",
                     directives: new [] {
                         DefinitionDirective.Comment
@@ -476,7 +476,7 @@ namespace MetaphysicsIndustries.Giza.Test
             //<atomic> def = token;
             //<token> token = 'token';
             var dis = new [] {
-                new DefinitionExpression(
+                new Definition(
                     name: "def",
                     directives: new [] {
                         DefinitionDirective.Atomic,
@@ -484,7 +484,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     expr: new Expression(
                         new DefRefSubExpression("token"))
                 ),
-                new DefinitionExpression(
+                new Definition(
                     name: "token",
                     directives: new [] {
                         DefinitionDirective.Token,
@@ -530,7 +530,7 @@ namespace MetaphysicsIndustries.Giza.Test
             //<token, atomic> something = 'value';
             var dis = new[]
             {
-                new DefinitionExpression(
+                new Definition(
                     name: "something",
                     directives: new[]
                     {
@@ -581,7 +581,7 @@ namespace MetaphysicsIndustries.Giza.Test
             //<subtoken, atomic> something = 'value';
             var dis = new[]
             {
-                new DefinitionExpression(
+                new Definition(
                     name: "something",
                     directives: new[]
                     {
@@ -632,7 +632,7 @@ namespace MetaphysicsIndustries.Giza.Test
             //<comment, atomic> something = 'value';
             var dis = new[]
             {
-                new DefinitionExpression(
+                new Definition(
                     name: "something",
                     directives: new[]
                     {

@@ -28,7 +28,7 @@ namespace giza
 {
     public class ParseReplCommand : ReplCommand
     {
-        public ParseReplCommand(Dictionary<string, DefinitionExpression> env)
+        public ParseReplCommand(Dictionary<string, Definition> env)
             : base(env)
         {
             Name = "parse";

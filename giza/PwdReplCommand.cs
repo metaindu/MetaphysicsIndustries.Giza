@@ -8,7 +8,7 @@ namespace giza
 {
     public class PwdReplCommand : ReplCommand
     {
-        public PwdReplCommand(Dictionary<string, DefinitionExpression> env)
+        public PwdReplCommand(Dictionary<string, Definition> env)
             : base(env)
         {
             Name = "pwd";

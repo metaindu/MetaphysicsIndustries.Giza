@@ -105,7 +105,7 @@
     <Compile Include="ExpressionChecker.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="NodeMatch.cs" />
-    <Compile Include="DefinitionExpression.cs" />
+    <Compile Include="Definition.cs" />
     <Compile Include="ErrorType.cs" />
     <Compile Include="Error.cs" />
     <Compile Include="StringFormatterGrammar.cs" />

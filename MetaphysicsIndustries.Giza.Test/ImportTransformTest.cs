@@ -17,7 +17,7 @@ namespace MetaphysicsIndustries.Giza.Test
             // import 'file1.txt';
             var pg = new PreGrammar
             {
-                Definitions = new List<DefinitionExpression>(),
+                Definitions = new List<Definition>(),
                 ImportStatements = new List<ImportStatement>
                 {
                     new ImportStatement
@@ -52,7 +52,7 @@ namespace MetaphysicsIndustries.Giza.Test
             // from 'file1.txt' import def1;
             var pg = new PreGrammar
             {
-                Definitions = new List<DefinitionExpression>(),
+                Definitions = new List<Definition>(),
                 ImportStatements = new List<ImportStatement>
                 {
                     new ImportStatement
@@ -91,7 +91,7 @@ namespace MetaphysicsIndustries.Giza.Test
             // from 'file1.txt' import def1, def3;
             var pg = new PreGrammar
             {
-                Definitions = new List<DefinitionExpression>(),
+                Definitions = new List<Definition>(),
                 ImportStatements = new List<ImportStatement>
                 {
                     new ImportStatement
@@ -142,7 +142,7 @@ namespace MetaphysicsIndustries.Giza.Test
             // import 'file1.txt';
             var pg = new PreGrammar
             {
-                Definitions = new List<DefinitionExpression>(),
+                Definitions = new List<Definition>(),
                 ImportStatements = new List<ImportStatement>
                 {
                     new ImportStatement
@@ -186,9 +186,9 @@ namespace MetaphysicsIndustries.Giza.Test
             // def4 = 'd';
             var pg = new PreGrammar
             {
-                Definitions = new List<DefinitionExpression>
+                Definitions = new List<Definition>
                 {
-                    new DefinitionExpression("def4",
+                    new Definition("def4",
                         expr: new Expression(new LiteralSubExpression("d"))),
                 },
                 ImportStatements = new List<ImportStatement>
@@ -258,7 +258,7 @@ namespace MetaphysicsIndustries.Giza.Test
             // import 'file2.txt';
             var pg = new PreGrammar
             {
-                Definitions = new List<DefinitionExpression>(),
+                Definitions = new List<Definition>(),
                 ImportStatements = new List<ImportStatement>
                 {
                     new ImportStatement
@@ -305,7 +305,7 @@ namespace MetaphysicsIndustries.Giza.Test
             // from 'file2.txt' import def1 as def2;
             var pg = new PreGrammar
             {
-                Definitions = new List<DefinitionExpression>(),
+                Definitions = new List<Definition>(),
                 ImportStatements = new List<ImportStatement>
                 {
                     new ImportStatement

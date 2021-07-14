@@ -28,7 +28,7 @@ namespace giza
 {
     public class SaveReplCommand : ReplCommand
     {
-        public SaveReplCommand(Dictionary<string, DefinitionExpression> env)
+        public SaveReplCommand(Dictionary<string, Definition> env)
             : base(env)
         {
             Name = "save";
@@ -87,11 +87,11 @@ namespace giza
             Console.WriteLine(header);
         }
 
-        public static DefinitionExpression[] GetAllReferencedDefinitions(IEnumerable<DefinitionExpression> defs, Dictionary<string, DefinitionExpression> env, ref bool someAreMissing)
+        public static Definition[] GetAllReferencedDefinitions(IEnumerable<Definition> defs, Dictionary<string, Definition> env, ref bool someAreMissing)
         {
-            var next = new HashSet<DefinitionExpression>();
-            var prev = new HashSet<DefinitionExpression>(defs);
-            var alldefs = new HashSet<DefinitionExpression>(defs);
+            var next = new HashSet<Definition>();
+            var prev = new HashSet<Definition>(defs);
+            var alldefs = new HashSet<Definition>(defs);
 
             while (prev.Count > 0)
             {

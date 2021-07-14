@@ -27,7 +27,7 @@ namespace MetaphysicsIndustries.Giza
 {
     public partial class ExpressionChecker
     {
-        bool IsTokenized(DefinitionExpression def)
+        bool IsTokenized(Definition def)
         {
             return
                 def.Directives.Contains(DefinitionDirective.Token) ||
@@ -35,11 +35,11 @@ namespace MetaphysicsIndustries.Giza
                 def.Directives.Contains(DefinitionDirective.Comment);
         }
 
-        public List<Error> CheckDefinitionForParsing(IEnumerable<DefinitionExpression> defs)
+        public List<Error> CheckDefinitionForParsing(IEnumerable<Definition> defs)
         {
             List<Error> errors = CheckDefinitions(defs);
 
-            Dictionary<string, DefinitionExpression> defsByName = new Dictionary<string, DefinitionExpression>();
+            Dictionary<string, Definition> defsByName = new Dictionary<string, Definition>();
             foreach (var def in defs)
             {
                 defsByName[def.Name] = def;
@@ -109,7 +109,7 @@ namespace MetaphysicsIndustries.Giza
                 {
                     if (!defsByName.ContainsKey(defref.DefinitionName)) continue;
 
-                    DefinitionExpression target = defsByName[defref.DefinitionName];
+                    Definition target = defsByName[defref.DefinitionName];
 
                     if (!IsTokenized(def) &&
                         target.Directives.Contains(DefinitionDirective.Subtoken))
@@ -166,7 +166,7 @@ namespace MetaphysicsIndustries.Giza
             return errors;
         }
 
-        public List<Error> CheckDefinitionsForSpanning(IEnumerable<DefinitionExpression> defs)
+        public List<Error> CheckDefinitionsForSpanning(IEnumerable<Definition> defs)
         {
             List<Error> errors = CheckDefinitions(defs);
 
@@ -186,7 +186,7 @@ namespace MetaphysicsIndustries.Giza
             return errors;
         }
 
-        public virtual List<Error> CheckDefinitions(IEnumerable<DefinitionExpression> defs)
+        public virtual List<Error> CheckDefinitions(IEnumerable<Definition> defs)
         {
             if (defs == null) throw new ArgumentNullException("defs");
 
@@ -199,10 +199,10 @@ namespace MetaphysicsIndustries.Giza
             // weren't expecting it.
             HashSet<Expression> visitedExprs = new HashSet<Expression>();
             HashSet<ExpressionItem> visitedItems = new HashSet<ExpressionItem>();
-            HashSet<DefinitionExpression> visitedDefs = new HashSet<DefinitionExpression>();
+            HashSet<Definition> visitedDefs = new HashSet<Definition>();
             int index = -1;
             List<string> defNames = new List<string>();
-            foreach (DefinitionExpression def in defs)
+            foreach (Definition def in defs)
             {
                 index++;
                 if (def == null)
@@ -219,7 +219,7 @@ namespace MetaphysicsIndustries.Giza
 
             var defnames2 = new HashSet<string>();
             index = -1;
-            foreach (DefinitionExpression def in defs)
+            foreach (Definition def in defs)
             {
                 index++;
                 if (def == null) continue;
@@ -263,7 +263,7 @@ namespace MetaphysicsIndustries.Giza
             return errors;
         }
 
-        protected virtual void CheckExpression(DefinitionExpression def,
+        protected virtual void CheckExpression(Definition def,
                              Expression expr,
                              List<string> defNames,
                              HashSet<Expression> visitedExprs,
@@ -325,7 +325,7 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        protected virtual void CheckExpressionItem(DefinitionExpression def,
+        protected virtual void CheckExpressionItem(Definition def,
                                  ExpressionItem item,
                                  List<string> defNames,
                                  HashSet<Expression> visitedExprs,

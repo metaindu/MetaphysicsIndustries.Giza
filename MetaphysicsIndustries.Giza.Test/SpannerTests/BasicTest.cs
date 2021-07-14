@@ -859,7 +859,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
         {
             // setup
             var item =
-                new DefinitionExpression(
+                new Definition(
                     name: "item",
                     directives: new[] {DefinitionDirective.IgnoreCase},
                     expr: new Expression(new LiteralSubExpression("item")));
@@ -898,7 +898,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
         {
             // setup
             var item =
-                new DefinitionExpression(
+                new Definition(
                     name: "item",
                     expr: new Expression(new LiteralSubExpression("item")));
             var grammar = (new GrammarCompiler()).BuildGrammar(new [] { item });

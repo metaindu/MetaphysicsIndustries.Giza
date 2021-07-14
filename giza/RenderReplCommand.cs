@@ -28,7 +28,7 @@ namespace giza
 {
     public class RenderReplCommand : ReplCommand
     {
-        public RenderReplCommand(Dictionary<string, DefinitionExpression> env)
+        public RenderReplCommand(Dictionary<string, Definition> env)
             : base(env)
         {
             Name = "render";

@@ -48,9 +48,9 @@ namespace MetaphysicsIndustries.Giza
 
             // get the implicit tokens
             var implicitTokenDefs =
-                new Dictionary<string, DefinitionExpression>();
-            var tokenizedDefs = new List<DefinitionExpression>();
-            var nonTokenizedDefs = new List<DefinitionExpression>();
+                new Dictionary<string, Definition>();
+            var tokenizedDefs = new List<Definition>();
+            var nonTokenizedDefs = new List<Definition>();
 
             foreach (var def in defs)
             {
@@ -66,17 +66,17 @@ namespace MetaphysicsIndustries.Giza
                         DefinitionDirective.IgnoreCase);
                     var defsByLiteral =
                         new Dictionary<LiteralSubExpression,
-                            DefinitionExpression>();
+                            Definition>();
                     var defsByCharClass =
                         new Dictionary<CharClassSubExpression,
-                            DefinitionExpression>();
+                            Definition>();
 
                     foreach (var literal in def.EnumerateLiterals())
                     {
                         var defname = GetImplicitDefinitionName(literal, ignoreCase);
                         if (!implicitTokenDefs.ContainsKey(defname))
                         {
-                            var di = new DefinitionExpression
+                            var di = new Definition
                             {
                                 Name = defname,
                                 IsImported = def.IsImported,
@@ -102,7 +102,7 @@ namespace MetaphysicsIndustries.Giza
                         var defname = GetImplicitDefinitionName(cc, ignoreCase);
                         if (!implicitTokenDefs.ContainsKey(defname))
                         {
-                            var di = new DefinitionExpression
+                            var di = new Definition
                             {
                                 Name = defname,
                                 IsImported = def.IsImported,
@@ -144,7 +144,7 @@ namespace MetaphysicsIndustries.Giza
                 def.Directives.Remove(DefinitionDirective.IgnoreCase);
             }
 
-            var outdefs = new List<DefinitionExpression>();
+            var outdefs = new List<Definition>();
             outdefs.AddRange(nonTokenizedDefs);
             outdefs.AddRange(tokenizedDefs);
             return new PreGrammar() {Definitions = outdefs};
@@ -166,19 +166,19 @@ namespace MetaphysicsIndustries.Giza
                     ignoreCase ? cc.CharClass.ToUndelimitedString().ToLower() : cc.CharClass.ToUndelimitedString());
         }
 
-        public DefinitionExpression ReplaceInDefintionExpression(
-            DefinitionExpression def,
-            Dictionary<LiteralSubExpression, DefinitionExpression> defsByLiteral,
-            Dictionary<CharClassSubExpression, DefinitionExpression> defsByCharClass)
+        public Definition ReplaceInDefintionExpression(
+            Definition def,
+            Dictionary<LiteralSubExpression, Definition> defsByLiteral,
+            Dictionary<CharClassSubExpression, Definition> defsByCharClass)
         {
-            return new DefinitionExpression(def.Name, def.Directives,
+            return new Definition(def.Name, def.Directives,
                 ReplaceInExpression(def.Expr, defsByLiteral, 
                     defsByCharClass));
         }
 
         public Expression ReplaceInExpression(Expression expr,
-            Dictionary<LiteralSubExpression, DefinitionExpression> defsByLiteral,
-            Dictionary<CharClassSubExpression, DefinitionExpression> defsByCharClass)
+            Dictionary<LiteralSubExpression, Definition> defsByLiteral,
+            Dictionary<CharClassSubExpression, Definition> defsByCharClass)
         {
             return new Expression(
                 expr.Items.Select(item => ReplaceInExpressionItem(
@@ -186,8 +186,8 @@ namespace MetaphysicsIndustries.Giza
         }
 
         public ExpressionItem ReplaceInExpressionItem(ExpressionItem item,
-            Dictionary<LiteralSubExpression, DefinitionExpression> defsByLiteral,
-            Dictionary<CharClassSubExpression, DefinitionExpression> defsByCharClass)
+            Dictionary<LiteralSubExpression, Definition> defsByLiteral,
+            Dictionary<CharClassSubExpression, Definition> defsByCharClass)
         {
             if (item is OrExpression orexpr)
                 return new OrExpression(

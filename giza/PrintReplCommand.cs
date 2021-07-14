@@ -28,7 +28,7 @@ namespace giza
 {
     public class PrintReplCommand : ReplCommand
     {
-        public PrintReplCommand(Dictionary<string, DefinitionExpression> env)
+        public PrintReplCommand(Dictionary<string, Definition> env)
             : base(env)
         {
             Name = "print";

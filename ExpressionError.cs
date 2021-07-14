@@ -26,7 +26,7 @@ namespace MetaphysicsIndustries.Giza
     {
         public Expression Expression;
         public ExpressionItem ExpressionItem;
-        public DefinitionExpression Definition;
+        public Definition Definition;
         public string DefinitionName { get { return Definition.Name; } }
         public string ReferencedDefinitionName
         {
@@ -74,8 +74,8 @@ namespace MetaphysicsIndustries.Giza
         //  technical errors - can only occur when manually creating the
         //      object tree. SupergrammarSpanner does not generate expression
         //      trees with these errors.
-        public static readonly ErrorType ReusedDefintion                            = new ErrorType(name:"ReusedDefintion",                                         descriptionFormat:"The DefinitionExpression object for '{DefinitionName}' was re-used at index {Index}. ");
-        public static readonly ErrorType NullDefinition                             = new ErrorType(name:"NullDefinition",                                          descriptionFormat:"A null was found in place of a DefinitionExpression object, at index {Index}. ");
+        public static readonly ErrorType ReusedDefintion                            = new ErrorType(name:"ReusedDefintion",                                         descriptionFormat:"The Definition object for '{DefinitionName}' was re-used at index {Index}. ");
+        public static readonly ErrorType NullDefinition                             = new ErrorType(name:"NullDefinition",                                          descriptionFormat:"A null was found in place of a Definition object, at index {Index}. ");
         public static readonly ErrorType ReusedExpression                           = new ErrorType(name:"ReusedExpression",                                        descriptionFormat:"An Expression object was re-used in definition '{DefinitionName}'.");
         public static readonly ErrorType ReusedExpressionItem                       = new ErrorType(name:"ReusedExpressionItem",                                    descriptionFormat:"An ExpressionItem object was re-used in definition '{DefinitionName}'.");
         public static readonly ErrorType NullOrEmptyDefinitionName                  = new ErrorType(name:"NullOrEmptyDefinitionName",                               descriptionFormat:"The definition's name was null or empty, at index {Index}. ");

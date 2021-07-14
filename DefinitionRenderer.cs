@@ -265,7 +265,7 @@ namespace MetaphysicsIndustries.Giza
             return "\"" + s2 + "\"";
         }
 
-        public string RenderDefinitionExprsAsGrammarText(IEnumerable<DefinitionExpression> defs, int? maxLineWidth=null)
+        public string RenderDefinitionExprsAsGrammarText(IEnumerable<Definition> defs, int? maxLineWidth=null)
         {
             var sb = new StringBuilder();
             var noSpaceTokens = new string[] { ";", ":", "*", "?", "+", ">", "," };
@@ -305,7 +305,7 @@ namespace MetaphysicsIndustries.Giza
             return sb.ToString();
         }
 
-        public IEnumerable<string> ProcessDefinitionExpression(DefinitionExpression defexpr)
+        public IEnumerable<string> ProcessDefinitionExpression(Definition defexpr)
         {
             if (defexpr.Directives.Count > 0)
             {

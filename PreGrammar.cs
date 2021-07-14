@@ -5,10 +5,10 @@ namespace MetaphysicsIndustries.Giza
 {
     public class PreGrammar
     {
-        public List<DefinitionExpression> Definitions;
+        public List<Definition> Definitions;
         public List<ImportStatement> ImportStatements;
 
-        public DefinitionExpression FindDefinitionByName(string name)
+        public Definition FindDefinitionByName(string name)
         {
             return Definitions.FirstOrDefault(def => def.Name == name);
         }

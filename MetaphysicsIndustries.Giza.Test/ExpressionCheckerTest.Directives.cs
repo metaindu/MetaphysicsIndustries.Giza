@@ -28,8 +28,8 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test()]
         public void TestTokenInNonTokenized1()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
             };
@@ -49,8 +49,8 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test()]
         public void TestTokenInNonTokenized2()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
             };
@@ -70,8 +70,8 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test()]
         public void TestTokenInNonTokenized3()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
             };
@@ -92,8 +92,8 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test()]
         public void TestMixedTokenizedDirectives1()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
             };
@@ -115,8 +115,8 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test()]
         public void TestMixedTokenizedDirectives2()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
             };
@@ -138,8 +138,8 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test()]
         public void TestMixedTokenizedDirectives3()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
             };
@@ -161,8 +161,8 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestAtomicInNonTokenDefinition()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
             };
@@ -183,8 +183,8 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestMindWhitespaceInNonTokenDefinition()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
             };
@@ -205,8 +205,8 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestAtomicInTokenDefinition()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
             };
@@ -228,8 +228,8 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestAtomicInSubtokenDefinition()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
             };
@@ -248,8 +248,8 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestAtomicInCommentDefinition()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
             };
@@ -271,8 +271,8 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestMindWhitespaceInTokenizedDefinition1()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
             };
@@ -294,8 +294,8 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestMindWhitespaceInTokenizedDefinition2()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
             };
@@ -317,8 +317,8 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestMindWhitespaceInTokenizedDefinition3()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
             };

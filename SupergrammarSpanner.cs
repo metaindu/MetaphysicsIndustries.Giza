@@ -84,7 +84,7 @@ namespace MetaphysicsIndustries.Giza
                 throw new InvalidOperationException("There were errors while checking the spans.");
             }
 
-            List<DefinitionExpression> defs = new List<DefinitionExpression>();
+            List<Definition> defs = new List<Definition>();
             var importStmts = new List<ImportStatement>();
 
             foreach (Span defspan in span.Subspans)
@@ -105,7 +105,7 @@ namespace MetaphysicsIndustries.Giza
                     // TODO: add an error? throw an exception?
                     continue;
 
-                DefinitionExpression def = new DefinitionExpression();
+                Definition def = new Definition();
                 defs.Add(def);
 
                 List<DefinitionDirective> directives = new List<DefinitionDirective>();

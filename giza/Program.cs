@@ -91,7 +91,7 @@ namespace giza
         static void Repl()
         {
             var spanner = new SupergrammarSpanner();
-            var env = new Dictionary<string, DefinitionExpression>();
+            var env = new Dictionary<string, Definition>();
 
             var buffer = new StringBuilder();
             string primaryPrompt = ">>> ";

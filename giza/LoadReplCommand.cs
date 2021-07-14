@@ -28,7 +28,7 @@ namespace giza
 {
     public class LoadReplCommand : ReplCommand
     {
-        public LoadReplCommand(Dictionary<string, DefinitionExpression> env)
+        public LoadReplCommand(Dictionary<string, Definition> env)
             : base(env)
         {
             Name = "load";

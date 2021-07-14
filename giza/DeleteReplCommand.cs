@@ -27,7 +27,7 @@ namespace giza
 {
     public class DeleteReplCommand : ReplCommand
     {
-        public DeleteReplCommand(Dictionary<string, DefinitionExpression> env)
+        public DeleteReplCommand(Dictionary<string, Definition> env)
             : base(env)
         {
             Name = "delete";

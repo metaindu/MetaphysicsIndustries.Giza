@@ -31,13 +31,13 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             // setup
             var sequence =
-                new DefinitionExpression(
+                new Definition(
                     name: "sequence",
                     expr: new Expression(
                         new DefRefSubExpression("letters",
                             isRepeatable: true)));
             var letters =
-                new DefinitionExpression(
+                new Definition(
                     name: "letters",
                     directives: new[] {DefinitionDirective.Atomic},
                     expr: new Expression(
@@ -81,13 +81,13 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             // setup
             var sequence =
-                new DefinitionExpression(
+                new Definition(
                     name: "sequence",
                     expr: new Expression(
                         new DefRefSubExpression("letters",
                             isRepeatable: true)));
             var letters =
-                new DefinitionExpression(
+                new Definition(
                     name: "letters",
                     expr: new Expression(
                         new CharClassSubExpression(

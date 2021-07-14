@@ -34,7 +34,7 @@ namespace MetaphysicsIndustries.Giza
 
             return BuildGrammar(pg.Definitions);
         }
-        public NGrammar BuildGrammar(IEnumerable<DefinitionExpression> defs)
+        public NGrammar BuildGrammar(IEnumerable<Definition> defs)
         {
             var defs1 = defs.ToList();
             var ec = new ExpressionChecker();
