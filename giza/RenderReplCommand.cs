@@ -136,8 +136,8 @@ namespace giza
                 var tgb = new TokenizeTransform();
                 g2 = tgb.Tokenize(g);
             }
-            var db = new GrammarCompiler();
-            var ng = db.Compile(g2);
+            var gc = new GrammarCompiler();
+            var ng = gc.Compile(g2);
 
             IEnumerable<NDefinition> defs2 = ng.Definitions;
 

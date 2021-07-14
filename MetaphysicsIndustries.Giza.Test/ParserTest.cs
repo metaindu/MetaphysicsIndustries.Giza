@@ -868,8 +868,8 @@ namespace MetaphysicsIndustries.Giza.Test
             var errors = new List<Error>();
             var g = sgs.GetGrammar(testGrammarText, errors);
             Assert.IsEmpty(errors);
-            var tgb = new TokenizeTransform();
-            var g2 = tgb.Tokenize(g);
+            var tt = new TokenizeTransform();
+            var g2 = tt.Tokenize(g);
             var gc = new GrammarCompiler();
             var testGrammar = gc.Compile(g2);
             var itemDef = testGrammar.FindDefinitionByName("item");
@@ -926,8 +926,8 @@ namespace MetaphysicsIndustries.Giza.Test
             var errors = new List<Error>();
             var g = sgs.GetGrammar(testGrammarText, errors);
             Assert.IsEmpty(errors);
-            var tgb = new TokenizeTransform();
-            var g2 = tgb.Tokenize(g);
+            var tt = new TokenizeTransform();
+            var g2 = tt.Tokenize(g);
             var gc = new GrammarCompiler();
             var testGrammar = gc.Compile(g2);
             var itemDef = testGrammar.FindDefinitionByName("item");
@@ -1614,8 +1614,8 @@ namespace MetaphysicsIndustries.Giza.Test
             var errors = new List<Error>();
             var g = sgs.GetGrammar(testGrammarText, errors);
             Assert.IsEmpty(errors);
-            var tgb = new TokenizeTransform();
-            var g2 = tgb.Tokenize(g);
+            var tt = new TokenizeTransform();
+            var g2 = tt.Tokenize(g);
             var gc = new GrammarCompiler();
             var testGrammar = gc.Compile(g2);
             var sequenceDef = testGrammar.FindDefinitionByName("sequence");

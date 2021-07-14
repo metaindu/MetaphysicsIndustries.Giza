@@ -93,8 +93,8 @@ namespace giza
             {
                 if (tokenized)
                 {
-                    var tgb = new TokenizeTransform();
-                    var g2 = tgb.Tokenize(g);
+                    var tt = new TokenizeTransform();
+                    var g2 = tt.Tokenize(g);
                     var gc = new GrammarCompiler();
                     var ng = gc.Compile(g2);
                     var dc = new DefinitionChecker();

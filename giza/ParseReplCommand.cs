@@ -107,9 +107,9 @@ namespace giza
             NGrammar grammar = null;
             if (!errors.ContainsNonWarnings())
             {
-                var tgb = new TokenizeTransform();
+                var tt = new TokenizeTransform();
                 var g = new Grammar() {Definitions = Env.Values.ToList()};
-                var g2 = tgb.Tokenize(g);
+                var g2 = tt.Tokenize(g);
                 var gc = new GrammarCompiler();
                 grammar = gc.Compile(g2);
                 var dc = new DefinitionChecker();

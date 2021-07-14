@@ -112,8 +112,8 @@ namespace giza
             NGrammar ng = null;
             if (!grammarErrors.ContainsNonWarnings())
             {
-                var tgb = new TokenizeTransform();
-                var g2 = tgb.Tokenize(g);
+                var tt = new TokenizeTransform();
+                var g2 = tt.Tokenize(g);
                 var gc = new GrammarCompiler();
                 ng = gc.Compile(g2);
 
