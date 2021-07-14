@@ -17,7 +17,6 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 // USA
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -25,11 +24,11 @@ namespace MetaphysicsIndustries.Giza
 {
     public class Grammar
     {
-        public Grammar(params Definition[] definitions)
-            : this((IEnumerable<Definition>)definitions)
+        public Grammar(params NDefinition[] definitions)
+            : this((IEnumerable<NDefinition>)definitions)
         {
         }
-        public Grammar(IEnumerable<Definition> definitions=null)
+        public Grammar(IEnumerable<NDefinition> definitions=null)
         {
             _definitions = new GrammarDefinitionOrderedParentChildrenCollection(this);
 
@@ -47,18 +46,18 @@ namespace MetaphysicsIndustries.Giza
 
         public Grammar Clone()
         {
-            Dictionary<Definition, Definition> defsMatchup = new Dictionary<Definition, Definition>();
-            List<Definition> defs = new List<Definition>();
-            foreach (Definition def in this.Definitions)
+            var defsMatchup = new Dictionary<NDefinition, NDefinition>();
+            var defs = new List<NDefinition>();
+            foreach (var def in Definitions)
             {
-                Definition def2 = new Definition(def.Name);
+                var def2 = new NDefinition(def.Name);
                 defs.Add(def2);
                 defsMatchup[def] = def2;
             }
             Dictionary<Node, Node> nodeMatchup = new Dictionary<Node, Node>();
-            foreach (Definition def in this.Definitions)
+            foreach (var def in this.Definitions)
             {
-                Definition def2 = defsMatchup[def];
+                var def2 = defsMatchup[def];
                 foreach (Node node in def.Nodes)
                 {
                     Node node2;
@@ -98,17 +97,9 @@ namespace MetaphysicsIndustries.Giza
             return grammar;
         }
 
-        public Definition FindDefinitionByName(string name)
+        public NDefinition FindDefinitionByName(string name)
         {
-            foreach (Definition def in Definitions)
-            {
-                if (def.Name == name)
-                {
-                    return def;
-                }
-            }
-
-            return null;
+            return Definitions.FirstOrDefault(def => def.Name == name);
         }
     }
 }

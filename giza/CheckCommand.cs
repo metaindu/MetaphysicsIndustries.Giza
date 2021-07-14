@@ -95,16 +95,16 @@ namespace giza
                 {
                     var tgb = new TokenizeTransform();
                     var pg2 = tgb.Tokenize(pg);
-                    var db = new DefinitionBuilder();
-                    var g2 = db.BuildGrammar(pg2);
+                    var gc = new GrammarCompiler();
+                    var g2 = gc.BuildGrammar(pg2);
                     var dc = new DefinitionChecker();
                     var errors2 = dc.CheckDefinitions(g2.Definitions);
                     errors.AddRange(errors2);
                 }
                 else
                 {
-                    var db = new DefinitionBuilder();
-                    var g2 = db.BuildGrammar(pg.Definitions);
+                    var gc = new GrammarCompiler();
+                    var g2 = gc.BuildGrammar(pg.Definitions);
                     var dc = new DefinitionChecker();
                     var errors2 = dc.CheckDefinitions(g2.Definitions);
                     errors.AddRange(errors2);
@@ -120,13 +120,13 @@ namespace giza
                 {
                     TokenizeTransform tgb = new TokenizeTransform();
                     var pg2 = tgb.Tokenize(pg);
-                    var db = new DefinitionBuilder();
-                    g = db.BuildGrammar(pg2);
+                    var gc = new GrammarCompiler();
+                    g = gc.BuildGrammar(pg2);
                 }
                 else
                 {
-                    DefinitionBuilder db = new DefinitionBuilder();
-                    g = db.BuildGrammar(pg.Definitions);
+                    var gc = new GrammarCompiler();
+                    g = gc.BuildGrammar(pg.Definitions);
                 }
 
                 Console.WriteLine(

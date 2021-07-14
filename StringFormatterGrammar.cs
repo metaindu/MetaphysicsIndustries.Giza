@@ -23,11 +23,11 @@ namespace MetaphysicsIndustries.Giza
 {
     public class StringFormatterGrammar : Grammar
     {
-        public Definition def_0_format = new Definition("format");
-        public Definition def_1_text = new Definition("text");
-        public Definition def_2_escape = new Definition("escape");
-        public Definition def_3_param = new Definition("param");
-        public Definition def_4_name = new Definition("name");
+        public NDefinition def_0_format = new NDefinition("format");
+        public NDefinition def_1_text = new NDefinition("text");
+        public NDefinition def_2_escape = new NDefinition("escape");
+        public NDefinition def_3_param = new NDefinition("param");
+        public NDefinition def_4_name = new NDefinition("name");
 
         public DefRefNode node_format_0_text;
         public DefRefNode node_format_1_escape;

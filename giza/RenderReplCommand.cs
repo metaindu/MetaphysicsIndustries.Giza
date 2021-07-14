@@ -132,16 +132,16 @@ namespace giza
                 var tgb = new TokenizeTransform();
                 var pg = new PreGrammar() {Definitions = alldefs.ToList()};
                 var pg2 = tgb.Tokenize(pg);
-                var db = new DefinitionBuilder();
+                var db = new GrammarCompiler();
                 g = db.BuildGrammar(pg2);
             }
             else
             {
-                var db = new DefinitionBuilder();
+                var db = new GrammarCompiler();
                 g = db.BuildGrammar(alldefs);
             }
 
-            IEnumerable<Definition> defs2 = g.Definitions;
+            IEnumerable<NDefinition> defs2 = g.Definitions;
 
             var dr = new DefinitionRenderer();
             var cs = dr.RenderDefinitionsAsCSharpClass(className,

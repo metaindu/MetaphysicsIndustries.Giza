@@ -128,13 +128,13 @@ namespace giza
             {
                 var tgb = new TokenizeTransform();
                 var pg2 = tgb.Tokenize(pg);
-                var db = new DefinitionBuilder();
-                g = db.BuildGrammar(pg2);
+                var gc = new GrammarCompiler();
+                g = gc.BuildGrammar(pg2);
             }
             else
             {
-                var db = new DefinitionBuilder();
-                g = db.BuildGrammar(pg.Definitions);
+                var gc = new GrammarCompiler();
+                g = gc.BuildGrammar(pg.Definitions);
             }
 
             var dr = new DefinitionRenderer();

@@ -25,9 +25,9 @@ using System.Diagnostics;
 
 namespace MetaphysicsIndustries.Giza
 {
-    public class Definition
+    public class NDefinition
     {
-        public Definition(
+        public NDefinition(
             string name="",
             Node[] nodes=null,
             int[] nexts=null,

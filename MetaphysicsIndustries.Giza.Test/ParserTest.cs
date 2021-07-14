@@ -36,7 +36,7 @@ namespace MetaphysicsIndustries.Giza.Test
             //<token> operand = [\l_] [\l\d_]*;
 
             var operandDef =
-                new Definition(
+                new NDefinition(
                     name: "operand",
                     nodes: new [] {
                         new CharNode(CharClass.FromUndelimitedCharClassText("\\l_")),
@@ -52,7 +52,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 );
             var operatorDef =
-                new Definition(
+                new NDefinition(
                     name: "$implicit literal +",
                     nodes: new [] { new CharNode('+') },
                     startNodes: new [] { 0 },
@@ -64,7 +64,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 );
             var exprDef =
-                new Definition(
+                new NDefinition(
                     name: "expr",
                     nodes: new Node[] {
                         new DefRefNode(operandDef),
@@ -116,8 +116,8 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
 
             var pg2 = (new TokenizeTransform()).Tokenize(pg);
-            var db = new DefinitionBuilder();
-            var grammar = db.BuildGrammar(pg2);
+            var gc = new GrammarCompiler();
+            var grammar = gc.BuildGrammar(pg2);
 
             var exprDef = grammar.FindDefinitionByName("expr");
             var subexprDef = grammar.FindDefinitionByName("subexpr");
@@ -198,7 +198,7 @@ namespace MetaphysicsIndustries.Giza.Test
             //sequence = item+;
             //<token, ignore case> item = 'item';
             var itemDef =
-                new Definition(
+                new NDefinition(
                     name: "item",
                     nodes: new [] {
                         new CharNode('i', "item"),
@@ -217,7 +217,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 );
             var sequenceDef =
-                new Definition(
+                new NDefinition(
                     name: "sequence",
                     nodes: new [] { new DefRefNode(itemDef) },
                     nexts: new [] { 0, 0 },
@@ -264,7 +264,7 @@ namespace MetaphysicsIndustries.Giza.Test
             //sequence = item+;
             //<token, ignore case> item = [\l]+;
             var itemDef =
-                new Definition(
+                new NDefinition(
                     name: "item",
                     nodes: new [] {
                         new CharNode(CharClass.FromUndelimitedCharClassText("\\l"))
@@ -280,7 +280,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 );
             var sequenceDef =
-                new Definition(
+                new NDefinition(
                     name: "sequence",
                     nodes: new [] { new DefRefNode(itemDef) },
                     nexts: new [] { 0, 0 },
@@ -328,7 +328,7 @@ namespace MetaphysicsIndustries.Giza.Test
             //<token> item = 'abc' middle 'xyz';
             //<subtoken, ignore case> middle = 'qwer';
             var middleDef =
-                new Definition(
+                new NDefinition(
                     name: "middle",
                     nodes: new [] {
                         new CharNode('q', "qwer"),
@@ -346,7 +346,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 );
             var itemDef =
-                new Definition(
+                new NDefinition(
                     name: "item",
                     nodes: new Node[] {
                         new CharNode('a', "abc"),
@@ -367,7 +367,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 );
             var sequenceDef =
-                new Definition(
+                new NDefinition(
                     name: "sequence",
                     nodes: new [] { new DefRefNode(itemDef) },
                     nexts: new [] { 0, 0 },
@@ -415,7 +415,7 @@ namespace MetaphysicsIndustries.Giza.Test
             //<token> item = 'abc' middle 'xyz';
             //<subtoken, ignore case> middle = [\l]+;
             var middleDef =
-                new Definition(
+                new NDefinition(
                     name: "middle",
                     nodes: new [] {
                         new CharNode(CharClass.FromUndelimitedCharClassText("\\l")),
@@ -430,7 +430,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 );
             var itemDef =
-                new Definition(
+                new NDefinition(
                     name: "item",
                     nodes: new Node[] {
                         new CharNode('a', "abc"),
@@ -451,7 +451,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 );
             var sequenceDef =
-                new Definition(
+                new NDefinition(
                     name: "sequence",
                     nodes: new [] { new DefRefNode(itemDef) },
                     nexts: new [] { 0, 0 },
@@ -499,7 +499,7 @@ namespace MetaphysicsIndustries.Giza.Test
             //<token> item = 'abc-' sub+ '-xyz';
             //<subtoken, atomic> sub = [\l]+;
             var sub =
-                new Definition(
+                new NDefinition(
                     name: "sub",
                     nodes: new [] {
                         new CharNode(CharClass.FromUndelimitedCharClassText("\\l")),
@@ -515,7 +515,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 );
             var itemDef =
-                new Definition(
+                new NDefinition(
                     name: "item",
                     nodes: new Node[] {
                         new CharNode('a', "abc-"),
@@ -548,7 +548,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 );
             var sequenceDef =
-                new Definition(
+                new NDefinition(
                     name: "sequence",
                     nodes: new [] { new DefRefNode(itemDef) },
                     nexts: new [] { 0, 0 },
@@ -588,7 +588,7 @@ namespace MetaphysicsIndustries.Giza.Test
             //<token> item = 'abc-' sub+ '-xyz';
             //<subtoken> sub = [\l]+;
             var sub =
-                new Definition(
+                new NDefinition(
                     name: "sub",
                     nodes: new [] {
                         new CharNode(CharClass.FromUndelimitedCharClassText("\\l")),
@@ -603,7 +603,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 );
             var itemDef =
-                new Definition(
+                new NDefinition(
                     name: "item",
                     nodes: new Node[] {
                         new CharNode('a', "abc-"),
@@ -636,7 +636,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 );
             var sequenceDef =
-                new Definition(
+                new NDefinition(
                     name: "sequence",
                     nodes: new [] { new DefRefNode(itemDef) },
                     nexts: new [] { 0, 0 },
@@ -676,7 +676,7 @@ namespace MetaphysicsIndustries.Giza.Test
             //<token> item = 'item';
             //<comment, ignore case> comment = '[comment]';
             var commentDef =
-                new Definition(
+                new NDefinition(
                     name: "comment",
                     nodes: new [] {
                         new CharNode('[', "[comment]"),
@@ -709,7 +709,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 );
             var itemDef =
-                new Definition(
+                new NDefinition(
                     name: "item",
                     nodes: new [] {
                         new CharNode('i', "item"),
@@ -727,7 +727,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 );
             var sequenceDef =
-                new Definition(
+                new NDefinition(
                     name: "sequence",
                     nodes: new [] { new DefRefNode(itemDef) },
                     nexts: new [] { 0, 0 },
@@ -775,7 +775,7 @@ namespace MetaphysicsIndustries.Giza.Test
             //<token> item = 'item';
             //<comment, ignore case> comment = '[' [\l]+ ']';
             var commentDef =
-                new Definition(
+                new NDefinition(
                     name: "comment",
                     nodes: new [] {
                         new CharNode('[', "[comment]"),
@@ -797,7 +797,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 );
             var itemDef =
-                new Definition(
+                new NDefinition(
                     name: "item",
                     nodes: new [] {
                         new CharNode('i', "item"),
@@ -815,7 +815,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 );
             var sequenceDef =
-                new Definition(
+                new NDefinition(
                     name: "sequence",
                     nodes: new [] { new DefRefNode(itemDef) },
                     nexts: new [] { 0, 0 },
@@ -870,8 +870,8 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
             var tgb = new TokenizeTransform();
             var pg2 = tgb.Tokenize(pg);
-            var db = new DefinitionBuilder();
-            var testGrammar = db.BuildGrammar(pg2);
+            var gc = new GrammarCompiler();
+            var testGrammar = gc.BuildGrammar(pg2);
             var itemDef = testGrammar.FindDefinitionByName("item");
             var sequenceDef = testGrammar.FindDefinitionByName("sequence");
             var implicitDef = testGrammar.FindDefinitionByName("$implicit ignore case literal item");
@@ -928,8 +928,8 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
             var tgb = new TokenizeTransform();
             var pg2 = tgb.Tokenize(pg);
-            var db = new DefinitionBuilder();
-            var testGrammar = db.BuildGrammar(pg2);
+            var gc = new GrammarCompiler();
+            var testGrammar = gc.BuildGrammar(pg2);
             var itemDef = testGrammar.FindDefinitionByName("item");
             var sequenceDef = testGrammar.FindDefinitionByName("sequence");
             var implicitDef = testGrammar.FindDefinitionByName("$implicit ignore case char class \\dabcdef");
@@ -980,7 +980,7 @@ namespace MetaphysicsIndustries.Giza.Test
             //paren = '(' sequence ')';
 
             var item1Def =
-                new Definition(
+                new NDefinition(
                     name: "id-item1",
                     nodes: new [] {
                         new CharNode('i', "item1"),
@@ -999,7 +999,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 );
             var item2Def =
-                new Definition(
+                new NDefinition(
                     name: "id-item2",
                     nodes: new [] {
                         new CharNode('i', "item2"),
@@ -1018,7 +1018,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 );
             var implicitOpenDef =
-                new Definition(
+                new NDefinition(
                     name: "$implicit literal (",
                     nodes: new [] { new CharNode('(', "") },
                     startNodes: new [] { 0 },
@@ -1030,7 +1030,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 );
             var implicitCloseDef =
-                new Definition(
+                new NDefinition(
                     name: "$implicit literal )",
                     nodes: new [] { new CharNode(')', "") },
                     startNodes: new [] { 0 },
@@ -1041,9 +1041,9 @@ namespace MetaphysicsIndustries.Giza.Test
                         DefinitionDirective.MindWhitespace,
                     }
                 );
-            var sequenceDef = new Definition("sequence");
+            var sequenceDef = new NDefinition("sequence");
             var parenDef =
-                new Definition(
+                new NDefinition(
                     name: "paren",
                     nodes: new [] {
                         new DefRefNode(implicitOpenDef, "("),
@@ -1055,7 +1055,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     endNodes: new [] { 2 }
                 );
             var itemDef =
-                new Definition(
+                new NDefinition(
                     name: "item",
                     nodes: new [] {
                         new DefRefNode(item1Def),
@@ -1260,7 +1260,7 @@ namespace MetaphysicsIndustries.Giza.Test
             //paren = '(' sequence ')';
 
             var item1Def =
-                new Definition(
+                new NDefinition(
                     name: "id-item1",
                     nodes: new [] {
                         new CharNode('i', "item1"),
@@ -1279,7 +1279,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 );
             var item2Def =
-                new Definition(
+                new NDefinition(
                     name: "id-item2",
                     nodes: new [] {
                         new CharNode('i', "item2"),
@@ -1298,7 +1298,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 );
             var implicitOpenDef =
-                new Definition(
+                new NDefinition(
                     name: "$implicit literal (",
                     nodes: new [] { new CharNode('(', "") },
                     startNodes: new [] { 0 },
@@ -1310,7 +1310,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 );
             var implicitCloseDef =
-                new Definition(
+                new NDefinition(
                     name: "$implicit literal )",
                     nodes: new [] { new CharNode(')', "") },
                     startNodes: new [] { 0 },
@@ -1321,9 +1321,9 @@ namespace MetaphysicsIndustries.Giza.Test
                         DefinitionDirective.MindWhitespace,
                     }
                 );
-            var sequenceDef = new Definition("sequence");
+            var sequenceDef = new NDefinition("sequence");
             var parenDef =
-                new Definition(
+                new NDefinition(
                     name: "paren",
                     nodes: new [] {
                         new DefRefNode(implicitOpenDef, "("),
@@ -1335,7 +1335,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     endNodes: new [] { 2 }
                 );
             var implicitOneDef =
-                new Definition(
+                new NDefinition(
                     name: "$implicit literal one",
                     nodes: new [] {
                         new CharNode('o', ""),
@@ -1352,7 +1352,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 );
             var implicitTwoDef =
-                new Definition(
+                new NDefinition(
                     name: "$implicit literal two",
                     nodes: new [] {
                         new CharNode('t', ""),
@@ -1369,7 +1369,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 );
             var oneTwoDef =
-                new Definition(
+                new NDefinition(
                     name: "one-two",
                     nodes: new [] {
                         new DefRefNode(implicitOneDef, "one"),
@@ -1380,7 +1380,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     endNodes: new [] { 1 }
                 );
             var itemDef =
-                new Definition(
+                new NDefinition(
                     name: "item",
                     nodes: new [] {
                         new DefRefNode(item1Def),
@@ -1494,7 +1494,7 @@ namespace MetaphysicsIndustries.Giza.Test
             //<token> id-four = 'four';
 
             var oneDef =
-                new Definition(
+                new NDefinition(
                     name: "id-one",
                     nodes: new [] {
                         new CharNode('o', "one"),
@@ -1511,7 +1511,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 );
             var twoDef =
-                new Definition(
+                new NDefinition(
                     name: "id-two",
                     nodes: new [] {
                         new CharNode('t', "two"),
@@ -1528,7 +1528,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 );
             var threeDef =
-                new Definition(
+                new NDefinition(
                     name: "id-three",
                     nodes: new [] {
                         new CharNode('t', "three"),
@@ -1547,7 +1547,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 );
             var fourDef =
-                new Definition(
+                new NDefinition(
                     name: "id-four",
                     nodes: new [] {
                         new CharNode('f', "four"),
@@ -1565,7 +1565,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 );
             var sequenceDef =
-                new Definition(
+                new NDefinition(
                     name: "sequence",
                     nodes: new [] {
                         new DefRefNode(oneDef),
@@ -1624,8 +1624,8 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
             var tgb = new TokenizeTransform();
             var pg2 = tgb.Tokenize(pg);
-            var db = new DefinitionBuilder();
-            var testGrammar = db.BuildGrammar(pg2);
+            var gc = new GrammarCompiler();
+            var testGrammar = gc.BuildGrammar(pg2);
             var sequenceDef = testGrammar.FindDefinitionByName("sequence");
             var parser = new Parser(sequenceDef);
 
@@ -1700,7 +1700,7 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             // setup
             var def1 =
-                new Definition(
+                new NDefinition(
                     name: "A",
                     nodes: new [] { new CharNode('a') },
                     startNodes: new [] { 0 },
@@ -1712,7 +1712,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 );
             var sequenceDef =
-                new Definition(
+                new NDefinition(
                     name: "sequence",
                     nodes: new [] { new DefRefNode(def1) },
                     nexts: new [] { 0, 0 },

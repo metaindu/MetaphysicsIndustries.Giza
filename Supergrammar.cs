@@ -17,37 +17,35 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 // USA
 
-using System;
-
 namespace MetaphysicsIndustries.Giza
 {
     public class Supergrammar : Grammar
     {
-        public Definition def_grammar = new Definition("grammar");
-        public Definition def_definition = new Definition("definition");
-        public Definition def_directive = new Definition("directive");
-        public Definition def_directive_002D_item = new Definition("directive-item");
-        public Definition def_id_002D_mind = new Definition("id-mind");
-        public Definition def_id_002D_whitespace = new Definition("id-whitespace");
-        public Definition def_id_002D_ignore = new Definition("id-ignore");
-        public Definition def_id_002D_case = new Definition("id-case");
-        public Definition def_id_002D_atomic = new Definition("id-atomic");
-        public Definition def_id_002D_token = new Definition("id-token");
-        public Definition def_id_002D_subtoken = new Definition("id-subtoken");
-        public Definition def_id_002D_comment = new Definition("id-comment");
-        public Definition def_expr = new Definition("expr");
-        public Definition def_orexpr = new Definition("orexpr");
-        public Definition def_subexpr = new Definition("subexpr");
-        public Definition def_modifier = new Definition("modifier");
-        public Definition def_number = new Definition("number");
-        public Definition def_identifier = new Definition("identifier");
-        public Definition def_literal = new Definition("literal");
-        public Definition def_charclass = new Definition("charclass");
-        public Definition def_unicodechar = new Definition("unicodechar");
-        public Definition def_comment = new Definition("comment");
-        public Definition def_import_002D_stmt = new Definition("import-stmt");
-        public Definition def_module = new Definition("module");
-        public Definition def_import_002D_ref = new Definition("import-ref");
+        public NDefinition def_grammar = new NDefinition("grammar");
+        public NDefinition def_definition = new NDefinition("definition");
+        public NDefinition def_directive = new NDefinition("directive");
+        public NDefinition def_directive_002D_item = new NDefinition("directive-item");
+        public NDefinition def_id_002D_mind = new NDefinition("id-mind");
+        public NDefinition def_id_002D_whitespace = new NDefinition("id-whitespace");
+        public NDefinition def_id_002D_ignore = new NDefinition("id-ignore");
+        public NDefinition def_id_002D_case = new NDefinition("id-case");
+        public NDefinition def_id_002D_atomic = new NDefinition("id-atomic");
+        public NDefinition def_id_002D_token = new NDefinition("id-token");
+        public NDefinition def_id_002D_subtoken = new NDefinition("id-subtoken");
+        public NDefinition def_id_002D_comment = new NDefinition("id-comment");
+        public NDefinition def_expr = new NDefinition("expr");
+        public NDefinition def_orexpr = new NDefinition("orexpr");
+        public NDefinition def_subexpr = new NDefinition("subexpr");
+        public NDefinition def_modifier = new NDefinition("modifier");
+        public NDefinition def_number = new NDefinition("number");
+        public NDefinition def_identifier = new NDefinition("identifier");
+        public NDefinition def_literal = new NDefinition("literal");
+        public NDefinition def_charclass = new NDefinition("charclass");
+        public NDefinition def_unicodechar = new NDefinition("unicodechar");
+        public NDefinition def_comment = new NDefinition("comment");
+        public NDefinition def_import_002D_stmt = new NDefinition("import-stmt");
+        public NDefinition def_module = new NDefinition("module");
+        public NDefinition def_import_002D_ref = new NDefinition("import-ref");
 
         public DefRefNode node_grammar_0_definition;
         public DefRefNode node_grammar_1_comment;

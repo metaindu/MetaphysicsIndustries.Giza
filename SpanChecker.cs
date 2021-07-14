@@ -37,7 +37,7 @@ namespace MetaphysicsIndustries.Giza
 
         void CheckSpan(Span span, Grammar grammar, HashSet<Span> visited, HashSet<Span> ancestorSpans, List<Error> errors)
         {
-            Definition spandef = (span.Node as DefRefNode).DefRef;
+            var spandef = (span.Node as DefRefNode)?.DefRef;
 
             if (ancestorSpans.Contains(span))
             {

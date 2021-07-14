@@ -22,8 +22,8 @@
  * the supergrammar. That is, instances of the classes represent element of a
  * grammar. There are no nodes.
  *
- * In contrast, the Definition class represents a defintion within a grammar
- * that is ready to be used by Parser. It is equivalent to a kind of DFA, or
+ * In contrast, the NDefinition class represents a definition within a grammar
+ * that is ready to be used by Parser. It is equivalent to a kind of
  * state machine, with all of the states represented by nodes. It does not use
  * hierarchical trees of Expression and ExpressionItem.
  *

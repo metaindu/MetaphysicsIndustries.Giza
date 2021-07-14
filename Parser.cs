@@ -27,7 +27,7 @@ namespace MetaphysicsIndustries.Giza
 {
     public class Parser : ParserBase<Token>
     {
-        public Parser(Definition definition)
+        public Parser(NDefinition definition)
             : base(definition)
         {
         }
@@ -66,14 +66,14 @@ namespace MetaphysicsIndustries.Giza
     public abstract class ParserBase<T>
         where T : IInputElement
     {
-        public ParserBase(Definition definition)
+        public ParserBase(NDefinition definition)
         {
             if (definition == null) throw new ArgumentNullException("definition");
 
             _definition = definition;
         }
 
-        protected Definition _definition;
+        protected readonly NDefinition _definition;
 
         public Span[] Parse(IInputSource<T> inputSource, ICollection<Error> errors)
         {
@@ -109,7 +109,7 @@ namespace MetaphysicsIndustries.Giza
             if (errors == null) throw new ArgumentNullException("errors");
 
             var sources = new PriorityQueue<NodeMatchStackPair<T> , int>(lowToHigh: true);
-            var rootDef = new Definition("$rootDef");
+            var rootDef = new NDefinition("$rootDef");
             var rootNode = new DefRefNode(_definition, "$rootNode");
             rootDef.Nodes.Add(rootNode);
             rootDef.StartNodes.Add(rootNode);

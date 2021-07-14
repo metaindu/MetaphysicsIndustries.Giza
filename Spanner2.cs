@@ -26,7 +26,7 @@ namespace MetaphysicsIndustries.Giza
 {
     public class Spanner2 : ParserBase<InputChar>
     {
-        public Spanner2(Definition definition)
+        public Spanner2(NDefinition definition)
             : base(definition)
         {
         }

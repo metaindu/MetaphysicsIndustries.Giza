@@ -226,9 +226,9 @@ namespace MetaphysicsIndustries.Giza.Test
             // definition builders.
 
             Grammar g = new Grammar();
-            Definition d0 = new Definition("d0");
-            Definition d1 = new Definition("d1");
-            Definition d2 = new Definition("d2");
+            var d0 = new NDefinition("d0");
+            var d1 = new NDefinition("d1");
+            var d2 = new NDefinition("d2");
             Node n0 = new DefRefNode(d1);
             Node n1 = new CharNode('a');
             Node n2 = new CharNode('b');
@@ -356,7 +356,7 @@ namespace MetaphysicsIndustries.Giza.Test
             // definition builders.
 
             Grammar g = new Grammar();
-            Definition d0 = new Definition("d0");
+            var d0 = new NDefinition("d0");
             Node n0 = new CharNode('a');
             Node n1 = new DefRefNode(d0);
 

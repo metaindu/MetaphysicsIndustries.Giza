@@ -28,20 +28,20 @@ namespace MetaphysicsIndustries.Giza
     public class DefinitionRenderer
     {
         public string RenderDefinitionsAsCSharpClass(
-            string className, IEnumerable<Definition> defs, string ns=null,
+            string className, IEnumerable<NDefinition> defs, string ns=null,
             bool singleton=false, string baseClassName="Grammar",
             IEnumerable<string> usings=null, bool skipImported=false)
         {
             var defsSorted = defs.ToList();
             defsSorted.Sort((a, b) =>
                 string.Compare(a.Name, b.Name, StringComparison.Ordinal));
-            IEnumerable<Definition> defsToRender;
+            IEnumerable<NDefinition> defsToRender;
             if (skipImported)
                 defsToRender = defsSorted.Where(d => !d.IsImported).ToList();
             else
                 defsToRender = defsSorted;
 
-            Dictionary<Definition, string> defnames = new Dictionary<Definition, string>();
+            var defnames = new Dictionary<NDefinition, string>();
 
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("using System;");
@@ -96,7 +96,7 @@ namespace MetaphysicsIndustries.Giza
 
                 sb.Append(indent);
                 sb.AppendFormat(
-                    "    public Definition {0} = new Definition({1});",
+                    "    public NDefinition {0} = new NDefinition({1});",
                     name,
                     RenderString(def.Name));
                 sb.AppendLine();

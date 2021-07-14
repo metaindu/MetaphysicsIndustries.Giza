@@ -23,7 +23,7 @@ namespace MetaphysicsIndustries.Giza
 {
     public struct Token : IInputElement
     {
-        public Token(Definition definition=null,
+        public Token(NDefinition definition=null,
                      InputPosition startPosition=new InputPosition(),
                      string value="",
                      int indexOfNextTokenization=-1)
@@ -39,7 +39,7 @@ namespace MetaphysicsIndustries.Giza
             IndexOfNextTokenization = indexOfNextTokenization;
         }
 
-        public Definition Definition;
+        public NDefinition Definition;
         public InputPosition StartPosition;
         public string Value;
         public int IndexOfNextTokenization;

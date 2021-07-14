@@ -92,16 +92,16 @@ namespace giza
                         Definitions = defs.ToList()
                     };
                     var pg2 = tgb.Tokenize(pg);
-                    var db = new DefinitionBuilder();
-                    var g = db.BuildGrammar(pg2);
+                    var gc = new GrammarCompiler();
+                    var g = gc.BuildGrammar(pg2);
                     var dc = new DefinitionChecker();
                     var errors2 = dc.CheckDefinitions(g.Definitions);
                     errors.AddRange(errors2);
                 }
                 else
                 {
-                    var db = new DefinitionBuilder();
-                    var g = db.BuildGrammar(defs.ToArray());
+                    var gc = new GrammarCompiler();
+                    var g = gc.BuildGrammar(defs.ToArray());
                     var dc = new DefinitionChecker();
                     var errors2 = dc.CheckDefinitions(g.Definitions);
                     errors.AddRange(errors2);

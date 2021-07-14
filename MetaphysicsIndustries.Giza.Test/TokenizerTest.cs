@@ -37,7 +37,7 @@ namespace MetaphysicsIndustries.Giza.Test
             //item = ( id-item1 | id-item2 );
             //<token> id-item1 = 'item1';
             //<token> id-item2 = 'item2';
-            var item1Def = new Definition {
+            var item1Def = new NDefinition {
                 Name = "id-item1",
                 Nodes = {
                     new CharNode('i', "item1"),
@@ -57,7 +57,7 @@ namespace MetaphysicsIndustries.Giza.Test
             item1Def.StartNodes.Add(item1Def.Nodes.First());
             item1Def.EndNodes.Add(item1Def.Nodes.Last());
 
-            var item2Def = new Definition {
+            var item2Def = new NDefinition {
                 Name = "id-item2",
                 Nodes = {
                     new CharNode('i', "item2"),
@@ -77,7 +77,7 @@ namespace MetaphysicsIndustries.Giza.Test
             item2Def.StartNodes.Add(item2Def.Nodes.First());
             item2Def.EndNodes.Add(item2Def.Nodes.Last());
 
-            var itemDef = new Definition {
+            var itemDef = new NDefinition {
                 Name = "item",
                 Nodes = {
                     new DefRefNode(item1Def),
@@ -87,7 +87,7 @@ namespace MetaphysicsIndustries.Giza.Test
             itemDef.StartNodes.AddRange(itemDef.Nodes);
             itemDef.EndNodes.AddRange(itemDef.Nodes);
 
-            var sequenceDef = new Definition {
+            var sequenceDef = new NDefinition {
                 Name = "sequence",
                 Nodes = {
                     new DefRefNode(itemDef),
@@ -138,7 +138,7 @@ namespace MetaphysicsIndustries.Giza.Test
             //<token> varref = [\l]+ ;
             //<token> plusplus = '++';
             //<token> oper = '+';
-            var varrefDef = new Definition {
+            var varrefDef = new NDefinition {
                 Name = "varref",
                 Nodes = {
                     new CharNode(CharClass.FromUndelimitedCharClassText("\\l"))
@@ -151,7 +151,7 @@ namespace MetaphysicsIndustries.Giza.Test
             varrefDef.Directives.Add(DefinitionDirective.Atomic);
             varrefDef.Directives.Add(DefinitionDirective.MindWhitespace);
 
-            var plusplusDef = new Definition {
+            var plusplusDef = new NDefinition {
                 Name = "plusplus",
                 Nodes = {
                     new CharNode('+', "++"),
@@ -165,7 +165,7 @@ namespace MetaphysicsIndustries.Giza.Test
             plusplusDef.Directives.Add(DefinitionDirective.Atomic);
             plusplusDef.Directives.Add(DefinitionDirective.MindWhitespace);
 
-            var operDef = new Definition {
+            var operDef = new NDefinition {
                 Name = "open",
                 Nodes = {
                     new CharNode('+'),
@@ -177,7 +177,7 @@ namespace MetaphysicsIndustries.Giza.Test
             operDef.Directives.Add(DefinitionDirective.Atomic);
             operDef.Directives.Add(DefinitionDirective.MindWhitespace);
 
-            var postfixDef = new Definition {
+            var postfixDef = new NDefinition {
                 Name = "postfix",
                 Nodes = {
                     new DefRefNode(varrefDef),
@@ -188,7 +188,7 @@ namespace MetaphysicsIndustries.Giza.Test
             postfixDef.StartNodes.Add(postfixDef.Nodes.First());
             postfixDef.EndNodes.Add(postfixDef.Nodes.Last());
 
-            var prefixDef = new Definition {
+            var prefixDef = new NDefinition {
                 Name = "postfix",
                 Nodes = {
                     new DefRefNode(plusplusDef),
@@ -199,7 +199,7 @@ namespace MetaphysicsIndustries.Giza.Test
             prefixDef.StartNodes.Add(prefixDef.Nodes.First());
             prefixDef.EndNodes.Add(prefixDef.Nodes.Last());
 
-            var itemDef = new Definition {
+            var itemDef = new NDefinition {
                 Name = "item",
                 Nodes = {
                     new DefRefNode(varrefDef),
@@ -210,7 +210,7 @@ namespace MetaphysicsIndustries.Giza.Test
             itemDef.StartNodes.AddRange(itemDef.Nodes);
             itemDef.EndNodes.AddRange(itemDef.Nodes);
 
-            var exprDef = new Definition {
+            var exprDef = new NDefinition {
                 Name = "expr",
                 Nodes = {
                     new DefRefNode(itemDef),
@@ -287,7 +287,7 @@ namespace MetaphysicsIndustries.Giza.Test
             //<token> item = [\\l]+ ;
             //<token> oper = ( '<' | '<<' );
 
-            var itemDef = new Definition {
+            var itemDef = new NDefinition {
                 Name = "item",
                 Nodes = {
                     new CharNode(CharClass.FromUndelimitedCharClassText("\\l"))
@@ -300,7 +300,7 @@ namespace MetaphysicsIndustries.Giza.Test
             itemDef.Directives.Add(DefinitionDirective.Atomic);
             itemDef.Directives.Add(DefinitionDirective.MindWhitespace);
 
-            var operDef = new Definition {
+            var operDef = new NDefinition {
                 Name = "oper",
                 Nodes = {
                     new CharNode('<', "<"),
@@ -317,7 +317,7 @@ namespace MetaphysicsIndustries.Giza.Test
             operDef.Directives.Add(DefinitionDirective.Atomic);
             operDef.Directives.Add(DefinitionDirective.MindWhitespace);
 
-            var exprDef = new Definition {
+            var exprDef = new NDefinition {
                 Name = "expr",
                 Nodes = {
                     new DefRefNode(itemDef),
@@ -371,7 +371,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
         static Grammar CreateGrammarForTestTokensAtIndex()
         {
-            var operandDef = new Definition {
+            var operandDef = new NDefinition {
                 Name = "operand",
                 Nodes = {
                     new CharNode(CharClass.FromUndelimitedCharClassText("\\l_")),
@@ -386,7 +386,7 @@ namespace MetaphysicsIndustries.Giza.Test
             operandDef.Directives.Add(DefinitionDirective.Atomic);
             operandDef.Directives.Add(DefinitionDirective.MindWhitespace);
 
-            var implicitPlusDef = new Definition {
+            var implicitPlusDef = new NDefinition {
                 Name = "$implicit literal +",
                 Nodes = {
                     new CharNode('+'),
@@ -398,7 +398,7 @@ namespace MetaphysicsIndustries.Giza.Test
             implicitPlusDef.Directives.Add(DefinitionDirective.Atomic);
             implicitPlusDef.Directives.Add(DefinitionDirective.MindWhitespace);
 
-            var exprDef = new Definition {
+            var exprDef = new NDefinition {
                 Name = "expr",
                 Nodes = {
                     new DefRefNode(operandDef),
@@ -457,7 +457,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
             var grammar = CreateGrammarForTestTokensAtIndex();
 
-            Definition operatorDef = grammar.FindDefinitionByName("$implicit literal +");
+            var operatorDef = grammar.FindDefinitionByName("$implicit literal +");
 
             string input = "a + b";
             Tokenizer tokenizer = new Tokenizer(grammar, input.ToCharacterSource());
@@ -486,7 +486,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
             var grammar = CreateGrammarForTestTokensAtIndex();
 
-            Definition operatorDef = grammar.FindDefinitionByName("$implicit literal +");
+            var operatorDef = grammar.FindDefinitionByName("$implicit literal +");
 
             string input = "a + b";
             Tokenizer tokenizer = new Tokenizer(grammar, input.ToCharacterSource());
@@ -515,7 +515,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
             var grammar = CreateGrammarForTestTokensAtIndex();
 
-            Definition operandDef = grammar.FindDefinitionByName("operand");
+            var operandDef = grammar.FindDefinitionByName("operand");
 
             string input = "a + b";
             Tokenizer tokenizer = new Tokenizer(grammar, input.ToCharacterSource());
@@ -544,7 +544,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
             var grammar = CreateGrammarForTestTokensAtIndex();
 
-            Definition operandDef = grammar.FindDefinitionByName("operand");
+            var operandDef = grammar.FindDefinitionByName("operand");
 
             string input = "a + b";
             Tokenizer tokenizer = new Tokenizer(grammar, input.ToCharacterSource());
@@ -656,7 +656,7 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             var grammar = CreateGrammarForTestTokensAtIndex();
 
-            var commentDef = new Definition {
+            var commentDef = new NDefinition {
                 Name = "comment",
                 Nodes = {
                     new CharNode('/', "/*"),
@@ -764,7 +764,7 @@ namespace MetaphysicsIndustries.Giza.Test
             //<token> strange = '/*' [\\l]+;
 
             var grammar = CreateGrammarForTestEndOfInputParameterWithComment();
-            var strangeDef = new Definition {
+            var strangeDef = new NDefinition {
                 Name = "strange",
                 Nodes = {
                     new CharNode('/', "/*"),
@@ -816,7 +816,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
             string testInputText = "start-ABCD-end";
 
-            var middleDef = new Definition {
+            var middleDef = new NDefinition {
                 Name = "middle",
                 Nodes = {
                     new CharNode(CharClass.FromUndelimitedCharClassText("\\l"))
@@ -828,7 +828,7 @@ namespace MetaphysicsIndustries.Giza.Test
             middleDef.Directives.Add(DefinitionDirective.Subtoken);
             middleDef.Directives.Add(DefinitionDirective.MindWhitespace);
 
-            var itemDef = new Definition {
+            var itemDef = new NDefinition {
                 Name = "item",
                 Nodes = {
                     new CharNode('s', "start-"),
@@ -861,7 +861,7 @@ namespace MetaphysicsIndustries.Giza.Test
             itemDef.Directives.Add(DefinitionDirective.Atomic);
             itemDef.Directives.Add(DefinitionDirective.MindWhitespace);
 
-            var sequenceDef = new Definition {
+            var sequenceDef = new NDefinition {
                 Name = "sequence",
                 Nodes = {
                     new DefRefNode(itemDef),
@@ -899,8 +899,8 @@ namespace MetaphysicsIndustries.Giza.Test
             var pg = (new SupergrammarSpanner()).GetPreGrammar(grammarText, errors);
             Assert.IsEmpty(errors);
             var pg2 = (new TokenizeTransform()).Tokenize(pg);
-            var db = new DefinitionBuilder();
-            var grammar = db.BuildGrammar(pg2);
+            var gc = new GrammarCompiler();
+            var grammar = gc.BuildGrammar(pg2);
             var implicitA = grammar.FindDefinitionByName("$implicit literal a");
             var implicitAb = grammar.FindDefinitionByName("$implicit literal ab");
             var implicitAbc = grammar.FindDefinitionByName("$implicit literal abc");

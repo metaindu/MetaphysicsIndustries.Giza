@@ -114,8 +114,8 @@ namespace giza
             {
                 var tgb = new TokenizeTransform();
                 var pg2 = tgb.Tokenize(pg);
-                var db = new DefinitionBuilder();
-                g = db.BuildGrammar(pg2);
+                var gc = new GrammarCompiler();
+                g = gc.BuildGrammar(pg2);
 
                 var dc = new DefinitionChecker();
                 var errors2 = dc.CheckDefinitions(g.Definitions);
@@ -138,7 +138,7 @@ namespace giza
 
             Parse(input, startDefinition, printingOptions);
         }
-        public static void Parse(string input, Definition startDefinition, SpanPrintingOptions spanPrintingOption=SpanPrintingOptions.None)
+        public static void Parse(string input, NDefinition startDefinition, SpanPrintingOptions spanPrintingOption=SpanPrintingOptions.None)
         {
             var parser = new Parser(startDefinition);
             var inputErrors = new List<Error>();
