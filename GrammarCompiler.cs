@@ -24,17 +24,17 @@ using System.Linq;
 
 namespace MetaphysicsIndustries.Giza
 {
-    public class DefinitionBuilder
+    public class GrammarCompiler
     {
-        public Grammar BuildGrammar(PreGrammar pg)
+        public NGrammar Compile(Grammar g)
         {
-            if (pg.ImportStatements != null && pg.ImportStatements.Count > 0)
+            if (g.ImportStatements != null && g.ImportStatements.Count > 0)
                 throw new ArgumentException(
                     "The grammar must not contain import statements.");
 
-            return BuildGrammar(pg.Definitions);
+            return Compile(g.Definitions);
         }
-        public Grammar BuildGrammar(IEnumerable<DefinitionExpression> defs)
+        public NGrammar Compile(IEnumerable<Definition> defs)
         {
             var defs1 = defs.ToList();
             var ec = new ExpressionChecker();
@@ -44,36 +44,37 @@ namespace MetaphysicsIndustries.Giza
                 throw new InvalidOperationException("Errors in expressions.");
             }
 
-            var defs2 = new List<Definition>();
-            var defsByName = new Dictionary<string, Definition>();
-            var exprsByDef = new Dictionary<Definition, Expression>();
-            foreach (var di in defs1)
+            var defs2 = new List<NDefinition>();
+            var defsByName = new Dictionary<string, NDefinition>();
+            var exprsByDef = new Dictionary<NDefinition, Expression>();
+            foreach (var def in defs1)
             {
-                var def = new Definition(di.Name);
-                def.IsImported = di.IsImported;
-                defs2.Add(def);
-                defsByName[di.Name] = def;
-                def.Directives.UnionWith(di.Directives);
-                exprsByDef[def] = di;
+                var ndef = new NDefinition(def.Name);
+                ndef.IsImported = def.IsImported;
+                defs2.Add(ndef);
+                defsByName[def.Name] = ndef;
+                ndef.Directives.UnionWith(def.Directives);
+                exprsByDef[ndef] = def.Expr;
             }
 
-            foreach (Definition def in defs2)
+            foreach (var ndef in defs2)
             {
-                NodeBundle bundle = GetNodesFromExpression(exprsByDef[def], defsByName);
+                NodeBundle bundle = GetNodesFromExpression(exprsByDef[ndef], defsByName);
 
                 if (bundle.IsSkippable) throw new InvalidOperationException();
 
-                def.StartNodes.UnionWith(bundle.StartNodes);
+                ndef.StartNodes.UnionWith(bundle.StartNodes);
 
-                def.Nodes.AddRange(bundle.Nodes);
+                ndef.Nodes.AddRange(bundle.Nodes);
 
-                def.EndNodes.UnionWith(bundle.EndNodes);
+                ndef.EndNodes.UnionWith(bundle.EndNodes);
             }
 
-            return new Grammar(defs2);
+            return new NGrammar(defs2);
         }
 
-        NodeBundle GetNodesFromExpression(Expression expr, Dictionary<string, Definition> defsByName)
+        NodeBundle GetNodesFromExpression(Expression expr, 
+            Dictionary<string, NDefinition> defsByName)
         {
             NodeBundle first = null;
             NodeBundle last = null;
@@ -181,7 +182,8 @@ namespace MetaphysicsIndustries.Giza
                 IsSkippable = skippable};
         }
 
-        static NodeBundle GetNodesFromSubExpression(SubExpression subexpr, Dictionary<string, Definition> defsByName)
+        static NodeBundle GetNodesFromSubExpression(SubExpression subexpr, 
+            Dictionary<string, NDefinition> defsByName)
         {
             if (subexpr is DefRefSubExpression)
             {
@@ -197,7 +199,9 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        static NodeBundle GetNodesFromDefRefSubExpression(DefRefSubExpression defref, IDictionary<string, Definition> defsByName)
+        static NodeBundle GetNodesFromDefRefSubExpression(
+            DefRefSubExpression defref, 
+            IDictionary<string, NDefinition> defsByName)
         {
             var node = new DefRefNode(defsByName[defref.DefinitionName], defref.Tag);
             if (defref.IsRepeatable)
@@ -261,7 +265,8 @@ namespace MetaphysicsIndustries.Giza
                 };
         }
 
-        NodeBundle GetNodesFromOrExpression(OrExpression orexpr, Dictionary<string, Definition> defsByName)
+        NodeBundle GetNodesFromOrExpression(OrExpression orexpr,
+            Dictionary<string, NDefinition> defsByName)
         {
             var bundles = new List<NodeBundle>();
 

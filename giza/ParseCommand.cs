@@ -100,25 +100,25 @@ namespace giza
         {
             var spanner = new SupergrammarSpanner();
             var grammarErrors = new List<Error>();
-            var pg = spanner.GetPreGrammar(grammar, grammarErrors);
+            var g = spanner.GetGrammar(grammar, grammarErrors);
 
             if (!grammarErrors.ContainsNonWarnings())
             {
                 var ec = new ExpressionChecker();
-                var errors2 = ec.CheckDefinitionForParsing(pg.Definitions);
+                var errors2 = ec.CheckDefinitionForParsing(g.Definitions);
                 grammarErrors.AddRange(errors2);
             }
 
-            Grammar g = null;
+            NGrammar ng = null;
             if (!grammarErrors.ContainsNonWarnings())
             {
-                var tgb = new TokenizeTransform();
-                var pg2 = tgb.Tokenize(pg);
-                var db = new DefinitionBuilder();
-                g = db.BuildGrammar(pg2);
+                var tt = new TokenizeTransform();
+                var g2 = tt.Tokenize(g);
+                var gc = new GrammarCompiler();
+                ng = gc.Compile(g2);
 
                 var dc = new DefinitionChecker();
-                var errors2 = dc.CheckDefinitions(g.Definitions);
+                var errors2 = dc.CheckDefinitions(ng.Definitions);
                 grammarErrors.AddRange(errors2);
             }
 
@@ -129,7 +129,7 @@ namespace giza
                 return;
             }
 
-            var startDefinition = g.FindDefinitionByName(startDef);
+            var startDefinition = ng.FindDefinitionByName(startDef);
             if (startDefinition == null)
             {
                 Console.WriteLine("Error: There is no defintion named \"{0}\".", startDef);
@@ -138,7 +138,7 @@ namespace giza
 
             Parse(input, startDefinition, printingOptions);
         }
-        public static void Parse(string input, Definition startDefinition, SpanPrintingOptions spanPrintingOption=SpanPrintingOptions.None)
+        public static void Parse(string input, NDefinition startDefinition, SpanPrintingOptions spanPrintingOption=SpanPrintingOptions.None)
         {
             var parser = new Parser(startDefinition);
             var inputErrors = new List<Error>();

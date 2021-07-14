@@ -28,7 +28,7 @@ namespace giza
 {
     public class RenderReplCommand : ReplCommand
     {
-        public RenderReplCommand(Dictionary<string, DefinitionExpression> env)
+        public RenderReplCommand(Dictionary<string, Definition> env)
             : base(env)
         {
             Name = "render";
@@ -70,7 +70,7 @@ namespace giza
                     Type = ParameterType.String,
                     Description = "The base class for the class to be " +
                                   "rendered (default is " +
-                                  "'MetaphysicsIndustries.Giza.Grammar')",
+                                  "'MetaphysicsIndustries.Giza.NGrammar')",
                 },
                 new Option
                 {
@@ -96,7 +96,7 @@ namespace giza
             var ns = (string)args["namespace"] ?? "MetaphysicsIndustries.Giza";
             var singleton = (bool)args["singleton"];
             var toFile = (string)args["to-file"];
-            var baseClassName = (string) args["base"] ?? "Grammar";
+            var baseClassName = (string) args["base"] ?? "NGrammar";
             var usings = (string[]) args["using"];
             var skipImported = (bool) args["skip-imported"];
 
@@ -126,22 +126,20 @@ namespace giza
 
             if (someAreMissing) return;
 
-            Grammar g;
+            var g = new Grammar
+            {
+                Definitions = alldefs.ToList()
+            };
+            var g2 = g;
             if (tokenized)
             {
                 var tgb = new TokenizeTransform();
-                var pg = new PreGrammar() {Definitions = alldefs.ToList()};
-                var pg2 = tgb.Tokenize(pg);
-                var db = new DefinitionBuilder();
-                g = db.BuildGrammar(pg2);
+                g2 = tgb.Tokenize(g);
             }
-            else
-            {
-                var db = new DefinitionBuilder();
-                g = db.BuildGrammar(alldefs);
-            }
+            var gc = new GrammarCompiler();
+            var ng = gc.Compile(g2);
 
-            IEnumerable<Definition> defs2 = g.Definitions;
+            IEnumerable<NDefinition> defs2 = ng.Definitions;
 
             var dr = new DefinitionRenderer();
             var cs = dr.RenderDefinitionsAsCSharpClass(className,

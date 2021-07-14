@@ -26,18 +26,18 @@ namespace MetaphysicsIndustries.Giza
 {
     public class DefinitionChecker
     {
-        /* Definitions are graphs of interconnected nodes. The graphs of nodes
-           that result from using the supergrammar are not all of the possible
-           graphs that Spanner can deal with. That is, there are other graphs
-           that could be constructed manually, or by some system other than
-           DefintionBuilder, that would still work. The purpose of the
-           DefinitionChecker then, is to confirm that a given Definition can be
-           used by Spanner (a looser requirement), and NOT to confirm that the
-           Definition conforms to what the supergrammar can output (a narrower
-           requirement). */
+        /* NDefinitions are graphs of interconnected nodes. The graphs of
+           nodes that result from using the supergrammar are not all of the 
+           possible graphs that Spanner can deal with. That is, there are
+           other graphs that could be constructed manually, or by some system
+           other than GrammarCompiler, that would still work. The purpose of
+           the DefinitionChecker then, is to confirm that a given NDefinition
+           can be used by Spanner (a looser requirement), and NOT to confirm
+           that the NDefinition conforms to what the supergrammar can output
+           (a narrower requirement). */
 
-
-        public IEnumerable<Error> CheckDefinitions(IEnumerable<Definition> defs)
+        public IEnumerable<Error> CheckDefinitions(
+            IEnumerable<NDefinition> defs)
         {
             if (defs == null) throw new ArgumentNullException("defs");
 
@@ -45,13 +45,15 @@ namespace MetaphysicsIndustries.Giza
             CheckDefinitions(defs, errors);
             return errors;
         }
-        public void CheckDefinitions(IEnumerable<Definition> defs, ICollection<Error> errors)
+        public void CheckDefinitions(IEnumerable<NDefinition> defs, 
+            ICollection<Error> errors)
         {
             if (defs == null) throw new ArgumentNullException("defs");
             if (errors == null) throw new ArgumentNullException("errors");
 
             bool foundErrors = false;
-            foreach (Definition def in defs)
+            var defs1 = defs.ToList();
+            foreach (var def in defs1)
             {
                 var defErrors = CheckDefinition(def);
                 if (defErrors.Count() > 0)
@@ -64,10 +66,11 @@ namespace MetaphysicsIndustries.Giza
             if (!foundErrors)
             {
                 // check for leading cycles
-                var leaders = new Dictionary<Definition, HashSet<Definition>>();
-                foreach (Definition def in defs)
+                var leaders = 
+                    new Dictionary<NDefinition, HashSet<NDefinition>>();
+                foreach (var def in defs1)
                 {
-                    HashSet<Definition> s = new HashSet<Definition>();
+                    var s = new HashSet<NDefinition>();
                     leaders[def] = s;
 
                     foreach (Node start in def.StartNodes)
@@ -83,7 +86,7 @@ namespace MetaphysicsIndustries.Giza
                 while (c)
                 {
                     c = false;
-                    foreach (Definition def in leaders.Keys.ToArray())
+                    foreach (var def in leaders.Keys.ToArray())
                     {
                         if (leaders[def].Count < 1)
                         {
@@ -92,7 +95,7 @@ namespace MetaphysicsIndustries.Giza
                         }
                         else
                         {
-                            foreach (Definition leader in leaders[def].ToArray())
+                            foreach (var leader in leaders[def].ToArray())
                             {
                                 if (!leaders.ContainsKey(leader))
                                 {
@@ -106,9 +109,9 @@ namespace MetaphysicsIndustries.Giza
 
                 if (leaders.Count > 0)
                 {
-                    Definition start = leaders.Keys.First();
-                    var leadingCycle = new List<Definition>();
-                    Definition current = leaders[start].First();
+                    var start = leaders.Keys.First();
+                    var leadingCycle = new List<NDefinition>();
+                    var current = leaders[start].First();
                     leadingCycle.Add(start);
                     leadingCycle.Add(current);
                     while (current != start)
@@ -125,7 +128,7 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        public IEnumerable<Error> CheckDefinition(Definition def)
+        public IEnumerable<Error> CheckDefinition(NDefinition def)
         {
             if (def == null) throw new ArgumentNullException("def");
 
@@ -133,7 +136,7 @@ namespace MetaphysicsIndustries.Giza
             CheckDefinition(def, errors);
             return errors;
         }
-        public void CheckDefinition(Definition def, ICollection<Error> errors)
+        public void CheckDefinition(NDefinition def, ICollection<Error> errors)
         {
             if (def == null) throw new ArgumentNullException("def");
             if (errors == null) throw new ArgumentNullException("errors");

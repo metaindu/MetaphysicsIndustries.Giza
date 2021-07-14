@@ -31,24 +31,20 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             // setup
             var sequence =
-                new DefinitionExpression(
+                new Definition(
                     name: "sequence",
-                    items: new [] {
-                        new DefRefSubExpression("letters", isRepeatable: true)
-                    }
-                );
+                    expr: new Expression(
+                        new DefRefSubExpression("letters",
+                            isRepeatable: true)));
             var letters =
-                new DefinitionExpression(
+                new Definition(
                     name: "letters",
-                    directives: new [] { DefinitionDirective.Atomic },
-                    items: new [] {
+                    directives: new[] {DefinitionDirective.Atomic},
+                    expr: new Expression(
                         new CharClassSubExpression(
-                            charClass: CharClass.FromUndelimitedCharClassText("\\l"),
-                            isRepeatable: true
-                        )
-                    }
-                );
-            var grammar = (new DefinitionBuilder()).BuildGrammar(new [] { letters, sequence });
+                            CharClass.FromUndelimitedCharClassText("\\l"),
+                            isRepeatable: true)));
+            var grammar = (new GrammarCompiler()).Compile(new [] { letters, sequence });
             var sequenceDef = grammar.FindDefinitionByName("sequence");
             var lettersDef = grammar.FindDefinitionByName("letters");
             var spanner = new Spanner(sequenceDef);
@@ -85,23 +81,19 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             // setup
             var sequence =
-                new DefinitionExpression(
+                new Definition(
                     name: "sequence",
-                    items: new [] {
-                        new DefRefSubExpression("letters", isRepeatable: true)
-                    }
-                );
+                    expr: new Expression(
+                        new DefRefSubExpression("letters",
+                            isRepeatable: true)));
             var letters =
-                new DefinitionExpression(
+                new Definition(
                     name: "letters",
-                    items: new [] {
+                    expr: new Expression(
                         new CharClassSubExpression(
-                            charClass: CharClass.FromUndelimitedCharClassText("\\l"),
-                            isRepeatable: true
-                        )
-                    }
-                );
-            var grammar = (new DefinitionBuilder()).BuildGrammar(new [] { letters, sequence });
+                            CharClass.FromUndelimitedCharClassText("\\l"),
+                            isRepeatable: true)));
+            var grammar = (new GrammarCompiler()).Compile(new [] { letters, sequence });
             var sequenceDef = grammar.FindDefinitionByName("sequence");
             var lettersDef = grammar.FindDefinitionByName("letters");
             var spanner = new Spanner(sequenceDef);

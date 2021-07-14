@@ -28,7 +28,7 @@ namespace giza
 {
     public class ParseReplCommand : ReplCommand
     {
-        public ParseReplCommand(Dictionary<string, DefinitionExpression> env)
+        public ParseReplCommand(Dictionary<string, Definition> env)
             : base(env)
         {
             Name = "parse";
@@ -104,14 +104,14 @@ namespace giza
             var ec = new ExpressionChecker();
             var errors = ec.CheckDefinitionForParsing(Env.Values);
 
-            Grammar grammar = null;
+            NGrammar grammar = null;
             if (!errors.ContainsNonWarnings())
             {
-                var tgb = new TokenizeTransform();
-                var pg = new PreGrammar() {Definitions = Env.Values.ToList()};
-                var pg2 = tgb.Tokenize(pg);
-                var db = new DefinitionBuilder();
-                grammar = db.BuildGrammar(pg2);
+                var tt = new TokenizeTransform();
+                var g = new Grammar() {Definitions = Env.Values.ToList()};
+                var g2 = tt.Tokenize(g);
+                var gc = new GrammarCompiler();
+                grammar = gc.Compile(g2);
                 var dc = new DefinitionChecker();
                 var errors2 = dc.CheckDefinitions(grammar.Definitions);
                 errors.AddRange(errors2);

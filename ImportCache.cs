@@ -9,15 +9,15 @@ namespace MetaphysicsIndustries.Giza
             return _cache.ContainsKey(name);
         }
 
-        public Dictionary<string, DefinitionExpression> this[string key]
+        public Dictionary<string, Definition> this[string key]
         {
             get => _cache[key];
             set => _cache[key] = value;
         }
 
-        private Dictionary<string, Dictionary<string, DefinitionExpression>>
+        private Dictionary<string, Dictionary<string, Definition>>
             _cache =
                 new Dictionary<string,
-                    Dictionary<string, DefinitionExpression>>();
+                    Dictionary<string, Definition>>();
     }
 }

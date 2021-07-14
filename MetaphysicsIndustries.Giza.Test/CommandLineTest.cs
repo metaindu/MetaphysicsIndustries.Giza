@@ -43,6 +43,14 @@ namespace MetaphysicsIndustries.Giza.Test
         public void TestCommandLine2()
         {
             // setup
+            var x =
+                @"
+expr = value ( [+-*/] value )*;
+value = ( number | varref );
+<token> number = [\\d]+ ( '.' [\\d]* )?;
+<token> varref = [\\l]+;
+
+";
             string testGrammarText =
                 "expr = value ( [+-*/] value )*; " +
                 "value = ( number | varref ); " +

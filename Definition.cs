@@ -1,4 +1,4 @@
-
+﻿
 // MetaphysicsIndustries.Giza - A Parsing System
 // Copyright (C) 2008-2020 Metaphysics Industries, Inc.
 //
@@ -17,152 +17,65 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 // USA
 
-using System;
-using System.Collections.Generic;
-using System.Text;
+/*
+ * Definition and related classes form the set of domain objects for the
+ * supergrammar. That is, instances of the classes represent element of a
+ * grammar. There are no nodes.
+ *
+ * In contrast, the NDefinition class represents a definition within a grammar
+ * that is ready to be used by Parser. It is equivalent to a kind of
+ * state machine, with all of the states represented by nodes. It does not use
+ * hierarchical trees of Expression and ExpressionItem.
+ *
+ */
 
-using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Giza
 {
     public class Definition
     {
-        public Definition(
-            string name="",
-            Node[] nodes=null,
-            int[] nexts=null,
-            int[] startNodes=null,
-            int[] endNodes=null,
-            DefinitionDirective[] directives=null)
+        public Definition(string name = "",
+            IEnumerable<DefinitionDirective> directives = null,
+            Expression expr = null)
         {
-            Init(name, nodes, nexts, startNodes, endNodes, directives);
-        }
-
-        public void Init(
-            string name="",
-            Node[] nodes=null,
-            int[] nexts=null,
-            int[] startNodes=null,
-            int[] endNodes=null,
-            DefinitionDirective[] directives=null)
-        {
-            Nodes = new DefinitionNodeOrderedParentChildrenCollection(this);
-
             Name = name;
-
-            if (nodes != null)
-            {
-                Nodes.AddRange(nodes);
-
-                if (nexts != null)
-                {
-                    int i;
-                    for (i = 0; i < nexts.Length; i += 2)
-                    {
-                        int from = nexts[i];
-                        int to = nexts[i + 1];
-
-                        if (from < nodes.Length &&
-                            to < nodes.Length)
-                        {
-                            nodes[from].NextNodes.Add(nodes[to]);
-                        }
-                    }
-                }
-
-                if (startNodes != null)
-                {
-                    foreach (var i in startNodes)
-                    {
-                        if (i < nodes.Length)
-                        {
-                            StartNodes.Add(nodes[i]);
-                        }
-                    }
-                }
-
-                if (endNodes != null)
-                {
-                    foreach (var i in endNodes)
-                    {
-                        if (i < nodes.Length)
-                        {
-                            EndNodes.Add(nodes[i]);
-                        }
-                    }
-                }
-            }
-
             if (directives != null)
             {
                 Directives.UnionWith(directives);
             }
+
+            if (expr == null)
+                expr = new Expression();
+            Expr = expr;
         }
 
-        public string Name;
-        public DefinitionNodeOrderedParentChildrenCollection Nodes;
-        public HashSet<Node> StartNodes = new HashSet<Node>();
-        public HashSet<Node> EndNodes = new HashSet<Node>();
+        public override string ToString() => $"Definition {Name}";
 
-        public bool IsImported { get; set; } = false;
-
+        public string Name = string.Empty;
         public readonly HashSet<DefinitionDirective> Directives = new HashSet<DefinitionDirective>();
-        public bool MindWhitespace { get { return Directives.Contains(DefinitionDirective.MindWhitespace); } }
-        public bool IgnoreCase { get { return Directives.Contains(DefinitionDirective.IgnoreCase); } }
-        public bool Atomic { get { return Directives.Contains(DefinitionDirective.Atomic); } }
-        public bool IsTokenized
-        {
-            get
-            {
-                return
-                    Directives.Contains(DefinitionDirective.Token) ||
-                    Directives.Contains(DefinitionDirective.Subtoken) ||
-                    Directives.Contains(DefinitionDirective.Comment);
-            }
-        }
-        public bool IsComment { get { return Directives.Contains(DefinitionDirective.Comment); } }
+        public Expression Expr;
 
-        public override string ToString()
-        {
-            return string.Format("[{0}] {1}, {2} nodes", ID, Name, Nodes.Count);
-        }
+        public bool MindWhitespace => Directives.Contains(DefinitionDirective.MindWhitespace);
+        public bool IgnoreCase => Directives.Contains(DefinitionDirective.IgnoreCase);
+        public bool Atomic => Directives.Contains(DefinitionDirective.Atomic);
 
-        private Grammar _parentGrammar;
-        public Grammar ParentGrammar
-        {
-            get { return _parentGrammar; }
-            set
-            {
-                if (value != _parentGrammar)
-                {
-                    if (_parentGrammar != null)
-                    {
-                        _parentGrammar.Definitions.Remove(this);
-                    }
+        public bool IsTokenized =>
+            Directives.Contains(DefinitionDirective.Token) ||
+            Directives.Contains(DefinitionDirective.Subtoken) ||
+            Directives.Contains(DefinitionDirective.Comment);
 
-                    _parentGrammar = value;
+        public bool IsComment => Directives.Contains(DefinitionDirective.Comment);
+        public bool IsImported { get; set; } = false;
+        
+        public IEnumerable<DefRefSubExpression> EnumerateDefRefs() => 
+            Expr.EnumerateDefRefs();
 
-                    if (_parentGrammar != null)
-                    {
-                        _parentGrammar.Definitions.Add(this);
-                    }
-                }
-            }
-        }
+        public IEnumerable<LiteralSubExpression> EnumerateLiterals() => 
+            Expr.EnumerateLiterals();
 
-        public int ID
-        {
-            get
-            {
-                if (ParentGrammar == null)
-                {
-                    return -1;
-                }
-                else
-                {
-                    return ParentGrammar.Definitions.IndexOf(this); 
-                }
-            }
-        }
+        public IEnumerable<CharClassSubExpression> EnumerateCharClasses() => 
+            Expr.EnumerateCharClasses();
     }
 }
+

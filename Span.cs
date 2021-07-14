@@ -69,7 +69,7 @@ namespace MetaphysicsIndustries.Giza
         }
 
         public Node Node;
-        public Definition DefRef
+        public NDefinition DefRef
         {
             get
             {

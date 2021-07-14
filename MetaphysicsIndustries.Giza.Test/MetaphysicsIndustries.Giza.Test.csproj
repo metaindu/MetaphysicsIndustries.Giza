@@ -41,7 +41,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DefinitionCheckerTest.cs" />
     <Compile Include="TokenizerTest.cs" />
-    <Compile Include="DefinitionBuilderTest.cs" />
+    <Compile Include="GrammarCompilerTest.cs" />
     <Compile Include="ExpressionCheckerTest.cs" />
     <Compile Include="ParserTest.cs" />
     <Compile Include="CommandLineTest.cs" />
@@ -49,7 +49,7 @@
     <Compile Include="NodeMatchTest.cs" />
     <Compile Include="ExpressionCheckerTest.DirectivesAndDefRefs.cs" />
     <Compile Include="ExpressionCheckerTest.Directives.cs" />
-    <Compile Include="TokenizedGrammarBuilderTest.cs" />
+    <Compile Include="TokenizeTransformTest.cs" />
     <Compile Include="StringFormatterTest.cs" />
     <Compile Include="PriorityQueueTest.cs" />
     <Compile Include="CharacterSourceTest.cs" />

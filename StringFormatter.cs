@@ -32,7 +32,7 @@ namespace MetaphysicsIndustries.Giza
         static StringFormatter()
         {
             _grammar = new StringFormatterGrammar();
-            _spanner = new Spanner(_grammar.def_0_format);
+            _spanner = new Spanner(_grammar.def_format);
         }
 
         public static string Format(this string format, Func<string, string> values)
@@ -61,11 +61,11 @@ namespace MetaphysicsIndustries.Giza
 
             foreach (var item in span.Subspans)
             {
-                if (item.DefRef == _grammar.def_1_text)
+                if (item.DefRef == _grammar.def_text)
                 {
                     sb.Append(item.CollectValue());
                 }
-                else if (item.DefRef == _grammar.def_2_escape)
+                else if (item.DefRef == _grammar.def_escape)
                 {
                     if (item.CollectValue() == "{{")
                     {
@@ -76,11 +76,11 @@ namespace MetaphysicsIndustries.Giza
                         sb.Append("}");
                     }
                 }
-                else if (item.DefRef == _grammar.def_3_param)
+                else if (item.DefRef == _grammar.def_param)
                 {
                     var name = (
                         from s in item.Subspans 
-                            where s.DefRef == _grammar.def_4_name
+                            where s.DefRef == _grammar.def_name
                             select s
                         ).First();
 

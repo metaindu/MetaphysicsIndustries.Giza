@@ -27,14 +27,14 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
     public class SequenceTest
     {
         Spanner spanner;
-        Definition sequenceDef;
+        NDefinition sequenceDef;
         List<Error> errors;
 
         [SetUp]
         public void Setup()
         {
             sequenceDef =
-                new Definition(
+                new NDefinition(
                     name: "sequence",
                     nodes: new [] {
                         new CharNode('a', "abc"),
@@ -45,7 +45,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                     startNodes: new [] { 0 },
                     endNodes: new [] { 2 }
                 );
-            var grammar = new Grammar(sequenceDef);
+            var grammar = new NGrammar(sequenceDef);
             spanner = new Spanner(sequenceDef);
             errors = new List<Error>();
         }

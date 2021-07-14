@@ -70,17 +70,17 @@
     <Compile Include="ImportRef.cs" />
     <Compile Include="ImportStatement.cs" />
     <Compile Include="ImportTransform.cs" />
-    <Compile Include="IPreGrammarTransform.cs" />
-    <Compile Include="PreGrammar.cs" />
+    <Compile Include="IGrammarTransform.cs" />
+    <Compile Include="Grammar.cs" />
     <Compile Include="Span.cs" />
     <Compile Include="SupergrammarSpanner.cs" />
     <Content Include="BinarySpanner example grammar.txt" />
     <Content Include="BinarySpannerGrammar.txt" />
     <Content Include="BitmapBinaryGrammar.txt" />
-    <Compile Include="DefinitionBuilder.cs" />
+    <Compile Include="GrammarCompiler.cs" />
     <Compile Include="Node.cs" />
-    <Compile Include="Definition.cs" />
-    <Compile Include="Grammar.cs" />
+    <Compile Include="NDefinition.cs" />
+    <Compile Include="NGrammar.cs" />
     <Compile Include="DefinitionRenderer.cs" />
     <Compile Include="Supergrammar.cs" />
     <Compile Include="DefinitionNodeOrderedParentChildrenCollection.cs.cs" />
@@ -105,7 +105,7 @@
     <Compile Include="ExpressionChecker.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="NodeMatch.cs" />
-    <Compile Include="DefinitionExpression.cs" />
+    <Compile Include="Definition.cs" />
     <Compile Include="ErrorType.cs" />
     <Compile Include="Error.cs" />
     <Compile Include="StringFormatterGrammar.cs" />
@@ -149,6 +149,7 @@
   <ItemGroup>
     <Content Include="CppCliGrammar.txt" />
     <Content Include="ExeBinaryGrammar.txt" />
+    <Content Include="render_grammars.sh" />
     <Content Include="Supergrammar.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

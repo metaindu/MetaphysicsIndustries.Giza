@@ -6,8 +6,6 @@ namespace MetaphysicsIndustries.Giza.Test
     [TestFixture]
     public class ImportTest
     {
-        // PreGrammar
-
         [Test]
         public void ImportingFileAddsImportStatementsToCurrentPreGrammar()
         {
@@ -16,7 +14,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var ss = new SupergrammarSpanner();
             var errors = new List<Error>();
             // when
-            var result = ss.GetPreGrammar(src, errors);
+            var result = ss.GetGrammar(src, errors);
             // then
             Assert.AreEqual(0, errors.Count);
             Assert.IsNotNull(result);
@@ -37,7 +35,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var ss = new SupergrammarSpanner();
             var errors = new List<Error>();
             // when
-            var result = ss.GetPreGrammar(src, errors);
+            var result = ss.GetGrammar(src, errors);
             // then
             Assert.AreEqual(0, errors.Count);
             Assert.IsNotNull(result);
@@ -62,7 +60,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var ss = new SupergrammarSpanner();
             var errors = new List<Error>();
             // when
-            var result = ss.GetPreGrammar(src, errors);
+            var result = ss.GetGrammar(src, errors);
             // then
             Assert.AreEqual(0, errors.Count);
             Assert.IsNotNull(result);
@@ -91,7 +89,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var ss = new SupergrammarSpanner();
             var errors = new List<Error>();
             // when
-            var result = ss.GetPreGrammar(src, errors);
+            var result = ss.GetGrammar(src, errors);
             // then
             Assert.AreEqual(0, errors.Count);
             Assert.IsNotNull(result);

@@ -26,13 +26,13 @@ namespace giza
 {
     public abstract class ReplCommand : Command
     {
-        protected ReplCommand(Dictionary<string, DefinitionExpression> env)
+        protected ReplCommand(Dictionary<string, Definition> env)
         {
             if (env == null) throw new ArgumentNullException("env");
             Env = env;
         }
 
-        protected readonly Dictionary<string, DefinitionExpression> Env;
+        protected readonly Dictionary<string, Definition> Env;
     }
 }
 

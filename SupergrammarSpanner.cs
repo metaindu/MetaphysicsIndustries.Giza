@@ -36,7 +36,7 @@ namespace MetaphysicsIndustries.Giza
 {
     public class SupergrammarSpanner
     {
-        public PreGrammar GetPreGrammar(string input, List<Error> errors)
+        public Grammar GetGrammar(string input, List<Error> errors)
         {
             Supergrammar supergrammar = new Supergrammar();
             Spanner spanner = new Spanner(supergrammar.def_grammar);
@@ -64,11 +64,11 @@ namespace MetaphysicsIndustries.Giza
                 return null;
             }
 
-            var pg = BuildPreGrammar(supergrammar, s2[0], errors);
-            return pg;
+            var g = BuildPreGrammar(supergrammar, s2[0], errors);
+            return g;
         }
 
-        public PreGrammar BuildPreGrammar(Supergrammar grammar, Span span, List<Error> errors)
+        public Grammar BuildPreGrammar(Supergrammar grammar, Span span, List<Error> errors)
         {
             if (!(span.Node is DefRefNode) ||
                 (span.Node as DefRefNode).DefRef != grammar.def_grammar)
@@ -84,7 +84,7 @@ namespace MetaphysicsIndustries.Giza
                 throw new InvalidOperationException("There were errors while checking the spans.");
             }
 
-            List<DefinitionExpression> defs = new List<DefinitionExpression>();
+            List<Definition> defs = new List<Definition>();
             var importStmts = new List<ImportStatement>();
 
             foreach (Span defspan in span.Subspans)
@@ -105,7 +105,7 @@ namespace MetaphysicsIndustries.Giza
                     // TODO: add an error? throw an exception?
                     continue;
 
-                DefinitionExpression def = new DefinitionExpression();
+                Definition def = new Definition();
                 defs.Add(def);
 
                 List<DefinitionDirective> directives = new List<DefinitionDirective>();
@@ -121,16 +121,14 @@ namespace MetaphysicsIndustries.Giza
                     }
                     else if (sub.Node == grammar.node_definition_3_expr)
                     {
-                        var expr = GetExpressionFromSpan(grammar, sub);
-                        def.Items.AddRange(expr.Items);
-                        expr.Items.Clear();
+                        def.Expr = GetExpressionFromSpan(grammar, sub);
                     }
                 }
 
                 def.Directives.UnionWith(directives);
             }
 
-            return new PreGrammar()
+            return new Grammar()
             {
                 Definitions = defs,
                 ImportStatements = importStmts,

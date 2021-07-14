@@ -44,16 +44,16 @@ namespace MetaphysicsIndustries.Giza.Test
             OrExpression orexprB = new OrExpression();
             orexprB.Expressions.Add(expr);
 
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
-            defs[0].Items.Add(orexprA);
-            defs[1].Items.Add(orexprB);
+            defs[0].Expr.Items.Add(orexprA);
+            defs[1].Expr.Items.Add(orexprB);
 
             ExpressionChecker ec = new ExpressionChecker();
 
@@ -75,16 +75,16 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             LiteralSubExpression literal = new LiteralSubExpression { Value = "literal" };
 
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
-            defs[0].Items.Add(literal);
-            defs[1].Items.Add(literal);
+            defs[0].Expr.Items.Add(literal);
+            defs[1].Expr.Items.Add(literal);
 
             ExpressionChecker ec = new ExpressionChecker();
 
@@ -106,13 +106,13 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             LiteralSubExpression literal = new LiteralSubExpression { Value = "literal" };
 
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
             };
-            defs[0].Items.Add(literal);
-            defs[0].Items.Add(literal);
+            defs[0].Expr.Items.Add(literal);
+            defs[0].Expr.Items.Add(literal);
 
             ExpressionChecker ec = new ExpressionChecker();
 
@@ -140,12 +140,12 @@ namespace MetaphysicsIndustries.Giza.Test
             expr.Items.Add(orexpr);
             orexpr2.Expressions.Add(expr);
 
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
             };
-            defs[0].Items.Add(orexpr2);
+            defs[0].Expr.Items.Add(orexpr2);
 
             ExpressionChecker ec = new ExpressionChecker();
 
@@ -171,12 +171,12 @@ namespace MetaphysicsIndustries.Giza.Test
             orexpr.Expressions.Add(expr2);
             expr2.Items.Add(orexpr);
 
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
             };
-            defs[0].Items.Add(orexpr);
+            defs[0].Expr.Items.Add(orexpr);
 
             ExpressionChecker ec = new ExpressionChecker();
 
@@ -199,12 +199,12 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             LiteralSubExpression literal = new LiteralSubExpression { Value = "literal" };
 
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = null,
                 },
             };
-            defs[0].Items.Add(literal);
+            defs[0].Expr.Items.Add(literal);
 
             ExpressionChecker ec = new ExpressionChecker();
 
@@ -225,12 +225,12 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             LiteralSubExpression literal = new LiteralSubExpression { Value = "literal" };
 
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "",
                 },
             };
-            defs[0].Items.Add(literal);
+            defs[0].Expr.Items.Add(literal);
 
             ExpressionChecker ec = new ExpressionChecker();
 
@@ -249,8 +249,8 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test()]
         public void TestEmptyDefinitionItems()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
             };
@@ -263,7 +263,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(ExpressionError.EmptyExpressionItems, errors[0].ErrorType);
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
-            Assert.AreSame(defs[0], err.Expression);
+            Assert.AreSame(defs[0].Expr, err.Expression);
             Assert.AreSame(null, err.ExpressionItem);
             Assert.AreSame(defs[0], err.Definition);
         }
@@ -275,12 +275,12 @@ namespace MetaphysicsIndustries.Giza.Test
             var expr = new Expression();
 
 
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
             };
-            defs[0].Items.Add(orexpr);
+            defs[0].Expr.Items.Add(orexpr);
             orexpr.Expressions.Add(expr);
 
             ExpressionChecker ec = new ExpressionChecker();
@@ -301,12 +301,12 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             OrExpression orexpr = new OrExpression();
 
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
             };
-            defs[0].Items.Add(orexpr);
+            defs[0].Expr.Items.Add(orexpr);
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitions(defs);
@@ -328,12 +328,12 @@ namespace MetaphysicsIndustries.Giza.Test
                 Tag = null,
             };
 
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
             };
-            defs[0].Items.Add(literal);
+            defs[0].Expr.Items.Add(literal);
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitions(defs);
@@ -353,12 +353,12 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             DefRefSubExpression defref = new DefRefSubExpression { DefinitionName = null };
 
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
             };
-            defs[0].Items.Add(defref);
+            defs[0].Expr.Items.Add(defref);
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitions(defs);
@@ -378,12 +378,12 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             DefRefSubExpression defref = new DefRefSubExpression { DefinitionName = "" };
 
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
             };
-            defs[0].Items.Add(defref);
+            defs[0].Expr.Items.Add(defref);
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitions(defs);
@@ -403,12 +403,12 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             LiteralSubExpression literal = new LiteralSubExpression { Value = null };
 
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
             };
-            defs[0].Items.Add(literal);
+            defs[0].Expr.Items.Add(literal);
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitions(defs);
@@ -428,12 +428,12 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             LiteralSubExpression literal = new LiteralSubExpression { Value = "" };
 
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
             };
-            defs[0].Items.Add(literal);
+            defs[0].Expr.Items.Add(literal);
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitions(defs);
@@ -453,12 +453,12 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             CharClassSubExpression cc = new CharClassSubExpression { CharClass = null };
 
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
             };
-            defs[0].Items.Add(cc);
+            defs[0].Expr.Items.Add(cc);
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitions(defs);
@@ -478,12 +478,12 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             CharClassSubExpression cc = new CharClassSubExpression { CharClass = new CharClass(new char[0]) };
 
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
             };
-            defs[0].Items.Add(cc);
+            defs[0].Expr.Items.Add(cc);
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitions(defs);
@@ -501,16 +501,16 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test()]
         public void TestDuplicateNames()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "A",
                 }
             };
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
-            defs[1].Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[0].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[1].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitions(defs);
@@ -541,12 +541,12 @@ namespace MetaphysicsIndustries.Giza.Test
             var orexpr = new OrExpression();
             orexpr.Expressions.Add(expr);
 
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
             };
-            defs[0].Items.Add(orexpr);
+            defs[0].Expr.Items.Add(orexpr);
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitions(defs);
@@ -601,12 +601,12 @@ namespace MetaphysicsIndustries.Giza.Test
         {
             DefRefSubExpression defref = new DefRefSubExpression { DefinitionName = "qwerty" };
 
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
             };
-            defs[0].Items.Add(defref);
+            defs[0].Expr.Items.Add(defref);
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitions(defs);
@@ -624,12 +624,12 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test()]
         public void TestDefinitionReuse()
         {
-            DefinitionExpression def = new DefinitionExpression {
+            Definition def = new Definition {
                 Name = "A",
             };
-            def.Items.Add(new LiteralSubExpression { Value = "literal" });
+            def.Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
 
-            DefinitionExpression[] defs = {
+            Definition[] defs = {
                 def,
                 def,
             };
@@ -652,13 +652,13 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test()]
         public void TestNullDefinition()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
                 null,
             };
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[0].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
 
             ExpressionChecker ec = new ExpressionChecker();
 

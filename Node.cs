@@ -79,8 +79,8 @@ namespace MetaphysicsIndustries.Giza
             get { return ParentDefinition.EndNodes.Contains(this); }
         }
 
-        private Definition _parentDefinition;
-        public Definition ParentDefinition
+        private NDefinition _parentDefinition;
+        public NDefinition ParentDefinition
         {
             get { return _parentDefinition; }
             set

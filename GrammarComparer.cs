@@ -26,8 +26,8 @@ namespace MetaphysicsIndustries.Giza
     {
         public struct Discrepancy
         {
-            public Definition DefinitionA;
-            public Definition DefinitionB;
+            public NDefinition DefinitionA;
+            public NDefinition DefinitionB;
             public Node NodeA;
             public Node NodeB;
 
@@ -48,11 +48,12 @@ namespace MetaphysicsIndustries.Giza
             NodeNextLinksAreDifferent,
         }
 
-//        public bool AreEquivalent(Grammar a, Grammar b)
+//        public bool AreEquivalent(NGrammar a, NGrammar b)
 //        {
 //            if (a.Definitions.Count != b.Definitions.Count) return false;
 //
-//            Dictionary<Definition, Definition> defMatchup = new Dictionary<Definition, Definition>();
+//            Dictionary<NDefinition, NDefinition> defMatchup =
+//                new Dictionary<NDefinition, NDefinition>();
 //            int i;
 //            for (i = 0; i < a.Definitions.Count; i++)
 //            {
@@ -68,7 +69,8 @@ namespace MetaphysicsIndustries.Giza
 //            return true;
 //        }
 
-        public Discrepancy[] AreEquivalent(Definition a, Definition b, Dictionary<Definition, Definition> defmatch)
+        public Discrepancy[] AreEquivalent(NDefinition a, NDefinition b, 
+            Dictionary<NDefinition, NDefinition> defmatch)
         {
             List<Discrepancy> discrepancies = new List<Discrepancy>();
 
@@ -177,7 +179,9 @@ namespace MetaphysicsIndustries.Giza
             return discrepancies.ToArray();
         }
 
-        public Discrepancy[] AreEquivalent(Node a, Node b, Dictionary<Definition, Definition> defmatchup, Dictionary<Node, Node> nodematchup)
+        public Discrepancy[] AreEquivalent(Node a, Node b, 
+            Dictionary<NDefinition, NDefinition> defmatchup, 
+            Dictionary<Node, Node> nodematchup)
         {
             List<Discrepancy> discrepancies = new List<Discrepancy>();
 

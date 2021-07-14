@@ -44,9 +44,9 @@ namespace MetaphysicsIndustries.Giza.Test
                 "unop = [+-] subexpr; \r\n" +
                 "paren = '(' expr ')'; \r\n";
             var errors = new List<Error>();
-            var pg = ss.GetPreGrammar(input, errors);
-            var db = new DefinitionBuilder();
-            var grammar = db.BuildGrammar(pg);
+            var g = ss.GetGrammar(input, errors);
+            var gc = new GrammarCompiler();
+            var grammar = gc.Compile(g);
             DefinitionChecker dc = new DefinitionChecker();
 
             // precondition
@@ -62,14 +62,14 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test()]
         public void TestSingleDefCycle()
         {
-            Definition a = new Definition {
+            var a = new NDefinition {
                 Name="a",
             };
             a.Nodes.Add(new DefRefNode(a));
             a.StartNodes.Add(a.Nodes[0]);
             a.EndNodes.Add(a.Nodes[0]);
 
-            List<Definition> defs = new List<Definition> { a };
+            var defs = new List<NDefinition> { a };
 
             DefinitionChecker dc = new DefinitionChecker();
             var errors = dc.CheckDefinitions(defs).ToList();
@@ -90,13 +90,13 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test()]
         public void TestMultiDefCycle()
         {
-            Definition a = new Definition {
+            var a = new NDefinition {
                 Name="a",
             };
-            Definition b = new Definition {
+            var b = new NDefinition {
                 Name="b",
             };
-            Definition c = new Definition {
+            var c = new NDefinition {
                 Name="c",
             };
 
@@ -118,7 +118,7 @@ namespace MetaphysicsIndustries.Giza.Test
             c.EndNodes.Add(c.Nodes[1]);
             c.Nodes[0].NextNodes.Add(c.Nodes[1]);
 
-            List<Definition> defs = new List<Definition> { a, b, c };
+            var defs = new List<NDefinition> { a, b, c };
 
             DefinitionChecker dc = new DefinitionChecker();
             var errors = dc.CheckDefinitions(defs).ToList();
@@ -140,7 +140,7 @@ namespace MetaphysicsIndustries.Giza.Test
         public void TestNoPathFromStart()
         {
             // setup
-            var a = new Definition {
+            var a = new NDefinition {
                 Name="a"
             };
 
@@ -176,7 +176,7 @@ namespace MetaphysicsIndustries.Giza.Test
         public void TestNoPathToEnd()
         {
             // setup
-            var a = new Definition {
+            var a = new NDefinition {
                 Name="a"
             };
 
@@ -212,8 +212,8 @@ namespace MetaphysicsIndustries.Giza.Test
         public void TestNextNodeOutsideDefinition1()
         {
             // setup
-            var a = new Definition() { Name="a" };
-            var b = new Definition() { Name="b" };
+            var a = new NDefinition() { Name="a" };
+            var b = new NDefinition() { Name="b" };
             var n1 = new CharNode('1');
             var n2 = new CharNode('2');
 
@@ -244,7 +244,7 @@ namespace MetaphysicsIndustries.Giza.Test
         public void TestNextNodeOutsideDefinition2()
         {
             // setup
-            var a = new Definition() { Name="a" };
+            var a = new NDefinition() { Name="a" };
             var n1 = new CharNode('1');
             var n2 = new CharNode('2');
 
@@ -272,8 +272,8 @@ namespace MetaphysicsIndustries.Giza.Test
         public void TestStartNodeHasWrongParentDefinition1()
         {
             // setup
-            var a = new Definition() { Name="a" };
-            var b = new Definition() { Name="b" };
+            var a = new NDefinition() { Name="a" };
+            var b = new NDefinition() { Name="b" };
             var n1 = new CharNode('1');
             var n2 = new CharNode('2');
 
@@ -305,7 +305,7 @@ namespace MetaphysicsIndustries.Giza.Test
         public void TestStartNodeHasWrongParentDefinition2()
         {
             // setup
-            var a = new Definition() { Name="a" };
+            var a = new NDefinition() { Name="a" };
             var n1 = new CharNode('1');
             var n2 = new CharNode('2');
 
@@ -334,8 +334,8 @@ namespace MetaphysicsIndustries.Giza.Test
         public void TestEndNodeHasWrongParentDefinition1()
         {
             // setup
-            var a = new Definition() { Name="a" };
-            var b = new Definition() { Name="b" };
+            var a = new NDefinition() { Name="a" };
+            var b = new NDefinition() { Name="b" };
             var n1 = new CharNode('1');
             var n2 = new CharNode('2');
 
@@ -367,7 +367,7 @@ namespace MetaphysicsIndustries.Giza.Test
         public void TestEndNodeHasWrongParentDefinition2()
         {
             // setup
-            var a = new Definition() { Name="a" };
+            var a = new NDefinition() { Name="a" };
             var n1 = new CharNode('1');
             var n2 = new CharNode('2');
 
@@ -419,7 +419,8 @@ namespace MetaphysicsIndustries.Giza.Test
             var dc = new DefinitionChecker();
 
             // action/assertions
-            Assert.Throws<ArgumentNullException>(() => dc.CheckDefinitions(new Definition[0], null));
+            Assert.Throws<ArgumentNullException>(
+                () => dc.CheckDefinitions(new NDefinition[0], null));
         }
 
         [Test]
@@ -439,7 +440,8 @@ namespace MetaphysicsIndustries.Giza.Test
             var dc = new DefinitionChecker();
 
             // action/assertions
-            Assert.Throws<ArgumentNullException>(() => dc.CheckDefinition(new Definition("a"), null));
+            Assert.Throws<ArgumentNullException>(
+                () => dc.CheckDefinition(new NDefinition("a"), null));
         }
 
         [Test]

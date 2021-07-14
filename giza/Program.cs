@@ -91,7 +91,7 @@ namespace giza
         static void Repl()
         {
             var spanner = new SupergrammarSpanner();
-            var env = new Dictionary<string, DefinitionExpression>();
+            var env = new Dictionary<string, Definition>();
 
             var buffer = new StringBuilder();
             string primaryPrompt = ">>> ";
@@ -171,8 +171,8 @@ namespace giza
                         while (true)
                         {
                             var errors = new List<Error>();
-                            var pg = spanner.GetPreGrammar(buffer.ToString(), errors);
-                            var defs = pg.Definitions;
+                            var g = spanner.GetGrammar(buffer.ToString(), errors);
+                            var defs = g.Definitions;
                             if (!errors.ContainsNonWarnings())
                             {
                                 // good to go
@@ -184,9 +184,9 @@ namespace giza
                                 }
 
                                 // add new definitions to the list
-                                foreach (var defexpr in defs)
+                                foreach (var def in defs)
                                 {
-                                    env[defexpr.Name] = defexpr;
+                                    env[def.Name] = def;
                                 }
 
                                 break;

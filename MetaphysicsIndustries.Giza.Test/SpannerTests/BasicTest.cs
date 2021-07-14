@@ -32,9 +32,9 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
         {
             // setup
             //def1 = ( 'qwer' | 'asdf' );
-            var testGrammar = new Grammar {
+            var testGrammar = new NGrammar {
                 Definitions = {
-                    new Definition(
+                    new NDefinition(
                         name: "def1",
                         nodes: new [] {
                             new CharNode('q', "qwer"),
@@ -151,7 +151,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             //<mind whitespace, atomic> id-item1 = 'item1';
             //<mind whitespace, atomic> id-item2 = 'item2';
             var item1Def =
-                new Definition(
+                new NDefinition(
                     name: "id-item1",
                     nodes: new [] {
                         new CharNode('i', "item1"),
@@ -169,7 +169,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                     }
                 );
             var item2Def =
-                new Definition(
+                new NDefinition(
                     name: "id-item2",
                     nodes: new [] {
                         new CharNode('i', "item2"),
@@ -187,7 +187,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                     }
                 );
             var itemDef =
-                new Definition(
+                new NDefinition(
                     name: "item",
                     nodes: new [] {
                         new DefRefNode(item1Def),
@@ -197,14 +197,14 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                     endNodes: new [] { 0, 1 }
                 );
             var sequenceDef =
-                new Definition(
+                new NDefinition(
                     name: "sequence",
                     nodes: new [] { new DefRefNode(itemDef) },
                     nexts: new [] { 0, 0 },
                     startNodes: new [] { 0 },
                     endNodes: new [] { 0 }
                 );
-            var testGrammar = new Grammar {
+            var testGrammar = new NGrammar {
                 Definitions = { sequenceDef, itemDef, item1Def, item2Def }
             };
 
@@ -232,7 +232,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             Assert.AreEqual("item", (err.ExpectedNodes.First() as DefRefNode).DefRef.Name);
         }
 
-        static Grammar CreateGrammarForTestUnexpectedEndOfInput()
+        static NGrammar CreateGrammarForTestUnexpectedEndOfInput()
         {
             //sequence = item+;
             //item = ( id-item1 | id-item2 | paren );
@@ -241,7 +241,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             //paren = '(' sequence ')';
 
             var item1Def =
-                new Definition(
+                new NDefinition(
                     name: "id-item1",
                     nodes: new [] {
                         new CharNode('i', "item1"),
@@ -259,7 +259,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                     }
                 );
             var item2Def =
-                new Definition(
+                new NDefinition(
                     name: "id-item2",
                     nodes: new [] {
                         new CharNode('i', "item2"),
@@ -276,9 +276,9 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                         DefinitionDirective.MindWhitespace,
                     }
                 );
-            var sequenceDef = new Definition("sequence");
+            var sequenceDef = new NDefinition("sequence");
             var parenDef =
-                new Definition(
+                new NDefinition(
                     name: "paren",
                     nodes: new Node[] {
                         new CharNode('('),
@@ -290,7 +290,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                     endNodes: new [] { 2 }
                 );
             var itemDef =
-                new Definition(
+                new NDefinition(
                     name: "item",
                     nodes: new [] {
                         new DefRefNode(item1Def),
@@ -306,7 +306,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             sequenceDef.StartNodes.Add(sequenceDef.Nodes[0]);
             sequenceDef.EndNodes.Add(sequenceDef.Nodes[0]);
 
-            return new Grammar(new [] { sequenceDef, itemDef, item1Def, item2Def, parenDef });
+            return new NGrammar(new [] { sequenceDef, itemDef, item1Def, item2Def, parenDef });
         }
 
         [Test]
@@ -437,7 +437,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             //<mind whitespace, atomic> id-three = 'three';
 
             var oneDef =
-                new Definition(
+                new NDefinition(
                     name: "id-one",
                     nodes: new [] {
                         new CharNode('o', "one"),
@@ -453,7 +453,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                     }
                 );
             var twoDef =
-                new Definition(
+                new NDefinition(
                     name: "id-two",
                     nodes: new [] {
                         new CharNode('t', "two"),
@@ -469,7 +469,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                     }
                 );
             var threeDef =
-                new Definition(
+                new NDefinition(
                     name: "id-three",
                     nodes: new [] {
                         new CharNode('t', "three"),
@@ -487,7 +487,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                     }
                 );
             var sequenceDef =
-                new Definition(
+                new NDefinition(
                     name: "sequence",
                     nodes: new [] {
                         new DefRefNode(oneDef),
@@ -498,7 +498,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                     startNodes: new [] { 0 },
                     endNodes: new [] { 2 }
                 );
-            var testGrammar = new Grammar(sequenceDef, oneDef, twoDef, threeDef);
+            var testGrammar = new NGrammar(sequenceDef, oneDef, twoDef, threeDef);
 
             string testInput = "one two three four";
                               //123456789012345678
@@ -525,13 +525,13 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             Assert.IsNull(err.ExpectedNodes);
         }
 
-        static Grammar CreateGrammarForTestEndOfInputParameter()
+        static NGrammar CreateGrammarForTestEndOfInputParameter()
         {
             //expr = operand '+' operand;
             //<atomic> operand = [\l_] [\l\d_]*;
 
             var operandDef =
-                new Definition(
+                new NDefinition(
                     name: "operand",
                     nodes: new [] {
                         new CharNode(CharClass.FromUndelimitedCharClassText("\\l_")),
@@ -542,9 +542,9 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                     endNodes: new [] { 0, 1 },
                     directives: new [] { DefinitionDirective.Atomic }
                 );
-            var grammar = new Grammar {
+            var grammar = new NGrammar {
                 Definitions = {
-                    new Definition(
+                    new NDefinition(
                         name: "expr",
                         nodes: new Node[] {
                             new DefRefNode(operandDef),
@@ -667,7 +667,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             //<mind whitespace> name = [\l_] [\l\d]* ;
 
             var nameDef =
-                new Definition(
+                new NDefinition(
                     name: "name",
                     nodes: new [] {
                         new CharNode(CharClass.FromUndelimitedCharClassText("\\l_")),
@@ -681,7 +681,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                     }
                 );
             var paramDef =
-                new Definition(
+                new NDefinition(
                     name: "param",
                     nodes: new Node[] {
                         new CharNode('{'),
@@ -707,7 +707,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                     }
                 );
             var textDef =
-                new Definition(
+                new NDefinition(
                     name: "text",
                     nodes: new [] { new CharNode(CharClass.FromUndelimitedCharClassText("^{}")) },
                     nexts: new [] { 0, 0 },
@@ -719,7 +719,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                     }
                 );
             var formatDef =
-                new Definition(
+                new NDefinition(
                     name: "format",
                     nodes: new [] {
                         new DefRefNode(textDef),
@@ -732,7 +732,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                         DefinitionDirective.MindWhitespace
                     }
                 );
-            var grammar = new Grammar(formatDef, textDef, paramDef, nameDef);
+            var grammar = new NGrammar(formatDef, textDef, paramDef, nameDef);
 
             string testInput = "leading {delimited}x";
             var errors = new List<Error>();
@@ -789,7 +789,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             //<mind whitespace> field = [\d\l]+;
 
             var fieldDef =
-                new Definition(
+                new NDefinition(
                     name: "field",
                     nodes: new [] {
                         new CharNode(CharClass.FromUndelimitedCharClassText("\\d\\l"))
@@ -802,7 +802,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                     }
                 );
             var recordDef =
-                new Definition(
+                new NDefinition(
                     name: "record",
                     nodes: new Node[] {
                         new DefRefNode(fieldDef),
@@ -817,7 +817,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                     }
                 );
             var fileDef =
-                new Definition(
+                new NDefinition(
                     name: "file",
                     nodes: new Node[] {
                         new DefRefNode(recordDef),
@@ -842,7 +842,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                         DefinitionDirective.Atomic
                     }
                 );
-            var grammar = new Grammar(fileDef, recordDef, fieldDef);
+            var grammar = new NGrammar(fileDef, recordDef, fieldDef);
             var errors = new List<Error>();
             var spanner = new Spanner(grammar.FindDefinitionByName("file"));
 
@@ -859,12 +859,11 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
         {
             // setup
             var item =
-                new DefinitionExpression(
+                new Definition(
                     name: "item",
-                    directives: new [] { DefinitionDirective.IgnoreCase },
-                    items: new [] { new LiteralSubExpression("item") }
-                );
-            var grammar = (new DefinitionBuilder()).BuildGrammar(new [] { item });
+                    directives: new[] {DefinitionDirective.IgnoreCase},
+                    expr: new Expression(new LiteralSubExpression("item")));
+            var grammar = (new GrammarCompiler()).Compile(new [] { item });
             var itemDef = grammar.FindDefinitionByName("item");
             var spanner = new Spanner(itemDef);
             var input = "iTeM";
@@ -899,11 +898,10 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
         {
             // setup
             var item =
-                new DefinitionExpression(
+                new Definition(
                     name: "item",
-                    items: new [] { new LiteralSubExpression("item") }
-                );
-            var grammar = (new DefinitionBuilder()).BuildGrammar(new [] { item });
+                    expr: new Expression(new LiteralSubExpression("item")));
+            var grammar = (new GrammarCompiler()).Compile(new [] { item });
             var itemDef = grammar.FindDefinitionByName("item");
             var spanner = new Spanner(itemDef);
             var input = "iTeM";
@@ -928,7 +926,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
         {
             // setup
             var def =
-                new Definition(
+                new NDefinition(
                     name: "def",
                     nodes: new [] {
                         new CharNode('a')
@@ -936,7 +934,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                     startNodes: new [] { 0 },
                     endNodes: new [] { 0 }
                 );
-            var grammar = new Grammar(def);
+            var grammar = new NGrammar(def);
             var spanner = new Spanner(def);
             var errors = new List<Error>();
 
@@ -957,7 +955,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
         public void TestDefRefNode()
         {
             var chardef =
-                new Definition(
+                new NDefinition(
                     name: "chardef",
                     nodes: new [] {
                         new CharNode('a')
@@ -966,7 +964,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                     endNodes: new [] { 0 }
                 );
             var defdef =
-                new Definition(
+                new NDefinition(
                     name: "defdef",
                     nodes: new [] {
                         new DefRefNode(chardef)
@@ -974,7 +972,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                     startNodes: new [] { 0 },
                     endNodes: new [] { 0 }
                 );
-            var grammar = new Grammar(defdef, chardef);
+            var grammar = new NGrammar(defdef, chardef);
             var spanner = new Spanner(defdef);
             var errors = new List<Error>();
 

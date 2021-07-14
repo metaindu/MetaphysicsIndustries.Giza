@@ -111,7 +111,7 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        public Definition DefRef
+        public NDefinition DefRef
         {
             get
             {
@@ -340,7 +340,7 @@ namespace MetaphysicsIndustries.Giza
         public NodeMatch<T> NodeMatch { get; protected set; }
         public MatchStack<T> Parent { get; protected set; }
         public DefRefNode Node { get { return (DefRefNode)NodeMatch.Node; } }
-        public Definition Definition { get { return Node.DefRef; } }
+        public NDefinition Definition => Node.DefRef;
     }
 
     public struct NodeMatchStackPair<T>

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace MetaphysicsIndustries.Giza
 {
-    public class ImportTransform : IPreGrammarTransform
+    public class ImportTransform : IGrammarTransform
     {
         public ImportTransform(IFileSource fileSource)
         {
@@ -15,27 +15,27 @@ namespace MetaphysicsIndustries.Giza
 
         private readonly ImportCache _importCache = new ImportCache();
 
-        PreGrammar IPreGrammarTransform.Transform(PreGrammar pg)
+        Grammar IGrammarTransform.Transform(Grammar g)
         {
-            return Transform(pg);
+            return Transform(g);
         }
-        public PreGrammar Transform(PreGrammar pg, List<Error> errors=null,
+        public Grammar Transform(Grammar g, List<Error> errors=null,
             IFileSource fileSource=null, ImportCache importCache=null)
         {
             if (errors == null) errors = new List<Error>();
             if (fileSource == null) fileSource = _fileSource;
             if (importCache == null) importCache = _importCache;
 
-            return ProcessImports(pg, errors, fileSource, importCache);
+            return ProcessImports(g, errors, fileSource, importCache);
         }
-        public static PreGrammar ProcessImports(PreGrammar pg,
+        public static Grammar ProcessImports(Grammar g,
             List<Error> errors, IFileSource fileSource,
             ImportCache importCache=null)
         {
             var defsByName =
-                pg.Definitions.ToDictionary(d => d.Name);
+                g.Definitions.ToDictionary(d => d.Name);
             var errors2 = new List<Error>();
-            foreach (var importStmt in pg.ImportStatements)
+            foreach (var importStmt in g.ImportStatements)
             {
                 var importedDefs = ImportDefinitions(importStmt, errors2,
                     fileSource, importCache);
@@ -52,13 +52,13 @@ namespace MetaphysicsIndustries.Giza
                 }
             }
 
-            return new PreGrammar
+            return new Grammar
             {
                 Definitions = defsByName.Values.ToList()
             };
         }
 
-        static DefinitionExpression[] ImportDefinitions(
+        static Definition[] ImportDefinitions(
             ImportStatement importStmt, List<Error> errors,
             IFileSource fileSource, ImportCache importCache)
         {
@@ -70,18 +70,18 @@ namespace MetaphysicsIndustries.Giza
                 var content = fileSource.GetFileContents(fileToImport);
                 var errors2 = new List<Error>();
                 var ss = new SupergrammarSpanner();
-                var ipg1 = ss.GetPreGrammar(content, errors2);
+                var ig1 = ss.GetGrammar(content, errors2);
                 errors.AddRange(errors2);
                 if (errors2.ContainsNonWarnings())
                     return null;
 
-                var ipg = ProcessImports(ipg1, errors2, fileSource,
+                var ig = ProcessImports(ig1, errors2, fileSource,
                     importCache);
                 errors.AddRange(errors2);
                 if (errors2.ContainsNonWarnings())
                     return null;
 
-                var importedDefs = ipg.Definitions;
+                var importedDefs = ig.Definitions;
                 errors.AddRange(errors2);
                 if (errors2.Count > 0)
                     return null;
@@ -95,46 +95,44 @@ namespace MetaphysicsIndustries.Giza
 
             var importedDefsByName = importCache[fileToImport];
 
-            IEnumerable<DefinitionExpression> defsToImport;
-            if (importRefs != null)
+            IEnumerable<Definition> defsToImport;
+            if (importRefs == null)
             {
-                var defsToImport1 = new List<DefinitionExpression>();
-                defsToImport = defsToImport1;
-                foreach (var importRef in importRefs)
-                {
-                    var sourceName = importRef.SourceName;
-                    var destName = importRef.DestName;
-                    if (!importedDefsByName.ContainsKey(sourceName))
-                        errors.Add(new ImportError
-                        {
-                            ErrorType = ImportError.DefinitionNotFound,
-                            DefinitionName = sourceName
-                        });
-                    else
+                importRefs = importedDefsByName.Values.Select(
+                    defToImport => new ImportRef
                     {
-                        // TODO: refactor to de-duplicate
-                        var sourceDef = importedDefsByName[sourceName];
-                        var destDef = new DefinitionExpression(destName,
-                            sourceDef.Directives, sourceDef.Items);
-                        destDef.IsImported = true;
-                        defsToImport1.Add(destDef);
-                    }
-                }
+                        SourceName = defToImport.Name, DestName = defToImport.Name
+                    }).ToArray();
             }
-            else
+
+            var defsToImport1 = new List<Definition>();
+            defsToImport = defsToImport1;
+            var hasErrors = false;
+            foreach (var importRef in importRefs)
             {
-                var defsToImport1 = new List<DefinitionExpression>();
-                defsToImport = defsToImport1;
-                foreach (var defToImport in importedDefsByName.Values)
+                if (importedDefsByName.ContainsKey(importRef.SourceName))
+                    continue;
+
+                errors.Add(new ImportError
                 {
-                    // TODO: refactor to de-duplicate
-                    var sourceDef = defToImport;
-                    var destName = defToImport.Name;
-                    var destDef = new DefinitionExpression(destName,
-                        sourceDef.Directives, sourceDef.Items);
-                    destDef.IsImported = true;
-                    defsToImport1.Add(destDef);
-                }
+                    ErrorType = ImportError.DefinitionNotFound,
+                    DefinitionName = importRef.SourceName
+                });
+
+                hasErrors = true;
+            }
+
+            if (hasErrors) return null;
+
+            foreach (var importRef in importRefs)
+            {
+                var sourceName = importRef.SourceName;
+                var sourceDef = importedDefsByName[sourceName];
+                var destName = importRef.DestName;
+                var destDef = new Definition(destName,
+                    sourceDef.Directives, sourceDef.Expr);
+                destDef.IsImported = true;
+                defsToImport1.Add(destDef);
             }
 
             return defsToImport.ToArray();

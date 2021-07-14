@@ -18,21 +18,17 @@
 // USA
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-
-using System.Diagnostics;
 
 namespace MetaphysicsIndustries.Giza
 {
 
     public class DefRefNode : Node
     {
-        public DefRefNode(Definition def)
+        public DefRefNode(NDefinition def)
             : this(def, def == null ? string.Empty : def.Name)
         {
         }
-        public DefRefNode(Definition def, string tag)
+        public DefRefNode(NDefinition def, string tag)
             : base(tag)
         {
             if (def == null) { throw new ArgumentNullException("def"); }
@@ -40,11 +36,8 @@ namespace MetaphysicsIndustries.Giza
             _defRef = def;
         }
 
-        Definition _defRef;
-        public Definition DefRef
-        {
-            get { return _defRef; }
-        }
+        private readonly NDefinition _defRef;
+        public NDefinition DefRef => _defRef;
 
         public override string ToString()
         {

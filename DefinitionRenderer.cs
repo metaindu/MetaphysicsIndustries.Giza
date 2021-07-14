@@ -28,20 +28,20 @@ namespace MetaphysicsIndustries.Giza
     public class DefinitionRenderer
     {
         public string RenderDefinitionsAsCSharpClass(
-            string className, IEnumerable<Definition> defs, string ns=null,
-            bool singleton=false, string baseClassName="Grammar",
+            string className, IEnumerable<NDefinition> defs, string ns=null,
+            bool singleton=false, string baseClassName="NGrammar",
             IEnumerable<string> usings=null, bool skipImported=false)
         {
             var defsSorted = defs.ToList();
             defsSorted.Sort((a, b) =>
                 string.Compare(a.Name, b.Name, StringComparison.Ordinal));
-            IEnumerable<Definition> defsToRender;
+            IEnumerable<NDefinition> defsToRender;
             if (skipImported)
                 defsToRender = defsSorted.Where(d => !d.IsImported).ToList();
             else
                 defsToRender = defsSorted;
 
-            Dictionary<Definition, string> defnames = new Dictionary<Definition, string>();
+            var defnames = new Dictionary<NDefinition, string>();
 
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("using System;");
@@ -96,7 +96,7 @@ namespace MetaphysicsIndustries.Giza
 
                 sb.Append(indent);
                 sb.AppendFormat(
-                    "    public Definition {0} = new Definition({1});",
+                    "    public NDefinition {0} = new NDefinition({1});",
                     name,
                     RenderString(def.Name));
                 sb.AppendLine();
@@ -265,7 +265,7 @@ namespace MetaphysicsIndustries.Giza
             return "\"" + s2 + "\"";
         }
 
-        public string RenderDefinitionExprsAsGrammarText(IEnumerable<DefinitionExpression> defs, int? maxLineWidth=null)
+        public string RenderDefinitionExprsAsGrammarText(IEnumerable<Definition> defs, int? maxLineWidth=null)
         {
             var sb = new StringBuilder();
             var noSpaceTokens = new string[] { ";", ":", "*", "?", "+", ">", "," };
@@ -305,7 +305,7 @@ namespace MetaphysicsIndustries.Giza
             return sb.ToString();
         }
 
-        public IEnumerable<string> ProcessDefinitionExpression(DefinitionExpression defexpr)
+        public IEnumerable<string> ProcessDefinitionExpression(Definition defexpr)
         {
             if (defexpr.Directives.Count > 0)
             {
@@ -350,7 +350,7 @@ namespace MetaphysicsIndustries.Giza
 
             yield return defexpr.Name;
             yield return "=";
-            foreach (var token in ProcessExpression(defexpr))
+            foreach (var token in ProcessExpression(defexpr.Expr))
             {
                 yield return token;
             }

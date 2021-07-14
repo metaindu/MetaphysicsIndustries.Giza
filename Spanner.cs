@@ -33,14 +33,14 @@ namespace MetaphysicsIndustries.Giza
 {
     public class Spanner : Spanner1
     {
-        public Spanner(Definition definition)
+        public Spanner(NDefinition definition)
             : base(definition)
         {
         }
     }
     public class Spanner1
     {
-        public Spanner1(Definition definition)
+        public Spanner1(NDefinition definition)
         {
             if (definition == null) throw new ArgumentNullException("definition");
 
@@ -55,7 +55,7 @@ namespace MetaphysicsIndustries.Giza
             _definition = definition;
         }
 
-        Definition _definition;
+        NDefinition _definition;
 
         public Span[] Process(IInputSource<InputChar> input, List<Error> errors)
         {
@@ -221,7 +221,7 @@ namespace MetaphysicsIndustries.Giza
                             if (expectedNodes != null)
                             {
                                 CharClass expectedChars = new CharClass(new char[0]);
-                                HashSet<Definition> expectedDefs = new HashSet<Definition>();
+                                var expectedDefs = new HashSet<NDefinition>();
                                 foreach (Node node in expectedNodes)
                                 {
                                     if (node is CharNode)

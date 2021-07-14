@@ -45,18 +45,18 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestTokenReferencesToken()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
             defs[0].Directives.Add(DefinitionDirective.Token);
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[0].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
             defs[1].Directives.Add(DefinitionDirective.Token);
-            defs[1].Items.Add(new DefRefSubExpression { DefinitionName = "A" });
+            defs[1].Expr.Items.Add(new DefRefSubExpression { DefinitionName = "A" });
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
@@ -67,25 +67,25 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
             Assert.AreEqual(null, err.Expression);
-            Assert.AreSame(defs[1].Items[0], err.ExpressionItem);
+            Assert.AreSame(defs[1].Expr.Items[0], err.ExpressionItem);
             Assert.AreSame(defs[1], err.Definition);
         }
 
         [Test]
         public void TestTokenReferencesSubtoken()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
             defs[0].Directives.Add(DefinitionDirective.Subtoken);
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[0].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
             defs[1].Directives.Add(DefinitionDirective.Token);
-            defs[1].Items.Add(new DefRefSubExpression { DefinitionName = "A" });
+            defs[1].Expr.Items.Add(new DefRefSubExpression { DefinitionName = "A" });
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
@@ -97,18 +97,18 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestTokenReferencesComment()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
             defs[0].Directives.Add(DefinitionDirective.Comment);
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[0].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
             defs[1].Directives.Add(DefinitionDirective.Token);
-            defs[1].Items.Add(new DefRefSubExpression { DefinitionName = "A" });
+            defs[1].Expr.Items.Add(new DefRefSubExpression { DefinitionName = "A" });
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
@@ -119,24 +119,24 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
             Assert.AreEqual(null, err.Expression);
-            Assert.AreSame(defs[1].Items[0], err.ExpressionItem);
+            Assert.AreSame(defs[1].Expr.Items[0], err.ExpressionItem);
             Assert.AreSame(defs[1], err.Definition);
         }
 
         [Test]
         public void TestTokenReferencesNonToken()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[0].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
             defs[1].Directives.Add(DefinitionDirective.Token);
-            defs[1].Items.Add(new DefRefSubExpression { DefinitionName = "A" });
+            defs[1].Expr.Items.Add(new DefRefSubExpression { DefinitionName = "A" });
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
@@ -147,25 +147,25 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
             Assert.AreEqual(null, err.Expression);
-            Assert.AreSame(defs[1].Items[0], err.ExpressionItem);
+            Assert.AreSame(defs[1].Expr.Items[0], err.ExpressionItem);
             Assert.AreSame(defs[1], err.Definition);
         }
 
         [Test]
         public void TestSubtokenReferencesToken()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
             defs[0].Directives.Add(DefinitionDirective.Token);
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[0].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
             defs[1].Directives.Add(DefinitionDirective.Subtoken);
-            defs[1].Items.Add(new DefRefSubExpression { DefinitionName = "A" });
+            defs[1].Expr.Items.Add(new DefRefSubExpression { DefinitionName = "A" });
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
@@ -176,25 +176,25 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
             Assert.AreEqual(null, err.Expression);
-            Assert.AreSame(defs[1].Items[0], err.ExpressionItem);
+            Assert.AreSame(defs[1].Expr.Items[0], err.ExpressionItem);
             Assert.AreSame(defs[1], err.Definition);
         }
 
         [Test]
         public void TestSubtokenReferencesSubtoken()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
             defs[0].Directives.Add(DefinitionDirective.Subtoken);
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[0].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
             defs[1].Directives.Add(DefinitionDirective.Subtoken);
-            defs[1].Items.Add(new DefRefSubExpression { DefinitionName = "A" });
+            defs[1].Expr.Items.Add(new DefRefSubExpression { DefinitionName = "A" });
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
@@ -206,18 +206,18 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestSubtokenReferencesComment()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
             defs[0].Directives.Add(DefinitionDirective.Comment);
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[0].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
             defs[1].Directives.Add(DefinitionDirective.Subtoken);
-            defs[1].Items.Add(new DefRefSubExpression { DefinitionName = "A" });
+            defs[1].Expr.Items.Add(new DefRefSubExpression { DefinitionName = "A" });
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
@@ -228,24 +228,24 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
             Assert.AreEqual(null, err.Expression);
-            Assert.AreSame(defs[1].Items[0], err.ExpressionItem);
+            Assert.AreSame(defs[1].Expr.Items[0], err.ExpressionItem);
             Assert.AreSame(defs[1], err.Definition);
         }
 
         [Test()]
         public void TestSubtokenReferencesNonToken()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[0].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
             defs[1].Directives.Add(DefinitionDirective.Subtoken);
-            defs[1].Items.Add(new DefRefSubExpression { DefinitionName = "A" });
+            defs[1].Expr.Items.Add(new DefRefSubExpression { DefinitionName = "A" });
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
@@ -256,25 +256,25 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
             Assert.AreEqual(null, err.Expression);
-            Assert.AreSame(defs[1].Items[0], err.ExpressionItem);
+            Assert.AreSame(defs[1].Expr.Items[0], err.ExpressionItem);
             Assert.AreSame(defs[1], err.Definition);
         }
 
         [Test]
         public void TestCommentReferencesToken()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
             defs[0].Directives.Add(DefinitionDirective.Token);
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[0].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
             defs[1].Directives.Add(DefinitionDirective.Comment);
-            defs[1].Items.Add(new DefRefSubExpression { DefinitionName = "A" });
+            defs[1].Expr.Items.Add(new DefRefSubExpression { DefinitionName = "A" });
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
@@ -285,25 +285,25 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
             Assert.AreEqual(null, err.Expression);
-            Assert.AreSame(defs[1].Items[0], err.ExpressionItem);
+            Assert.AreSame(defs[1].Expr.Items[0], err.ExpressionItem);
             Assert.AreSame(defs[1], err.Definition);
         }
 
         [Test]
         public void TestCommentReferencesSubtoken()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
             defs[0].Directives.Add(DefinitionDirective.Subtoken);
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[0].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
             defs[1].Directives.Add(DefinitionDirective.Comment);
-            defs[1].Items.Add(new DefRefSubExpression { DefinitionName = "A" });
+            defs[1].Expr.Items.Add(new DefRefSubExpression { DefinitionName = "A" });
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
@@ -315,18 +315,18 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestCommentReferencesComment()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
             defs[0].Directives.Add(DefinitionDirective.Comment);
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[0].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
             defs[1].Directives.Add(DefinitionDirective.Comment);
-            defs[1].Items.Add(new DefRefSubExpression { DefinitionName = "A" });
+            defs[1].Expr.Items.Add(new DefRefSubExpression { DefinitionName = "A" });
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
@@ -337,24 +337,24 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
             Assert.AreEqual(null, err.Expression);
-            Assert.AreSame(defs[1].Items[0], err.ExpressionItem);
+            Assert.AreSame(defs[1].Expr.Items[0], err.ExpressionItem);
             Assert.AreSame(defs[1], err.Definition);
         }
 
         [Test]
         public void TestCommentReferencesNonToken()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[0].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
             defs[1].Directives.Add(DefinitionDirective.Comment);
-            defs[1].Items.Add(new DefRefSubExpression { DefinitionName = "A" });
+            defs[1].Expr.Items.Add(new DefRefSubExpression { DefinitionName = "A" });
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
@@ -365,24 +365,24 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
             Assert.AreEqual(null, err.Expression);
-            Assert.AreSame(defs[1].Items[0], err.ExpressionItem);
+            Assert.AreSame(defs[1].Expr.Items[0], err.ExpressionItem);
             Assert.AreSame(defs[1], err.Definition);
         }
 
         [Test]
         public void TestNonTokenReferencesToken()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
             defs[0].Directives.Add(DefinitionDirective.Token);
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
-            defs[1].Items.Add(new DefRefSubExpression { DefinitionName = "A" });
+            defs[0].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[1].Expr.Items.Add(new DefRefSubExpression { DefinitionName = "A" });
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
@@ -394,17 +394,17 @@ namespace MetaphysicsIndustries.Giza.Test
         [Test]
         public void TestNonTokenReferencesSubtoken()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
             defs[0].Directives.Add(DefinitionDirective.Subtoken);
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
-            defs[1].Items.Add(new DefRefSubExpression { DefinitionName = "A" });
+            defs[0].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[1].Expr.Items.Add(new DefRefSubExpression { DefinitionName = "A" });
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
@@ -415,24 +415,24 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
             Assert.AreEqual(null, err.Expression);
-            Assert.AreSame(defs[1].Items[0], err.ExpressionItem);
+            Assert.AreSame(defs[1].Expr.Items[0], err.ExpressionItem);
             Assert.AreSame(defs[1], err.Definition);
         }
 
         [Test()]
         public void TestNonTokenReferencesComment()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
             defs[0].Directives.Add(DefinitionDirective.Comment);
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
-            defs[1].Items.Add(new DefRefSubExpression { DefinitionName = "A" });
+            defs[0].Expr.Items.Add(new LiteralSubExpression { Value = "literal" });
+            defs[1].Expr.Items.Add(new DefRefSubExpression { DefinitionName = "A" });
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
@@ -443,23 +443,25 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
             Assert.AreEqual(null, err.Expression);
-            Assert.AreSame(defs[1].Items[0], err.ExpressionItem);
+            Assert.AreSame(defs[1].Expr.Items[0], err.ExpressionItem);
             Assert.AreSame(defs[1], err.Definition);
         }
 
         [Test]
         public void TestNonTokenReferencesNonToken()
         {
-            DefinitionExpression[] defs = {
-                new DefinitionExpression {
+            Definition[] defs = {
+                new Definition {
                     Name = "A",
                 },
-                new DefinitionExpression {
+                new Definition {
                     Name = "B",
                 },
             };
-            defs[0].Items.Add(new LiteralSubExpression { Value = "literal" });
-            defs[1].Items.Add(new DefRefSubExpression { DefinitionName = "A" });
+            defs[0].Expr.Items.Add(
+                new LiteralSubExpression { Value = "literal" });
+            defs[1].Expr.Items.Add(
+                new DefRefSubExpression { DefinitionName = "A" });
 
             ExpressionChecker ec = new ExpressionChecker();
             List<Error> errors = ec.CheckDefinitionForParsing(defs);

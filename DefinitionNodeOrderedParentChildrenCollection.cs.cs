@@ -37,7 +37,7 @@ namespace MetaphysicsIndustries.Giza
 {
     public class DefinitionNodeOrderedParentChildrenCollection : IList<Node>, IDisposable
     {
-        public DefinitionNodeOrderedParentChildrenCollection(Definition container)
+        public DefinitionNodeOrderedParentChildrenCollection(NDefinition container)
         {
             _container = container;
         }
@@ -176,7 +176,7 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        private Definition _container;
-        private List<Node> _list = new List<Node>();
+        private readonly NDefinition _container;
+        private readonly List<Node> _list = new List<Node>();
     }
 }

@@ -24,7 +24,7 @@ using System.Linq;
 
 namespace MetaphysicsIndustries.Giza
 {
-    public class TokenizeTransform : IPreGrammarTransform
+    public class TokenizeTransform : IGrammarTransform
     {
         // tokenized grammars differ from non-tokenized by virtue of
         // 'implicit token' definitions. That is, any occurence of
@@ -34,11 +34,11 @@ namespace MetaphysicsIndustries.Giza
         // place of that subexpr. In this way, non-tokenized definitions
         // are composed entirely of defrefs.
 
-        public PreGrammar Transform(PreGrammar pg) => Tokenize(pg);
+        public Grammar Transform(Grammar g) => Tokenize(g);
 
-        public PreGrammar Tokenize(PreGrammar pg)
+        public Grammar Tokenize(Grammar g)
         {
-            var defs = pg.Definitions;
+            var defs = g.Definitions;
             var ec = new ExpressionChecker();
             var errors = ec.CheckDefinitionForParsing(defs);
             if (errors.GetNonWarningsCount() > 0)
@@ -48,9 +48,9 @@ namespace MetaphysicsIndustries.Giza
 
             // get the implicit tokens
             var implicitTokenDefs =
-                new Dictionary<string, DefinitionExpression>();
-            var tokenizedDefs = new List<DefinitionExpression>();
-            var nonTokenizedDefs = new List<DefinitionExpression>();
+                new Dictionary<string, Definition>();
+            var tokenizedDefs = new List<Definition>();
+            var nonTokenizedDefs = new List<Definition>();
 
             foreach (var def in defs)
             {
@@ -66,29 +66,33 @@ namespace MetaphysicsIndustries.Giza
                         DefinitionDirective.IgnoreCase);
                     var defsByLiteral =
                         new Dictionary<LiteralSubExpression,
-                            DefinitionExpression>();
+                            Definition>();
                     var defsByCharClass =
                         new Dictionary<CharClassSubExpression,
-                            DefinitionExpression>();
+                            Definition>();
 
                     foreach (var literal in def.EnumerateLiterals())
                     {
                         var defname = GetImplicitDefinitionName(literal, ignoreCase);
                         if (!implicitTokenDefs.ContainsKey(defname))
                         {
-                            var di = new DefinitionExpression
+                            var def2 = new Definition
                             {
                                 Name = defname,
                                 IsImported = def.IsImported,
                             };
-                            di.Items.Add(new LiteralSubExpression {Value = literal.Value});
-                            di.Directives.Add(DefinitionDirective.Token);
+                            def2.Expr = new Expression(
+                                new LiteralSubExpression
+                                {
+                                    Value = literal.Value
+                                });
+                            def2.Directives.Add(DefinitionDirective.Token);
                             if (ignoreCase)
                             {
-                                di.Directives.Add(DefinitionDirective.IgnoreCase);
+                                def2.Directives.Add(DefinitionDirective.IgnoreCase);
                             }
 
-                            implicitTokenDefs[defname] = di;
+                            implicitTokenDefs[defname] = def2;
                         }
                         defsByLiteral[literal] = implicitTokenDefs[defname];
                     }
@@ -98,19 +102,23 @@ namespace MetaphysicsIndustries.Giza
                         var defname = GetImplicitDefinitionName(cc, ignoreCase);
                         if (!implicitTokenDefs.ContainsKey(defname))
                         {
-                            var di = new DefinitionExpression
+                            var def2 = new Definition
                             {
                                 Name = defname,
                                 IsImported = def.IsImported,
                             };
-                            di.Items.Add(new CharClassSubExpression() {CharClass = cc.CharClass});
-                            di.Directives.Add(DefinitionDirective.Token);
+                            def2.Expr = new Expression(
+                                new CharClassSubExpression()
+                                {
+                                    CharClass = cc.CharClass
+                                });
+                            def2.Directives.Add(DefinitionDirective.Token);
                             if (ignoreCase)
                             {
-                                di.Directives.Add(DefinitionDirective.IgnoreCase);
+                                def2.Directives.Add(DefinitionDirective.IgnoreCase);
                             }
 
-                            implicitTokenDefs[defname] = di;
+                            implicitTokenDefs[defname] = def2;
                         }
                         defsByCharClass[cc] = implicitTokenDefs[defname];
                     }
@@ -136,10 +144,10 @@ namespace MetaphysicsIndustries.Giza
                 def.Directives.Remove(DefinitionDirective.IgnoreCase);
             }
 
-            var outdefs = new List<DefinitionExpression>();
+            var outdefs = new List<Definition>();
             outdefs.AddRange(nonTokenizedDefs);
             outdefs.AddRange(tokenizedDefs);
-            return new PreGrammar() {Definitions = outdefs};
+            return new Grammar() {Definitions = outdefs};
         }
 
         string GetImplicitDefinitionName(LiteralSubExpression literal, bool ignoreCase)
@@ -158,18 +166,19 @@ namespace MetaphysicsIndustries.Giza
                     ignoreCase ? cc.CharClass.ToUndelimitedString().ToLower() : cc.CharClass.ToUndelimitedString());
         }
 
-        public DefinitionExpression ReplaceInDefintionExpression(
-            DefinitionExpression def,
-            Dictionary<LiteralSubExpression, DefinitionExpression> defsByLiteral,
-            Dictionary<CharClassSubExpression, DefinitionExpression> defsByCharClass)
+        public Definition ReplaceInDefintionExpression(
+            Definition def,
+            Dictionary<LiteralSubExpression, Definition> defsByLiteral,
+            Dictionary<CharClassSubExpression, Definition> defsByCharClass)
         {
-            return new DefinitionExpression(def.Name, def.Directives,
-                def.Items.Select(item => ReplaceInExpressionItem(
-                    item, defsByLiteral, defsByCharClass)));
+            return new Definition(def.Name, def.Directives,
+                ReplaceInExpression(def.Expr, defsByLiteral, 
+                    defsByCharClass));
         }
+
         public Expression ReplaceInExpression(Expression expr,
-            Dictionary<LiteralSubExpression, DefinitionExpression> defsByLiteral,
-            Dictionary<CharClassSubExpression, DefinitionExpression> defsByCharClass)
+            Dictionary<LiteralSubExpression, Definition> defsByLiteral,
+            Dictionary<CharClassSubExpression, Definition> defsByCharClass)
         {
             return new Expression(
                 expr.Items.Select(item => ReplaceInExpressionItem(
@@ -177,8 +186,8 @@ namespace MetaphysicsIndustries.Giza
         }
 
         public ExpressionItem ReplaceInExpressionItem(ExpressionItem item,
-            Dictionary<LiteralSubExpression, DefinitionExpression> defsByLiteral,
-            Dictionary<CharClassSubExpression, DefinitionExpression> defsByCharClass)
+            Dictionary<LiteralSubExpression, Definition> defsByLiteral,
+            Dictionary<CharClassSubExpression, Definition> defsByCharClass)
         {
             if (item is OrExpression orexpr)
                 return new OrExpression(

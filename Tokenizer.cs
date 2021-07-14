@@ -26,16 +26,16 @@ namespace MetaphysicsIndustries.Giza
 {
     public class Tokenizer : IInputSource<Token>
     {
-        public Tokenizer(Grammar grammar, IInputSource<InputChar> input)
+        public Tokenizer(NGrammar grammar, IInputSource<InputChar> input)
         {
             if (grammar == null) throw new ArgumentNullException("grammar");
             if (input == null) throw new ArgumentNullException("input");
 
             _grammar = grammar.Clone();
-            _tokenDef = new Definition("$token");
+            _tokenDef = new NDefinition("$token");
             _grammar.Definitions.Add(_tokenDef);
 
-            foreach (Definition def in grammar.Definitions)
+            foreach (var def in grammar.Definitions)
             {
                 if (def.Directives.Contains(DefinitionDirective.Token) ||
                     def.Directives.Contains(DefinitionDirective.Comment))
@@ -51,9 +51,9 @@ namespace MetaphysicsIndustries.Giza
             _input = input;
         }
 
-        Grammar _grammar;
+        NGrammar _grammar;
         Spanner _spanner;
-        Definition _tokenDef;
+        NDefinition _tokenDef;
         IInputSource<InputChar> _input;
         readonly Dictionary<int, InputElementSet<Token>> _tokenizationsByIndex = new Dictionary<int, InputElementSet<Token>>();
         readonly HashSet<int> _startIndexes = new HashSet<int>();

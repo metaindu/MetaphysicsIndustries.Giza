@@ -8,7 +8,7 @@ namespace giza
 {
     public class CdReplCommand : ReplCommand
     {
-        public CdReplCommand(Dictionary<string, DefinitionExpression> env)
+        public CdReplCommand(Dictionary<string, Definition> env)
             : base(env)
         {
             Name = "cd";

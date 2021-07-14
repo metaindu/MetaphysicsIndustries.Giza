@@ -27,7 +27,7 @@ namespace giza
 {
     public class CheckReplCommand : ReplCommand
     {
-        public CheckReplCommand(Dictionary<string, DefinitionExpression> env)
+        public CheckReplCommand(Dictionary<string, Definition> env)
             : base(env)
         {
             Name = "check";
@@ -71,7 +71,7 @@ namespace giza
             }
 
             var ec = new ExpressionChecker();
-            var defs = defnames.Select(name => Env[name]);
+            var defs = defnames.Select(name => Env[name]).ToList();
             List<Error> errors;
             if (tokenized)
             {
@@ -84,28 +84,21 @@ namespace giza
 
             if (!errors.ContainsNonWarnings())
             {
+                var g = new Grammar()
+                {
+                    Definitions = defs
+                };
+                var g2 = g;
                 if (tokenized)
                 {
-                    var tgb = new TokenizeTransform();
-                    var pg = new PreGrammar()
-                    {
-                        Definitions = defs.ToList()
-                    };
-                    var pg2 = tgb.Tokenize(pg);
-                    var db = new DefinitionBuilder();
-                    var g = db.BuildGrammar(pg2);
-                    var dc = new DefinitionChecker();
-                    var errors2 = dc.CheckDefinitions(g.Definitions);
-                    errors.AddRange(errors2);
+                    var tt = new TokenizeTransform();
+                    g2 = tt.Tokenize(g);
                 }
-                else
-                {
-                    var db = new DefinitionBuilder();
-                    var g = db.BuildGrammar(defs.ToArray());
-                    var dc = new DefinitionChecker();
-                    var errors2 = dc.CheckDefinitions(g.Definitions);
-                    errors.AddRange(errors2);
-                }
+                var gc = new GrammarCompiler();
+                var ng = gc.Compile(g2);
+                var dc = new DefinitionChecker();
+                var errors2 = dc.CheckDefinitions(ng.Definitions);
+                errors.AddRange(errors2);
             }
 
             errors.PrintErrors(true);

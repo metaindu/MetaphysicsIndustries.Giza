@@ -26,7 +26,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
     [TestFixture]
     public class MindWhitespaceOff
     {
-        Definition def;
+        NDefinition def;
         Spanner spanner;
         List<Error> errors;
 
@@ -34,7 +34,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
         public void Setup()
         {
             def =
-                new Definition(
+                new NDefinition(
                     name: "def",
                     nodes: new [] {
                         new CharNode('a', "abc"),
@@ -47,7 +47,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                     directives: new DefinitionDirective[] {
                     }
                 );
-            var grammar = new Grammar(def);
+            var grammar = new NGrammar(def);
             spanner = new Spanner(def);
             errors = new List<Error>();
         }

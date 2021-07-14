@@ -35,9 +35,13 @@ using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Giza
 {
-    public class GrammarDefinitionOrderedParentChildrenCollection : IList<Definition>, IDisposable
+    /// <summary>
+    /// An ordered collection of NDefinition objects.
+    /// </summary>
+    public class GrammarDefinitionOrderedParentChildrenCollection : 
+        IList<NDefinition>, IDisposable
     {
-        public GrammarDefinitionOrderedParentChildrenCollection(Grammar container)
+        public GrammarDefinitionOrderedParentChildrenCollection(NGrammar container)
         {
             _container = container;
         }
@@ -47,31 +51,31 @@ namespace MetaphysicsIndustries.Giza
             Clear();
         }
 
-        public void AddRange(params Definition[] items)
+        public void AddRange(params NDefinition[] items)
         {
-            AddRange((IEnumerable<Definition>)items);
+            AddRange((IEnumerable<NDefinition>)items);
         }
-        public void AddRange(IEnumerable<Definition> items)
+        public void AddRange(IEnumerable<NDefinition> items)
         {
-            foreach (Definition item in items)
+            foreach (var item in items)
             {
                 Add(item);
             }
         }
-        public void RemoveRange(params Definition[] items)
+        public void RemoveRange(params NDefinition[] items)
         {
-            RemoveRange((IEnumerable<Definition>)items);
+            RemoveRange((IEnumerable<NDefinition>)items);
         }
-        public void RemoveRange(IEnumerable<Definition> items)
+        public void RemoveRange(IEnumerable<NDefinition> items)
         {
-            foreach (Definition item in items)
+            foreach (var item in items)
             {
                 Remove(item);
             }
         }
 
-        //ICollection<Definition>
-        public virtual void Add(Definition item)
+        //ICollection<NDefinition>
+        public virtual void Add(NDefinition item)
         {
             if (!Contains(item))
             {
@@ -80,12 +84,12 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        public virtual bool Contains(Definition item)
+        public virtual bool Contains(NDefinition item)
         {
             return _list.Contains(item);
         }
 
-        public virtual bool Remove(Definition item)
+        public virtual bool Remove(NDefinition item)
         {
             if (Contains(item))
             {
@@ -99,11 +103,11 @@ namespace MetaphysicsIndustries.Giza
 
         public virtual void Clear()
         {
-            Definition[] array = new Definition[Count];
+            var array = new NDefinition[Count];
 
             CopyTo(array, 0);
 
-            foreach (Definition item in array)
+            foreach (var item in array)
             {
                 Remove(item);
             }
@@ -111,23 +115,23 @@ namespace MetaphysicsIndustries.Giza
             _list.Clear();
         }
 
-        public virtual void CopyTo(Definition[] array, int arrayIndex)
+        public virtual void CopyTo(NDefinition[] array, int arrayIndex)
         {
             _list.CopyTo(array, arrayIndex);
         }
 
-        public virtual IEnumerator<Definition> GetEnumerator()
+        public virtual IEnumerator<NDefinition> GetEnumerator()
         {
             return _list.GetEnumerator();
         }
 
-        //IList<Definition>
-        public virtual int IndexOf(Definition item)
+        //IList<NDefinition>
+        public virtual int IndexOf(NDefinition item)
         {
             return _list.IndexOf(item);
         }
 
-        public virtual void Insert(int index, Definition item)
+        public virtual void Insert(int index, NDefinition item)
         {
             if (Contains(item))
             {
@@ -149,24 +153,22 @@ namespace MetaphysicsIndustries.Giza
             Remove(this[index]);
         }
 
-        //ICollection<Definition>
+        //ICollection<NDefinition>
         public virtual int Count
         {
             get { return _list.Count; }
         }
 
-        public virtual bool IsReadOnly
-        {
-            get { return (_list as ICollection<Definition>).IsReadOnly; }
-        }
+        public virtual bool IsReadOnly => 
+            (_list as ICollection<NDefinition>).IsReadOnly;
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
 
-        //IList<Definition>
-        public virtual Definition this [ int index ]
+        //IList<NDefinition>
+        public virtual NDefinition this [ int index ]
         {
             get { return _list[index]; }
             set
@@ -176,7 +178,7 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        private Grammar _container;
-        private List<Definition> _list = new List<Definition>();
+        private readonly NGrammar _container;
+        private readonly List<NDefinition> _list = new List<NDefinition>();
     }
 }

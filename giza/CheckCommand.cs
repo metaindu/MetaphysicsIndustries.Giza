@@ -70,7 +70,7 @@ namespace giza
         {
             var sgs = new SupergrammarSpanner();
             var errors = new List<Error>();
-            var pg = sgs.GetPreGrammar(grammar, errors);
+            var g = sgs.GetGrammar(grammar, errors);
 
             if (!errors.ContainsNonWarnings())
             {
@@ -79,11 +79,11 @@ namespace giza
                 var ec = new ExpressionChecker();
                 if (tokenized)
                 {
-                    errors2 = ec.CheckDefinitionForParsing(pg.Definitions);
+                    errors2 = ec.CheckDefinitionForParsing(g.Definitions);
                 }
                 else
                 {
-                    errors2 = ec.CheckDefinitions(pg.Definitions);
+                    errors2 = ec.CheckDefinitions(g.Definitions);
                 }
 
                 errors.AddRange(errors2);
@@ -93,20 +93,20 @@ namespace giza
             {
                 if (tokenized)
                 {
-                    var tgb = new TokenizeTransform();
-                    var pg2 = tgb.Tokenize(pg);
-                    var db = new DefinitionBuilder();
-                    var g2 = db.BuildGrammar(pg2);
+                    var tt = new TokenizeTransform();
+                    var g2 = tt.Tokenize(g);
+                    var gc = new GrammarCompiler();
+                    var ng = gc.Compile(g2);
                     var dc = new DefinitionChecker();
-                    var errors2 = dc.CheckDefinitions(g2.Definitions);
+                    var errors2 = dc.CheckDefinitions(ng.Definitions);
                     errors.AddRange(errors2);
                 }
                 else
                 {
-                    var db = new DefinitionBuilder();
-                    var g2 = db.BuildGrammar(pg.Definitions);
+                    var gc = new GrammarCompiler();
+                    var ng = gc.Compile(g.Definitions);
                     var dc = new DefinitionChecker();
-                    var errors2 = dc.CheckDefinitions(g2.Definitions);
+                    var errors2 = dc.CheckDefinitions(ng.Definitions);
                     errors.AddRange(errors2);
                 }
             }
@@ -115,24 +115,20 @@ namespace giza
 
             if (!errors.ContainsNonWarnings())
             {
-                Grammar g;
+                NGrammar ng;
+                var g2 = g;
                 if (tokenized)
                 {
-                    TokenizeTransform tgb = new TokenizeTransform();
-                    var pg2 = tgb.Tokenize(pg);
-                    var db = new DefinitionBuilder();
-                    g = db.BuildGrammar(pg2);
+                    var tt = new TokenizeTransform();
+                    g2 = tt.Tokenize(g);
                 }
-                else
-                {
-                    DefinitionBuilder db = new DefinitionBuilder();
-                    g = db.BuildGrammar(pg.Definitions);
-                }
+                var gc = new GrammarCompiler();
+                ng = gc.Compile(g2.Definitions);
 
                 Console.WriteLine(
                     "There are {0} definitions in the grammar:",
-                    g.Definitions.Count());
-                foreach (var def in g.Definitions)
+                    ng.Definitions.Count());
+                foreach (var def in ng.Definitions)
                 {
                     Console.WriteLine("  {0}", def.Name);
                 }

@@ -15,9 +15,9 @@ namespace MetaphysicsIndustries.Giza.Test
             var mfs = new MockFileSource((s) => file1);
 
             // import 'file1.txt';
-            var pg = new PreGrammar
+            var g = new Grammar
             {
-                Definitions = new List<DefinitionExpression>(),
+                Definitions = new List<Definition>(),
                 ImportStatements = new List<ImportStatement>
                 {
                     new ImportStatement
@@ -30,7 +30,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var importer = new ImportTransform(fileSource: mfs);
             var errors = new List<Error>();
             // when
-            var result = importer.Transform(pg, errors, mfs);
+            var result = importer.Transform(g, errors, mfs);
             // then
             Assert.AreEqual(0, errors.Count);
             Assert.IsNotNull(result);
@@ -50,9 +50,9 @@ namespace MetaphysicsIndustries.Giza.Test
             var file1 = @"def1 = 'a'; def2 = 'b';";
             var mfs = new MockFileSource((s) => file1);
             // from 'file1.txt' import def1;
-            var pg = new PreGrammar
+            var g = new Grammar
             {
-                Definitions = new List<DefinitionExpression>(),
+                Definitions = new List<Definition>(),
                 ImportStatements = new List<ImportStatement>
                 {
                     new ImportStatement
@@ -72,7 +72,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var importer = new ImportTransform(fileSource: mfs);
             var errors = new List<Error>();
             // when
-            var result = importer.Transform(pg, errors, mfs);
+            var result = importer.Transform(g, errors, mfs);
             // then
             Assert.AreEqual(0, errors.Count);
             Assert.IsNotNull(result);
@@ -89,9 +89,9 @@ namespace MetaphysicsIndustries.Giza.Test
             var mfs = new MockFileSource((s) => file1);
 
             // from 'file1.txt' import def1, def3;
-            var pg = new PreGrammar
+            var g = new Grammar
             {
-                Definitions = new List<DefinitionExpression>(),
+                Definitions = new List<Definition>(),
                 ImportStatements = new List<ImportStatement>
                 {
                     new ImportStatement
@@ -116,7 +116,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var importer = new ImportTransform(mfs);
             var errors = new List<Error>();
             // when
-            var result = importer.Transform(pg, errors, mfs);
+            var result = importer.Transform(g, errors, mfs);
             // then
             Assert.AreEqual(0, errors.Count);
             Assert.IsNotNull(result);
@@ -140,9 +140,9 @@ namespace MetaphysicsIndustries.Giza.Test
                 return "def1 = 'a';";
             });
             // import 'file1.txt';
-            var pg = new PreGrammar
+            var g = new Grammar
             {
-                Definitions = new List<DefinitionExpression>(),
+                Definitions = new List<Definition>(),
                 ImportStatements = new List<ImportStatement>
                 {
                     new ImportStatement
@@ -157,8 +157,8 @@ namespace MetaphysicsIndustries.Giza.Test
             var errors1 = new List<Error>();
             var errors2 = new List<Error>();
             // when
-            var result1 = importer.Transform(pg, errors1, mfs);
-            var result2 = importer.Transform(pg, errors2, mfs);
+            var result1 = importer.Transform(g, errors1, mfs);
+            var result2 = importer.Transform(g, errors2, mfs);
             // then
             Assert.AreEqual(0, errors1.Count);
             Assert.IsNotNull(result1);
@@ -184,15 +184,12 @@ namespace MetaphysicsIndustries.Giza.Test
             // import 'file2.txt';
             // import 'file3.txt';
             // def4 = 'd';
-            var pg = new PreGrammar
+            var g = new Grammar
             {
-                Definitions = new List<DefinitionExpression>
+                Definitions = new List<Definition>
                 {
-                    new DefinitionExpression("def4",
-                        items: new ExpressionItem[]
-                        {
-                            new LiteralSubExpression("d")
-                        })
+                    new Definition("def4",
+                        expr: new Expression(new LiteralSubExpression("d"))),
                 },
                 ImportStatements = new List<ImportStatement>
                 {
@@ -220,7 +217,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var importer = new ImportTransform(mfs);
             var errors = new List<Error>();
             // when
-            var result = importer.Transform(pg, errors, mfs);
+            var result = importer.Transform(g, errors, mfs);
             // then
             Assert.AreEqual(0, errors.Count);
             Assert.IsNotNull(result);
@@ -259,9 +256,9 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // import 'file1.txt';
             // import 'file2.txt';
-            var pg = new PreGrammar
+            var g = new Grammar
             {
-                Definitions = new List<DefinitionExpression>(),
+                Definitions = new List<Definition>(),
                 ImportStatements = new List<ImportStatement>
                 {
                     new ImportStatement
@@ -279,15 +276,15 @@ namespace MetaphysicsIndustries.Giza.Test
             var importer = new ImportTransform(mfs);
             var errors = new List<Error>();
             // when
-            var result = importer.Transform(pg, errors, mfs);
+            var result = importer.Transform(g, errors, mfs);
             // then
             Assert.AreEqual(0, errors.Count);
             Assert.IsNotNull(result);
             Assert.AreEqual(1, result.Definitions.Count);
             Assert.AreEqual("def1", result.Definitions[0].Name);
-            Assert.AreEqual(1, result.Definitions[0].Items.Count);
-            Assert.IsInstanceOf<LiteralSubExpression>(result.Definitions[0].Items[0]);
-            var literal = (LiteralSubExpression) result.Definitions[0].Items[0];
+            Assert.AreEqual(1, result.Definitions[0].Expr.Items.Count);
+            Assert.IsInstanceOf<LiteralSubExpression>(result.Definitions[0].Expr.Items[0]);
+            var literal = (LiteralSubExpression) result.Definitions[0].Expr.Items[0];
             Assert.AreEqual("b", literal.Value);
         }
 
@@ -306,9 +303,9 @@ namespace MetaphysicsIndustries.Giza.Test
             });
             // from 'file1.txt' import def1;
             // from 'file2.txt' import def1 as def2;
-            var pg = new PreGrammar
+            var g = new Grammar
             {
-                Definitions = new List<DefinitionExpression>(),
+                Definitions = new List<Definition>(),
                 ImportStatements = new List<ImportStatement>
                 {
                     new ImportStatement
@@ -340,7 +337,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var importer = new ImportTransform(mfs);
             var errors = new List<Error>();
             // when
-            var result = importer.Transform(pg, errors, mfs);
+            var result = importer.Transform(g, errors, mfs);
             // then
             Assert.AreEqual(0, errors.Count);
             Assert.IsNotNull(result);
@@ -355,14 +352,14 @@ namespace MetaphysicsIndustries.Giza.Test
             var def2 = (result.Definitions[0].Name == "def2" ?
                 result.Definitions[0] : result.Definitions[1]);
 
-            Assert.AreEqual(1, def1.Items.Count);
-            Assert.IsInstanceOf<LiteralSubExpression>(def1.Items[0]);
-            var literal1 = (LiteralSubExpression) def1.Items[0];
+            Assert.AreEqual(1, def1.Expr.Items.Count);
+            Assert.IsInstanceOf<LiteralSubExpression>(def1.Expr.Items[0]);
+            var literal1 = (LiteralSubExpression) def1.Expr.Items[0];
             Assert.AreEqual("a", literal1.Value);
 
-            Assert.AreEqual(1, def2.Items.Count);
-            Assert.IsInstanceOf<LiteralSubExpression>(def2.Items[0]);
-            var literal2 = (LiteralSubExpression) def2.Items[0];
+            Assert.AreEqual(1, def2.Expr.Items.Count);
+            Assert.IsInstanceOf<LiteralSubExpression>(def2.Expr.Items[0]);
+            var literal2 = (LiteralSubExpression) def2.Expr.Items[0];
             Assert.AreEqual("b", literal2.Value);
         }
     }
