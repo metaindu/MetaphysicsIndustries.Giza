@@ -24,7 +24,7 @@ using System.Linq;
 
 namespace MetaphysicsIndustries.Giza
 {
-    public class TokenizeTransform : IPreGrammarTransform
+    public class TokenizeTransform : IGrammarTransform
     {
         // tokenized grammars differ from non-tokenized by virtue of
         // 'implicit token' definitions. That is, any occurence of
@@ -34,11 +34,11 @@ namespace MetaphysicsIndustries.Giza
         // place of that subexpr. In this way, non-tokenized definitions
         // are composed entirely of defrefs.
 
-        public PreGrammar Transform(PreGrammar pg) => Tokenize(pg);
+        public Grammar Transform(Grammar g) => Tokenize(g);
 
-        public PreGrammar Tokenize(PreGrammar pg)
+        public Grammar Tokenize(Grammar g)
         {
-            var defs = pg.Definitions;
+            var defs = g.Definitions;
             var ec = new ExpressionChecker();
             var errors = ec.CheckDefinitionForParsing(defs);
             if (errors.GetNonWarningsCount() > 0)
@@ -147,7 +147,7 @@ namespace MetaphysicsIndustries.Giza
             var outdefs = new List<Definition>();
             outdefs.AddRange(nonTokenizedDefs);
             outdefs.AddRange(tokenizedDefs);
-            return new PreGrammar() {Definitions = outdefs};
+            return new Grammar() {Definitions = outdefs};
         }
 
         string GetImplicitDefinitionName(LiteralSubExpression literal, bool ignoreCase)

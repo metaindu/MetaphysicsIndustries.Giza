@@ -84,18 +84,19 @@ namespace giza
 
             if (!errors.ContainsNonWarnings())
             {
+                // TODO: deduplicate
                 if (tokenized)
                 {
                     var tgb = new TokenizeTransform();
-                    var pg = new PreGrammar()
+                    var g = new Grammar()
                     {
                         Definitions = defs.ToList()
                     };
-                    var pg2 = tgb.Tokenize(pg);
+                    var g2 = tgb.Tokenize(g);
                     var gc = new GrammarCompiler();
-                    var g = gc.BuildGrammar(pg2);
+                    var ng = gc.BuildGrammar(g2);
                     var dc = new DefinitionChecker();
-                    var errors2 = dc.CheckDefinitions(g.Definitions);
+                    var errors2 = dc.CheckDefinitions(ng.Definitions);
                     errors.AddRange(errors2);
                 }
                 else

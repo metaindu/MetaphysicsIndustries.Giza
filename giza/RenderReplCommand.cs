@@ -126,22 +126,23 @@ namespace giza
 
             if (someAreMissing) return;
 
-            NGrammar g;
+            NGrammar ng;
+            // TODO: deduplicate
             if (tokenized)
             {
                 var tgb = new TokenizeTransform();
-                var pg = new PreGrammar() {Definitions = alldefs.ToList()};
-                var pg2 = tgb.Tokenize(pg);
+                var g = new Grammar() {Definitions = alldefs.ToList()};
+                var g2 = tgb.Tokenize(g);
                 var db = new GrammarCompiler();
-                g = db.BuildGrammar(pg2);
+                ng = db.BuildGrammar(g2);
             }
             else
             {
                 var db = new GrammarCompiler();
-                g = db.BuildGrammar(alldefs);
+                ng = db.BuildGrammar(alldefs);
             }
 
-            IEnumerable<NDefinition> defs2 = g.Definitions;
+            IEnumerable<NDefinition> defs2 = ng.Definitions;
 
             var dr = new DefinitionRenderer();
             var cs = dr.RenderDefinitionsAsCSharpClass(className,

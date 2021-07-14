@@ -44,9 +44,9 @@ namespace MetaphysicsIndustries.Giza.Test
                 "unop = [+-] subexpr; \r\n" +
                 "paren = '(' expr ')'; \r\n";
             var errors = new List<Error>();
-            var pg = ss.GetPreGrammar(input, errors);
+            var g = ss.GetGrammar(input, errors);
             var gc = new GrammarCompiler();
-            var grammar = gc.BuildGrammar(pg);
+            var grammar = gc.BuildGrammar(g);
             DefinitionChecker dc = new DefinitionChecker();
 
             // precondition

@@ -896,11 +896,11 @@ namespace MetaphysicsIndustries.Giza.Test
             // setup
             var grammarText = "sequence = ('a' | 'ab' | 'abc' | 'bca' | 'bc' | 'cab' | 'c')+;";
             var errors = new List<Error>();
-            var pg = (new SupergrammarSpanner()).GetPreGrammar(grammarText, errors);
+            var g = (new SupergrammarSpanner()).GetGrammar(grammarText, errors);
             Assert.IsEmpty(errors);
-            var pg2 = (new TokenizeTransform()).Tokenize(pg);
+            var g2 = (new TokenizeTransform()).Tokenize(g);
             var gc = new GrammarCompiler();
-            var grammar = gc.BuildGrammar(pg2);
+            var grammar = gc.BuildGrammar(g2);
             var implicitA = grammar.FindDefinitionByName("$implicit literal a");
             var implicitAb = grammar.FindDefinitionByName("$implicit literal ab");
             var implicitAbc = grammar.FindDefinitionByName("$implicit literal abc");

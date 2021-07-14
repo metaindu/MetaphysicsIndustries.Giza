@@ -26,13 +26,13 @@ namespace MetaphysicsIndustries.Giza
 {
     public class GrammarCompiler
     {
-        public NGrammar BuildGrammar(PreGrammar pg)
+        public NGrammar BuildGrammar(Grammar g)
         {
-            if (pg.ImportStatements != null && pg.ImportStatements.Count > 0)
+            if (g.ImportStatements != null && g.ImportStatements.Count > 0)
                 throw new ArgumentException(
                     "The grammar must not contain import statements.");
 
-            return BuildGrammar(pg.Definitions);
+            return BuildGrammar(g.Definitions);
         }
         public NGrammar BuildGrammar(IEnumerable<Definition> defs)
         {

@@ -112,12 +112,12 @@ namespace MetaphysicsIndustries.Giza.Test
                 "<token> operand = [\\l_] [\\l\\d_]*;";
 
             var errors = new List<Error>();
-            var pg = (new SupergrammarSpanner()).GetPreGrammar(grammarText, errors);
+            var g = (new SupergrammarSpanner()).GetGrammar(grammarText, errors);
             Assert.IsEmpty(errors);
 
-            var pg2 = (new TokenizeTransform()).Tokenize(pg);
+            var g2 = (new TokenizeTransform()).Tokenize(g);
             var gc = new GrammarCompiler();
-            var grammar = gc.BuildGrammar(pg2);
+            var grammar = gc.BuildGrammar(g2);
 
             var exprDef = grammar.FindDefinitionByName("expr");
             var subexprDef = grammar.FindDefinitionByName("subexpr");
@@ -866,12 +866,12 @@ namespace MetaphysicsIndustries.Giza.Test
 
             var sgs = new SupergrammarSpanner();
             var errors = new List<Error>();
-            var pg = sgs.GetPreGrammar(testGrammarText, errors);
+            var g = sgs.GetGrammar(testGrammarText, errors);
             Assert.IsEmpty(errors);
             var tgb = new TokenizeTransform();
-            var pg2 = tgb.Tokenize(pg);
+            var g2 = tgb.Tokenize(g);
             var gc = new GrammarCompiler();
-            var testGrammar = gc.BuildGrammar(pg2);
+            var testGrammar = gc.BuildGrammar(g2);
             var itemDef = testGrammar.FindDefinitionByName("item");
             var sequenceDef = testGrammar.FindDefinitionByName("sequence");
             var implicitDef = testGrammar.FindDefinitionByName("$implicit ignore case literal item");
@@ -924,12 +924,12 @@ namespace MetaphysicsIndustries.Giza.Test
 
             var sgs = new SupergrammarSpanner();
             var errors = new List<Error>();
-            var pg = sgs.GetPreGrammar(testGrammarText, errors);
+            var g = sgs.GetGrammar(testGrammarText, errors);
             Assert.IsEmpty(errors);
             var tgb = new TokenizeTransform();
-            var pg2 = tgb.Tokenize(pg);
+            var g2 = tgb.Tokenize(g);
             var gc = new GrammarCompiler();
-            var testGrammar = gc.BuildGrammar(pg2);
+            var testGrammar = gc.BuildGrammar(g2);
             var itemDef = testGrammar.FindDefinitionByName("item");
             var sequenceDef = testGrammar.FindDefinitionByName("sequence");
             var implicitDef = testGrammar.FindDefinitionByName("$implicit ignore case char class \\dabcdef");
@@ -1612,12 +1612,12 @@ namespace MetaphysicsIndustries.Giza.Test
             var testInput = "aabbbbcc".ToCharacterSource();
             var sgs = new SupergrammarSpanner();
             var errors = new List<Error>();
-            var pg = sgs.GetPreGrammar(testGrammarText, errors);
+            var g = sgs.GetGrammar(testGrammarText, errors);
             Assert.IsEmpty(errors);
             var tgb = new TokenizeTransform();
-            var pg2 = tgb.Tokenize(pg);
+            var g2 = tgb.Tokenize(g);
             var gc = new GrammarCompiler();
-            var testGrammar = gc.BuildGrammar(pg2);
+            var testGrammar = gc.BuildGrammar(g2);
             var sequenceDef = testGrammar.FindDefinitionByName("sequence");
             var parser = new Parser(sequenceDef);
 

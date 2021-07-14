@@ -70,7 +70,7 @@ namespace giza
         {
             var sgs = new SupergrammarSpanner();
             var errors = new List<Error>();
-            var pg = sgs.GetPreGrammar(grammar, errors);
+            var g = sgs.GetGrammar(grammar, errors);
 
             if (!errors.ContainsNonWarnings())
             {
@@ -79,11 +79,11 @@ namespace giza
                 var ec = new ExpressionChecker();
                 if (tokenized)
                 {
-                    errors2 = ec.CheckDefinitionForParsing(pg.Definitions);
+                    errors2 = ec.CheckDefinitionForParsing(g.Definitions);
                 }
                 else
                 {
-                    errors2 = ec.CheckDefinitions(pg.Definitions);
+                    errors2 = ec.CheckDefinitions(g.Definitions);
                 }
 
                 errors.AddRange(errors2);
@@ -94,19 +94,19 @@ namespace giza
                 if (tokenized)
                 {
                     var tgb = new TokenizeTransform();
-                    var pg2 = tgb.Tokenize(pg);
+                    var g2 = tgb.Tokenize(g);
                     var gc = new GrammarCompiler();
-                    var g2 = gc.BuildGrammar(pg2);
+                    var ng = gc.BuildGrammar(g2);
                     var dc = new DefinitionChecker();
-                    var errors2 = dc.CheckDefinitions(g2.Definitions);
+                    var errors2 = dc.CheckDefinitions(ng.Definitions);
                     errors.AddRange(errors2);
                 }
                 else
                 {
                     var gc = new GrammarCompiler();
-                    var g2 = gc.BuildGrammar(pg.Definitions);
+                    var ng = gc.BuildGrammar(g.Definitions);
                     var dc = new DefinitionChecker();
-                    var errors2 = dc.CheckDefinitions(g2.Definitions);
+                    var errors2 = dc.CheckDefinitions(ng.Definitions);
                     errors.AddRange(errors2);
                 }
             }
@@ -115,18 +115,19 @@ namespace giza
 
             if (!errors.ContainsNonWarnings())
             {
-                NGrammar g;
+                NGrammar ng;
+                // TODO: deduplicate
                 if (tokenized)
                 {
                     TokenizeTransform tgb = new TokenizeTransform();
-                    var pg2 = tgb.Tokenize(pg);
+                    var g2 = tgb.Tokenize(g);
                     var gc = new GrammarCompiler();
-                    g = gc.BuildGrammar(pg2);
+                    ng = gc.BuildGrammar(g2);
                 }
                 else
                 {
                     var gc = new GrammarCompiler();
-                    g = gc.BuildGrammar(pg.Definitions);
+                    ng = gc.BuildGrammar(g.Definitions);
                 }
 
                 Console.WriteLine(

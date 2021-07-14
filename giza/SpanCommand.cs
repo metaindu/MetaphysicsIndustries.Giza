@@ -97,7 +97,7 @@ namespace giza
         {
             var spanner = new SupergrammarSpanner();
             var errors = new List<Error>();
-            var pg = spanner.GetPreGrammar(grammar, errors);
+            var g = spanner.GetGrammar(grammar, errors);
 
             if (errors != null && errors.Count > 0)
             {
@@ -111,7 +111,7 @@ namespace giza
             }
 
             var ec = new ExpressionChecker();
-            errors = ec.CheckDefinitions(pg.Definitions);
+            errors = ec.CheckDefinitions(g.Definitions);
 
             if (errors != null && errors.Count > 0)
             {
@@ -125,8 +125,8 @@ namespace giza
             }
 
             var gc = new GrammarCompiler();
-            var g = gc.BuildGrammar(pg.Definitions);
-            var startDefinition = g.Definitions.First(d => d.Name == startDef);
+            var ng = gc.BuildGrammar(g.Definitions);
+            var startDefinition = ng.Definitions.First(d => d.Name == startDef);
             Span(input, startDefinition, printingOptions);
         }
         public static void Span(string input, NDefinition startDefinition, SpanPrintingOptions printingOptions)

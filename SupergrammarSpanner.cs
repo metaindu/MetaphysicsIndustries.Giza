@@ -36,7 +36,7 @@ namespace MetaphysicsIndustries.Giza
 {
     public class SupergrammarSpanner
     {
-        public PreGrammar GetPreGrammar(string input, List<Error> errors)
+        public Grammar GetGrammar(string input, List<Error> errors)
         {
             Supergrammar supergrammar = new Supergrammar();
             Spanner spanner = new Spanner(supergrammar.def_grammar);
@@ -64,11 +64,11 @@ namespace MetaphysicsIndustries.Giza
                 return null;
             }
 
-            var pg = BuildPreGrammar(supergrammar, s2[0], errors);
-            return pg;
+            var g = BuildPreGrammar(supergrammar, s2[0], errors);
+            return g;
         }
 
-        public PreGrammar BuildPreGrammar(Supergrammar grammar, Span span, List<Error> errors)
+        public Grammar BuildPreGrammar(Supergrammar grammar, Span span, List<Error> errors)
         {
             if (!(span.Node is DefRefNode) ||
                 (span.Node as DefRefNode).DefRef != grammar.def_grammar)
@@ -128,7 +128,7 @@ namespace MetaphysicsIndustries.Giza
                 def.Directives.UnionWith(directives);
             }
 
-            return new PreGrammar()
+            return new Grammar()
             {
                 Definitions = defs,
                 ImportStatements = importStmts,

@@ -89,7 +89,7 @@ namespace giza
 
             var sgs = new SupergrammarSpanner();
             var errors = new List<Error>();
-            var pg = sgs.GetPreGrammar(grammar, errors);
+            var g = sgs.GetGrammar(grammar, errors);
 
             if (errors.Count > 0)
             {
@@ -104,11 +104,11 @@ namespace giza
             var ec = new ExpressionChecker();
             if (tokenized)
             {
-                errors = ec.CheckDefinitionForParsing(pg.Definitions);
+                errors = ec.CheckDefinitionForParsing(g.Definitions);
             }
             else
             {
-                errors = ec.CheckDefinitions(pg.Definitions);
+                errors = ec.CheckDefinitions(g.Definitions);
             }
 
             if (errors != null && errors.Count > 0)
@@ -122,23 +122,24 @@ namespace giza
                 return;
             }
 
-            NGrammar g;
+            NGrammar ng;
 
+            // TODO: deduplicate
             if (tokenized)
             {
                 var tgb = new TokenizeTransform();
-                var pg2 = tgb.Tokenize(pg);
+                var g2 = tgb.Tokenize(g);
                 var gc = new GrammarCompiler();
-                g = gc.BuildGrammar(pg2);
+                ng = gc.BuildGrammar(g2);
             }
             else
             {
                 var gc = new GrammarCompiler();
-                g = gc.BuildGrammar(pg.Definitions);
+                ng = gc.BuildGrammar(g.Definitions);
             }
 
             var dr = new DefinitionRenderer();
-            Console.Write(dr.RenderDefinitionsAsCSharpClass(className, g.Definitions, ns: ns, singleton: isSingleton));
+            Console.Write(dr.RenderDefinitionsAsCSharpClass(className, ng.Definitions, ns: ns, singleton: isSingleton));
         }
     }
 }

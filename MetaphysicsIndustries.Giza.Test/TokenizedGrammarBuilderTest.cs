@@ -39,12 +39,12 @@ namespace MetaphysicsIndustries.Giza.Test
                     expr: new Expression(
                         new LiteralSubExpression(value: "value")))
             };
-            var pg = new PreGrammar() {Definitions = dis.ToList()};
+            var g = new Grammar() {Definitions = dis.ToList()};
             var tgb = new TokenizeTransform();
 
 
             // action
-            var grammar = tgb.Tokenize(pg);
+            var grammar = tgb.Tokenize(g);
             var explicitDef = grammar.FindDefinitionByName("def");
             var implicitDef = grammar.FindDefinitionByName("$implicit literal value");
 
@@ -100,12 +100,12 @@ namespace MetaphysicsIndustries.Giza.Test
                         new CharClassSubExpression(
                             CharClass.FromUndelimitedCharClassText("\\d"))))
             };
-            var pg = new PreGrammar() {Definitions = dis.ToList()};
+            var g = new Grammar() {Definitions = dis.ToList()};
             var tgb = new TokenizeTransform();
 
 
             // action
-            var grammar = tgb.Tokenize(pg);
+            var grammar = tgb.Tokenize(g);
             var explicitDef = grammar.FindDefinitionByName("def");
             var implicitDef = grammar.FindDefinitionByName("$implicit char class \\d");
 
@@ -164,12 +164,12 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 )
             };
-            var pg = new PreGrammar() {Definitions = dis.ToList()};
+            var g = new Grammar() {Definitions = dis.ToList()};
             var tgb = new TokenizeTransform();
 
 
             // action
-            var grammar = tgb.Tokenize(pg);
+            var grammar = tgb.Tokenize(g);
             var explicitDef = grammar.FindDefinitionByName("def");
             var implicitDef = grammar.FindDefinitionByName("$implicit ignore case literal value");
 
@@ -231,12 +231,12 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 )
             };
-            var pg = new PreGrammar() {Definitions = dis.ToList()};
+            var g = new Grammar() {Definitions = dis.ToList()};
             var tgb = new TokenizeTransform();
 
 
             // action
-            var grammar = tgb.Tokenize(pg);
+            var grammar = tgb.Tokenize(g);
             var explicitDef = grammar.FindDefinitionByName("def");
             var implicitDef = grammar.FindDefinitionByName("$implicit ignore case char class \\d");
 
@@ -295,12 +295,12 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 )
             };
-            var pg = new PreGrammar() {Definitions = dis.ToList()};
+            var g = new Grammar() {Definitions = dis.ToList()};
             var tgb = new TokenizeTransform();
 
 
             // action
-            var grammar = tgb.Tokenize(pg);
+            var grammar = tgb.Tokenize(g);
             var def = grammar.FindDefinitionByName("def");
 
 
@@ -337,12 +337,12 @@ namespace MetaphysicsIndustries.Giza.Test
                     expr: new Expression(
                         new LiteralSubExpression("value")))
             };
-            var pg = new PreGrammar() {Definitions = dis.ToList()};
+            var g = new Grammar() {Definitions = dis.ToList()};
             var tgb = new TokenizeTransform();
 
 
             // action
-            var grammar = tgb.Tokenize(pg);
+            var grammar = tgb.Tokenize(g);
             var def = grammar.FindDefinitionByName("something");
 
 
@@ -387,12 +387,12 @@ namespace MetaphysicsIndustries.Giza.Test
                     expr: new Expression(
                         new LiteralSubExpression("value")))
             };
-            var pg = new PreGrammar() {Definitions = dis.ToList()};
+            var g = new Grammar() {Definitions = dis.ToList()};
             var tgb = new TokenizeTransform();
 
 
             // action
-            var grammar = tgb.Tokenize(pg);
+            var grammar = tgb.Tokenize(g);
             var def = grammar.FindDefinitionByName("something");
 
 
@@ -435,12 +435,12 @@ namespace MetaphysicsIndustries.Giza.Test
                         new LiteralSubExpression("value"))
                 )
             };
-            var pg = new PreGrammar() {Definitions = dis.ToList()};
+            var g = new Grammar() {Definitions = dis.ToList()};
             var tgb = new TokenizeTransform();
 
 
             // action
-            var grammar = tgb.Tokenize(pg);
+            var grammar = tgb.Tokenize(g);
             var def = grammar.FindDefinitionByName("something");
 
 
@@ -492,12 +492,12 @@ namespace MetaphysicsIndustries.Giza.Test
                     expr: new Expression(
                         new LiteralSubExpression("token")))
             };
-            var pg = new PreGrammar() {Definitions = dis.ToList()};
+            var g = new Grammar() {Definitions = dis.ToList()};
             var tgb = new TokenizeTransform();
 
 
             // action
-            var grammar = tgb.Tokenize(pg);
+            var grammar = tgb.Tokenize(g);
             var def = grammar.FindDefinitionByName("def");
 
 
@@ -540,12 +540,12 @@ namespace MetaphysicsIndustries.Giza.Test
                     expr: new Expression(
                         new LiteralSubExpression("value")))
             };
-            var pg = new PreGrammar() {Definitions = dis.ToList()};
+            var g = new Grammar() {Definitions = dis.ToList()};
             var tgb = new TokenizeTransform();
 
 
             // action
-            var grammar = tgb.Tokenize(pg);
+            var grammar = tgb.Tokenize(g);
             var def = grammar.FindDefinitionByName("something");
 
 
@@ -591,12 +591,12 @@ namespace MetaphysicsIndustries.Giza.Test
                     expr: new Expression(
                         new LiteralSubExpression("value")))
             };
-            var pg = new PreGrammar() {Definitions = dis.ToList()};
+            var g = new Grammar() {Definitions = dis.ToList()};
             var tgb = new TokenizeTransform();
 
 
             // action
-            var grammar = tgb.Tokenize(pg);
+            var grammar = tgb.Tokenize(g);
             var def = grammar.FindDefinitionByName("something");
 
 
@@ -642,12 +642,12 @@ namespace MetaphysicsIndustries.Giza.Test
                     expr: new Expression(
                         new LiteralSubExpression("value")))
             };
-            var pg = new PreGrammar() {Definitions = dis.ToList()};
+            var g = new Grammar() {Definitions = dis.ToList()};
             var tgb = new TokenizeTransform();
 
 
             // action
-            var grammar = tgb.Tokenize(pg);
+            var grammar = tgb.Tokenize(g);
             var def = grammar.FindDefinitionByName("something");
 
 

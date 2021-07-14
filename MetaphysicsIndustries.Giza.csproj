@@ -70,8 +70,8 @@
     <Compile Include="ImportRef.cs" />
     <Compile Include="ImportStatement.cs" />
     <Compile Include="ImportTransform.cs" />
-    <Compile Include="IPreGrammarTransform.cs" />
-    <Compile Include="PreGrammar.cs" />
+    <Compile Include="IGrammarTransform.cs" />
+    <Compile Include="Grammar.cs" />
     <Compile Include="Span.cs" />
     <Compile Include="SupergrammarSpanner.cs" />
     <Content Include="BinarySpanner example grammar.txt" />

@@ -108,10 +108,10 @@ namespace giza
             if (!errors.ContainsNonWarnings())
             {
                 var tgb = new TokenizeTransform();
-                var pg = new PreGrammar() {Definitions = Env.Values.ToList()};
-                var pg2 = tgb.Tokenize(pg);
+                var g = new Grammar() {Definitions = Env.Values.ToList()};
+                var g2 = tgb.Tokenize(g);
                 var gc = new GrammarCompiler();
-                grammar = gc.BuildGrammar(pg2);
+                grammar = gc.BuildGrammar(g2);
                 var dc = new DefinitionChecker();
                 var errors2 = dc.CheckDefinitions(grammar.Definitions);
                 errors.AddRange(errors2);

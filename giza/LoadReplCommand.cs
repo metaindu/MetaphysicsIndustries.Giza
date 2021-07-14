@@ -50,8 +50,8 @@ namespace giza
 
             var errors = new List<Error>();
             var spanner = new SupergrammarSpanner();
-            var pg = spanner.GetPreGrammar(contents, errors);
-            var defs = pg.Definitions;
+            var g = spanner.GetGrammar(contents, errors);
+            var defs = g.Definitions;
             if (errors.ContainsNonWarnings())
             {
                 Console.WriteLine("There are errors in the loaded file:");

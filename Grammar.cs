@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace MetaphysicsIndustries.Giza
 {
-    public class PreGrammar
+    public class Grammar
     {
         public List<Definition> Definitions;
         public List<ImportStatement> ImportStatements;
