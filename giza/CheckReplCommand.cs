@@ -71,7 +71,7 @@ namespace giza
             }
 
             var ec = new ExpressionChecker();
-            var defs = defnames.Select(name => Env[name]);
+            var defs = defnames.Select(name => Env[name]).ToList();
             List<Error> errors;
             if (tokenized)
             {
@@ -84,29 +84,21 @@ namespace giza
 
             if (!errors.ContainsNonWarnings())
             {
-                // TODO: deduplicate
+                var g = new Grammar()
+                {
+                    Definitions = defs
+                };
+                var g2 = g;
                 if (tokenized)
                 {
-                    var tgb = new TokenizeTransform();
-                    var g = new Grammar()
-                    {
-                        Definitions = defs.ToList()
-                    };
-                    var g2 = tgb.Tokenize(g);
-                    var gc = new GrammarCompiler();
-                    var ng = gc.Compile(g2);
-                    var dc = new DefinitionChecker();
-                    var errors2 = dc.CheckDefinitions(ng.Definitions);
-                    errors.AddRange(errors2);
+                    var tt = new TokenizeTransform();
+                    g2 = tt.Tokenize(g);
                 }
-                else
-                {
-                    var gc = new GrammarCompiler();
-                    var ng = gc.Compile(defs.ToArray());
-                    var dc = new DefinitionChecker();
-                    var errors2 = dc.CheckDefinitions(ng.Definitions);
-                    errors.AddRange(errors2);
-                }
+                var gc = new GrammarCompiler();
+                var ng = gc.Compile(g2);
+                var dc = new DefinitionChecker();
+                var errors2 = dc.CheckDefinitions(ng.Definitions);
+                errors.AddRange(errors2);
             }
 
             errors.PrintErrors(true);

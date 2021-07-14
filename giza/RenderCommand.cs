@@ -122,24 +122,18 @@ namespace giza
                 return;
             }
 
-            NGrammar ng;
-
-            // TODO: deduplicate
+            var g2 = g;
             if (tokenized)
             {
-                var tgb = new TokenizeTransform();
-                var g2 = tgb.Tokenize(g);
-                var gc = new GrammarCompiler();
-                ng = gc.Compile(g2);
+                var tt = new TokenizeTransform();
+                g2 = tt.Tokenize(g);
             }
-            else
-            {
-                var gc = new GrammarCompiler();
-                ng = gc.Compile(g.Definitions);
-            }
+            var gc = new GrammarCompiler();
+            var ng = gc.Compile(g2);
 
             var dr = new DefinitionRenderer();
-            Console.Write(dr.RenderDefinitionsAsCSharpClass(className, ng.Definitions, ns: ns, singleton: isSingleton));
+            Console.Write(dr.RenderDefinitionsAsCSharpClass(className,
+                ng.Definitions, ns: ns, singleton: isSingleton));
         }
     }
 }

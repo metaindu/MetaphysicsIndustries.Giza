@@ -116,19 +116,14 @@ namespace giza
             if (!errors.ContainsNonWarnings())
             {
                 NGrammar ng;
-                // TODO: deduplicate
+                var g2 = g;
                 if (tokenized)
                 {
-                    TokenizeTransform tgb = new TokenizeTransform();
-                    var g2 = tgb.Tokenize(g);
-                    var gc = new GrammarCompiler();
-                    ng = gc.Compile(g2);
+                    var tt = new TokenizeTransform();
+                    g2 = tt.Tokenize(g);
                 }
-                else
-                {
-                    var gc = new GrammarCompiler();
-                    ng = gc.Compile(g.Definitions);
-                }
+                var gc = new GrammarCompiler();
+                ng = gc.Compile(g2.Definitions);
 
                 Console.WriteLine(
                     "There are {0} definitions in the grammar:",
