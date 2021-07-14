@@ -47,27 +47,27 @@ namespace MetaphysicsIndustries.Giza
             var defs2 = new List<NDefinition>();
             var defsByName = new Dictionary<string, NDefinition>();
             var exprsByDef = new Dictionary<NDefinition, Expression>();
-            foreach (var di in defs1)
+            foreach (var def in defs1)
             {
-                var def = new NDefinition(di.Name);
-                def.IsImported = di.IsImported;
-                defs2.Add(def);
-                defsByName[di.Name] = def;
-                def.Directives.UnionWith(di.Directives);
-                exprsByDef[def] = di.Expr;
+                var ndef = new NDefinition(def.Name);
+                ndef.IsImported = def.IsImported;
+                defs2.Add(ndef);
+                defsByName[def.Name] = ndef;
+                ndef.Directives.UnionWith(def.Directives);
+                exprsByDef[ndef] = def.Expr;
             }
 
-            foreach (var def in defs2)
+            foreach (var ndef in defs2)
             {
-                NodeBundle bundle = GetNodesFromExpression(exprsByDef[def], defsByName);
+                NodeBundle bundle = GetNodesFromExpression(exprsByDef[ndef], defsByName);
 
                 if (bundle.IsSkippable) throw new InvalidOperationException();
 
-                def.StartNodes.UnionWith(bundle.StartNodes);
+                ndef.StartNodes.UnionWith(bundle.StartNodes);
 
-                def.Nodes.AddRange(bundle.Nodes);
+                ndef.Nodes.AddRange(bundle.Nodes);
 
-                def.EndNodes.UnionWith(bundle.EndNodes);
+                ndef.EndNodes.UnionWith(bundle.EndNodes);
             }
 
             return new NGrammar(defs2);

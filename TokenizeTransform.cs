@@ -76,23 +76,23 @@ namespace MetaphysicsIndustries.Giza
                         var defname = GetImplicitDefinitionName(literal, ignoreCase);
                         if (!implicitTokenDefs.ContainsKey(defname))
                         {
-                            var di = new Definition
+                            var def2 = new Definition
                             {
                                 Name = defname,
                                 IsImported = def.IsImported,
                             };
-                            di.Expr = new Expression(
+                            def2.Expr = new Expression(
                                 new LiteralSubExpression
                                 {
                                     Value = literal.Value
                                 });
-                            di.Directives.Add(DefinitionDirective.Token);
+                            def2.Directives.Add(DefinitionDirective.Token);
                             if (ignoreCase)
                             {
-                                di.Directives.Add(DefinitionDirective.IgnoreCase);
+                                def2.Directives.Add(DefinitionDirective.IgnoreCase);
                             }
 
-                            implicitTokenDefs[defname] = di;
+                            implicitTokenDefs[defname] = def2;
                         }
                         defsByLiteral[literal] = implicitTokenDefs[defname];
                     }
@@ -102,23 +102,23 @@ namespace MetaphysicsIndustries.Giza
                         var defname = GetImplicitDefinitionName(cc, ignoreCase);
                         if (!implicitTokenDefs.ContainsKey(defname))
                         {
-                            var di = new Definition
+                            var def2 = new Definition
                             {
                                 Name = defname,
                                 IsImported = def.IsImported,
                             };
-                            di.Expr = new Expression(
+                            def2.Expr = new Expression(
                                 new CharClassSubExpression()
                                 {
                                     CharClass = cc.CharClass
                                 });
-                            di.Directives.Add(DefinitionDirective.Token);
+                            def2.Directives.Add(DefinitionDirective.Token);
                             if (ignoreCase)
                             {
-                                di.Directives.Add(DefinitionDirective.IgnoreCase);
+                                def2.Directives.Add(DefinitionDirective.IgnoreCase);
                             }
 
-                            implicitTokenDefs[defname] = di;
+                            implicitTokenDefs[defname] = def2;
                         }
                         defsByCharClass[cc] = implicitTokenDefs[defname];
                     }
