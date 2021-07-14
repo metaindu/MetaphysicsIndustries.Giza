@@ -1,3 +1,8 @@
+coherent error handling
+    error lists or exceptions?
+    return errors or always use a parameters?
+    return null when something fails (force caller to check return value and error list)?
+
 tokenized parsing
     definitions and directives
     all of this is checked by ExpressionChecker
