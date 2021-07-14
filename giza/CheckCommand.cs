@@ -96,17 +96,17 @@ namespace giza
                     var tgb = new TokenizeTransform();
                     var pg2 = tgb.Tokenize(pg);
                     var db = new DefinitionBuilder();
-                    var g = db.BuildGrammar(pg2);
+                    var g2 = db.BuildGrammar(pg2);
                     var dc = new DefinitionChecker();
-                    var errors2 = dc.CheckDefinitions(g.Definitions);
+                    var errors2 = dc.CheckDefinitions(g2.Definitions);
                     errors.AddRange(errors2);
                 }
                 else
                 {
                     var db = new DefinitionBuilder();
-                    var defs2 = db.BuildDefinitions(pg.Definitions);
+                    var g2 = db.BuildGrammar(pg.Definitions);
                     var dc = new DefinitionChecker();
-                    var errors2 = dc.CheckDefinitions(defs2);
+                    var errors2 = dc.CheckDefinitions(g2.Definitions);
                     errors.AddRange(errors2);
                 }
             }
@@ -115,31 +115,28 @@ namespace giza
 
             if (!errors.ContainsNonWarnings())
             {
-                IEnumerable<Definition> defs;
+                Grammar g;
                 if (tokenized)
                 {
                     TokenizeTransform tgb = new TokenizeTransform();
                     var pg2 = tgb.Tokenize(pg);
                     var db = new DefinitionBuilder();
-                    var g = db.BuildGrammar(pg2);
-                    defs = g.Definitions;
+                    g = db.BuildGrammar(pg2);
                 }
                 else
                 {
                     DefinitionBuilder db = new DefinitionBuilder();
-                    defs = db.BuildDefinitions(pg.Definitions);
+                    g = db.BuildGrammar(pg.Definitions);
                 }
 
-                Console.WriteLine("There are {0} definitions in the grammar:", defs.Count());
-                foreach (var def in defs)
+                Console.WriteLine(
+                    "There are {0} definitions in the grammar:",
+                    g.Definitions.Count());
+                foreach (var def in g.Definitions)
                 {
                     Console.WriteLine("  {0}", def.Name);
                 }
             }
         }
-
-
     }
-
 }
-

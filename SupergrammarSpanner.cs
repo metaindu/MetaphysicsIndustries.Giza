@@ -30,29 +30,12 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
-using System.Linq;
 
 
 namespace MetaphysicsIndustries.Giza
 {
     public class SupergrammarSpanner
     {
-        public SupergrammarSpanner(IFileSource fileSource=null,
-            ImportTransform importer=null)
-        {
-            if (fileSource == null)
-                fileSource = new FileSource();
-            _fileSource = fileSource;
-
-            if (importer == null)
-                importer = new ImportTransform(this, _fileSource);
-            _importer = importer;
-        }
-
-        private readonly IFileSource _fileSource;
-        private readonly ImportTransform _importer;
-
         public PreGrammar GetPreGrammar(string input, List<Error> errors)
         {
             Supergrammar supergrammar = new Supergrammar();
@@ -83,26 +66,6 @@ namespace MetaphysicsIndustries.Giza
 
             var pg = BuildPreGrammar(supergrammar, s2[0], errors);
             return pg;
-        }
-
-        public Grammar GetGrammar(string input, List<Error> errors)
-        {
-            var pg = GetPreGrammar(input, errors);
-            pg = _importer.Transform(pg);
-            var dis = pg.Definitions;
-
-            if (errors.Count > 0 || dis == null)
-            {
-                return null;
-            }
-
-            DefinitionBuilder db = new DefinitionBuilder();
-            Definition[] defs = db.BuildDefinitions(dis);
-
-            Grammar grammar = new Grammar();
-            grammar.Definitions.AddRange(defs);
-
-            return grammar;
         }
 
         public PreGrammar BuildPreGrammar(Supergrammar grammar, Span span, List<Error> errors)

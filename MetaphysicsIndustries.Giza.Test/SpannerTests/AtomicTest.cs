@@ -48,8 +48,7 @@ namespace MetaphysicsIndustries.Giza.Test
                         )
                     }
                 );
-            var defs = (new DefinitionBuilder()).BuildDefinitions(new [] { letters, sequence });
-            var grammar = new Grammar(defs);
+            var grammar = (new DefinitionBuilder()).BuildGrammar(new [] { letters, sequence });
             var sequenceDef = grammar.FindDefinitionByName("sequence");
             var lettersDef = grammar.FindDefinitionByName("letters");
             var spanner = new Spanner(sequenceDef);
@@ -102,8 +101,7 @@ namespace MetaphysicsIndustries.Giza.Test
                         )
                     }
                 );
-            var defs = (new DefinitionBuilder()).BuildDefinitions(new [] { letters, sequence });
-            var grammar = new Grammar(defs);
+            var grammar = (new DefinitionBuilder()).BuildGrammar(new [] { letters, sequence });
             var sequenceDef = grammar.FindDefinitionByName("sequence");
             var lettersDef = grammar.FindDefinitionByName("letters");
             var spanner = new Spanner(sequenceDef);

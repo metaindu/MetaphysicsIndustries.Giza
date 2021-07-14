@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Giza.Test
@@ -28,11 +27,10 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 }
             };
-            var ss = new SupergrammarSpanner(mfs, importer: null);
-            var importer = new ImportTransform(ss: ss, fileSource: mfs);
+            var importer = new ImportTransform(fileSource: mfs);
             var errors = new List<Error>();
             // when
-            var result = importer.Transform(pg, errors, ss, mfs);
+            var result = importer.Transform(pg, errors, mfs);
             // then
             Assert.AreEqual(0, errors.Count);
             Assert.IsNotNull(result);
@@ -71,11 +69,10 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 }
             };
-            var ss = new SupergrammarSpanner(mfs, importer: null);
-            var importer = new ImportTransform(ss: ss, fileSource: mfs);
+            var importer = new ImportTransform(fileSource: mfs);
             var errors = new List<Error>();
             // when
-            var result = importer.Transform(pg, errors, ss, mfs);
+            var result = importer.Transform(pg, errors, mfs);
             // then
             Assert.AreEqual(0, errors.Count);
             Assert.IsNotNull(result);
@@ -116,11 +113,10 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 }
             };
-            var ss = new SupergrammarSpanner(mfs);
-            var importer = new ImportTransform(ss, mfs);
+            var importer = new ImportTransform(mfs);
             var errors = new List<Error>();
             // when
-            var result = importer.Transform(pg, errors, ss, mfs);
+            var result = importer.Transform(pg, errors, mfs);
             // then
             Assert.AreEqual(0, errors.Count);
             Assert.IsNotNull(result);
@@ -157,13 +153,12 @@ namespace MetaphysicsIndustries.Giza.Test
                 }
             };
 
-            var ss = new SupergrammarSpanner(mfs);
-            var importer = new ImportTransform(ss, mfs);
+            var importer = new ImportTransform(mfs);
             var errors1 = new List<Error>();
             var errors2 = new List<Error>();
             // when
-            var result1 = importer.Transform(pg, errors1, ss, mfs);
-            var result2 = importer.Transform(pg, errors2, ss, mfs);
+            var result1 = importer.Transform(pg, errors1, mfs);
+            var result2 = importer.Transform(pg, errors2, mfs);
             // then
             Assert.AreEqual(0, errors1.Count);
             Assert.IsNotNull(result1);
@@ -222,11 +217,10 @@ namespace MetaphysicsIndustries.Giza.Test
 
                 throw new FileNotFoundException(s);
             });
-            var ss = new SupergrammarSpanner(mfs);
-            var importer = new ImportTransform(ss, mfs);
+            var importer = new ImportTransform(mfs);
             var errors = new List<Error>();
             // when
-            var result = importer.Transform(pg, errors, ss, mfs);
+            var result = importer.Transform(pg, errors, mfs);
             // then
             Assert.AreEqual(0, errors.Count);
             Assert.IsNotNull(result);
@@ -282,11 +276,10 @@ namespace MetaphysicsIndustries.Giza.Test
                     },
                 }
             };
-            var ss = new SupergrammarSpanner(mfs);
-            var importer = new ImportTransform(ss, mfs);
+            var importer = new ImportTransform(mfs);
             var errors = new List<Error>();
             // when
-            var result = importer.Transform(pg, errors, ss, mfs);
+            var result = importer.Transform(pg, errors, mfs);
             // then
             Assert.AreEqual(0, errors.Count);
             Assert.IsNotNull(result);
@@ -344,11 +337,10 @@ namespace MetaphysicsIndustries.Giza.Test
                     },
                 }
             };
-            var ss = new SupergrammarSpanner(mfs);
-            var importer = new ImportTransform(ss, mfs);
+            var importer = new ImportTransform(mfs);
             var errors = new List<Error>();
             // when
-            var result = importer.Transform(pg, errors, ss, mfs);
+            var result = importer.Transform(pg, errors, mfs);
             // then
             Assert.AreEqual(0, errors.Count);
             Assert.IsNotNull(result);

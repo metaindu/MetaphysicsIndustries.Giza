@@ -137,7 +137,7 @@ namespace giza
             else
             {
                 var db = new DefinitionBuilder();
-                g = new Grammar(db.BuildDefinitions(alldefs));
+                g = db.BuildGrammar(alldefs);
             }
 
             IEnumerable<Definition> defs2 = g.Definitions;

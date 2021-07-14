@@ -1,19 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 
 namespace MetaphysicsIndustries.Giza
 {
     public class ImportTransform : IPreGrammarTransform
     {
-        public ImportTransform(SupergrammarSpanner ss, IFileSource fileSource)
+        public ImportTransform(IFileSource fileSource)
         {
-            _ss = ss;
             _fileSource = fileSource;
         }
 
-        private readonly SupergrammarSpanner _ss;
         private readonly IFileSource _fileSource;
 
         private readonly ImportCache _importCache = new ImportCache();
@@ -23,18 +20,16 @@ namespace MetaphysicsIndustries.Giza
             return Transform(pg);
         }
         public PreGrammar Transform(PreGrammar pg, List<Error> errors=null,
-            SupergrammarSpanner ss=null, IFileSource fileSource=null,
-            ImportCache importCache=null)
+            IFileSource fileSource=null, ImportCache importCache=null)
         {
             if (errors == null) errors = new List<Error>();
-            if (ss == null) ss = _ss;
             if (fileSource == null) fileSource = _fileSource;
             if (importCache == null) importCache = _importCache;
 
-            return ProcessImports(pg, errors, ss, fileSource, importCache);
+            return ProcessImports(pg, errors, fileSource, importCache);
         }
         public static PreGrammar ProcessImports(PreGrammar pg,
-            List<Error> errors, SupergrammarSpanner ss, IFileSource fileSource,
+            List<Error> errors, IFileSource fileSource,
             ImportCache importCache=null)
         {
             var defsByName =
@@ -42,7 +37,7 @@ namespace MetaphysicsIndustries.Giza
             var errors2 = new List<Error>();
             foreach (var importStmt in pg.ImportStatements)
             {
-                var importedDefs = ImportDefinitions(importStmt, errors2, ss,
+                var importedDefs = ImportDefinitions(importStmt, errors2,
                     fileSource, importCache);
                 errors.AddRange(errors2);
                 if (errors2.ContainsNonWarnings())
@@ -63,9 +58,9 @@ namespace MetaphysicsIndustries.Giza
             };
         }
 
-        static DefinitionExpression[] ImportDefinitions(ImportStatement importStmt,
-            List<Error> errors, SupergrammarSpanner ss, IFileSource fileSource,
-            ImportCache importCache)
+        static DefinitionExpression[] ImportDefinitions(
+            ImportStatement importStmt, List<Error> errors,
+            IFileSource fileSource, ImportCache importCache)
         {
             var fileToImport = importStmt.ModuleOrFile;
             var importRefs = importStmt.ImportRefs;
@@ -74,12 +69,13 @@ namespace MetaphysicsIndustries.Giza
             {
                 var content = fileSource.GetFileContents(fileToImport);
                 var errors2 = new List<Error>();
+                var ss = new SupergrammarSpanner();
                 var ipg1 = ss.GetPreGrammar(content, errors2);
                 errors.AddRange(errors2);
                 if (errors2.ContainsNonWarnings())
                     return null;
 
-                var ipg = ProcessImports(ipg1, errors2, ss, fileSource,
+                var ipg = ProcessImports(ipg1, errors2, fileSource,
                     importCache);
                 errors.AddRange(errors2);
                 if (errors2.ContainsNonWarnings())

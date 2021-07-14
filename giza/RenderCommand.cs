@@ -133,17 +133,12 @@ namespace giza
             else
             {
                 var db = new DefinitionBuilder();
-                var defs = db.BuildDefinitions(pg.Definitions);
-
-                g = new Grammar();
-                g.Definitions.AddRange(defs);
+                g = db.BuildGrammar(pg.Definitions);
             }
 
             var dr = new DefinitionRenderer();
             Console.Write(dr.RenderDefinitionsAsCSharpClass(className, g.Definitions, ns: ns, singleton: isSingleton));
         }
-
-
     }
 }
 

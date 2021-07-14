@@ -28,20 +28,17 @@ namespace MetaphysicsIndustries.Giza
     {
         public Grammar BuildGrammar(PreGrammar pg)
         {
+            if (pg.ImportStatements != null && pg.ImportStatements.Count > 0)
+                throw new ArgumentException(
+                    "The grammar must not contain import statements.");
+
             return BuildGrammar(pg.Definitions);
         }
         public Grammar BuildGrammar(IEnumerable<DefinitionExpression> defs)
         {
-            return new Grammar(BuildDefinitions(defs));
-        }
-        public Definition[] BuildDefinitions(PreGrammar pg)
-        {
-            return BuildDefinitions(pg.Definitions);
-        }
-        public Definition[] BuildDefinitions(IEnumerable<DefinitionExpression> defs)
-        {
+            var defs1 = defs.ToList();
             var ec = new ExpressionChecker();
-            List<Error> errors = ec.CheckDefinitionsForSpanning(defs);
+            List<Error> errors = ec.CheckDefinitionsForSpanning(defs1);
             if (errors.ContainsNonWarnings())
             {
                 throw new InvalidOperationException("Errors in expressions.");
@@ -50,7 +47,7 @@ namespace MetaphysicsIndustries.Giza
             var defs2 = new List<Definition>();
             var defsByName = new Dictionary<string, Definition>();
             var exprsByDef = new Dictionary<Definition, Expression>();
-            foreach (DefinitionExpression di in defs)
+            foreach (var di in defs1)
             {
                 var def = new Definition(di.Name);
                 def.IsImported = di.IsImported;
@@ -73,7 +70,7 @@ namespace MetaphysicsIndustries.Giza
                 def.EndNodes.UnionWith(bundle.EndNodes);
             }
 
-            return defs2.ToArray();
+            return new Grammar(defs2);
         }
 
         NodeBundle GetNodesFromExpression(Expression expr, Dictionary<string, Definition> defsByName)

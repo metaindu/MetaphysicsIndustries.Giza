@@ -19,7 +19,6 @@
 
 using System;
 using NCommander;
-using System.IO;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Giza;
 using System.Linq;
@@ -102,9 +101,9 @@ namespace giza
                 else
                 {
                     var db = new DefinitionBuilder();
-                    var defs2 = db.BuildDefinitions(defs.ToArray());
+                    var g = db.BuildGrammar(defs.ToArray());
                     var dc = new DefinitionChecker();
-                    var errors2 = dc.CheckDefinitions(defs2);
+                    var errors2 = dc.CheckDefinitions(g.Definitions);
                     errors.AddRange(errors2);
                 }
             }

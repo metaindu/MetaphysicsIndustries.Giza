@@ -125,10 +125,8 @@ namespace giza
             }
 
             DefinitionBuilder db = new DefinitionBuilder();
-            var defs = db.BuildDefinitions(pg.Definitions);
-
-            var startDefinition = defs.First(d => d.Name == startDef);
-            var g = new Grammar(defs); // the definitions will be linked to the grammar. so we're not _really_ throwing g away after creating it, even though that's what it looks like.
+            var g = db.BuildGrammar(pg.Definitions);
+            var startDefinition = g.Definitions.First(d => d.Name == startDef);
             Span(input, startDefinition, printingOptions);
         }
         public static void Span(string input, Definition startDefinition, SpanPrintingOptions printingOptions)
