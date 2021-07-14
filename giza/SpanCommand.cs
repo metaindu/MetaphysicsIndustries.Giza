@@ -125,7 +125,7 @@ namespace giza
             }
 
             var gc = new GrammarCompiler();
-            var ng = gc.BuildGrammar(g.Definitions);
+            var ng = gc.Compile(g.Definitions);
             var startDefinition = ng.Definitions.First(d => d.Name == startDef);
             Span(input, startDefinition, printingOptions);
         }

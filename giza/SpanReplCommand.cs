@@ -107,7 +107,7 @@ namespace giza
             }
 
             var gc = new GrammarCompiler();
-            var grammar = gc.BuildGrammar(Env.Values.ToArray());
+            var grammar = gc.Compile(Env.Values.ToArray());
             var startDefinition = grammar.FindDefinitionByName(startDef);
 
             foreach (var input in inputs)

@@ -96,7 +96,7 @@ namespace giza
                     var tgb = new TokenizeTransform();
                     var g2 = tgb.Tokenize(g);
                     var gc = new GrammarCompiler();
-                    var ng = gc.BuildGrammar(g2);
+                    var ng = gc.Compile(g2);
                     var dc = new DefinitionChecker();
                     var errors2 = dc.CheckDefinitions(ng.Definitions);
                     errors.AddRange(errors2);
@@ -104,7 +104,7 @@ namespace giza
                 else
                 {
                     var gc = new GrammarCompiler();
-                    var ng = gc.BuildGrammar(g.Definitions);
+                    var ng = gc.Compile(g.Definitions);
                     var dc = new DefinitionChecker();
                     var errors2 = dc.CheckDefinitions(ng.Definitions);
                     errors.AddRange(errors2);
@@ -122,18 +122,18 @@ namespace giza
                     TokenizeTransform tgb = new TokenizeTransform();
                     var g2 = tgb.Tokenize(g);
                     var gc = new GrammarCompiler();
-                    ng = gc.BuildGrammar(g2);
+                    ng = gc.Compile(g2);
                 }
                 else
                 {
                     var gc = new GrammarCompiler();
-                    ng = gc.BuildGrammar(g.Definitions);
+                    ng = gc.Compile(g.Definitions);
                 }
 
                 Console.WriteLine(
                     "There are {0} definitions in the grammar:",
-                    g.Definitions.Count());
-                foreach (var def in g.Definitions)
+                    ng.Definitions.Count());
+                foreach (var def in ng.Definitions)
                 {
                     Console.WriteLine("  {0}", def.Name);
                 }

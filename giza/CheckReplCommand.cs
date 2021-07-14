@@ -94,7 +94,7 @@ namespace giza
                     };
                     var g2 = tgb.Tokenize(g);
                     var gc = new GrammarCompiler();
-                    var ng = gc.BuildGrammar(g2);
+                    var ng = gc.Compile(g2);
                     var dc = new DefinitionChecker();
                     var errors2 = dc.CheckDefinitions(ng.Definitions);
                     errors.AddRange(errors2);
@@ -102,9 +102,9 @@ namespace giza
                 else
                 {
                     var gc = new GrammarCompiler();
-                    var g = gc.BuildGrammar(defs.ToArray());
+                    var ng = gc.Compile(defs.ToArray());
                     var dc = new DefinitionChecker();
-                    var errors2 = dc.CheckDefinitions(g.Definitions);
+                    var errors2 = dc.CheckDefinitions(ng.Definitions);
                     errors.AddRange(errors2);
                 }
             }

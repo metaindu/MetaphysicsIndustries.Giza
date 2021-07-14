@@ -44,7 +44,7 @@ namespace MetaphysicsIndustries.Giza.Test
                         new CharClassSubExpression(
                             CharClass.FromUndelimitedCharClassText("\\l"),
                             isRepeatable: true)));
-            var grammar = (new GrammarCompiler()).BuildGrammar(new [] { letters, sequence });
+            var grammar = (new GrammarCompiler()).Compile(new [] { letters, sequence });
             var sequenceDef = grammar.FindDefinitionByName("sequence");
             var lettersDef = grammar.FindDefinitionByName("letters");
             var spanner = new Spanner(sequenceDef);
@@ -93,7 +93,7 @@ namespace MetaphysicsIndustries.Giza.Test
                         new CharClassSubExpression(
                             CharClass.FromUndelimitedCharClassText("\\l"),
                             isRepeatable: true)));
-            var grammar = (new GrammarCompiler()).BuildGrammar(new [] { letters, sequence });
+            var grammar = (new GrammarCompiler()).Compile(new [] { letters, sequence });
             var sequenceDef = grammar.FindDefinitionByName("sequence");
             var lettersDef = grammar.FindDefinitionByName("letters");
             var spanner = new Spanner(sequenceDef);

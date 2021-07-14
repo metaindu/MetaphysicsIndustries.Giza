@@ -130,12 +130,12 @@ namespace giza
                 var tgb = new TokenizeTransform();
                 var g2 = tgb.Tokenize(g);
                 var gc = new GrammarCompiler();
-                ng = gc.BuildGrammar(g2);
+                ng = gc.Compile(g2);
             }
             else
             {
                 var gc = new GrammarCompiler();
-                ng = gc.BuildGrammar(g.Definitions);
+                ng = gc.Compile(g.Definitions);
             }
 
             var dr = new DefinitionRenderer();

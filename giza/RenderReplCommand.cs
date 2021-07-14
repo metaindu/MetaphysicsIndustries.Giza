@@ -134,12 +134,12 @@ namespace giza
                 var g = new Grammar() {Definitions = alldefs.ToList()};
                 var g2 = tgb.Tokenize(g);
                 var db = new GrammarCompiler();
-                ng = db.BuildGrammar(g2);
+                ng = db.Compile(g2);
             }
             else
             {
                 var db = new GrammarCompiler();
-                ng = db.BuildGrammar(alldefs);
+                ng = db.Compile(alldefs);
             }
 
             IEnumerable<NDefinition> defs2 = ng.Definitions;

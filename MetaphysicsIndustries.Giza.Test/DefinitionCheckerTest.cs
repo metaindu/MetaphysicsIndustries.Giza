@@ -46,7 +46,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var errors = new List<Error>();
             var g = ss.GetGrammar(input, errors);
             var gc = new GrammarCompiler();
-            var grammar = gc.BuildGrammar(g);
+            var grammar = gc.Compile(g);
             DefinitionChecker dc = new DefinitionChecker();
 
             // precondition

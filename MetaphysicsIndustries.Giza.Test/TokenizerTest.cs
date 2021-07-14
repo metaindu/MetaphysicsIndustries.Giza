@@ -900,7 +900,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsEmpty(errors);
             var g2 = (new TokenizeTransform()).Tokenize(g);
             var gc = new GrammarCompiler();
-            var grammar = gc.BuildGrammar(g2);
+            var grammar = gc.Compile(g2);
             var implicitA = grammar.FindDefinitionByName("$implicit literal a");
             var implicitAb = grammar.FindDefinitionByName("$implicit literal ab");
             var implicitAbc = grammar.FindDefinitionByName("$implicit literal abc");

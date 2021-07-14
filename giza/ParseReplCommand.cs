@@ -111,7 +111,7 @@ namespace giza
                 var g = new Grammar() {Definitions = Env.Values.ToList()};
                 var g2 = tgb.Tokenize(g);
                 var gc = new GrammarCompiler();
-                grammar = gc.BuildGrammar(g2);
+                grammar = gc.Compile(g2);
                 var dc = new DefinitionChecker();
                 var errors2 = dc.CheckDefinitions(grammar.Definitions);
                 errors.AddRange(errors2);
