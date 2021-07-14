@@ -2,7 +2,7 @@
 definitions and directives
 all of this is checked by ExpressionChecker
 some of it is checked by DefinitionChecker
-some of it also goes into DefinitionBuilder and TokenizedGrammarBuilder
+some of it also goes into GrammarCompiler and TokenizeTransform
 
 
 

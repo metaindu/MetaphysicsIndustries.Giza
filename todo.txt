@@ -7,16 +7,16 @@ tokenized parsing
     definitions and directives
     all of this is checked by ExpressionChecker
     some of it is checked by DefinitionChecker
-    some of it also goes into DefinitionBuilder and TokenizedGrammarBuilder
+    some of it also goes into GrammarCompiler and TokenizeTransform
 
     in all grammars, combinations of token, subtoken, and comment yield an error
     in a spanned grammar
         definitions, by default have no directives, which means that they ignore whitespace, mind case, and aren't atomic.
-            test in DefinitionBuilder
+            test in GrammarCompiler
         ignore case, mind whitespace, and atomic perform as advertized
             test in SpannerTest
         references between definitions work normally, no matter what tokenizing directives are applied to either def
-            test in DefinitionBuilder
+            test in GrammarCompiler
         directives have no effect on inter-definition references, as token, subtoken, and comment are ignored
     in a parsed grammar
         definitions, by default have no directives, which means that they ignore whitespace, mind case, and aren't atomic.
