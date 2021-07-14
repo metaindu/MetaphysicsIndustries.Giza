@@ -58,6 +58,7 @@ namespace giza
                     Type=ParameterType.String,
                     Description="The namespace in which the C# class is defined (default is 'MetaphysicsIndustries.Giza')",
                 },
+                // TODO: add the new options from RenderReplCommand
             };
         }
 

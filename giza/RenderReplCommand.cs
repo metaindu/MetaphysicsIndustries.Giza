@@ -64,6 +64,7 @@ namespace giza
                     Type=ParameterType.String,
                     Description="Save the c# class to the specified file, instead of printing it out",
                 },
+                // TODO: add these new options to RenderCommand
                 new Option {
                     Name="base",
                     Type = ParameterType.String,
