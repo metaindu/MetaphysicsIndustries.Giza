@@ -75,7 +75,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     startNodes: new [] { 0 },
                     endNodes: new [] { 2 }
                 );
-            var grammar = new Grammar(exprDef, operandDef, operatorDef);
+            var grammar = new NGrammar(exprDef, operandDef, operatorDef);
 
             var errors = new List<Error>();
             var parser = new Parser(exprDef);
@@ -224,7 +224,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     startNodes: new [] { 0 },
                     endNodes: new [] { 0 }
                 );
-            var testGrammar = new Grammar(sequenceDef, itemDef);
+            var testGrammar = new NGrammar(sequenceDef, itemDef);
             string testInputText = "item ITEM iTeM";
 
             var errors = new List<Error>();
@@ -287,7 +287,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     startNodes: new [] { 0 },
                     endNodes: new [] { 0 }
                 );
-            var testGrammar = new Grammar(sequenceDef, itemDef);
+            var testGrammar = new NGrammar(sequenceDef, itemDef);
             string testInputText = "item ITEM iTeM";
 
             var errors = new List<Error>();
@@ -374,7 +374,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     startNodes: new [] { 0 },
                     endNodes: new [] { 0 }
                 );
-            var testGrammar = new Grammar(sequenceDef, itemDef, middleDef);
+            var testGrammar = new NGrammar(sequenceDef, itemDef, middleDef);
             string testInputText = "abcqwerxyz abcQWERxyz abcQwErxyz";
 
             var errors = new List<Error>();
@@ -458,7 +458,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     startNodes: new [] { 0 },
                     endNodes: new [] { 0 }
                 );
-            var testGrammar = new Grammar(sequenceDef, itemDef, middleDef);
+            var testGrammar = new NGrammar(sequenceDef, itemDef, middleDef);
             string testInputText = "abcqwerxyz abcQWERxyz abcQwErxyz";
 
             var errors = new List<Error>();
@@ -555,7 +555,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     startNodes: new [] { 0 },
                     endNodes: new [] { 0 }
                 );
-            var testGrammar = new Grammar(sequenceDef, itemDef, sub);
+            var testGrammar = new NGrammar(sequenceDef, itemDef, sub);
             string testInputText = "abc-qwer-xyz";
 
             var errors = new List<Error>();
@@ -643,7 +643,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     startNodes: new [] { 0 },
                     endNodes: new [] { 0 }
                 );
-            var testGrammar = new Grammar(sequenceDef, itemDef, sub);
+            var testGrammar = new NGrammar(sequenceDef, itemDef, sub);
             string testInputText = "abc-qw-xyz";
 
             var errors = new List<Error>();
@@ -734,7 +734,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     startNodes: new [] { 0 },
                     endNodes: new [] { 0 }
                 );
-            var testGrammar = new Grammar(sequenceDef, itemDef, commentDef);
+            var testGrammar = new NGrammar(sequenceDef, itemDef, commentDef);
             string testInputText = "item [comment] item [COMMENT] item [CoMmEnT]";
 
             var errors = new List<Error>();
@@ -822,7 +822,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     startNodes: new [] { 0 },
                     endNodes: new [] { 0 }
                 );
-            var testGrammar = new Grammar(sequenceDef, itemDef, commentDef);
+            var testGrammar = new NGrammar(sequenceDef, itemDef, commentDef);
             string testInputText = "item [comment] item [COMMENT] item [CoMmEnT]";
 
             var errors = new List<Error>();
@@ -971,7 +971,7 @@ namespace MetaphysicsIndustries.Giza.Test
         }
 
 
-        static Grammar CreateGrammarForTestUnexpectedEndOfInputAndInvalidToken()
+        static NGrammar CreateGrammarForTestUnexpectedEndOfInputAndInvalidToken()
         {
             //sequence = item+;
             //item = ( id-item1 | id-item2 | paren );
@@ -1073,7 +1073,8 @@ namespace MetaphysicsIndustries.Giza.Test
                 endNodes: new [] { 0 }
             );
 
-            return new Grammar(sequenceDef, itemDef, parenDef, item1Def, item2Def, implicitOpenDef, implicitCloseDef);
+            return new NGrammar(sequenceDef, itemDef, parenDef, item1Def,
+                item2Def, implicitOpenDef, implicitCloseDef);
         }
 
 
@@ -1399,7 +1400,7 @@ namespace MetaphysicsIndustries.Giza.Test
                 endNodes: new [] { 0 }
             );
 
-            var testGrammar = new Grammar(
+            var testGrammar = new NGrammar(
                 sequenceDef,
                 itemDef,
                 oneTwoDef,
@@ -1576,7 +1577,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     startNodes: new [] { 0 },
                     endNodes: new [] { 2 }
                 );
-            var grammar = new Grammar(sequenceDef, oneDef, twoDef, threeDef, fourDef);
+            var grammar = new NGrammar(sequenceDef, oneDef, twoDef, threeDef, fourDef);
 
             string testInput = "one two three four";
                               //123456789012345678
@@ -1719,7 +1720,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     startNodes: new [] { 0 },
                     endNodes: new [] { 0 }
                 );
-            var grammar = new Grammar(sequenceDef, def1);
+            var grammar = new NGrammar(sequenceDef, def1);
 
             var tokenSource = new MockTokenSource();
             tokenSource.InputElementSetsByIndex[0] = new InputElementSet<Token>() {

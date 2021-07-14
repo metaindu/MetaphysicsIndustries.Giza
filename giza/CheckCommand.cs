@@ -115,7 +115,7 @@ namespace giza
 
             if (!errors.ContainsNonWarnings())
             {
-                Grammar g;
+                NGrammar g;
                 if (tokenized)
                 {
                     TokenizeTransform tgb = new TokenizeTransform();

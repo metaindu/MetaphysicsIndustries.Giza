@@ -45,7 +45,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                     startNodes: new [] { 0 },
                     endNodes: new [] { 2 }
                 );
-            var grammar = new Grammar(sequenceDef);
+            var grammar = new NGrammar(sequenceDef);
             spanner = new Spanner(sequenceDef);
             errors = new List<Error>();
         }

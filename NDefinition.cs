@@ -127,8 +127,8 @@ namespace MetaphysicsIndustries.Giza
             return string.Format("[{0}] {1}, {2} nodes", ID, Name, Nodes.Count);
         }
 
-        private Grammar _parentGrammar;
-        public Grammar ParentGrammar
+        private NGrammar _parentGrammar;
+        public NGrammar ParentGrammar
         {
             get { return _parentGrammar; }
             set

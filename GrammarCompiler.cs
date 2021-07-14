@@ -26,7 +26,7 @@ namespace MetaphysicsIndustries.Giza
 {
     public class GrammarCompiler
     {
-        public Grammar BuildGrammar(PreGrammar pg)
+        public NGrammar BuildGrammar(PreGrammar pg)
         {
             if (pg.ImportStatements != null && pg.ImportStatements.Count > 0)
                 throw new ArgumentException(
@@ -34,7 +34,7 @@ namespace MetaphysicsIndustries.Giza
 
             return BuildGrammar(pg.Definitions);
         }
-        public Grammar BuildGrammar(IEnumerable<DefinitionExpression> defs)
+        public NGrammar BuildGrammar(IEnumerable<DefinitionExpression> defs)
         {
             var defs1 = defs.ToList();
             var ec = new ExpressionChecker();
@@ -70,7 +70,7 @@ namespace MetaphysicsIndustries.Giza
                 def.EndNodes.UnionWith(bundle.EndNodes);
             }
 
-            return new Grammar(defs2);
+            return new NGrammar(defs2);
         }
 
         NodeBundle GetNodesFromExpression(Expression expr, 

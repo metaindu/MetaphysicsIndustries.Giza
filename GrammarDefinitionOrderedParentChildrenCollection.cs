@@ -41,7 +41,7 @@ namespace MetaphysicsIndustries.Giza
     public class GrammarDefinitionOrderedParentChildrenCollection : 
         IList<NDefinition>, IDisposable
     {
-        public GrammarDefinitionOrderedParentChildrenCollection(Grammar container)
+        public GrammarDefinitionOrderedParentChildrenCollection(NGrammar container)
         {
             _container = container;
         }
@@ -178,7 +178,7 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        private readonly Grammar _container;
+        private readonly NGrammar _container;
         private readonly List<NDefinition> _list = new List<NDefinition>();
     }
 }

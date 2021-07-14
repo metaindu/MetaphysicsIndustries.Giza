@@ -32,7 +32,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
         {
             // setup
             //def1 = ( 'qwer' | 'asdf' );
-            var testGrammar = new Grammar {
+            var testGrammar = new NGrammar {
                 Definitions = {
                     new NDefinition(
                         name: "def1",
@@ -204,7 +204,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                     startNodes: new [] { 0 },
                     endNodes: new [] { 0 }
                 );
-            var testGrammar = new Grammar {
+            var testGrammar = new NGrammar {
                 Definitions = { sequenceDef, itemDef, item1Def, item2Def }
             };
 
@@ -232,7 +232,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             Assert.AreEqual("item", (err.ExpectedNodes.First() as DefRefNode).DefRef.Name);
         }
 
-        static Grammar CreateGrammarForTestUnexpectedEndOfInput()
+        static NGrammar CreateGrammarForTestUnexpectedEndOfInput()
         {
             //sequence = item+;
             //item = ( id-item1 | id-item2 | paren );
@@ -306,7 +306,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             sequenceDef.StartNodes.Add(sequenceDef.Nodes[0]);
             sequenceDef.EndNodes.Add(sequenceDef.Nodes[0]);
 
-            return new Grammar(new [] { sequenceDef, itemDef, item1Def, item2Def, parenDef });
+            return new NGrammar(new [] { sequenceDef, itemDef, item1Def, item2Def, parenDef });
         }
 
         [Test]
@@ -498,7 +498,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                     startNodes: new [] { 0 },
                     endNodes: new [] { 2 }
                 );
-            var testGrammar = new Grammar(sequenceDef, oneDef, twoDef, threeDef);
+            var testGrammar = new NGrammar(sequenceDef, oneDef, twoDef, threeDef);
 
             string testInput = "one two three four";
                               //123456789012345678
@@ -525,7 +525,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             Assert.IsNull(err.ExpectedNodes);
         }
 
-        static Grammar CreateGrammarForTestEndOfInputParameter()
+        static NGrammar CreateGrammarForTestEndOfInputParameter()
         {
             //expr = operand '+' operand;
             //<atomic> operand = [\l_] [\l\d_]*;
@@ -542,7 +542,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                     endNodes: new [] { 0, 1 },
                     directives: new [] { DefinitionDirective.Atomic }
                 );
-            var grammar = new Grammar {
+            var grammar = new NGrammar {
                 Definitions = {
                     new NDefinition(
                         name: "expr",
@@ -732,7 +732,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                         DefinitionDirective.MindWhitespace
                     }
                 );
-            var grammar = new Grammar(formatDef, textDef, paramDef, nameDef);
+            var grammar = new NGrammar(formatDef, textDef, paramDef, nameDef);
 
             string testInput = "leading {delimited}x";
             var errors = new List<Error>();
@@ -842,7 +842,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                         DefinitionDirective.Atomic
                     }
                 );
-            var grammar = new Grammar(fileDef, recordDef, fieldDef);
+            var grammar = new NGrammar(fileDef, recordDef, fieldDef);
             var errors = new List<Error>();
             var spanner = new Spanner(grammar.FindDefinitionByName("file"));
 
@@ -936,7 +936,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                     startNodes: new [] { 0 },
                     endNodes: new [] { 0 }
                 );
-            var grammar = new Grammar(def);
+            var grammar = new NGrammar(def);
             var spanner = new Spanner(def);
             var errors = new List<Error>();
 
@@ -974,7 +974,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                     startNodes: new [] { 0 },
                     endNodes: new [] { 0 }
                 );
-            var grammar = new Grammar(defdef, chardef);
+            var grammar = new NGrammar(defdef, chardef);
             var spanner = new Spanner(defdef);
             var errors = new List<Error>();
 

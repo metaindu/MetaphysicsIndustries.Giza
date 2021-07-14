@@ -109,7 +109,7 @@ namespace giza
                 grammarErrors.AddRange(errors2);
             }
 
-            Grammar g = null;
+            NGrammar g = null;
             if (!grammarErrors.ContainsNonWarnings())
             {
                 var tgb = new TokenizeTransform();

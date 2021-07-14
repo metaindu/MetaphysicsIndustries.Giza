@@ -80,7 +80,7 @@
     <Compile Include="GrammarCompiler.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="NDefinition.cs" />
-    <Compile Include="Grammar.cs" />
+    <Compile Include="NGrammar.cs" />
     <Compile Include="DefinitionRenderer.cs" />
     <Compile Include="Supergrammar.cs" />
     <Compile Include="DefinitionNodeOrderedParentChildrenCollection.cs.cs" />

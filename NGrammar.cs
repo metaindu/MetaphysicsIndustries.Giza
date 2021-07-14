@@ -22,13 +22,13 @@ using System.Linq;
 
 namespace MetaphysicsIndustries.Giza
 {
-    public class Grammar
+    public class NGrammar
     {
-        public Grammar(params NDefinition[] definitions)
+        public NGrammar(params NDefinition[] definitions)
             : this((IEnumerable<NDefinition>)definitions)
         {
         }
-        public Grammar(IEnumerable<NDefinition> definitions=null)
+        public NGrammar(IEnumerable<NDefinition> definitions=null)
         {
             _definitions = new GrammarDefinitionOrderedParentChildrenCollection(this);
 
@@ -44,7 +44,7 @@ namespace MetaphysicsIndustries.Giza
             get { return _definitions; }
         }
 
-        public Grammar Clone()
+        public NGrammar Clone()
         {
             var defsMatchup = new Dictionary<NDefinition, NDefinition>();
             var defs = new List<NDefinition>();
@@ -91,10 +91,7 @@ namespace MetaphysicsIndustries.Giza
                 def2.Directives.UnionWith(def.Directives);
             }
 
-            Grammar grammar = new Grammar();
-            grammar.Definitions.AddRange(defs);
-
-            return grammar;
+            return new NGrammar(defs);
         }
 
         public NDefinition FindDefinitionByName(string name)

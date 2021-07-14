@@ -21,7 +21,7 @@ using System;
 
 namespace MetaphysicsIndustries.Giza
 {
-    public class StringFormatterGrammar : Grammar
+    public class StringFormatterGrammar : NGrammar
     {
         public NDefinition def_0_format = new NDefinition("format");
         public NDefinition def_1_text = new NDefinition("text");

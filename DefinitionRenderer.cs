@@ -29,7 +29,7 @@ namespace MetaphysicsIndustries.Giza
     {
         public string RenderDefinitionsAsCSharpClass(
             string className, IEnumerable<NDefinition> defs, string ns=null,
-            bool singleton=false, string baseClassName="Grammar",
+            bool singleton=false, string baseClassName="NGrammar",
             IEnumerable<string> usings=null, bool skipImported=false)
         {
             var defsSorted = defs.ToList();

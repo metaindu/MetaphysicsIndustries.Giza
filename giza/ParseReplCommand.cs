@@ -104,7 +104,7 @@ namespace giza
             var ec = new ExpressionChecker();
             var errors = ec.CheckDefinitionForParsing(Env.Values);
 
-            Grammar grammar = null;
+            NGrammar grammar = null;
             if (!errors.ContainsNonWarnings())
             {
                 var tgb = new TokenizeTransform();

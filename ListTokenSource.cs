@@ -24,11 +24,11 @@ namespace MetaphysicsIndustries.Giza
 {
     public class ListTokenSource : IInputSource<Token>
     {
-        public ListTokenSource(Grammar grammar, params string[] intokens)
+        public ListTokenSource(NGrammar grammar, params string[] intokens)
             : this(grammar, (IEnumerable<string>)intokens)
         {
         }
-        public ListTokenSource(Grammar grammar, IEnumerable<string> intokens)
+        public ListTokenSource(NGrammar grammar, IEnumerable<string> intokens)
         {
             _grammar = grammar.Clone();
             _tokenDef = new NDefinition("$token");
@@ -55,7 +55,7 @@ namespace MetaphysicsIndustries.Giza
             }
         }
 
-        Grammar _grammar;
+        NGrammar _grammar;
         Spanner _spanner;
         NDefinition _tokenDef;
         List<string> _intokens;

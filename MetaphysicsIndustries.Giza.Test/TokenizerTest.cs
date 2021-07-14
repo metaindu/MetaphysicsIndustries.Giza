@@ -97,7 +97,7 @@ namespace MetaphysicsIndustries.Giza.Test
             sequenceDef.StartNodes.AddRange(sequenceDef.Nodes);
             sequenceDef.EndNodes.AddRange(sequenceDef.Nodes);
 
-            var testGrammar = new Grammar();
+            var testGrammar = new NGrammar();
             testGrammar.Definitions.AddRange(sequenceDef, itemDef, item1Def, item2Def);
 
             Tokenizer t = new Tokenizer(testGrammar, "item1 item2".ToCharacterSource());
@@ -228,7 +228,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
             var errors = new List<Error>();
 
-            Grammar testGrammar = new Grammar();
+            var testGrammar = new NGrammar();
             testGrammar.Definitions.AddRange(exprDef, itemDef, prefixDef, postfixDef, operDef, plusplusDef, varrefDef);
 
             Tokenizer t = new Tokenizer(testGrammar, testInput.ToCharacterSource());
@@ -334,7 +334,7 @@ namespace MetaphysicsIndustries.Giza.Test
             string testInput = "a << b";
 
             var errors = new List<Error>();
-            var testGrammar = new Grammar();
+            var testGrammar = new NGrammar();
             testGrammar.Definitions.AddRange(exprDef, itemDef, operDef);
 
             Tokenizer t = new Tokenizer(testGrammar, testInput.ToCharacterSource());
@@ -369,7 +369,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsTrue(first.Value != second.Value);
         }
 
-        static Grammar CreateGrammarForTestTokensAtIndex()
+        static NGrammar CreateGrammarForTestTokensAtIndex()
         {
             var operandDef = new NDefinition {
                 Name = "operand",
@@ -412,7 +412,7 @@ namespace MetaphysicsIndustries.Giza.Test
             exprDef.EndNodes.Add(exprDef.Nodes.Last());
 
 
-            var grammar = new Grammar();
+            var grammar = new NGrammar();
             grammar.Definitions.AddRange(exprDef, implicitPlusDef, operandDef);
 
             return grammar;
@@ -652,7 +652,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(6, tinfo.EndOfInputPosition.Index);
         }
 
-        static Grammar CreateGrammarForTestEndOfInputParameterWithComment()
+        static NGrammar CreateGrammarForTestEndOfInputParameterWithComment()
         {
             var grammar = CreateGrammarForTestTokensAtIndex();
 
@@ -871,7 +871,7 @@ namespace MetaphysicsIndustries.Giza.Test
             sequenceDef.StartNodes.Add(sequenceDef.Nodes[0]);
             sequenceDef.EndNodes.Add(sequenceDef.Nodes[0]);
 
-            var grammar = new Grammar();
+            var grammar = new NGrammar();
             grammar.Definitions.AddRange(sequenceDef, itemDef, middleDef);
 
             Tokenizer tokenizer = new Tokenizer(grammar, testInputText.ToCharacterSource());

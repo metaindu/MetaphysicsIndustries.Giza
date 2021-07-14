@@ -26,7 +26,7 @@ namespace MetaphysicsIndustries.Giza
 {
     public class SpanChecker
     {
-        public List<Error> CheckSpan(Span span, Grammar grammar)
+        public List<Error> CheckSpan(Span span, NGrammar grammar)
         {
             List<Error> errors = new List<Error>();
 
@@ -35,7 +35,8 @@ namespace MetaphysicsIndustries.Giza
             return errors;
         }
 
-        void CheckSpan(Span span, Grammar grammar, HashSet<Span> visited, HashSet<Span> ancestorSpans, List<Error> errors)
+        void CheckSpan(Span span, NGrammar grammar, HashSet<Span> visited, 
+            HashSet<Span> ancestorSpans, List<Error> errors)
         {
             var spandef = (span.Node as DefRefNode)?.DefRef;
 

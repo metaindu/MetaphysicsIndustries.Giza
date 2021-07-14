@@ -47,7 +47,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                     directives: new DefinitionDirective[] {
                     }
                 );
-            var grammar = new Grammar(def);
+            var grammar = new NGrammar(def);
             spanner = new Spanner(def);
             errors = new List<Error>();
         }

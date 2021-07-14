@@ -19,7 +19,7 @@
 
 namespace MetaphysicsIndustries.Giza
 {
-    public class Supergrammar : Grammar
+    public class Supergrammar : NGrammar
     {
         public NDefinition def_grammar = new NDefinition("grammar");
         public NDefinition def_definition = new NDefinition("definition");

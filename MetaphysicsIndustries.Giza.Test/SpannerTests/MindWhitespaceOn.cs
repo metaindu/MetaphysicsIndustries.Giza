@@ -48,7 +48,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
                         DefinitionDirective.MindWhitespace,
                     }
                 );
-            var grammar = new Grammar(def);
+            var grammar = new NGrammar(def);
             spanner = new Spanner(def);
             errors = new List<Error>();
         }

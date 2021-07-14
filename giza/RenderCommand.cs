@@ -122,7 +122,7 @@ namespace giza
                 return;
             }
 
-            Grammar g;
+            NGrammar g;
 
             if (tokenized)
             {

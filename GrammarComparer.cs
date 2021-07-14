@@ -48,7 +48,7 @@ namespace MetaphysicsIndustries.Giza
             NodeNextLinksAreDifferent,
         }
 
-//        public bool AreEquivalent(Grammar a, Grammar b)
+//        public bool AreEquivalent(NGrammar a, NGrammar b)
 //        {
 //            if (a.Definitions.Count != b.Definitions.Count) return false;
 //
