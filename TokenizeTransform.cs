@@ -172,8 +172,11 @@ namespace MetaphysicsIndustries.Giza
             Dictionary<CharClassSubExpression, Definition> defsByCharClass)
         {
             return new Definition(def.Name, def.Directives,
-                ReplaceInExpression(def.Expr, defsByLiteral, 
-                    defsByCharClass));
+                ReplaceInExpression(def.Expr, defsByLiteral,
+                    defsByCharClass))
+            {
+                IsImported = def.IsImported,
+            };
         }
 
         public Expression ReplaceInExpression(Expression expr,

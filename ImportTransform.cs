@@ -6,8 +6,10 @@ namespace MetaphysicsIndustries.Giza
 {
     public class ImportTransform : IGrammarTransform
     {
-        public ImportTransform(IFileSource fileSource)
+        public ImportTransform(IFileSource fileSource=null)
         {
+            if (fileSource == null)
+                fileSource = new FileSource();
             _fileSource = fileSource;
         }
 
@@ -101,7 +103,8 @@ namespace MetaphysicsIndustries.Giza
                 importRefs = importedDefsByName.Values.Select(
                     defToImport => new ImportRef
                     {
-                        SourceName = defToImport.Name, DestName = defToImport.Name
+                        SourceName = defToImport.Name,
+                        DestName = defToImport.Name
                     }).ToArray();
             }
 

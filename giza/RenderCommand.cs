@@ -58,7 +58,28 @@ namespace giza
                     Type=ParameterType.String,
                     Description="The namespace in which the C# class is defined (default is 'MetaphysicsIndustries.Giza')",
                 },
-                // TODO: add the new options from RenderReplCommand
+                new Option {
+                    Name="base",
+                    Type = ParameterType.String,
+                    Description = "The base class for the class to be " +
+                                  "rendered (default is " +
+                                  "'MetaphysicsIndustries.Giza.Grammar')",
+                },
+                new Option
+                {
+                    Name="using",
+                    Type=ParameterType.StringArray,
+                    Description="A namespace to reference in a using " +
+                                "statement at the top of the file. Can be " +
+                                "specified multiple times.",
+                },
+                new Option()
+                {
+                    Name="skip-imported",
+                    Type=ParameterType.Flag,
+                    Description="Don't render definitions that were " +
+                                "imported from other files.",
+                },
             };
         }
 
@@ -67,6 +88,9 @@ namespace giza
             var tokenized = (bool)args["tokenized"];
             var ns = (string)args["namespace"] ?? "MetaphysicsIndustries.Giza";
             var singleton = (bool)args["singleton"];
+            var baseClassName = (string) args["base"] ?? "Grammar";
+            var usings = (string[]) args["using"];
+            var skipImported = (bool) args["skip-imported"];
 
             var grammarFilename = (string)args["grammar-filename"];
             var className = (string)args["class-name"];
@@ -81,15 +105,18 @@ namespace giza
                 grammar = File.ReadAllText(grammarFilename);
             }
 
-            Render(tokenized, ns, singleton, grammar, className);
+            Render(tokenized, ns, singleton, grammar, className, baseClassName,
+                usings, skipImported);
         }
 
-        public static void Render(bool tokenized, string ns, bool isSingleton, string grammar, string className)
+        public static void Render(bool tokenized, string ns, bool isSingleton,
+            string grammar, string className, string baseClassName,
+            string[] usings, bool skipImported)
         {
 
             var sgs = new SupergrammarSpanner();
             var errors = new List<Error>();
-            var g = sgs.GetGrammar(grammar, errors);
+            var g0 = sgs.GetGrammar(grammar, errors);
 
             if (errors.Count > 0)
             {
@@ -101,14 +128,24 @@ namespace giza
                 return;
             }
 
+            var importer = new ImportTransform();
+            var g1 = importer.Transform(g0, errors);
+            if (errors.ContainsNonWarnings())
+            {
+                Console.WriteLine(
+                    "There were errors while importing definitions:");
+                errors.PrintErrors();
+                return;
+            }
+
             var ec = new ExpressionChecker();
             if (tokenized)
             {
-                errors = ec.CheckDefinitionForParsing(g.Definitions);
+                errors = ec.CheckDefinitionForParsing(g1.Definitions);
             }
             else
             {
-                errors = ec.CheckDefinitions(g.Definitions);
+                errors = ec.CheckDefinitions(g1.Definitions);
             }
 
             if (errors != null && errors.Count > 0)
@@ -122,18 +159,20 @@ namespace giza
                 return;
             }
 
-            var g2 = g;
+            var g2 = g1;
             if (tokenized)
             {
                 var tt = new TokenizeTransform();
-                g2 = tt.Tokenize(g);
+                g2 = tt.Tokenize(g1);
             }
             var gc = new GrammarCompiler();
             var ng = gc.Compile(g2);
 
             var dr = new DefinitionRenderer();
-            Console.Write(dr.RenderDefinitionsAsCSharpClass(className,
-                ng.Definitions, ns: ns, singleton: isSingleton));
+            var cs = dr.RenderDefinitionsAsCSharpClass(className,
+                ng.Definitions, ns, isSingleton, baseClassName, usings,
+                skipImported);
+            Console.Write(cs);
         }
     }
 }

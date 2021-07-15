@@ -675,6 +675,40 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsFalse(literal.IsSkippable);
             Assert.IsFalse(literal.IsRepeatable);
         }
+
+        [Test]
+        public void TestImportedStaysImported()
+        {
+            // given
+            var g = new Grammar
+            {
+                //def = 'value';
+                Definitions = new List<Definition>
+                {
+                    new Definition(
+                        name: "def",
+                        expr: new Expression(
+                            new LiteralSubExpression(value: "value")))
+                    {
+                        IsImported = true  // here's the important bit
+                    }
+                }
+            };
+            var tt = new TokenizeTransform();
+            // when
+            var result = tt.Tokenize(g);
+            // then
+            Assert.IsNotNull(result);
+            Assert.AreEqual(2, result.Definitions.Count);
+            var explicitDef = result.FindDefinitionByName("def");
+            Assert.IsNotNull(explicitDef);
+            Assert.IsTrue(explicitDef.IsImported); // still marked as imported
+            Assert.AreNotSame(explicitDef,g.Definitions[0]);
+            var implicitDef =
+                result.FindDefinitionByName("$implicit literal value");
+            Assert.IsNotNull(implicitDef);
+            Assert.IsTrue(implicitDef.IsImported); // should it be, though?
+        }
     }
 }
 
