@@ -688,10 +688,8 @@ namespace MetaphysicsIndustries.Giza.Test
                     new Definition(
                         name: "def",
                         expr: new Expression(
-                            new LiteralSubExpression(value: "value")))
-                    {
-                        IsImported = true  // here's the important bit
-                    }
+                            new LiteralSubExpression(value: "value")),
+                        isImported: true)  // here's the important bit
                 }
             };
             var tt = new TokenizeTransform();
