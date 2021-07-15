@@ -6,8 +6,10 @@ namespace MetaphysicsIndustries.Giza
 {
     public class ImportTransform : IGrammarTransform
     {
-        public ImportTransform(IFileSource fileSource)
+        public ImportTransform(IFileSource fileSource=null)
         {
+            if (fileSource == null)
+                fileSource = new FileSource();
             _fileSource = fileSource;
         }
 
