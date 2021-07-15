@@ -134,7 +134,11 @@ namespace MetaphysicsIndustries.Giza
             var outdefs = new List<Definition>();
             outdefs.AddRange(nonTokenizedDefs);
             outdefs.AddRange(tokenizedDefs);
-            return new Grammar() {Definitions = outdefs};
+            return new Grammar
+            {
+                Definitions = outdefs,
+                Source = g.Source,
+            };
         }
 
         string GetImplicitDefinitionName(LiteralSubExpression literal, bool ignoreCase)

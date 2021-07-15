@@ -127,7 +127,8 @@ namespace giza
 
             var g = new Grammar
             {
-                Definitions = alldefs.ToList()
+                Definitions = alldefs.ToList(),
+                Source = "<repl>"
             };
             var g2 = g;
             if (tokenized)

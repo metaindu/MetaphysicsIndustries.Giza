@@ -36,7 +36,8 @@ namespace MetaphysicsIndustries.Giza
 {
     public class SupergrammarSpanner
     {
-        public Grammar GetGrammar(string input, List<Error> errors)
+        public Grammar GetGrammar(string input, List<Error> errors,
+            string source=null)
         {
             Supergrammar supergrammar = new Supergrammar();
             Spanner spanner = new Spanner(supergrammar.def_grammar);
@@ -125,10 +126,11 @@ namespace MetaphysicsIndustries.Giza
                 def.Directives.UnionWith(directives);
             }
 
-            return new Grammar()
+            return new Grammar
             {
                 Definitions = defs,
                 ImportStatements = importStmts,
+                Source = source
             };
         }
 

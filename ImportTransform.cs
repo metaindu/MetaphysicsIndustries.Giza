@@ -56,7 +56,8 @@ namespace MetaphysicsIndustries.Giza
 
             return new Grammar
             {
-                Definitions = defsByName.Values.ToList()
+                Definitions = defsByName.Values.ToList(),
+                Source = g.Source
             };
         }
 
@@ -73,7 +74,7 @@ namespace MetaphysicsIndustries.Giza
                 var content = fileSource.GetFileContents(fileToImport);
                 var errors2 = new List<Error>();
                 var ss = new SupergrammarSpanner();
-                var ig1 = ss.GetGrammar(content, errors2);
+                var ig1 = ss.GetGrammar(content, errors2, fileToImport);
                 errors.AddRange(errors2);
                 if (errors2.ContainsNonWarnings())
                     return null;

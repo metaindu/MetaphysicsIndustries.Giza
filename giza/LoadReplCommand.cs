@@ -50,7 +50,7 @@ namespace giza
 
             var errors = new List<Error>();
             var spanner = new SupergrammarSpanner();
-            var g = spanner.GetGrammar(contents, errors);
+            var g = spanner.GetGrammar(contents, errors, filename);
             var defs = g.Definitions;
             if (errors.ContainsNonWarnings())
             {

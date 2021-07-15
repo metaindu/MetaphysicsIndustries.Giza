@@ -7,6 +7,7 @@ namespace MetaphysicsIndustries.Giza
     {
         public List<Definition> Definitions;
         public List<ImportStatement> ImportStatements;
+        public string Source;
 
         public Definition FindDefinitionByName(string name)
         {

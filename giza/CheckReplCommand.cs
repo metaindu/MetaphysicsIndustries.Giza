@@ -86,7 +86,8 @@ namespace giza
             {
                 var g = new Grammar()
                 {
-                    Definitions = defs
+                    Definitions = defs,
+                    Source = "<repl>"
                 };
                 var g2 = g;
                 if (tokenized)

@@ -108,7 +108,11 @@ namespace giza
             if (!errors.ContainsNonWarnings())
             {
                 var tt = new TokenizeTransform();
-                var g = new Grammar() {Definitions = Env.Values.ToList()};
+                var g = new Grammar()
+                {
+                    Definitions = Env.Values.ToList(),
+                    Source = "<repl>"
+                };
                 var g2 = tt.Tokenize(g);
                 var gc = new GrammarCompiler();
                 grammar = gc.Compile(g2);

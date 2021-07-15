@@ -171,7 +171,8 @@ namespace giza
                         while (true)
                         {
                             var errors = new List<Error>();
-                            var g = spanner.GetGrammar(buffer.ToString(), errors);
+                            var g = spanner.GetGrammar(buffer.ToString(),
+                                errors, "<repl>");
                             var defs = g.Definitions;
                             if (!errors.ContainsNonWarnings())
                             {
