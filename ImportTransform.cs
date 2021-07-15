@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace MetaphysicsIndustries.Giza
@@ -40,7 +41,7 @@ namespace MetaphysicsIndustries.Giza
             foreach (var importStmt in g.ImportStatements)
             {
                 var importedDefs = ImportDefinitions(importStmt, errors2,
-                    fileSource, importCache);
+                    fileSource, importCache, g.Source);
                 errors.AddRange(errors2);
                 if (errors2.ContainsNonWarnings())
                     // TODO: proper exception type, like ImportException
@@ -57,16 +58,23 @@ namespace MetaphysicsIndustries.Giza
             return g.Clone(defsByName.Values);
         }
 
+
         static Definition[] ImportDefinitions(
             ImportStatement importStmt, List<Error> errors,
-            IFileSource fileSource, ImportCache importCache)
+            IFileSource fileSource, ImportCache importCache, string source)
         {
             var fileToImport = importStmt.Filename;
+            if (!Path.IsPathRooted(importStmt.Filename) &&
+                !string.IsNullOrWhiteSpace(source))
+            {
+                fileToImport = fileSource.CombinePath(source,
+                    importStmt.Filename);
+            }
+
             var importRefs = importStmt.ImportRefs;
 
             if (!importCache.ContainsKey(fileToImport))
             {
-                // TODO: relative imports should be relative to the importing file.
                 var content = fileSource.GetFileContents(fileToImport);
                 var errors2 = new List<Error>();
                 var ss = new SupergrammarSpanner();

@@ -378,5 +378,46 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsTrue(result.Definitions[0].IsImported);
             Assert.AreEqual("file1.txt", result.Definitions[0].Source);
         }
+
+        [Test]
+        public void ImportingRelativePathSetsSource()
+        {
+            // given
+            const string file1 = "import '../path2/file2.giza';";
+            const string file2 = "def1 = 'a';";
+            var mfs = new MockFileSource(s =>
+                {
+                    if (s == "/base/path1/file1.giza") return file1;
+                    if (s == "/base/path2/file2.giza") return file2;
+
+                    throw new FileNotFoundException(s);
+                },
+                "/base");
+
+            // import '../path2/file2.giza';
+            var g = new Grammar(
+                new List<Definition>(),
+                new List<ImportStatement>
+                {
+                    new ImportStatement
+                    {
+                        Filename = "../path2/file2.giza",
+                    }
+                },
+                "/base/path1/file1.giza");
+            var importer = new ImportTransform(fileSource: mfs);
+            var errors = new List<Error>();
+            // when
+            var result = importer.Transform(g, errors, mfs);
+            // then
+            Assert.AreEqual(0, errors.Count);
+            Assert.IsNotNull(result);
+            Assert.AreEqual("/base/path1/file1.giza", result.Source);
+            Assert.AreEqual(1, result.Definitions.Count);
+            Assert.That(result.Definitions[0].Name == "def1");
+            Assert.IsTrue(result.Definitions[0].IsImported);
+            Assert.AreEqual("/base/path2/file2.giza",
+                result.Definitions[0].Source);
+        }
     }
 }
