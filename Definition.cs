@@ -76,6 +76,10 @@ namespace MetaphysicsIndustries.Giza
 
         public IEnumerable<CharClassSubExpression> EnumerateCharClasses() => 
             Expr.EnumerateCharClasses();
+
+        // TODO: improvement: a proper Clone method, with parameters for
+        // changing name, directives, etc. That would make it easier to keep
+        // IsImported correct.
     }
 }
 
