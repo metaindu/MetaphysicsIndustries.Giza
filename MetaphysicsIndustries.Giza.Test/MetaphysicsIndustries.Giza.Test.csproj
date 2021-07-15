@@ -35,6 +35,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CSharpPathTest.cs" />
     <Compile Include="DefinitionTest.cs" />
     <Compile Include="ImportTest.cs" />
     <Compile Include="ImportTransformTest.cs" />
