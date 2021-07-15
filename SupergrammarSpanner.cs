@@ -64,12 +64,9 @@ namespace MetaphysicsIndustries.Giza
                 return null;
             }
 
-            var g = BuildPreGrammar(supergrammar, s2[0], errors);
-            return g;
-        }
+            var grammar = supergrammar;
+            var span = s2[0];
 
-        public Grammar BuildPreGrammar(Supergrammar grammar, Span span, List<Error> errors)
-        {
             if (!(span.Node is DefRefNode) ||
                 (span.Node as DefRefNode).DefRef != grammar.def_grammar)
             {
