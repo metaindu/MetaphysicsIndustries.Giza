@@ -103,7 +103,7 @@ namespace MetaphysicsIndustries.Giza
                     // TODO: add an error? throw an exception?
                     continue;
 
-                Definition def = new Definition();
+                Definition def = new Definition(source: source);
                 defs.Add(def);
 
                 List<DefinitionDirective> directives = new List<DefinitionDirective>();

@@ -346,5 +346,37 @@ namespace MetaphysicsIndustries.Giza.Test
             var literal2 = (LiteralSubExpression) def2.Expr.Items[0];
             Assert.AreEqual("b", literal2.Value);
         }
+
+        [Test]
+        public void ImportingSetsTheDefinitionSource()
+        {
+            // given
+            var file1 = @"def1 = 'a';";
+            var mfs = new MockFileSource((s) => file1);
+
+            // import 'file1.txt';
+            var g = new Grammar(
+                new List<Definition>(),
+                new List<ImportStatement>
+                {
+                    new ImportStatement
+                    {
+                        Filename = "file1.txt",
+                    }
+                },
+                "src1");
+            var importer = new ImportTransform(fileSource: mfs);
+            var errors = new List<Error>();
+            // when
+            var result = importer.Transform(g, errors, mfs);
+            // then
+            Assert.AreEqual(0, errors.Count);
+            Assert.IsNotNull(result);
+            Assert.AreEqual("src1", result.Source);
+            Assert.AreEqual(1, result.Definitions.Count);
+            Assert.AreEqual("def1", result.Definitions[0].Name);
+            Assert.IsTrue(result.Definitions[0].IsImported);
+            Assert.AreEqual("file1.txt", result.Definitions[0].Source);
+        }
     }
 }

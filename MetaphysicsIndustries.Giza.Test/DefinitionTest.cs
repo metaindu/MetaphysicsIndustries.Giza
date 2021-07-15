@@ -30,7 +30,8 @@ namespace MetaphysicsIndustries.Giza.Test
             };
             var expr = new Expression(new LiteralSubExpression("value"));
             // when
-            var result = new Definition("def1", directives, expr, true);
+            var result = new Definition("def1", directives, expr, true,
+                "source1");
             // then
             Assert.IsNotNull(result);
             Assert.AreEqual("def1", result.Name);
@@ -42,6 +43,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsNotNull(result.Expr);
             Assert.AreSame(expr, result.Expr);
             Assert.IsTrue(result.IsImported);
+            Assert.AreEqual("source1", result.Source);
         }
 
         [Test]

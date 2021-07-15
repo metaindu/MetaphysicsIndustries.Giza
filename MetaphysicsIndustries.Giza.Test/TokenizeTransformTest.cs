@@ -705,6 +705,43 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsNotNull(implicitDef);
             Assert.IsTrue(implicitDef.IsImported); // should it be, though?
         }
+
+        [Test]
+        public void TestSourceStaysTheSame()
+        {
+            // given
+            var g = new Grammar(
+                //def = 'value';
+                new[]
+                {
+                    new Definition(
+                        name: "def",
+                        expr: new Expression(
+                            new LiteralSubExpression(value: "value")),
+                        source: "src1")  // here's the important bit
+                },
+                null,
+                "src1");
+            var tt = new TokenizeTransform();
+            // when
+            var result = tt.Tokenize(g);
+            // then
+            Assert.IsNotNull(result);
+            Assert.AreEqual(2, result.Definitions.Count);
+            Assert.AreEqual("src1", result.Source);
+
+            var explicitDef = result.FindDefinitionByName("def");
+            Assert.IsNotNull(explicitDef);
+            Assert.AreEqual("src1", explicitDef.Source); //
+            Assert.AreNotSame(explicitDef,g.Definitions[0]);
+
+            var implicitDef =
+                result.FindDefinitionByName("$implicit literal value");
+            Assert.IsNotNull(implicitDef);
+
+            Assert.AreEqual("src1", implicitDef.Source);
+            // should it be, though?
+        }
     }
 }
 

@@ -42,6 +42,7 @@
     <Compile Include="MockFileSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DefinitionCheckerTest.cs" />
+    <Compile Include="SupergrammarSpannerTest.cs" />
     <Compile Include="TokenizerTest.cs" />
     <Compile Include="GrammarCompilerTest.cs" />
     <Compile Include="ExpressionCheckerTest.cs" />

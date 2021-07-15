@@ -130,8 +130,7 @@ namespace MetaphysicsIndustries.Giza
                 var sourceName = importRef.SourceName;
                 var sourceDef = importedDefsByName[sourceName];
                 var destName = importRef.DestName;
-                var destDef = new Definition(destName,
-                    sourceDef.Directives, sourceDef.Expr, true);
+                var destDef = sourceDef.Clone(destName, newIsImported: true);
                 defsToImport1.Add(destDef);
             }
 

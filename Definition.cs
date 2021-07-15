@@ -37,7 +37,8 @@ namespace MetaphysicsIndustries.Giza
     {
         public Definition(string name = "",
             IEnumerable<DefinitionDirective> directives = null,
-            Expression expr = null, bool isImported=false)
+            Expression expr = null, bool isImported=false,
+            string source=null)
         {
             Name = name;
             if (directives != null)
@@ -50,6 +51,8 @@ namespace MetaphysicsIndustries.Giza
             Expr = expr;
 
             IsImported = isImported;
+
+            Source = source;
         }
 
         public override string ToString() => $"Definition {Name}";
@@ -58,6 +61,7 @@ namespace MetaphysicsIndustries.Giza
         public readonly HashSet<DefinitionDirective> Directives = new HashSet<DefinitionDirective>();
         public Expression Expr;
         public bool IsImported { get; set; }
+        public string Source;
 
         public bool MindWhitespace => Directives.Contains(DefinitionDirective.MindWhitespace);
         public bool IgnoreCase => Directives.Contains(DefinitionDirective.IgnoreCase);
@@ -87,9 +91,10 @@ namespace MetaphysicsIndustries.Giza
             if (newDirectives == null) newDirectives = Directives;
             if (newExpr == null) newExpr = Expr;
             if (newIsImported == null) newIsImported = IsImported;
+            // should source be an option?
 
             return new Definition(newName, newDirectives, newExpr,
-                newIsImported.Value);
+                newIsImported.Value, Source);
         }
     }
 }
