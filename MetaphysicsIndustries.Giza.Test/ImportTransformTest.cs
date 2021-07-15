@@ -22,7 +22,7 @@ namespace MetaphysicsIndustries.Giza.Test
                 {
                     new ImportStatement
                     {
-                        ModuleOrFile = "file1.txt",
+                        Filename = "file1.txt",
                     }
                 }
             };
@@ -56,7 +56,7 @@ namespace MetaphysicsIndustries.Giza.Test
                 {
                     new ImportStatement
                     {
-                        ModuleOrFile = "file1.txt",
+                        Filename = "file1.txt",
                         ImportRefs = new []
                         {
                             new ImportRef
@@ -95,7 +95,7 @@ namespace MetaphysicsIndustries.Giza.Test
                 {
                     new ImportStatement
                     {
-                        ModuleOrFile = "file1.txt",
+                        Filename = "file1.txt",
                         ImportRefs = new[]
                         {
                             new ImportRef
@@ -146,7 +146,7 @@ namespace MetaphysicsIndustries.Giza.Test
                 {
                     new ImportStatement
                     {
-                        ModuleOrFile = "file1.txt",
+                        Filename = "file1.txt",
                     }
                 }
             };
@@ -193,12 +193,12 @@ namespace MetaphysicsIndustries.Giza.Test
                 {
                     new ImportStatement
                     {
-                        ModuleOrFile = "file2.txt",
+                        Filename = "file2.txt",
                         ImportAll = true
                     },
                     new ImportStatement
                     {
-                        ModuleOrFile = "file3.txt",
+                        Filename = "file3.txt",
                         ImportAll = true
                     },
                 }
@@ -261,12 +261,12 @@ namespace MetaphysicsIndustries.Giza.Test
                 {
                     new ImportStatement
                     {
-                        ModuleOrFile = "file1.txt",
+                        Filename = "file1.txt",
                         ImportAll = true
                     },
                     new ImportStatement
                     {
-                        ModuleOrFile = "file2.txt",
+                        Filename = "file2.txt",
                         ImportAll = true
                     },
                 }
@@ -308,7 +308,7 @@ namespace MetaphysicsIndustries.Giza.Test
                 {
                     new ImportStatement
                     {
-                        ModuleOrFile = "file1.txt",
+                        Filename = "file1.txt",
                         ImportRefs = new[]
                         {
                             new ImportRef
@@ -320,7 +320,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     },
                     new ImportStatement
                     {
-                        ModuleOrFile = "file2.txt",
+                        Filename = "file2.txt",
                         ImportRefs = new[]
                         {
                             new ImportRef

@@ -183,7 +183,7 @@ namespace MetaphysicsIndustries.Giza
 
             var importStmt = new ImportStatement
             {
-                ModuleOrFile = fileToImport,
+                Filename = fileToImport,
                 ImportRefs = defNamesToImport?.ToArray(),
                 ImportAll = importAll,
             };
