@@ -143,7 +143,6 @@ namespace MetaphysicsIndustries.Giza
                 throw new ArgumentException("The span must describe an import-stmt.");
             var stmtType = importSpan.Subspans[0];
             Span source;
-            // TODO: relative imports should be relative to the importing file.
             List<ImportRef> defNamesToImport = null;
             bool importAll = false;
             if (stmtType.Node == importingGrammar.node_import_002D_stmt_0_import)

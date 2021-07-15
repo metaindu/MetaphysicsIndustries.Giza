@@ -69,6 +69,7 @@ namespace MetaphysicsIndustries.Giza
 
             if (!importCache.ContainsKey(fileToImport))
             {
+                // TODO: relative imports should be relative to the importing file.
                 var content = fileSource.GetFileContents(fileToImport);
                 var errors2 = new List<Error>();
                 var ss = new SupergrammarSpanner();
