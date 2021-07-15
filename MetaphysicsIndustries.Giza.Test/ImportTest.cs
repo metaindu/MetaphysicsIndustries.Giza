@@ -23,7 +23,6 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual("file1.txt",
                 result.ImportStatements[0].ModuleOrFile);
             Assert.IsNull(result.ImportStatements[0].ImportRefs);
-            Assert.IsFalse(result.ImportStatements[0].IsModuleImport);
             Assert.IsTrue(result.ImportStatements[0].ImportAll);
         }
 
@@ -48,7 +47,6 @@ namespace MetaphysicsIndustries.Giza.Test
             var importRef = result.ImportStatements[0].ImportRefs[0];
             Assert.AreEqual("def1", importRef.SourceName);
             Assert.AreEqual("def1", importRef.DestName);
-            Assert.IsFalse(result.ImportStatements[0].IsModuleImport);
             Assert.IsFalse(result.ImportStatements[0].ImportAll);
         }
 
@@ -76,7 +74,6 @@ namespace MetaphysicsIndustries.Giza.Test
             var importRef2 = result.ImportStatements[0].ImportRefs[1];
             Assert.AreEqual("def3", importRef2.SourceName);
             Assert.AreEqual("def3", importRef2.DestName);
-            Assert.IsFalse(result.ImportStatements[0].IsModuleImport);
             Assert.IsFalse(result.ImportStatements[0].ImportAll);
         }
 
@@ -96,7 +93,6 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual(0, result.Definitions.Count);
             Assert.AreEqual(2, result.ImportStatements.Count);
             var importStmt1 = result.ImportStatements[0];
-            Assert.IsFalse(importStmt1.IsModuleImport);
             Assert.AreEqual("file1.txt", importStmt1.ModuleOrFile);
             Assert.IsFalse(importStmt1.ImportAll);
             Assert.IsNotNull(importStmt1.ImportRefs);
@@ -106,7 +102,6 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual("def1", importRef1.DestName);
 
             var importStmt2 = result.ImportStatements[0];
-            Assert.IsFalse(importStmt2.IsModuleImport);
             Assert.AreEqual("file1.txt", importStmt2.ModuleOrFile);
             Assert.IsFalse(importStmt2.ImportAll);
             Assert.IsNotNull(importStmt2.ImportRefs);

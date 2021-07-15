@@ -22,7 +22,6 @@ namespace MetaphysicsIndustries.Giza.Test
                 {
                     new ImportStatement
                     {
-                        IsModuleImport = false,
                         ModuleOrFile = "file1.txt",
                     }
                 }
@@ -147,7 +146,6 @@ namespace MetaphysicsIndustries.Giza.Test
                 {
                     new ImportStatement
                     {
-                        IsModuleImport = false,
                         ModuleOrFile = "file1.txt",
                     }
                 }
