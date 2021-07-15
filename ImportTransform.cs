@@ -64,7 +64,7 @@ namespace MetaphysicsIndustries.Giza
             ImportStatement importStmt, List<Error> errors,
             IFileSource fileSource, ImportCache importCache)
         {
-            var fileToImport = importStmt.ModuleOrFile;
+            var fileToImport = importStmt.Filename;
             var importRefs = importStmt.ImportRefs;
 
             if (!importCache.ContainsKey(fileToImport))

@@ -2,8 +2,8 @@ namespace MetaphysicsIndustries.Giza
 {
     public struct ImportStatement
     {
-        public bool IsModuleImport;
-        public string ModuleOrFile;
+        // TODO: module imports
+        public string Filename;
         public ImportRef[] ImportRefs;
         public bool ImportAll;
     }
