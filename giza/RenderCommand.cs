@@ -63,7 +63,7 @@ namespace giza
                     Type = ParameterType.String,
                     Description = "The base class for the class to be " +
                                   "rendered (default is " +
-                                  "'MetaphysicsIndustries.Giza.Grammar')",
+                                  "'MetaphysicsIndustries.Giza.NGrammar')",
                 },
                 new Option
                 {
@@ -88,7 +88,7 @@ namespace giza
             var tokenized = (bool)args["tokenized"];
             var ns = (string)args["namespace"] ?? "MetaphysicsIndustries.Giza";
             var singleton = (bool)args["singleton"];
-            var baseClassName = (string) args["base"] ?? "Grammar";
+            var baseClassName = (string) args["base"] ?? "NGrammar";
             var usings = (string[]) args["using"];
             var skipImported = (bool) args["skip-imported"];
 
