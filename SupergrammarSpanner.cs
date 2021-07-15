@@ -126,12 +126,7 @@ namespace MetaphysicsIndustries.Giza
                 def.Directives.UnionWith(directives);
             }
 
-            return new Grammar
-            {
-                Definitions = defs,
-                ImportStatements = importStmts,
-                Source = source
-            };
+            return new Grammar(defs, importStmts, source);
         }
 
         ImportStatement GetImportStatementFromSpan(

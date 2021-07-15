@@ -39,7 +39,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     expr: new Expression(
                         new LiteralSubExpression(value: "value")))
             };
-            var g = new Grammar() {Definitions = dis.ToList()};
+            var g = new Grammar(dis);
             var tt = new TokenizeTransform();
 
 
@@ -100,7 +100,7 @@ namespace MetaphysicsIndustries.Giza.Test
                         new CharClassSubExpression(
                             CharClass.FromUndelimitedCharClassText("\\d"))))
             };
-            var g = new Grammar() {Definitions = dis.ToList()};
+            var g = new Grammar(dis);
             var tt = new TokenizeTransform();
 
 
@@ -164,7 +164,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 )
             };
-            var g = new Grammar() {Definitions = dis.ToList()};
+            var g = new Grammar(dis);
             var tt = new TokenizeTransform();
 
 
@@ -231,7 +231,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 )
             };
-            var g = new Grammar() {Definitions = dis.ToList()};
+            var g = new Grammar(dis);
             var tt = new TokenizeTransform();
 
 
@@ -295,7 +295,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     }
                 )
             };
-            var g = new Grammar() {Definitions = dis.ToList()};
+            var g = new Grammar(dis);
             var tt = new TokenizeTransform();
 
 
@@ -337,7 +337,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     expr: new Expression(
                         new LiteralSubExpression("value")))
             };
-            var g = new Grammar() {Definitions = dis.ToList()};
+            var g = new Grammar(dis);
             var tt = new TokenizeTransform();
 
 
@@ -387,7 +387,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     expr: new Expression(
                         new LiteralSubExpression("value")))
             };
-            var g = new Grammar() {Definitions = dis.ToList()};
+            var g = new Grammar(dis);
             var tt = new TokenizeTransform();
 
 
@@ -435,7 +435,7 @@ namespace MetaphysicsIndustries.Giza.Test
                         new LiteralSubExpression("value"))
                 )
             };
-            var g = new Grammar() {Definitions = dis.ToList()};
+            var g = new Grammar(dis);
             var tt = new TokenizeTransform();
 
 
@@ -492,7 +492,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     expr: new Expression(
                         new LiteralSubExpression("token")))
             };
-            var g = new Grammar() {Definitions = dis.ToList()};
+            var g = new Grammar(dis);
             var tt = new TokenizeTransform();
 
 
@@ -540,7 +540,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     expr: new Expression(
                         new LiteralSubExpression("value")))
             };
-            var g = new Grammar() {Definitions = dis.ToList()};
+            var g = new Grammar(dis);
             var tt = new TokenizeTransform();
 
 
@@ -591,7 +591,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     expr: new Expression(
                         new LiteralSubExpression("value")))
             };
-            var g = new Grammar() {Definitions = dis.ToList()};
+            var g = new Grammar(dis);
             var tt = new TokenizeTransform();
 
 
@@ -642,7 +642,7 @@ namespace MetaphysicsIndustries.Giza.Test
                     expr: new Expression(
                         new LiteralSubExpression("value")))
             };
-            var g = new Grammar() {Definitions = dis.ToList()};
+            var g = new Grammar(dis);
             var tt = new TokenizeTransform();
 
 
@@ -680,18 +680,16 @@ namespace MetaphysicsIndustries.Giza.Test
         public void TestImportedStaysImported()
         {
             // given
-            var g = new Grammar
-            {
+            var g = new Grammar(
                 //def = 'value';
-                Definitions = new List<Definition>
+                new[]
                 {
                     new Definition(
                         name: "def",
                         expr: new Expression(
                             new LiteralSubExpression(value: "value")),
                         isImported: true)  // here's the important bit
-                }
-            };
+                });
             var tt = new TokenizeTransform();
             // when
             var result = tt.Tokenize(g);

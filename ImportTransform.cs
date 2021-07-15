@@ -54,11 +54,7 @@ namespace MetaphysicsIndustries.Giza
                 }
             }
 
-            return new Grammar
-            {
-                Definitions = defsByName.Values.ToList(),
-                Source = g.Source
-            };
+            return g.Clone(defsByName.Values);
         }
 
         static Definition[] ImportDefinitions(

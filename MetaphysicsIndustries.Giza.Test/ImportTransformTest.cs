@@ -15,17 +15,15 @@ namespace MetaphysicsIndustries.Giza.Test
             var mfs = new MockFileSource((s) => file1);
 
             // import 'file1.txt';
-            var g = new Grammar
-            {
-                Definitions = new List<Definition>(),
-                ImportStatements = new List<ImportStatement>
+            var g = new Grammar(
+                new List<Definition>(),
+                new List<ImportStatement>
                 {
                     new ImportStatement
                     {
                         Filename = "file1.txt",
                     }
-                }
-            };
+                });
             var importer = new ImportTransform(fileSource: mfs);
             var errors = new List<Error>();
             // when
@@ -49,15 +47,14 @@ namespace MetaphysicsIndustries.Giza.Test
             var file1 = @"def1 = 'a'; def2 = 'b';";
             var mfs = new MockFileSource((s) => file1);
             // from 'file1.txt' import def1;
-            var g = new Grammar
-            {
-                Definitions = new List<Definition>(),
-                ImportStatements = new List<ImportStatement>
+            var g = new Grammar(
+                new List<Definition>(),
+                new List<ImportStatement>
                 {
                     new ImportStatement
                     {
                         Filename = "file1.txt",
-                        ImportRefs = new []
+                        ImportRefs = new[]
                         {
                             new ImportRef
                             {
@@ -66,8 +63,7 @@ namespace MetaphysicsIndustries.Giza.Test
                             }
                         }
                     }
-                }
-            };
+                });
             var importer = new ImportTransform(fileSource: mfs);
             var errors = new List<Error>();
             // when
@@ -88,10 +84,9 @@ namespace MetaphysicsIndustries.Giza.Test
             var mfs = new MockFileSource((s) => file1);
 
             // from 'file1.txt' import def1, def3;
-            var g = new Grammar
-            {
-                Definitions = new List<Definition>(),
-                ImportStatements = new List<ImportStatement>
+            var g = new Grammar(
+                new List<Definition>(),
+                new List<ImportStatement>
                 {
                     new ImportStatement
                     {
@@ -110,8 +105,7 @@ namespace MetaphysicsIndustries.Giza.Test
                             },
                         }
                     }
-                }
-            };
+                });
             var importer = new ImportTransform(mfs);
             var errors = new List<Error>();
             // when
@@ -139,17 +133,15 @@ namespace MetaphysicsIndustries.Giza.Test
                 return "def1 = 'a';";
             });
             // import 'file1.txt';
-            var g = new Grammar
-            {
-                Definitions = new List<Definition>(),
-                ImportStatements = new List<ImportStatement>
+            var g = new Grammar(
+                new List<Definition>(),
+                new List<ImportStatement>
                 {
                     new ImportStatement
                     {
                         Filename = "file1.txt",
                     }
-                }
-            };
+                });
 
             var importer = new ImportTransform(mfs);
             var errors1 = new List<Error>();
@@ -182,14 +174,13 @@ namespace MetaphysicsIndustries.Giza.Test
             // import 'file2.txt';
             // import 'file3.txt';
             // def4 = 'd';
-            var g = new Grammar
-            {
-                Definitions = new List<Definition>
+            var g = new Grammar(
+                new List<Definition>
                 {
                     new Definition("def4",
                         expr: new Expression(new LiteralSubExpression("d"))),
                 },
-                ImportStatements = new List<ImportStatement>
+                new List<ImportStatement>
                 {
                     new ImportStatement
                     {
@@ -201,8 +192,7 @@ namespace MetaphysicsIndustries.Giza.Test
                         Filename = "file3.txt",
                         ImportAll = true
                     },
-                }
-            };
+                });
 
             var mfs = new MockFileSource(s =>
             {
@@ -254,10 +244,9 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // import 'file1.txt';
             // import 'file2.txt';
-            var g = new Grammar
-            {
-                Definitions = new List<Definition>(),
-                ImportStatements = new List<ImportStatement>
+            var g = new Grammar(
+                new List<Definition>(),
+                new List<ImportStatement>
                 {
                     new ImportStatement
                     {
@@ -269,8 +258,7 @@ namespace MetaphysicsIndustries.Giza.Test
                         Filename = "file2.txt",
                         ImportAll = true
                     },
-                }
-            };
+                });
             var importer = new ImportTransform(mfs);
             var errors = new List<Error>();
             // when
@@ -301,10 +289,9 @@ namespace MetaphysicsIndustries.Giza.Test
             });
             // from 'file1.txt' import def1;
             // from 'file2.txt' import def1 as def2;
-            var g = new Grammar
-            {
-                Definitions = new List<Definition>(),
-                ImportStatements = new List<ImportStatement>
+            var g = new Grammar(
+                new List<Definition>(),
+                new List<ImportStatement>
                 {
                     new ImportStatement
                     {
@@ -330,8 +317,7 @@ namespace MetaphysicsIndustries.Giza.Test
                             }
                         }
                     },
-                }
-            };
+                });
             var importer = new ImportTransform(mfs);
             var errors = new List<Error>();
             // when
