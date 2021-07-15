@@ -103,7 +103,8 @@ namespace MetaphysicsIndustries.Giza
                 importRefs = importedDefsByName.Values.Select(
                     defToImport => new ImportRef
                     {
-                        SourceName = defToImport.Name, DestName = defToImport.Name
+                        SourceName = defToImport.Name,
+                        DestName = defToImport.Name
                     }).ToArray();
             }
 
