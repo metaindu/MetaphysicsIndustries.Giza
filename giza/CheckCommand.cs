@@ -63,14 +63,14 @@ namespace giza
                 grammar = File.ReadAllText(grammarFilename);
             }
 
-            Check(grammar, tokenized);
+            Check(grammar, tokenized, grammarFilename);
         }
 
-        public static void Check(string grammar, bool tokenized)
+        public static void Check(string grammar, bool tokenized, string source)
         {
             var sgs = new SupergrammarSpanner();
             var errors = new List<Error>();
-            var g = sgs.GetGrammar(grammar, errors);
+            var g = sgs.GetGrammar(grammar, errors, source);
 
             if (!errors.ContainsNonWarnings())
             {

@@ -106,17 +106,17 @@ namespace giza
             }
 
             Render(tokenized, ns, singleton, grammar, className, baseClassName,
-                usings, skipImported);
+                usings, skipImported, grammarFilename);
         }
 
         public static void Render(bool tokenized, string ns, bool isSingleton,
             string grammar, string className, string baseClassName,
-            string[] usings, bool skipImported)
+            string[] usings, bool skipImported, string source)
         {
 
             var sgs = new SupergrammarSpanner();
             var errors = new List<Error>();
-            var g0 = sgs.GetGrammar(grammar, errors);
+            var g0 = sgs.GetGrammar(grammar, errors, source);
 
             if (errors.Count > 0)
             {

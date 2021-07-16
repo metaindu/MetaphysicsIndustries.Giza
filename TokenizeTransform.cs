@@ -76,21 +76,14 @@ namespace MetaphysicsIndustries.Giza
                         var defname = GetImplicitDefinitionName(literal, ignoreCase);
                         if (!implicitTokenDefs.ContainsKey(defname))
                         {
-                            var def2 = new Definition
-                            {
-                                Name = defname,
-                                IsImported = def.IsImported,
-                            };
-                            def2.Expr = new Expression(
-                                new LiteralSubExpression
-                                {
-                                    Value = literal.Value
-                                });
-                            def2.Directives.Add(DefinitionDirective.Token);
+                            var def2 = def.Clone(
+                                defname,
+                                new[] {DefinitionDirective.Token},
+                                new Expression(
+                                    new LiteralSubExpression(literal.Value)));
                             if (ignoreCase)
-                            {
-                                def2.Directives.Add(DefinitionDirective.IgnoreCase);
-                            }
+                                def2.Directives.Add(
+                                    DefinitionDirective.IgnoreCase);
 
                             implicitTokenDefs[defname] = def2;
                         }
@@ -102,21 +95,15 @@ namespace MetaphysicsIndustries.Giza
                         var defname = GetImplicitDefinitionName(cc, ignoreCase);
                         if (!implicitTokenDefs.ContainsKey(defname))
                         {
-                            var def2 = new Definition
-                            {
-                                Name = defname,
-                                IsImported = def.IsImported,
-                            };
-                            def2.Expr = new Expression(
-                                new CharClassSubExpression()
-                                {
-                                    CharClass = cc.CharClass
-                                });
-                            def2.Directives.Add(DefinitionDirective.Token);
+                            var def2 = def.Clone(
+                                defname,
+                                new [] {DefinitionDirective.Token},
+                                new Expression(
+                                    new CharClassSubExpression(
+                                        cc.CharClass)));
                             if (ignoreCase)
-                            {
-                                def2.Directives.Add(DefinitionDirective.IgnoreCase);
-                            }
+                                def2.Directives.Add(
+                                    DefinitionDirective.IgnoreCase);
 
                             implicitTokenDefs[defname] = def2;
                         }
@@ -147,7 +134,7 @@ namespace MetaphysicsIndustries.Giza
             var outdefs = new List<Definition>();
             outdefs.AddRange(nonTokenizedDefs);
             outdefs.AddRange(tokenizedDefs);
-            return new Grammar() {Definitions = outdefs};
+            return g.Clone(outdefs);
         }
 
         string GetImplicitDefinitionName(LiteralSubExpression literal, bool ignoreCase)
@@ -171,12 +158,9 @@ namespace MetaphysicsIndustries.Giza
             Dictionary<LiteralSubExpression, Definition> defsByLiteral,
             Dictionary<CharClassSubExpression, Definition> defsByCharClass)
         {
-            return new Definition(def.Name, def.Directives,
-                ReplaceInExpression(def.Expr, defsByLiteral,
-                    defsByCharClass))
-            {
-                IsImported = def.IsImported,
-            };
+            return def.Clone(
+                newExpr: ReplaceInExpression(def.Expr, defsByLiteral,
+                    defsByCharClass));
         }
 
         public Expression ReplaceInExpression(Expression expr,

@@ -37,7 +37,8 @@ namespace MetaphysicsIndustries.Giza
     {
         public Definition(string name = "",
             IEnumerable<DefinitionDirective> directives = null,
-            Expression expr = null)
+            Expression expr = null, bool isImported=false,
+            string source=null)
         {
             Name = name;
             if (directives != null)
@@ -48,6 +49,10 @@ namespace MetaphysicsIndustries.Giza
             if (expr == null)
                 expr = new Expression();
             Expr = expr;
+
+            IsImported = isImported;
+
+            Source = source;
         }
 
         public override string ToString() => $"Definition {Name}";
@@ -55,6 +60,8 @@ namespace MetaphysicsIndustries.Giza
         public string Name = string.Empty;
         public readonly HashSet<DefinitionDirective> Directives = new HashSet<DefinitionDirective>();
         public Expression Expr;
+        public bool IsImported { get; set; }
+        public string Source;
 
         public bool MindWhitespace => Directives.Contains(DefinitionDirective.MindWhitespace);
         public bool IgnoreCase => Directives.Contains(DefinitionDirective.IgnoreCase);
@@ -66,20 +73,29 @@ namespace MetaphysicsIndustries.Giza
             Directives.Contains(DefinitionDirective.Comment);
 
         public bool IsComment => Directives.Contains(DefinitionDirective.Comment);
-        public bool IsImported { get; set; } = false;
-        
-        public IEnumerable<DefRefSubExpression> EnumerateDefRefs() => 
+
+        public IEnumerable<DefRefSubExpression> EnumerateDefRefs() =>
             Expr.EnumerateDefRefs();
 
-        public IEnumerable<LiteralSubExpression> EnumerateLiterals() => 
+        public IEnumerable<LiteralSubExpression> EnumerateLiterals() =>
             Expr.EnumerateLiterals();
 
-        public IEnumerable<CharClassSubExpression> EnumerateCharClasses() => 
+        public IEnumerable<CharClassSubExpression> EnumerateCharClasses() =>
             Expr.EnumerateCharClasses();
 
-        // TODO: improvement: a proper Clone method, with parameters for
-        // changing name, directives, etc. That would make it easier to keep
-        // IsImported correct.
+        public Definition Clone(string newName=null,
+            IEnumerable<DefinitionDirective> newDirectives=null,
+            Expression newExpr=null, bool? newIsImported=null)
+        {
+            if (newName == null) newName = Name;
+            if (newDirectives == null) newDirectives = Directives;
+            if (newExpr == null) newExpr = Expr;
+            if (newIsImported == null) newIsImported = IsImported;
+            // should source be an option?
+
+            return new Definition(newName, newDirectives, newExpr,
+                newIsImported.Value, Source);
+        }
     }
 }
 

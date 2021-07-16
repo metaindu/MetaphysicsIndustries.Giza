@@ -90,14 +90,15 @@ namespace giza
                 input = File.ReadAllText(inputFilename);
             }
 
-            Span(grammar, input, startDef, printingOptions);
+            Span(grammar, input, startDef, printingOptions, grammarFilename);
         }
 
-        public static void Span(string grammar, string input, string startDef, SpanPrintingOptions printingOptions)
+        public static void Span(string grammar, string input, string startDef,
+            SpanPrintingOptions printingOptions, string source)
         {
             var spanner = new SupergrammarSpanner();
             var errors = new List<Error>();
-            var g = spanner.GetGrammar(grammar, errors);
+            var g = spanner.GetGrammar(grammar, errors, source);
 
             if (errors != null && errors.Count > 0)
             {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace MetaphysicsIndustries.Giza
@@ -40,7 +41,7 @@ namespace MetaphysicsIndustries.Giza
             foreach (var importStmt in g.ImportStatements)
             {
                 var importedDefs = ImportDefinitions(importStmt, errors2,
-                    fileSource, importCache);
+                    fileSource, importCache, g.Source);
                 errors.AddRange(errors2);
                 if (errors2.ContainsNonWarnings())
                     // TODO: proper exception type, like ImportException
@@ -54,17 +55,24 @@ namespace MetaphysicsIndustries.Giza
                 }
             }
 
-            return new Grammar
-            {
-                Definitions = defsByName.Values.ToList()
-            };
+            var g2 = g.Clone(defsByName.Values);
+            g2.ImportStatements.Clear();
+            return g2;
         }
+
 
         static Definition[] ImportDefinitions(
             ImportStatement importStmt, List<Error> errors,
-            IFileSource fileSource, ImportCache importCache)
+            IFileSource fileSource, ImportCache importCache, string source)
         {
             var fileToImport = importStmt.Filename;
+            if (!Path.IsPathRooted(importStmt.Filename) &&
+                !string.IsNullOrWhiteSpace(source))
+            {
+                fileToImport = fileSource.CombinePath(source,
+                    importStmt.Filename);
+            }
+
             var importRefs = importStmt.ImportRefs;
 
             if (!importCache.ContainsKey(fileToImport))
@@ -72,7 +80,7 @@ namespace MetaphysicsIndustries.Giza
                 var content = fileSource.GetFileContents(fileToImport);
                 var errors2 = new List<Error>();
                 var ss = new SupergrammarSpanner();
-                var ig1 = ss.GetGrammar(content, errors2);
+                var ig1 = ss.GetGrammar(content, errors2, fileToImport);
                 errors.AddRange(errors2);
                 if (errors2.ContainsNonWarnings())
                     return null;
@@ -132,9 +140,7 @@ namespace MetaphysicsIndustries.Giza
                 var sourceName = importRef.SourceName;
                 var sourceDef = importedDefsByName[sourceName];
                 var destName = importRef.DestName;
-                var destDef = new Definition(destName,
-                    sourceDef.Directives, sourceDef.Expr);
-                destDef.IsImported = true;
+                var destDef = sourceDef.Clone(destName, newIsImported: true);
                 defsToImport1.Add(destDef);
             }
 

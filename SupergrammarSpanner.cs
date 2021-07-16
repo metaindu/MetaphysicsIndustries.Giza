@@ -36,8 +36,12 @@ namespace MetaphysicsIndustries.Giza
 {
     public class SupergrammarSpanner
     {
-        public Grammar GetGrammar(string input, List<Error> errors)
+        public Grammar GetGrammar(string input, List<Error> errors,
+            string source=null)
         {
+            if (string.IsNullOrWhiteSpace(input))
+                return new Grammar(source: source);
+
             Supergrammar supergrammar = new Supergrammar();
             Spanner spanner = new Spanner(supergrammar.def_grammar);
             Span[] s2 = spanner.Process(input.ToCharacterSource(), errors);
@@ -64,12 +68,9 @@ namespace MetaphysicsIndustries.Giza
                 return null;
             }
 
-            var g = BuildPreGrammar(supergrammar, s2[0], errors);
-            return g;
-        }
+            var grammar = supergrammar;
+            var span = s2[0];
 
-        public Grammar BuildPreGrammar(Supergrammar grammar, Span span, List<Error> errors)
-        {
             if (!(span.Node is DefRefNode) ||
                 (span.Node as DefRefNode).DefRef != grammar.def_grammar)
             {
@@ -105,7 +106,7 @@ namespace MetaphysicsIndustries.Giza
                     // TODO: add an error? throw an exception?
                     continue;
 
-                Definition def = new Definition();
+                Definition def = new Definition(source: source);
                 defs.Add(def);
 
                 List<DefinitionDirective> directives = new List<DefinitionDirective>();
@@ -128,11 +129,7 @@ namespace MetaphysicsIndustries.Giza
                 def.Directives.UnionWith(directives);
             }
 
-            return new Grammar()
-            {
-                Definitions = defs,
-                ImportStatements = importStmts,
-            };
+            return new Grammar(defs, importStmts, source);
         }
 
         ImportStatement GetImportStatementFromSpan(
@@ -143,7 +140,6 @@ namespace MetaphysicsIndustries.Giza
                 throw new ArgumentException("The span must describe an import-stmt.");
             var stmtType = importSpan.Subspans[0];
             Span source;
-            // TODO: relative imports should be relative to the importing file.
             List<ImportRef> defNamesToImport = null;
             bool importAll = false;
             if (stmtType.Node == importingGrammar.node_import_002D_stmt_0_import)
