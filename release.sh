@@ -53,7 +53,7 @@ if ! nuget pack MetaphysicsIndustries.Giza.nuspec -Properties version=$VERSION ;
 fi
 
 echo 'Uploading the package to nuget...'
-if ! nuget push -ApiKey $NUGET_APIKEY MetaphysicsIndustries.Giza.$VERSION.nupkg ; then
+if ! nuget push MetaphysicsIndustries.Giza.$VERSION.nupkg -Source nuget.org -ApiKey $NUGET_API_KEY ; then
     echo 'Error uploading the package. Quitting.'
     exit 1
 fi
