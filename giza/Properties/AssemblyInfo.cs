@@ -26,7 +26,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Metaphysics Industries, Inc.")]
 [assembly: AssemblyProduct("giza")]
-[assembly: AssemblyCopyright("Copyright © Metaphysics Industries, Richard Sartor 2014")]
+[assembly: AssemblyCopyright("Copyright © Metaphysics Industries, Richard Sartor 2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
