@@ -44,6 +44,7 @@ USA
   </metadata>
   <files>
     <file src="bin/Debug/MetaphysicsIndustries.Giza.dll" target="lib/net40" />
+    <file src="bin/Debug/MetaphysicsIndustries.Giza.pdb" target="lib/net40" />
     <file src="docs/logo.png" target="images/" />
   </files>
 </package>
