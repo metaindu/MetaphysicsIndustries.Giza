@@ -1,6 +1,6 @@
 ﻿
 // MetaphysicsIndustries.Giza - A Parsing System
-// Copyright (C) 2008-2020 Metaphysics Industries, Inc.
+// Copyright (C) 2008-2021 Metaphysics Industries, Inc.
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -27,6 +27,8 @@ namespace MetaphysicsIndustries.Giza
 {
     public partial class ExpressionChecker
     {
+        // TODO: check import statements and import refs
+
         bool IsTokenized(Definition def)
         {
             return

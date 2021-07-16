@@ -1,6 +1,6 @@
 ﻿
 // MetaphysicsIndustries.Giza - A Parsing System
-// Copyright (C) 2008-2020 Metaphysics Industries, Inc.
+// Copyright (C) 2008-2021 Metaphysics Industries, Inc.
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,6 @@
  *  18 June 2013                                                             *
  *  Project: MetaphysicsIndustries.Giza                                      *
  *  Written by: Richard Sartor                                               *
- *  Copyright © 2013 Metaphysics Industries, Inc.                            *
  *                                                                           *
  *  An ordered collection of Definition objects.                             *
  *                                                                           *
