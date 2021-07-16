@@ -39,6 +39,9 @@ namespace MetaphysicsIndustries.Giza
         public Grammar GetGrammar(string input, List<Error> errors,
             string source=null)
         {
+            if (string.IsNullOrWhiteSpace(input))
+                return new Grammar(source: source);
+
             Supergrammar supergrammar = new Supergrammar();
             Spanner spanner = new Spanner(supergrammar.def_grammar);
             Span[] s2 = spanner.Process(input.ToCharacterSource(), errors);
