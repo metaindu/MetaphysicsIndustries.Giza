@@ -27,6 +27,8 @@ namespace MetaphysicsIndustries.Giza
 {
     public partial class ExpressionChecker
     {
+        // TODO: check import statements and import refs
+
         bool IsTokenized(Definition def)
         {
             return
