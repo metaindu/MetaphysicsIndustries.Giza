@@ -23,7 +23,6 @@
  *  18 June 2013                                                             *
  *  Project: MetaphysicsIndustries.Giza                                      *
  *  Written by: Richard Sartor                                               *
- *  Copyright © 2013 Metaphysics Industries, Inc.                            *
  *                                                                           *
  *  An ordered collection of Definition objects.                             *
  *                                                                           *

@@ -23,7 +23,6 @@
  *  3 May 2010                                                               *
  *  Project: MetaphysicsIndustries.Giza                                      *
  *  Written by: Richard Sartor                                               *
- *  Copyright ? 2010-2013 Metaphysics Industries, Inc.                       *
  *                                                                           *
  *  The supergrammar - this grammar defines the language used to write       *
  *    other grammars.                                                        *
