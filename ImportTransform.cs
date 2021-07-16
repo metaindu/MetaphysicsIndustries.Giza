@@ -55,7 +55,9 @@ namespace MetaphysicsIndustries.Giza
                 }
             }
 
-            return g.Clone(defsByName.Values);
+            var g2 = g.Clone(defsByName.Values);
+            g2.ImportStatements.Clear();
+            return g2;
         }
 
 

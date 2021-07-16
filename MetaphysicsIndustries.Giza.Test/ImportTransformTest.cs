@@ -419,5 +419,35 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.AreEqual("/base/path2/file2.giza",
                 result.Definitions[0].Source);
         }
+
+        [Test]
+        public void TransformRemovesImportStatments()
+        {
+            // given
+            const string file1 = "";
+            var mfs = new MockFileSource(s => file1);
+
+            // import 'file1.txt';
+            var g = new Grammar(
+                new List<Definition>(),
+                new List<ImportStatement>
+                {
+                    new ImportStatement
+                    {
+                        Filename = "file1.txt",
+                    }
+                },
+                "src");
+            var importer = new ImportTransform(fileSource: mfs);
+            var errors = new List<Error>();
+            // when
+            var result = importer.Transform(g, errors, mfs);
+            // then
+            Assert.AreEqual(0, errors.Count);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(0, result.Definitions.Count);
+            Assert.AreEqual(0, result.ImportStatements.Count);
+            Assert.AreEqual("src", result.Source);
+        }
     }
 }
