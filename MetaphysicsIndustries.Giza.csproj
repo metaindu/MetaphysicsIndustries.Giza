@@ -76,7 +76,6 @@
     <Compile Include="SupergrammarSpanner.cs" />
     <Content Include="BinarySpanner example grammar.txt" />
     <Content Include="BinarySpannerGrammar.txt" />
-    <Content Include="BitmapBinaryGrammar.txt" />
     <Compile Include="GrammarCompiler.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="NDefinition.cs" />
@@ -149,6 +148,8 @@
   <ItemGroup>
     <Content Include="CppCliGrammar.txt" />
     <Content Include="ExeBinaryGrammar.txt" />
+    <Content Include="MetaphysicsIndustries.Giza.nuspec" />
+    <Content Include="release.sh" />
     <Content Include="render_grammars.sh" />
     <Content Include="Supergrammar.txt" />
   </ItemGroup>
