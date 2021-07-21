@@ -149,6 +149,7 @@
     <Content Include="CppCliGrammar.txt" />
     <Content Include="ExeBinaryGrammar.txt" />
     <Content Include="MetaphysicsIndustries.Giza.nuspec" />
+    <Content Include="release.sh" />
     <Content Include="render_grammars.sh" />
     <Content Include="Supergrammar.txt" />
   </ItemGroup>
