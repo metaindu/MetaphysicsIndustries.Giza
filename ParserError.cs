@@ -102,7 +102,7 @@ namespace MetaphysicsIndustries.Giza
                 var expects = new List<string>();
                 foreach (var enode in ExpectedNodes)
                 {
-                    expects.Add(((DefRefNode)ExpectedNodes.First()).DefRef.Name);
+                    expects.Add(((DefRefNode)enode).DefRef.Name);
                 }
                 StringBuilder sb = new StringBuilder();
                 sb.Append("Expected ");

@@ -73,7 +73,7 @@ namespace MetaphysicsIndustries.Giza
             return new NGrammar(defs2);
         }
 
-        NodeBundle GetNodesFromExpression(Expression expr, 
+        public NodeBundle GetNodesFromExpression(Expression expr,
             Dictionary<string, NDefinition> defsByName)
         {
             NodeBundle first = null;
@@ -127,15 +127,15 @@ namespace MetaphysicsIndustries.Giza
             }
 
             // inter-bundle skips
+            var prevs = new HashSet<Node>(bundles[0].EndNodes);
             for (i = 2; i < bundles.Count; i++)
             {
                 if (bundles[i - 1].IsSkippable)
-                {
-                    foreach (Node prev in bundles[i-2].EndNodes)
-                    {
+                    foreach (var prev in prevs)
                         prev.NextNodes.UnionWith(bundles[i].StartNodes);
-                    }
-                }
+                else
+                    prevs.Clear();
+                prevs.AddRange(bundles[i - 1].EndNodes);
             }
 
             // skip from start to inner bundle
@@ -265,7 +265,7 @@ namespace MetaphysicsIndustries.Giza
                 };
         }
 
-        NodeBundle GetNodesFromOrExpression(OrExpression orexpr,
+        public NodeBundle GetNodesFromOrExpression(OrExpression orexpr,
             Dictionary<string, NDefinition> defsByName)
         {
             var bundles = new List<NodeBundle>();
