@@ -37,6 +37,8 @@
   <ItemGroup>
     <Compile Include="CSharpPathTest.cs" />
     <Compile Include="DefinitionTest.cs" />
+    <Compile Include="GrammarCompilerT\GetNodesFromExpressionTest.cs" />
+    <Compile Include="GrammarCompilerT\GetNodesFromOrExpressionTest.cs" />
     <Compile Include="ImportTest.cs" />
     <Compile Include="ImportTransformTest.cs" />
     <Compile Include="MockFileSource.cs" />

@@ -73,7 +73,7 @@ namespace MetaphysicsIndustries.Giza
             return new NGrammar(defs2);
         }
 
-        NodeBundle GetNodesFromExpression(Expression expr, 
+        public NodeBundle GetNodesFromExpression(Expression expr,
             Dictionary<string, NDefinition> defsByName)
         {
             NodeBundle first = null;
@@ -265,7 +265,7 @@ namespace MetaphysicsIndustries.Giza
                 };
         }
 
-        NodeBundle GetNodesFromOrExpression(OrExpression orexpr,
+        public NodeBundle GetNodesFromOrExpression(OrExpression orexpr,
             Dictionary<string, NDefinition> defsByName)
         {
             var bundles = new List<NodeBundle>();
