@@ -76,7 +76,6 @@
     <Compile Include="SupergrammarSpanner.cs" />
     <Content Include="BinarySpanner example grammar.txt" />
     <Content Include="BinarySpannerGrammar.txt" />
-    <Content Include="BitmapBinaryGrammar.txt" />
     <Compile Include="GrammarCompiler.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="NDefinition.cs" />
