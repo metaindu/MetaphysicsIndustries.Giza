@@ -32,7 +32,7 @@ USA
     <icon>images/logo.png</icon>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A parser system</description>
-    <releaseNotes>Initial release</releaseNotes>
+    <releaseNotes>Bug fix regarding subsequent skippable expression items</releaseNotes>
     <copyright>Copyright 2021 izrik and Metaphysics Industries, Inc.</copyright>
     <tags>parser lexer grammar</tags>
     <dependencies>
