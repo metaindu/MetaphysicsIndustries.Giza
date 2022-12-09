@@ -1,6 +1,6 @@
 
 // MetaphysicsIndustries.Giza - A Parsing System
-// Copyright (C) 2008-2021 Metaphysics Industries, Inc.
+// Copyright (C) 2008-2022 Metaphysics Industries, Inc.
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -135,7 +135,7 @@ namespace giza
                     args = Splitter.SplitArgs(_commandLine).ToList();
                     command = args[0];
                 }
-                catch(UnmatchedQuoteException ex)
+                catch (UnmatchedQuoteException)
                 {
                     splittingFailed = true;
                 }

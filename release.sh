@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # MetaphysicsIndustries.Giza - A Parsing System
-# Copyright (C) 2008-2021 Metaphysics Industries, Inc., Richard Sartor
+# Copyright (C) 2008-2022 Metaphysics Industries, Inc., Richard Sartor
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -40,6 +40,9 @@ then
     exit 1
 fi
 
+python3 ./pre-build.py
+./build.sh
+
 AVERSION=`grep AssemblyVersion AssemblyInfo.cs | perl -npe 's/^.*?\"//;s/\".*$//'`
 
 if [ "$VERSION" != "$AVERSION" ]
@@ -58,7 +61,7 @@ else
 fi
 
 echo 'Creating the nuget package...'
-if ! dotnet pack --include-source --include-symbols $PACKAGE_BASE.csproj /p:PackageVersion=$VERSION ; then
+if ! dotnet pack --include-source --include-symbols -o ./ $PACKAGE_BASE.csproj /p:PackageVersion=$VERSION ; then
     echo 'Error creating the package. The package will not be uploaded.'
     exit 1
 fi

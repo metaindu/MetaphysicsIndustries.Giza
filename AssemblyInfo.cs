@@ -1,6 +1,6 @@
 ﻿
 // MetaphysicsIndustries.Giza - A Parsing System
-// Copyright (C) 2008-2021 Metaphysics Industries, Inc.
+// Copyright (C) 2008-2022 Metaphysics Industries, Inc.
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -29,7 +29,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Metaphysics Industries, Inc.")]
 [assembly: AssemblyProduct("MetaphysicsIndustries.Giza")]
-[assembly: AssemblyCopyright("Copyright © Metaphysics Industries, Inc. 2008-2021")]
+[assembly: AssemblyCopyright(
+    "Copyright © Metaphysics Industries, Inc. 2008-2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -50,5 +51,5 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("0.3")]
-[assembly: AssemblyFileVersion("0.3.0.0")]
+[assembly: AssemblyVersion("0.4")]
+[assembly: AssemblyFileVersion("0.4.0.0")]

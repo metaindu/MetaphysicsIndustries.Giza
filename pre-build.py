@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # MetaphysicsIndustries.Giza - A Parsing System
-# Copyright (C) 2008-2021 Metaphysics Industries, Inc.
+# Copyright (C) 2008-2022 Metaphysics Industries, Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
