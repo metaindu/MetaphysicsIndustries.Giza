@@ -14,10 +14,34 @@
             Test2/**;
             giza/**;
             instance/**;
-            packages/**</DefaultItemExcludes>
+            packages/**;
+            tmp/**
+        </DefaultItemExcludes>
     </PropertyGroup>
 
     <PropertyGroup>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     </PropertyGroup>
+
+    <PropertyGroup>
+        <PackageId>MetaphysicsIndustries.Giza</PackageId>
+        <!--<PackageVersion></PackageVersion>-->
+        <Title>MetaphysicsIndustries.Giza</Title>
+        <Authors>izrik,metaindu</Authors>
+        <!--<PackageOwners>izrik,metaindu</PackageOwners>-->
+        <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
+        <PackageProjectUrl>https://github.com/metaindu/MetaphysicsIndustries.Giza</PackageProjectUrl>
+        <PackageIcon>images/logo.png</PackageIcon>
+        <Description>A parser system</Description>
+        <PackageReleaseNotes>Target newer frameworks.</PackageReleaseNotes>
+        <Copyright>Copyright 2022 izrik and Metaphysics Industries, Inc.</Copyright>
+        <PackageTags>parser lexer grammar</PackageTags>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="README.md" Pack="true" PackagePath="\" />
+        <None Include="docs/logo.png" Pack="true" PackagePath="images/" />
+    </ItemGroup>
+
 </Project>
