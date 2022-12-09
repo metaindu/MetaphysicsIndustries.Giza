@@ -48,9 +48,9 @@ namespace MetaphysicsIndustries.Giza.Test
             // when
             var result = importer.Transform(g, errors, mfs);
             // then
-            Assert.AreEqual(0, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(0));
             Assert.IsNotNull(result);
-            Assert.AreEqual(2, result.Definitions.Count);
+            Assert.That(result.Definitions.Count, Is.EqualTo(2));
             Assert.That(result.Definitions[0].Name == "def1" ||
                         result.Definitions[1].Name == "def1");
             Assert.That(result.Definitions[0].Name == "def2" ||
@@ -88,9 +88,9 @@ namespace MetaphysicsIndustries.Giza.Test
             // when
             var result = importer.Transform(g, errors, mfs);
             // then
-            Assert.AreEqual(0, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(0));
             Assert.IsNotNull(result);
-            Assert.AreEqual(1, result.Definitions.Count);
+            Assert.That(result.Definitions.Count, Is.EqualTo(1));
             Assert.That(result.Definitions[0].Name == "def1");
             Assert.IsTrue(result.Definitions[0].IsImported);
         }
@@ -130,9 +130,9 @@ namespace MetaphysicsIndustries.Giza.Test
             // when
             var result = importer.Transform(g, errors, mfs);
             // then
-            Assert.AreEqual(0, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(0));
             Assert.IsNotNull(result);
-            Assert.AreEqual(2, result.Definitions.Count);
+            Assert.That(result.Definitions.Count, Is.EqualTo(2));
             Assert.That(result.Definitions[0].Name == "def1" ||
                         result.Definitions[1].Name == "def1");
             Assert.That(result.Definitions[0].Name == "def3" ||
@@ -169,17 +169,17 @@ namespace MetaphysicsIndustries.Giza.Test
             var result1 = importer.Transform(g, errors1, mfs);
             var result2 = importer.Transform(g, errors2, mfs);
             // then
-            Assert.AreEqual(0, errors1.Count);
+            Assert.That(errors1.Count, Is.EqualTo(0));
             Assert.IsNotNull(result1);
-            Assert.AreEqual(1, result1.Definitions.Count);
+            Assert.That(result1.Definitions.Count, Is.EqualTo(1));
             Assert.That(result1.Definitions[0].Name == "def1");
             // and
-            Assert.AreEqual(0, errors2.Count);
+            Assert.That(errors2.Count, Is.EqualTo(0));
             Assert.IsNotNull(result2);
-            Assert.AreEqual(1, result2.Definitions.Count);
+            Assert.That(result2.Definitions.Count, Is.EqualTo(1));
             Assert.That(result2.Definitions[0].Name == "def1");
             // and
-            Assert.AreEqual(1, callCount);
+            Assert.That(callCount, Is.EqualTo(1));
         }
 
         [Test]
@@ -226,9 +226,9 @@ namespace MetaphysicsIndustries.Giza.Test
             // when
             var result = importer.Transform(g, errors, mfs);
             // then
-            Assert.AreEqual(0, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(0));
             Assert.IsNotNull(result);
-            Assert.AreEqual(4, result.Definitions.Count);
+            Assert.That(result.Definitions.Count, Is.EqualTo(4));
             Assert.That(result.Definitions[0].Name == "def1" ||
                         result.Definitions[0].Name == "def2" ||
                         result.Definitions[0].Name == "def3" ||
@@ -283,14 +283,14 @@ namespace MetaphysicsIndustries.Giza.Test
             // when
             var result = importer.Transform(g, errors, mfs);
             // then
-            Assert.AreEqual(0, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(0));
             Assert.IsNotNull(result);
-            Assert.AreEqual(1, result.Definitions.Count);
-            Assert.AreEqual("def1", result.Definitions[0].Name);
-            Assert.AreEqual(1, result.Definitions[0].Expr.Items.Count);
+            Assert.That(result.Definitions.Count, Is.EqualTo(1));
+            Assert.That(result.Definitions[0].Name, Is.EqualTo("def1"));
+            Assert.That(result.Definitions[0].Expr.Items.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<LiteralSubExpression>(result.Definitions[0].Expr.Items[0]);
             var literal = (LiteralSubExpression) result.Definitions[0].Expr.Items[0];
-            Assert.AreEqual("b", literal.Value);
+            Assert.That(literal.Value, Is.EqualTo("b"));
         }
 
         [Test]
@@ -342,9 +342,9 @@ namespace MetaphysicsIndustries.Giza.Test
             // when
             var result = importer.Transform(g, errors, mfs);
             // then
-            Assert.AreEqual(0, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(0));
             Assert.IsNotNull(result);
-            Assert.AreEqual(2, result.Definitions.Count);
+            Assert.That(result.Definitions.Count, Is.EqualTo(2));
 
             Assert.That(result.Definitions[0].Name == "def1" ||
                         result.Definitions[0].Name == "def2");
@@ -355,15 +355,15 @@ namespace MetaphysicsIndustries.Giza.Test
             var def2 = (result.Definitions[0].Name == "def2" ?
                 result.Definitions[0] : result.Definitions[1]);
 
-            Assert.AreEqual(1, def1.Expr.Items.Count);
+            Assert.That(def1.Expr.Items.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<LiteralSubExpression>(def1.Expr.Items[0]);
             var literal1 = (LiteralSubExpression) def1.Expr.Items[0];
-            Assert.AreEqual("a", literal1.Value);
+            Assert.That(literal1.Value, Is.EqualTo("a"));
 
-            Assert.AreEqual(1, def2.Expr.Items.Count);
+            Assert.That(def2.Expr.Items.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<LiteralSubExpression>(def2.Expr.Items[0]);
             var literal2 = (LiteralSubExpression) def2.Expr.Items[0];
-            Assert.AreEqual("b", literal2.Value);
+            Assert.That(literal2.Value, Is.EqualTo("b"));
         }
 
         [Test]
@@ -389,13 +389,13 @@ namespace MetaphysicsIndustries.Giza.Test
             // when
             var result = importer.Transform(g, errors, mfs);
             // then
-            Assert.AreEqual(0, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(0));
             Assert.IsNotNull(result);
-            Assert.AreEqual("src1", result.Source);
-            Assert.AreEqual(1, result.Definitions.Count);
-            Assert.AreEqual("def1", result.Definitions[0].Name);
+            Assert.That(result.Source, Is.EqualTo("src1"));
+            Assert.That(result.Definitions.Count, Is.EqualTo(1));
+            Assert.That(result.Definitions[0].Name, Is.EqualTo("def1"));
             Assert.IsTrue(result.Definitions[0].IsImported);
-            Assert.AreEqual("file1.txt", result.Definitions[0].Source);
+            Assert.That(result.Definitions[0].Source, Is.EqualTo("file1.txt"));
         }
 
         [Test]
@@ -429,14 +429,14 @@ namespace MetaphysicsIndustries.Giza.Test
             // when
             var result = importer.Transform(g, errors, mfs);
             // then
-            Assert.AreEqual(0, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(0));
             Assert.IsNotNull(result);
-            Assert.AreEqual("/base/path1/file1.giza", result.Source);
-            Assert.AreEqual(1, result.Definitions.Count);
+            Assert.That(result.Source, Is.EqualTo("/base/path1/file1.giza"));
+            Assert.That(result.Definitions.Count, Is.EqualTo(1));
             Assert.That(result.Definitions[0].Name == "def1");
             Assert.IsTrue(result.Definitions[0].IsImported);
-            Assert.AreEqual("/base/path2/file2.giza",
-                result.Definitions[0].Source);
+            Assert.That(result.Definitions[0].Source,
+                Is.EqualTo("/base/path2/file2.giza"));
         }
 
         [Test]
@@ -462,11 +462,11 @@ namespace MetaphysicsIndustries.Giza.Test
             // when
             var result = importer.Transform(g, errors, mfs);
             // then
-            Assert.AreEqual(0, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(0));
             Assert.IsNotNull(result);
-            Assert.AreEqual(0, result.Definitions.Count);
-            Assert.AreEqual(0, result.ImportStatements.Count);
-            Assert.AreEqual("src", result.Source);
+            Assert.That(result.Definitions.Count, Is.EqualTo(0));
+            Assert.That(result.ImportStatements.Count, Is.EqualTo(0));
+            Assert.That(result.Source, Is.EqualTo("src"));
         }
     }
 }

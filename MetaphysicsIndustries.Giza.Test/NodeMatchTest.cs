@@ -34,11 +34,11 @@ namespace MetaphysicsIndustries.Giza.Test
 
             var clone = nm.CloneWithNewInputElement(new Token(startPosition: new InputPosition(5), value: "zxcv"));
 
-            Assert.AreSame(node, clone.Node);
-            Assert.AreEqual(TransitionType.Follow, clone.Transition);
-            Assert.AreEqual(5, clone.StartPosition.Index);
-            Assert.AreEqual(5, clone.InputElement.StartPosition.Index);
-            Assert.AreEqual("zxcv", clone.InputElement.Value);
+            Assert.That(clone.Node, Is.SameAs(node));
+            Assert.That(clone.Transition, Is.EqualTo(TransitionType.Follow));
+            Assert.That(clone.StartPosition.Index, Is.EqualTo(5));
+            Assert.That(clone.InputElement.StartPosition.Index, Is.EqualTo(5));
+            Assert.That(clone.InputElement.Value, Is.EqualTo("zxcv"));
         }
     }
 }

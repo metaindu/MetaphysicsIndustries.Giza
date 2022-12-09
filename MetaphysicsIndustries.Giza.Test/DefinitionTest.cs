@@ -31,7 +31,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = new Definition();
             // then
             Assert.IsNotNull(result);
-            Assert.AreEqual("", result.Name);
+            Assert.That(result.Name, Is.EqualTo(""));
             Assert.IsEmpty(result.Directives);
             Assert.IsNotNull(result.Expr);
             Assert.IsEmpty(result.Expr.Items);
@@ -53,16 +53,16 @@ namespace MetaphysicsIndustries.Giza.Test
                 "source1");
             // then
             Assert.IsNotNull(result);
-            Assert.AreEqual("def1", result.Name);
+            Assert.That(result.Name, Is.EqualTo("def1"));
             Assert.IsNotEmpty(result.Directives);
             Assert.IsTrue(
                 result.Directives.Contains(DefinitionDirective.Atomic));
             Assert.IsTrue(
                 result.Directives.Contains(DefinitionDirective.IgnoreCase));
             Assert.IsNotNull(result.Expr);
-            Assert.AreSame(expr, result.Expr);
+            Assert.That(result.Expr, Is.SameAs(expr));
             Assert.IsTrue(result.IsImported);
-            Assert.AreEqual("source1", result.Source);
+            Assert.That(result.Source, Is.EqualTo("source1"));
         }
 
         [Test]
@@ -80,14 +80,14 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = def.Clone();
             // then
             Assert.IsNotNull(result);
-            Assert.AreEqual("def1", result.Name);
+            Assert.That(result.Name, Is.EqualTo("def1"));
             Assert.IsNotEmpty(result.Directives);
             Assert.IsTrue(
                 result.Directives.Contains(DefinitionDirective.Atomic));
             Assert.IsTrue(
                 result.Directives.Contains(DefinitionDirective.IgnoreCase));
             Assert.IsNotNull(result.Expr);
-            Assert.AreSame(expr, result.Expr);
+            Assert.That(result.Expr, Is.SameAs(expr));
             Assert.IsTrue(result.IsImported);
         }
 
@@ -106,14 +106,14 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = def.Clone(newName: "def2");
             // then
             Assert.IsNotNull(result);
-            Assert.AreEqual("def2", result.Name);
+            Assert.That(result.Name, Is.EqualTo("def2"));
             Assert.IsNotEmpty(result.Directives);
             Assert.IsTrue(
                 result.Directives.Contains(DefinitionDirective.Atomic));
             Assert.IsTrue(
                 result.Directives.Contains(DefinitionDirective.IgnoreCase));
             Assert.IsNotNull(result.Expr);
-            Assert.AreSame(expr, result.Expr);
+            Assert.That(result.Expr, Is.SameAs(expr));
             Assert.IsTrue(result.IsImported);
         }
 
@@ -133,7 +133,7 @@ namespace MetaphysicsIndustries.Giza.Test
                 newDirectives: new []{DefinitionDirective.MindWhitespace});
             // then
             Assert.IsNotNull(result);
-            Assert.AreEqual("def1", result.Name);
+            Assert.That(result.Name, Is.EqualTo("def1"));
             Assert.IsNotEmpty(result.Directives);
             Assert.IsFalse(
                 result.Directives.Contains(DefinitionDirective.Atomic));
@@ -143,7 +143,7 @@ namespace MetaphysicsIndustries.Giza.Test
                 result.Directives.Contains(
                     DefinitionDirective.MindWhitespace));
             Assert.IsNotNull(result.Expr);
-            Assert.AreSame(expr, result.Expr);
+            Assert.That(result.Expr, Is.SameAs(expr));
             Assert.IsTrue(result.IsImported);
         }
 
@@ -164,15 +164,15 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = def.Clone(newExpr: expr2);
             // then
             Assert.IsNotNull(result);
-            Assert.AreEqual("def1", result.Name);
+            Assert.That(result.Name, Is.EqualTo("def1"));
             Assert.IsNotEmpty(result.Directives);
             Assert.IsTrue(
                 result.Directives.Contains(DefinitionDirective.Atomic));
             Assert.IsTrue(
                 result.Directives.Contains(DefinitionDirective.IgnoreCase));
             Assert.IsNotNull(result.Expr);
-            Assert.AreNotSame(expr1, result.Expr);
-            Assert.AreSame(expr2, result.Expr);
+            Assert.That(result.Expr, Is.Not.SameAs(expr1));
+            Assert.That(result.Expr, Is.SameAs(expr2));
             Assert.IsTrue(result.IsImported);
         }
 
@@ -191,14 +191,14 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = def.Clone(newIsImported: false);
             // then
             Assert.IsNotNull(result);
-            Assert.AreEqual("def1", result.Name);
+            Assert.That(result.Name, Is.EqualTo("def1"));
             Assert.IsNotEmpty(result.Directives);
             Assert.IsTrue(
                 result.Directives.Contains(DefinitionDirective.Atomic));
             Assert.IsTrue(
                 result.Directives.Contains(DefinitionDirective.IgnoreCase));
             Assert.IsNotNull(result.Expr);
-            Assert.AreSame(expr, result.Expr);
+            Assert.That(result.Expr, Is.SameAs(expr));
             Assert.IsFalse(result.IsImported);
         }
 
@@ -217,14 +217,14 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = def.Clone(newIsImported: true);
             // then
             Assert.IsNotNull(result);
-            Assert.AreEqual("def1", result.Name);
+            Assert.That(result.Name, Is.EqualTo("def1"));
             Assert.IsNotEmpty(result.Directives);
             Assert.IsTrue(
                 result.Directives.Contains(DefinitionDirective.Atomic));
             Assert.IsTrue(
                 result.Directives.Contains(DefinitionDirective.IgnoreCase));
             Assert.IsNotNull(result.Expr);
-            Assert.AreSame(expr, result.Expr);
+            Assert.That(result.Expr, Is.SameAs(expr));
             Assert.IsTrue(result.IsImported);
         }
 
@@ -236,7 +236,7 @@ namespace MetaphysicsIndustries.Giza.Test
             // when
             var result = def.ToString();
             // then
-            Assert.AreEqual("Definition def1", result);
+            Assert.That(result, Is.EqualTo("Definition def1"));
         }
     }
 }

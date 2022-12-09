@@ -60,8 +60,8 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
 
             // assertions
             Assert.IsEmpty(errors);
-            Assert.AreEqual(1, spans.Length);
-            Assert.AreEqual("abc", spans[0].CollectValue());
+            Assert.That(spans.Length, Is.EqualTo(1));
+            Assert.That(spans[0].CollectValue(), Is.EqualTo("abc"));
         }
 
         [Test]
@@ -72,8 +72,8 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
 
             // assertions
             Assert.IsEmpty(errors);
-            Assert.AreEqual(1, spans.Length);
-            Assert.AreEqual("abc", spans[0].CollectValue());
+            Assert.That(spans.Length, Is.EqualTo(1));
+            Assert.That(spans[0].CollectValue(), Is.EqualTo("abc"));
         }
 
         [Test]
@@ -84,8 +84,8 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
 
             // assertions
             Assert.IsEmpty(errors);
-            Assert.AreEqual(1, spans.Length);
-            Assert.AreEqual("abc", spans[0].CollectValue());
+            Assert.That(spans.Length, Is.EqualTo(1));
+            Assert.That(spans[0].CollectValue(), Is.EqualTo("abc"));
         }
 
         [Test]
@@ -96,8 +96,8 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
 
             // assertions
             Assert.IsEmpty(errors);
-            Assert.AreEqual(1, spans.Length);
-            Assert.AreEqual("abc", spans[0].CollectValue());
+            Assert.That(spans.Length, Is.EqualTo(1));
+            Assert.That(spans[0].CollectValue(), Is.EqualTo("abc"));
         }
 
         [Test]
@@ -108,8 +108,8 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
 
             // assertions
             Assert.IsEmpty(errors);
-            Assert.AreEqual(1, spans.Length);
-            Assert.AreEqual("abc", spans[0].CollectValue());
+            Assert.That(spans.Length, Is.EqualTo(1));
+            Assert.That(spans[0].CollectValue(), Is.EqualTo("abc"));
         }
 
         [Test]
@@ -120,8 +120,8 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
 
             // assertions
             Assert.IsEmpty(errors);
-            Assert.AreEqual(1, spans.Length);
-            Assert.AreEqual("abc", spans[0].CollectValue());
+            Assert.That(spans.Length, Is.EqualTo(1));
+            Assert.That(spans[0].CollectValue(), Is.EqualTo("abc"));
         }
 
         [Test]
@@ -132,8 +132,8 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
 
             // assertions
             Assert.IsEmpty(errors);
-            Assert.AreEqual(1, spans.Length);
-            Assert.AreEqual("abc", spans[0].CollectValue());
+            Assert.That(spans.Length, Is.EqualTo(1));
+            Assert.That(spans[0].CollectValue(), Is.EqualTo("abc"));
         }
     }
 }

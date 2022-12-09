@@ -36,10 +36,10 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = ss.GetGrammar(input, errors, source);
             // then
             Assert.IsNotNull(result);
-            Assert.AreEqual(source, result.Source);
-            Assert.AreEqual(1, result.Definitions.Count);
-            Assert.AreEqual("def1", result.Definitions[0].Name);
-            Assert.AreEqual(source, result.Definitions[0].Source);
+            Assert.That(result.Source, Is.EqualTo(source));
+            Assert.That(result.Definitions.Count, Is.EqualTo(1));
+            Assert.That(result.Definitions[0].Name, Is.EqualTo("def1"));
+            Assert.That(result.Definitions[0].Source, Is.EqualTo(source));
         }
     }
 }

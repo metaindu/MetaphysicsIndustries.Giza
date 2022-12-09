@@ -38,7 +38,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = StringFormatter.Format(format, emptyParams);
 
             // assertions
-            Assert.AreEqual(format, result);
+            Assert.That(result, Is.EqualTo(format));
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = StringFormatter.Format(format, values);
 
             // assertions
-            Assert.AreEqual("single result", result);
+            Assert.That(result, Is.EqualTo("single result"));
         }
 
         [Test]
@@ -66,7 +66,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = StringFormatter.Format(format, values);
 
             // assertions
-            Assert.AreEqual("single result", result);
+            Assert.That(result, Is.EqualTo("single result"));
         }
 
         [Test]
@@ -80,7 +80,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = StringFormatter.Format(format, values);
 
             // assertions
-            Assert.AreEqual("single result", result);
+            Assert.That(result, Is.EqualTo("single result"));
         }
 
         [Test]
@@ -94,7 +94,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = StringFormatter.Format(format, values);
 
             // assertions
-            Assert.AreEqual("single result", result);
+            Assert.That(result, Is.EqualTo("single result"));
         }
 
         [Test]
@@ -111,7 +111,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = StringFormatter.Format(format, values);
 
             // assertions
-            Assert.AreEqual("first second", result);
+            Assert.That(result, Is.EqualTo("first second"));
         }
 
         [Test]
@@ -127,7 +127,8 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = StringFormatter.Format(format, values);
 
             // assertions
-            Assert.AreEqual("a friend in need is a friend indeed", result);
+            Assert.That(result,
+                Is.EqualTo("a friend in need is a friend indeed"));
         }
 
         [Test]
@@ -140,7 +141,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = StringFormatter.Format(format, emptyParams);
 
             // assertions
-            Assert.AreEqual(format, result);
+            Assert.That(result, Is.EqualTo(format));
         }
 
         [Test]
@@ -153,7 +154,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = StringFormatter.Format(format, emptyParams);
 
             // assertions
-            Assert.AreEqual(format, result);
+            Assert.That(result, Is.EqualTo(format));
         }
 
         [Test]
@@ -166,7 +167,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = StringFormatter.Format(format, emptyParams);
 
             // assertions
-            Assert.AreEqual(format, result);
+            Assert.That(result, Is.EqualTo(format));
         }
 
         [Test]
@@ -179,7 +180,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = StringFormatter.Format(format, emptyParams);
 
             // assertions
-            Assert.AreEqual(format, result);
+            Assert.That(result, Is.EqualTo(format));
         }
 
         [Test]
@@ -196,7 +197,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = StringFormatter.Format(format, values);
 
             // assertions
-            Assert.AreEqual("more widgets than params", result);
+            Assert.That(result, Is.EqualTo("more widgets than params"));
         }
 
         [Test]
@@ -212,7 +213,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = StringFormatter.Format(format, values);
 
             // assertions
-            Assert.AreEqual("more {params} than widgets", result);
+            Assert.That(result, Is.EqualTo("more {params} than widgets"));
         }
 
         [Test]
@@ -225,7 +226,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = StringFormatter.Format(format, emptyParams);
 
             // assertions
-            Assert.AreEqual("escape {", result);
+            Assert.That(result, Is.EqualTo("escape {"));
         }
 
         [Test]
@@ -238,7 +239,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = StringFormatter.Format(format, emptyParams);
 
             // assertions
-            Assert.AreEqual("escape }", result);
+            Assert.That(result, Is.EqualTo("escape }"));
         }
 
         [Test]
@@ -251,7 +252,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = StringFormatter.Format(format, emptyParams);
 
             // assertions
-            Assert.AreEqual("escapes {text}", result);
+            Assert.That(result, Is.EqualTo("escapes {text}"));
         }
 
         [Test]
@@ -267,7 +268,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = StringFormatter.Format(format, values);
 
             // assertions
-            Assert.AreEqual("difficult {something}", result);
+            Assert.That(result, Is.EqualTo("difficult {something}"));
         }
 
         [Test]
@@ -280,7 +281,8 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = StringFormatter.Format(format, emptyParams);
 
             // assertions
-            Assert.AreEqual("difficult {{escape}} with missing param", result);
+            Assert.That(result,
+                Is.EqualTo("difficult {{escape}} with missing param"));
         }
 
         [Test]
@@ -294,7 +296,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = StringFormatter.Format(format, values);
 
             // assertions
-            Assert.AreEqual("func arg", result);
+            Assert.That(result, Is.EqualTo("func arg"));
         }
 
         [Test]
@@ -308,7 +310,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = StringFormatter.Format(format, values);
 
             // assertions
-            Assert.AreEqual("func arg and object", result);
+            Assert.That(result, Is.EqualTo("func arg and object"));
         }
 
         [Test]
@@ -324,7 +326,8 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = StringFormatter.Format(format, values);
 
             // assertions
-            Assert.AreEqual("one arg two object three {another}", result);
+            Assert.That(result,
+                Is.EqualTo("one arg two object three {another}"));
         }
 
         [Test]
@@ -338,7 +341,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = StringFormatter.Format(format, values);
 
             // assertions
-            Assert.AreEqual("func arg arg arg", result);
+            Assert.That(result, Is.EqualTo("func arg arg arg"));
         }
 
         [Test]
@@ -355,7 +358,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = StringFormatter.Format(format, values);
 
             // assertions
-            Assert.AreEqual("func arg arg arg", result);
+            Assert.That(result, Is.EqualTo("func arg arg arg"));
         }
 
         [Test]
@@ -371,7 +374,8 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = "one {param} two {something} three {another}".Format(values);
 
             // assertions
-            Assert.AreEqual("one arg two object three {another}", result);
+            Assert.That(result,
+                Is.EqualTo("one arg two object three {another}"));
         }
 
         [Test]
@@ -386,7 +390,8 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = "one {param} two {something} three {another}".Format(values);
 
             // assertions
-            Assert.AreEqual("one arg two object three {another}", result);
+            Assert.That(result,
+                Is.EqualTo("one arg two object three {another}"));
         }
 
         [Test]

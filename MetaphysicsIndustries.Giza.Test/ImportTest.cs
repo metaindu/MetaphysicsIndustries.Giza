@@ -35,12 +35,12 @@ namespace MetaphysicsIndustries.Giza.Test
             // when
             var result = ss.GetGrammar(src, errors);
             // then
-            Assert.AreEqual(0, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(0));
             Assert.IsNotNull(result);
-            Assert.AreEqual(0, result.Definitions.Count);
-            Assert.AreEqual(1, result.ImportStatements.Count);
-            Assert.AreEqual("file1.txt",
-                result.ImportStatements[0].Filename);
+            Assert.That(result.Definitions.Count, Is.EqualTo(0));
+            Assert.That(result.ImportStatements.Count, Is.EqualTo(1));
+            Assert.That(result.ImportStatements[0].Filename,
+                Is.EqualTo("file1.txt"));
             Assert.IsNull(result.ImportStatements[0].ImportRefs);
             Assert.IsTrue(result.ImportStatements[0].ImportAll);
         }
@@ -55,17 +55,18 @@ namespace MetaphysicsIndustries.Giza.Test
             // when
             var result = ss.GetGrammar(src, errors);
             // then
-            Assert.AreEqual(0, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(0));
             Assert.IsNotNull(result);
-            Assert.AreEqual(0, result.Definitions.Count);
-            Assert.AreEqual(1, result.ImportStatements.Count);
-            Assert.AreEqual("file1.txt",
-                result.ImportStatements[0].Filename);
+            Assert.That(result.Definitions.Count, Is.EqualTo(0));
+            Assert.That(result.ImportStatements.Count, Is.EqualTo(1));
+            Assert.That(result.ImportStatements[0].Filename,
+                Is.EqualTo("file1.txt"));
             Assert.IsNotNull(result.ImportStatements[0].ImportRefs);
-            Assert.AreEqual(1, result.ImportStatements[0].ImportRefs.Length);
+            Assert.That(result.ImportStatements[0].ImportRefs.Length,
+                Is.EqualTo(1));
             var importRef = result.ImportStatements[0].ImportRefs[0];
-            Assert.AreEqual("def1", importRef.SourceName);
-            Assert.AreEqual("def1", importRef.DestName);
+            Assert.That(importRef.SourceName, Is.EqualTo("def1"));
+            Assert.That(importRef.DestName, Is.EqualTo("def1"));
             Assert.IsFalse(result.ImportStatements[0].ImportAll);
         }
 
@@ -79,20 +80,21 @@ namespace MetaphysicsIndustries.Giza.Test
             // when
             var result = ss.GetGrammar(src, errors);
             // then
-            Assert.AreEqual(0, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(0));
             Assert.IsNotNull(result);
-            Assert.AreEqual(0, result.Definitions.Count);
-            Assert.AreEqual(1, result.ImportStatements.Count);
-            Assert.AreEqual("file1.txt",
-                result.ImportStatements[0].Filename);
+            Assert.That(result.Definitions.Count, Is.EqualTo(0));
+            Assert.That(result.ImportStatements.Count, Is.EqualTo(1));
+            Assert.That(result.ImportStatements[0].Filename,
+                Is.EqualTo("file1.txt"));
             Assert.IsNotNull(result.ImportStatements[0].ImportRefs);
-            Assert.AreEqual(2, result.ImportStatements[0].ImportRefs.Length);
+            Assert.That(result.ImportStatements[0].ImportRefs.Length,
+                Is.EqualTo(2));
             var importRef1 = result.ImportStatements[0].ImportRefs[0];
-            Assert.AreEqual("def1", importRef1.SourceName);
-            Assert.AreEqual("def1", importRef1.DestName);
+            Assert.That(importRef1.SourceName, Is.EqualTo("def1"));
+            Assert.That(importRef1.DestName, Is.EqualTo("def1"));
             var importRef2 = result.ImportStatements[0].ImportRefs[1];
-            Assert.AreEqual("def3", importRef2.SourceName);
-            Assert.AreEqual("def3", importRef2.DestName);
+            Assert.That(importRef2.SourceName, Is.EqualTo("def3"));
+            Assert.That(importRef2.DestName, Is.EqualTo("def3"));
             Assert.IsFalse(result.ImportStatements[0].ImportAll);
         }
 
@@ -107,27 +109,27 @@ namespace MetaphysicsIndustries.Giza.Test
             // when
             var result = ss.GetGrammar(src, errors);
             // then
-            Assert.AreEqual(0, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(0));
             Assert.IsNotNull(result);
-            Assert.AreEqual(0, result.Definitions.Count);
-            Assert.AreEqual(2, result.ImportStatements.Count);
+            Assert.That(result.Definitions.Count, Is.EqualTo(0));
+            Assert.That(result.ImportStatements.Count, Is.EqualTo(2));
             var importStmt1 = result.ImportStatements[0];
-            Assert.AreEqual("file1.txt", importStmt1.Filename);
+            Assert.That(importStmt1.Filename, Is.EqualTo("file1.txt"));
             Assert.IsFalse(importStmt1.ImportAll);
             Assert.IsNotNull(importStmt1.ImportRefs);
-            Assert.AreEqual(1, importStmt1.ImportRefs.Length);
+            Assert.That(importStmt1.ImportRefs.Length, Is.EqualTo(1));
             var importRef1 = importStmt1.ImportRefs[0];
-            Assert.AreEqual("def1", importRef1.SourceName);
-            Assert.AreEqual("def1", importRef1.DestName);
+            Assert.That(importRef1.SourceName, Is.EqualTo("def1"));
+            Assert.That(importRef1.DestName, Is.EqualTo("def1"));
 
             var importStmt2 = result.ImportStatements[0];
-            Assert.AreEqual("file1.txt", importStmt2.Filename);
+            Assert.That(importStmt2.Filename, Is.EqualTo("file1.txt"));
             Assert.IsFalse(importStmt2.ImportAll);
             Assert.IsNotNull(importStmt2.ImportRefs);
-            Assert.AreEqual(1, importStmt2.ImportRefs.Length);
+            Assert.That(importStmt2.ImportRefs.Length, Is.EqualTo(1));
             var importRef2 = importStmt2.ImportRefs[0];
-            Assert.AreEqual("def1", importRef2.SourceName);
-            Assert.AreEqual("def1", importRef2.DestName);
+            Assert.That(importRef2.SourceName, Is.EqualTo("def1"));
+            Assert.That(importRef2.DestName, Is.EqualTo("def1"));
         }
     }
 }

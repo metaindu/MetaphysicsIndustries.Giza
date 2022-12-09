@@ -1,5 +1,4 @@
-﻿
-// MetaphysicsIndustries.Giza - A Parsing System
+﻿// MetaphysicsIndustries.Giza - A Parsing System
 // Copyright (C) 2008-2021 Metaphysics Industries, Inc.
 //
 // This library is free software; you can redistribute it and/or
@@ -35,7 +34,7 @@ namespace MetaphysicsIndustries.Giza.Test
             pq.Enqueue("something", 3);
 
             // assertion
-            Assert.AreEqual(1, pq.Count);
+            Assert.That(pq.Count, Is.EqualTo(1));
         }
 
         [Test]
@@ -48,8 +47,8 @@ namespace MetaphysicsIndustries.Giza.Test
             pq.Enqueue("something2", 4);
 
             // assertion
-            Assert.AreEqual(1, pq.Count);
-            Assert.AreEqual("something2", pq.Peek());
+            Assert.That(pq.Count, Is.EqualTo(1));
+            Assert.That(pq.Peek(), Is.EqualTo("something2"));
         }
 
         [Test]
@@ -58,15 +57,15 @@ namespace MetaphysicsIndustries.Giza.Test
             // setup
             var pq = new PriorityQueue<string, int>();
             pq.Enqueue("item", 2);
-            Assert.AreEqual(1, pq.Count);
-            Assert.AreEqual("item", pq.Peek());
+            Assert.That(pq.Count, Is.EqualTo(1));
+            Assert.That(pq.Peek(), Is.EqualTo("item"));
 
             // action
             string value = pq.Dequeue();
 
             // assertions
-            Assert.AreEqual(0, pq.Count);
-            Assert.AreSame("item", value);
+            Assert.That(pq.Count, Is.EqualTo(0));
+            Assert.That(value, Is.SameAs("item"));
         }
 
         [Test]
@@ -85,8 +84,8 @@ namespace MetaphysicsIndustries.Giza.Test
             pq.Enqueue("something else", 5);
 
             // assertion
-            Assert.AreEqual(2, pq.Count);
-            Assert.AreEqual("something else", pq.Peek());
+            Assert.That(pq.Count, Is.EqualTo(2));
+            Assert.That(pq.Peek(), Is.EqualTo("something else"));
         }
 
         [Test]
@@ -100,8 +99,8 @@ namespace MetaphysicsIndustries.Giza.Test
             pq.Enqueue("low", 1);
 
             // assertion
-            Assert.AreEqual(2, pq.Count);
-            Assert.AreEqual("high", pq.Peek());
+            Assert.That(pq.Count, Is.EqualTo(2));
+            Assert.That(pq.Peek(), Is.EqualTo("high"));
         }
 
         [Test]
@@ -118,9 +117,9 @@ namespace MetaphysicsIndustries.Giza.Test
             pq.CopyTo(array, 0);
 
             // assertion
-            Assert.AreEqual("high", array[0]);
-            Assert.AreEqual("middle", array[1]);
-            Assert.AreEqual("low", array[2]);
+            Assert.That(array[0], Is.EqualTo("high"));
+            Assert.That(array[1], Is.EqualTo("middle"));
+            Assert.That(array[2], Is.EqualTo("low"));
         }
 
         [Test]
@@ -137,9 +136,9 @@ namespace MetaphysicsIndustries.Giza.Test
             pq.CopyTo(array, 0);
 
             // assertion
-            Assert.AreEqual("high", array[0]);
-            Assert.AreEqual("middle", array[1]);
-            Assert.AreEqual("low", array[2]);
+            Assert.That(array[0], Is.EqualTo("high"));
+            Assert.That(array[1], Is.EqualTo("middle"));
+            Assert.That(array[2], Is.EqualTo("low"));
         }
 
         [Test]
@@ -156,9 +155,9 @@ namespace MetaphysicsIndustries.Giza.Test
             pq.CopyTo(array, 0);
 
             // assertion
-            Assert.AreEqual("high", array[0]);
-            Assert.AreEqual("high2", array[1]);
-            Assert.AreEqual("low", array[2]);
+            Assert.That(array[0], Is.EqualTo("high"));
+            Assert.That(array[1], Is.EqualTo("high2"));
+            Assert.That(array[2], Is.EqualTo("low"));
         }
 
         [Test]
@@ -175,9 +174,9 @@ namespace MetaphysicsIndustries.Giza.Test
             pq.CopyTo(array, 0);
 
             // assertion
-            Assert.AreEqual("high", array[0]);
-            Assert.AreEqual("low", array[1]);
-            Assert.AreEqual("low2", array[2]);
+            Assert.That(array[0], Is.EqualTo("high"));
+            Assert.That(array[1], Is.EqualTo("low"));
+            Assert.That(array[2], Is.EqualTo("low2"));
         }
 
         [Test]
@@ -194,9 +193,9 @@ namespace MetaphysicsIndustries.Giza.Test
             pq.CopyTo(array, 0);
 
             // assertion
-            Assert.AreEqual("low", array[0]);
-            Assert.AreEqual("high", array[1]);
-            Assert.AreEqual("high2", array[2]);
+            Assert.That(array[0], Is.EqualTo("low"));
+            Assert.That(array[1], Is.EqualTo("high"));
+            Assert.That(array[2], Is.EqualTo("high2"));
         }
 
         [Test]
@@ -213,10 +212,9 @@ namespace MetaphysicsIndustries.Giza.Test
             pq.CopyTo(array, 0);
 
             // assertion
-            Assert.AreEqual("low", array[0]);
-            Assert.AreEqual("low2", array[1]);
-            Assert.AreEqual("high", array[2]);
+            Assert.That(array[0], Is.EqualTo("low"));
+            Assert.That(array[1], Is.EqualTo("low2"));
+            Assert.That(array[2], Is.EqualTo("high"));
         }
     }
 }
-

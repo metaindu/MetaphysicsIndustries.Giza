@@ -66,13 +66,13 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             Span[] spans = s.Process("qwer".ToCharacterSource(), errors);
 
             // assertions
-            Assert.AreEqual(1, spans.Length);
+            Assert.That(spans.Length, Is.EqualTo(1));
             Assert.IsEmpty(errors);
 
             // action
             spans = s.Process("asdf".ToCharacterSource(), errors);
             // assertions
-            Assert.AreEqual(1, spans.Length);
+            Assert.That(spans.Length, Is.EqualTo(1));
             Assert.IsEmpty(errors);
         }
 
@@ -92,19 +92,23 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             Span[] spans = s.Process(testGrammarText.ToCharacterSource(), errors);
 
             Assert.IsEmpty(spans);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<ParserError<InputChar>>(errors[0]);
             var err = ((ParserError<InputChar>)errors[0]);
-            Assert.AreEqual(ParserError.InvalidInputElement, err.ErrorType);
-            Assert.AreEqual('w', err.OffendingInputElement.Value);
-            Assert.AreEqual(4, err.Position.Line);
-            Assert.AreEqual(2, err.Position.Column);
-            Assert.AreEqual(74, err.Position.Index);
+            Assert.That(err.ErrorType,
+                Is.EqualTo(ParserError.InvalidInputElement));
+            Assert.That(err.OffendingInputElement.Value, Is.EqualTo('w'));
+            Assert.That(err.Position.Line, Is.EqualTo(4));
+            Assert.That(err.Position.Column, Is.EqualTo(2));
+            Assert.That(err.Position.Index, Is.EqualTo(74));
             Assert.IsInstanceOf<CharNode>(err.LastValidMatchingNode);
             var charnode = (err.LastValidMatchingNode as CharNode);
-            Assert.AreEqual("<", charnode.CharClass.ToUndelimitedString());
-            Assert.AreEqual(1, err.ExpectedNodes.Count());
-            Assert.AreEqual("directive-item", (err.ExpectedNodes.First() as DefRefNode).DefRef.Name);
+            Assert.That(charnode.CharClass.ToUndelimitedString(),
+                Is.EqualTo("<"));
+            Assert.That(err.ExpectedNodes.Count(), Is.EqualTo(1));
+            Assert.That(
+                (err.ExpectedNodes.First() as DefRefNode).DefRef.Name,
+                Is.EqualTo("directive-item"));
         }
 
         [Test()]
@@ -123,23 +127,28 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             Span[] spans = s.Process(testGrammarText.ToCharacterSource(), errors);
 
             Assert.IsEmpty(spans);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<ParserError<InputChar>>(errors[0]);
             var err = ((ParserError<InputChar>)errors[0]);
-            Assert.AreEqual(ParserError.InvalidInputElement, err.ErrorType);
-            Assert.AreEqual('w', err.OffendingInputElement.Value);
-            Assert.AreEqual(4, err.Position.Line);
-            Assert.AreEqual(2, err.Position.Column);
-            Assert.AreEqual(74, err.Position.Index);
+            Assert.That(err.ErrorType,
+                Is.EqualTo(ParserError.InvalidInputElement));
+            Assert.That(err.OffendingInputElement.Value, Is.EqualTo('w'));
+            Assert.That(err.Position.Line, Is.EqualTo(4));
+            Assert.That(err.Position.Column, Is.EqualTo(2));
+            Assert.That(err.Position.Index, Is.EqualTo(74));
             Assert.IsInstanceOf<CharNode>(err.LastValidMatchingNode);
             var charnode = (err.LastValidMatchingNode as CharNode);
-            Assert.AreEqual("<", charnode.CharClass.ToUndelimitedString());
-            Assert.AreEqual(1, err.ExpectedNodes.Count());
-            Assert.AreEqual("directive-item", (err.ExpectedNodes.First() as DefRefNode).DefRef.Name);
+            Assert.That(charnode.CharClass.ToUndelimitedString(),
+                Is.EqualTo("<"));
+            Assert.That(err.ExpectedNodes.Count(), Is.EqualTo(1));
+            Assert.That(
+                (err.ExpectedNodes.First() as DefRefNode).DefRef.Name,
+                Is.EqualTo("directive-item"));
 
-            Assert.AreEqual(
-                "Invalid token 'w' at position 4,2 (index 74). Expected directive-item.",
-                err.Description);
+            Assert.That(
+                err.Description,
+                Is.EqualTo("Invalid token 'w' at position 4,2 (index 74). " +
+                           "Expected directive-item."));
         }
 
         [Test()]
@@ -219,17 +228,20 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
 
             // assertions
             Assert.IsEmpty(spans);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<ParserError<InputChar>>(errors[0]);
             var err = ((ParserError<InputChar>)errors[0]);
-            Assert.AreEqual(ParserError.InvalidInputElement, err.ErrorType);
-            Assert.AreEqual('$', err.OffendingInputElement.Value);
-            Assert.AreEqual(1, err.Position.Line);
-            Assert.AreEqual(1, err.Position.Column);
-            Assert.AreEqual(0, err.Position.Index);
+            Assert.That(err.ErrorType,
+                Is.EqualTo(ParserError.InvalidInputElement));
+            Assert.That(err.OffendingInputElement.Value, Is.EqualTo('$'));
+            Assert.That(err.Position.Line, Is.EqualTo(1));
+            Assert.That(err.Position.Column, Is.EqualTo(1));
+            Assert.That(err.Position.Index, Is.EqualTo(0));
             Assert.IsNull(err.LastValidMatchingNode);
-            Assert.AreEqual(1, err.ExpectedNodes.Count());
-            Assert.AreEqual("item", (err.ExpectedNodes.First() as DefRefNode).DefRef.Name);
+            Assert.That(err.ExpectedNodes.Count(), Is.EqualTo(1));
+            Assert.That(
+                (err.ExpectedNodes.First() as DefRefNode).DefRef.Name,
+                Is.EqualTo("item"));
         }
 
         static NGrammar CreateGrammarForTestUnexpectedEndOfInput()
@@ -331,21 +343,27 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
 
             // assertions
             Assert.IsNotNull(spans);
-            Assert.AreEqual(0, spans.Length);
+            Assert.That(spans.Length, Is.EqualTo(0));
             Assert.IsNotNull(errors);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<ParserError>(errors[0]);
             var err = ((ParserError)errors[0]);
-            Assert.AreEqual(ParserError.UnexpectedEndOfInput, err.ErrorType);
-            Assert.AreEqual(1, err.Position.Line);
-            Assert.AreEqual(15, err.Position.Column);
-            Assert.AreEqual(14, err.Position.Index);
+            Assert.That(err.ErrorType,
+                Is.EqualTo(ParserError.UnexpectedEndOfInput));
+            Assert.That(err.Position.Line, Is.EqualTo(1));
+            Assert.That(err.Position.Column, Is.EqualTo(15));
+            Assert.That(err.Position.Index, Is.EqualTo(14));
             Assert.IsInstanceOf<DefRefNode>(err.LastValidMatchingNode);
-            Assert.AreEqual("sequence", (err.LastValidMatchingNode as DefRefNode).DefRef.Name);
+            Assert.That(
+                (err.LastValidMatchingNode as DefRefNode).DefRef.Name,
+                Is.EqualTo("sequence"));
             Assert.IsNotNull(err.ExpectedNodes);
-            Assert.AreEqual(1, err.ExpectedNodes.Count());
+            Assert.That(err.ExpectedNodes.Count(), Is.EqualTo(1));
             Assert.IsInstanceOf<CharNode>(err.ExpectedNodes.First());
-            Assert.AreEqual(")", (err.ExpectedNodes.First() as CharNode).CharClass.ToUndelimitedString());
+            Assert.That(
+                (err.ExpectedNodes.First() as CharNode).CharClass
+                .ToUndelimitedString(),
+                Is.EqualTo(")"));
         }
 
         [Test]
@@ -370,21 +388,27 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
 
             // assertions
             Assert.IsNotNull(spans);
-            Assert.AreEqual(0, spans.Length);
+            Assert.That(spans.Length, Is.EqualTo(0));
             Assert.IsNotNull(errors);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<ParserError>(errors[0]);
             var err = ((ParserError)errors[0]);
-            Assert.AreEqual(ParserError.UnexpectedEndOfInput, err.ErrorType);
-            Assert.AreEqual(1, err.Position.Line);
-            Assert.AreEqual(14, err.Position.Column);
-            Assert.AreEqual(13, err.Position.Index);
+            Assert.That(err.ErrorType,
+                Is.EqualTo(ParserError.UnexpectedEndOfInput));
+            Assert.That(err.Position.Line, Is.EqualTo(1));
+            Assert.That(err.Position.Column, Is.EqualTo(14));
+            Assert.That(err.Position.Index, Is.EqualTo(13));
             Assert.IsInstanceOf<DefRefNode>(err.LastValidMatchingNode);
-            Assert.AreEqual("sequence", (err.LastValidMatchingNode as DefRefNode).DefRef.Name);
+            Assert.That(
+                (err.LastValidMatchingNode as DefRefNode).DefRef.Name,
+                Is.EqualTo("sequence"));
             Assert.IsNotNull(err.ExpectedNodes);
-            Assert.AreEqual(1, err.ExpectedNodes.Count());
+            Assert.That(err.ExpectedNodes.Count(), Is.EqualTo(1));
             Assert.IsInstanceOf<CharNode>(err.ExpectedNodes.First());
-            Assert.AreEqual(")", (err.ExpectedNodes.First() as CharNode).CharClass.ToUndelimitedString());
+            Assert.That(
+                (err.ExpectedNodes.First() as CharNode).CharClass
+                .ToUndelimitedString(),
+                Is.EqualTo(")"));
         }
 
         [Test]
@@ -409,19 +433,23 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
 
             // assertions
             Assert.IsNotNull(spans);
-            Assert.AreEqual(0, spans.Length);
+            Assert.That(spans.Length, Is.EqualTo(0));
             Assert.IsNotNull(errors);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<ParserError>(errors[0]);
             var err = ((ParserError)errors[0]);
-            Assert.AreEqual(ParserError.UnexpectedEndOfInput, err.ErrorType);
-            Assert.AreEqual(1, err.Position.Line);
-            Assert.AreEqual(13, err.Position.Column);
-            Assert.AreEqual(12, err.Position.Index);
+            Assert.That(err.ErrorType,
+                Is.EqualTo(ParserError.UnexpectedEndOfInput));
+            Assert.That(err.Position.Line, Is.EqualTo(1));
+            Assert.That(err.Position.Column, Is.EqualTo(13));
+            Assert.That(err.Position.Index, Is.EqualTo(12));
             Assert.IsInstanceOf<CharNode>(err.LastValidMatchingNode);
-            Assert.AreEqual("m", (err.LastValidMatchingNode as CharNode).CharClass.ToUndelimitedString());
+            Assert.That(
+                (err.LastValidMatchingNode as CharNode).CharClass
+                .ToUndelimitedString(),
+                Is.EqualTo("m"));
             Assert.IsNotNull(err.ExpectedNodes);
-            Assert.AreEqual(1, err.ExpectedNodes.Count());
+            Assert.That(err.ExpectedNodes.Count(), Is.EqualTo(1));
             Assert.IsInstanceOf<CharNode>(err.ExpectedNodes.First());
             var expectedChar = (err.ExpectedNodes.First() as CharNode).CharClass.ToUndelimitedString();
             Assert.True(expectedChar == "1" || expectedChar == "2");
@@ -511,17 +539,20 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
 
             // assertions
             Assert.IsNotNull(spans);
-            Assert.AreEqual(0, spans.Length);
+            Assert.That(spans.Length, Is.EqualTo(0));
             Assert.IsNotNull(errors);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<ParserError>(errors[0]);
             var err = ((ParserError)errors[0]);
-            Assert.AreEqual(ParserError.ExcessRemainingInput, err.ErrorType);
-            Assert.AreEqual(1, err.Position.Line);
-            Assert.AreEqual(15, err.Position.Column);
-            Assert.AreEqual(14, err.Position.Index);
+            Assert.That(err.ErrorType,
+                Is.EqualTo(ParserError.ExcessRemainingInput));
+            Assert.That(err.Position.Line, Is.EqualTo(1));
+            Assert.That(err.Position.Column, Is.EqualTo(15));
+            Assert.That(err.Position.Index, Is.EqualTo(14));
             Assert.IsInstanceOf<DefRefNode>(err.LastValidMatchingNode);
-            Assert.AreEqual("sequence", (err.LastValidMatchingNode as DefRefNode).DefRef.Name);
+            Assert.That(
+                (err.LastValidMatchingNode as DefRefNode).DefRef.Name,
+                Is.EqualTo("sequence"));
             Assert.IsNull(err.ExpectedNodes);
         }
 
@@ -590,7 +621,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             Assert.IsEmpty(tokens);
             Assert.IsNotNull(errors);
             Assert.IsEmpty(errors);
-            Assert.AreEqual(5, endOfInputPosition.Index);
+            Assert.That(endOfInputPosition.Index, Is.EqualTo(5));
         }
 
         [Test]
@@ -622,7 +653,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             Assert.IsEmpty(tokens);
             Assert.IsNotNull(errors);
             Assert.IsEmpty(errors);
-            Assert.AreEqual(6, endOfInputPosition.Index);
+            Assert.That(endOfInputPosition.Index, Is.EqualTo(6));
         }
 
         [Test]
@@ -654,7 +685,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             Assert.IsEmpty(tokens);
             Assert.IsNotNull(errors);
             Assert.IsEmpty(errors);
-            Assert.AreEqual(6, endOfInputPosition.Index);
+            Assert.That(endOfInputPosition.Index, Is.EqualTo(6));
         }
 
         [Test]
@@ -743,36 +774,36 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
 
             // assertions
             Assert.IsNotNull(errors);
-            Assert.AreEqual(0, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(0));
             Assert.IsNotNull(spans);
-            Assert.AreEqual(1, spans.Length);
+            Assert.That(spans.Length, Is.EqualTo(1));
             var span = spans[0];
-            Assert.AreSame(formatDef, span.DefRef);
-            Assert.AreEqual(3, span.Subspans.Count);
+            Assert.That(span.DefRef, Is.SameAs(formatDef));
+            Assert.That(span.Subspans.Count, Is.EqualTo(3));
             var s0 = span.Subspans[0];
             var s1 = span.Subspans[1];
             var s2 = span.Subspans[2];
-            Assert.AreSame(textDef, s0.DefRef);
-            Assert.AreEqual("leading ", s0.CollectValue());
+            Assert.That(s0.DefRef, Is.SameAs(textDef));
+            Assert.That(s0.CollectValue(), Is.EqualTo("leading "));
 
-            Assert.AreSame(paramDef, s1.DefRef);
-            Assert.AreEqual(3, s1.Subspans.Count);
+            Assert.That(s1.DefRef, Is.SameAs(paramDef));
+            Assert.That(s1.Subspans.Count, Is.EqualTo(3));
             var s10 = s1.Subspans[0];
             var s11 = s1.Subspans[1];
             var s12 = s1.Subspans[2];
-            Assert.AreSame(paramDef.Nodes[0], s10.Node);
+            Assert.That(s10.Node, Is.SameAs(paramDef.Nodes[0]));
             Assert.IsNull(s10.DefRef);
-            Assert.AreEqual(0, s10.Subspans.Count);
-            Assert.AreEqual("{", s10.Value);
-            Assert.AreSame(nameDef, s11.DefRef);
-            Assert.AreEqual("delimited", s11.CollectValue());
-            Assert.AreSame(paramDef.Nodes[4], s12.Node);
+            Assert.That(s10.Subspans.Count, Is.EqualTo(0));
+            Assert.That(s10.Value, Is.EqualTo("{"));
+            Assert.That(s11.DefRef, Is.SameAs(nameDef));
+            Assert.That(s11.CollectValue(), Is.EqualTo("delimited"));
+            Assert.That(s12.Node, Is.SameAs(paramDef.Nodes[4]));
             Assert.IsNull(s12.DefRef);
-            Assert.AreEqual(0, s12.Subspans.Count);
-            Assert.AreEqual("}", s12.Value);
+            Assert.That(s12.Subspans.Count, Is.EqualTo(0));
+            Assert.That(s12.Value, Is.EqualTo("}"));
 
-            Assert.AreSame(textDef, s2.DefRef);
-            Assert.AreEqual("x", s2.CollectValue());
+            Assert.That(s2.DefRef, Is.SameAs(textDef));
+            Assert.That(s2.CollectValue(), Is.EqualTo("x"));
         }
 
         [Ignore("Will not fix")]
@@ -851,7 +882,7 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
 
             // assertions
             Assert.IsNotNull(spans);
-            Assert.AreEqual(1, spans.Length);
+            Assert.That(spans.Length, Is.EqualTo(1));
         }
 
         [Test]
@@ -875,21 +906,21 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             // assertions
             Assert.IsEmpty(errors);
             Assert.IsNotNull(spans);
-            Assert.AreEqual(1, spans.Length);
+            Assert.That(spans.Length, Is.EqualTo(1));
             var s = spans[0];
-            Assert.AreSame(itemDef, s.DefRef);
-            Assert.AreEqual(4, s.Subspans.Count);
-            Assert.AreSame(itemDef.Nodes[0], s.Subspans[0].Node);
-            Assert.AreEqual("i", s.Subspans[0].Value);
+            Assert.That(s.DefRef, Is.SameAs(itemDef));
+            Assert.That(s.Subspans.Count, Is.EqualTo(4));
+            Assert.That(s.Subspans[0].Node, Is.SameAs(itemDef.Nodes[0]));
+            Assert.That(s.Subspans[0].Value, Is.EqualTo("i"));
             Assert.IsEmpty(s.Subspans[0].Subspans);
-            Assert.AreSame(itemDef.Nodes[1], s.Subspans[1].Node);
-            Assert.AreEqual("T", s.Subspans[1].Value);
+            Assert.That(s.Subspans[1].Node, Is.SameAs(itemDef.Nodes[1]));
+            Assert.That(s.Subspans[1].Value, Is.EqualTo("T"));
             Assert.IsEmpty(s.Subspans[1].Subspans);
-            Assert.AreSame(itemDef.Nodes[2], s.Subspans[2].Node);
-            Assert.AreEqual("e", s.Subspans[2].Value);
+            Assert.That(s.Subspans[2].Node, Is.SameAs(itemDef.Nodes[2]));
+            Assert.That(s.Subspans[2].Value, Is.EqualTo("e"));
             Assert.IsEmpty(s.Subspans[2].Subspans);
-            Assert.AreSame(itemDef.Nodes[3], s.Subspans[3].Node);
-            Assert.AreEqual("M", s.Subspans[3].Value);
+            Assert.That(s.Subspans[3].Node, Is.SameAs(itemDef.Nodes[3]));
+            Assert.That(s.Subspans[3].Value, Is.EqualTo("M"));
             Assert.IsEmpty(s.Subspans[3].Subspans);
         }
 
@@ -911,14 +942,16 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
             var spans = spanner.Process(input.ToCharacterSource(), errors);
 
             // assertions
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<ParserError<InputChar>>(errors[0]);
             var e = (ParserError<InputChar>)(errors[0]);
-            Assert.AreEqual(ParserError.InvalidInputElement, e.ErrorType);
-            Assert.AreEqual('T', e.OffendingInputElement.Value);
-            Assert.AreEqual(new InputPosition(1, 1, 2), e.Position);
+            Assert.That(e.ErrorType,
+                Is.EqualTo(ParserError.InvalidInputElement));
+            Assert.That(e.OffendingInputElement.Value, Is.EqualTo('T'));
+            Assert.That(e.Position,
+                Is.EqualTo(new InputPosition(1, 1, 2)));
             Assert.IsNotNull(spans);
-            Assert.AreEqual(0, spans.Length);
+            Assert.That(spans.Length, Is.EqualTo(0));
         }
 
         [Test]
@@ -943,12 +976,12 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
 
             // assertions
             Assert.IsEmpty(errors);
-            Assert.AreEqual(1, spans.Length);
-            Assert.AreSame(def, spans[0].DefRef);
-            Assert.AreEqual(1, spans[0].Subspans.Count);
-            Assert.AreSame(def.Nodes[0], spans[0].Subspans[0].Node);
+            Assert.That(spans.Length, Is.EqualTo(1));
+            Assert.That(spans[0].DefRef, Is.SameAs(def));
+            Assert.That(spans[0].Subspans.Count, Is.EqualTo(1));
+            Assert.That(spans[0].Subspans[0].Node, Is.SameAs(def.Nodes[0]));
             Assert.IsEmpty(spans[0].Subspans[0].Subspans);
-            Assert.AreEqual("a", spans[0].Subspans[0].Value);
+            Assert.That(spans[0].Subspans[0].Value, Is.EqualTo("a"));
         }
 
         [Test]
@@ -981,16 +1014,16 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
 
             // assertions
             Assert.IsEmpty(errors);
-            Assert.AreEqual(1, spans.Length);
+            Assert.That(spans.Length, Is.EqualTo(1));
             var s = spans[0];
-            Assert.AreSame(defdef, s.DefRef);
-            Assert.AreEqual(1, s.Subspans.Count);
+            Assert.That(s.DefRef, Is.SameAs(defdef));
+            Assert.That(s.Subspans.Count, Is.EqualTo(1));
             var s2 = s.Subspans[0];
-            Assert.AreSame(chardef, s2.DefRef);
-            Assert.AreEqual(1, s2.Subspans.Count);
+            Assert.That(s2.DefRef, Is.SameAs(chardef));
+            Assert.That(s2.Subspans.Count, Is.EqualTo(1));
             var s3 = s2.Subspans[0];
-            Assert.AreSame(chardef.Nodes[0], s3.Node);
-            Assert.AreEqual("a", s3.Value);
+            Assert.That(s3.Node, Is.SameAs(chardef.Nodes[0]));
+            Assert.That(s3.Value, Is.EqualTo("a"));
             Assert.IsEmpty(s3.Subspans);
         }
     }
