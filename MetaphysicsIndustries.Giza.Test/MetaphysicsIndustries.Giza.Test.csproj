@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFrameworks>net40;net45;net451;net452;net46;net461;net462;net47;net471;net472;net48;net6.0;net7.0</TargetFrameworks>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>disable</Nullable>
 
@@ -21,12 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-<!--    <ProjectReference Include="..\giza\giza.csproj" />-->
+    <ProjectReference Include="..\giza\giza.csproj" />
     <ProjectReference Include="..\MetaphysicsIndustries.Giza.csproj" />
-    <ProjectReference Include="..\giza\giza.csproj">
-      <Project>{3CB3C1B6-0838-4E0A-94BA-254B974D8D6E}</Project>
-      <Name>giza</Name>
-    </ProjectReference>
   </ItemGroup>
 
 </Project>
