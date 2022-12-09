@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # MetaphysicsIndustries.Giza - A Parsing System
-# Copyright (C) 2008-2021 Metaphysics Industries, Inc.
+# Copyright (C) 2008-2021 Metaphysics Industries, Inc., Richard Sartor
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -17,6 +17,8 @@
 # License along with this library; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 # USA
+
+PACKAGE_BASE=MetaphysicsIndustries.Giza
 
 TAG="$1"
 
@@ -42,18 +44,32 @@ AVERSION=`grep AssemblyVersion AssemblyInfo.cs | perl -npe 's/^.*?\"//;s/\".*$//
 
 if [ "$VERSION" != "$AVERSION" ]
 then
-    echo "Tag doesn't match assembly version. Package will not be created."
+    echo "Tag doesn't match assembly version ($VERSION != $AVERSION). Package will not be created."
     exit 1
 fi
 
+DVERSION=`echo "$VERSION" | perl -ne 'print /^(\d+\.\d+\.\d+(?:\.\d+)?)/'`
+if [ "$DVERSION" = "" ];
+then
+    DVERSION="${VERSION}.0"
+    echo "Adjusting version to '$DVERSION'."
+else
+    DVERSION="$VERSION"
+fi
+
 echo 'Creating the nuget package...'
-if ! nuget pack MetaphysicsIndustries.Giza.nuspec -Properties version=$VERSION ; then
+if ! dotnet pack --include-source --include-symbols $PACKAGE_BASE.csproj /p:PackageVersion=$VERSION ; then
     echo 'Error creating the package. The package will not be uploaded.'
     exit 1
 fi
 
+if [ -z "$NUGET_API_KEY" ]; then
+    echo 'No Api Key provided. The package will not be uploaded. Please set the $NUGET_API_KEY variable.'
+    exit 1
+fi
+
 echo 'Uploading the package to nuget...'
-if ! nuget push MetaphysicsIndustries.Giza.$VERSION.nupkg -Source nuget.org -ApiKey $NUGET_API_KEY ; then
+if ! nuget push $PACKAGE_BASE.$DVERSION.nupkg -Source nuget.org -ApiKey $NUGET_API_KEY ; then
     echo 'Error uploading the package. Quitting.'
     exit 1
 fi
