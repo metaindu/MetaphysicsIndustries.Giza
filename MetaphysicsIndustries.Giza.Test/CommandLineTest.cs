@@ -60,15 +60,16 @@ namespace MetaphysicsIndustries.Giza.Test
             giza.Program.Main(new string[] { "check", "--tokenized", "-" });
 
             // assertions
-            Assert.AreEqual("", newStderr.ToString());
-            Assert.AreEqual(
-                "There are 5 definitions in the grammar:\n" +
-                "  expr\n" +
-                "  value\n" +
-                "  number\n" +
-                "  varref\n" +
-                "  $implicit char class *+-/\n",
-                newStdout.ToString());
+            Assert.That(newStderr.ToString(), Is.EqualTo(""));
+            Assert.That(
+                newStdout.ToString(),
+                Is.EqualTo(
+                    "There are 5 definitions in the grammar:\n" +
+                    "  expr\n" +
+                    "  value\n" +
+                    "  number\n" +
+                    "  varref\n" +
+                    "  $implicit char class *+-/\n"));
         }
 
         class MultipleStdIn : TextReader
@@ -169,10 +170,10 @@ namespace MetaphysicsIndustries.Giza.Test
             giza.Program.Main(new string[] { "parse", "-", "expr", "-" });
 
             // assertions
-            Assert.AreEqual("", newStderr.ToString());
-            Assert.AreEqual(
-                "There is 1 valid parse of the input.\n",
-                newStdout.ToString());
+            Assert.That(newStderr.ToString(), Is.EqualTo(""));
+            Assert.That(
+                newStdout.ToString(),
+                Is.EqualTo("There is 1 valid parse of the input.\n"));
         }
 
         [Test]
@@ -199,10 +200,9 @@ namespace MetaphysicsIndustries.Giza.Test
             giza.Program.Main(new string[] { "span", "-", "expr", "-" });
 
             // assertions
-            Assert.AreEqual("", newStderr.ToString());
-            Assert.AreEqual(
-                "There is 1 valid span of the input.\n",
-                newStdout.ToString());
+            Assert.That(newStderr.ToString(), Is.EqualTo(""));
+            Assert.That(newStdout.ToString(),
+                Is.EqualTo("There is 1 valid span of the input.\n"));
         }
     }
 }

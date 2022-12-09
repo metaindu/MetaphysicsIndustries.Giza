@@ -36,9 +36,9 @@ namespace MetaphysicsIndustries.Giza.Test.GrammarCompilerT
             var result = gc.GetNodesFromExpression(expr, null);
             // then
             Assert.IsFalse(result.IsSkippable);
-            Assert.AreEqual(1, result.Nodes.Count);
-            Assert.AreEqual(1, result.StartNodes.Count);
-            Assert.AreEqual(1, result.EndNodes.Count);
+            Assert.That(result.Nodes.Count, Is.EqualTo(1));
+            Assert.That(result.StartNodes.Count, Is.EqualTo(1));
+            Assert.That(result.EndNodes.Count, Is.EqualTo(1));
             var node = result.Nodes[0];
             Assert.Contains(node, result.StartNodes.ToList());
             Assert.Contains(node, result.EndNodes.ToList());
@@ -58,14 +58,14 @@ namespace MetaphysicsIndustries.Giza.Test.GrammarCompilerT
             var result = gc.GetNodesFromExpression(expr, null);
             // then
             Assert.IsFalse(result.IsSkippable);
-            Assert.AreEqual(2, result.Nodes.Count);
-            Assert.AreEqual(1, result.StartNodes.Count);
-            Assert.AreEqual(1, result.EndNodes.Count);
+            Assert.That(result.Nodes.Count, Is.EqualTo(2));
+            Assert.That(result.StartNodes.Count, Is.EqualTo(1));
+            Assert.That(result.EndNodes.Count, Is.EqualTo(1));
             var node0 = result.Nodes[0];
             var node1 = result.Nodes[1];
             Assert.Contains(node0, result.StartNodes.ToList());
             Assert.Contains(node1, result.EndNodes.ToList());
-            Assert.AreEqual(1, node0.NextNodes.Count);
+            Assert.That(node0.NextNodes.Count, Is.EqualTo(1));
             Assert.Contains(node1, node0.NextNodes.ToList());
             Assert.IsEmpty(node1.NextNodes);
             Assert.IsFalse(result.IsSkippable);
@@ -83,9 +83,9 @@ namespace MetaphysicsIndustries.Giza.Test.GrammarCompilerT
             var result = gc.GetNodesFromExpression(expr, null);
             // then
             Assert.IsFalse(result.IsSkippable);
-            Assert.AreEqual(2,result.Nodes.Count);
-            Assert.AreEqual(2,result.StartNodes.Count);
-            Assert.AreEqual(1,result.EndNodes.Count);
+            Assert.That(result.Nodes.Count, Is.EqualTo(2));
+            Assert.That(result.StartNodes.Count, Is.EqualTo(2));
+            Assert.That(result.EndNodes.Count, Is.EqualTo(1));
             var node0 = result.Nodes[0];
             Assert.Contains(node0, result.StartNodes.ToList());
             Assert.IsFalse(result.EndNodes.Contains(node0));
@@ -107,9 +107,9 @@ namespace MetaphysicsIndustries.Giza.Test.GrammarCompilerT
             var result = gc.GetNodesFromExpression(expr, null);
             // then
             Assert.IsFalse(result.IsSkippable);
-            Assert.AreEqual(2,result.Nodes.Count);
-            Assert.AreEqual(1,result.StartNodes.Count);
-            Assert.AreEqual(2,result.EndNodes.Count);
+            Assert.That(result.Nodes.Count, Is.EqualTo(2));
+            Assert.That(result.StartNodes.Count, Is.EqualTo(1));
+            Assert.That(result.EndNodes.Count, Is.EqualTo(2));
             var node0 = result.Nodes[0];
             Assert.Contains(node0, result.StartNodes.ToList());
             Assert.Contains(node0, result.EndNodes.ToList());
@@ -134,9 +134,9 @@ namespace MetaphysicsIndustries.Giza.Test.GrammarCompilerT
             var result = gc.GetNodesFromExpression(expr, null);
             // then
             Assert.IsFalse(result.IsSkippable);
-            Assert.AreEqual(5,result.Nodes.Count);
-            Assert.AreEqual(1,result.StartNodes.Count);
-            Assert.AreEqual(1,result.EndNodes.Count);
+            Assert.That(result.Nodes.Count, Is.EqualTo(5));
+            Assert.That(result.StartNodes.Count, Is.EqualTo(1));
+            Assert.That(result.EndNodes.Count, Is.EqualTo(1));
 
             var node0 = result.Nodes[0];
             var node1 = result.Nodes[1];
@@ -146,29 +146,29 @@ namespace MetaphysicsIndustries.Giza.Test.GrammarCompilerT
 
             Assert.IsTrue(result.StartNodes.Contains(node0));
             Assert.IsFalse(result.EndNodes.Contains(node0));
-            Assert.AreEqual(2, node0.NextNodes.Count);
+            Assert.That(node0.NextNodes.Count, Is.EqualTo(2));
             Assert.Contains(node1,node0.NextNodes.ToList());
             Assert.Contains(node2,node0.NextNodes.ToList());
 
             Assert.IsFalse(result.StartNodes.Contains(node1));
             Assert.IsFalse(result.EndNodes.Contains(node1));
-            Assert.AreEqual(1, node1.NextNodes.Count);
+            Assert.That(node1.NextNodes.Count, Is.EqualTo(1));
             Assert.Contains(node2,node1.NextNodes.ToList());
 
             Assert.IsFalse(result.StartNodes.Contains(node2));
             Assert.IsFalse(result.EndNodes.Contains(node2));
-            Assert.AreEqual(2, node2.NextNodes.Count);
+            Assert.That(node2.NextNodes.Count, Is.EqualTo(2));
             Assert.Contains(node3,node2.NextNodes.ToList());
             Assert.Contains(node4,node2.NextNodes.ToList());
 
             Assert.IsFalse(result.StartNodes.Contains(node3));
             Assert.IsFalse(result.EndNodes.Contains(node3));
-            Assert.AreEqual(1, node3.NextNodes.Count);
+            Assert.That(node3.NextNodes.Count, Is.EqualTo(1));
             Assert.Contains(node4,node3.NextNodes.ToList());
 
             Assert.IsFalse(result.StartNodes.Contains(node4));
             Assert.IsTrue(result.EndNodes.Contains(node4));
-            Assert.AreEqual(0, node4.NextNodes.Count);
+            Assert.That(node4.NextNodes.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -186,9 +186,9 @@ namespace MetaphysicsIndustries.Giza.Test.GrammarCompilerT
             var result = gc.GetNodesFromExpression(expr, null);
             // then
             Assert.IsFalse(result.IsSkippable);
-            Assert.AreEqual(5,result.Nodes.Count);
-            Assert.AreEqual(1,result.StartNodes.Count);
-            Assert.AreEqual(1,result.EndNodes.Count);
+            Assert.That(result.Nodes.Count, Is.EqualTo(5));
+            Assert.That(result.StartNodes.Count, Is.EqualTo(1));
+            Assert.That(result.EndNodes.Count, Is.EqualTo(1));
 
             var node0 = result.Nodes[0];
             var node1 = result.Nodes[1];
@@ -198,7 +198,7 @@ namespace MetaphysicsIndustries.Giza.Test.GrammarCompilerT
 
             Assert.IsTrue(result.StartNodes.Contains(node0));
             Assert.IsFalse(result.EndNodes.Contains(node0));
-            Assert.AreEqual(4, node0.NextNodes.Count);
+            Assert.That(node0.NextNodes.Count, Is.EqualTo(4));
             Assert.Contains(node1,node0.NextNodes.ToList());
             Assert.Contains(node2,node0.NextNodes.ToList());
             Assert.Contains(node3,node0.NextNodes.ToList());
@@ -206,25 +206,25 @@ namespace MetaphysicsIndustries.Giza.Test.GrammarCompilerT
 
             Assert.IsFalse(result.StartNodes.Contains(node1));
             Assert.IsFalse(result.EndNodes.Contains(node1));
-            Assert.AreEqual(3, node1.NextNodes.Count);
+            Assert.That(node1.NextNodes.Count, Is.EqualTo(3));
             Assert.Contains(node2,node1.NextNodes.ToList());
             Assert.Contains(node3,node1.NextNodes.ToList());
             Assert.Contains(node4,node1.NextNodes.ToList());
 
             Assert.IsFalse(result.StartNodes.Contains(node2));
             Assert.IsFalse(result.EndNodes.Contains(node2));
-            Assert.AreEqual(2, node2.NextNodes.Count);
+            Assert.That(node2.NextNodes.Count, Is.EqualTo(2));
             Assert.Contains(node3,node2.NextNodes.ToList());
             Assert.Contains(node4,node2.NextNodes.ToList());
 
             Assert.IsFalse(result.StartNodes.Contains(node3));
             Assert.IsFalse(result.EndNodes.Contains(node3));
-            Assert.AreEqual(1, node3.NextNodes.Count);
+            Assert.That(node3.NextNodes.Count, Is.EqualTo(1));
             Assert.Contains(node4,node3.NextNodes.ToList());
 
             Assert.IsFalse(result.StartNodes.Contains(node4));
             Assert.IsTrue(result.EndNodes.Contains(node4));
-            Assert.AreEqual(0, node4.NextNodes.Count);
+            Assert.That(node4.NextNodes.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -242,9 +242,9 @@ namespace MetaphysicsIndustries.Giza.Test.GrammarCompilerT
             var result = gc.GetNodesFromExpression(expr, null);
             // then
             Assert.IsFalse(result.IsSkippable);
-            Assert.AreEqual(5,result.Nodes.Count);
-            Assert.AreEqual(1,result.StartNodes.Count);
-            Assert.AreEqual(1,result.EndNodes.Count);
+            Assert.That(result.Nodes.Count, Is.EqualTo(5));
+            Assert.That(result.StartNodes.Count, Is.EqualTo(1));
+            Assert.That(result.EndNodes.Count, Is.EqualTo(1));
 
             var node0 = result.Nodes[0];
             var node1 = result.Nodes[1];
@@ -254,30 +254,30 @@ namespace MetaphysicsIndustries.Giza.Test.GrammarCompilerT
 
             Assert.IsTrue(result.StartNodes.Contains(node0));
             Assert.IsFalse(result.EndNodes.Contains(node0));
-            Assert.AreEqual(3, node0.NextNodes.Count);
+            Assert.That(node0.NextNodes.Count, Is.EqualTo(3));
             Assert.Contains(node1,node0.NextNodes.ToList());
             Assert.Contains(node2,node0.NextNodes.ToList());
             Assert.Contains(node3,node0.NextNodes.ToList());
 
             Assert.IsFalse(result.StartNodes.Contains(node1));
             Assert.IsFalse(result.EndNodes.Contains(node1));
-            Assert.AreEqual(2, node1.NextNodes.Count);
+            Assert.That(node1.NextNodes.Count, Is.EqualTo(2));
             Assert.Contains(node2,node1.NextNodes.ToList());
             Assert.Contains(node3,node1.NextNodes.ToList());
 
             Assert.IsFalse(result.StartNodes.Contains(node2));
             Assert.IsFalse(result.EndNodes.Contains(node2));
-            Assert.AreEqual(1, node2.NextNodes.Count);
+            Assert.That(node2.NextNodes.Count, Is.EqualTo(1));
             Assert.Contains(node3,node2.NextNodes.ToList());
 
             Assert.IsFalse(result.StartNodes.Contains(node3));
             Assert.IsFalse(result.EndNodes.Contains(node3));
-            Assert.AreEqual(1, node3.NextNodes.Count);
+            Assert.That(node3.NextNodes.Count, Is.EqualTo(1));
             Assert.Contains(node4,node3.NextNodes.ToList());
 
             Assert.IsFalse(result.StartNodes.Contains(node4));
             Assert.IsTrue(result.EndNodes.Contains(node4));
-            Assert.AreEqual(0, node4.NextNodes.Count);
+            Assert.That(node4.NextNodes.Count, Is.EqualTo(0));
         }
     }
 }

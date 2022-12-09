@@ -87,20 +87,20 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(s);
-            Assert.AreEqual(1, s.Length);
-            Assert.AreEqual(3, s[0].Subspans.Count);
+            Assert.That(s.Length, Is.EqualTo(1));
+            Assert.That(s[0].Subspans.Count, Is.EqualTo(3));
 
-            Assert.AreSame(exprDef.Nodes[0], s[0].Subspans[0].Node);
-            Assert.AreSame(operandDef, s[0].Subspans[0].DefRef);
-            Assert.AreEqual("a", s[0].Subspans[0].Value);
+            Assert.That(s[0].Subspans[0].Node, Is.SameAs(exprDef.Nodes[0]));
+            Assert.That(s[0].Subspans[0].DefRef, Is.SameAs(operandDef));
+            Assert.That(s[0].Subspans[0].Value, Is.EqualTo("a"));
 
-            Assert.AreSame(exprDef.Nodes[1], s[0].Subspans[1].Node);
-            Assert.AreSame(operatorDef, s[0].Subspans[1].DefRef);
-            Assert.AreEqual("+", s[0].Subspans[1].Value);
+            Assert.That(s[0].Subspans[1].Node, Is.SameAs(exprDef.Nodes[1]));
+            Assert.That(s[0].Subspans[1].DefRef, Is.SameAs(operatorDef));
+            Assert.That(s[0].Subspans[1].Value, Is.EqualTo("+"));
 
-            Assert.AreSame(exprDef.Nodes[2], s[0].Subspans[2].Node);
-            Assert.AreSame(operandDef, s[0].Subspans[2].DefRef);
-            Assert.AreEqual("b", s[0].Subspans[2].Value);
+            Assert.That(s[0].Subspans[2].Node, Is.SameAs(exprDef.Nodes[2]));
+            Assert.That(s[0].Subspans[2].DefRef, Is.SameAs(operandDef));
+            Assert.That(s[0].Subspans[2].Value, Is.EqualTo("b"));
         }
 
         [Test]
@@ -135,19 +135,19 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             Assert.IsNotNull(s);
-            Assert.AreEqual(2, s.Length);
+            Assert.That(s.Length, Is.EqualTo(2));
 
-            Assert.AreEqual(3, s[0].Subspans.Count);
-            Assert.AreSame(subexprDef, s[0].Subspans[0].DefRef);
-            Assert.AreSame(plusDef, s[0].Subspans[1].DefRef);
-            Assert.AreEqual(0, s[0].Subspans[1].Subspans.Count);
-            Assert.AreSame(subexprDef, s[0].Subspans[2].DefRef);
+            Assert.That(s[0].Subspans.Count, Is.EqualTo(3));
+            Assert.That(s[0].Subspans[0].DefRef, Is.SameAs(subexprDef));
+            Assert.That(s[0].Subspans[1].DefRef, Is.SameAs(plusDef));
+            Assert.That(s[0].Subspans[1].Subspans.Count, Is.EqualTo(0));
+            Assert.That(s[0].Subspans[2].DefRef, Is.SameAs(subexprDef));
 
-            Assert.AreEqual(3, s[1].Subspans.Count);
-            Assert.AreSame(subexprDef, s[1].Subspans[0].DefRef);
-            Assert.AreSame(plusDef, s[1].Subspans[1].DefRef);
-            Assert.AreEqual(0, s[1].Subspans[1].Subspans.Count);
-            Assert.AreSame(subexprDef, s[1].Subspans[2].DefRef);
+            Assert.That(s[1].Subspans.Count, Is.EqualTo(3));
+            Assert.That(s[1].Subspans[0].DefRef, Is.SameAs(subexprDef));
+            Assert.That(s[1].Subspans[1].DefRef, Is.SameAs(plusDef));
+            Assert.That(s[1].Subspans[1].Subspans.Count, Is.EqualTo(0));
+            Assert.That(s[1].Subspans[2].DefRef, Is.SameAs(subexprDef));
 
             Assert.True(s[0].Subspans[0].Subspans.Count == 1 ||
                         s[0].Subspans[0].Subspans.Count == 2);
@@ -168,27 +168,43 @@ namespace MetaphysicsIndustries.Giza.Test
                 twoOne = s[0];
             }
 
-            Assert.AreEqual(1, oneTwo.Subspans[0].Subspans.Count);
-            Assert.AreEqual(0, oneTwo.Subspans[0].Subspans[0].Subspans.Count);
-            Assert.AreSame(operandDef, oneTwo.Subspans[0].Subspans[0].DefRef);
-            Assert.AreEqual("a", oneTwo.Subspans[0].Subspans[0].Value);
-            Assert.AreEqual(2, oneTwo.Subspans[2].Subspans.Count);
-            Assert.AreEqual(0, oneTwo.Subspans[2].Subspans[0].Subspans.Count);
-            Assert.AreSame(plusPlusDef, oneTwo.Subspans[2].Subspans[0].DefRef);
-            Assert.AreEqual(0, oneTwo.Subspans[2].Subspans[1].Subspans.Count);
-            Assert.AreSame(operandDef, oneTwo.Subspans[2].Subspans[1].DefRef);
-            Assert.AreEqual("b", oneTwo.Subspans[2].Subspans[1].Value);
+            Assert.That(oneTwo.Subspans[0].Subspans.Count, Is.EqualTo(1));
+            Assert.That(oneTwo.Subspans[0].Subspans[0].Subspans.Count,
+                Is.EqualTo(0));
+            Assert.That(oneTwo.Subspans[0].Subspans[0].DefRef,
+                Is.SameAs(operandDef));
+            Assert.That(oneTwo.Subspans[0].Subspans[0].Value,
+                Is.EqualTo("a"));
+            Assert.That(oneTwo.Subspans[2].Subspans.Count, Is.EqualTo(2));
+            Assert.That(oneTwo.Subspans[2].Subspans[0].Subspans.Count,
+                Is.EqualTo(0));
+            Assert.That(oneTwo.Subspans[2].Subspans[0].DefRef,
+                Is.SameAs(plusPlusDef));
+            Assert.That(oneTwo.Subspans[2].Subspans[1].Subspans.Count,
+                Is.EqualTo(0));
+            Assert.That(oneTwo.Subspans[2].Subspans[1].DefRef,
+                Is.SameAs(operandDef));
+            Assert.That(oneTwo.Subspans[2].Subspans[1].Value,
+                Is.EqualTo("b"));
 
-            Assert.AreEqual(2, twoOne.Subspans[0].Subspans.Count);
-            Assert.AreEqual(0, twoOne.Subspans[0].Subspans[0].Subspans.Count);
-            Assert.AreSame(operandDef, twoOne.Subspans[0].Subspans[0].DefRef);
-            Assert.AreEqual("a", twoOne.Subspans[0].Subspans[0].Value);
-            Assert.AreSame(plusPlusDef, twoOne.Subspans[0].Subspans[1].DefRef);
-            Assert.AreEqual(0, twoOne.Subspans[0].Subspans[1].Subspans.Count);
-            Assert.AreEqual(1, twoOne.Subspans[2].Subspans.Count);
-            Assert.AreEqual(0, twoOne.Subspans[2].Subspans[0].Subspans.Count);
-            Assert.AreSame(operandDef, twoOne.Subspans[2].Subspans[0].DefRef);
-            Assert.AreEqual("b", twoOne.Subspans[2].Subspans[0].Value);
+            Assert.That(twoOne.Subspans[0].Subspans.Count, Is.EqualTo(2));
+            Assert.That(twoOne.Subspans[0].Subspans[0].Subspans.Count,
+                Is.EqualTo(0));
+            Assert.That(twoOne.Subspans[0].Subspans[0].DefRef,
+                Is.SameAs(operandDef));
+            Assert.That(twoOne.Subspans[0].Subspans[0].Value,
+                Is.EqualTo("a"));
+            Assert.That(twoOne.Subspans[0].Subspans[1].DefRef,
+                Is.SameAs(plusPlusDef));
+            Assert.That(twoOne.Subspans[0].Subspans[1].Subspans.Count,
+                Is.EqualTo(0));
+            Assert.That(twoOne.Subspans[2].Subspans.Count, Is.EqualTo(1));
+            Assert.That(twoOne.Subspans[2].Subspans[0].Subspans.Count,
+                Is.EqualTo(0));
+            Assert.That(twoOne.Subspans[2].Subspans[0].DefRef,
+                Is.SameAs(operandDef));
+            Assert.That(twoOne.Subspans[2].Subspans[0].Value,
+                Is.EqualTo("b"));
         }
 
         [Test]
@@ -237,23 +253,23 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(errors);
-            Assert.AreEqual(0, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(0));
             Assert.IsNotNull(spans);
-            Assert.AreEqual(1, spans.Length);
-            Assert.AreSame(sequenceDef, spans[0].DefRef);
-            Assert.AreEqual(3, spans[0].Subspans.Count);
+            Assert.That(spans.Length, Is.EqualTo(1));
+            Assert.That(spans[0].DefRef, Is.SameAs(sequenceDef));
+            Assert.That(spans[0].Subspans.Count, Is.EqualTo(3));
 
-            Assert.AreSame(itemDef, spans[0].Subspans[0].DefRef);
-            Assert.AreEqual("item", spans[0].Subspans[0].Value);
-            Assert.AreEqual(0, spans[0].Subspans[0].Subspans.Count);
+            Assert.That(spans[0].Subspans[0].DefRef, Is.SameAs(itemDef));
+            Assert.That(spans[0].Subspans[0].Value, Is.EqualTo("item"));
+            Assert.That(spans[0].Subspans[0].Subspans.Count, Is.EqualTo(0));
 
-            Assert.AreSame(itemDef, spans[0].Subspans[1].DefRef);
-            Assert.AreEqual("ITEM", spans[0].Subspans[1].Value);
-            Assert.AreEqual(0, spans[0].Subspans[1].Subspans.Count);
+            Assert.That(spans[0].Subspans[1].DefRef, Is.SameAs(itemDef));
+            Assert.That(spans[0].Subspans[1].Value, Is.EqualTo("ITEM"));
+            Assert.That(spans[0].Subspans[1].Subspans.Count, Is.EqualTo(0));
 
-            Assert.AreSame(itemDef, spans[0].Subspans[2].DefRef);
-            Assert.AreEqual("iTeM", spans[0].Subspans[2].Value);
-            Assert.AreEqual(0, spans[0].Subspans[2].Subspans.Count);
+            Assert.That(spans[0].Subspans[2].DefRef, Is.SameAs(itemDef));
+            Assert.That(spans[0].Subspans[2].Value, Is.EqualTo("iTeM"));
+            Assert.That(spans[0].Subspans[2].Subspans.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -300,23 +316,23 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(errors);
-            Assert.AreEqual(0, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(0));
             Assert.IsNotNull(spans);
-            Assert.AreEqual(1, spans.Length);
-            Assert.AreSame(sequenceDef, spans[0].DefRef);
-            Assert.AreEqual(3, spans[0].Subspans.Count);
+            Assert.That(spans.Length, Is.EqualTo(1));
+            Assert.That(spans[0].DefRef, Is.SameAs(sequenceDef));
+            Assert.That(spans[0].Subspans.Count, Is.EqualTo(3));
 
-            Assert.AreSame(itemDef, spans[0].Subspans[0].DefRef);
-            Assert.AreEqual("item", spans[0].Subspans[0].Value);
-            Assert.AreEqual(0, spans[0].Subspans[0].Subspans.Count);
+            Assert.That(spans[0].Subspans[0].DefRef, Is.SameAs(itemDef));
+            Assert.That(spans[0].Subspans[0].Value, Is.EqualTo("item"));
+            Assert.That(spans[0].Subspans[0].Subspans.Count, Is.EqualTo(0));
 
-            Assert.AreSame(itemDef, spans[0].Subspans[1].DefRef);
-            Assert.AreEqual("ITEM", spans[0].Subspans[1].Value);
-            Assert.AreEqual(0, spans[0].Subspans[1].Subspans.Count);
+            Assert.That(spans[0].Subspans[1].DefRef, Is.SameAs(itemDef));
+            Assert.That(spans[0].Subspans[1].Value, Is.EqualTo("ITEM"));
+            Assert.That(spans[0].Subspans[1].Subspans.Count, Is.EqualTo(0));
 
-            Assert.AreSame(itemDef, spans[0].Subspans[2].DefRef);
-            Assert.AreEqual("iTeM", spans[0].Subspans[2].Value);
-            Assert.AreEqual(0, spans[0].Subspans[2].Subspans.Count);
+            Assert.That(spans[0].Subspans[2].DefRef, Is.SameAs(itemDef));
+            Assert.That(spans[0].Subspans[2].Value, Is.EqualTo("iTeM"));
+            Assert.That(spans[0].Subspans[2].Subspans.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -387,23 +403,23 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(errors);
-            Assert.AreEqual(0, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(0));
             Assert.IsNotNull(spans);
-            Assert.AreEqual(1, spans.Length);
-            Assert.AreSame(sequenceDef, spans[0].DefRef);
-            Assert.AreEqual(3, spans[0].Subspans.Count);
+            Assert.That(spans.Length, Is.EqualTo(1));
+            Assert.That(spans[0].DefRef, Is.SameAs(sequenceDef));
+            Assert.That(spans[0].Subspans.Count, Is.EqualTo(3));
 
-            Assert.AreSame(itemDef, spans[0].Subspans[0].DefRef);
-            Assert.AreEqual("abcqwerxyz", spans[0].Subspans[0].Value);
-            Assert.AreEqual(0, spans[0].Subspans[0].Subspans.Count);
+            Assert.That(spans[0].Subspans[0].DefRef, Is.SameAs(itemDef));
+            Assert.That(spans[0].Subspans[0].Value, Is.EqualTo("abcqwerxyz"));
+            Assert.That(spans[0].Subspans[0].Subspans.Count, Is.EqualTo(0));
 
-            Assert.AreSame(itemDef, spans[0].Subspans[1].DefRef);
-            Assert.AreEqual("abcQWERxyz", spans[0].Subspans[1].Value);
-            Assert.AreEqual(0, spans[0].Subspans[1].Subspans.Count);
+            Assert.That(spans[0].Subspans[1].DefRef, Is.SameAs(itemDef));
+            Assert.That(spans[0].Subspans[1].Value, Is.EqualTo("abcQWERxyz"));
+            Assert.That(spans[0].Subspans[1].Subspans.Count, Is.EqualTo(0));
 
-            Assert.AreSame(itemDef, spans[0].Subspans[2].DefRef);
-            Assert.AreEqual("abcQwErxyz", spans[0].Subspans[2].Value);
-            Assert.AreEqual(0, spans[0].Subspans[2].Subspans.Count);
+            Assert.That(spans[0].Subspans[2].DefRef, Is.SameAs(itemDef));
+            Assert.That(spans[0].Subspans[2].Value, Is.EqualTo("abcQwErxyz"));
+            Assert.That(spans[0].Subspans[2].Subspans.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -471,23 +487,23 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(errors);
-            Assert.AreEqual(0, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(0));
             Assert.IsNotNull(spans);
-            Assert.AreEqual(1, spans.Length);
-            Assert.AreSame(sequenceDef, spans[0].DefRef);
-            Assert.AreEqual(3, spans[0].Subspans.Count);
+            Assert.That(spans.Length, Is.EqualTo(1));
+            Assert.That(spans[0].DefRef, Is.SameAs(sequenceDef));
+            Assert.That(spans[0].Subspans.Count, Is.EqualTo(3));
 
-            Assert.AreSame(itemDef, spans[0].Subspans[0].DefRef);
-            Assert.AreEqual("abcqwerxyz", spans[0].Subspans[0].Value);
-            Assert.AreEqual(0, spans[0].Subspans[0].Subspans.Count);
+            Assert.That(spans[0].Subspans[0].DefRef, Is.SameAs(itemDef));
+            Assert.That(spans[0].Subspans[0].Value, Is.EqualTo("abcqwerxyz"));
+            Assert.That(spans[0].Subspans[0].Subspans.Count, Is.EqualTo(0));
 
-            Assert.AreSame(itemDef, spans[0].Subspans[1].DefRef);
-            Assert.AreEqual("abcQWERxyz", spans[0].Subspans[1].Value);
-            Assert.AreEqual(0, spans[0].Subspans[1].Subspans.Count);
+            Assert.That(spans[0].Subspans[1].DefRef, Is.SameAs(itemDef));
+            Assert.That(spans[0].Subspans[1].Value, Is.EqualTo("abcQWERxyz"));
+            Assert.That(spans[0].Subspans[1].Subspans.Count, Is.EqualTo(0));
 
-            Assert.AreSame(itemDef, spans[0].Subspans[2].DefRef);
-            Assert.AreEqual("abcQwErxyz", spans[0].Subspans[2].Value);
-            Assert.AreEqual(0, spans[0].Subspans[2].Subspans.Count);
+            Assert.That(spans[0].Subspans[2].DefRef, Is.SameAs(itemDef));
+            Assert.That(spans[0].Subspans[2].Value, Is.EqualTo("abcQwErxyz"));
+            Assert.That(spans[0].Subspans[2].Subspans.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -568,15 +584,16 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(errors);
-            Assert.AreEqual(0, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(0));
             Assert.IsNotNull(spans);
-            Assert.AreEqual(1, spans.Length);
-            Assert.AreSame(sequenceDef, spans[0].DefRef);
-            Assert.AreEqual(1, spans[0].Subspans.Count);
+            Assert.That(spans.Length, Is.EqualTo(1));
+            Assert.That(spans[0].DefRef, Is.SameAs(sequenceDef));
+            Assert.That(spans[0].Subspans.Count, Is.EqualTo(1));
 
-            Assert.AreSame(itemDef, spans[0].Subspans[0].DefRef);
-            Assert.AreEqual("abc-qwer-xyz", spans[0].Subspans[0].Value);
-            Assert.AreEqual(0, spans[0].Subspans[0].Subspans.Count);
+            Assert.That(spans[0].Subspans[0].DefRef, Is.SameAs(itemDef));
+            Assert.That(spans[0].Subspans[0].Value,
+                Is.EqualTo("abc-qwer-xyz"));
+            Assert.That(spans[0].Subspans[0].Subspans.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -657,14 +674,14 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(errors);
-            Assert.AreEqual(0, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(0));
             Assert.IsNotNull(spans);
-            Assert.AreEqual(1, spans.Length);
-            Assert.AreSame(sequenceDef, spans[0].DefRef);
-            Assert.AreEqual(1, spans[0].Subspans.Count);
-            Assert.AreSame(itemDef, spans[0].Subspans[0].DefRef);
-            Assert.AreEqual("abc-qw-xyz", spans[0].Subspans[0].Value);
-            Assert.AreEqual(0, spans[0].Subspans[0].Subspans.Count);
+            Assert.That(spans.Length, Is.EqualTo(1));
+            Assert.That(spans[0].DefRef, Is.SameAs(sequenceDef));
+            Assert.That(spans[0].Subspans.Count, Is.EqualTo(1));
+            Assert.That(spans[0].Subspans[0].DefRef, Is.SameAs(itemDef));
+            Assert.That(spans[0].Subspans[0].Value, Is.EqualTo("abc-qw-xyz"));
+            Assert.That(spans[0].Subspans[0].Subspans.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -747,23 +764,23 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(errors);
-            Assert.AreEqual(0, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(0));
             Assert.IsNotNull(spans);
-            Assert.AreEqual(1, spans.Length);
-            Assert.AreSame(sequenceDef, spans[0].DefRef);
-            Assert.AreEqual(3, spans[0].Subspans.Count);
+            Assert.That(spans.Length, Is.EqualTo(1));
+            Assert.That(spans[0].DefRef, Is.SameAs(sequenceDef));
+            Assert.That(spans[0].Subspans.Count, Is.EqualTo(3));
 
-            Assert.AreSame(itemDef, spans[0].Subspans[0].DefRef);
-            Assert.AreEqual("item", spans[0].Subspans[0].Value);
-            Assert.AreEqual(0, spans[0].Subspans[0].Subspans.Count);
+            Assert.That(spans[0].Subspans[0].DefRef, Is.SameAs(itemDef));
+            Assert.That(spans[0].Subspans[0].Value, Is.EqualTo("item"));
+            Assert.That(spans[0].Subspans[0].Subspans.Count, Is.EqualTo(0));
 
-            Assert.AreSame(itemDef, spans[0].Subspans[1].DefRef);
-            Assert.AreEqual("item", spans[0].Subspans[1].Value);
-            Assert.AreEqual(0, spans[0].Subspans[1].Subspans.Count);
+            Assert.That(spans[0].Subspans[1].DefRef, Is.SameAs(itemDef));
+            Assert.That(spans[0].Subspans[1].Value, Is.EqualTo("item"));
+            Assert.That(spans[0].Subspans[1].Subspans.Count, Is.EqualTo(0));
 
-            Assert.AreSame(itemDef, spans[0].Subspans[2].DefRef);
-            Assert.AreEqual("item", spans[0].Subspans[2].Value);
-            Assert.AreEqual(0, spans[0].Subspans[2].Subspans.Count);
+            Assert.That(spans[0].Subspans[2].DefRef, Is.SameAs(itemDef));
+            Assert.That(spans[0].Subspans[2].Value, Is.EqualTo("item"));
+            Assert.That(spans[0].Subspans[2].Subspans.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -835,23 +852,23 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(errors);
-            Assert.AreEqual(0, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(0));
             Assert.IsNotNull(spans);
-            Assert.AreEqual(1, spans.Length);
-            Assert.AreSame(sequenceDef, spans[0].DefRef);
-            Assert.AreEqual(3, spans[0].Subspans.Count);
+            Assert.That(spans.Length, Is.EqualTo(1));
+            Assert.That(spans[0].DefRef, Is.SameAs(sequenceDef));
+            Assert.That(spans[0].Subspans.Count, Is.EqualTo(3));
 
-            Assert.AreSame(itemDef, spans[0].Subspans[0].DefRef);
-            Assert.AreEqual("item", spans[0].Subspans[0].Value);
-            Assert.AreEqual(0, spans[0].Subspans[0].Subspans.Count);
+            Assert.That(spans[0].Subspans[0].DefRef, Is.SameAs(itemDef));
+            Assert.That(spans[0].Subspans[0].Value, Is.EqualTo("item"));
+            Assert.That(spans[0].Subspans[0].Subspans.Count, Is.EqualTo(0));
 
-            Assert.AreSame(itemDef, spans[0].Subspans[1].DefRef);
-            Assert.AreEqual("item", spans[0].Subspans[1].Value);
-            Assert.AreEqual(0, spans[0].Subspans[1].Subspans.Count);
+            Assert.That(spans[0].Subspans[1].DefRef, Is.SameAs(itemDef));
+            Assert.That(spans[0].Subspans[1].Value, Is.EqualTo("item"));
+            Assert.That(spans[0].Subspans[1].Subspans.Count, Is.EqualTo(0));
 
-            Assert.AreSame(itemDef, spans[0].Subspans[2].DefRef);
-            Assert.AreEqual("item", spans[0].Subspans[2].Value);
-            Assert.AreEqual(0, spans[0].Subspans[2].Subspans.Count);
+            Assert.That(spans[0].Subspans[2].DefRef, Is.SameAs(itemDef));
+            Assert.That(spans[0].Subspans[2].Value, Is.EqualTo("item"));
+            Assert.That(spans[0].Subspans[2].Subspans.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -887,29 +904,38 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(errors);
-            Assert.AreEqual(0, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(0));
             Assert.IsNotNull(spans);
-            Assert.AreEqual(1, spans.Length);
-            Assert.AreSame(sequenceDef, spans[0].DefRef);
-            Assert.AreEqual(3, spans[0].Subspans.Count);
+            Assert.That(spans.Length, Is.EqualTo(1));
+            Assert.That(spans[0].DefRef, Is.SameAs(sequenceDef));
+            Assert.That(spans[0].Subspans.Count, Is.EqualTo(3));
 
-            Assert.AreSame(itemDef, spans[0].Subspans[0].DefRef);
-            Assert.AreEqual(1, spans[0].Subspans[0].Subspans.Count);
-            Assert.AreSame(implicitDef, spans[0].Subspans[0].Subspans[0].DefRef);
-            Assert.AreEqual("item", spans[0].Subspans[0].Subspans[0].Value);
-            Assert.AreEqual(0, spans[0].Subspans[0].Subspans[0].Subspans.Count);
+            Assert.That(spans[0].Subspans[0].DefRef, Is.SameAs(itemDef));
+            Assert.That(spans[0].Subspans[0].Subspans.Count, Is.EqualTo(1));
+            Assert.That(spans[0].Subspans[0].Subspans[0].DefRef,
+                Is.SameAs(implicitDef));
+            Assert.That(spans[0].Subspans[0].Subspans[0].Value,
+                Is.EqualTo("item"));
+            Assert.That(spans[0].Subspans[0].Subspans[0].Subspans.Count,
+                Is.EqualTo(0));
 
-            Assert.AreSame(itemDef, spans[0].Subspans[1].DefRef);
-            Assert.AreEqual(1, spans[0].Subspans[1].Subspans.Count);
-            Assert.AreSame(implicitDef, spans[0].Subspans[1].Subspans[0].DefRef);
-            Assert.AreEqual("ITEM", spans[0].Subspans[1].Subspans[0].Value);
-            Assert.AreEqual(0, spans[0].Subspans[1].Subspans[0].Subspans.Count);
+            Assert.That(spans[0].Subspans[1].DefRef, Is.SameAs(itemDef));
+            Assert.That(spans[0].Subspans[1].Subspans.Count, Is.EqualTo(1));
+            Assert.That(spans[0].Subspans[1].Subspans[0].DefRef,
+                Is.SameAs(implicitDef));
+            Assert.That(spans[0].Subspans[1].Subspans[0].Value,
+                Is.EqualTo("ITEM"));
+            Assert.That(spans[0].Subspans[1].Subspans[0].Subspans.Count,
+                Is.EqualTo(0));
 
-            Assert.AreSame(itemDef, spans[0].Subspans[2].DefRef);
-            Assert.AreEqual(1, spans[0].Subspans[2].Subspans.Count);
-            Assert.AreSame(implicitDef, spans[0].Subspans[2].Subspans[0].DefRef);
-            Assert.AreEqual("iTeM", spans[0].Subspans[2].Subspans[0].Value);
-            Assert.AreEqual(0, spans[0].Subspans[2].Subspans[0].Subspans.Count);
+            Assert.That(spans[0].Subspans[2].DefRef, Is.SameAs(itemDef));
+            Assert.That(spans[0].Subspans[2].Subspans.Count, Is.EqualTo(1));
+            Assert.That(spans[0].Subspans[2].Subspans[0].DefRef,
+                Is.SameAs(implicitDef));
+            Assert.That(spans[0].Subspans[2].Subspans[0].Value,
+                Is.EqualTo("iTeM"));
+            Assert.That(spans[0].Subspans[2].Subspans[0].Subspans.Count,
+                Is.EqualTo(0));
         }
 
         [Test]
@@ -945,29 +971,38 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(errors);
-            Assert.AreEqual(0, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(0));
             Assert.IsNotNull(spans);
-            Assert.AreEqual(1, spans.Length);
-            Assert.AreSame(sequenceDef, spans[0].DefRef);
-            Assert.AreEqual(3, spans[0].Subspans.Count);
+            Assert.That(spans.Length, Is.EqualTo(1));
+            Assert.That(spans[0].DefRef, Is.SameAs(sequenceDef));
+            Assert.That(spans[0].Subspans.Count, Is.EqualTo(3));
 
-            Assert.AreSame(itemDef, spans[0].Subspans[0].DefRef);
-            Assert.AreEqual(1, spans[0].Subspans[0].Subspans.Count);
-            Assert.AreSame(implicitDef, spans[0].Subspans[0].Subspans[0].DefRef);
-            Assert.AreEqual("0", spans[0].Subspans[0].Subspans[0].Value);
-            Assert.AreEqual(0, spans[0].Subspans[0].Subspans[0].Subspans.Count);
+            Assert.That(spans[0].Subspans[0].DefRef, Is.SameAs(itemDef));
+            Assert.That(spans[0].Subspans[0].Subspans.Count, Is.EqualTo(1));
+            Assert.That(spans[0].Subspans[0].Subspans[0].DefRef,
+                Is.SameAs(implicitDef));
+            Assert.That(spans[0].Subspans[0].Subspans[0].Value,
+                Is.EqualTo("0"));
+            Assert.That(spans[0].Subspans[0].Subspans[0].Subspans.Count,
+                Is.EqualTo(0));
 
-            Assert.AreSame(itemDef, spans[0].Subspans[1].DefRef);
-            Assert.AreEqual(1, spans[0].Subspans[1].Subspans.Count);
-            Assert.AreSame(implicitDef, spans[0].Subspans[1].Subspans[0].DefRef);
-            Assert.AreEqual("a", spans[0].Subspans[1].Subspans[0].Value);
-            Assert.AreEqual(0, spans[0].Subspans[1].Subspans[0].Subspans.Count);
+            Assert.That(spans[0].Subspans[1].DefRef, Is.SameAs(itemDef));
+            Assert.That(spans[0].Subspans[1].Subspans.Count, Is.EqualTo(1));
+            Assert.That(spans[0].Subspans[1].Subspans[0].DefRef,
+                Is.SameAs(implicitDef));
+            Assert.That(spans[0].Subspans[1].Subspans[0].Value,
+                Is.EqualTo("a"));
+            Assert.That(spans[0].Subspans[1].Subspans[0].Subspans.Count,
+                Is.EqualTo(0));
 
-            Assert.AreSame(itemDef, spans[0].Subspans[2].DefRef);
-            Assert.AreEqual(1, spans[0].Subspans[2].Subspans.Count);
-            Assert.AreSame(implicitDef, spans[0].Subspans[2].Subspans[0].DefRef);
-            Assert.AreEqual("A", spans[0].Subspans[2].Subspans[0].Value);
-            Assert.AreEqual(0, spans[0].Subspans[2].Subspans[0].Subspans.Count);
+            Assert.That(spans[0].Subspans[2].DefRef, Is.SameAs(itemDef));
+            Assert.That(spans[0].Subspans[2].Subspans.Count, Is.EqualTo(1));
+            Assert.That(spans[0].Subspans[2].Subspans[0].DefRef,
+                Is.SameAs(implicitDef));
+            Assert.That(spans[0].Subspans[2].Subspans[0].Value,
+                Is.EqualTo("A"));
+            Assert.That(spans[0].Subspans[2].Subspans[0].Subspans.Count,
+                Is.EqualTo(0));
         }
 
 
@@ -1101,20 +1136,24 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(spans);
-            Assert.AreEqual(0, spans.Length);
+            Assert.That(spans.Length, Is.EqualTo(0));
             Assert.IsNotNull(errors);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<ParserError>(errors[0]);
             var err = ((ParserError)errors[0]);
-            Assert.AreEqual(ParserError.UnexpectedEndOfInput, err.ErrorType);
-            Assert.AreEqual(1, err.Line);
-            Assert.AreEqual(15, err.Column);
+            Assert.That(err.ErrorType,
+                Is.EqualTo(ParserError.UnexpectedEndOfInput));
+            Assert.That(err.Line, Is.EqualTo(1));
+            Assert.That(err.Column, Is.EqualTo(15));
             Assert.IsInstanceOf<DefRefNode>(err.LastValidMatchingNode);
-            Assert.AreEqual("id-item2", (err.LastValidMatchingNode as DefRefNode).DefRef.Name);
+            Assert.That(
+                (err.LastValidMatchingNode as DefRefNode).DefRef.Name,
+                Is.EqualTo("id-item2"));
             Assert.IsNotNull(err.ExpectedNodes);
-            Assert.AreEqual(1, err.ExpectedNodes.Count());
+            Assert.That(err.ExpectedNodes.Count(), Is.EqualTo(1));
             Assert.IsInstanceOf<DefRefNode>(err.ExpectedNodes.First());
-            Assert.AreSame(itemDef, (err.ExpectedNodes.First() as DefRefNode).DefRef);
+            Assert.That((err.ExpectedNodes.First() as DefRefNode).DefRef,
+                Is.SameAs(itemDef));
         }
 
         [Test]
@@ -1140,20 +1179,24 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(spans);
-            Assert.AreEqual(0, spans.Length);
+            Assert.That(spans.Length, Is.EqualTo(0));
             Assert.IsNotNull(errors);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<ParserError>(errors[0]);
             var err = ((ParserError)errors[0]);
-            Assert.AreEqual(ParserError.UnexpectedEndOfInput, err.ErrorType);
-            Assert.AreEqual(1, err.Line);
-            Assert.AreEqual(14, err.Column);
+            Assert.That(err.ErrorType,
+                Is.EqualTo(ParserError.UnexpectedEndOfInput));
+            Assert.That(err.Line, Is.EqualTo(1));
+            Assert.That(err.Column, Is.EqualTo(14));
             Assert.IsInstanceOf<DefRefNode>(err.LastValidMatchingNode);
-            Assert.AreEqual("id-item2", (err.LastValidMatchingNode as DefRefNode).DefRef.Name);
+            Assert.That(
+                (err.LastValidMatchingNode as DefRefNode).DefRef.Name,
+                Is.EqualTo("id-item2"));
             Assert.IsNotNull(err.ExpectedNodes);
-            Assert.AreEqual(1, err.ExpectedNodes.Count());
+            Assert.That(err.ExpectedNodes.Count(), Is.EqualTo(1));
             Assert.IsInstanceOf<DefRefNode>(err.ExpectedNodes.First());
-            Assert.AreSame(itemDef, (err.ExpectedNodes.First() as DefRefNode).DefRef);
+            Assert.That((err.ExpectedNodes.First() as DefRefNode).DefRef,
+                Is.SameAs(itemDef));
         }
 
         [Test]
@@ -1180,20 +1223,25 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(spans);
-            Assert.AreEqual(0, spans.Length);
+            Assert.That(spans.Length, Is.EqualTo(0));
             Assert.IsNotNull(errors);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<ParserError>(errors[0]);
             var err = ((ParserError)errors[0]);
-            Assert.AreEqual(ParserError.UnexpectedEndOfInput, err.ErrorType);
-            Assert.AreEqual(1, err.Line);
-            Assert.AreEqual(13, err.Column);
+            Assert.That(err.ErrorType,
+                Is.EqualTo(ParserError.UnexpectedEndOfInput));
+            Assert.That(err.Line, Is.EqualTo(1));
+            Assert.That(err.Column, Is.EqualTo(13));
             Assert.IsInstanceOf<CharNode>(err.LastValidMatchingNode);
-            Assert.AreEqual("m", (err.LastValidMatchingNode as CharNode).CharClass.ToUndelimitedString());
+            Assert.That(
+                (err.LastValidMatchingNode as CharNode).CharClass
+                .ToUndelimitedString(),
+                Is.EqualTo("m"));
             Assert.IsNotNull(err.ExpectedNodes);
-            Assert.AreEqual(1, err.ExpectedNodes.Count());
+            Assert.That(err.ExpectedNodes.Count(), Is.EqualTo(1));
 //            Assert.IsInstanceOf<DefRefNode>(err.ExpectedNodes.First());
-//            Assert.AreSame(sequenceDef, (err.ExpectedNodes.First() as DefRefNode).DefRef);
+//            Assert.That((err.ExpectedNodes.First() as DefRefNode).DefRef,
+//                Is.SameAs(sequenceDef));
         }
 
         [Test]
@@ -1221,24 +1269,29 @@ namespace MetaphysicsIndustries.Giza.Test
             Span[] spans = parser.Parse(testInput.ToCharacterSource(), errors);
 
             Assert.IsNotNull(spans);
-            Assert.AreEqual(0, spans.Length);
+            Assert.That(spans.Length, Is.EqualTo(0));
             Assert.IsNotNull(errors);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<ParserError<Token>>(errors[0]);
             var err = ((ParserError<Token>)errors[0]);
-            Assert.AreEqual(ParserError.InvalidInputElement, err.ErrorType);
-            Assert.AreEqual(1, err.Line);
-            Assert.AreEqual(9, err.Column);
-            Assert.AreEqual(8, err.Index);
-            Assert.AreEqual(8, err.OffendingInputElement.StartPosition.Index);
-            Assert.AreEqual(")", err.OffendingInputElement.Value);
-            Assert.AreSame(cparenDef, err.OffendingInputElement.Definition);
+            Assert.That(err.ErrorType,
+                Is.EqualTo(ParserError.InvalidInputElement));
+            Assert.That(err.Line, Is.EqualTo(1));
+            Assert.That(err.Column, Is.EqualTo(9));
+            Assert.That(err.Index, Is.EqualTo(8));
+            Assert.That(err.OffendingInputElement.StartPosition.Index,
+                Is.EqualTo(8));
+            Assert.That(err.OffendingInputElement.Value, Is.EqualTo(")"));
+            Assert.That(err.OffendingInputElement.Definition,
+                Is.SameAs(cparenDef));
             Assert.IsInstanceOf<DefRefNode>(err.LastValidMatchingNode);
-            Assert.AreSame(oparenDef, (err.LastValidMatchingNode as DefRefNode).DefRef);
+            Assert.That((err.LastValidMatchingNode as DefRefNode).DefRef,
+                Is.SameAs(oparenDef));
             Assert.IsNotNull(err.ExpectedNodes);
-            Assert.AreEqual(1, err.ExpectedNodes.Count());
+            Assert.That(err.ExpectedNodes.Count(), Is.EqualTo(1));
             Assert.IsInstanceOf<DefRefNode>(err.ExpectedNodes.First());
-            Assert.AreSame(sequenceDef, (err.ExpectedNodes.First() as DefRefNode).DefRef);
+            Assert.That((err.ExpectedNodes.First() as DefRefNode).DefRef,
+                Is.SameAs(sequenceDef));
         }
 
         [Test]
@@ -1414,24 +1467,29 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(spans);
-            Assert.AreEqual(0, spans.Length);
+            Assert.That(spans.Length, Is.EqualTo(0));
             Assert.IsNotNull(errors);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<ParserError<Token>>(errors[0]);
             var err = ((ParserError<Token>)errors[0]);
-            Assert.AreEqual(ParserError.InvalidInputElement, err.ErrorType);
-            Assert.AreEqual(1, err.Line);
-            Assert.AreEqual(9, err.Column);
-            Assert.AreEqual(8, err.Index);
-            Assert.AreEqual(8, err.OffendingInputElement.StartPosition.Index);
-            Assert.AreEqual("two", err.OffendingInputElement.Value);
-            Assert.AreSame(implicitTwoDef, err.OffendingInputElement.Definition);
+            Assert.That(err.ErrorType,
+                Is.EqualTo(ParserError.InvalidInputElement));
+            Assert.That(err.Line, Is.EqualTo(1));
+            Assert.That(err.Column, Is.EqualTo(9));
+            Assert.That(err.Index, Is.EqualTo(8));
+            Assert.That(err.OffendingInputElement.StartPosition.Index,
+                Is.EqualTo(8));
+            Assert.That(err.OffendingInputElement.Value, Is.EqualTo("two"));
+            Assert.That(err.OffendingInputElement.Definition,
+                Is.SameAs(implicitTwoDef));
             Assert.IsInstanceOf<DefRefNode>(err.LastValidMatchingNode);
-            Assert.AreSame(implicitOpenDef, (err.LastValidMatchingNode as DefRefNode).DefRef);
+            Assert.That((err.LastValidMatchingNode as DefRefNode).DefRef,
+                Is.SameAs(implicitOpenDef));
             Assert.IsNotNull(err.ExpectedNodes);
-            Assert.AreEqual(1, err.ExpectedNodes.Count());
+            Assert.That(err.ExpectedNodes.Count(), Is.EqualTo(1));
             Assert.IsInstanceOf<DefRefNode>(err.ExpectedNodes.First());
-            Assert.AreSame(sequenceDef, (err.ExpectedNodes.First() as DefRefNode).DefRef);
+            Assert.That((err.ExpectedNodes.First() as DefRefNode).DefRef,
+                Is.SameAs(sequenceDef));
         }
 
         [Test]
@@ -1455,23 +1513,27 @@ namespace MetaphysicsIndustries.Giza.Test
             Span[] spans = parser.Parse(testInput.ToCharacterSource(), errors);
 
             Assert.IsNotNull(spans);
-            Assert.AreEqual(0, spans.Length);
+            Assert.That(spans.Length, Is.EqualTo(0));
             Assert.IsNotNull(errors);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<ParserError<InputChar>>(errors[0]);
             var err = ((ParserError<InputChar>)errors[0]);
-            Assert.AreEqual(ParserError.InvalidInputElement, err.ErrorType);
-            Assert.AreEqual(1, err.Line);
-            Assert.AreEqual(9, err.Column);
-            Assert.AreEqual(8, err.Index);
-//            Assert.AreEqual(8, err.OffendingToken.StartPosition.Index);
-            Assert.AreEqual('$', err.OffendingInputElement.Value);
+            Assert.That(err.ErrorType,
+                Is.EqualTo(ParserError.InvalidInputElement));
+            Assert.That(err.Line, Is.EqualTo(1));
+            Assert.That(err.Column, Is.EqualTo(9));
+            Assert.That(err.Index, Is.EqualTo(8));
+//            Assert.That(err.OffendingToken.StartPosition.Index,
+//                Is.EqualTo(8));
+            Assert.That(err.OffendingInputElement.Value, Is.EqualTo('$'));
 //            Assert.IsInstanceOf<DefRefNode>(err.LastValidMatchingNode);
-//            Assert.AreSame(oparenDef, (err.LastValidMatchingNode as DefRefNode).DefRef);
+//            Assert.That((err.LastValidMatchingNode as DefRefNode).DefRef,
+//                Is.SameAs(oparenDef));
 //            Assert.IsNotNull(err.ExpectedNodes);
-//            Assert.AreEqual(1, err.ExpectedNodes.Count());
+//            Assert.That(err.ExpectedNodes.Count(), Is.EqualTo(1));
 //            Assert.IsInstanceOf<DefRefNode>(err.ExpectedNodes.First());
-//            Assert.AreSame(sequenceDef, (err.ExpectedNodes.First() as DefRefNode).DefRef);
+//            Assert.That((err.ExpectedNodes.First() as DefRefNode).DefRef,
+//                Is.SameAs(sequenceDef));
         }
 
         [Test]
@@ -1580,20 +1642,25 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             Assert.IsNotNull(spans);
-            Assert.AreEqual(0, spans.Length);
+            Assert.That(spans.Length, Is.EqualTo(0));
             Assert.IsNotNull(errors);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<ParserError<Token>>(errors[0]);
             var err = ((ParserError<Token>)errors[0]);
-            Assert.AreEqual(ParserError.ExcessRemainingInput, err.ErrorType);
-            Assert.AreEqual(1, err.Line);
-            Assert.AreEqual(15, err.Column);
-            Assert.AreEqual(14, err.Index);
-            Assert.AreEqual(14, err.OffendingInputElement.StartPosition.Index);
-            Assert.AreEqual("four", err.OffendingInputElement.Value);
-            Assert.AreSame(fourDef, err.OffendingInputElement.Definition);
+            Assert.That(err.ErrorType,
+                Is.EqualTo(ParserError.ExcessRemainingInput));
+            Assert.That(err.Line, Is.EqualTo(1));
+            Assert.That(err.Column, Is.EqualTo(15));
+            Assert.That(err.Index, Is.EqualTo(14));
+            Assert.That(err.OffendingInputElement.StartPosition.Index,
+                Is.EqualTo(14));
+            Assert.That(err.OffendingInputElement.Value,
+                Is.EqualTo("four"));
+            Assert.That(err.OffendingInputElement.Definition,
+                Is.SameAs(fourDef));
             Assert.IsInstanceOf<DefRefNode>(err.LastValidMatchingNode);
-            Assert.AreSame(threeDef, (err.LastValidMatchingNode as DefRefNode).DefRef);
+            Assert.That((err.LastValidMatchingNode as DefRefNode).DefRef,
+                Is.SameAs(threeDef));
             Assert.IsNull(err.ExpectedNodes);
         }
 
@@ -1625,7 +1692,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var spans = parser.Parse(testInput, errors);
 
             Assert.IsNotNull(spans);
-            Assert.AreEqual(2, spans.Length);
+            Assert.That(spans.Length, Is.EqualTo(2));
 
         }
 
@@ -1738,12 +1805,14 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(spans);
-            Assert.AreEqual(0, spans.Length);
-            Assert.AreEqual(2, errors.Count);
+            Assert.That(spans.Length, Is.EqualTo(0));
+            Assert.That(errors.Count, Is.EqualTo(2));
             Assert.IsInstanceOf<MockError>(errors[0]);
-            Assert.AreEqual(MockError.MockErrorType, errors[0].ErrorType);
+            Assert.That(errors[0].ErrorType,
+                Is.EqualTo(MockError.MockErrorType));
             Assert.IsInstanceOf<MockError>(errors[1]);
-            Assert.AreEqual(MockError.MockErrorType2, errors[1].ErrorType);
+            Assert.That(errors[1].ErrorType,
+                Is.EqualTo(MockError.MockErrorType2));
         }
     }
 }

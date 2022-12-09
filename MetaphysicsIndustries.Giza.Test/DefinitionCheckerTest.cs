@@ -165,11 +165,12 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(errorEnu);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<DefinitionError>(errors[0]);
             var err = (DefinitionError)errors[0];
-            Assert.AreEqual(DefinitionError.NodeHasNoPathFromStart, err.ErrorType);
-            Assert.AreSame(n2, err.Node);
+            Assert.That(err.ErrorType,
+                Is.EqualTo(DefinitionError.NodeHasNoPathFromStart));
+            Assert.That(err.Node, Is.SameAs(n2));
         }
 
         [Test]
@@ -201,11 +202,12 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(errorEnu);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<DefinitionError>(errors[0]);
             var err = (DefinitionError)errors[0];
-            Assert.AreEqual(DefinitionError.NodeHasNoPathToEnd, err.ErrorType);
-            Assert.AreSame(n2, err.Node);
+            Assert.That(err.ErrorType,
+                Is.EqualTo(DefinitionError.NodeHasNoPathToEnd));
+            Assert.That(err.Node, Is.SameAs(n2));
         }
 
         [Test]
@@ -233,11 +235,12 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(errorEnu);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<DefinitionError>(errors[0]);
             var err = (DefinitionError)errors[0];
-            Assert.AreEqual(DefinitionError.NextNodeLinksOutsideOfDefinition, err.ErrorType);
-            Assert.AreSame(n1, err.Node);
+            Assert.That(err.ErrorType,
+                Is.EqualTo(DefinitionError.NextNodeLinksOutsideOfDefinition));
+            Assert.That(err.Node, Is.SameAs(n1));
         }
 
         [Test]
@@ -261,11 +264,12 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(errorEnu);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<DefinitionError>(errors[0]);
             var err = (DefinitionError)errors[0];
-            Assert.AreEqual(DefinitionError.NextNodeLinksOutsideOfDefinition, err.ErrorType);
-            Assert.AreSame(n1, err.Node);
+            Assert.That(err.ErrorType,
+                Is.EqualTo(DefinitionError.NextNodeLinksOutsideOfDefinition));
+            Assert.That(err.Node, Is.SameAs(n1));
         }
 
         [Test]
@@ -294,11 +298,12 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(errorEnu);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<DefinitionError>(errors[0]);
             var err = (DefinitionError)errors[0];
-            Assert.AreEqual(DefinitionError.StartNodeHasWrongParentDefinition, err.ErrorType);
-            Assert.AreSame(n2, err.Node);
+            Assert.That(err.ErrorType,
+                Is.EqualTo(DefinitionError.StartNodeHasWrongParentDefinition));
+            Assert.That(err.Node, Is.SameAs(n2));
         }
 
         [Test]
@@ -323,11 +328,12 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(errorEnu);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<DefinitionError>(errors[0]);
             var err = (DefinitionError)errors[0];
-            Assert.AreEqual(DefinitionError.StartNodeHasWrongParentDefinition, err.ErrorType);
-            Assert.AreSame(n2, err.Node);
+            Assert.That(err.ErrorType,
+                Is.EqualTo(DefinitionError.StartNodeHasWrongParentDefinition));
+            Assert.That(err.Node, Is.SameAs(n2));
         }
 
         [Test]
@@ -356,11 +362,12 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(errorEnu);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<DefinitionError>(errors[0]);
             var err = (DefinitionError)errors[0];
-            Assert.AreEqual(DefinitionError.EndNodeHasWrongParentDefinition, err.ErrorType);
-            Assert.AreSame(n2, err.Node);
+            Assert.That(err.ErrorType,
+                Is.EqualTo(DefinitionError.EndNodeHasWrongParentDefinition));
+            Assert.That(err.Node, Is.SameAs(n2));
         }
 
         [Test]
@@ -385,11 +392,12 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(errorEnu);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<DefinitionError>(errors[0]);
             var err = (DefinitionError)errors[0];
-            Assert.AreEqual(DefinitionError.EndNodeHasWrongParentDefinition, err.ErrorType);
-            Assert.AreSame(n2, err.Node);
+            Assert.That(err.ErrorType,
+                Is.EqualTo(DefinitionError.EndNodeHasWrongParentDefinition));
+            Assert.That(err.Node, Is.SameAs(n2));
         }
 
         [Test]

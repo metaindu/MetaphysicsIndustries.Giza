@@ -62,13 +62,14 @@ namespace MetaphysicsIndustries.Giza.Test
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
 
             Assert.IsNotNull(errors);
-            Assert.AreEqual(1, errors.Count);
-            Assert.AreEqual(ExpressionError.TokenizedReferencesToken, errors[0].ErrorType);
+            Assert.That(errors.Count, Is.EqualTo(1));
+            Assert.That(errors[0].ErrorType,
+                Is.EqualTo(ExpressionError.TokenizedReferencesToken));
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
-            Assert.AreEqual(null, err.Expression);
-            Assert.AreSame(defs[1].Expr.Items[0], err.ExpressionItem);
-            Assert.AreSame(defs[1], err.Definition);
+            Assert.That(err.Expression, Is.EqualTo(null));
+            Assert.That(err.ExpressionItem, Is.SameAs(defs[1].Expr.Items[0]));
+            Assert.That(err.Definition, Is.SameAs(defs[1]));
         }
 
         [Test]
@@ -91,7 +92,7 @@ namespace MetaphysicsIndustries.Giza.Test
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
 
             Assert.IsNotNull(errors);
-            Assert.AreEqual(0, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -114,13 +115,14 @@ namespace MetaphysicsIndustries.Giza.Test
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
 
             Assert.IsNotNull(errors);
-            Assert.AreEqual(1, errors.Count);
-            Assert.AreEqual(ExpressionError.TokenizedReferencesComment, errors[0].ErrorType);
+            Assert.That(errors.Count, Is.EqualTo(1));
+            Assert.That(errors[0].ErrorType,
+                Is.EqualTo(ExpressionError.TokenizedReferencesComment));
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
-            Assert.AreEqual(null, err.Expression);
-            Assert.AreSame(defs[1].Expr.Items[0], err.ExpressionItem);
-            Assert.AreSame(defs[1], err.Definition);
+            Assert.That(err.Expression, Is.EqualTo(null));
+            Assert.That(err.ExpressionItem, Is.SameAs(defs[1].Expr.Items[0]));
+            Assert.That(err.Definition, Is.SameAs(defs[1]));
         }
 
         [Test]
@@ -142,13 +144,14 @@ namespace MetaphysicsIndustries.Giza.Test
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
 
             Assert.IsNotNull(errors);
-            Assert.AreEqual(1, errors.Count);
-            Assert.AreEqual(ExpressionError.TokenizedReferencesNonToken, errors[0].ErrorType);
+            Assert.That(errors.Count, Is.EqualTo(1));
+            Assert.That(errors[0].ErrorType,
+                Is.EqualTo(ExpressionError.TokenizedReferencesNonToken));
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
-            Assert.AreEqual(null, err.Expression);
-            Assert.AreSame(defs[1].Expr.Items[0], err.ExpressionItem);
-            Assert.AreSame(defs[1], err.Definition);
+            Assert.That(err.Expression, Is.EqualTo(null));
+            Assert.That(err.ExpressionItem, Is.SameAs(defs[1].Expr.Items[0]));
+            Assert.That(err.Definition, Is.SameAs(defs[1]));
         }
 
         [Test]
@@ -171,13 +174,14 @@ namespace MetaphysicsIndustries.Giza.Test
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
 
             Assert.IsNotNull(errors);
-            Assert.AreEqual(1, errors.Count);
-            Assert.AreEqual(ExpressionError.TokenizedReferencesToken, errors[0].ErrorType);
+            Assert.That(errors.Count, Is.EqualTo(1));
+            Assert.That(errors[0].ErrorType,
+                Is.EqualTo(ExpressionError.TokenizedReferencesToken));
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
-            Assert.AreEqual(null, err.Expression);
-            Assert.AreSame(defs[1].Expr.Items[0], err.ExpressionItem);
-            Assert.AreSame(defs[1], err.Definition);
+            Assert.That(err.Expression, Is.EqualTo(null));
+            Assert.That(err.ExpressionItem, Is.SameAs(defs[1].Expr.Items[0]));
+            Assert.That(err.Definition, Is.SameAs(defs[1]));
         }
 
         [Test]
@@ -200,7 +204,7 @@ namespace MetaphysicsIndustries.Giza.Test
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
 
             Assert.IsNotNull(errors);
-            Assert.AreEqual(0, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -223,13 +227,14 @@ namespace MetaphysicsIndustries.Giza.Test
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
 
             Assert.IsNotNull(errors);
-            Assert.AreEqual(1, errors.Count);
-            Assert.AreEqual(ExpressionError.TokenizedReferencesComment, errors[0].ErrorType);
+            Assert.That(errors.Count, Is.EqualTo(1));
+            Assert.That(errors[0].ErrorType,
+                Is.EqualTo(ExpressionError.TokenizedReferencesComment));
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
-            Assert.AreEqual(null, err.Expression);
-            Assert.AreSame(defs[1].Expr.Items[0], err.ExpressionItem);
-            Assert.AreSame(defs[1], err.Definition);
+            Assert.That(err.Expression, Is.EqualTo(null));
+            Assert.That(err.ExpressionItem, Is.SameAs(defs[1].Expr.Items[0]));
+            Assert.That(err.Definition, Is.SameAs(defs[1]));
         }
 
         [Test()]
@@ -251,13 +256,14 @@ namespace MetaphysicsIndustries.Giza.Test
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
 
             Assert.IsNotNull(errors);
-            Assert.AreEqual(1, errors.Count);
-            Assert.AreEqual(ExpressionError.TokenizedReferencesNonToken, errors[0].ErrorType);
+            Assert.That(errors.Count, Is.EqualTo(1));
+            Assert.That(errors[0].ErrorType,
+                Is.EqualTo(ExpressionError.TokenizedReferencesNonToken));
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
-            Assert.AreEqual(null, err.Expression);
-            Assert.AreSame(defs[1].Expr.Items[0], err.ExpressionItem);
-            Assert.AreSame(defs[1], err.Definition);
+            Assert.That(err.Expression, Is.EqualTo(null));
+            Assert.That(err.ExpressionItem, Is.SameAs(defs[1].Expr.Items[0]));
+            Assert.That(err.Definition, Is.SameAs(defs[1]));
         }
 
         [Test]
@@ -280,13 +286,14 @@ namespace MetaphysicsIndustries.Giza.Test
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
 
             Assert.IsNotNull(errors);
-            Assert.AreEqual(1, errors.Count);
-            Assert.AreEqual(ExpressionError.TokenizedReferencesToken, errors[0].ErrorType);
+            Assert.That(errors.Count, Is.EqualTo(1));
+            Assert.That(errors[0].ErrorType,
+                Is.EqualTo(ExpressionError.TokenizedReferencesToken));
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
-            Assert.AreEqual(null, err.Expression);
-            Assert.AreSame(defs[1].Expr.Items[0], err.ExpressionItem);
-            Assert.AreSame(defs[1], err.Definition);
+            Assert.That(err.Expression, Is.EqualTo(null));
+            Assert.That(err.ExpressionItem, Is.SameAs(defs[1].Expr.Items[0]));
+            Assert.That(err.Definition, Is.SameAs(defs[1]));
         }
 
         [Test]
@@ -309,7 +316,7 @@ namespace MetaphysicsIndustries.Giza.Test
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
 
             Assert.IsNotNull(errors);
-            Assert.AreEqual(0, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -332,13 +339,14 @@ namespace MetaphysicsIndustries.Giza.Test
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
 
             Assert.IsNotNull(errors);
-            Assert.AreEqual(1, errors.Count);
-            Assert.AreEqual(ExpressionError.TokenizedReferencesComment, errors[0].ErrorType);
+            Assert.That(errors.Count, Is.EqualTo(1));
+            Assert.That(errors[0].ErrorType,
+                Is.EqualTo(ExpressionError.TokenizedReferencesComment));
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
-            Assert.AreEqual(null, err.Expression);
-            Assert.AreSame(defs[1].Expr.Items[0], err.ExpressionItem);
-            Assert.AreSame(defs[1], err.Definition);
+            Assert.That(err.Expression, Is.EqualTo(null));
+            Assert.That(err.ExpressionItem, Is.SameAs(defs[1].Expr.Items[0]));
+            Assert.That(err.Definition, Is.SameAs(defs[1]));
         }
 
         [Test]
@@ -360,13 +368,14 @@ namespace MetaphysicsIndustries.Giza.Test
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
 
             Assert.IsNotNull(errors);
-            Assert.AreEqual(1, errors.Count);
-            Assert.AreEqual(ExpressionError.TokenizedReferencesNonToken, errors[0].ErrorType);
+            Assert.That(errors.Count, Is.EqualTo(1));
+            Assert.That(errors[0].ErrorType,
+                Is.EqualTo(ExpressionError.TokenizedReferencesNonToken));
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
-            Assert.AreEqual(null, err.Expression);
-            Assert.AreSame(defs[1].Expr.Items[0], err.ExpressionItem);
-            Assert.AreSame(defs[1], err.Definition);
+            Assert.That(err.Expression, Is.EqualTo(null));
+            Assert.That(err.ExpressionItem, Is.SameAs(defs[1].Expr.Items[0]));
+            Assert.That(err.Definition, Is.SameAs(defs[1]));
         }
 
         [Test]
@@ -388,7 +397,7 @@ namespace MetaphysicsIndustries.Giza.Test
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
 
             Assert.IsNotNull(errors);
-            Assert.AreEqual(0, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -410,13 +419,14 @@ namespace MetaphysicsIndustries.Giza.Test
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
 
             Assert.IsNotNull(errors);
-            Assert.AreEqual(1, errors.Count);
-            Assert.AreEqual(ExpressionError.NonTokenReferencesSubtoken, errors[0].ErrorType);
+            Assert.That(errors.Count, Is.EqualTo(1));
+            Assert.That(errors[0].ErrorType,
+                Is.EqualTo(ExpressionError.NonTokenReferencesSubtoken));
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
-            Assert.AreEqual(null, err.Expression);
-            Assert.AreSame(defs[1].Expr.Items[0], err.ExpressionItem);
-            Assert.AreSame(defs[1], err.Definition);
+            Assert.That(err.Expression, Is.EqualTo(null));
+            Assert.That(err.ExpressionItem, Is.SameAs(defs[1].Expr.Items[0]));
+            Assert.That(err.Definition, Is.SameAs(defs[1]));
         }
 
         [Test()]
@@ -438,13 +448,14 @@ namespace MetaphysicsIndustries.Giza.Test
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
 
             Assert.IsNotNull(errors);
-            Assert.AreEqual(1, errors.Count);
-            Assert.AreEqual(ExpressionError.NonTokenReferencesComment, errors[0].ErrorType);
+            Assert.That(errors.Count, Is.EqualTo(1));
+            Assert.That(errors[0].ErrorType,
+                Is.EqualTo(ExpressionError.NonTokenReferencesComment));
             Assert.IsInstanceOf<ExpressionError>(errors[0]);
             var err = (errors[0] as ExpressionError);
-            Assert.AreEqual(null, err.Expression);
-            Assert.AreSame(defs[1].Expr.Items[0], err.ExpressionItem);
-            Assert.AreSame(defs[1], err.Definition);
+            Assert.That(err.Expression, Is.EqualTo(null));
+            Assert.That(err.ExpressionItem, Is.SameAs(defs[1].Expr.Items[0]));
+            Assert.That(err.Definition, Is.SameAs(defs[1]));
         }
 
         [Test]
@@ -467,7 +478,7 @@ namespace MetaphysicsIndustries.Giza.Test
             List<Error> errors = ec.CheckDefinitionForParsing(defs);
 
             Assert.IsNotNull(errors);
-            Assert.AreEqual(0, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(0));
         }
     }
 }

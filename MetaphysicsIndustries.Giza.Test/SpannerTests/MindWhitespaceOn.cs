@@ -61,8 +61,8 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
 
             // assertions
             Assert.IsEmpty(errors);
-            Assert.AreEqual(1, spans.Length);
-            Assert.AreEqual("abc", spans[0].CollectValue());
+            Assert.That(spans.Length, Is.EqualTo(1));
+            Assert.That(spans[0].CollectValue(), Is.EqualTo("abc"));
         }
 
         [Test]
@@ -73,12 +73,14 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
 
             // assertions
             Assert.IsEmpty(spans);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<ParserError<InputChar>>(errors[0]);
             var e = (ParserError<InputChar>)errors[0];
-            Assert.AreEqual(ParserError.InvalidInputElement, e.ErrorType);
-            Assert.AreEqual(new InputPosition(0, 1, 1), e.Position);
-            Assert.AreEqual(' ', e.OffendingInputElement.Value);
+            Assert.That(e.ErrorType,
+                Is.EqualTo(ParserError.InvalidInputElement));
+            Assert.That(e.Position,
+                Is.EqualTo(new InputPosition(0, 1, 1)));
+            Assert.That(e.OffendingInputElement.Value, Is.EqualTo(' '));
         }
 
         [Test]
@@ -89,12 +91,14 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
 
             // assertions
             Assert.IsEmpty(spans);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<ParserError<InputChar>>(errors[0]);
             var e = (ParserError<InputChar>)errors[0];
-            Assert.AreEqual(ParserError.ExcessRemainingInput, e.ErrorType);
-            Assert.AreEqual(new InputPosition(3, 1, 4), e.Position);
-            Assert.AreEqual(' ', e.OffendingInputElement.Value);
+            Assert.That(e.ErrorType,
+                Is.EqualTo(ParserError.ExcessRemainingInput));
+            Assert.That(e.Position,
+                Is.EqualTo(new InputPosition(3, 1, 4)));
+            Assert.That(e.OffendingInputElement.Value, Is.EqualTo(' '));
         }
 
         [Test]
@@ -105,12 +109,14 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
 
             // assertions
             Assert.IsEmpty(spans);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<ParserError<InputChar>>(errors[0]);
             var e = (ParserError<InputChar>)errors[0];
-            Assert.AreEqual(ParserError.InvalidInputElement, e.ErrorType);
-            Assert.AreEqual(new InputPosition(1, 1, 2), e.Position);
-            Assert.AreEqual(' ', e.OffendingInputElement.Value);
+            Assert.That(e.ErrorType,
+                Is.EqualTo(ParserError.InvalidInputElement));
+            Assert.That(e.Position,
+                Is.EqualTo(new InputPosition(1, 1, 2)));
+            Assert.That(e.OffendingInputElement.Value, Is.EqualTo(' '));
         }
 
         [Test]
@@ -121,12 +127,14 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
 
             // assertions
             Assert.IsEmpty(spans);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<ParserError<InputChar>>(errors[0]);
             var e = (ParserError<InputChar>)errors[0];
-            Assert.AreEqual(ParserError.InvalidInputElement, e.ErrorType);
-            Assert.AreEqual(new InputPosition(0, 1, 1), e.Position);
-            Assert.AreEqual('\t', e.OffendingInputElement.Value);
+            Assert.That(e.ErrorType,
+                Is.EqualTo(ParserError.InvalidInputElement));
+            Assert.That(e.Position,
+                Is.EqualTo(new InputPosition(0, 1, 1)));
+            Assert.That(e.OffendingInputElement.Value, Is.EqualTo('\t'));
         }
 
         [Test]
@@ -137,12 +145,14 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
 
             // assertions
             Assert.IsEmpty(spans);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<ParserError<InputChar>>(errors[0]);
             var e = (ParserError<InputChar>)errors[0];
-            Assert.AreEqual(ParserError.InvalidInputElement, e.ErrorType);
-            Assert.AreEqual(new InputPosition(0, 1, 1), e.Position);
-            Assert.AreEqual('\n', e.OffendingInputElement.Value);
+            Assert.That(e.ErrorType,
+                Is.EqualTo(ParserError.InvalidInputElement));
+            Assert.That(e.Position,
+                Is.EqualTo(new InputPosition(0, 1, 1)));
+            Assert.That(e.OffendingInputElement.Value, Is.EqualTo('\n'));
         }
 
         [Test]
@@ -153,12 +163,14 @@ namespace MetaphysicsIndustries.Giza.Test.SpannerTests
 
             // assertions
             Assert.IsEmpty(spans);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<ParserError<InputChar>>(errors[0]);
             var e = (ParserError<InputChar>)errors[0];
-            Assert.AreEqual(ParserError.InvalidInputElement, e.ErrorType);
-            Assert.AreEqual(new InputPosition(0, 1, 1), e.Position);
-            Assert.AreEqual('\r', e.OffendingInputElement.Value);
+            Assert.That(e.ErrorType,
+                Is.EqualTo(ParserError.InvalidInputElement));
+            Assert.That(e.Position,
+                Is.EqualTo(new InputPosition(0, 1, 1)));
+            Assert.That(e.OffendingInputElement.Value, Is.EqualTo('\r'));
         }
     }
 }

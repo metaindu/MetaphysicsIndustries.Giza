@@ -1,4 +1,3 @@
-
 // MetaphysicsIndustries.Giza - A Parsing System
 // Copyright (C) 2008-2021 Metaphysics Industries, Inc.
 //
@@ -42,9 +41,9 @@ namespace MetaphysicsIndustries.Giza.Test.GrammarCompilerT
             // when
             var result = gc.GetNodesFromOrExpression(orexpr, null);
             // then
-            Assert.AreEqual(1,result.StartNodes.Count);
-            Assert.AreEqual(1,result.EndNodes.Count);
-            Assert.AreEqual(1,result.Nodes.Count);
+            Assert.That(result.StartNodes.Count, Is.EqualTo(1));
+            Assert.That(result.EndNodes.Count, Is.EqualTo(1));
+            Assert.That(result.Nodes.Count, Is.EqualTo(1));
             var node = result.Nodes[0];
             Assert.Contains(node, result.StartNodes.ToList());
             Assert.Contains(node, result.EndNodes.ToList());
@@ -70,9 +69,9 @@ namespace MetaphysicsIndustries.Giza.Test.GrammarCompilerT
             // when
             var result = gc.GetNodesFromOrExpression(orexpr, null);
             // then
-            Assert.AreEqual(2,result.StartNodes.Count);
-            Assert.AreEqual(2,result.EndNodes.Count);
-            Assert.AreEqual(2,result.Nodes.Count);
+            Assert.That(result.StartNodes.Count, Is.EqualTo(2));
+            Assert.That(result.EndNodes.Count, Is.EqualTo(2));
+            Assert.That(result.Nodes.Count, Is.EqualTo(2));
             var node0 = result.Nodes[0];
             Assert.Contains(node0, result.StartNodes.ToList());
             Assert.Contains(node0, result.EndNodes.ToList());
@@ -100,9 +99,9 @@ namespace MetaphysicsIndustries.Giza.Test.GrammarCompilerT
             // when
             var result = gc.GetNodesFromOrExpression(orexpr, null);
             // then
-            Assert.AreEqual(1,result.StartNodes.Count);
-            Assert.AreEqual(1,result.EndNodes.Count);
-            Assert.AreEqual(2,result.Nodes.Count);
+            Assert.That(result.StartNodes.Count, Is.EqualTo(1));
+            Assert.That(result.EndNodes.Count, Is.EqualTo(1));
+            Assert.That(result.Nodes.Count, Is.EqualTo(2));
             var node0 = result.Nodes[0];
             Assert.Contains(node0, result.StartNodes.ToList());
             Assert.IsFalse(result.EndNodes.Contains(node0));
@@ -130,9 +129,9 @@ namespace MetaphysicsIndustries.Giza.Test.GrammarCompilerT
             // when
             var result = gc.GetNodesFromOrExpression(orexpr, null);
             // then
-            Assert.AreEqual(2,result.StartNodes.Count);
-            Assert.AreEqual(1,result.EndNodes.Count);
-            Assert.AreEqual(2,result.Nodes.Count);
+            Assert.That(result.StartNodes.Count, Is.EqualTo(2));
+            Assert.That(result.EndNodes.Count, Is.EqualTo(1));
+            Assert.That(result.Nodes.Count, Is.EqualTo(2));
             var node0 = result.Nodes[0];
             Assert.Contains(node0, result.StartNodes.ToList());
             Assert.IsFalse(result.EndNodes.Contains(node0));
@@ -161,9 +160,9 @@ namespace MetaphysicsIndustries.Giza.Test.GrammarCompilerT
             // when
             var result = gc.GetNodesFromOrExpression(orexpr, null);
             // then
-            Assert.AreEqual(1,result.StartNodes.Count);
-            Assert.AreEqual(2,result.EndNodes.Count);
-            Assert.AreEqual(2,result.Nodes.Count);
+            Assert.That(result.StartNodes.Count, Is.EqualTo(1));
+            Assert.That(result.EndNodes.Count, Is.EqualTo(2));
+            Assert.That(result.Nodes.Count, Is.EqualTo(2));
             var node0 = result.Nodes[0];
             Assert.Contains(node0, result.StartNodes.ToList());
             Assert.Contains(node0, result.EndNodes.ToList());

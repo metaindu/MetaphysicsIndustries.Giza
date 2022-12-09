@@ -51,24 +51,24 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(grammar);
-            Assert.AreEqual(2, grammar.Definitions.Count);
+            Assert.That(grammar.Definitions.Count, Is.EqualTo(2));
 
             Assert.IsNotNull(explicitDef);
-            Assert.AreEqual(0, explicitDef.Directives.Count);
+            Assert.That(explicitDef.Directives.Count, Is.EqualTo(0));
             Assert.IsFalse(explicitDef.Atomic);
             Assert.IsFalse(explicitDef.IgnoreCase);
             Assert.IsFalse(explicitDef.IsComment);
             Assert.IsFalse(explicitDef.IsTokenized);
             Assert.IsFalse(explicitDef.MindWhitespace);
             Assert.IsNotNull(explicitDef.Expr.Items);
-            Assert.AreEqual(1, explicitDef.Expr.Items.Count);
+            Assert.That(explicitDef.Expr.Items.Count, Is.EqualTo(1));
             Assert.IsNotNull(explicitDef.Expr.Items[0]);
             Assert.IsInstanceOf<DefRefSubExpression>(explicitDef.Expr.Items[0]);
             var defref = (DefRefSubExpression) explicitDef.Expr.Items[0];
-            Assert.AreEqual(implicitDef.Name, defref.DefinitionName);
+            Assert.That(defref.DefinitionName, Is.EqualTo(implicitDef.Name));
 
             Assert.IsNotNull(implicitDef);
-            Assert.AreEqual(3, implicitDef.Directives.Count);
+            Assert.That(implicitDef.Directives.Count, Is.EqualTo(3));
             Assert.Contains(DefinitionDirective.Token, implicitDef.Directives.ToArray());
             Assert.Contains(DefinitionDirective.Atomic, implicitDef.Directives.ToArray());
             Assert.Contains(DefinitionDirective.MindWhitespace, implicitDef.Directives.ToArray());
@@ -78,12 +78,12 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsTrue(implicitDef.IsTokenized);
             Assert.IsTrue(implicitDef.MindWhitespace);
             Assert.IsNotNull(implicitDef.Expr.Items);
-            Assert.AreEqual(1, implicitDef.Expr.Items.Count);
+            Assert.That(implicitDef.Expr.Items.Count, Is.EqualTo(1));
             Assert.IsNotNull(implicitDef.Expr.Items[0]);
             Assert.IsInstanceOf<LiteralSubExpression>(implicitDef.Expr.Items[0]);
             var literal = (LiteralSubExpression) implicitDef.Expr.Items[0];
-            Assert.AreEqual("value", literal.Value);
-            Assert.AreEqual("",literal.Tag);
+            Assert.That(literal.Value, Is.EqualTo("value"));
+            Assert.That(literal.Tag, Is.EqualTo(""));
             Assert.IsFalse(literal.IsSkippable);
             Assert.IsFalse(literal.IsRepeatable);
         }
@@ -112,24 +112,24 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(grammar);
-            Assert.AreEqual(2, grammar.Definitions.Count);
+            Assert.That(grammar.Definitions.Count, Is.EqualTo(2));
 
             Assert.IsNotNull(explicitDef);
-            Assert.AreEqual(0, explicitDef.Directives.Count);
+            Assert.That(explicitDef.Directives.Count, Is.EqualTo(0));
             Assert.IsFalse(explicitDef.Atomic);
             Assert.IsFalse(explicitDef.IgnoreCase);
             Assert.IsFalse(explicitDef.IsComment);
             Assert.IsFalse(explicitDef.IsTokenized);
             Assert.IsFalse(explicitDef.MindWhitespace);
             Assert.IsNotNull(explicitDef.Expr.Items);
-            Assert.AreEqual(1, explicitDef.Expr.Items.Count);
+            Assert.That(explicitDef.Expr.Items.Count, Is.EqualTo(1));
             Assert.IsNotNull(explicitDef.Expr.Items[0]);
             Assert.IsInstanceOf<DefRefSubExpression>(explicitDef.Expr.Items[0]);
             var defref = (DefRefSubExpression) explicitDef.Expr.Items[0];
-            Assert.AreEqual(implicitDef.Name, defref.DefinitionName);
+            Assert.That(defref.DefinitionName, Is.EqualTo(implicitDef.Name));
 
             Assert.IsNotNull(implicitDef);
-            Assert.AreEqual(3, implicitDef.Directives.Count);
+            Assert.That(implicitDef.Directives.Count, Is.EqualTo(3));
             Assert.Contains(DefinitionDirective.Token, implicitDef.Directives.ToArray());
             Assert.Contains(DefinitionDirective.Atomic, implicitDef.Directives.ToArray());
             Assert.Contains(DefinitionDirective.MindWhitespace, implicitDef.Directives.ToArray());
@@ -139,12 +139,12 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsTrue(implicitDef.IsTokenized);
             Assert.IsTrue(implicitDef.MindWhitespace);
             Assert.IsNotNull(implicitDef.Expr.Items);
-            Assert.AreEqual(1, implicitDef.Expr.Items.Count);
+            Assert.That(implicitDef.Expr.Items.Count, Is.EqualTo(1));
             Assert.IsNotNull(implicitDef.Expr.Items[0]);
             Assert.IsInstanceOf<CharClassSubExpression>(implicitDef.Expr.Items[0]);
             var cc = (CharClassSubExpression) implicitDef.Expr.Items[0];
-            Assert.AreEqual("\\d", cc.CharClass.ToUndelimitedString());
-            Assert.AreEqual("",cc.Tag);
+            Assert.That(cc.CharClass.ToUndelimitedString(), Is.EqualTo("\\d"));
+            Assert.That(cc.Tag, Is.EqualTo(""));
             Assert.IsFalse(cc.IsSkippable);
             Assert.IsFalse(cc.IsRepeatable);
         }
@@ -176,40 +176,44 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(grammar);
-            Assert.AreEqual(2, grammar.Definitions.Count);
+            Assert.That(grammar.Definitions.Count, Is.EqualTo(2));
 
             Assert.IsNotNull(explicitDef);
-            Assert.AreEqual(0, explicitDef.Directives.Count);
+            Assert.That(explicitDef.Directives.Count, Is.EqualTo(0));
             Assert.IsFalse(explicitDef.Atomic);
             Assert.IsFalse(explicitDef.IgnoreCase);
             Assert.IsFalse(explicitDef.IsComment);
             Assert.IsFalse(explicitDef.IsTokenized);
             Assert.IsFalse(explicitDef.MindWhitespace);
             Assert.IsNotNull(explicitDef.Expr.Items);
-            Assert.AreEqual(1, explicitDef.Expr.Items.Count);
+            Assert.That(explicitDef.Expr.Items.Count, Is.EqualTo(1));
             Assert.IsNotNull(explicitDef.Expr.Items[0]);
             Assert.IsInstanceOf<DefRefSubExpression>(explicitDef.Expr.Items[0]);
             var defref = (DefRefSubExpression) explicitDef.Expr.Items[0];
-            Assert.AreEqual(implicitDef.Name, defref.DefinitionName);
+            Assert.That(defref.DefinitionName, Is.EqualTo(implicitDef.Name));
 
             Assert.IsNotNull(implicitDef);
-            Assert.AreEqual(4, implicitDef.Directives.Count);
-            Assert.Contains(DefinitionDirective.Token, implicitDef.Directives.ToArray());
-            Assert.Contains(DefinitionDirective.Atomic, implicitDef.Directives.ToArray());
-            Assert.Contains(DefinitionDirective.IgnoreCase, implicitDef.Directives.ToArray());
-            Assert.Contains(DefinitionDirective.MindWhitespace, implicitDef.Directives.ToArray());
+            Assert.That(implicitDef.Directives.Count, Is.EqualTo(4));
+            Assert.That(implicitDef.Directives.ToArray(),
+                Does.Contain(DefinitionDirective.Token));
+            Assert.That(implicitDef.Directives.ToArray(),
+                Does.Contain(DefinitionDirective.Atomic));
+            Assert.That(implicitDef.Directives.ToArray(),
+                Does.Contain(DefinitionDirective.IgnoreCase));
+            Assert.That(implicitDef.Directives.ToArray(),
+                Does.Contain(DefinitionDirective.MindWhitespace));
             Assert.IsTrue(implicitDef.Atomic);
             Assert.IsTrue(implicitDef.IgnoreCase);
             Assert.IsFalse(implicitDef.IsComment);
             Assert.IsTrue(implicitDef.IsTokenized);
             Assert.IsTrue(implicitDef.MindWhitespace);
             Assert.IsNotNull(implicitDef.Expr.Items);
-            Assert.AreEqual(1, implicitDef.Expr.Items.Count);
+            Assert.That(implicitDef.Expr.Items.Count, Is.EqualTo(1));
             Assert.IsNotNull(implicitDef.Expr.Items[0]);
             Assert.IsInstanceOf<LiteralSubExpression>(implicitDef.Expr.Items[0]);
             var literal = (LiteralSubExpression) implicitDef.Expr.Items[0];
-            Assert.AreEqual("value", literal.Value);
-            Assert.AreEqual("",literal.Tag);
+            Assert.That(literal.Value, Is.EqualTo("value"));
+            Assert.That(literal.Tag, Is.EqualTo(""));
             Assert.IsFalse(literal.IsSkippable);
             Assert.IsFalse(literal.IsRepeatable);
         }
@@ -243,10 +247,10 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(grammar);
-            Assert.AreEqual(2, grammar.Definitions.Count);
+            Assert.That(grammar.Definitions.Count, Is.EqualTo(2));
 
             Assert.IsNotNull(explicitDef);
-            Assert.AreEqual(0, explicitDef.Directives.Count);
+            Assert.That(explicitDef.Directives.Count, Is.EqualTo(0));
             Assert.IsFalse(explicitDef.Atomic);
             Assert.IsFalse(explicitDef.IgnoreCase);
             Assert.IsFalse(explicitDef.IsComment);
@@ -254,7 +258,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsFalse(explicitDef.MindWhitespace);
 
             Assert.IsNotNull(implicitDef);
-            Assert.AreEqual(4, implicitDef.Directives.Count);
+            Assert.That(implicitDef.Directives.Count, Is.EqualTo(4));
             Assert.Contains(DefinitionDirective.Token, implicitDef.Directives.ToArray());
             Assert.Contains(DefinitionDirective.Atomic, implicitDef.Directives.ToArray());
             Assert.Contains(DefinitionDirective.IgnoreCase, implicitDef.Directives.ToArray());
@@ -265,12 +269,12 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsTrue(implicitDef.IsTokenized);
             Assert.IsTrue(implicitDef.MindWhitespace);
             Assert.IsNotNull(implicitDef.Expr.Items);
-            Assert.AreEqual(1, implicitDef.Expr.Items.Count);
+            Assert.That(implicitDef.Expr.Items.Count, Is.EqualTo(1));
             Assert.IsNotNull(implicitDef.Expr.Items[0]);
             Assert.IsInstanceOf<CharClassSubExpression>(implicitDef.Expr.Items[0]);
             var cc = (CharClassSubExpression) implicitDef.Expr.Items[0];
-            Assert.AreEqual("\\d", cc.CharClass.ToUndelimitedString());
-            Assert.AreEqual("",cc.Tag);
+            Assert.That(cc.CharClass.ToUndelimitedString(), Is.EqualTo("\\d"));
+            Assert.That(cc.Tag, Is.EqualTo(""));
             Assert.IsFalse(cc.IsSkippable);
             Assert.IsFalse(cc.IsRepeatable);
         }
@@ -306,21 +310,21 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(grammar);
-            Assert.AreEqual(2, grammar.Definitions.Count);
+            Assert.That(grammar.Definitions.Count, Is.EqualTo(2));
 
             Assert.IsNotNull(def);
-            Assert.AreEqual(0, def.Directives.Count);
+            Assert.That(def.Directives.Count, Is.EqualTo(0));
             Assert.IsFalse(def.Atomic);
             Assert.IsFalse(def.IgnoreCase);
             Assert.IsFalse(def.IsComment);
             Assert.IsFalse(def.IsTokenized);
             Assert.IsFalse(def.MindWhitespace);
             Assert.IsNotNull(def.Expr.Items);
-            Assert.AreEqual(1, def.Expr.Items.Count);
+            Assert.That(def.Expr.Items.Count, Is.EqualTo(1));
             Assert.IsNotNull(def.Expr.Items[0]);
             Assert.IsInstanceOf<DefRefSubExpression>(def.Expr.Items[0]);
             var defref = (DefRefSubExpression) def.Expr.Items[0];
-            Assert.AreEqual("token", defref.DefinitionName);
+            Assert.That(defref.DefinitionName, Is.EqualTo("token"));
         }
 
         [Test]
@@ -348,10 +352,10 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(grammar);
-            Assert.AreEqual(1, grammar.Definitions.Count);
+            Assert.That(grammar.Definitions.Count, Is.EqualTo(1));
 
             Assert.IsNotNull(def);
-            Assert.AreEqual(3, def.Directives.Count);
+            Assert.That(def.Directives.Count, Is.EqualTo(3));
             Assert.Contains(DefinitionDirective.Token, def.Directives.ToArray());
             Assert.Contains(DefinitionDirective.Atomic, def.Directives.ToArray());
             Assert.Contains(DefinitionDirective.MindWhitespace, def.Directives.ToArray());
@@ -361,12 +365,12 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsTrue(def.IsTokenized);
             Assert.IsTrue(def.MindWhitespace);
             Assert.IsNotNull(def.Expr.Items);
-            Assert.AreEqual(1, def.Expr.Items.Count);
+            Assert.That(def.Expr.Items.Count, Is.EqualTo(1));
             Assert.IsNotNull(def.Expr.Items[0]);
             Assert.IsInstanceOf<LiteralSubExpression>(def.Expr.Items[0]);
             var literal = (LiteralSubExpression) def.Expr.Items[0];
-            Assert.AreEqual("value", literal.Value);
-            Assert.AreEqual("",literal.Tag);
+            Assert.That(literal.Value, Is.EqualTo("value"));
+            Assert.That(literal.Tag, Is.EqualTo(""));
             Assert.IsFalse(literal.IsSkippable);
             Assert.IsFalse(literal.IsRepeatable);
         }
@@ -398,10 +402,10 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(grammar);
-            Assert.AreEqual(1, grammar.Definitions.Count);
+            Assert.That(grammar.Definitions.Count, Is.EqualTo(1));
 
             Assert.IsNotNull(def);
-            Assert.AreEqual(2, def.Directives.Count);
+            Assert.That(def.Directives.Count, Is.EqualTo(2));
             Assert.Contains(DefinitionDirective.Subtoken, def.Directives.ToArray());
             Assert.Contains(DefinitionDirective.MindWhitespace, def.Directives.ToArray());
             Assert.IsFalse(def.Atomic);
@@ -410,12 +414,12 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsTrue(def.IsTokenized);
             Assert.IsTrue(def.MindWhitespace);
             Assert.IsNotNull(def.Expr.Items);
-            Assert.AreEqual(1, def.Expr.Items.Count);
+            Assert.That(def.Expr.Items.Count, Is.EqualTo(1));
             Assert.IsNotNull(def.Expr.Items[0]);
             Assert.IsInstanceOf<LiteralSubExpression>(def.Expr.Items[0]);
             var literal = (LiteralSubExpression) def.Expr.Items[0];
-            Assert.AreEqual("value", literal.Value);
-            Assert.AreEqual("",literal.Tag);
+            Assert.That(literal.Value, Is.EqualTo("value"));
+            Assert.That(literal.Tag, Is.EqualTo(""));
             Assert.IsFalse(literal.IsSkippable);
             Assert.IsFalse(literal.IsRepeatable);
         }
@@ -446,10 +450,10 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(grammar);
-            Assert.AreEqual(1, grammar.Definitions.Count);
+            Assert.That(grammar.Definitions.Count, Is.EqualTo(1));
 
             Assert.IsNotNull(def);
-            Assert.AreEqual(3, def.Directives.Count);
+            Assert.That(def.Directives.Count, Is.EqualTo(3));
             Assert.Contains(DefinitionDirective.Comment, def.Directives.ToArray());
             Assert.Contains(DefinitionDirective.Atomic, def.Directives.ToArray());
             Assert.Contains(DefinitionDirective.MindWhitespace, def.Directives.ToArray());
@@ -459,12 +463,12 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsTrue(def.IsTokenized);
             Assert.IsTrue(def.MindWhitespace);
             Assert.IsNotNull(def.Expr.Items);
-            Assert.AreEqual(1, def.Expr.Items.Count);
+            Assert.That(def.Expr.Items.Count, Is.EqualTo(1));
             Assert.IsNotNull(def.Expr.Items[0]);
             Assert.IsInstanceOf<LiteralSubExpression>(def.Expr.Items[0]);
             var literal = (LiteralSubExpression) def.Expr.Items[0];
-            Assert.AreEqual("value", literal.Value);
-            Assert.AreEqual("",literal.Tag);
+            Assert.That(literal.Value, Is.EqualTo("value"));
+            Assert.That(literal.Tag, Is.EqualTo(""));
             Assert.IsFalse(literal.IsSkippable);
             Assert.IsFalse(literal.IsRepeatable);
         }
@@ -503,22 +507,22 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(grammar);
-            Assert.AreEqual(2, grammar.Definitions.Count);
+            Assert.That(grammar.Definitions.Count, Is.EqualTo(2));
 
             Assert.IsNotNull(def);
-            Assert.AreEqual(0, def.Directives.Count);
+            Assert.That(def.Directives.Count, Is.EqualTo(0));
             Assert.IsFalse(def.Atomic);
             Assert.IsFalse(def.IgnoreCase);
             Assert.IsFalse(def.IsComment);
             Assert.IsFalse(def.IsTokenized);
             Assert.IsFalse(def.MindWhitespace);
             Assert.IsNotNull(def.Expr.Items);
-            Assert.AreEqual(1, def.Expr.Items.Count);
+            Assert.That(def.Expr.Items.Count, Is.EqualTo(1));
             Assert.IsNotNull(def.Expr.Items[0]);
             Assert.IsInstanceOf<DefRefSubExpression>(def.Expr.Items[0]);
             var defref = (DefRefSubExpression) def.Expr.Items[0];
-            Assert.AreEqual("token", defref.DefinitionName);
-            Assert.AreEqual("",defref.Tag);
+            Assert.That(defref.DefinitionName, Is.EqualTo("token"));
+            Assert.That(defref.Tag, Is.EqualTo(""));
             Assert.IsFalse(defref.IsSkippable);
             Assert.IsFalse(defref.IsRepeatable);
         }
@@ -551,10 +555,10 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(grammar);
-            Assert.AreEqual(1, grammar.Definitions.Count);
+            Assert.That(grammar.Definitions.Count, Is.EqualTo(1));
 
             Assert.IsNotNull(def);
-            Assert.AreEqual(3, def.Directives.Count);
+            Assert.That(def.Directives.Count, Is.EqualTo(3));
             Assert.Contains(DefinitionDirective.Token, def.Directives.ToArray());
             Assert.Contains(DefinitionDirective.Atomic, def.Directives.ToArray());
             Assert.Contains(DefinitionDirective.MindWhitespace, def.Directives.ToArray());
@@ -564,12 +568,12 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsTrue(def.IsTokenized);
             Assert.IsTrue(def.MindWhitespace);
             Assert.IsNotNull(def.Expr.Items);
-            Assert.AreEqual(1, def.Expr.Items.Count);
+            Assert.That(def.Expr.Items.Count, Is.EqualTo(1));
             Assert.IsNotNull(def.Expr.Items[0]);
             Assert.IsInstanceOf<LiteralSubExpression>(def.Expr.Items[0]);
             var literal = (LiteralSubExpression) def.Expr.Items[0];
-            Assert.AreEqual("value", literal.Value);
-            Assert.AreEqual("",literal.Tag);
+            Assert.That(literal.Value, Is.EqualTo("value"));
+            Assert.That(literal.Tag, Is.EqualTo(""));
             Assert.IsFalse(literal.IsSkippable);
             Assert.IsFalse(literal.IsRepeatable);
         }
@@ -602,10 +606,10 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(grammar);
-            Assert.AreEqual(1, grammar.Definitions.Count);
+            Assert.That(grammar.Definitions.Count, Is.EqualTo(1));
 
             Assert.IsNotNull(def);
-            Assert.AreEqual(3, def.Directives.Count);
+            Assert.That(def.Directives.Count, Is.EqualTo(3));
             Assert.Contains(DefinitionDirective.Subtoken, def.Directives.ToArray());
             Assert.Contains(DefinitionDirective.Atomic, def.Directives.ToArray());
             Assert.Contains(DefinitionDirective.MindWhitespace, def.Directives.ToArray());
@@ -615,12 +619,12 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsTrue(def.IsTokenized);
             Assert.IsTrue(def.MindWhitespace);
             Assert.IsNotNull(def.Expr.Items);
-            Assert.AreEqual(1, def.Expr.Items.Count);
+            Assert.That(def.Expr.Items.Count, Is.EqualTo(1));
             Assert.IsNotNull(def.Expr.Items[0]);
             Assert.IsInstanceOf<LiteralSubExpression>(def.Expr.Items[0]);
             var literal = (LiteralSubExpression) def.Expr.Items[0];
-            Assert.AreEqual("value", literal.Value);
-            Assert.AreEqual("",literal.Tag);
+            Assert.That(literal.Value, Is.EqualTo("value"));
+            Assert.That(literal.Tag, Is.EqualTo(""));
             Assert.IsFalse(literal.IsSkippable);
             Assert.IsFalse(literal.IsRepeatable);
         }
@@ -653,10 +657,10 @@ namespace MetaphysicsIndustries.Giza.Test
 
             // assertions
             Assert.IsNotNull(grammar);
-            Assert.AreEqual(1, grammar.Definitions.Count);
+            Assert.That(grammar.Definitions.Count, Is.EqualTo(1));
 
             Assert.IsNotNull(def);
-            Assert.AreEqual(3, def.Directives.Count);
+            Assert.That(def.Directives.Count, Is.EqualTo(3));
             Assert.Contains(DefinitionDirective.Comment, def.Directives.ToArray());
             Assert.Contains(DefinitionDirective.Atomic, def.Directives.ToArray());
             Assert.Contains(DefinitionDirective.MindWhitespace, def.Directives.ToArray());
@@ -666,12 +670,12 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsTrue(def.IsTokenized);
             Assert.IsTrue(def.MindWhitespace);
             Assert.IsNotNull(def.Expr.Items);
-            Assert.AreEqual(1, def.Expr.Items.Count);
+            Assert.That(def.Expr.Items.Count, Is.EqualTo(1));
             Assert.IsNotNull(def.Expr.Items[0]);
             Assert.IsInstanceOf<LiteralSubExpression>(def.Expr.Items[0]);
             var literal = (LiteralSubExpression) def.Expr.Items[0];
-            Assert.AreEqual("value", literal.Value);
-            Assert.AreEqual("",literal.Tag);
+            Assert.That(literal.Value, Is.EqualTo("value"));
+            Assert.That(literal.Tag, Is.EqualTo(""));
             Assert.IsFalse(literal.IsSkippable);
             Assert.IsFalse(literal.IsRepeatable);
         }
@@ -695,11 +699,11 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = tt.Tokenize(g);
             // then
             Assert.IsNotNull(result);
-            Assert.AreEqual(2, result.Definitions.Count);
+            Assert.That(result.Definitions.Count, Is.EqualTo(2));
             var explicitDef = result.FindDefinitionByName("def");
             Assert.IsNotNull(explicitDef);
             Assert.IsTrue(explicitDef.IsImported); // still marked as imported
-            Assert.AreNotSame(explicitDef,g.Definitions[0]);
+            Assert.That(g.Definitions[0], Is.Not.SameAs(explicitDef));
             var implicitDef =
                 result.FindDefinitionByName("$implicit literal value");
             Assert.IsNotNull(implicitDef);
@@ -727,19 +731,19 @@ namespace MetaphysicsIndustries.Giza.Test
             var result = tt.Tokenize(g);
             // then
             Assert.IsNotNull(result);
-            Assert.AreEqual(2, result.Definitions.Count);
-            Assert.AreEqual("src1", result.Source);
+            Assert.That(result.Definitions.Count, Is.EqualTo(2));
+            Assert.That(result.Source, Is.EqualTo("src1"));
 
             var explicitDef = result.FindDefinitionByName("def");
             Assert.IsNotNull(explicitDef);
-            Assert.AreEqual("src1", explicitDef.Source); //
-            Assert.AreNotSame(explicitDef,g.Definitions[0]);
+            Assert.That(explicitDef.Source, Is.EqualTo("src1")); //
+            Assert.That(g.Definitions[0], Is.Not.SameAs(explicitDef));
 
             var implicitDef =
                 result.FindDefinitionByName("$implicit literal value");
             Assert.IsNotNull(implicitDef);
 
-            Assert.AreEqual("src1", implicitDef.Source);
+            Assert.That(implicitDef.Source, Is.EqualTo("src1"));
             // should it be, though?
         }
     }

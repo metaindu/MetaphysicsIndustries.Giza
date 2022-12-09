@@ -72,7 +72,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var a2 = Path.Combine(a1, toPath);
             var a3 = Path.GetFullPath(a2);
             // then
-            Assert.AreEqual("/path/to/another/file2.giza", a3);
+            Assert.That(a3, Is.EqualTo("/path/to/another/file2.giza"));
         }
     }
 }

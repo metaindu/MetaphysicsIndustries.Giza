@@ -35,259 +35,265 @@ namespace MetaphysicsIndustries.Giza.Test
             //column 1234567 8 912345 61
             var cs = new CharacterSource(s);
 
-            Assert.AreEqual(0, cs.CurrentPosition.Index);
-            Assert.AreEqual(1, cs.CurrentPosition.Line);
-            Assert.AreEqual(1, cs.CurrentPosition.Column);
+            Assert.That(cs.CurrentPosition.Index, Is.EqualTo(0));
+            Assert.That(cs.CurrentPosition.Line, Is.EqualTo(1));
+            Assert.That(cs.CurrentPosition.Column, Is.EqualTo(1));
             var ies = cs.Peek();
             Assert.IsFalse(ies.EndOfInput);
             Assert.IsNotNull(ies.Errors);
             Assert.IsEmpty(ies.Errors);
             Assert.IsNotNull(ies.InputElements);
-            Assert.AreEqual(1, ies.InputElements.Count());
-            Assert.AreEqual(cs.CurrentPosition, ies.InputElements.First().Position);
-            Assert.AreEqual('O', ies.InputElements.First().Value);
+            Assert.That(ies.InputElements.Count(), Is.EqualTo(1));
+            Assert.That(ies.InputElements.First().Position,
+                Is.EqualTo(cs.CurrentPosition));
+            Assert.That(ies.InputElements.First().Value, Is.EqualTo('O'));
 
             ies = cs.GetNextValue();
             Assert.IsFalse(ies.EndOfInput);
             Assert.IsNotNull(ies.Errors);
             Assert.IsEmpty(ies.Errors);
             Assert.IsNotNull(ies.InputElements);
-            Assert.AreEqual(1, ies.InputElements.Count());
+            Assert.That(ies.InputElements.Count(), Is.EqualTo(1));
             var ch = ies.InputElements.First();
 
-            Assert.AreEqual(0, ch.Position.Index);
-            Assert.AreEqual(1, ch.Position.Line);
-            Assert.AreEqual(1, ch.Position.Column);
-            Assert.AreEqual('O', ch.Value);
+            Assert.That(ch.Position.Index, Is.EqualTo(0));
+            Assert.That(ch.Position.Line, Is.EqualTo(1));
+            Assert.That(ch.Position.Column, Is.EqualTo(1));
+            Assert.That(ch.Value, Is.EqualTo('O'));
 
-            Assert.AreEqual(1, cs.CurrentPosition.Index);
-            Assert.AreEqual(1, cs.CurrentPosition.Line);
-            Assert.AreEqual(2, cs.CurrentPosition.Column);
+            Assert.That(cs.CurrentPosition.Index, Is.EqualTo(1));
+            Assert.That(cs.CurrentPosition.Line, Is.EqualTo(1));
+            Assert.That(cs.CurrentPosition.Column, Is.EqualTo(2));
             ies = cs.Peek();
             Assert.IsFalse(ies.EndOfInput);
             Assert.IsNotNull(ies.Errors);
             Assert.IsEmpty(ies.Errors);
             Assert.IsNotNull(ies.InputElements);
-            Assert.AreEqual(1, ies.InputElements.Count());
-            Assert.AreEqual(cs.CurrentPosition, ies.InputElements.First().Position);
-            Assert.AreEqual('n', ies.InputElements.First().Value);
+            Assert.That(ies.InputElements.Count(), Is.EqualTo(1));
+            Assert.That(ies.InputElements.First().Position,
+                Is.EqualTo(cs.CurrentPosition));
+            Assert.That(ies.InputElements.First().Value, Is.EqualTo('n'));
 
             ies = cs.GetNextValue();
             Assert.IsFalse(ies.EndOfInput);
             Assert.IsNotNull(ies.Errors);
             Assert.IsEmpty(ies.Errors);
             Assert.IsNotNull(ies.InputElements);
-            Assert.AreEqual(1, ies.InputElements.Count());
+            Assert.That(ies.InputElements.Count(), Is.EqualTo(1));
             ch = ies.InputElements.First();
 
-            Assert.AreEqual(1, ch.Position.Index);
-            Assert.AreEqual(1, ch.Position.Line);
-            Assert.AreEqual(2, ch.Position.Column);
-            Assert.AreEqual('n', ch.Value);
+            Assert.That(ch.Position.Index, Is.EqualTo(1));
+            Assert.That(ch.Position.Line, Is.EqualTo(1));
+            Assert.That(ch.Position.Column, Is.EqualTo(2));
+            Assert.That(ch.Value, Is.EqualTo('n'));
 
             ies = cs.GetNextValue();
             Assert.IsFalse(ies.EndOfInput);
             Assert.IsNotNull(ies.Errors);
             Assert.IsEmpty(ies.Errors);
             Assert.IsNotNull(ies.InputElements);
-            Assert.AreEqual(1, ies.InputElements.Count());
+            Assert.That(ies.InputElements.Count(), Is.EqualTo(1));
             ch = ies.InputElements.First();
 
-            Assert.AreEqual(2, ch.Position.Index);
-            Assert.AreEqual(1, ch.Position.Line);
-            Assert.AreEqual(3, ch.Position.Column);
-            Assert.AreEqual('e', ch.Value);
+            Assert.That(ch.Position.Index, Is.EqualTo(2));
+            Assert.That(ch.Position.Line, Is.EqualTo(1));
+            Assert.That(ch.Position.Column, Is.EqualTo(3));
+            Assert.That(ch.Value, Is.EqualTo('e'));
 
             ies = cs.GetNextValue();
             Assert.IsFalse(ies.EndOfInput);
             Assert.IsNotNull(ies.Errors);
             Assert.IsEmpty(ies.Errors);
             Assert.IsNotNull(ies.InputElements);
-            Assert.AreEqual(1, ies.InputElements.Count());
+            Assert.That(ies.InputElements.Count(), Is.EqualTo(1));
             ch = ies.InputElements.First();
 
-            Assert.AreEqual(3, ch.Position.Index);
-            Assert.AreEqual(1, ch.Position.Line);
-            Assert.AreEqual(4, ch.Position.Column);
-            Assert.AreEqual(' ', ch.Value);
+            Assert.That(ch.Position.Index, Is.EqualTo(3));
+            Assert.That(ch.Position.Line, Is.EqualTo(1));
+            Assert.That(ch.Position.Column, Is.EqualTo(4));
+            Assert.That(ch.Value, Is.EqualTo(' '));
 
             ies = cs.GetNextValue();
             Assert.IsFalse(ies.EndOfInput);
             Assert.IsNotNull(ies.Errors);
             Assert.IsEmpty(ies.Errors);
             Assert.IsNotNull(ies.InputElements);
-            Assert.AreEqual(1, ies.InputElements.Count());
+            Assert.That(ies.InputElements.Count(), Is.EqualTo(1));
             ch = ies.InputElements.First();
 
-            Assert.AreEqual(4, ch.Position.Index);
-            Assert.AreEqual(1, ch.Position.Line);
-            Assert.AreEqual(5, ch.Position.Column);
-            Assert.AreEqual('t', ch.Value);
+            Assert.That(ch.Position.Index, Is.EqualTo(4));
+            Assert.That(ch.Position.Line, Is.EqualTo(1));
+            Assert.That(ch.Position.Column, Is.EqualTo(5));
+            Assert.That(ch.Value, Is.EqualTo('t'));
 
             ies = cs.GetNextValue();
             Assert.IsFalse(ies.EndOfInput);
             Assert.IsNotNull(ies.Errors);
             Assert.IsEmpty(ies.Errors);
             Assert.IsNotNull(ies.InputElements);
-            Assert.AreEqual(1, ies.InputElements.Count());
+            Assert.That(ies.InputElements.Count(), Is.EqualTo(1));
             ch = ies.InputElements.First();
 
-            Assert.AreEqual(5, ch.Position.Index);
-            Assert.AreEqual(1, ch.Position.Line);
-            Assert.AreEqual(6, ch.Position.Column);
-            Assert.AreEqual('w', ch.Value);
+            Assert.That(ch.Position.Index, Is.EqualTo(5));
+            Assert.That(ch.Position.Line, Is.EqualTo(1));
+            Assert.That(ch.Position.Column, Is.EqualTo(6));
+            Assert.That(ch.Value, Is.EqualTo('w'));
 
             ies = cs.GetNextValue();
             Assert.IsFalse(ies.EndOfInput);
             Assert.IsNotNull(ies.Errors);
             Assert.IsEmpty(ies.Errors);
             Assert.IsNotNull(ies.InputElements);
-            Assert.AreEqual(1, ies.InputElements.Count());
+            Assert.That(ies.InputElements.Count(), Is.EqualTo(1));
             ch = ies.InputElements.First();
 
-            Assert.AreEqual(6, ch.Position.Index);
-            Assert.AreEqual(1, ch.Position.Line);
-            Assert.AreEqual(7, ch.Position.Column);
-            Assert.AreEqual('o', ch.Value);
+            Assert.That(ch.Position.Index, Is.EqualTo(6));
+            Assert.That(ch.Position.Line, Is.EqualTo(1));
+            Assert.That(ch.Position.Column, Is.EqualTo(7));
+            Assert.That(ch.Value, Is.EqualTo('o'));
 
             ies = cs.GetNextValue();
             Assert.IsFalse(ies.EndOfInput);
             Assert.IsNotNull(ies.Errors);
             Assert.IsEmpty(ies.Errors);
             Assert.IsNotNull(ies.InputElements);
-            Assert.AreEqual(1, ies.InputElements.Count());
+            Assert.That(ies.InputElements.Count(), Is.EqualTo(1));
             ch = ies.InputElements.First();
 
-            Assert.AreEqual(7, ch.Position.Index);
-            Assert.AreEqual(1, ch.Position.Line);
-            Assert.AreEqual(8, ch.Position.Column);
-            Assert.AreEqual('\r', ch.Value);
+            Assert.That(ch.Position.Index, Is.EqualTo(7));
+            Assert.That(ch.Position.Line, Is.EqualTo(1));
+            Assert.That(ch.Position.Column, Is.EqualTo(8));
+            Assert.That(ch.Value, Is.EqualTo('\r'));
 
-            Assert.AreEqual(8, cs.CurrentPosition.Index);
-            Assert.AreEqual(1, cs.CurrentPosition.Line);
-            Assert.AreEqual(9, cs.CurrentPosition.Column);
+            Assert.That(cs.CurrentPosition.Index, Is.EqualTo(8));
+            Assert.That(cs.CurrentPosition.Line, Is.EqualTo(1));
+            Assert.That(cs.CurrentPosition.Column, Is.EqualTo(9));
             ies = cs.Peek();
             Assert.IsFalse(ies.EndOfInput);
             Assert.IsNotNull(ies.Errors);
             Assert.IsEmpty(ies.Errors);
             Assert.IsNotNull(ies.InputElements);
-            Assert.AreEqual(1, ies.InputElements.Count());
-            Assert.AreEqual(cs.CurrentPosition, ies.InputElements.First().Position);
-            Assert.AreEqual('\n', ies.InputElements.First().Value);
+            Assert.That(ies.InputElements.Count(), Is.EqualTo(1));
+            Assert.That(ies.InputElements.First().Position,
+                Is.EqualTo(cs.CurrentPosition));
+            Assert.That(ies.InputElements.First().Value, Is.EqualTo('\n'));
 
             ies = cs.GetNextValue();
             Assert.IsFalse(ies.EndOfInput);
             Assert.IsNotNull(ies.Errors);
             Assert.IsEmpty(ies.Errors);
             Assert.IsNotNull(ies.InputElements);
-            Assert.AreEqual(1, ies.InputElements.Count());
+            Assert.That(ies.InputElements.Count(), Is.EqualTo(1));
             ch = ies.InputElements.First();
 
-            Assert.AreEqual(8, ch.Position.Index);
-            Assert.AreEqual(1, ch.Position.Line);
-            Assert.AreEqual(9, ch.Position.Column);
-            Assert.AreEqual('\n', ch.Value);
+            Assert.That(ch.Position.Index, Is.EqualTo(8));
+            Assert.That(ch.Position.Line, Is.EqualTo(1));
+            Assert.That(ch.Position.Column, Is.EqualTo(9));
+            Assert.That(ch.Value, Is.EqualTo('\n'));
 
-            Assert.AreEqual(9, cs.CurrentPosition.Index);
-            Assert.AreEqual(2, cs.CurrentPosition.Line);
-            Assert.AreEqual(1, cs.CurrentPosition.Column);
+            Assert.That(cs.CurrentPosition.Index, Is.EqualTo(9));
+            Assert.That(cs.CurrentPosition.Line, Is.EqualTo(2));
+            Assert.That(cs.CurrentPosition.Column, Is.EqualTo(1));
             ies = cs.Peek();
             Assert.IsFalse(ies.EndOfInput);
             Assert.IsNotNull(ies.Errors);
             Assert.IsEmpty(ies.Errors);
             Assert.IsNotNull(ies.InputElements);
-            Assert.AreEqual(1, ies.InputElements.Count());
-            Assert.AreEqual(cs.CurrentPosition, ies.InputElements.First().Position);
-            Assert.AreEqual('t', ies.InputElements.First().Value);
+            Assert.That(ies.InputElements.Count(), Is.EqualTo(1));
+            Assert.That(ies.InputElements.First().Position,
+                Is.EqualTo(cs.CurrentPosition));
+            Assert.That(ies.InputElements.First().Value, Is.EqualTo('t'));
 
             ies = cs.GetNextValue();
             Assert.IsFalse(ies.EndOfInput);
             Assert.IsNotNull(ies.Errors);
             Assert.IsEmpty(ies.Errors);
             Assert.IsNotNull(ies.InputElements);
-            Assert.AreEqual(1, ies.InputElements.Count());
+            Assert.That(ies.InputElements.Count(), Is.EqualTo(1));
             ch = ies.InputElements.First();
 
-            Assert.AreEqual(9, ch.Position.Index);
-            Assert.AreEqual(2, ch.Position.Line);
-            Assert.AreEqual(1, ch.Position.Column);
-            Assert.AreEqual('t', ch.Value);
+            Assert.That(ch.Position.Index, Is.EqualTo(9));
+            Assert.That(ch.Position.Line, Is.EqualTo(2));
+            Assert.That(ch.Position.Column, Is.EqualTo(1));
+            Assert.That(ch.Value, Is.EqualTo('t'));
 
             ies = cs.GetNextValue();
             Assert.IsFalse(ies.EndOfInput);
             Assert.IsNotNull(ies.Errors);
             Assert.IsEmpty(ies.Errors);
             Assert.IsNotNull(ies.InputElements);
-            Assert.AreEqual(1, ies.InputElements.Count());
+            Assert.That(ies.InputElements.Count(), Is.EqualTo(1));
             ch = ies.InputElements.First();
 
-            Assert.AreEqual(10, ch.Position.Index);
-            Assert.AreEqual(2, ch.Position.Line);
-            Assert.AreEqual(2, ch.Position.Column);
-            Assert.AreEqual('h', ch.Value);
+            Assert.That(ch.Position.Index, Is.EqualTo(10));
+            Assert.That(ch.Position.Line, Is.EqualTo(2));
+            Assert.That(ch.Position.Column, Is.EqualTo(2));
+            Assert.That(ch.Value, Is.EqualTo('h'));
 
             ies = cs.GetNextValue();
             Assert.IsFalse(ies.EndOfInput);
             Assert.IsNotNull(ies.Errors);
             Assert.IsEmpty(ies.Errors);
             Assert.IsNotNull(ies.InputElements);
-            Assert.AreEqual(1, ies.InputElements.Count());
+            Assert.That(ies.InputElements.Count(), Is.EqualTo(1));
             ch = ies.InputElements.First();
 
-            Assert.AreEqual(11, ch.Position.Index);
-            Assert.AreEqual(2, ch.Position.Line);
-            Assert.AreEqual(3, ch.Position.Column);
-            Assert.AreEqual('r', ch.Value);
+            Assert.That(ch.Position.Index, Is.EqualTo(11));
+            Assert.That(ch.Position.Line, Is.EqualTo(2));
+            Assert.That(ch.Position.Column, Is.EqualTo(3));
+            Assert.That(ch.Value, Is.EqualTo('r'));
 
             ies = cs.GetNextValue();
             Assert.IsFalse(ies.EndOfInput);
             Assert.IsNotNull(ies.Errors);
             Assert.IsEmpty(ies.Errors);
             Assert.IsNotNull(ies.InputElements);
-            Assert.AreEqual(1, ies.InputElements.Count());
+            Assert.That(ies.InputElements.Count(), Is.EqualTo(1));
             ch = ies.InputElements.First();
 
-            Assert.AreEqual(12, ch.Position.Index);
-            Assert.AreEqual(2, ch.Position.Line);
-            Assert.AreEqual(4, ch.Position.Column);
-            Assert.AreEqual('e', ch.Value);
+            Assert.That(ch.Position.Index, Is.EqualTo(12));
+            Assert.That(ch.Position.Line, Is.EqualTo(2));
+            Assert.That(ch.Position.Column, Is.EqualTo(4));
+            Assert.That(ch.Value, Is.EqualTo('e'));
 
-            Assert.AreEqual(13, cs.CurrentPosition.Index);
-            Assert.AreEqual(2, cs.CurrentPosition.Line);
-            Assert.AreEqual(5, cs.CurrentPosition.Column);
+            Assert.That(cs.CurrentPosition.Index, Is.EqualTo(13));
+            Assert.That(cs.CurrentPosition.Line, Is.EqualTo(2));
+            Assert.That(cs.CurrentPosition.Column, Is.EqualTo(5));
             ies = cs.Peek();
             Assert.IsFalse(ies.EndOfInput);
             Assert.IsNotNull(ies.Errors);
             Assert.IsEmpty(ies.Errors);
             Assert.IsNotNull(ies.InputElements);
-            Assert.AreEqual(1, ies.InputElements.Count());
-            Assert.AreEqual(cs.CurrentPosition, ies.InputElements.First().Position);
-            Assert.AreEqual('e', ies.InputElements.First().Value);
+            Assert.That(ies.InputElements.Count(), Is.EqualTo(1));
+            Assert.That(ies.InputElements.First().Position,
+                Is.EqualTo(cs.CurrentPosition));
+            Assert.That(ies.InputElements.First().Value, Is.EqualTo('e'));
 
             ies = cs.GetNextValue();
             Assert.IsFalse(ies.EndOfInput);
             Assert.IsNotNull(ies.Errors);
             Assert.IsEmpty(ies.Errors);
             Assert.IsNotNull(ies.InputElements);
-            Assert.AreEqual(1, ies.InputElements.Count());
+            Assert.That(ies.InputElements.Count(), Is.EqualTo(1));
             ch = ies.InputElements.First();
 
-            Assert.AreEqual(13, ch.Position.Index);
-            Assert.AreEqual(2, ch.Position.Line);
-            Assert.AreEqual(5, ch.Position.Column);
-            Assert.AreEqual('e', ch.Value);
+            Assert.That(ch.Position.Index, Is.EqualTo(13));
+            Assert.That(ch.Position.Line, Is.EqualTo(2));
+            Assert.That(ch.Position.Column, Is.EqualTo(5));
+            Assert.That(ch.Value, Is.EqualTo('e'));
 
-            Assert.AreEqual(14, cs.CurrentPosition.Index);
-            Assert.AreEqual(2, cs.CurrentPosition.Line);
-            Assert.AreEqual(6, cs.CurrentPosition.Column);
+            Assert.That(cs.CurrentPosition.Index, Is.EqualTo(14));
+            Assert.That(cs.CurrentPosition.Line, Is.EqualTo(2));
+            Assert.That(cs.CurrentPosition.Column, Is.EqualTo(6));
             ies = cs.Peek();
             Assert.IsFalse(ies.EndOfInput);
             Assert.IsNotNull(ies.Errors);
             Assert.IsEmpty(ies.Errors);
             Assert.IsNotNull(ies.InputElements);
-            Assert.AreEqual(1, ies.InputElements.Count());
-            Assert.AreEqual(cs.CurrentPosition, ies.InputElements.First().Position);
-            Assert.AreEqual('\n', ies.InputElements.First().Value);
+            Assert.That(ies.InputElements.Count(), Is.EqualTo(1));
+            Assert.That(ies.InputElements.First().Position,
+                Is.EqualTo(cs.CurrentPosition));
+            Assert.That(ies.InputElements.First().Value, Is.EqualTo('\n'));
 
             Assert.IsFalse(cs.IsAtEnd);
 
@@ -296,17 +302,17 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsNotNull(ies.Errors);
             Assert.IsEmpty(ies.Errors);
             Assert.IsNotNull(ies.InputElements);
-            Assert.AreEqual(1, ies.InputElements.Count());
+            Assert.That(ies.InputElements.Count(), Is.EqualTo(1));
             ch = ies.InputElements.First();
 
-            Assert.AreEqual(14, ch.Position.Index);
-            Assert.AreEqual(2, ch.Position.Line);
-            Assert.AreEqual(6, ch.Position.Column);
-            Assert.AreEqual('\n', ch.Value);
+            Assert.That(ch.Position.Index, Is.EqualTo(14));
+            Assert.That(ch.Position.Line, Is.EqualTo(2));
+            Assert.That(ch.Position.Column, Is.EqualTo(6));
+            Assert.That(ch.Value, Is.EqualTo('\n'));
 
-            Assert.AreEqual(15, cs.CurrentPosition.Index);
-            Assert.AreEqual(3, cs.CurrentPosition.Line);
-            Assert.AreEqual(1, cs.CurrentPosition.Column);
+            Assert.That(cs.CurrentPosition.Index, Is.EqualTo(15));
+            Assert.That(cs.CurrentPosition.Line, Is.EqualTo(3));
+            Assert.That(cs.CurrentPosition.Column, Is.EqualTo(1));
 
             Assert.IsTrue(cs.IsAtEnd);
         }

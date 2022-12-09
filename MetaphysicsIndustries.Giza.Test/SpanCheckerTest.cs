@@ -1,5 +1,4 @@
-﻿
-// MetaphysicsIndustries.Giza - A Parsing System
+﻿// MetaphysicsIndustries.Giza - A Parsing System
 // Copyright (C) 2008-2021 Metaphysics Industries, Inc.
 //
 // This library is free software; you can redistribute it and/or
@@ -59,7 +58,7 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             Assert.IsNotNull(errors);
-            Assert.AreEqual(0, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -92,11 +91,11 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             Assert.IsNotNull(errors);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<SpanError>(errors[0]);
             var e = (SpanError)errors[0];
-            Assert.AreEqual(SpanError.BadStartingNode, e.ErrorType);
-            Assert.AreSame(span.Subspans[0], e.Span);
+            Assert.That(e.ErrorType, Is.EqualTo(SpanError.BadStartingNode));
+            Assert.That(e.Span, Is.SameAs(span.Subspans[0]));
         }
 
         [Test]
@@ -129,11 +128,11 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             Assert.IsNotNull(errors);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<SpanError>(errors[0]);
             var e = (SpanError)errors[0];
-            Assert.AreEqual(SpanError.BadEndingNode, e.ErrorType);
-            Assert.AreSame(span.Subspans[3], e.Span);
+            Assert.That(e.ErrorType, Is.EqualTo(SpanError.BadEndingNode));
+            Assert.That(e.Span, Is.SameAs(span.Subspans[3]));
         }
 
         [Test]
@@ -158,11 +157,11 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             Assert.IsNotNull(errors);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<SpanError>(errors[0]);
             var e = (SpanError)errors[0];
-            Assert.AreEqual(SpanError.BadFollow, e.ErrorType);
-            Assert.AreSame(span.Subspans[1], e.Span);
+            Assert.That(e.ErrorType, Is.EqualTo(SpanError.BadFollow));
+            Assert.That(e.Span, Is.SameAs(span.Subspans[1]));
         }
 
         [Test]
@@ -211,8 +210,9 @@ namespace MetaphysicsIndustries.Giza.Test
                 }
             }
             Assert.IsNotNull(e);
-            Assert.AreEqual(SpanError.NodeInWrongDefinition, e.ErrorType);
-            Assert.AreSame(span.Subspans[2], e.Span);
+            Assert.That(e.ErrorType,
+                Is.EqualTo(SpanError.NodeInWrongDefinition));
+            Assert.That(e.Span, Is.SameAs(span.Subspans[2]));
         }
 
         [Test]
@@ -269,11 +269,12 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             Assert.IsNotNull(errors);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<SpanError>(errors[0]);
             var e = (SpanError)errors[0];
-            Assert.AreEqual(SpanError.NodeInWrongDefinition, e.ErrorType);
-            Assert.AreSame(span.Subspans[1], e.Span);
+            Assert.That(e.ErrorType,
+                Is.EqualTo(SpanError.NodeInWrongDefinition));
+            Assert.That(e.Span, Is.SameAs(span.Subspans[1]));
         }
 
         [Test]
@@ -290,11 +291,11 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             Assert.IsNotNull(errors);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<SpanError>(errors[0]);
             var e = (SpanError)errors[0];
-            Assert.AreEqual(SpanError.SpanHasNoSubspans, e.ErrorType);
-            Assert.AreSame(span, e.Span);
+            Assert.That(e.ErrorType, Is.EqualTo(SpanError.SpanHasNoSubspans));
+            Assert.That(e.Span, Is.SameAs(span));
         }
 
         [Test]
@@ -340,9 +341,9 @@ namespace MetaphysicsIndustries.Giza.Test
                 }
             }
             Assert.IsNotNull(e);
-            Assert.AreEqual(SpanError.CycleInSubspans, e.ErrorType);
-            Assert.AreSame(span, e.Span);
-            Assert.AreSame(span.Subspans[4], e.Span);
+            Assert.That(e.ErrorType, Is.EqualTo(SpanError.CycleInSubspans));
+            Assert.That(e.Span, Is.SameAs(span));
+            Assert.That(e.Span, Is.SameAs(span.Subspans[4]));
         }
 
         [Test]
@@ -384,12 +385,12 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             Assert.IsNotNull(errors);
-            Assert.AreEqual(1, errors.Count);
+            Assert.That(errors.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<SpanError>(errors[0]);
             var e = (SpanError)errors[0];
-            Assert.AreEqual(SpanError.CycleInSubspans, e.ErrorType);
-            Assert.AreSame(span, e.Span);
-            Assert.AreSame(span.Subspans[1], e.Span);
+            Assert.That(e.ErrorType, Is.EqualTo(SpanError.CycleInSubspans));
+            Assert.That(e.Span, Is.SameAs(span));
+            Assert.That(e.Span, Is.SameAs(span.Subspans[1]));
         }
     }
 }

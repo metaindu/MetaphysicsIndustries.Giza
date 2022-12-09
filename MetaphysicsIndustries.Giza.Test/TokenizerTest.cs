@@ -108,21 +108,21 @@ namespace MetaphysicsIndustries.Giza.Test
             // assertions
             Assert.IsEmpty(tinfo.Errors);
             Assert.IsFalse(tinfo.EndOfInput);
-            Assert.AreEqual(1, tinfo.InputElements.Count());
+            Assert.That(tinfo.InputElements.Count(), Is.EqualTo(1));
             var first = tinfo.InputElements.First();
-            Assert.AreEqual(item1Def, first.Definition);
-            Assert.AreEqual(0, first.StartPosition.Index);
-            Assert.AreEqual("item1", first.Value);
+            Assert.That(first.Definition, Is.EqualTo(item1Def));
+            Assert.That(first.StartPosition.Index, Is.EqualTo(0));
+            Assert.That(first.Value, Is.EqualTo("item1"));
 
             tinfo = t.GetInputAtLocation(5);
 
             Assert.IsEmpty(tinfo.Errors);
             Assert.IsFalse(tinfo.EndOfInput);
-            Assert.AreEqual(1, tinfo.InputElements.Count());
+            Assert.That(tinfo.InputElements.Count(), Is.EqualTo(1));
             first = tinfo.InputElements.First();
-            Assert.AreEqual(item2Def, first.Definition);
-            Assert.AreEqual(6, first.StartPosition.Index);
-            Assert.AreEqual("item2", first.Value);
+            Assert.That(first.Definition, Is.EqualTo(item2Def));
+            Assert.That(first.StartPosition.Index, Is.EqualTo(6));
+            Assert.That(first.Value, Is.EqualTo("item2"));
         }
 
         [Test()]
@@ -239,11 +239,11 @@ namespace MetaphysicsIndustries.Giza.Test
             //assertions
             Assert.IsEmpty(errors);
             Assert.IsFalse(tinfo.EndOfInput);
-            Assert.AreEqual(1, tinfo.InputElements.Count());
+            Assert.That(tinfo.InputElements.Count(), Is.EqualTo(1));
             var first = tinfo.InputElements.First();
-            Assert.AreEqual(varrefDef, first.Definition);
-            Assert.AreEqual(0, first.StartPosition.Index);
-            Assert.AreEqual("a", first.Value);
+            Assert.That(first.Definition, Is.EqualTo(varrefDef));
+            Assert.That(first.StartPosition.Index, Is.EqualTo(0));
+            Assert.That(first.Value, Is.EqualTo("a"));
 
             // action
             tinfo = t.GetInputAtLocation(1);
@@ -251,7 +251,7 @@ namespace MetaphysicsIndustries.Giza.Test
             // assertions
             Assert.IsEmpty(errors);
             Assert.IsFalse(tinfo.EndOfInput);
-            Assert.AreEqual(2, tinfo.InputElements.Count());
+            Assert.That(tinfo.InputElements.Count(), Is.EqualTo(2));
             first = tinfo.InputElements.First();
             var second = tinfo.InputElements.ElementAt(1);
             Assert.IsTrue(first.Definition == plusplusDef || first.Definition == operDef);
@@ -271,10 +271,10 @@ namespace MetaphysicsIndustries.Giza.Test
                 operToken = first;
             }
 
-            Assert.AreEqual(1, plusplusToken.StartPosition.Index);
-            Assert.AreEqual("++", plusplusToken.Value);
-            Assert.AreEqual(1, operToken.StartPosition.Index);
-            Assert.AreEqual("+", operToken.Value);
+            Assert.That(plusplusToken.StartPosition.Index, Is.EqualTo(1));
+            Assert.That(plusplusToken.Value, Is.EqualTo("++"));
+            Assert.That(operToken.StartPosition.Index, Is.EqualTo(1));
+            Assert.That(operToken.Value, Is.EqualTo("+"));
         }
 
         [Test()]
@@ -345,11 +345,11 @@ namespace MetaphysicsIndustries.Giza.Test
             // assertions
             Assert.IsEmpty(errors);
             Assert.IsFalse(tinfo.EndOfInput);
-            Assert.AreEqual(1, tinfo.InputElements.Count());
+            Assert.That(tinfo.InputElements.Count(), Is.EqualTo(1));
             var first = tinfo.InputElements.First();
-            Assert.AreEqual(itemDef, first.Definition);
-            Assert.AreEqual(0, first.StartPosition.Index);
-            Assert.AreEqual("a", first.Value);
+            Assert.That(first.Definition, Is.EqualTo(itemDef));
+            Assert.That(first.StartPosition.Index, Is.EqualTo(0));
+            Assert.That(first.Value, Is.EqualTo("a"));
 
             // action
             tinfo = t.GetInputAtLocation(1);
@@ -357,13 +357,13 @@ namespace MetaphysicsIndustries.Giza.Test
             // assertions
             Assert.IsEmpty(errors);
             Assert.IsFalse(tinfo.EndOfInput);
-            Assert.AreEqual(2, tinfo.InputElements.Count());
+            Assert.That(tinfo.InputElements.Count(), Is.EqualTo(2));
             first = tinfo.InputElements.First();
             var second = tinfo.InputElements.ElementAt(1);
-            Assert.AreEqual(2, first.StartPosition.Index);
-            Assert.AreEqual(2, second.StartPosition.Index);
-            Assert.AreEqual(operDef, first.Definition);
-            Assert.AreEqual(operDef, second.Definition);
+            Assert.That(first.StartPosition.Index, Is.EqualTo(2));
+            Assert.That(second.StartPosition.Index, Is.EqualTo(2));
+            Assert.That(first.Definition, Is.EqualTo(operDef));
+            Assert.That(second.Definition, Is.EqualTo(operDef));
             Assert.IsTrue(first.Value == "<" || first.Value == "<<");
             Assert.IsTrue(second.Value == "<" || second.Value == "<<");
             Assert.IsTrue(first.Value != second.Value);
@@ -439,12 +439,12 @@ namespace MetaphysicsIndustries.Giza.Test
             // assertions
             Assert.IsFalse(tinfo.EndOfInput);
             Assert.IsNotNull(tinfo.InputElements);
-            Assert.AreEqual(1, tinfo.InputElements.Count());
+            Assert.That(tinfo.InputElements.Count(), Is.EqualTo(1));
             var first = tinfo.InputElements.First();
-            Assert.AreSame(operandDef, first.Definition);
-            Assert.AreEqual(0, first.StartPosition.Index);
-            Assert.AreEqual("a", first.Value);
-            Assert.AreEqual(-1, tinfo.EndOfInputPosition.Index);
+            Assert.That(first.Definition, Is.SameAs(operandDef));
+            Assert.That(first.StartPosition.Index, Is.EqualTo(0));
+            Assert.That(first.Value, Is.EqualTo("a"));
+            Assert.That(tinfo.EndOfInputPosition.Index, Is.EqualTo(-1));
         }
 
         [Test]
@@ -468,12 +468,12 @@ namespace MetaphysicsIndustries.Giza.Test
             // assertions
             Assert.IsFalse(tinfo.EndOfInput);
             Assert.IsNotNull(tinfo.InputElements);
-            Assert.AreEqual(1, tinfo.InputElements.Count());
+            Assert.That(tinfo.InputElements.Count(), Is.EqualTo(1));
             var first = tinfo.InputElements.First();
-            Assert.AreSame(operatorDef, first.Definition);
-            Assert.AreEqual(2, first.StartPosition.Index);
-            Assert.AreEqual("+", first.Value);
-            Assert.AreEqual(-1, tinfo.EndOfInputPosition.Index);
+            Assert.That(first.Definition, Is.SameAs(operatorDef));
+            Assert.That(first.StartPosition.Index, Is.EqualTo(2));
+            Assert.That(first.Value, Is.EqualTo("+"));
+            Assert.That(tinfo.EndOfInputPosition.Index, Is.EqualTo(-1));
         }
 
         [Test]
@@ -497,12 +497,12 @@ namespace MetaphysicsIndustries.Giza.Test
             // assertions
             Assert.IsFalse(tinfo.EndOfInput);
             Assert.IsNotNull(tinfo.InputElements);
-            Assert.AreEqual(1, tinfo.InputElements.Count());
+            Assert.That(tinfo.InputElements.Count(), Is.EqualTo(1));
             var first = tinfo.InputElements.First();
-            Assert.AreSame(operatorDef, first.Definition);
-            Assert.AreEqual(2, first.StartPosition.Index);
-            Assert.AreEqual("+", first.Value);
-            Assert.AreEqual(-1, tinfo.EndOfInputPosition.Index);
+            Assert.That(first.Definition, Is.SameAs(operatorDef));
+            Assert.That(first.StartPosition.Index, Is.EqualTo(2));
+            Assert.That(first.Value, Is.EqualTo("+"));
+            Assert.That(tinfo.EndOfInputPosition.Index, Is.EqualTo(-1));
         }
 
         [Test]
@@ -526,12 +526,12 @@ namespace MetaphysicsIndustries.Giza.Test
             // assertions
             Assert.IsFalse(tinfo.EndOfInput);
             Assert.IsNotNull(tinfo.InputElements);
-            Assert.AreEqual(1, tinfo.InputElements.Count());
+            Assert.That(tinfo.InputElements.Count(), Is.EqualTo(1));
             var first = tinfo.InputElements.First();
-            Assert.AreSame(operandDef, first.Definition);
-            Assert.AreEqual(4, first.StartPosition.Index);
-            Assert.AreEqual("b", first.Value);
-            Assert.AreEqual(-1, tinfo.EndOfInputPosition.Index);
+            Assert.That(first.Definition, Is.SameAs(operandDef));
+            Assert.That(first.StartPosition.Index, Is.EqualTo(4));
+            Assert.That(first.Value, Is.EqualTo("b"));
+            Assert.That(tinfo.EndOfInputPosition.Index, Is.EqualTo(-1));
         }
 
         [Test]
@@ -555,12 +555,12 @@ namespace MetaphysicsIndustries.Giza.Test
             // assertions
             Assert.IsFalse(tinfo.EndOfInput);
             Assert.IsNotNull(tinfo.InputElements);
-            Assert.AreEqual(1, tinfo.InputElements.Count());
+            Assert.That(tinfo.InputElements.Count(), Is.EqualTo(1));
             var first = tinfo.InputElements.First();
-            Assert.AreSame(operandDef, first.Definition);
-            Assert.AreEqual(4, first.StartPosition.Index);
-            Assert.AreEqual("b", first.Value);
-            Assert.AreEqual(-1, tinfo.EndOfInputPosition.Index);
+            Assert.That(first.Definition, Is.SameAs(operandDef));
+            Assert.That(first.StartPosition.Index, Is.EqualTo(4));
+            Assert.That(first.Value, Is.EqualTo("b"));
+            Assert.That(tinfo.EndOfInputPosition.Index, Is.EqualTo(-1));
         }
 
         [Test]
@@ -582,8 +582,8 @@ namespace MetaphysicsIndustries.Giza.Test
             // assertions
             Assert.IsTrue(tinfo.EndOfInput);
             Assert.IsNotNull(tinfo.InputElements);
-            Assert.AreEqual(0, tinfo.InputElements.Count());
-            Assert.AreEqual(5, tinfo.EndOfInputPosition.Index);
+            Assert.That(tinfo.InputElements.Count(), Is.EqualTo(0));
+            Assert.That(tinfo.EndOfInputPosition.Index, Is.EqualTo(5));
         }
 
         [Test]
@@ -605,7 +605,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsTrue(tinfo.EndOfInput);
             Assert.IsNotNull(tinfo.InputElements);
             Assert.IsEmpty(tinfo.InputElements);
-            Assert.AreEqual(5, tinfo.EndOfInputPosition.Index);
+            Assert.That(tinfo.EndOfInputPosition.Index, Is.EqualTo(5));
         }
 
         [Test]
@@ -627,7 +627,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsTrue(tinfo.EndOfInput);
             Assert.IsNotNull(tinfo.InputElements);
             Assert.IsEmpty(tinfo.InputElements);
-            Assert.AreEqual(6, tinfo.EndOfInputPosition.Index);
+            Assert.That(tinfo.EndOfInputPosition.Index, Is.EqualTo(6));
         }
 
         [Test]
@@ -649,7 +649,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsTrue(tinfo.EndOfInput);
             Assert.IsNotNull(tinfo.InputElements);
             Assert.IsEmpty(tinfo.InputElements);
-            Assert.AreEqual(6, tinfo.EndOfInputPosition.Index);
+            Assert.That(tinfo.EndOfInputPosition.Index, Is.EqualTo(6));
         }
 
         static NGrammar CreateGrammarForTestEndOfInputParameterWithComment()
@@ -704,7 +704,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsTrue(tinfo.EndOfInput);
             Assert.IsNotNull(tinfo.InputElements);
             Assert.IsEmpty(tinfo.InputElements);
-            Assert.AreEqual(16, tinfo.EndOfInputPosition.Index);
+            Assert.That(tinfo.EndOfInputPosition.Index, Is.EqualTo(16));
         }
 
         [Test]
@@ -727,7 +727,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsTrue(tinfo.EndOfInput);
             Assert.IsNotNull(tinfo.InputElements);
             Assert.IsEmpty(tinfo.InputElements);
-            Assert.AreEqual(17, tinfo.EndOfInputPosition.Index);
+            Assert.That(tinfo.EndOfInputPosition.Index, Is.EqualTo(17));
         }
 
         [Test]
@@ -750,7 +750,7 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsTrue(tinfo.EndOfInput);
             Assert.IsNotNull(tinfo.InputElements);
             Assert.IsEmpty(tinfo.InputElements);
-            Assert.AreEqual(17, tinfo.EndOfInputPosition.Index);
+            Assert.That(tinfo.EndOfInputPosition.Index, Is.EqualTo(17));
         }
 
         [Test]
@@ -792,12 +792,12 @@ namespace MetaphysicsIndustries.Giza.Test
             // assertions
             Assert.IsTrue(tinfo.EndOfInput);
             Assert.IsNotNull(tinfo.InputElements);
-            Assert.AreEqual(1, tinfo.InputElements.Count());
+            Assert.That(tinfo.InputElements.Count(), Is.EqualTo(1));
             var first = tinfo.InputElements.First();
-            Assert.AreSame(strangeDef, first.Definition);
-            Assert.AreEqual(5, first.StartPosition.Index);
-            Assert.AreEqual("/*comment", first.Value);
-            Assert.AreEqual(16, tinfo.EndOfInputPosition.Index);
+            Assert.That(first.Definition, Is.SameAs(strangeDef));
+            Assert.That(first.StartPosition.Index, Is.EqualTo(5));
+            Assert.That(first.Value, Is.EqualTo("/*comment"));
+            Assert.That(tinfo.EndOfInputPosition.Index, Is.EqualTo(16));
         }
 
         [Test]
@@ -881,13 +881,13 @@ namespace MetaphysicsIndustries.Giza.Test
 
 
             Assert.IsFalse(tinfo.EndOfInput);
-            Assert.AreEqual(-1, tinfo.EndOfInputPosition.Index);
+            Assert.That(tinfo.EndOfInputPosition.Index, Is.EqualTo(-1));
             Assert.IsNotNull(tinfo.InputElements);
-            Assert.AreEqual(1, tinfo.InputElements.Count());
+            Assert.That(tinfo.InputElements.Count(), Is.EqualTo(1));
             var first = tinfo.InputElements.First();
-            Assert.AreSame(itemDef, first.Definition);
-            Assert.AreEqual(0, first.StartPosition.Index);
-            Assert.AreEqual("start-ABCD-end", first.Value);
+            Assert.That(first.Definition, Is.SameAs(itemDef));
+            Assert.That(first.StartPosition.Index, Is.EqualTo(0));
+            Assert.That(first.Value, Is.EqualTo("start-ABCD-end"));
         }
 
         [Test]
@@ -921,23 +921,26 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsNotNull(ies.Errors);
             Assert.IsEmpty(ies.Errors);
             Assert.IsNotNull(ies.InputElements);
-            Assert.AreEqual(3, ies.InputElements.Count());
+            Assert.That(ies.InputElements.Count(), Is.EqualTo(3));
             Assert.IsTrue(ies.InputElements.Any(x => x.Definition == implicitA));
             Assert.IsTrue(ies.InputElements.Any(x => x.Definition == implicitAb));
             Assert.IsTrue(ies.InputElements.Any(x => x.Definition == implicitAbc));
             token = ies.InputElements.First(x => x.Definition == implicitA);
-            Assert.AreEqual(1, token.IndexOfNextTokenization);
-            Assert.AreEqual(new InputPosition(0, 1, 1), token.StartPosition);
-            Assert.AreEqual("a", token.Value);
+            Assert.That(token.IndexOfNextTokenization, Is.EqualTo(1));
+            Assert.That(token.StartPosition,
+                Is.EqualTo(new InputPosition(0, 1, 1)));
+            Assert.That(token.Value, Is.EqualTo("a"));
             token = ies.InputElements.First(x => x.Definition == implicitAb);
-            Assert.AreEqual(2, token.IndexOfNextTokenization);
-            Assert.AreEqual(new InputPosition(0, 1, 1), token.StartPosition);
-            Assert.AreEqual("ab", token.Value);
+            Assert.That(token.IndexOfNextTokenization, Is.EqualTo(2));
+            Assert.That(token.StartPosition,
+                Is.EqualTo(new InputPosition(0, 1, 1)));
+            Assert.That(token.Value, Is.EqualTo("ab"));
             token = ies.InputElements.First(x => x.Definition == implicitAbc);
-            Assert.AreEqual(3, token.IndexOfNextTokenization);
-            Assert.AreEqual(new InputPosition(0, 1, 1), token.StartPosition);
-            Assert.AreEqual("abc", token.Value);
-            Assert.AreEqual(1, tokenizer.CurrentPosition.Index);
+            Assert.That(token.IndexOfNextTokenization, Is.EqualTo(3));
+            Assert.That(token.StartPosition,
+                Is.EqualTo(new InputPosition(0, 1, 1)));
+            Assert.That(token.Value, Is.EqualTo("abc"));
+            Assert.That(tokenizer.CurrentPosition.Index, Is.EqualTo(1));
             Assert.IsFalse(tokenizer.IsAtEnd);
 
             // action
@@ -948,18 +951,20 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsNotNull(ies.Errors);
             Assert.IsEmpty(ies.Errors);
             Assert.IsNotNull(ies.InputElements);
-            Assert.AreEqual(2, ies.InputElements.Count());
+            Assert.That(ies.InputElements.Count(), Is.EqualTo(2));
             Assert.IsTrue(ies.InputElements.Any(x => x.Definition == implicitBc));
             Assert.IsTrue(ies.InputElements.Any(x => x.Definition == implicitBca));
             token = ies.InputElements.First(x => x.Definition == implicitBc);
-            Assert.AreEqual(3, token.IndexOfNextTokenization);
-            Assert.AreEqual(new InputPosition(1, 1, 2), token.StartPosition);
-            Assert.AreEqual("bc", token.Value);
+            Assert.That(token.IndexOfNextTokenization, Is.EqualTo(3));
+            Assert.That(token.StartPosition,
+                Is.EqualTo(new InputPosition(1, 1, 2)));
+            Assert.That(token.Value, Is.EqualTo("bc"));
             token = ies.InputElements.First(x => x.Definition == implicitBca);
-            Assert.AreEqual(4, token.IndexOfNextTokenization);
-            Assert.AreEqual(new InputPosition(1, 1, 2), token.StartPosition);
-            Assert.AreEqual("bca", token.Value);
-            Assert.AreEqual(2, tokenizer.CurrentPosition.Index);
+            Assert.That(token.IndexOfNextTokenization, Is.EqualTo(4));
+            Assert.That(token.StartPosition,
+                Is.EqualTo(new InputPosition(1, 1, 2)));
+            Assert.That(token.Value, Is.EqualTo("bca"));
+            Assert.That(tokenizer.CurrentPosition.Index, Is.EqualTo(2));
             Assert.IsFalse(tokenizer.IsAtEnd);
 
             // action
@@ -970,18 +975,20 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsNotNull(ies.Errors);
             Assert.IsEmpty(ies.Errors);
             Assert.IsNotNull(ies.InputElements);
-            Assert.AreEqual(2, ies.InputElements.Count());
+            Assert.That(ies.InputElements.Count(), Is.EqualTo(2));
             Assert.IsTrue(ies.InputElements.Any(x => x.Definition == implicitC));
             Assert.IsTrue(ies.InputElements.Any(x => x.Definition == implicitCab));
             token = ies.InputElements.First(x => x.Definition == implicitC);
-            Assert.AreEqual(3, token.IndexOfNextTokenization);
-            Assert.AreEqual(new InputPosition(2, 1, 3), token.StartPosition);
-            Assert.AreEqual("c", token.Value);
+            Assert.That(token.IndexOfNextTokenization, Is.EqualTo(3));
+            Assert.That(token.StartPosition,
+                Is.EqualTo(new InputPosition(2, 1, 3)));
+            Assert.That(token.Value, Is.EqualTo("c"));
             token = ies.InputElements.First(x => x.Definition == implicitCab);
-            Assert.AreEqual(5, token.IndexOfNextTokenization);
-            Assert.AreEqual(new InputPosition(2, 1, 3), token.StartPosition);
-            Assert.AreEqual("cab", token.Value);
-            Assert.AreEqual(3, tokenizer.CurrentPosition.Index);
+            Assert.That(token.IndexOfNextTokenization, Is.EqualTo(5));
+            Assert.That(token.StartPosition,
+                Is.EqualTo(new InputPosition(2, 1, 3)));
+            Assert.That(token.Value, Is.EqualTo("cab"));
+            Assert.That(tokenizer.CurrentPosition.Index, Is.EqualTo(3));
             Assert.IsFalse(tokenizer.IsAtEnd);
 
             // action
@@ -992,23 +999,26 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsNotNull(ies.Errors);
             Assert.IsEmpty(ies.Errors);
             Assert.IsNotNull(ies.InputElements);
-            Assert.AreEqual(3, ies.InputElements.Count());
+            Assert.That(ies.InputElements.Count(), Is.EqualTo(3));
             Assert.IsTrue(ies.InputElements.Any(x => x.Definition == implicitA));
             Assert.IsTrue(ies.InputElements.Any(x => x.Definition == implicitAb));
             Assert.IsTrue(ies.InputElements.Any(x => x.Definition == implicitAbc));
             token = ies.InputElements.First(x => x.Definition == implicitA);
-            Assert.AreEqual(4, token.IndexOfNextTokenization);
-            Assert.AreEqual(new InputPosition(3, 1, 4), token.StartPosition);
-            Assert.AreEqual("a", token.Value);
+            Assert.That(token.IndexOfNextTokenization, Is.EqualTo(4));
+            Assert.That(token.StartPosition,
+                Is.EqualTo(new InputPosition(3, 1, 4)));
+            Assert.That(token.Value, Is.EqualTo("a"));
             token = ies.InputElements.First(x => x.Definition == implicitAb);
-            Assert.AreEqual(5, token.IndexOfNextTokenization);
-            Assert.AreEqual(new InputPosition(3, 1, 4), token.StartPosition);
-            Assert.AreEqual("ab", token.Value);
+            Assert.That(token.IndexOfNextTokenization, Is.EqualTo(5));
+            Assert.That(token.StartPosition,
+                Is.EqualTo(new InputPosition(3, 1, 4)));
+            Assert.That(token.Value, Is.EqualTo("ab"));
             token = ies.InputElements.First(x => x.Definition == implicitAbc);
-            Assert.AreEqual(6, token.IndexOfNextTokenization);
-            Assert.AreEqual(new InputPosition(3, 1, 4), token.StartPosition);
-            Assert.AreEqual("abc", token.Value);
-            Assert.AreEqual(4, tokenizer.CurrentPosition.Index);
+            Assert.That(token.IndexOfNextTokenization, Is.EqualTo(6));
+            Assert.That(token.StartPosition,
+                Is.EqualTo(new InputPosition(3, 1, 4)));
+            Assert.That(token.Value, Is.EqualTo("abc"));
+            Assert.That(tokenizer.CurrentPosition.Index, Is.EqualTo(4));
             Assert.IsFalse(tokenizer.IsAtEnd);
 
             // action
@@ -1019,13 +1029,14 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsNotNull(ies.Errors);
             Assert.IsEmpty(ies.Errors);
             Assert.IsNotNull(ies.InputElements);
-            Assert.AreEqual(1, ies.InputElements.Count());
+            Assert.That(ies.InputElements.Count(), Is.EqualTo(1));
             token = ies.InputElements.First();
-            Assert.AreSame(implicitBc, token.Definition);
-            Assert.AreEqual(6, token.IndexOfNextTokenization);
-            Assert.AreEqual(new InputPosition(4, 1, 5), token.StartPosition);
-            Assert.AreEqual("bc", token.Value);
-            Assert.AreEqual(5, tokenizer.CurrentPosition.Index);
+            Assert.That(token.Definition, Is.SameAs(implicitBc));
+            Assert.That(token.IndexOfNextTokenization, Is.EqualTo(6));
+            Assert.That(token.StartPosition,
+                Is.EqualTo(new InputPosition(4, 1, 5)));
+            Assert.That(token.Value, Is.EqualTo("bc"));
+            Assert.That(tokenizer.CurrentPosition.Index, Is.EqualTo(5));
             Assert.IsFalse(tokenizer.IsAtEnd);
 
             // action
@@ -1036,13 +1047,14 @@ namespace MetaphysicsIndustries.Giza.Test
             Assert.IsNotNull(ies.Errors);
             Assert.IsEmpty(ies.Errors);
             Assert.IsNotNull(ies.InputElements);
-            Assert.AreEqual(1, ies.InputElements.Count());
+            Assert.That(ies.InputElements.Count(), Is.EqualTo(1));
             token = ies.InputElements.First();
-            Assert.AreSame(implicitC, token.Definition);
-            Assert.AreEqual(6, token.IndexOfNextTokenization);
-            Assert.AreEqual(new InputPosition(5, 1, 6), token.StartPosition);
-            Assert.AreEqual("c", token.Value);
-            Assert.AreEqual(6, tokenizer.CurrentPosition.Index);
+            Assert.That(token.Definition, Is.SameAs(implicitC));
+            Assert.That(token.IndexOfNextTokenization, Is.EqualTo(6));
+            Assert.That(token.StartPosition,
+                Is.EqualTo(new InputPosition(5, 1, 6)));
+            Assert.That(token.Value, Is.EqualTo("c"));
+            Assert.That(tokenizer.CurrentPosition.Index, Is.EqualTo(6));
             Assert.IsTrue(tokenizer.IsAtEnd);
 
 

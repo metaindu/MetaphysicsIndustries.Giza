@@ -45,7 +45,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var dr = new DefinitionRenderer();
             var result = dr.RenderDefinitionExprsAsGrammarText(g.Definitions);
 
-            Assert.AreEqual(input, result);
+            Assert.That(result, Is.EqualTo(input));
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var dr = new DefinitionRenderer();
             var result = dr.RenderDefinitionExprsAsGrammarText(g.Definitions);
 
-            Assert.AreEqual(input, result);
+            Assert.That(result, Is.EqualTo(input));
         }
 
         [Test]
@@ -82,7 +82,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var dr = new DefinitionRenderer();
             var result = dr.RenderDefinitionExprsAsGrammarText(g.Definitions);
 
-            Assert.AreEqual(input, result);
+            Assert.That(result, Is.EqualTo(input));
         }
 
         [Test]
@@ -105,7 +105,7 @@ namespace MetaphysicsIndustries.Giza.Test
             var dr = new DefinitionRenderer();
             var result = dr.RenderDefinitionExprsAsGrammarText(g.Definitions);
 
-            Assert.AreEqual(input, result);
+            Assert.That(result, Is.EqualTo(input));
         }
 
         // TODO: test C# output

@@ -57,23 +57,23 @@ namespace MetaphysicsIndustries.Giza.Test
             // assertions
             Assert.IsEmpty(errors);
             Assert.IsNotNull(spans);
-            Assert.AreEqual(1, spans.Length);
+            Assert.That(spans.Length, Is.EqualTo(1));
             var s = spans[0];
-            Assert.AreSame(sequenceDef, s.DefRef);
-            Assert.AreEqual(1, s.Subspans.Count);
+            Assert.That(s.DefRef, Is.SameAs(sequenceDef));
+            Assert.That(s.Subspans.Count, Is.EqualTo(1));
             var s2 = s.Subspans[0];
-            Assert.AreSame(lettersDef, s2.DefRef);
-            Assert.AreEqual(3, s2.Subspans.Count);
+            Assert.That(s2.DefRef, Is.SameAs(lettersDef));
+            Assert.That(s2.Subspans.Count, Is.EqualTo(3));
 
-            Assert.AreSame(lettersDef.Nodes[0], s2.Subspans[0].Node);
-            Assert.AreSame(lettersDef.Nodes[0], s2.Subspans[1].Node);
-            Assert.AreSame(lettersDef.Nodes[0], s2.Subspans[2].Node);
+            Assert.That(s2.Subspans[0].Node, Is.SameAs(lettersDef.Nodes[0]));
+            Assert.That(s2.Subspans[1].Node, Is.SameAs(lettersDef.Nodes[0]));
+            Assert.That(s2.Subspans[2].Node, Is.SameAs(lettersDef.Nodes[0]));
             Assert.IsEmpty(s2.Subspans[0].Subspans);
             Assert.IsEmpty(s2.Subspans[1].Subspans);
             Assert.IsEmpty(s2.Subspans[2].Subspans);
-            Assert.AreEqual("a", s2.Subspans[0].Value);
-            Assert.AreEqual("b", s2.Subspans[1].Value);
-            Assert.AreEqual("c", s2.Subspans[2].Value);
+            Assert.That(s2.Subspans[0].Value, Is.EqualTo("a"));
+            Assert.That(s2.Subspans[1].Value, Is.EqualTo("b"));
+            Assert.That(s2.Subspans[2].Value, Is.EqualTo("c"));
         }
 
         [Test]
@@ -106,7 +106,7 @@ namespace MetaphysicsIndustries.Giza.Test
             // assertions
             Assert.IsEmpty(errors);
             Assert.IsNotNull(spans);
-            Assert.AreEqual(4, spans.Length);
+            Assert.That(spans.Length, Is.EqualTo(4));
 
             // sequence
             //    |
@@ -125,88 +125,94 @@ namespace MetaphysicsIndustries.Giza.Test
             //             /      |     \
             // letters('a') letters('b') letters('c')
 
-            Assert.AreEqual(1, spans.Count(x => x.Subspans.Count == 1));    // abc
-            Assert.AreEqual(1, spans.Count(x => x.Subspans.Count == 3));    // a b c
-            Assert.AreEqual(2, spans.Count(x => x.Subspans.Count == 2));
-            Assert.AreEqual(1, spans.Count(
+            Assert.That(spans.Count(x => x.Subspans.Count == 1),
+                Is.EqualTo(1));                                      // abc
+            Assert.That(spans.Count(x => x.Subspans.Count == 3),
+                Is.EqualTo(1));                                      // a b c
+            Assert.That(spans.Count(x => x.Subspans.Count == 2),
+                Is.EqualTo(2));
+            Assert.That(spans.Count(
                 x =>
                 x.Subspans.Count == 2 &&
                 x.Subspans[0].Subspans.Count == 1 &&
-                x.Subspans[1].Subspans.Count == 2));                    // a bc
-            Assert.AreEqual(1, spans.Count(
+                x.Subspans[1].Subspans.Count == 2), Is.EqualTo(1));  // a bc
+            Assert.That(spans.Count(
                 x =>
                 x.Subspans.Count == 2 &&
                 x.Subspans[0].Subspans.Count == 2 &&
-                x.Subspans[1].Subspans.Count == 1));                    // ab c
+                x.Subspans[1].Subspans.Count == 1), Is.EqualTo(1));  // ab c
 
             Span s;
             Span s2;
 
             s = spans.First(x => x.Subspans.Count == 1);    //abc
-            Assert.AreSame(sequenceDef, s.DefRef);
+            Assert.That(s.DefRef, Is.SameAs(sequenceDef));
             s2 = s.Subspans[0];
-            Assert.AreSame(lettersDef, s2.DefRef);
-            Assert.AreEqual(3, s2.Subspans.Count);
-            Assert.AreSame(lettersDef.Nodes[0], s2.Subspans[0].Node);
-            Assert.AreSame(lettersDef.Nodes[0], s2.Subspans[1].Node);
-            Assert.AreSame(lettersDef.Nodes[0], s2.Subspans[2].Node);
-            Assert.AreEqual("a", s2.Subspans[0].Value);
-            Assert.AreEqual("b", s2.Subspans[1].Value);
-            Assert.AreEqual("c", s2.Subspans[2].Value);
+            Assert.That(s2.DefRef, Is.SameAs(lettersDef));
+            Assert.That(s2.Subspans.Count, Is.EqualTo(3));
+            Assert.That(s2.Subspans[0].Node, Is.SameAs(lettersDef.Nodes[0]));
+            Assert.That(s2.Subspans[1].Node, Is.SameAs(lettersDef.Nodes[0]));
+            Assert.That(s2.Subspans[2].Node, Is.SameAs(lettersDef.Nodes[0]));
+            Assert.That(s2.Subspans[0].Value, Is.EqualTo("a"));
+            Assert.That(s2.Subspans[1].Value, Is.EqualTo("b"));
+            Assert.That(s2.Subspans[2].Value, Is.EqualTo("c"));
             Assert.IsEmpty(s2.Subspans[0].Subspans);
             Assert.IsEmpty(s2.Subspans[1].Subspans);
             Assert.IsEmpty(s2.Subspans[2].Subspans);
 
             s = spans.First(x => x.Subspans.Count == 2 && x.Subspans[0].Subspans.Count == 1); // a bc
-            Assert.AreSame(sequenceDef, s.DefRef);
+            Assert.That(s.DefRef, Is.SameAs(sequenceDef));
             s2 = s.Subspans[0];
-            Assert.AreSame(lettersDef, s2.DefRef);
-            Assert.AreEqual(1, s2.Subspans.Count);
-            Assert.AreSame(lettersDef.Nodes[0], s2.Subspans[0].Node);
-            Assert.AreEqual("a", s2.Subspans[0].Value);
+            Assert.That(s2.DefRef, Is.SameAs(lettersDef));
+            Assert.That(s2.Subspans.Count, Is.EqualTo(1));
+            Assert.That(s2.Subspans[0].Node, Is.SameAs(lettersDef.Nodes[0]));
+            Assert.That(s2.Subspans[0].Value, Is.EqualTo("a"));
             Assert.IsEmpty(s2.Subspans[0].Subspans);
             s2 = s.Subspans[1];
-            Assert.AreSame(lettersDef, s2.DefRef);
-            Assert.AreEqual(2, s2.Subspans.Count);
-            Assert.AreSame(lettersDef.Nodes[0], s2.Subspans[0].Node);
-            Assert.AreSame(lettersDef.Nodes[0], s2.Subspans[1].Node);
-            Assert.AreEqual("b", s2.Subspans[0].Value);
-            Assert.AreEqual("c", s2.Subspans[1].Value);
+            Assert.That(s2.DefRef, Is.SameAs(lettersDef));
+            Assert.That(s2.Subspans.Count, Is.EqualTo(2));
+            Assert.That(s2.Subspans[0].Node, Is.SameAs(lettersDef.Nodes[0]));
+            Assert.That(s2.Subspans[1].Node, Is.SameAs(lettersDef.Nodes[0]));
+            Assert.That(s2.Subspans[0].Value, Is.EqualTo("b"));
+            Assert.That(s2.Subspans[1].Value, Is.EqualTo("c"));
             Assert.IsEmpty(s2.Subspans[0].Subspans);
             Assert.IsEmpty(s2.Subspans[1].Subspans);
 
             s = spans.First(x => x.Subspans.Count == 2 && x.Subspans[0].Subspans.Count == 2); // ab c
-            Assert.AreSame(sequenceDef, s.DefRef);
+            Assert.That(s.DefRef, Is.SameAs(sequenceDef));
             s2 = s.Subspans[0];
-            Assert.AreSame(lettersDef, s2.DefRef);
-            Assert.AreEqual(2, s2.Subspans.Count);
-            Assert.AreSame(lettersDef.Nodes[0], s2.Subspans[0].Node);
-            Assert.AreSame(lettersDef.Nodes[0], s2.Subspans[1].Node);
-            Assert.AreEqual("a", s2.Subspans[0].Value);
-            Assert.AreEqual("b", s2.Subspans[1].Value);
+            Assert.That(s2.DefRef, Is.SameAs(lettersDef));
+            Assert.That(s2.Subspans.Count, Is.EqualTo(2));
+            Assert.That(s2.Subspans[0].Node, Is.SameAs(lettersDef.Nodes[0]));
+            Assert.That(s2.Subspans[1].Node, Is.SameAs(lettersDef.Nodes[0]));
+            Assert.That(s2.Subspans[0].Value, Is.EqualTo("a"));
+            Assert.That(s2.Subspans[1].Value, Is.EqualTo("b"));
             Assert.IsEmpty(s2.Subspans[0].Subspans);
             Assert.IsEmpty(s2.Subspans[1].Subspans);
             s2 = s.Subspans[1];
-            Assert.AreSame(lettersDef, s2.DefRef);
-            Assert.AreEqual(1, s2.Subspans.Count);
-            Assert.AreSame(lettersDef.Nodes[0], s2.Subspans[0].Node);
-            Assert.AreEqual("c", s2.Subspans[0].Value);
+            Assert.That(s2.DefRef, Is.SameAs(lettersDef));
+            Assert.That(s2.Subspans.Count, Is.EqualTo(1));
+            Assert.That(s2.Subspans[0].Node, Is.SameAs(lettersDef.Nodes[0]));
+            Assert.That(s2.Subspans[0].Value, Is.EqualTo("c"));
             Assert.IsEmpty(s2.Subspans[0].Subspans);
 
             s = spans.First(x => x.Subspans.Count == 3);    // a b c
-            Assert.AreSame(sequenceDef, s.DefRef);
-            Assert.AreSame(lettersDef, s.Subspans[0].DefRef);
-            Assert.AreSame(lettersDef, s.Subspans[1].DefRef);
-            Assert.AreSame(lettersDef, s.Subspans[2].DefRef);
-            Assert.AreEqual(1, s.Subspans[0].Subspans.Count);
-            Assert.AreEqual(1, s.Subspans[1].Subspans.Count);
-            Assert.AreEqual(1, s.Subspans[2].Subspans.Count);
-            Assert.AreSame(lettersDef.Nodes[0], s.Subspans[0].Subspans[0].Node);
-            Assert.AreSame(lettersDef.Nodes[0], s.Subspans[1].Subspans[0].Node);
-            Assert.AreSame(lettersDef.Nodes[0], s.Subspans[2].Subspans[0].Node);
-            Assert.AreEqual("a", s.Subspans[0].Subspans[0].Value);
-            Assert.AreEqual("b", s.Subspans[1].Subspans[0].Value);
-            Assert.AreEqual("c", s.Subspans[2].Subspans[0].Value);
+            Assert.That(s.DefRef, Is.SameAs(sequenceDef));
+            Assert.That(s.Subspans[0].DefRef, Is.SameAs(lettersDef));
+            Assert.That(s.Subspans[1].DefRef, Is.SameAs(lettersDef));
+            Assert.That(s.Subspans[2].DefRef, Is.SameAs(lettersDef));
+            Assert.That(s.Subspans[0].Subspans.Count, Is.EqualTo(1));
+            Assert.That(s.Subspans[1].Subspans.Count, Is.EqualTo(1));
+            Assert.That(s.Subspans[2].Subspans.Count, Is.EqualTo(1));
+            Assert.That(s.Subspans[0].Subspans[0].Node,
+             Is.SameAs(lettersDef.Nodes[0]));
+            Assert.That(s.Subspans[1].Subspans[0].Node,
+                Is.SameAs(lettersDef.Nodes[0]));
+            Assert.That(s.Subspans[2].Subspans[0].Node,
+                Is.SameAs(lettersDef.Nodes[0]));
+            Assert.That(s.Subspans[0].Subspans[0].Value, Is.EqualTo("a"));
+            Assert.That(s.Subspans[1].Subspans[0].Value, Is.EqualTo("b"));
+            Assert.That(s.Subspans[2].Subspans[0].Value, Is.EqualTo("c"));
             Assert.IsEmpty(s.Subspans[0].Subspans[0].Subspans);
             Assert.IsEmpty(s.Subspans[1].Subspans[0].Subspans);
             Assert.IsEmpty(s.Subspans[2].Subspans[0].Subspans);
