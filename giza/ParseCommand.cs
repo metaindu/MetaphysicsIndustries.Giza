@@ -185,8 +185,6 @@ namespace giza
 
         public static void PrintSpanHierarchy(Span s)
         {
-            const string indent = "  ";
-
             var items = new List<Tuple<string, string>>();
             GatherSpanHierarchy(s, items);
 

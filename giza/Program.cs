@@ -135,7 +135,7 @@ namespace giza
                     args = Splitter.SplitArgs(_commandLine).ToList();
                     command = args[0];
                 }
-                catch(UnmatchedQuoteException ex)
+                catch (UnmatchedQuoteException)
                 {
                     splittingFailed = true;
                 }
