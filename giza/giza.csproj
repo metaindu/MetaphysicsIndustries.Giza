@@ -1,99 +1,22 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{3CB3C1B6-0838-4E0A-94BA-254B974D8D6E}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>giza</RootNamespace>
-    <AssemblyName>giza</AssemblyName>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
-    <DebugSymbols>True</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>False</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Externalconsole>true</Externalconsole>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>True</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="NCommander, Version=0.12.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\NCommander.0.13.0\lib\net40\NCommander.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="CdReplCommand.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="getline.cs" />
-    <Compile Include="PwdReplCommand.cs" />
-    <Compile Include="RenderCommand.cs" />
-    <Compile Include="ParseCommand.cs" />
-    <Compile Include="SpanCommand.cs" />
-    <Compile Include="CheckCommand.cs" />
-    <Compile Include="ReplCommand.cs" />
-    <Compile Include="ListReplCommand.cs" />
-    <Compile Include="PrintReplCommand.cs" />
-    <Compile Include="DeleteReplCommand.cs" />
-    <Compile Include="SaveReplCommand.cs" />
-    <Compile Include="LoadReplCommand.cs" />
-    <Compile Include="CheckReplCommand.cs" />
-    <Compile Include="ParseReplCommand.cs" />
-    <Compile Include="SpanReplCommand.cs" />
-    <Compile Include="RenderReplCommand.cs" />
-    <Compile Include="SpanPrintingOptions.cs" />
-    <Compile Include="ErrorHelper.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MetaphysicsIndustries.Giza.csproj">
-      <Project>{98B42ACF-8370-4428-9D41-73FF1CEFB2E4}</Project>
-      <Name>MetaphysicsIndustries.Giza</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-    <None Include="test.giza" />
-    <None Include="invalid.json" />
-    <None Include="json.giza" />
-    <None Include="json.json" />
-    <None Include="json_example1.json" />
-    <None Include="json_example2.json" />
-    <None Include="rfc4627.txt" />
-    <None Include="todo.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="test.txt" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <Nullable>disable</Nullable>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="NCommander" Version="0.14.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\MetaphysicsIndustries.Giza.csproj" />
+    </ItemGroup>
+
 </Project>

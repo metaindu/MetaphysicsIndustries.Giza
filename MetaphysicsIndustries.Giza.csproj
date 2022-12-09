@@ -1,171 +1,23 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{98B42ACF-8370-4428-9D41-73FF1CEFB2E4}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MetaphysicsIndustries.Giza</RootNamespace>
-    <AssemblyName>MetaphysicsIndustries.Giza</AssemblyName>
-    <SignAssembly>false</SignAssembly>
-    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <OldToolsVersion>2.0</OldToolsVersion>
-    <UpgradeBackupLocation />
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>True</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>False</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CustomCommands>
-      <CustomCommands>
-        <Command>
-          <type>BeforeBuild</type>
-          <command>python pre-build.py</command>
-          <workingdir>${ProjectDir}</workingdir>
-        </Command>
-      </CustomCommands>
-    </CustomCommands>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>True</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CustomCommands>
-      <CustomCommands>
-        <Command>
-          <type>BeforeBuild</type>
-          <command>python pre-build.py</command>
-          <workingdir>${ProjectDir}</workingdir>
-        </Command>
-      </CustomCommands>
-    </CustomCommands>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Core" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="BinarySpanner.cs" />
-    <Compile Include="CharClass.cs" />
-    <Compile Include="FileSource.cs" />
-    <Compile Include="IFileSource.cs" />
-    <Compile Include="ImportCache.cs" />
-    <Compile Include="ImportError.cs" />
-    <Compile Include="ImportRef.cs" />
-    <Compile Include="ImportStatement.cs" />
-    <Compile Include="ImportTransform.cs" />
-    <Compile Include="IGrammarTransform.cs" />
-    <Compile Include="Grammar.cs" />
-    <Compile Include="Span.cs" />
-    <Compile Include="SupergrammarSpanner.cs" />
-    <Content Include="BinarySpanner example grammar.txt" />
-    <Content Include="BinarySpannerGrammar.txt" />
-    <Compile Include="GrammarCompiler.cs" />
-    <Compile Include="Node.cs" />
-    <Compile Include="NDefinition.cs" />
-    <Compile Include="NGrammar.cs" />
-    <Compile Include="DefinitionRenderer.cs" />
-    <Compile Include="Supergrammar.cs" />
-    <Compile Include="DefinitionNodeOrderedParentChildrenCollection.cs.cs" />
-    <Compile Include="CharNode.cs" />
-    <Compile Include="DefRefNode.cs" />
-    <Compile Include="Spanner.cs" />
-    <Compile Include="DefinitionChecker.cs" />
-    <Compile Include="SpanChecker.cs" />
-    <Compile Include="DefinitionDirective.cs" />
-    <Compile Include="Tokenizer.cs" />
-    <Compile Include="Token.cs" />
-    <Compile Include="Expression.cs" />
-    <Compile Include="SubExpression.cs" />
-    <Compile Include="OrExpression.cs" />
-    <Compile Include="DefRefSubExpression.cs" />
-    <Compile Include="LiteralSubExpression.cs" />
-    <Compile Include="CharClassSubExpression.cs" />
-    <Compile Include="ExpressionItem.cs" />
-    <Compile Include="GrammarComparer.cs" />
-    <Compile Include="GrammarDefinitionOrderedParentChildrenCollection.cs" />
-    <Compile Include="TokenizeTransform.cs" />
-    <Compile Include="ExpressionChecker.cs" />
-    <Compile Include="Parser.cs" />
-    <Compile Include="NodeMatch.cs" />
-    <Compile Include="Definition.cs" />
-    <Compile Include="ErrorType.cs" />
-    <Compile Include="Error.cs" />
-    <Compile Include="StringFormatterGrammar.cs" />
-    <Compile Include="StringFormatter.cs" />
-    <Compile Include="ListTokenSource.cs" />
-    <Compile Include="InputPosition.cs" />
-    <Compile Include="InputChar.cs" />
-    <Compile Include="CharacterSource.cs" />
-    <Compile Include="PriorityQueue.cs" />
-    <Compile Include="SupergrammarSpannerError.cs" />
-    <Compile Include="DefinitionError.cs" />
-    <Compile Include="SpanError.cs" />
-    <Compile Include="ExpressionError.cs" />
-    <Compile Include="ParserError.cs" />
-    <Compile Include="Logger.cs" />
-    <Compile Include="Spanner2.cs" />
-    <Compile Include="IInputElement.cs" />
-    <Compile Include="InputElementSet.cs" />
-    <Compile Include="IInputSource.cs" />
-    <Compile Include="TransitionType.cs" />
-    <Compile Include="EndCandidatesByIndexCollection.cs" />
-    <Compile Include="BranchTipsByIndexCollection.cs" />
-    <Compile Include="Collection.cs" />
-    <Compile Include="AssemblyInfo.Git.cs" />
-    <Compile Include="AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Giza.cd" />
-    <None Include="todo.txt" />
-    <None Include="docs\Directives.txt" />
-    <None Include="StringFormatterGrammar.giza" />
-    <None Include="LICENSE" />
-    <None Include="README.md" />
-    <None Include=".travis.yml" />
-    <None Include="build.sh" />
-    <None Include="pre-build.py" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="CppCliGrammar.txt" />
-    <Content Include="ExeBinaryGrammar.txt" />
-    <Content Include="MetaphysicsIndustries.Giza.nuspec" />
-    <Content Include="release.sh" />
-    <Content Include="render_grammars.sh" />
-    <Content Include="Supergrammar.txt" />
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
-  <ItemGroup>
-    <Folder Include="docs\" />
-  </ItemGroup>
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <Nullable>disable</Nullable>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <DefaultItemExcludes>
+            MetaphysicsIndustries.Giza.CSharp/**;
+            MetaphysicsIndustries.Giza.Test/**;
+            Test2/**;
+            giza/**;
+            instance/**;
+            packages/**</DefaultItemExcludes>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    </PropertyGroup>
 </Project>
