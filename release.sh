@@ -58,7 +58,7 @@ else
 fi
 
 echo 'Creating the nuget package...'
-if ! dotnet pack --include-source --include-symbols $PACKAGE_BASE.csproj /p:PackageVersion=$VERSION ; then
+if ! dotnet pack --include-source --include-symbols -o ./ $PACKAGE_BASE.csproj /p:PackageVersion=$VERSION ; then
     echo 'Error creating the package. The package will not be uploaded.'
     exit 1
 fi
