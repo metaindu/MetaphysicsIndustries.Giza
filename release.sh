@@ -40,6 +40,9 @@ then
     exit 1
 fi
 
+python3 ./pre-build.py
+./build.sh
+
 AVERSION=`grep AssemblyVersion AssemblyInfo.cs | perl -npe 's/^.*?\"//;s/\".*$//'`
 
 if [ "$VERSION" != "$AVERSION" ]
